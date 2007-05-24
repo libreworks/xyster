@@ -74,7 +74,6 @@ class Xyster_Collection_BaseCollectionTest extends PHPUnit_Framework_TestCase
         $c = $this->_getNewCollection();
         $pre = $c->count();
         $c->add( $this->_getNewValue() );
-        $this->assertEquals(3,$c->count());
         $post = $c->count();
         $this->assertTrue( $pre < $post );
     }
@@ -130,6 +129,7 @@ class Xyster_Collection_BaseCollectionTest extends PHPUnit_Framework_TestCase
         $val = $this->_getNewValue();
         $val2 = $this->_getNewValue();
         $val3 = $this->_getNewValue();
+        $val4 = 42; // the answer to everything
         $c->add( $val );
         $c->add( $val2 );
         $c->add( $val3 );
@@ -138,6 +138,10 @@ class Xyster_Collection_BaseCollectionTest extends PHPUnit_Framework_TestCase
         $coll->add( $val3 );
         $c->retainAll($coll);
         $this->assertTrue($c->containsAll($coll));
+        $coll2 = $this->_getNewCollection();
+        $coll2->add( $val4 );
+        $c->retainAll($coll2);
+        $this->assertTrue($c->isEmpty());
     }
     public function testIterator()
     {
@@ -160,9 +164,9 @@ class Xyster_Collection_BaseCollectionTest extends PHPUnit_Framework_TestCase
         $c->add(789);
         $this->assertArrayHasKey(2,$c->toArray()); // 3 elements in array
     }
-    protected function _addRandomValues( Xyster_Collection $c )
+    protected function _addRandomValues( Xyster_Collection_Interface $c )
     {
-        for( $i=0; $i<rand(2,10); $i++ ) {
+        for( $i=0; $i<rand(3,10); $i++ ) {
             $c->add( $this->_getNewValue() );
         }
     }
@@ -177,6 +181,15 @@ class Xyster_Collection_BaseCollectionTest extends PHPUnit_Framework_TestCase
     {
         $class = $this->_className;
         return new $class( $arg );    
+    }
+    /**
+     * @return Xyster_Collection
+     */
+    protected function _getNewCollectionWithRandomValues()
+    {
+        $c = $this->_getNewCollection();
+        $this->_addRandomValues($c);
+        return $c;
     }
 }
 /**

@@ -32,6 +32,14 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
+require_once 'Xyster/Collection/CollectionTest.php';
+require_once 'Xyster/Collection/SetTest.php';
+require_once 'Xyster/Collection/ListTest.php';
+require_once 'Xyster/Collection/IteratorTest.php';
+require_once 'Xyster/Collection/ImmutableCollectionTest.php';
+require_once 'Xyster/Collection/ImmutableSetTest.php';
+require_once 'Xyster/Collection/ImmutableListTest.php';
+
 error_reporting(E_ALL | E_STRICT);
 
 class Xyster_Collection_AllTests
@@ -44,6 +52,13 @@ class Xyster_Collection_AllTests
     public static function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('Xyster Framework - Xyster_Collection');
+        $suite->addTestSuite('Xyster_Collection_CollectionTest');
+        $suite->addTestSuite('Xyster_Collection_SetTest');
+        $suite->addTestSuite('Xyster_Collection_ListTest');
+        $suite->addTestSuite('Xyster_Collection_IteratorTest');
+        $suite->addTestSuite('Xyster_Collection_ImmutableCollectionTest');
+        $suite->addTestSuite('Xyster_Collection_ImmutableSetTest');
+        $suite->addTestSuite('Xyster_Collection_ImmutableListTest');
         return $suite;
     }
 }
