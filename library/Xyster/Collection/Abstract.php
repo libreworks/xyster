@@ -22,6 +22,10 @@
  */
 require_once 'Xyster/Collection/Interface.php';
 /**
+ * Xyster_Collection_Iterator
+ */
+require_once 'Xyster/Collection/Iterator.php';
+/**
  * Abstract class for collections
  *
  * @category  Xyster

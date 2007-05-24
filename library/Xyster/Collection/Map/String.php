@@ -44,9 +44,11 @@ class Xyster_Collection_Map_String extends Xyster_Collection_Map_Abstract
 	 * @param Xyster_Collection_Map_Interface $map The values to add to this map
 	 * @param boolean $immutable
 	 */
-	public function __construct( Xyster_Collection_Map_Interface $map )
+	public function __construct( Xyster_Collection_Map_Interface $map = null )
 	{
-		$this->merge($map);
+	    if ( $map ) {
+		    $this->merge($map);
+	    }
 	}
 
 	/**

@@ -142,8 +142,9 @@ abstract class Xyster_Collection_List_Abstract extends Xyster_Collection_Abstrac
 	 */
 	public function offsetSet( $index, $value )
 	{
-		if ( $index < 0 || $index > $this->count() )
+		if ( $index < 0 || $index > $this->count() ) {
 			throw new OutOfBoundsException("Invalid index given");
+		}
 		$this->_items[$index] = $value;
 	}
 	/**
@@ -158,8 +159,9 @@ abstract class Xyster_Collection_List_Abstract extends Xyster_Collection_Abstrac
 	 */
 	public function offsetUnset( $index )
 	{
-		if ( $index < 0 || $index > $this->count() )
+		if ( $index < 0 || $index > $this->count() ) {
 			throw new OutOfBoundsException("Invalid index given");
+		}
 		unset($this->_items[$index]);
 		$this->_items = array_values($this->_items);
 	}

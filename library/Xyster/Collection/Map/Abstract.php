@@ -111,7 +111,7 @@ abstract class Xyster_Collection_Map_Abstract implements Xyster_Collection_Map_I
 	 * @throws InvalidArgumentException if any of the keys or values are invalid for this map
 	 * @return boolean Whether the map changed as a result of this method
 	 */
-	public function merge( Xyster_Map_Interface $map )
+	public function merge( Xyster_Collection_Map_Interface $map )
 	{
 		$changed = false;
 		foreach( $map as $key=>$value ) {

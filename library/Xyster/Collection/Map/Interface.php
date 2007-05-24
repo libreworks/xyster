@@ -108,7 +108,7 @@ interface Xyster_Collection_Map_Interface extends Countable, IteratorAggregate, 
 	 * @throws InvalidArgumentException if any of the keys or values are invalid for this map
 	 * @return boolean Whether the map changed as a result of this method
 	 */
-	function merge( Xyster_Map_Interface $map );
+	function merge( Xyster_Collection_Map_Interface $map );
 	/**
 	 * Removes the mapping for the specified key
 	 * 

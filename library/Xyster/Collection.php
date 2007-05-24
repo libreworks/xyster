@@ -41,7 +41,9 @@ class Xyster_Collection extends Xyster_Collection_Abstract
 	 */
 	public function __construct( Xyster_Collection_Interface $collection = null, $immutable = false )
     {
-        $this->merge($collection);
+        if ( $collection ) {
+            $this->merge($collection);
+        }
         $this->_immutable = $immutable;
 	}
 

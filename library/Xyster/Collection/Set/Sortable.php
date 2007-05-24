@@ -38,7 +38,9 @@ class Xyster_Collection_Set_Sortable extends Xyster_Collection_Set_Abstract
 	 */
 	public function __construct( Xyster_Collection_Set_Interface $set )
 	{
-		$this->merge($set);
+	    if ( $set ) {
+		    $this->merge($set);
+	    }
 	}
 
 	/**

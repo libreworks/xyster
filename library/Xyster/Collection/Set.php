@@ -37,7 +37,7 @@ class Xyster_Collection_Set extends Xyster_Collection implements Xyster_Collecti
 	 * @param Xyster_Collection_Set_Interface $set The values to add to this set
 	 * @param boolean $immutable Whether the set can be changed
 	 */
-	public function __construct( Xyster_Collection_Set_Interface $set, $immutable = false )
+	public function __construct( Xyster_Collection_Set_Interface $set = null, $immutable = false )
 	{
 		parent::__construct($set,$immutable);
 	}
