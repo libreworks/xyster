@@ -77,8 +77,9 @@ abstract class Xyster_Collection_List_Abstract extends Xyster_Collection_Abstrac
 	 */
 	public function insert( $index, $value )
 	{
-		if ( $index < 0 || $index > $this->count() )
+		if ( $index < 0 || $index > $this->count() ) {
 			throw new OutOfBoundsException("Invalid index given");
+		}
 		array_splice( $this->_items, $index, 0, $value );
 	}
 	/**
@@ -96,8 +97,9 @@ abstract class Xyster_Collection_List_Abstract extends Xyster_Collection_Abstrac
 	 */
 	public function insertAll( $index, Xyster_Collection_Interface $values )
 	{
-		if ( $index < 0 || $index > $this->count() )
+		if ( $index < 0 || $index > $this->count() ) {
 			throw new OutOfBoundsException("Invalid index given");
+		}
 		array_splice( $this->_items, $index, 0, $values->toArray() );
 	}
 	/**
@@ -113,9 +115,9 @@ abstract class Xyster_Collection_List_Abstract extends Xyster_Collection_Abstrac
 	/**
 	 * Gets the value at a specified index
 	 * 
-	 * The index must be greater than or equal to 0 and less than or equal to
+	 * The index must be greater than or equal to 0 and less than
 	 * the size of this collection.  In other words, an index is valid if  
-	 * <code>( $index < 0 || $index > $this->count() )</code> is false.
+	 * <code>( $index < 0 || $index >= $this->count() )</code> is false.
 	 *
 	 * @param int $index The index to get
 	 * @return mixed The value found at $index
@@ -123,8 +125,9 @@ abstract class Xyster_Collection_List_Abstract extends Xyster_Collection_Abstrac
 	 */
 	public function offsetGet( $index )
 	{
-		if ( $index < 0 || $index > $this->count() )
+		if ( !$this->offsetExists($index) ) {
 			throw new OutOfBoundsException("Invalid index given");
+		}
 		return $this->_items[$index];
 	}
 	/**
@@ -150,7 +153,7 @@ abstract class Xyster_Collection_List_Abstract extends Xyster_Collection_Abstrac
 	/**
 	 * Removes a value at the specified index
 	 * 
-	 * The index must be greater than or equal to 0 and less than or equal to
+	 * The index must be greater than or equal to 0 and less than
 	 * the size of this collection.  In other words, an index is valid if  
 	 * <code>( $index < 0 || $index > $this->count() )</code> is false.  
 	 *
@@ -159,7 +162,7 @@ abstract class Xyster_Collection_List_Abstract extends Xyster_Collection_Abstrac
 	 */
 	public function offsetUnset( $index )
 	{
-		if ( $index < 0 || $index > $this->count() ) {
+		if ( $index < 0 || $index >= $this->count() ) {
 			throw new OutOfBoundsException("Invalid index given");
 		}
 		unset($this->_items[$index]);
@@ -174,8 +177,9 @@ abstract class Xyster_Collection_List_Abstract extends Xyster_Collection_Abstrac
 	public function remove( $item )
 	{
 		$removed = parent::remove($item);
-		if ( $removed )
+		if ( $removed ) {
 			$this->_items = array_values($this->_items);
+		}
 		return $removed;
 	}
 	/**
@@ -187,8 +191,9 @@ abstract class Xyster_Collection_List_Abstract extends Xyster_Collection_Abstrac
 	public function removeAll( Xyster_Collection_Interface $values )
 	{
 		$removed = parent::removeAll($values);
-		if ( $removed )
+		if ( $removed ) {
 			$this->_items = array_values($this->_items);
+		}
 		return $removed;
 	}
 	/**
@@ -196,7 +201,7 @@ abstract class Xyster_Collection_List_Abstract extends Xyster_Collection_Abstrac
 	 * 
 	 * This method is an alias to ArrayAccess::offsetUnset
 	 * 
-	 * The index must be greater than or equal to 0 and less than or equal to
+	 * The index must be greater than or equal to 0 and less than 
 	 * the size of this collection.  In other words, an index is valid if  
 	 * <code>( $index < 0 || $index > $this->count() )</code> is false.  
 	 *
@@ -218,8 +223,9 @@ abstract class Xyster_Collection_List_Abstract extends Xyster_Collection_Abstrac
 	public function retainAll( Xyster_Collection_Interface $values )
 	{
 		$removed = parent::retainAll($values);
-		if ( $removed && $this->count() )
+		if ( $removed && $this->count() ) {
 			$this->_items = array_values($this->_items);
+		}
 		return $removed;
 	}
 	/**
@@ -227,7 +233,7 @@ abstract class Xyster_Collection_List_Abstract extends Xyster_Collection_Abstrac
 	 * 
 	 * This method is an alias to ArrayAccess::offsetSet.
 	 * 
-	 * The index must be greater than or equal to 0 and less than or equal to
+	 * The index must be greater than or equal to 0 and less than 
 	 * the size of this collection.  In other words, an index is valid if  
 	 * <code>( $index < 0 || $index > $this->count() )</code> is false.
 	 *
@@ -249,8 +255,9 @@ abstract class Xyster_Collection_List_Abstract extends Xyster_Collection_Abstrac
 	 */
 	public function slice( $from, $count )
 	{
-		if ( $from < 0 || $from >= $this->count() )
+		if ( $from < 0 || $from >= $this->count() ) {
 			throw new OutOfBoundsException("Invalid index given");
+		}
 		for( $i=$from; $i<$count+$from; $i++ ) {
 			if ( isset($this->_items[$i]) ) 
 				unset($this->_items[$i]);
