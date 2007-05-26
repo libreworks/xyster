@@ -22,6 +22,10 @@
  */
 require_once 'Xyster/Collection/Map/Abstract.php';
 /**
+ * Xyster_Collection_Map_Entry
+ */
+require_once 'Xyster/Collection/Map/Entry.php';
+/**
  * Implementation of a key-based collection
  *
  * @category  Xyster
@@ -65,8 +69,9 @@ class Xyster_Collection_Map extends Xyster_Collection_Map_Abstract
 	 */
 	public function clear()
 	{
-		if ( $this->_immutable )
+		if ( $this->_immutable ) {
 			throw new BadMethodCallException("This map cannot be changed");
+		}
 		$this->_items = array();
 	}
 	/**
@@ -86,18 +91,21 @@ class Xyster_Collection_Map extends Xyster_Collection_Map_Abstract
 	public function getIterator()
 	{
 		return ( $this->count() ) ? 
-			new Xyster_Collection_Map_Iterator( $this->_items ) :
+			new Xyster_Collection_Iterator( $this->_items ) :
 			new EmptyIterator();
 	}
 	/**
 	 * Gets all keys contained in this map
 	 * 
 	 * @return Xyster_Collection_Set_Interface The keys in this map
-	 * @todo Implement this method (return a set of keys)
 	 */
 	public function keys()
 	{
-		
+	    $keys = new Xyster_Collection();
+	    foreach( $this->_items as $entry ) {
+	        $keys->add($entry->getKey());
+	    }
+	    return new Xyster_Collection_Set($keys,true);
 	}
 	/**
 	 * Gets the first key found for the value supplied
@@ -106,27 +114,32 @@ class Xyster_Collection_Map extends Xyster_Collection_Map_Abstract
 	 * found.  Use {@link containsKey} to check which is true.
 	 *
 	 * @param mixed $value
-	 * @return mixed The key found, or null if none
+	 * @return mixed The key found, or false if none
 	 */
 	public function keyFor( $value )
 	{
 		foreach( $this->_items as $entry ) {
-			if ( $entry->getValue() === $value )
+			if ( $entry->getValue() === $value ) {
 				return $entry->getKey();
+			}
 		}
-		return null;
+		return false;
 	}
 	/**
 	 * Gets all keys for the value supplied
 	 *
 	 * @param mixed $value The value for which to search
 	 * @return Xyster_Collection_Set_Interface
-	 * @todo implement this method (return a set of keys for a value)
 	 */
 	public function keysFor( $value )
 	{
-		$set = new Xyster_Collection_Set();
-		return $set;
+		$c = new Xyster_Collection();
+	    foreach( $this->_items as $entry ) {
+			if ( $entry->getValue() === $value ) {
+				$c->add($entry->getKey());
+			}
+		}
+		return new Xyster_Collection_Set($c,true);
 	}
 	/**
 	 * Gets whether the specified key exists in the map
@@ -136,8 +149,9 @@ class Xyster_Collection_Map extends Xyster_Collection_Map_Abstract
 	 */
 	public function offsetExists( $key )
 	{
-		if ( !is_object($key) )
+		if ( !is_object($key) ) {
 			throw new InvalidArgumentException("Only objects can be keys in this map");
+		}
 		return array_key_exists( spl_object_hash($key), $this->_items );
 	}
 	/**
@@ -162,8 +176,9 @@ class Xyster_Collection_Map extends Xyster_Collection_Map_Abstract
 	 */
 	public function offsetSet( $key, $value )
 	{
-		if ( $this->_immutable )
+		if ( $this->_immutable ) {
 			throw new BadMethodCallException("This map cannot be changed");
+		}
 		if ( !$this->offsetExists($key) )  {
 			$index = spl_object_hash($key);
 			$entry = new Xyster_Collection_Map_Entry($key,$value);
@@ -181,19 +196,35 @@ class Xyster_Collection_Map extends Xyster_Collection_Map_Abstract
 	 */
 	public function offsetUnset( $key )
 	{
-		if ( $this->_immutable )
+		if ( $this->_immutable ) {
 			throw new BadMethodCallException("This map cannot be changed");
-		if ( $this->offsetExists($key) )
+		}
+		if ( $this->offsetExists($key) ) {
 			unset($this->_items[spl_object_hash($key)]);
+		}
+	}
+	/**
+	 * Puts the items in this map into an array
+	 * 
+	 * This array contains objects with the key and value available.
+	 * 
+	 * @return array The items in this map
+	 */
+	public function toArray()
+	{
+		return array_values($this->_items);
 	}
 	/**
 	 * Gets the values contained in this map
 	 *
 	 * @return Xyster_Collection_Interface
-	 * @todo implement this method (return a collection of values)
 	 */
 	public function values()
 	{
-		
+		$values = array();
+		foreach( $this->_items as $entry ) {
+		    $values[] = $entry->getValue();
+		}
+		return Xyster_Collection::using($values,true);
 	}
 }

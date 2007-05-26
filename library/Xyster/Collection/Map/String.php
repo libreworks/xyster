@@ -95,10 +95,12 @@ class Xyster_Collection_Map_String extends Xyster_Collection_Map_Abstract
 	 * Gets all keys contained in this map
 	 * 
 	 * @return Xyster_Collection_Set_Interface The keys in this map
-	 * @todo Implement this method (Return a set of keys)
 	 */
 	public function keys()
 	{
+	    return new Xyster_Collection_Set(
+	        Xyster_Collection::using(array_keys($this->_items)),
+	        true );
 	}
 	/**
 	 * Gets the first key found for the value supplied
@@ -107,7 +109,7 @@ class Xyster_Collection_Map_String extends Xyster_Collection_Map_Abstract
 	 * found.  Use {@link containsKey} to check which is true.
 	 *
 	 * @param mixed $value
-	 * @return mixed The key found, or null if none
+	 * @return mixed The key found, or false if none
 	 */
 	public function keyFor( $value )
 	{
@@ -121,8 +123,9 @@ class Xyster_Collection_Map_String extends Xyster_Collection_Map_Abstract
 	 */
 	public function keysFor( $value )
 	{
-		$keys = array_keys($this->_items,$value,true);
-		$set = new Xyster_Collection_Set();
+		return new Xyster_Collection_Set(
+		    Xyster_Collection::using(array_keys($this->_items,$value,true)),
+		    true );
 	}
 	/**
 	 * Gets whether the specified key exists in the map
@@ -132,9 +135,10 @@ class Xyster_Collection_Map_String extends Xyster_Collection_Map_Abstract
 	 */
 	public function offsetExists( $key )
 	{
-		if ( !is_scalar($key) )
+		if ( !is_scalar($key) ) {
 			throw new InvalidArgumentException("Only strings can be keys in this map");
-		return array_key_exists( spl_object_hash($key), $this->_items );
+		}
+		return array_key_exists( $key, $this->_items );
 	}
 	/**
 	 * Gets the value at a specified key
@@ -145,7 +149,7 @@ class Xyster_Collection_Map_String extends Xyster_Collection_Map_Abstract
 	public function offsetGet( $key )
 	{
 		return $this->offsetExists($key) ? 
-			$this->_items[$key]->getValue() : 
+			$this->_items[$key] : 
 			null;
 	}
 	/**
@@ -157,8 +161,9 @@ class Xyster_Collection_Map_String extends Xyster_Collection_Map_Abstract
 	 */
 	public function offsetSet( $key, $value )
 	{
-		if ( !is_scalar($key) )
+		if ( !is_scalar($key) ) {
 			throw new InvalidArgumentException("Only strings can be keys in this map");
+		}
 		$this->_items[$key] = $value;
 	}
 	/**
@@ -168,8 +173,9 @@ class Xyster_Collection_Map_String extends Xyster_Collection_Map_Abstract
 	 */
 	public function offsetUnset( $key )
 	{
-		if ( $this->offsetExists($key) )
+		if ( $this->offsetExists($key) ) {
 			unset($this->_items[$key]);
+		}
 	}
 	/**
 	 * Puts the items in this collection into an array

@@ -87,9 +87,11 @@ class Xyster_Collection_Abstract implements Xyster_Collection_Interface
 	 */
 	public function containsAll( Xyster_Collection_Interface $values )
 	{
-		foreach( $values as $v )
-			if ( !$this->contains($v) )
+		foreach( $values as $v ) {
+			if ( !$this->contains($v) ) {
 				return false;
+			}
+		}
 		return true;
 	}
 	/**
@@ -103,9 +105,11 @@ class Xyster_Collection_Abstract implements Xyster_Collection_Interface
 	 */
 	public function containsAny( Xyster_Collection_Interface $values )
 	{
-		foreach( $values as $v )
-			if ( $this->contains($v) )
+		foreach( $values as $v ) {
+			if ( $this->contains($v) ) {
 				return true;
+			}
+		}
 		return false;
 	}
 	/**
@@ -158,8 +162,9 @@ class Xyster_Collection_Abstract implements Xyster_Collection_Interface
 	public function merge( Xyster_Collection_Interface $values )
 	{
 		$before = count($this);
-		foreach( $values as $v )
+		foreach( $values as $v ) {
 			$this->add($v);
+		}
 		return $this->count() != $before;
 	}
 	/**
@@ -171,9 +176,11 @@ class Xyster_Collection_Abstract implements Xyster_Collection_Interface
 	public function remove( $item )
 	{
 		$before = $this->count();
-		foreach( $this->_items as $key=>$value )
-			if ( $value === $item )
+		foreach( $this->_items as $key=>$value ) {
+			if ( $value === $item ) {
 				unset($this->_items[$key]);
+			}
+		}
 		return $this->count() != $before;		
 	}
 	/**
@@ -185,9 +192,11 @@ class Xyster_Collection_Abstract implements Xyster_Collection_Interface
 	public function removeAll( Xyster_Collection_Interface $values )
 	{
 		$before = $this->count();
-		foreach( $this->_items as $key=>$value )
-			if ( $values->contains($value) )
+		foreach( $this->_items as $key=>$value ) {
+			if ( $values->contains($value) ) {
 				unset($this->_items[$key]);
+			}
+		}
 		return $this->count() != $before;
 	}
 	/**
@@ -206,9 +215,11 @@ class Xyster_Collection_Abstract implements Xyster_Collection_Interface
 			$this->clear();
 			return true;
 		}
-		foreach( $this->_items as $key=>$value )
-			if ( !$values->contains($value) )
+		foreach( $this->_items as $key=>$value ) {
+			if ( !$values->contains($value) ) {
 				unset($this->_items[$key]);
+			}
+		}
 		return $this->count() != $before;
 	}
 	/**

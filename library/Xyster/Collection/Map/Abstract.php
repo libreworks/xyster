@@ -32,19 +32,6 @@ require_once 'Xyster/Collection/Map/Interface.php';
 abstract class Xyster_Collection_Map_Abstract implements Xyster_Collection_Map_Interface
 {
 	/**
-	 * Removes all items from the collection
-	 * 
-	 * This is a pretty basic implementation that should be overridden for 
-	 * performance reasons.
-	 *
-	 * @throws BadMethodCallException if the collection cannot be modified
-	 */
-	public function clear()
-	{
-		foreach( $this->keys() as $key )
-			$this->remove($key);
-	}
-	/**
 	 * Tests to see whether the map contains the key supplied
 	 * 
 	 * If the supplied value is an object, and the map allows objects as keys,
@@ -70,9 +57,11 @@ abstract class Xyster_Collection_Map_Abstract implements Xyster_Collection_Map_I
 	 */
 	public function containsValue( $item )
 	{
-		foreach( $this->values() as $value )
-			if ( $item === $value )
+		foreach( $this->values() as $value ) {
+			if ( $item === $value ) {
 				return true;
+			}
+		}
 		return false;
 	}
 	/**
@@ -115,9 +104,17 @@ abstract class Xyster_Collection_Map_Abstract implements Xyster_Collection_Map_I
 	{
 		$changed = false;
 		foreach( $map as $key=>$value ) {
-			if ( !$changed && $this->get($key) !== $value )
-				$changed = true;
-			$this->set($key,$value);
+		    if ( $value instanceof Xyster_Collection_Map_Entry ) {
+		        if ( !$changed && $this->get($value->getKey()) !== $value->getValue() ) {
+		            $changed = true;
+		        }
+		        $this->set($value->getKey(),$value->getValue());
+		    } else {
+    			if ( !$changed && $this->get($key) !== $value ) {
+				    $changed = true;
+			    }
+			    $this->set($key,$value);
+		    }
 		}
 		return $changed;
 	}
@@ -145,18 +142,5 @@ abstract class Xyster_Collection_Map_Abstract implements Xyster_Collection_Map_I
 	public function set( $key, $value )
 	{
 		$this->offsetSet($key,$value);
-	}
-	/**
-	 * Puts the items in this collection into an array
-	 * 
-	 * For Maps that allow for scalar-only keys, this array should have the map
-	 * keys as keys and values as values.  If the map allows complex types as 
-	 * keys, this array should contain objects with the key and value available.
-	 * 
-	 * @return array The items in this collection
-	 */
-	public function toArray()
-	{
-		return iterator_to_array($this->getIterator());
 	}
 }

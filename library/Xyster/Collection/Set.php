@@ -34,12 +34,12 @@ class Xyster_Collection_Set extends Xyster_Collection implements Xyster_Collecti
 	/**
 	 * Creates a new set
 	 *
-	 * @param Xyster_Collection_Set_Interface $set The values to add to this set
+	 * @param Xyster_Collection_Interface $set The values to add to this set
 	 * @param boolean $immutable Whether the set can be changed
 	 */
-	public function __construct( Xyster_Collection_Set_Interface $set = null, $immutable = false )
+	public function __construct( Xyster_Collection_Interface $c = null, $immutable = false )
 	{
-		parent::__construct($set,$immutable);
+		parent::__construct($c,$immutable);
 	}
 
 	/**
