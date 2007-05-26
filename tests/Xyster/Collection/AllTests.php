@@ -35,10 +35,13 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 require_once 'Xyster/Collection/CollectionTest.php';
 require_once 'Xyster/Collection/SetTest.php';
 require_once 'Xyster/Collection/ListTest.php';
+require_once 'Xyster/Collection/MapTest.php';
+require_once 'Xyster/Collection/MapStringTest.php';
 require_once 'Xyster/Collection/IteratorTest.php';
 require_once 'Xyster/Collection/ImmutableCollectionTest.php';
 require_once 'Xyster/Collection/ImmutableSetTest.php';
 require_once 'Xyster/Collection/ImmutableListTest.php';
+require_once 'Xyster/Collection/ImmutableMapTest.php';
 
 error_reporting(E_ALL | E_STRICT);
 
@@ -55,10 +58,13 @@ class Xyster_Collection_AllTests
         $suite->addTestSuite('Xyster_Collection_CollectionTest');
         $suite->addTestSuite('Xyster_Collection_SetTest');
         $suite->addTestSuite('Xyster_Collection_ListTest');
+        $suite->addTestSuite('Xyster_Collection_MapTest');
+        $suite->addTestSuite('Xyster_Collection_MapStringTest');
         $suite->addTestSuite('Xyster_Collection_IteratorTest');
         $suite->addTestSuite('Xyster_Collection_ImmutableCollectionTest');
         $suite->addTestSuite('Xyster_Collection_ImmutableSetTest');
         $suite->addTestSuite('Xyster_Collection_ImmutableListTest');
+        $suite->addTestSuite('Xyster_Collection_ImmutableMapTest');
         return $suite;
     }
 }

@@ -49,6 +49,7 @@ class Xyster_Collection_BaseCollectionTest extends PHPUnit_Framework_TestCase
         $this->_addRandomValues($c);
         $coll = $this->_getNewCollection($c);
         $this->assertTrue( $c->containsAll($coll) );
+        $this->assertFalse( $c->containsAll($this->_getNewCollectionWithRandomValues()));
     }
     public function testContainsAny()
     {
@@ -203,5 +204,9 @@ class Xyster_Collection_Test_Value
     public function __construct( $value )
     {
         $this->foo = $value;
+    }
+    public function __toString()
+    {
+        return $this->foo;
     }
 }
