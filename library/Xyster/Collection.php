@@ -16,6 +16,7 @@
  * @package   Xyster_Collection
  * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @version   $Id$
  */
 /**
  * Xyster_Collection_Abstract

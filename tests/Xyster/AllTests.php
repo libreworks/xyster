@@ -27,6 +27,7 @@ require_once 'TestHelper.php';
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
+require_once 'Xyster/EnumTest.php';
 require_once 'Xyster/Collection/AllTests.php';
 require_once 'Xyster/Data/AllTests.php';
 
@@ -41,6 +42,7 @@ class Xyster_AllTests
     public static function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('Xyster Framework - Xyster');
+        $suite->addTestSuite('Xyster_EnumTest');
         $suite->addTest( Xyster_Collection_AllTests::suite() );
         $suite->addTest( Xyster_Data_AllTests::suite() );
         return $suite;

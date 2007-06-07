@@ -40,31 +40,31 @@ class Xyster_Data_Aggregate extends Xyster_Enum
 	/**
 	 * Uses the Average function
 	 *
-	 * @return Aggregate
+	 * @return Xyster_Data_Aggregate
 	 */
 	static public function Average() { return Xyster_Enum::_factory(); }
 	/**
 	 * Uses the Count function
 	 *
-	 * @return Aggregate
+	 * @return Xyster_Data_Aggregate
 	 */
 	static public function Count() { return Xyster_Enum::_factory(); }
 	/**
 	 * Uses the Maximum function
 	 *
-	 * @return Aggregate
+	 * @return Xyster_Data_Aggregate
 	 */
 	static public function Maximum() { return Xyster_Enum::_factory(); }
 	/**
 	 * Uses the Minimum function
 	 *
-	 * @return Aggregate
+	 * @return Xyster_Data_Aggregate
 	 */
 	static public function Minimum() { return Xyster_Enum::_factory(); }
 	/**
 	 * Uses the Sum function
 	 *
-	 * @return Aggregate
+	 * @return Xyster_Data_Aggregate
 	 */
 	static public function Sum() { return Xyster_Enum::_factory(); }    
 }

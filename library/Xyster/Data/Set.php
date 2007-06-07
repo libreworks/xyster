@@ -39,14 +39,17 @@ class Xyster_Data_Set extends Xyster_Collection_Set_Sortable
 	/**
 	 * Creates a new data set
 	 *
-	 * @param mixed $values  Any traversable type
+	 * @param Xyster_Collection_Interface $values  Any traversable type
 	 */
-	public function __construct( $values=null )
+	public function __construct( Xyster_Collection_Interface $values=null )
 	{
 	    $this->_columns = new Xyster_Collection_Set();
-		if ( is_array($values) || $values instanceof Traversable ) {
+	    if ( $values ) {
 			if ( !count($this->_columns) ) {
-				$first = reset($values);
+			    foreach( $values as $value ) {
+			        $first = $value;
+			        break;
+			    }
 				if ( !is_array($first) && !is_object($first) ) {
 			        require_once 'Xyster/Data/Set/Exception.php';
 				    throw new Xyster_Data_Set_Exception('This set can only contain arrays or objects');
@@ -55,8 +58,8 @@ class Xyster_Data_Set extends Xyster_Collection_Set_Sortable
 					$this->addColumn($k);
 				}
 			}
-			$this->addAll($values);
-		}
+			$this->merge($values);
+	    }
 	}
 
 	/**

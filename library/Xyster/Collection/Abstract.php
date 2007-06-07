@@ -231,4 +231,18 @@ class Xyster_Collection_Abstract implements Xyster_Collection_Interface
 	{
 		return array_values($this->_items);
 	}
+	/**
+	 * Converts the collection into a string
+	 *
+	 * @magic
+	 * @return string
+	 */
+	public function __toString()
+	{
+	    try {
+	        return '['.implode(',',$this->_items).']';
+	    } catch ( Exception $e ) {
+	        return '[???]';
+	    }
+	}
 }

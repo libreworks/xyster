@@ -18,9 +18,9 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 /**
- * Zend_Data_Exception
+ * Zend_Exception
  */
-require_once 'Zend/Data/Exception.php';
+require_once 'Zend/Exception.php';
 /**
  * An exception for the Xyster_Data_Set class
  *
@@ -29,6 +29,6 @@ require_once 'Zend/Data/Exception.php';
  * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Data_Set_Exception extends Zend_Data_Exception
+class Xyster_Data_Set_Exception extends Zend_Exception
 {
 }

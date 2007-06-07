@@ -34,9 +34,9 @@ class Xyster_Collection_Set_Sortable extends Xyster_Collection_Set_Abstract
 	/**
 	 * Creates a new set
 	 *
-	 * @param Xyster_Collection_Set_Interface $set The values to add to this set
+	 * @param Xyster_Collection_Interface $set The values to add to this set
 	 */
-	public function __construct( Xyster_Collection_Set_Interface $set )
+	public function __construct( Xyster_Collection_Interface $set = null )
 	{
 	    if ( $set ) {
 		    $this->merge($set);

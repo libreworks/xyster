@@ -32,6 +32,8 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
+require_once 'Xyster/Data/AggregateTest.php';
+
 error_reporting(E_ALL | E_STRICT);
 
 class Xyster_Data_AllTests
@@ -44,6 +46,7 @@ class Xyster_Data_AllTests
     public static function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('Xyster Framework - Xyster_Data');
+        $suite->addTestSuite('Xyster_Data_AggregateTest');
         return $suite;
     }
 }

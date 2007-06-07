@@ -16,6 +16,7 @@
  * @package   Xyster
  * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @version   $Id$
  */
 /**
  * Enumerable type object
@@ -40,8 +41,24 @@
  */
 abstract class Xyster_Enum
 {
+    /**
+     * The enum name 
+     * 
+     * @var string 
+     */
 	private $_name;
+	/**
+	 * The enum value (usually a number, but doesn't have to be)
+	 * 
+	 * @var mixed
+	 */
 	private $_value;
+
+	/**
+	 * Static cache for factoried enum instances
+	 * 
+	 * @var array
+	 */
 	static private $_instances = array();
 
 	/**
@@ -55,6 +72,7 @@ abstract class Xyster_Enum
 		$this->_name = $name;
 		$this->_value = $value;
 	}
+
 	/**
 	 * Cannot be cloned
 	 *
@@ -108,9 +126,11 @@ abstract class Xyster_Enum
 	 */
 	static public function parse( $className, $name )
 	{
-		foreach( self::values($className) as $constValue=>$constName )
-			if ( strcasecmp( $constName, $name ) == 0 )
+		foreach( self::values($className) as $constValue=>$constName ) {
+			if ( strcasecmp( $constName, $name ) == 0 ) {
 				return self::_factory($className,$constName);
+			}
+		}
 		throw new Exception();
 	}
 	/**
@@ -127,9 +147,11 @@ abstract class Xyster_Enum
 	 */
 	static public function valueOf( $className, $value )
 	{
-		foreach( self::values($className) as $constValue=>$constName )
-			if ( strcasecmp( $constValue, $value ) == 0 )
+		foreach( self::values($className) as $constValue=>$constName ) {
+			if ( strcasecmp( $constValue, $value ) == 0 ) {
 				return self::_factory($className,$constName);
+			}
+		}
 		throw new Exception();
 	}
 	/**
@@ -170,7 +192,8 @@ abstract class Xyster_Enum
 		}
 		if ( !isset(self::$_instances[$className][$name]) ) {
 			$rc = new ReflectionClass($className);
-			self::$_instances[$className][$name] = new $className( $name, $rc->getConstant($name) );
+			self::$_instances[$className][$name] =
+			    $rc->newInstanceArgs( $name, $rc->getConstant($name) );
 		}
 		return self::$_instances[$className][$name];
 	}
