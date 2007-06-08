@@ -73,6 +73,11 @@ abstract class Xyster_Orm_Mapper
 	 * 
 	 * The array consists of index names as keys and arrays of the columns 
 	 * contained within as values.
+	 * 
+	 * <code>array(
+	 * 	'name_index' => array( 'name' ),
+	 *  'multi_index' => array( 'transactionNumber', 'transactionDate' )
+	 * );</code>
 	 *
 	 * @var array
 	 */
@@ -173,7 +178,7 @@ abstract class Xyster_Orm_Mapper
 	 *
 	 * @return Xyster_Orm_Cache The type of caching allowed
 	 */
-	final public function getCacheType()
+	final public function getCache()
 	{
 	    require_once 'Xyster/Enum.php';
 		return Xyster_Enum::parse('Xyster_Orm_Cache',$this->_cache);

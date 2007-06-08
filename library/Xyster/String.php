@@ -40,6 +40,25 @@ class Xyster_String
 	private function __construct() {}
 
 	/**
+	 * Converts an associative array into a string representation
+	 * 
+	 * For instance, an example output of this method might look like:
+	 * 
+	 * <code>1=January,2=February,3=March</code>
+	 * 
+	 * @param array $array The array to stringify
+	 * @return string The stringified array
+	 */
+	static function arrayToString( array $array )
+	{
+	    $string = array();
+	    foreach( $array as $key => $value ) {
+	        $string[] = $key . '=' . $value;
+	    }
+	    return implode(',',$string);
+	}
+	
+	/**
 	 * Converts a string to title case
 	 * 
 	 * @return string The input in title case

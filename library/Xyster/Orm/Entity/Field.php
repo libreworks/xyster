@@ -29,6 +29,7 @@
 class Xyster_Orm_Entity_Field
 {
     protected $_name;
+    protected $_original;
     protected $_type;
     protected $_length;
     protected $_default;
@@ -49,6 +50,7 @@ class Xyster_Orm_Entity_Field
     public function __construct( $name, array $details )
     {
         $this->_name = $name;
+        $this->_original = $details['COLUMN_NAME'];
         $this->_type = $details['DATA_TYPE'];
         $this->_length = $details['LENGTH'];
         $this->_null = $details['NULLABLE'];
@@ -66,6 +68,15 @@ class Xyster_Orm_Entity_Field
     public function getName()
     {
         return $this->_name;
+    }
+    /**
+     * Gets the original name
+     *
+     * @return string
+     */
+    public function getOriginalName()
+    {
+        return $this->_original;
     }
     /**
      * Gets the native type of the field

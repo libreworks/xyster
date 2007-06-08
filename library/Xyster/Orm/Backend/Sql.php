@@ -282,6 +282,8 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
 			
 	    } else if ( is_array($criteria) ) {
 	        
+	        $this->_checkPropertyNames($criteria);
+	        
             foreach( $criteria as $name => $value ) {
                 $expr = $this->_getAdapter()->quoteIdentifier($name);
             	if ( is_scalar($value) || $value === null ) {

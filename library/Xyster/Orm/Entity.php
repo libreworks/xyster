@@ -19,7 +19,7 @@
  * @version   $Id$
  */
 /**
- * 
+ * A data entity: the basic data unit of the ORM package
  *
  * @category  Xyster
  * @package   Xyster_Orm
@@ -223,15 +223,15 @@ class Xyster_Orm_Entity
         $this->_values[$name] = $value;
     }
 	/**
-	 * Asserts that the class name passed is a subclass of wfDataEntity
+	 * Asserts that the class name passed is a subclass of Xyster_Orm_Entity
 	 *
 	 * @param string $className
-	 * @throws ORMException if the class isn't a subclass of wfDataEntity
+	 * @throws Xyster_Orm_Entity_Exception if the class isn't a subclass of Xyster_Orm_Entity
 	 */
 	static public function assertSubclass( $className )
 	{
 		if ( !($className instanceof Xyster_Orm_Entity) &&
-			!is_subclass_of($className,'Xyster_Orm_Entity') ) {
+			!is_subclass_of($className,__CLASS__) ) {
 			require_once 'Xyster/Orm/Entity/Exception.php';
 			throw new Xyster_Orm_Entity_Exception("'" . $className . "' is not a subclass of Xyster_Orm_Entity");
 		}		

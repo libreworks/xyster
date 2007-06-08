@@ -19,7 +19,7 @@
  * @version   $Id$
  */
 /**
- * 
+ * The abstract backend for Xyster_Orm_Mapper
  *
  * @category  Xyster
  * @package   Xyster_Orm
@@ -128,11 +128,15 @@ abstract class Xyster_Orm_Backend_Abstract
 	 */
 	protected function _checkPropertyNames( array $criteria )
 	{
-		$fields = $this->getFields();
+	    // get the array of Xyster_Orm_Entity_Field objects
+		$fields = $this->_mapper->getFields();
+		
 		foreach( $criteria as $k => $v ) { 
-			if ( !array_key_exists($this->_mapper->untranslateField($k),$fields) ) {
+			if ( !array_key_exists($k,$fields) ) {
 				require_once 'Xyster/Orm/Backend/Exception.php';
-				throw new Xyster_Orm_Backend_Exception("'" . $k . "' is not a valid field");
+				throw new Xyster_Orm_Backend_Exception("'" . $k
+				    . "' is not a valid field for "
+					. $this->_mapper->getEntityName() );
 			}
 		}
 	}

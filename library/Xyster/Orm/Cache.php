@@ -23,7 +23,7 @@
  */
 require_once 'Xyster/Enum.php';
 /**
- * 
+ * Enum for cache types
  *
  * @category  Xyster
  * @package   Xyster_Orm
@@ -44,13 +44,13 @@ class Xyster_Orm_Cache extends Xyster_Enum
 	 *
 	 * @return Xyster_Orm_Cache
 	 */
-	static public function Session() { return wfEnum::_factory(); }
+	static public function Session() { return Xyster_Enum_factory(); }
 	/**
 	 * Used when entities should only persist for a single request
 	 *
 	 * @return Xyster_Orm_Cache
 	 */
-	static public function Request() { return wfEnum::_factory(); }
+	static public function Request() { return Xyster_Enum_factory(); }
 	/**
 	 * Used when entities can persist for a set amount of time
 	 *
@@ -59,5 +59,5 @@ class Xyster_Orm_Cache extends Xyster_Enum
 	 *
 	 * @return Xyster_Orm_Cache
 	 */
-	static public function Timeout() { return wfEnum::_factory(); }
+	static public function Timeout() { return Xyster_Enum_factory(); }
 }

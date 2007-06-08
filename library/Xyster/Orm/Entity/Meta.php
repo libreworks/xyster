@@ -19,7 +19,7 @@
  * @version   $Id$
  */
 /**
- * 
+ * A helper for meta information about entities
  *
  * @category  Xyster
  * @package   Xyster_Orm
@@ -28,6 +28,16 @@
  */
 class Xyster_Orm_Entity_Meta
 {
+    private function __construct()
+    {
+    }
+
+    /**
+     * Gets the fields defined for an entity
+     * 
+     * @param mixed $class The entity class (as a string or an instance)
+     * @return array An array of {@link Xyster_Orm_Entity_Field} objects
+     */
     static public function getFields( $class )
     {
         if ( is_object($class) ) {
