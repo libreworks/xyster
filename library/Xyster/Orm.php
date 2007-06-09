@@ -53,7 +53,25 @@ class Xyster_Orm
 	 *
 	 * @var Xyster_Orm_Repository
 	 */
-	protected $_repository;
+	protected $_repositoy;
+	/**
+	 * Entities that are in queue for insertion
+	 *
+	 * @var Xyster_Collection_Set
+	 */
+	protected $_new;
+	/**
+	 * Entities that are in queue for update
+	 *
+	 * @var Xyster_Collection_Set
+	 */
+	protected $_dirty;
+	/**
+	 * Entities that are in queue for removal
+	 *
+	 * @var Xyster_Collection_Set
+	 */
+	protected $_removed;
 
 	/**
 	 * Creates a new Xyster_Orm object
@@ -61,6 +79,9 @@ class Xyster_Orm
 	protected function __construct()
 	{
 	    $this->_repository = new Xyster_Orm_Repository();
+	    $this->_new = new Xyster_Collection_Set();
+		$this->_dirty = new Xyster_Collection_Set();
+		$this->_removed = new Xyster_Collection_Set();
 	}
 
     /**
@@ -95,17 +116,67 @@ class Xyster_Orm
 		self::$_lifetime = intval($seconds);
 	}
 
+	/**
+	 * Commits pending operations to the data store
+	 * 
+	 */
 	public function commit()
 	{
-	    
+	    /*
+	     * Save all new entities
+	     */
+		foreach( $this->_new as $v ) {
+			$this->getMapper(get_class($v))->save($v);
+			$this->_repository->add($v);
+		}
+		$this->_new->clear();
+		
+		/*
+		 * Update any existing entities
+		 */
+		foreach( $this->_dirty as $v ) {
+			$this->getMapper(get_class($v))->save($v);
+		}
+		$this->_dirty->clear();
+		
+		/*
+		 * Delete entities to be removed
+		 */
+		foreach( $this->_removed as $v ) {
+			$this->getMapper(get_class($v))->delete($v);
+			$this->_repository->remove($v);
+		}
+		$this->_removed->clear();
 	}
+	/**
+	 * Sets an entity to be removed
+	 *
+	 * @param Xyster_Orm_Entity $entity
+	 */
 	public function delete( Xyster_Orm_Entity $entity )
 	{
-	    
+	    if ( $this->_new->contains($entity) )  {
+			$this->_new->remove($entity);
+			return;
+	    }
+		if ( $this->_dirty->contains($entity) ) {
+			$this->_dirty->remove($entity);
+		}
+		$this->_removed->add($entity);
 	}
+	/**
+	 * Abandons the current session
+	 * 
+	 * This will unload the repository and unset the singleton instance.  The
+	 * next call to {@link getInstance} will return a new session. 
+	 */
 	public function destroy()
 	{
-	    
+	    $this->_repository = null;
+	    $this->_dirty->clear();
+	    $this->_new->clear();
+	    $this->_removed->clear();
+	    self::$_instance = null;
 	}
 	/**
 	 * Gets an entity by class and primary key
@@ -116,11 +187,16 @@ class Xyster_Orm
 	 */
 	public function get( $className, $id )
 	{
+	    if ( is_scalar($id) ) {
+	        $keyNames = (array) $this->getMapper($className)->getPrimary();
+	        $id = array( $this->getMapper($className)->translateField($keyNames[0]) => $id );
+	    }
 	    if ( $entity = $this->getRepository()->get($className,$id) ) {
 			return $entity;
 		} else {
 			$map = $this->getMapper($className);
-			if ( $entity = $map->get($id) ) {
+			$entity = $map->get($id); 
+			if ( $entity ) {
 				$this->getRepository()->add($entity);
 				return $entity;
 			}
@@ -237,17 +313,57 @@ class Xyster_Orm
 	{
 	    $this->getMapper(get_class($entity))->refresh($entity);
 	}
-	
+	/**
+	 * Refreshes dirty entities and clears pending operations 
+	 *
+	 */
 	public function rollBack()
 	{
-	    
+	    foreach( $this->_dirty as $entity ) {
+	        $this->refresh($entity);
+	    }
+	    $this->_dirty->clear();
+	    $this->_removed->clear();
+	    $this->_new->clear();
 	}
+	/**
+	 * Sets an entity to be added to the data store
+	 *
+	 * @param Xyster_Orm_Entity $entity
+	 * @throws Xyster_Orm_Exception if the entity is already persisted
+	 */
 	public function persist( Xyster_Orm_Entity $entity )
 	{
-	    
+	    if ( $this->_dirty->contains($entity) ) {
+			require_once 'Xyster/Orm/Exception.php';
+			throw new Xyster_Orm_Exception('This entity is already persisted');
+		}
+		if ( $this->_removed->contains($entity) ) {
+			require_once 'Xyster/Orm/Exception.php';
+			throw new Xyster_Orm_Exception('This entity is already persisted');
+		}
+		if ( $this->_new->contains($entity) ) {
+			require_once 'Xyster/Orm/Exception.php';
+			throw new Xyster_Orm_Exception('This entity is already persisted');
+		}
+		$this->_new->add($entity);
 	}
+	/**
+	 * Sets an entity to have changes added back to the data store
+	 *
+	 * @param Xyster_Orm_Entity $entity
+	 * @throws Xyster_Orm_Exception if the entity is not persisted or in queue for removal
+	 */
 	public function update( Xyster_Orm_Entity $entity )
 	{
-	    
+	    if ( !$entity->getPrimaryKey() ) {
+			require_once 'Xyster/Orm/Exception.php';
+	        throw new Xyster_Orm_Exception('This entity cannot be saved, it must first be persisted');
+		}
+		if ( $this->_removed->contains($entity) ) {
+			require_once 'Xyster/Orm/Exception.php';
+		    throw new Xyster_Orm_Exception('This entity cannot be updated because it is in queue for removal');
+		}
+		$this->_dirty->add($entity);
 	}
 }

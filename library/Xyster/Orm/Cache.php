@@ -44,13 +44,13 @@ class Xyster_Orm_Cache extends Xyster_Enum
 	 *
 	 * @return Xyster_Orm_Cache
 	 */
-	static public function Session() { return Xyster_Enum_factory(); }
+	static public function Session() { return Xyster_Enum::_factory(); }
 	/**
 	 * Used when entities should only persist for a single request
 	 *
 	 * @return Xyster_Orm_Cache
 	 */
-	static public function Request() { return Xyster_Enum_factory(); }
+	static public function Request() { return Xyster_Enum::_factory(); }
 	/**
 	 * Used when entities can persist for a set amount of time
 	 *
@@ -59,5 +59,5 @@ class Xyster_Orm_Cache extends Xyster_Enum
 	 *
 	 * @return Xyster_Orm_Cache
 	 */
-	static public function Timeout() { return Xyster_Enum_factory(); }
+	static public function Timeout() { return Xyster_Enum::_factory(); }
 }

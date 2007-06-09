@@ -97,7 +97,7 @@ class Xyster_Orm_Repository
      */
     public function add( Xyster_Orm_Entity $entity )
     {
-        $this->_getByKeyMap($entity)->set( $this->_stringifyPrimaryKey() );
+        $this->_getByKeyMap($entity)->set( $this->_stringifyPrimaryKey($entity), $entity );
         $map = $this->_getMapper($entity);
 
         if ( $map->getCache() === Xyster_Orm_Cache::Timeout() ) {
@@ -133,7 +133,7 @@ class Xyster_Orm_Repository
     public function addAll( Xyster_Orm_Set $set )
     {
         foreach( $set as $entity ) {
-            $this->add( $set );
+            $this->add( $entity );
         }
     }
 
