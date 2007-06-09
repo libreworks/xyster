@@ -35,12 +35,18 @@ class Xyster_Orm
    	/**
 	 * Setting for entity cache lifetime in seconds
 	 * 
-	 * It is set to 180 (3 minutes) by default
+	 * It is set to 30 seconds by default
 	 *
 	 * @var int
 	 */
-	static private $_lifetime = 180;
-	
+	static private $_lifetime = 30;
+    /**
+     * Secondary cache for entities by primary key
+     *
+     * @var Zend_Cache_Core
+     */
+    protected static $_secondaryRepository = null;
+    	
 	/**
 	 * The singleton instance of this class
 	 * 
@@ -84,6 +90,18 @@ class Xyster_Orm
 		$this->_removed = new Xyster_Collection_Set();
 	}
 
+	/**
+	 * Called if the object is cloned
+	 * 
+	 * @magic
+	 * @throws Xyster_Orm_Exception always
+	 */
+	public function __clone()
+	{
+	    require_once 'Xyster/Orm/Exception.php';
+	    throw new Xyster_Orm_Exception('This object cannot be cloned');
+	}
+	
     /**
      * Gets an instance of Xyster_Orm
      * 
@@ -116,6 +134,49 @@ class Xyster_Orm
 		self::$_lifetime = intval($seconds);
 	}
 
+    /**
+     * Sets the secondary repository for storing entities
+     *
+     * If $repository is null, then no secondary repository is used 
+     *
+     * @param  mixed $metadataCache Either a Cache object, or a string naming a Registry key
+     */
+    public static function setSecondaryRepository($repository = null)
+    {
+        self::$_secondaryRepository = self::_setupRepository($repository);
+    }
+
+    /**
+     * Gets the default metadata cache for information returned by getFields()
+     *
+     * @return Zend_Cache_Core
+     */
+    public static function getSecondaryRepository()
+    {
+        return self::$_secondaryRepository;
+    }
+	
+    /**
+     * @param mixed $repository Either a Cache object, or a string naming a Registry key
+     * @return Zend_Cache_Core
+     * @throws Xyster_Orm_Exception
+     */
+    protected static final function _setupRepository($repository)
+    {
+        if ($repository === null) {
+            return null;
+        }
+        if (is_string($repository)) {
+            require_once 'Zend/Registry.php';
+            $repository = Zend_Registry::get($repository);
+        }
+        if (!$repository instanceof Zend_Cache_Core) {
+            require_once 'Xyster/Orm/Exception.php';
+            throw new Xyster_Orm_Exception('Argument must be of type Zend_Cache_Core, or a Registry key where a Zend_Cache_Core object is stored');
+        }
+        return $repository;
+    }
+    
 	/**
 	 * Commits pending operations to the data store
 	 * 
@@ -191,15 +252,23 @@ class Xyster_Orm
 	        $keyNames = (array) $this->getMapper($className)->getPrimary();
 	        $id = array( $this->getMapper($className)->translateField($keyNames[0]) => $id );
 	    }
-	    if ( $entity = $this->getRepository()->get($className,$id) ) {
+
+	    $entity = $this->getRepository()->get($className,$id);
+	    if ( $entity ) {
 			return $entity;
-		} else {
-			$map = $this->getMapper($className);
-			$entity = $map->get($id); 
-			if ( $entity ) {
-				$this->getRepository()->add($entity);
-				return $entity;
-			}
+	    }
+
+	    $entity = $this->_getFromSecondaryRepository($className,$id);
+		if ( $entity ) {
+		    return $entity;
+		}
+		
+	    $map = $this->getMapper($className);
+		$entity = $map->get($id); 
+		if ( $entity ) {
+			$this->getRepository()->add($entity);
+			$this->_putInSecondaryRepository($entity);
+			return $entity;
 		}
 		return null;
 	}
@@ -219,16 +288,30 @@ class Xyster_Orm
 	        // we're getting a few entities by primary key
 
 			if ( $this->_repository->hasAll($className) ) {
+			    $keyNames = (array) $this->getMapper($className)->getPrimary();
 				$all = $map->getSet();
 				foreach( $ids as $id ) {
+				    if ( is_scalar($id) ) {
+			            $id = array( $this->getMapper($className)->translateField($keyNames[0]) => $id );
+				    }
 				    $entity = $this->_repository->get($className,$id);
 				    if ( $entity ) {
 					    $all->add( $entity );
+				    } else {
+				        $entity = $this->_getFromSecondaryRepository($className,$id);
+				        if ( $entity ) {
+				            $all->add($entity);
+				        }
 				    }
 				}
 			} else {
 				$all = $map->getAll($ids);
 				$this->_repository->addAll($all);
+			    if ( $map->getCache() !== Xyster_Orm_Cache::Request() ) {
+				    foreach( $all as $entity ) {
+				        $this->_putInSecondaryRepository($entity);
+				    }
+				}
 			}
 			
 		} else {
@@ -242,6 +325,11 @@ class Xyster_Orm
 			} else {
 				$all = $map->getAll();
 				$this->_repository->addAll($all);
+				if ( $map->getCache() !== Xyster_Orm_Cache::Request() ) {
+				    foreach( $all as $entity ) {
+				        $this->_putInSecondaryRepository($entity);
+				    }
+				}
 				$this->_repository->setHasAll($className,true);
 			}
 			
@@ -365,5 +453,57 @@ class Xyster_Orm
 		    throw new Xyster_Orm_Exception('This entity cannot be updated because it is in queue for removal');
 		}
 		$this->_dirty->add($entity);
+	}
+
+	/**
+	 * Gets an entity from the secondary repository
+	 *
+	 * @param string $className
+	 * @param array $id
+	 * @return Xyster_Orm_Entity the entity found or null if none
+	 */
+	protected function _getFromSecondaryRepository( $className, $id )
+	{
+	    $repo = self::getSecondaryRepository();
+	    if ( $repo ) {
+	        $repoId = array( 'Xyster_Orm',
+	            $this->getMapper($className)->getDomain(), $className );
+	        foreach( $id as $key => $value ) {
+	            $repoId[] = $key . '=' . $value;
+	        }
+	        $repoId = md5(implode("/",$repoId));
+	        
+	        return $repo->load($repoId);
+	    }
+
+	    return null;
+	}
+	/**
+	 * Puts the entity in the secondary repository
+	 * 
+	 * @param Xyster_Orm_Entity $entity
+	 */
+	protected function _putInSecondaryRepository( Xyster_Orm_Entity $entity )
+	{
+	    $repo = self::getSecondaryRepository();
+	    $className = get_class($entity);
+	    $map = $this->getMapper($className);
+	    $cache = $map->getCache();
+
+	    // only store the entity if it should be cached longer than the request
+	    // that's why we have the primary repository
+	    if ( $repo && $cache !== Xyster_Orm_Cache::Request() ) {
+	        
+	        $repoId = array( 'Xyster_Orm', $map->getDomain(), $className );
+	        foreach( $entity->getPrimaryKey() as $key => $value ) {
+	            $repoId[] = $key . '=' . $value;
+	        }
+            $repoId = md5(implode("/",$repoId));
+            
+            $lifetime = ( $cache === Xyster_Orm_Cache::Session() ) ?
+                null : self::getLifetime() + 60;
+
+            $repo->save( $repoId, $entity, null, $lifetime );
+	    }
 	}
 }
