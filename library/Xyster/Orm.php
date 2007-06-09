@@ -23,6 +23,14 @@
  */
 require_once 'Xyster/Orm/Mapper.php';
 /**
+ * @see Xyster_Orm_Repository
+ */
+require_once 'Xyster/Orm/Repository.php';
+/**
+ * @see Xyster_Collection_Set
+ */
+require_once 'Xyster/Collection/Set.php';
+/**
  * The main front-end for the ORM package
  *
  * @category  Xyster
@@ -46,6 +54,20 @@ class Xyster_Orm
      * @var Zend_Cache_Core
      */
     protected static $_secondaryRepository = null;
+    
+    /**
+     * Enable session persistence of Repository?
+     * 
+     * @var boolean
+     */
+    static protected $_session = false;
+    
+    /**
+     * Paths where entities, mappers, and sets are stored
+     * 
+     * @var array
+     */
+    static protected $_paths = array();
     	
 	/**
 	 * The singleton instance of this class
@@ -59,7 +81,7 @@ class Xyster_Orm
 	 *
 	 * @var Xyster_Orm_Repository
 	 */
-	protected $_repositoy;
+	protected $_repository;
 	/**
 	 * Entities that are in queue for insertion
 	 *
@@ -84,26 +106,47 @@ class Xyster_Orm
 	 */
 	protected function __construct()
 	{
-	    $this->_repository = new Xyster_Orm_Repository();
+	    // set up the repository
+	    if ( self::$_session ) {
+	        
+	        /*
+	         * If session persistence is turned on, try to load from the session
+	         */
+	        require_once 'Zend/Session/Namespace.php';
+	        $session = new Zend_Session_Namespace('Xyster_Orm');
+	        if ( $session->repository instanceof Xyster_Orm_Repository ) {
+	            $this->_repository = $session->repository;
+	        } else {
+	            $this->_repository = new Xyster_Orm_Repository();
+	            $session->repository = $this->_repository;
+	        }
+	        
+	    } else {
+	        
+	        $this->_repository = new Xyster_Orm_Repository();
+	        
+	    }
+
 	    $this->_new = new Xyster_Collection_Set();
 		$this->_dirty = new Xyster_Collection_Set();
 		$this->_removed = new Xyster_Collection_Set();
 	}
 
 	/**
-	 * Called if the object is cloned
+	 * Called if the object is cloned - singletons cannot be cloned
 	 * 
 	 * @magic
-	 * @throws Xyster_Orm_Exception always
 	 */
-	public function __clone()
+	private function __clone()
 	{
-	    require_once 'Xyster/Orm/Exception.php';
-	    throw new Xyster_Orm_Exception('This object cannot be cloned');
 	}
 	
     /**
      * Gets an instance of Xyster_Orm
+     * 
+     * Please note that if session persistence is enabled (via
+     * {@link persistRepository()}), calling this method WILL start the session
+     * if it hasn't already been started.
      * 
      * @return Xyster_Orm
      */	
@@ -156,6 +199,114 @@ class Xyster_Orm
         return self::$_secondaryRepository;
     }
 	
+    /**
+     * Whether to persist the repository in the user's session
+     * 
+     * Keep in mind that turning this on means that Xyster_Orm must be declared,
+     * the entity paths must be added via {@link addPath}, and the
+     * {@link autoload} method should be registered to be called by an
+     * autoload method all BEFORE the session is even started.
+     * 
+     * <code>
+     * require_once 'Xyster/Orm.php';
+     * 
+     * Xyster_Orm::addPath( '/path/to/my/entities' );
+     * 
+     * Xyster_Orm::registerAutoload();
+     * 
+     * Xyster_Orm::persistRepository();
+     * 
+     * // starts the session, unserializes the repository
+     * $orm = Xyster_Orm::getInstance();
+     * </code>
+     * 
+     * Use this option only if you fully understand the implications.
+     *
+     * @param boolean $persist
+     */
+    public static function persistRepository( $persist = true )
+    {
+        self::$_session = $persist;
+    }
+    
+    /**
+     * Adds a path to where class files for entities can be found
+     *
+     * @param string $path
+     */
+    public static function addPath( $path )
+    {
+        $path        = rtrim($path, '/');
+        $path        = rtrim($path, '\\');
+        $path       .= DIRECTORY_SEPARATOR;
+        
+        if ( @!is_dir($path) ) {
+            require_once 'Xyster/Orm/Exception.php';
+            throw new Xyster_Orm_Exception("The path '$path' does not exist'");
+        }
+        
+        self::$_paths[$path] = $path; // no need for dups
+    }
+
+    /**
+     * Tries to load the class in one of the paths defined for entities
+     *
+     * @param string $className
+     * @return string
+     */
+    public static function loadClass( $className )
+    {
+        $dirs = self::$_paths;
+        $file = $className . '.php';
+        
+        try {
+            require_once 'Zend/Loader.php';
+            Zend_Loader::loadFile($file, $dirs, true);
+        } catch (Zend_Exception $e) {
+            require_once 'Xyster/Orm/Exception.php';
+            throw new Xyster_Orm_Exception('Cannot load class "' . $className . '"');
+        }
+
+        if (!class_exists($className,false)) {
+            require_once 'Xyster/Orm/Exception.php';
+            throw new Xyster_Orm_Exception('Invalid class ("' . $className . '")');
+        }
+
+        return $className;
+    }
+    
+    /**
+     * spl_autoload() suitable implementation for supporting class autoloading.
+     *
+     * Attach to spl_autoload() using the following:
+     * <code>
+     * spl_autoload_register(array('Xyster_Orm', 'autoload'));
+     * </code>
+     * 
+     * @param string $class 
+     * @return mixed string class name on success; false on failure
+     */
+    public static function autoload($class)
+    {
+        try {
+            self::loadClass($class);
+            return $class;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+    
+    /**
+     * Register {@link autoload()} with spl_autoload()
+     * 
+     * @throws Zend_Exception if spl_autoload() is not found or if the specified class does not have an autoload() method.
+     */
+    public static function registerAutoload()
+    {
+        require_once 'Zend/Loader.php';
+        Zend_Loader::registerAutoload('Xyster_Orm');
+    }
+    
     /**
      * @param mixed $repository Either a Cache object, or a string naming a Registry key
      * @return Zend_Cache_Core

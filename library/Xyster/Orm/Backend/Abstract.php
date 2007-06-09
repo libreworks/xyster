@@ -44,8 +44,9 @@ abstract class Xyster_Orm_Backend_Abstract
 	{
 		$this->_mapper = $mapper;
 		$entityName = $this->_mapper->getEntityName();
-		require_once 'Zend/Loader.php';
-		Zend_Loader::loadClass($entityName);
+		if ( !class_exists($entityName,false) ) {
+		    Xyster_Orm::loadClass($entityName);
+		}
 	}
 
     /**

@@ -123,8 +123,9 @@ abstract class Xyster_Orm_Mapper
 	 */
 	static public function factory( $className )
 	{
-	    require_once 'Zend/Loader.php';
-		Zend_Loader::loadClass($className);
+	    if ( !class_exists($className,false) ) { 
+	        Xyster_Orm::loadClass($className);
+	    }
 		
 		if ( ! is_subclass_of($className,'Xyster_Orm_Entity') ) {
 		    require_once 'Xyster/Orm/Mapper/Exception.php';
@@ -134,7 +135,7 @@ abstract class Xyster_Orm_Mapper
 		$mapperName = $className."Mapper";
 		
 		if ( !isset(self::$_mappers[$className]) ) {
-			Zend_Loader::loadClass($mapperName);
+			Xyster_Orm::loadClass($mapperName);
 		 	self::$_mappers[$className] = new $mapperName();
 		 	self::$_mappers[$className]->init();
 		}
@@ -270,8 +271,9 @@ abstract class Xyster_Orm_Mapper
 	public function getSet( Xyster_Collection_Interface $entities = null )
 	{
 		$collection = $this->getEntityName()."Set";
-		require_once 'Zend/Loader.php';
-		Zend_Loader::loadClass($collection);
+		if ( !class_exists($collection,false) ) {
+		    Xyster_Orm::loadClass($collection);
+		}
 		return new $collection($entities);
 	}
 	/**

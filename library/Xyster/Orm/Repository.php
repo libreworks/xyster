@@ -19,6 +19,26 @@
  * @version   $Id$
  */
 /**
+ * @see Xyster_Orm_Entity
+ */
+require_once 'Xyster/Orm/Entity.php';
+/**
+ * @see Xyster_Orm_Cache
+ */
+require_once 'Xyster/Orm/Cache.php';
+/**
+ * @see Xyster_String
+ */
+require_once 'Xyster/String.php';
+/**
+ * @see Xyster_Collection_Map_Entry
+ */
+require_once 'Xyster/Collection/Map/Entry.php';
+/**
+ * @see Xyster_Collection_Map_String
+ */
+require_once 'Xyster/Collection/Map/String.php';
+/**
  * The "identity map" of persisted entities
  *
  * @category  Xyster
@@ -101,7 +121,6 @@ class Xyster_Orm_Repository
         $map = $this->_getMapper($entity);
 
         if ( $map->getCache() === Xyster_Orm_Cache::Timeout() ) {
-            
             $this->_timed[] = new Xyster_Collection_Map_Entry($entity, time());
             
         } else if ( $map->getCache() === Xyster_Orm_Cache::Request() ) {
@@ -310,6 +329,7 @@ class Xyster_Orm_Repository
      */
     protected function _getMapper( Xyster_Orm_Entity $entity )
     {
+        require_once 'Xyster/Orm/Mapper.php';
         return Xyster_Orm_Mapper::factory( get_class($entity) );
     }
     /**
