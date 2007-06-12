@@ -100,22 +100,21 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
         return self::$_defaultMetadataCache;
     }
     
-    /**
-	 * Gets the fields for an entity as they appear in the backend
-	 * 
-	 * The array should come in the format of the describeTable method of the 
-	 * Zend_Db_Adapter_Abstract class.
-	 * 
-	 * @see Zend_Db_Adapter_Abstract::describeTable
-	 * @return array
+	/**
+	 * Removes entities from the backend
+	 *
+	 * @param Xyster_Data_Criterion $where  The criteria on which to remove entities
 	 */
-    public function getFields()
-    {
-        if ( !$this->_metadata ) {
-            $this->_setupMetadata();
-        }
-        return $this->_metadata;
-    }
+	public function delete( Xyster_Data_Criterion $where )
+	{
+	    $translator = new Xyster_Db_Translator( $this->_getAdapter() );
+		$translator->setRenameCallback( array($this->_mapper,'untranslateField') );
+		$token = $translator->translateCriterion($where);
+		$stmt = $this->_getAdapter()->prepare( "DELETE FROM "
+			. $this->_getAdapter()->quoteIdentifier($this->_mapper->getTable())
+		    . " WHERE " . $token->getSql() );
+		$stmt->execute( $token->getBindValues() );
+	}
     
 	/**
 	 * Returns one entity found by primary key
@@ -160,6 +159,7 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
         
         return $this->_mapEntity( $this->_fetch( $whereParts, null, 1 ) );
 	}
+
 	/**
 	 * Returns one entity found by criteria 
 	 * 
@@ -210,6 +210,7 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
             return $this->_mapEntity( $this->_fetch( $whereParts, null, 1 ) );
 	    }
 	}
+
     /**
      * Returns a collection of entities found by primary keys
      * 
@@ -256,6 +257,7 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
 	    
 	    return $this->_mapSet( $this->_fetch( $where, null ) );
 	}
+
 	/**
 	 * Returns a collection of entities found by criteria
 	 * 
@@ -320,16 +322,35 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
 	    
 	    return $this->_mapSet( $find );
 	}
-	/**
-	 * Reloads an entity's values with fresh ones from the backend
-	 *
-	 * @param Xyster_Orm_Entity $entity  The entity to refresh
+	
+    
+    /**
+	 * Gets the fields for an entity as they appear in the backend
+	 * 
+	 * The array should come in the format of the describeTable method of the 
+	 * Zend_Db_Adapter_Abstract class.
+	 * 
+	 * @see Zend_Db_Adapter_Abstract::describeTable
+	 * @return array
 	 */
-	public function refresh( Xyster_Orm_Entity $entity )
-	{
-	    $where = $this->_getPrimaryKeyWhere($entity);
-	    $this->_mapEntity( $this->_fetch( $where, null, 1 ), $entity );
-	}
+    public function getFields()
+    {
+        if ( !$this->_metadata ) {
+            $this->_setupMetadata();
+        }
+        return $this->_metadata;
+    }
+    
+    /**
+     * Gets the metadata cache for information returned by getFields()
+     *
+     * @return Zend_Cache_Core or null
+     */
+    public function getMetadataCache()
+    {
+        return $this->_metadataCache;
+    }
+
 	/**
 	 * Saves a new entity into the backend
 	 *
@@ -418,6 +439,18 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
     	
     	return $newPrimaryKey;
 	}
+
+	/**
+	 * Reloads an entity's values with fresh ones from the backend
+	 *
+	 * @param Xyster_Orm_Entity $entity  The entity to refresh
+	 */
+	public function refresh( Xyster_Orm_Entity $entity )
+	{
+	    $where = $this->_getPrimaryKeyWhere($entity);
+	    $this->_mapEntity( $this->_fetch( $where, null, 1 ), $entity );
+	}
+
 	/**
 	 * Updates the values of an entity in the backend
 	 *
@@ -444,32 +477,153 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
     	// this is in case any triggers in the db have changed the record
     	$this->refresh($entity);
 	}
-	/**
-	 * Removes entities from the backend
+
+    /**
+     * Support method for fetching rows.
+     *
+     * @param  mixed $where  OPTIONAL An SQL WHERE clause.
+     * @param  mixed $order  OPTIONAL An SQL ORDER clause.
+     * @param  int          $count  OPTIONAL An SQL LIMIT count.
+     * @param  int          $offset OPTIONAL An SQL LIMIT offset.
+     * @return Zend_Db_Statement_Interface The row results, in FETCH_ASSOC mode.
+     */
+    protected function _fetch($where = null, $order = null, $count = null, $offset = null)
+    {
+        // selection tool
+        $select = $this->_getAdapter()->select();
+
+        // the FROM clause
+        $select->from($this->_mapper->getTable(), $this->_selectColumns());
+
+        // the WHERE clause
+        $where = (array) $where;
+        foreach ($where as $key => $val) {
+            // is $key an int?
+            if (is_int($key)) {
+                // $val is the full condition
+                $select->where($val);
+            } else {
+                // $key is the condition with placeholder,
+                // and $val is quoted into the condition
+                $select->where($key, $val);
+            }
+        }
+
+        // the ORDER clause
+        $order = (array) $order;
+        foreach ($order as $val) {
+            $select->order($val);
+        }
+
+        // the LIMIT clause
+        $select->limit($count, $offset);
+
+        // return the results
+        return $this->_getAdapter()->query($select);
+    }
+    
+    /**
+	 * Gets a connection to the database
 	 *
-	 * @param Xyster_Data_Criterion $where  The criteria on which to remove entities
+	 * @return Zend_Db_Adapter_Abstract A connection to the database
+	 * @throws Xyster_Orm_Backend_Exception
 	 */
-	public function delete( Xyster_Data_Criterion $where )
+	protected function _getAdapter()
 	{
-	    $translator = new Xyster_Db_Translator( $this->_getAdapter() );
-		$translator->setRenameCallback( array($this->_mapper,'untranslateField') );
-		$token = $translator->translateCriterion($where);
-		$stmt = $this->_getAdapter()->prepare( "DELETE FROM "
-			. $this->_getAdapter()->quoteIdentifier($this->_mapper->getTable())
-		    . " WHERE " . $token->getSql() );
-		$stmt->execute( $token->getBindValues() );
+	    if ( $this->_db instanceof Zend_Db_Adapter_Abstract ) {
+	        return $this->_db;
+	    }
+
+		$dsn = $this->_mapper->getDomain();
+		
+        if ($dsn === null) {
+            return null;
+        }
+        require_once 'Zend/Registry.php';
+        $db = Zend_Registry::get( md5($dsn) );
+        if (!$db instanceof Zend_Db_Adapter_Abstract) {
+            require_once 'Xyster/Orm/Backend/Exception.php';
+            throw new Xyster_Orm_Backend_Exception('Argument must be a Registry key where a Zend_Db_Adapter_Abstract object is stored');
+        }
+        return $db;
+    }
+
+	/**
+	 * Gets the where items for the primary key of the entity
+	 * 
+	 * @param Xyster_Orm_Entity $entity The entity whose key is used
+	 * @param boolean $base True to get the original primary key (if changed)
+	 * @return array 
+	 */
+	protected function _getPrimaryKeyWhere( Xyster_Orm_Entity $entity, $base = false )
+	{
+	    $keyNames = (array) $this->_mapper->getPrimary();
+	    $key = $entity->getPrimaryKey($base);
+	    
+	    $whereParts = array();
+	    foreach( $keyNames as $name ) {
+    	    $whereParts[ $this->_getAdapter()->quoteIdentifier($name) . ' = ?' ] = 
+    	        $key[ $this->_mapper->translateField($name) ];
+    	}
+    	
+    	return $whereParts;
+	}
+    
+	/**
+	 * Translates the first row of a database recordset into an entity
+	 *
+	 * @param Zend_Db_Statement_Interface $stmt A statement containing the row to translate
+	 * @param Xyster_Orm_Entity $entity  Optional.  An entity to refresh
+	 * @return Xyster_Orm_Entity  The translated entity
+	 */
+	protected function _mapEntity( Zend_Db_Statement_Interface $stmt, Xyster_Orm_Entity $entity = null )
+	{
+	    $return = null;
+
+		if ( $row = $stmt->fetch(Zend_Db::FETCH_ASSOC) ) {
+			$this->_checkPropertyNames($row);
+			$stmt->closeCursor();
+			$return = ( $entity ) ? $entity->import($row) : $this->_create($row);
+		}
+		
+		return $return;
 	}
     
     /**
-     * Gets the metadata cache for information returned by getFields()
-     *
-     * @return Zend_Cache_Core or null
-     */
-    public function getMetadataCache()
-    {
-        return $this->_metadataCache;
-    }
+	 * Translates a database recordset into an entity set
+	 *
+	 * @param Zend_Db_Statement_Interface $stmt A statement containing rows to translate
+	 * @return Xyster_Orm_Set  The translated set
+	 */
+	protected function _mapSet( Zend_Db_Statement_Interface $stmt )
+	{
+		$entities = array();
+		$stmt->setFetchMode( Zend_Db::FETCH_ASSOC );
+		foreach( $stmt->fetchAll() as $k => $row ) {
+			if ( $k<1 ) {
+				$this->_checkPropertyNames($row);
+			}
+			$entities[] = $this->_create($row);
+		}
+		$stmt->closeCursor();
+		$entities = Xyster_Collection::using($entities);
+		return $this->_mapper->getSet($entities);
+	}
 
+	/**
+	 * Gets the columns to select
+	 *
+	 * @return array
+	 */
+	protected function _selectColumns()
+	{
+	    $columns = array();
+		foreach( $this->getFields() as $name => $v ) {
+			$alias = $this->_mapper->translateField($name);
+			$columns[$alias] = $name;
+		}
+		return $columns;
+	}
     
     /**
      * Sets the metadata cache for information returned by getFields().
@@ -484,7 +638,7 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
         $this->_metadataCache = self::_setupMetadataCache($metadataCache);
         return $this;
     }
-    
+
     /**
      * Initializes metadata.
      *
@@ -534,8 +688,7 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
         // Return whether the metadata were loaded from cache
         return $isMetadataFromCache;
     }
-    
-    
+	
     /**
      * @param mixed $metadataCache Either a Cache object, or a string naming a Registry key
      * @return Zend_Cache_Core
@@ -555,145 +708,5 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
             throw new Xyster_Orm_Backend_Exception('Argument must be of type Zend_Cache_Core, or a Registry key where a Zend_Cache_Core object is stored');
         }
         return $metadataCache;
-    }
-    
-    /**
-	 * Gets a connection to the database
-	 *
-	 * @return Zend_Db_Adapter_Abstract A connection to the database
-	 * @throws Xyster_Orm_Backend_Exception
-	 */
-	protected function _getAdapter()
-	{
-	    if ( $this->_db instanceof Zend_Db_Adapter_Abstract ) {
-	        return $this->_db;
-	    }
-
-		$dsn = $this->_mapper->getDomain();
-		
-        if ($dsn === null) {
-            return null;
-        }
-        require_once 'Zend/Registry.php';
-        $db = Zend_Registry::get( md5($dsn) );
-        if (!$db instanceof Zend_Db_Adapter_Abstract) {
-            require_once 'Xyster/Orm/Backend/Exception.php';
-            throw new Xyster_Orm_Backend_Exception('Argument must be a Registry key where a Zend_Db_Adapter_Abstract object is stored');
-        }
-        return $db;
-    }
-	/**
-	 * Translates a database recordset into an entity set
-	 *
-	 * @param Zend_Db_Statement_Interface $stmt A statement containing rows to translate
-	 * @return Xyster_Orm_Set  The translated set
-	 */
-	protected function _mapSet( Zend_Db_Statement_Interface $stmt )
-	{
-		$entities = array();
-		$stmt->setFetchMode( Zend_Db::FETCH_ASSOC );
-		foreach( $stmt->fetchAll() as $k => $row ) {
-			if ( $k<1 ) {
-				$this->_checkPropertyNames($row);
-			}
-			$entities[] = $this->_create($row);
-		}
-		$stmt->closeCursor();
-		$entities = Xyster_Collection::using($entities);
-		return $this->_mapper->getSet($entities);
-	}
-	/**
-	 * Translates the first row of a database recordset into an entity
-	 *
-	 * @param Zend_Db_Statement_Interface $stmt A statement containing the row to translate
-	 * @param Xyster_Orm_Entity $entity  Optional.  An entity to refresh
-	 * @return Xyster_Orm_Entity  The translated entity
-	 */
-	protected function _mapEntity( Zend_Db_Statement_Interface $stmt, Xyster_Orm_Entity $entity = null )
-	{
-		if ( $row = $stmt->fetch(Zend_Db::FETCH_ASSOC) ) {
-			$this->_checkPropertyNames($row);
-			$stmt->closeCursor();
-			return ( $entity ) ? $entity->import($row) : $this->_create($row);
-		} else return null;
-	}
-
-	/**
-	 * Gets the where items for the primary key of the entity
-	 * 
-	 * @param Xyster_Orm_Entity $entity The entity whose key is used
-	 * @param boolean $base True to get the original primary key (if changed)
-	 * @return array 
-	 */
-	protected function _getPrimaryKeyWhere( Xyster_Orm_Entity $entity, $base = false )
-	{
-	    $keyNames = (array) $this->_mapper->getPrimary();
-	    $key = $entity->getPrimaryKey($base);
-	    
-	    $whereParts = array();
-	    foreach( $keyNames as $name ) {
-    	    $whereParts[ $this->_getAdapter()->quoteIdentifier($name) . ' = ?' ] = 
-    	        $key[ $this->_mapper->translateField($name) ];
-    	}
-    	
-    	return $whereParts;
-	}
-	/**
-	 * Gets the columns to select
-	 *
-	 * @return array
-	 */
-	protected function _selectColumns()
-	{
-	    $columns = array();
-		foreach( $this->getFields() as $name => $v ) {
-			$alias = $this->_mapper->translateField($name);
-			$columns[$alias] = $name;
-		}
-		return $columns;
-	}
-
-    /**
-     * Support method for fetching rows.
-     *
-     * @param  mixed $where  OPTIONAL An SQL WHERE clause.
-     * @param  mixed $order  OPTIONAL An SQL ORDER clause.
-     * @param  int          $count  OPTIONAL An SQL LIMIT count.
-     * @param  int          $offset OPTIONAL An SQL LIMIT offset.
-     * @return Zend_Db_Statement_Interface The row results, in FETCH_ASSOC mode.
-     */
-    protected function _fetch($where = null, $order = null, $count = null, $offset = null)
-    {
-        // selection tool
-        $select = $this->_getAdapter()->select();
-
-        // the FROM clause
-        $select->from($this->_mapper->getTable(), $this->_selectColumns());
-
-        // the WHERE clause
-        $where = (array) $where;
-        foreach ($where as $key => $val) {
-            // is $key an int?
-            if (is_int($key)) {
-                // $val is the full condition
-                $select->where($val);
-            } else {
-                // $key is the condition with placeholder,
-                // and $val is quoted into the condition
-                $select->where($key, $val);
-            }
-        }
-
-        // the ORDER clause
-        $order = (array) $order;
-        foreach ($order as $val) {
-            $select->order($val);
-        }
-
-        // the LIMIT clause
-        $select->limit($count, $offset);
-
-        // return the results
-        return $this->_getAdapter()->query($select);
     }
 }
