@@ -115,8 +115,6 @@ abstract class Xyster_Orm_Mapper
             require_once 'Xyster/Orm/Mapper/Exception.php';
             throw new Xyster_Orm_Mapper_Exception('No backend type was specified for ' . get_class($this));
         }
-
-        $this->init();
     }
 
     /**
@@ -141,7 +139,8 @@ abstract class Xyster_Orm_Mapper
         
         if ( !isset(self::$_mappers[$className]) ) {
             Xyster_Orm::loadClass($mapperName);
-             self::$_mappers[$className] = new $mapperName();
+            self::$_mappers[$className] = new $mapperName();
+            self::$_mappers[$className]->init();
         }
 
         return self::$_mappers[$className];
@@ -351,11 +350,58 @@ abstract class Xyster_Orm_Mapper
      */
     public function save( Xyster_Orm_Entity $entity )
     {
+        /*
+		 * Step 1: Sets ids for any single-entity relationships 
+		 */
+		foreach( Xyster_Orm_Relation::getAll($entity) as $k=>$v ) {
+			if ( !$v->isCollection() && $entity->isLoaded($k) ) {
+				$linked = $entity->$k;
+				$key = $linked->getPrimaryKey();
+				if ( !$key ) {
+					Xyster_Orm_Mapper::factory($v->getTo())->save($linked);
+					$key = $linked->getPrimaryKey();
+				}
+				$keyNames = array_keys($key);
+				$foreignKey = $v->getId();
+				for( $i=0; $i<count($key); $i++ ) {
+				    $field = $foreignKey[$i];
+				    $keyName = $keyNames[$i];
+				    $entity->$field = $linked->$keyName;
+				}
+			}
+		}
+        
+		/*
+		 * Step 2: Save actual entity
+		 */
         if ( !$entity->getBase() ) {
             $this->getBackend()->insert($entity);
         } else {
             $this->getBackend()->update($entity);
         }
+        
+        /*
+		 * Step 3: work with many and joined relationships
+		 */
+		foreach( Xyster_Orm_Relation::getAll($entity) as $k=>$v ) {
+			if ( $v->isCollection() && $entity->isLoaded($k) ) {
+				$set = $entity->$k;
+
+				$added = $set->getDiffAdded();
+				$removed = $set->getDiffRemoved();
+				if ( !$added && !$removed ) {
+					continue;
+				}
+
+				$map = Xyster_Orm_Mapper::factory($v->getTo());
+				foreach( $added as $entity ) {
+				    $map->save($entity);
+				}
+				foreach( $removed as $entity ) {
+				    $map->delete($entity);
+				}
+			}
+		}
     }
     /**
      * Deletes an entity

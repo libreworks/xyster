@@ -399,11 +399,11 @@ class Xyster_Orm
 	 */
 	public function get( $className, $id )
 	{
-	    if ( is_scalar($id) ) {
+        if ( is_scalar($id) ) {
 	        $keyNames = (array) $this->getMapper($className)->getPrimary();
 	        $id = array( $this->getMapper($className)->translateField($keyNames[0]) => $id );
 	    }
-
+	    
 	    $entity = $this->getRepository()->get($className,$id);
 	    if ( $entity ) {
 			return $entity;

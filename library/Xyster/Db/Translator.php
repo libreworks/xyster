@@ -179,9 +179,10 @@ class Xyster_Db_Translator
 	public function translateExpression( Xyster_Data_Expression $tosql )
 	{
 		$binds = array();
-		$sql = $this->translateField($tosql->getLeft())->getSql();
-		$sql .= ' ' . $tosql->getOperator() . ' ';
+		$sql = $this->translateField($tosql->getLeft())->getSql() . ' ';
 		$val = $tosql->getRight();
+		$sql .= ( $val === null || $val == "NULL" ) ? 'IS' : $tosql->getOperator();
+		$sql .= ' ';
 		if ( $val == "NULL" || $val === null ) {
 			$sql .= 'NULL';
 		} else if ( $val instanceof Xyster_Data_Field ) {

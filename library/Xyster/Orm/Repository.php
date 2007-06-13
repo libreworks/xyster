@@ -101,7 +101,8 @@ class Xyster_Orm_Repository
 	    $time = time();
 	    $lifetime = Xyster_Orm::getLifetime();
 	    foreach( $this->_timed as $k => $timed ) {
-	        if ( $timed->getValue() + $lifetime > $time ) {
+	        
+	        if ( $timed->getValue() + $lifetime < $time ) {
 	            $this->remove($timed->getKey());
 	            unset($this->_timed[$k]);
 	        }
@@ -361,7 +362,7 @@ class Xyster_Orm_Repository
         
         // remove the entity from the key map
         $keyMap = $this->_getByKeyMap($entity);
-        $keyMap->remove( $this->_stringifyPrimaryKey($key) );
+        $keyMap->remove( $this->_stringifyPrimaryKey($entity) );
     }
     /**
      * Convenience method to stringify the primary key

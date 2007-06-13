@@ -146,17 +146,24 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
                 $keyValues[$dbName] = $value;
             }
             
+	    } else if ( is_array($id) ) {
+	        
+	        $keyValues = array( current($keyNames) => current($id) );
+	        
 	    } else {
-	        
+
 	        $keyValues = array( $keyNames[0] => $id );
-	        
+
 	    }
 	    
 	    $whereParts = array();
         foreach( $keyValues as $name => $value ) {
-            $whereParts[ $this->_getAdapter()->quoteIdentifier($name) . ' = ?' ] = $value;
+            if ( $value === null ) {
+                $whereParts[] = $this->_getAdapter()->quoteIdentifier($name) . ' is null';
+            } else {
+                $whereParts[ $this->_getAdapter()->quoteIdentifier($name) . ' = ?' ] = $value;
+            }
         }
-        
         return $this->_mapEntity( $this->_fetch( $whereParts, null, 1 ) );
 	}
 
@@ -202,6 +209,8 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
                         $orParts[] = $this->_getAdapter()->quoteInto( $expr, $v );
                     }
                     $whereParts[] = '( ' . implode(' OR ',$orParts) . ' )';
+                } else if ( $value === null ) {
+                    $whereParts[] = $this->_getAdapter()->quoteIdentifier($name) . ' IS NULL';
                 } else {
                     $whereParts[ $expr ] = $value;
                 }
@@ -222,15 +231,14 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
 	    $keyNames = (array) $this->_mapper->getPrimary();
 
 	    $orWhere = array();
-	    
-	    if ( count($keyNames) > 1 ) {
 
-	        foreach( $ids as $id ) {
-	    	    if (!is_array($id) || count($id) != count($keyNames)) {
-	                require_once 'Xyster/Orm/Backend/Exception.php';
-	                throw new Xyster_Orm_Backend_Exception("Missing value(s) for the primary key");
-	            }
-	            
+        foreach( $ids as $id ) {
+    	    if ( (!is_array($id) && count($keyNames) > 1) || count($id) != count($keyNames)) {
+                require_once 'Xyster/Orm/Backend/Exception.php';
+                throw new Xyster_Orm_Backend_Exception("Missing value(s) for the primary key");
+            }
+            
+            if ( is_array($id) ) {
 	            $andWhere = array();
 	            foreach( $id as $name => $value ) {
 	                $dbName = $this->_mapper->untranslateField($name);
@@ -238,20 +246,24 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
 	                    require_once 'Xyster/Orm/Backend/Exception.php';
 	                    throw new Xyster_Orm_Backend_Exception("'$dbName' is not a primary key");
 	                }
-	                $andWhere[] = $this->_getAdapter()->quoteInto(
-	                $this->_getAdapter()->quoteIdentifier($dbName) . " = ?", $value );
+	            	if ( $value === null ) {
+	                    $andWhere[] = $this->_getAdapter()->quoteIdentifier($dbName) . " IS NULL";
+	                } else {
+	                    $andWhere[] = $this->_getAdapter()->quoteInto(
+        	                $this->_getAdapter()->quoteIdentifier($dbName) . " = ?", $value );
+	                }
 	            }
 	            $orWhere[] = '( ' . implode(' AND ',$andWhere) . ' )';
-	        }
-
-	    } else {
-
-	        foreach( $ids as $id ) {
-	            $orWhere[] = $this->_getAdapter()->quoteInto(
-	                $this->_getAdapter()->quoteIdentifier($keyNames[0]) . " = ?", $id); 
-	        }
-	        
-	    }
+            } else {
+                $dbName = $keyNames[0];
+   	            if ( $id === null ) {
+                    $orWhere[] = $this->_getAdapter()->quoteIdentifier($dbName) . " IS NULL";
+                } else {
+                    $orWhere[] = $this->_getAdapter()->quoteInto(
+       	                $this->_getAdapter()->quoteIdentifier($dbName) . " = ?", $value );
+                } 
+            }
+        }	    
 
 	    $where = implode(' OR ', $orWhere);
 	    
