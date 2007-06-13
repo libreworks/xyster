@@ -193,7 +193,7 @@ abstract class Xyster_Enum
 		if ( !isset(self::$_instances[$className][$name]) ) {
 			$rc = new ReflectionClass($className);
 			self::$_instances[$className][$name] =
-			    $rc->newInstanceArgs( $name, $rc->getConstant($name) );
+			    new $className( $name, $rc->getConstant($name) );
 		}
 		return self::$_instances[$className][$name];
 	}

@@ -41,11 +41,11 @@ class Xyster_Data_Set extends Xyster_Collection_Set_Sortable
 	 *
 	 * @param Xyster_Collection_Interface $values  Any traversable type
 	 */
-	public function __construct( Xyster_Collection_Interface $values=null )
+	public function __construct( Xyster_Collection_Interface $values = null )
 	{
 	    $this->_columns = new Xyster_Collection_Set();
-	    if ( $values ) {
-			if ( !count($this->_columns) ) {
+	    if ( $values instanceof Xyster_Collection_Interface ) {
+			if ( !count($this->_columns) && count($values) ) {
 			    foreach( $values as $value ) {
 			        $first = $value;
 			        break;

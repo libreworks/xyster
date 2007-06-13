@@ -203,12 +203,6 @@ class Xyster_Data_Expression extends Xyster_Data_Criterion
 			case "NOT BETWEEN":
 				$bool = ( $value < $value2[0] ) && ( $value > $value2[1] );
 				break;
-			case "IS":
-				$bool = ( $value === null );
-				break;
-			case "IS NOT":
-				$bool = ( $value !== null );
-				break;
 			default: break;
 		}
 		return $bool;
