@@ -132,8 +132,8 @@ class Xyster_Orm_Relation
 	    $declaringClass = $map->getEntityName();
 	    
 		if ( !in_array($type,self::$_types) ) {
-			require_once 'Xyster/Orm/Exception.php';
-			throw new Xyster_Orm_Exception("'" . $type . "' is an invalid relationship type");
+			require_once 'Xyster/Orm/Relation/Exception.php';
+			throw new Xyster_Orm_Relation_Exception("'" . $type . "' is an invalid relationship type");
 		}
 		
 		$class = ( array_key_exists('class',$options) ) ? $options['class'] : null;
@@ -294,7 +294,7 @@ class Xyster_Orm_Relation
      * @param mixed $entity Either a {@link Xyster_Orm_Entity} or the class name
      * @param string $name The name of the relationship
      * @return Xyster_Orm_Relation
-     * @throws Xyster_Orm_Exception if the relationship name is invalid 
+     * @throws Xyster_Orm_Relation_Exception if the relationship name is invalid 
      */
     static public function get( $entity, $name )
     {
@@ -303,8 +303,8 @@ class Xyster_Orm_Relation
         }
 
         if ( !self::isValid($entity, $name) ) {
-            require_once 'Xyster/Orm/Exception.php';
-            throw new Xyster_Orm_Exception("'" . $name
+            require_once 'Xyster/Orm/Relation/Exception.php';
+            throw new Xyster_Orm_Relation_Exception("'" . $name
                 . "' is not a valid relation for the '" . $entity . "' class");
         }
 
@@ -528,13 +528,13 @@ class Xyster_Orm_Relation
      * If this relation is a 'many', this returns the 'belongs' relation
      *
      * @return Xyster_Orm_Relation
-     * @throws Xyster_Orm_Exception
+     * @throws Xyster_Orm_Relation_Exception
      */
     public function getReverse()
     {
         if ( $this->_type != 'many' ) {
-            require_once 'Xyster/Orm/Exception.php';
-            throw new Xyster_Orm_Exception('This method is only intended for "many" relations');
+            require_once 'Xyster/Orm/Relation/Exception.php';
+            throw new Xyster_Orm_Relation_Exception('This method is only intended for "many" relations');
         }
         
         if ( $this->_reverse === null ) {
@@ -578,25 +578,25 @@ class Xyster_Orm_Relation
      *
      * @param Xyster_Orm_Entity $from The entity that owns the many set
      * @param Xyster_Orm_Entity $to An entity in the many set
-     * @throws Xyster_Orm_Exception if $from or $to are of the wrong type
+     * @throws Xyster_Orm_Relation_Exception if $from or $to are of the wrong type
      */
     public function relate( Xyster_Orm_Entity $from, Xyster_Orm_Entity $to )
     {
         if ( $this->_type != 'many' ) {
-            require_once 'Xyster/Orm/Exception.php';
-            throw new Xyster_Orm_Exception('This can only be done with "many" relations');
+            require_once 'Xyster/Orm/Relation/Exception.php';
+            throw new Xyster_Orm_Relation_Exception('This can only be done with "many" relations');
         }
 
         $fromClass = $this->_from;
         if (! $from instanceof $fromClass ) {
-            require_once 'Xyster/Orm/Exception.php';
-            throw new Xyster_Orm_Exception('$from must be an instance of '.$fromClass);
+            require_once 'Xyster/Orm/Relation/Exception.php';
+            throw new Xyster_Orm_Relation_Exception('$from must be an instance of '.$fromClass);
         }
         
         $toClass = $this->_to;
         if (! $to instanceof $toClass ) {
-            require_once 'Xyster/Orm/Exception.php';
-            throw new Xyster_Orm_Exception('$to must be an instance of '.$toClass);
+            require_once 'Xyster/Orm/Relation/Exception.php';
+            throw new Xyster_Orm_Relation_Exception('$to must be an instance of '.$toClass);
         }
         
         if ( $this->hasBelongsTo() ) {
@@ -623,23 +623,23 @@ class Xyster_Orm_Relation
      * @param string $name The name of the relationship
      * @param array $options An array of options
      * @return Xyster_Orm_Relation
-     * @throws Xyster_Orm_Exception if the relationship is already defined
+     * @throws Xyster_Orm_Relation_Exception if the relationship is already defined
      */
     static protected function _baseCreate( $type, $name, array $options )
     {
         $bt = debug_backtrace();
         if ( !isset($bt[2]) || !isset($bt[2]['class'])
             || substr($bt[2]['class'],-6,6) != 'Mapper' ) {
-            require_once 'Xyster/Orm/Exception.php';
-            throw new Xyster_Orm_Exception("This method must only be called from inside a Xyster_Orm_Mapper");
+            require_once 'Xyster/Orm/Relation/Exception.php';
+            throw new Xyster_Orm_Relation_Exception("This method must only be called from inside a Xyster_Orm_Mapper");
         }
         // the 'object' entry of the bt array should be the mapper
 	    $map = $bt[2]['object'];
         $declaringClass = $map->getEntityName();
         
         if ( self::isValid($declaringClass, $name) ) {
-            require_once 'Xyster/Orm/Exception.php';
-            throw new Xyster_Orm_Exception("The relationship '" . $name . "' already exists");
+            require_once 'Xyster/Orm/Relation/Exception.php';
+            throw new Xyster_Orm_Relation_Exception("The relationship '" . $name . "' already exists");
         }
 
         self::$_registry[$declaringClass][$name] = 

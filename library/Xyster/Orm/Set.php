@@ -23,14 +23,14 @@
  */
 require_once 'Xyster/Data/Set.php';
 /**
- * 
+ * A set of {@link Xyster_Orm_Entity} objects
  *
  * @category  Xyster
  * @package   Xyster_Orm
  * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Orm_Set extends Xyster_Data_Set
+abstract class Xyster_Orm_Set extends Xyster_Data_Set
 {
     /**
      * The entity to which this set belongs
@@ -41,6 +41,7 @@ class Xyster_Orm_Set extends Xyster_Data_Set
      * @var Xyster_Orm_Entity
      */
     protected $_entity;
+
     /**
      * The relation of which the set is a result
      * 
@@ -50,6 +51,7 @@ class Xyster_Orm_Set extends Xyster_Data_Set
      * @var Xyster_Orm_Relation
      */
     protected $_relation;
+
     /**
      * The initial snapshot of the set
      *
@@ -100,6 +102,51 @@ class Xyster_Orm_Set extends Xyster_Data_Set
 
         return parent::add($item);
     }
+
+    /**
+     * Baselines the set
+     * 
+     * This method is used by {@link Xyster_Orm_Mapper} to baseline the set
+     * after its pending changes have been delt with
+     * 
+     * Do not call this method; it will lose track of changes to the set after 
+     * it was loaded.
+     */
+    public function baseline()
+    {
+        $this->_base = $this->_items;
+    }
+
+    /**
+     * Gets the base state of this set
+     *
+     * @return array
+     */
+    public function getBase()
+    {
+        return $this->_base;
+    }
+
+    /**
+     * Gets any added entities since creation
+     * 
+     * @return array
+     */
+    public function getDiffAdded()
+    {
+        return array_diff($this->_items,$this->_base);
+    }
+
+    /**
+     * Gets any removed entities since creation
+     * 
+     * @return array
+     */
+    public function getDiffRemoved()
+    {
+        return array_diff($this->_base,$this->_items);
+    }
+
     /**
      * Gets the class name of the entity supported by this set
      *
@@ -116,33 +163,7 @@ class Xyster_Orm_Set extends Xyster_Data_Set
     {
         return substr(get_class($this),0,-3);
     }
-    /**
-     * Gets the base state of this set
-     *
-     * @return array
-     */
-    public function getBase()
-    {
-        return $this->_base;
-    }
-    /**
-     * Gets any added entities since creation
-     * 
-     * @return array
-     */
-    public function getDiffAdded()
-    {
-        return array_diff($this->_items,$this->_base);
-    }
-    /**
-     * Gets any removed entities since creation
-     * 
-     * @return array
-     */
-    public function getDiffRemoved()
-    {
-        return array_diff($this->_base,$this->_items);
-    }
+
     /**
      * Gets the entity related to this set
      * 
@@ -161,6 +182,7 @@ class Xyster_Orm_Set extends Xyster_Data_Set
     {
         return $this->_relation;
     }
+
     /**
      * Relates the set to an entity and relationship
      * 

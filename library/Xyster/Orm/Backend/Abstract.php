@@ -36,13 +36,23 @@ abstract class Xyster_Orm_Backend_Abstract
     protected $_mapper;
 
     /**
+     * Information provided by the getFields() method
+     *
+     * @var array
+     * @see getFields()
+     */
+    protected $_metadata = array();
+
+    /**
      * Creates a new orm backend object
      *
      * @param Xyster_Orm_Mapper $mapper  The mapper the backend is supporting
      */
-    final public function __construct( Xyster_Orm_Mapper $mapper )
+    final public function __construct( Xyster_Orm_Mapper $mapper, Zend_Cache_Core $metadataCache = null )
     {
         $this->_mapper = $mapper;
+        $this->_metadataCache = $metadataCache;
+
         $entityName = $this->_mapper->getEntityName();
         if ( !class_exists($entityName,false) ) {
             Xyster_Orm::loadClass($entityName);

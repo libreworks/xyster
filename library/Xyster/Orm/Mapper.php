@@ -19,7 +19,11 @@
  * @version   $Id$
  */
 /**
+ * Responsible for translating data store records into entities
  * 
+ * Fowler describes a data mapper as "A layer of Mappers that moves data between
+ * objects and a database while keeping them independent of each other and the
+ * mapper itself". {@link http://www.martinfowler.com/eaaCatalog/dataMapper.html}
  *
  * @category  Xyster
  * @package   Xyster_Orm
@@ -29,12 +33,6 @@
 abstract class Xyster_Orm_Mapper
 {
     /**
-     * The domain associated with the entity
-     * 
-     * @var string
-     */
-    protected $_domain = "";
-    /**
      * The type of backend associated with the entity
      * 
      * This will most commonly be SQL, so we'll set that as the default.
@@ -42,32 +40,28 @@ abstract class Xyster_Orm_Mapper
      * @var string
      */
     protected $_backend = "sql";
+
     /**
-     * The name of the table, defaults to entity name
+     * The type of cache the entity uses
      * 
      * @var string
      */
-    protected $_table = "";
+    protected $_cache = "Request"; // one of Session, Request, Timeout
+    
     /**
-     * The primary key, either a string name, or an array for composite keys
+     * The domain associated with the entity
      * 
-     * The primary key defaults to the entity name + '_id'
-     * 
-     * @var mixed
-     */
-    protected $_primary;
-    /**
-     * The auto-incrementing sequence
-     *
      * @var string
      */
-    protected $_sequence;
+    protected $_domain = "";
+
     /**
      * An array of columns for the entity, will look up by default
      * 
      * @var array
      */
     protected $_fields = array();
+    
     /**
      * An array of properties used to index the entity by value
      * 
@@ -82,24 +76,62 @@ abstract class Xyster_Orm_Mapper
      * @var array
      */
     protected $_index = array();
-    /**
-     * The type of cache the entity uses
-     * 
-     * @var string
-     */
-    protected $_cache = "Request"; // one of Session, Request, Timeout
+
     /**
      * Any additional options
+     * 
+     * <dl>
+     * <dt>metadataCache</dt><dd>The name of the Zend_Registry key to find a
+     * Zend_Cache_Core object for caching metadata information.  If not
+     * specified, the mapper will use the defaultMetadataCache.</dd>
+     * </dl>
      *
      * @var array
      */
     protected $_options = array();
 
     /**
+     * The primary key, either a string name, or an array for composite keys
+     * 
+     * The primary key defaults to the entity name + '_id'
+     * 
+     * @var mixed
+     */
+    protected $_primary;
+
+    /**
+     * The auto-incrementing sequence
+     *
+     * @var string
+     */
+    protected $_sequence;
+
+    /**
+     * The name of the table, defaults to entity name
+     * 
+     * @var string
+     */
+    protected $_table = "";
+
+    /**
      * @var Xyster_Orm_Backend_Abstract
      */
     private $_backendInstance;
 
+    /**
+     * Cache for information provided the backend's getFields method
+     *
+     * @var Zend_Cache_Core
+     */
+    protected $_metadataCache;
+
+    /**
+     * Default cache for meta information provided by the backend
+     *
+     * @var Zend_Cache_Core
+     */
+    protected static $_defaultMetadataCache;
+    
     /**
      * @var array
      */
@@ -115,6 +147,9 @@ abstract class Xyster_Orm_Mapper
             require_once 'Xyster/Orm/Mapper/Exception.php';
             throw new Xyster_Orm_Mapper_Exception('No backend type was specified for ' . get_class($this));
         }
+        $this->_metadataCache = ( array_key_exists('metadataCache',$this->_options) ) ?
+            self::_setupMetadataCache($this->_options['metadataCache']) :
+            self::$_defaultMetadataCache;
     }
 
     /**
@@ -145,6 +180,29 @@ abstract class Xyster_Orm_Mapper
 
         return self::$_mappers[$className];
     }
+
+    /**
+     * Gets the default metadata cache for information returned by getFields()
+     *
+     * @return Zend_Cache_Core
+     */
+    public static function getDefaultMetadataCache()
+    {
+        return self::$_defaultMetadataCache;
+    }
+
+    /**
+     * Sets the default metadata cache for information returned by getFields()
+     *
+     * If $defaultMetadataCache is null, then no metadata cache is used by
+     * default.
+     *
+     * @param  mixed $metadataCache Either a Cache object, or a string naming a Registry key
+     */
+    public static function setDefaultMetadataCache($metadataCache = null)
+    {
+        self::$_defaultMetadataCache = self::_setupMetadataCache($metadataCache);
+    }
     
     /**
      * Allows for customization of mapper at construction
@@ -154,6 +212,7 @@ abstract class Xyster_Orm_Mapper
     public function init()
     {
     }
+
     /**
      * Gets the backend adapter
      * 
@@ -170,6 +229,7 @@ abstract class Xyster_Orm_Mapper
 
         return $this->_backendInstance;
     }
+
     /**
      * Gets the type of caching allowed with this mapper's entities
      *
@@ -182,6 +242,7 @@ abstract class Xyster_Orm_Mapper
         require_once 'Xyster/Enum.php';
         return Xyster_Enum::parse('Xyster_Orm_Cache',$this->_cache);
     }
+
     /**
      * Gets the name of the domain to which this mapper belongs
      * 
@@ -191,6 +252,7 @@ abstract class Xyster_Orm_Mapper
     {
         return $this->_domain;
     }
+
     /**
      * Gets the class name of the entity
      * 
@@ -203,6 +265,7 @@ abstract class Xyster_Orm_Mapper
     {
         return substr(get_class($this),0,-6);
     }
+
     /**
      * Gets an array of the fields belonging to this entity type
      *
@@ -220,6 +283,7 @@ abstract class Xyster_Orm_Mapper
 
         return $this->_fields;
     }
+
     /**
      * Gets the columns that should be used to index the entity
      * 
@@ -232,6 +296,17 @@ abstract class Xyster_Orm_Mapper
     {
         return $this->_index;
     }
+
+    /**
+     * Gets the metadata cache
+     *
+     * @return Zend_Cache_Core
+     */
+    public function getMetadataCache()
+    {
+        return $this->_metadataCache;
+    }
+
     /**
      * Gets the options for this mapper
      *
@@ -241,6 +316,7 @@ abstract class Xyster_Orm_Mapper
     {
         return $this->_options;
     }
+
     /**
      * Gets the field name of the entity primary key
      *
@@ -253,6 +329,7 @@ abstract class Xyster_Orm_Mapper
         }
         return $this->_primary;
     }
+
     /**
      * Gets the sequence of this table
      * 
@@ -262,6 +339,7 @@ abstract class Xyster_Orm_Mapper
     {
         return $this->_sequence;
     }
+
     /**
      * Gets an empty entity set for the mapper's entity type
      *
@@ -275,6 +353,7 @@ abstract class Xyster_Orm_Mapper
         }
         return new $collection($entities);
     }
+
     /**
      * Gets the table from which an entity comes
      * 
@@ -290,6 +369,7 @@ abstract class Xyster_Orm_Mapper
         }
         return $this->_table;
     }
+
     /**
      * Gets an entity with the supplied identifier
      *
@@ -300,6 +380,7 @@ abstract class Xyster_Orm_Mapper
     {
         return $this->getBackend()->findByPrimary($id);
     }
+
     /**
      * Gets all entities from the data store
      *
@@ -311,6 +392,7 @@ abstract class Xyster_Orm_Mapper
         return ( $ids ) ? $this->getBackend()->findManyByPrimary( $ids ) : 
             $this->getBackend()->findManyByCriteria();
     }
+
     /**
      * Gets the first entity from the data store matching the criteria
      *
@@ -322,6 +404,7 @@ abstract class Xyster_Orm_Mapper
         self::_assertCriteria($criteria);
         return $this->getBackend()->findByCriteria($criteria);
     }
+
     /**
      * Gets all entities from the data store matching the criteria
      *
@@ -334,6 +417,7 @@ abstract class Xyster_Orm_Mapper
         self::_assertCriteria($criteria);
         return $this->getBackend()->findManyByCriteria($criteria,$sorts);
     }
+
     /**
      * Refreshes the data of an entity
      *
@@ -343,6 +427,7 @@ abstract class Xyster_Orm_Mapper
     {
         return $this->getBackend()->refresh($entity);
     }
+
     /**
      * Saves an entity (insert or update)
      *
@@ -400,9 +485,11 @@ abstract class Xyster_Orm_Mapper
 				foreach( $removed as $entity ) {
 				    $map->delete($entity);
 				}
+				$set->baseline();
 			}
 		}
     }
+
     /**
      * Deletes an entity
      *
@@ -429,6 +516,7 @@ abstract class Xyster_Orm_Mapper
 
         $this->getBackend()->delete( $criteria );
     }
+
     /**
      * 
      * @param string $field
@@ -439,6 +527,7 @@ abstract class Xyster_Orm_Mapper
         require_once 'Xyster/String.php';
         return Xyster_String::toCamel($field);
     }
+
     /**
      * 
      * @param string $field
@@ -464,5 +553,26 @@ abstract class Xyster_Orm_Mapper
             require_once 'Xyster/Orm/Mapper/Exception.php';
             throw new Xyster_Orm_Mapper_Exception('Invalid criteria: ' . gettype($criteria) );
         }
+    }
+	
+    /**
+     * @param mixed $metadataCache Either a Cache object, or a string naming a Registry key
+     * @return Zend_Cache_Core
+     * @throws Xyster_Orm_Mapper_Exception
+     */
+    protected static final function _setupMetadataCache($metadataCache)
+    {
+        if ($metadataCache === null) {
+            return null;
+        }
+        if (is_string($metadataCache)) {
+            require_once 'Zend/Registry.php';
+            $metadataCache = Zend_Registry::get($metadataCache);
+        }
+        if (!$metadataCache instanceof Zend_Cache_Core) {
+            require_once 'Xyster/Orm/Mapper/Exception.php';
+            throw new Xyster_Orm_Mapper_Exception('Argument must be of type Zend_Cache_Core, or a Registry key where a Zend_Cache_Core object is stored');
+        }
+        return $metadataCache;
     }
 }

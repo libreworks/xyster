@@ -38,27 +38,6 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
      * @var Zend_Db_Adapter_Abstract
      */
     protected $_db;
-
-    /**
-     * Information provided by the adapter's describeTable() method
-     *
-     * @var array
-     */
-    protected $_metadata = array();
-
-    /**
-     * Cache for information provided by the adapter's describeTable() method
-     *
-     * @var Zend_Cache_Core
-     */
-    protected $_metadataCache = null;
-    
-    /**
-     * Default cache for information provided by the adapter's describeTable() method
-     *
-     * @var Zend_Cache_Core
-     */
-    protected static $_defaultMetadataCache = null;
     
     /**
      * Sets up a nickname for a database adapter
@@ -77,29 +56,6 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
         Zend_Registry::set( md5($dsn), Zend_Db::factory($driver,$config) );
     }
 
-    /**
-     * Sets the default metadata cache for information returned by getFields()
-     *
-     * If $defaultMetadataCache is null, then no metadata cache is used by
-     * default.
-     *
-     * @param  mixed $metadataCache Either a Cache object, or a string naming a Registry key
-     */
-    public static function setDefaultMetadataCache($metadataCache = null)
-    {
-        self::$_defaultMetadataCache = self::_setupMetadataCache($metadataCache);
-    }
-
-    /**
-     * Gets the default metadata cache for information returned by getFields()
-     *
-     * @return Zend_Cache_Core
-     */
-    public static function getDefaultMetadataCache()
-    {
-        return self::$_defaultMetadataCache;
-    }
-    
 	/**
 	 * Removes entities from the backend
 	 *
@@ -348,19 +304,30 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
     public function getFields()
     {
         if ( !$this->_metadata ) {
-            $this->_setupMetadata();
+
+            $cache = $this->_mapper->getMetadataCache();
+            
+            // If $this has a metadata cache
+	        if (null !== $cache) {
+	            // Define the cache identifier where the metadata are saved
+	            $cacheId = md5($this->_mapper->getTable());
+	        }
+	
+	        // If $this has no metadata cache or metadata cache misses
+	        if (null === $cache || !($metadata = $cache->load($cacheId))) {
+	            // Fetch metadata from the adapter's describeTable() method
+	            $metadata = $this->_getAdapter()->describeTable($this->_mapper->getTable());
+	            // If $this has a metadata cache, then cache the metadata
+	            if (null !== $cache && !$cache->save($metadata, $cacheId)) {
+	                require_once 'Xyster/Orm/Backend/Exception.php';
+	                throw new Xyster_Orm_Backend_Exception('Failed saving metadata to metadataCache');
+	            }
+	        }
+	
+	        // Assign the metadata to $this
+	        $this->_metadata = $metadata;
         }
         return $this->_metadata;
-    }
-    
-    /**
-     * Gets the metadata cache for information returned by getFields()
-     *
-     * @return Zend_Cache_Core or null
-     */
-    public function getMetadataCache()
-    {
-        return $this->_metadataCache;
     }
 
 	/**
@@ -618,8 +585,8 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
 			$entities[] = $this->_create($row);
 		}
 		$stmt->closeCursor();
-		$entities = Xyster_Collection::using($entities);
-		return $this->_mapper->getSet($entities);
+
+		return $this->_mapper->getSet( Xyster_Collection::using($entities) );
 	}
 
 	/**
@@ -636,89 +603,4 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
 		}
 		return $columns;
 	}
-    
-    /**
-     * Sets the metadata cache for information returned by getFields().
-     *
-     * If $metadataCache is null, then no metadata cache is used.
-     * 
-     * @param  mixed $metadataCache Either a Cache object, or a string naming a Registry key
-     * @return Zend_Db_Table_Abstract Provides a fluent interface
-     */
-    protected function _setMetadataCache($metadataCache)
-    {
-        $this->_metadataCache = self::_setupMetadataCache($metadataCache);
-        return $this;
-    }
-
-    /**
-     * Initializes metadata.
-     *
-     * If metadata cannot be loaded from cache, adapter's describeTable() method
-     * is called to discover metadata information. Returns true if and only if
-     * the metadata are loaded from cache.
-     *
-     * @return boolean
-     * @throws Xyster_Orm_Backend_Exception
-     */
-    protected function _setupMetadata()
-    {
-        // Assume that metadata will be loaded from cache
-        $isMetadataFromCache = true;
-
-        // If $this has no metadata cache but the class has a default metadata cache
-        if (null === $this->_metadataCache && null !== self::$_defaultMetadataCache) {
-            // Make $this use the default metadata cache of the class
-            $this->_setMetadataCache(self::$_defaultMetadataCache);
-        }
-
-        // If $this has a metadata cache
-        if (null !== $this->_metadataCache) {
-            // Define the cache identifier where the metadata are saved
-            $cacheId = md5($this->_mapper->getTable());
-        }
-
-        // If $this has no metadata cache or metadata cache misses
-        if (null === $this->_metadataCache || !($metadata = $this->_metadataCache->load($cacheId))) {
-            // Metadata are not loaded from cache
-            $isMetadataFromCache = false;
-            // Fetch metadata from the adapter's describeTable() method
-            $metadata = $this->_getAdapter()->describeTable($this->_mapper->getTable());
-            // If $this has a metadata cache, then cache the metadata
-            if (null !== $this->_metadataCache && !$this->_metadataCache->save($metadata, $cacheId)) {
-                /**
-                 * @see Xyster_Orm_Backend_Exception
-                 */
-                require_once 'Xyster/Orm/Backend/Exception.php';
-                throw new Xyster_Orm_Backend_Exception('Failed saving metadata to metadataCache');
-            }
-        }
-
-        // Assign the metadata to $this
-        $this->_metadata = $metadata;
-
-        // Return whether the metadata were loaded from cache
-        return $isMetadataFromCache;
-    }
-	
-    /**
-     * @param mixed $metadataCache Either a Cache object, or a string naming a Registry key
-     * @return Zend_Cache_Core
-     * @throws Zend_Db_Table_Exception
-     */
-    protected static final function _setupMetadataCache($metadataCache)
-    {
-        if ($metadataCache === null) {
-            return null;
-        }
-        if (is_string($metadataCache)) {
-            require_once 'Zend/Registry.php';
-            $metadataCache = Zend_Registry::get($metadataCache);
-        }
-        if (!$metadataCache instanceof Zend_Cache_Core) {
-            require_once 'Xyster/Orm/Backend/Exception.php';
-            throw new Xyster_Orm_Backend_Exception('Argument must be of type Zend_Cache_Core, or a Registry key where a Zend_Cache_Core object is stored');
-        }
-        return $metadataCache;
-    }
 }
