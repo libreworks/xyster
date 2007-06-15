@@ -52,11 +52,6 @@ abstract class Xyster_Orm_Backend_Abstract
     {
         $this->_mapper = $mapper;
         $this->_metadataCache = $metadataCache;
-
-        $entityName = $this->_mapper->getEntityName();
-        if ( !class_exists($entityName,false) ) {
-            Xyster_Orm::loadClass($entityName);
-        }
     }
 
     /**
@@ -160,7 +155,7 @@ abstract class Xyster_Orm_Backend_Abstract
     protected function _create( $row )
     {
         $entityName = $this->_mapper->getEntityName();
-        // this class should already be loaded when the constructor fires
+        // this class should already be loaded by the class' mapper
         return new $entityName($row);
     }
 }

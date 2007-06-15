@@ -61,13 +61,6 @@ class Xyster_Orm
      * @var boolean
      */
     static protected $_session = false;
-    
-    /**
-     * Paths where entities, mappers, and sets are stored
-     * 
-     * @var array
-     */
-    static protected $_paths = array();
     	
 	/**
 	 * The singleton instance of this class
@@ -203,16 +196,17 @@ class Xyster_Orm
      * Whether to persist the repository in the user's session
      * 
      * Keep in mind that turning this on means that Xyster_Orm must be declared,
-     * the entity paths must be added via {@link addPath}, and the
-     * {@link autoload} method should be registered to be called by an
-     * autoload method all BEFORE the session is even started.
+     * the entity paths must be added via {@link Xyster_Orm_Loader::addPath},
+     * and the {@link Xyster_Orm_Loader::autoload} method should be registered
+     * to be called by an autoload method all BEFORE the session is even started
      * 
      * <code>
      * require_once 'Xyster/Orm.php';
+     * require_once 'Xyster/Orm/Loader.php';
      * 
-     * Xyster_Orm::addPath( '/path/to/my/entities' );
+     * Xyster_Orm_Loader::addPath( '/path/to/my/entities' );
      * 
-     * Xyster_Orm::registerAutoload();
+     * Xyster_Orm_Loader::registerAutoload();
      * 
      * Xyster_Orm::persistRepository();
      * 
@@ -227,84 +221,6 @@ class Xyster_Orm
     public static function persistRepository( $persist = true )
     {
         self::$_session = $persist;
-    }
-    
-    /**
-     * Adds a path to where class files for entities can be found
-     *
-     * @param string $path
-     */
-    public static function addPath( $path )
-    {
-        $path        = rtrim($path, '/');
-        $path        = rtrim($path, '\\');
-        $path       .= DIRECTORY_SEPARATOR;
-        
-        if ( @!is_dir($path) ) {
-            require_once 'Xyster/Orm/Exception.php';
-            throw new Xyster_Orm_Exception("The path '$path' does not exist'");
-        }
-        
-        self::$_paths[$path] = $path; // no need for dups
-    }
-
-    /**
-     * Tries to load the class in one of the paths defined for entities
-     *
-     * @param string $className
-     * @return string
-     */
-    public static function loadClass( $className )
-    {
-        $dirs = self::$_paths;
-        $file = $className . '.php';
-        
-        try {
-            require_once 'Zend/Loader.php';
-            Zend_Loader::loadFile($file, $dirs, true);
-        } catch (Zend_Exception $e) {
-            require_once 'Xyster/Orm/Exception.php';
-            throw new Xyster_Orm_Exception('Cannot load class "' . $className . '"');
-        }
-
-        if (!class_exists($className,false)) {
-            require_once 'Xyster/Orm/Exception.php';
-            throw new Xyster_Orm_Exception('Invalid class ("' . $className . '")');
-        }
-
-        return $className;
-    }
-    
-    /**
-     * spl_autoload() suitable implementation for supporting class autoloading.
-     *
-     * Attach to spl_autoload() using the following:
-     * <code>
-     * spl_autoload_register(array('Xyster_Orm', 'autoload'));
-     * </code>
-     * 
-     * @param string $class 
-     * @return mixed string class name on success; false on failure
-     */
-    public static function autoload($class)
-    {
-        try {
-            self::loadClass($class);
-            return $class;
-        } catch (Exception $e) {
-            return false;
-        }
-    }
-    
-    /**
-     * Register {@link autoload()} with spl_autoload()
-     * 
-     * @throws Zend_Exception if spl_autoload() is not found or if the specified class does not have an autoload() method.
-     */
-    public static function registerAutoload()
-    {
-        require_once 'Zend/Loader.php';
-        Zend_Loader::registerAutoload('Xyster_Orm');
     }
     
     /**
@@ -573,15 +489,9 @@ class Xyster_Orm
 	 */
 	public function persist( Xyster_Orm_Entity $entity )
 	{
-	    if ( $this->_dirty->contains($entity) ) {
-			require_once 'Xyster/Orm/Exception.php';
-			throw new Xyster_Orm_Exception('This entity is already persisted');
-		}
-		if ( $this->_removed->contains($entity) ) {
-			require_once 'Xyster/Orm/Exception.php';
-			throw new Xyster_Orm_Exception('This entity is already persisted');
-		}
-		if ( $this->_new->contains($entity) ) {
+	    if ( $this->_dirty->contains($entity) ||
+	        $this->_removed->contains($entity) ||
+	        $this->_new->contains($entity) ) {
 			require_once 'Xyster/Orm/Exception.php';
 			throw new Xyster_Orm_Exception('This entity is already persisted');
 		}

@@ -43,7 +43,8 @@ class Xyster_Orm_Entity_Meta
         if ( is_object($class) ) {
             $class = get_class($class);
         }
-        Xyster_Orm_Entity::assertSubclass($class);
+        
+        // the factory method checks to make sure the class is an entity
         $map = Xyster_Orm_Mapper::factory($class);
         return $map->getFields();
     }

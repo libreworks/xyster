@@ -19,6 +19,10 @@
  * @version   $Id$
  */
 /**
+ * @see Xyster_Orm_Entity_Meta
+ */
+require_once 'Xyster/Orm/Entity/Meta.php';
+/**
  * A data entity: the basic data unit of the ORM package
  *
  * @category  Xyster
@@ -29,29 +33,32 @@
 class Xyster_Orm_Entity
 {
     /**
-     * The entity values
-     * 
-     * @var array
-     */
-    protected $_values = array();
-    /**
      * The "base" values from object instantiation
      * 
      * @var array
      */
     protected $_base = array();
-    /**
-     * Related entities or sets
-     * 
-     * @var array 
-     */
-    protected $_related = array();
+    
     /**
      * The primary keys
      * 
      * @var array
      */
     protected $_primary = array();
+    
+    /**
+     * Related entities or sets
+     * 
+     * @var array 
+     */
+    protected $_related = array();
+
+    /**
+     * The entity values
+     * 
+     * @var array
+     */
+    protected $_values = array();
 
     /**
      * Creates a new entity
@@ -68,6 +75,7 @@ class Xyster_Orm_Entity
         }
         if ( $values ) {
             $this->import($values);
+            $this->_base = $this->_values;
         }
     }
 
@@ -128,7 +136,7 @@ class Xyster_Orm_Entity
     {
         $this->{'set'.ucfirst($name)}( $value );
     }
-
+    
     /**
      * Gets the original values of the entity
      * 
@@ -213,7 +221,6 @@ class Xyster_Orm_Entity
             $this->_values[$field] = array_key_exists($field,$values) ?
                 $values[$field] : null;
         }
-        $this->_base = $values;
     }
 
     /**
@@ -228,7 +235,7 @@ class Xyster_Orm_Entity
         Xyster_Orm_Relation::get(get_class($this), $name); // to test validity
 	    return array_key_exists($name, $this->_related);
     }
-
+    
     /**
      * Returns an array copy of the entity
      * 
@@ -258,20 +265,6 @@ class Xyster_Orm_Entity
         }
         return $string . ']';
     }
-    
-    /**
-     * The base method for setting fields
-     * 
-     * @param string $name
-     * @param mixed $value
-     */
-    protected function _setField( $name, $value )
-    {
-        /**
-         * @todo notifications to listeners
-         */
-        $this->_values[$name] = $value;
-    }
 
     /**
      * Gets a related property
@@ -291,7 +284,18 @@ class Xyster_Orm_Entity
         }
         return $linked;
     }
-
+    
+    /**
+     * The base method for setting fields
+     * 
+     * @param string $name
+     * @param mixed $value
+     */
+    protected function _setField( $name, $value )
+    {
+        $this->_values[$name] = $value;
+    }
+    
     /**
      * Sets a linked property and registers the entity as dirty
      *
@@ -328,20 +332,5 @@ class Xyster_Orm_Entity
         }
 
         $this->_related[$name] = $value;
-    }
-    
-    /**
-     * Asserts that the class name passed is a subclass of Xyster_Orm_Entity
-     *
-     * @param string $className
-     * @throws Xyster_Orm_Entity_Exception if the class isn't a subclass of Xyster_Orm_Entity
-     */
-    static public function assertSubclass( $className )
-    {
-        if ( !($className instanceof Xyster_Orm_Entity) &&
-            !is_subclass_of($className,__CLASS__) ) {
-            require_once 'Xyster/Orm/Entity/Exception.php';
-            throw new Xyster_Orm_Entity_Exception("'" . $className . "' is not a subclass of Xyster_Orm_Entity");
-        }        
     }
 }

@@ -156,26 +156,16 @@ abstract class Xyster_Orm_Mapper
      * Gets the mapper for a given class
      * 
      * @param string $className The name of the entity class
-     * @return Xyster_Orm_Mapper
-     * @throws Xyster_Orm_Mapper_Exception if the class specified isn't a subclass of Xyster_Orm_Mapper
+     * @return Xyster_Orm_Mapper The mapper object
      */
     static public function factory( $className )
     {
-        if ( !class_exists($className,false) ) { 
-            Xyster_Orm::loadClass($className);
-        }
-        
-        if ( ! is_subclass_of($className,'Xyster_Orm_Entity') ) {
-            require_once 'Xyster/Orm/Mapper/Exception.php';
-            throw new Xyster_Orm_Mapper_Exception( "'" . $className . "' is not a subclass of " . __CLASS__ );
-        }
-        
-        $mapperName = $className."Mapper";
-        
         if ( !isset(self::$_mappers[$className]) ) {
-            Xyster_Orm::loadClass($mapperName);
+            
+            Xyster_Orm_Loader::loadMapperClass($className);
             self::$_mappers[$className] = new $mapperName();
             self::$_mappers[$className]->init();
+
         }
 
         return self::$_mappers[$className];
@@ -347,10 +337,8 @@ abstract class Xyster_Orm_Mapper
      */
     public function getSet( Xyster_Collection_Interface $entities = null )
     {
-        $collection = $this->getEntityName()."Set";
-        if ( !class_exists($collection,false) ) {
-            Xyster_Orm::loadClass($collection);
-        }
+        Xyster_Orm_Loader::loadSetClass($this->getEntityName());
+
         return new $collection($entities);
     }
 

@@ -27,6 +27,10 @@ require_once 'Xyster/Orm/Entity.php';
  */
 require_once 'Xyster/Orm/Cache.php';
 /**
+ * @see Xyster_Orm_Loader
+ */
+require_once 'Xyster/Orm/Loader.php';
+/**
  * @see Xyster_String
  */
 require_once 'Xyster/String.php';
@@ -177,7 +181,7 @@ class Xyster_Orm_Repository
      */
     public function find( $class, array $values )
     {
-        Xyster_Orm_Entity::assertSubclass($class);
+        Xyster_Orm_Loader::loadEntityClass($class);
         
         $hash = array();
 		foreach( $values as $name => $value ) {
@@ -197,7 +201,7 @@ class Xyster_Orm_Repository
      */
     public function get( $class, $primaryKey )
     {
-        Xyster_Orm_Entity::assertSubclass($class);
+        Xyster_Orm_Loader::loadEntityClass($class);
         return $this->_getByKeyMap($class)
             ->get($this->_stringifyPrimaryKey($primaryKey));
     }
@@ -209,7 +213,7 @@ class Xyster_Orm_Repository
      */
     public function getAll( $class )
     {
-        Xyster_Orm_Entity::assertSubclass($class);
+        Xyster_Orm_Loader::loadEntityClass($class);
         return $this->_getByKeyMap($class)
             ->values();
     }
@@ -244,7 +248,7 @@ class Xyster_Orm_Repository
      */
     public function removeByKey( $class, $key )
     {
-        Xyster_Orm_Entity::assertSubclass($class);
+        Xyster_Orm_Loader::loadEntityClass($class);
         $this->_removeByClassAndKey($class,$key);
     }
     /**
@@ -267,7 +271,7 @@ class Xyster_Orm_Repository
      */
     public function removeAllByKey( $class, array $ids )
     {
-        Xyster_Orm_Entity::assertSubclass($class);
+        Xyster_Orm_Loader::loadEntityClass($class);
         foreach( $ids as $key ) {
             $this->_removeByClassAndKey($class,$key);
         }
