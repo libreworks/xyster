@@ -38,6 +38,13 @@ class Xyster_Orm_Entity
      * @var array
      */
     protected $_base = array();
+
+    /**
+     * For quick modification checking
+     *
+     * @var boolean
+     */
+    protected $_dirty = false;
     
     /**
      * The primary keys
@@ -75,7 +82,6 @@ class Xyster_Orm_Entity
         }
         if ( $values ) {
             $this->import($values);
-            $this->_base = $this->_values;
         }
     }
 
@@ -119,7 +125,7 @@ class Xyster_Orm_Entity
         $isField = array_key_exists($name, $this->_values); 
         if ( !$isField && !Xyster_Orm_Relation::isValid($this,$name) ) {
             require_once 'Xyster/Orm/Entity/Exception.php';
-            throw new Xyster_Orm_Entity_Exception("'" . $name . "' is not a valid field");
+            throw new Xyster_Orm_Entity_Exception("'" . $name . "' is not a valid field or relation name");
         }
         return ( $isField ) ? $this->_values[$name] : $this->_getRelated($name);
     }
@@ -221,8 +227,19 @@ class Xyster_Orm_Entity
             $this->_values[$field] = array_key_exists($field,$values) ?
                 $values[$field] : null;
         }
+        $this->_base = $this->_values;
     }
 
+    /**
+     * Determines whether or not this entity has changed values since creation
+     *
+     * @return boolean Whether this entity has changed
+     */
+    public function isDirty()
+    {
+        return $this->_dirty;
+    }
+    
     /**
      * Checks whether a related entity or set has been loaded
      *
@@ -234,6 +251,20 @@ class Xyster_Orm_Entity
     {
         Xyster_Orm_Relation::get(get_class($this), $name); // to test validity
 	    return array_key_exists($name, $this->_related);
+    }
+    
+    /**
+     * Sets the entity as dirty or clean
+     * 
+     * This is only used by the transactional layer or associated collections to
+     * notify changes in an entity's state.  You shouldn't call this method
+     * directly.
+     *
+     * @param boolean $dirty Whether the entity should be set dirty
+     */
+    public function setDirty( $dirty = true )
+    {
+        $this->_dirty = $dirty;
     }
     
     /**
@@ -288,11 +319,15 @@ class Xyster_Orm_Entity
     /**
      * The base method for setting fields
      * 
+     * If overriding this method, make sure to call the parent or else the
+     * entity won't mark itself dirty.
+     * 
      * @param string $name
      * @param mixed $value
      */
     protected function _setField( $name, $value )
     {
+        $this->_dirty = true;
         $this->_values[$name] = $value;
     }
     
@@ -332,5 +367,6 @@ class Xyster_Orm_Entity
         }
 
         $this->_related[$name] = $value;
+        $this->_dirty = true;
     }
 }

@@ -33,6 +33,13 @@ require_once 'Xyster/Data/Set.php';
 abstract class Xyster_Orm_Set extends Xyster_Data_Set
 {
     /**
+     * The initial snapshot of the set
+     *
+     * @var array
+     */
+    protected $_base = array();
+
+    /**
      * The entity to which this set belongs
      * 
      * This is only set if the set is a many relation, not if pulling entities
@@ -51,13 +58,6 @@ abstract class Xyster_Orm_Set extends Xyster_Data_Set
      * @var Xyster_Orm_Relation
      */
     protected $_relation;
-
-    /**
-     * The initial snapshot of the set
-     *
-     * @var array
-     */
-    protected $_base = array();
 
     /**
      * Creates a new entity set
@@ -117,6 +117,17 @@ abstract class Xyster_Orm_Set extends Xyster_Data_Set
         $this->_base = $this->_items;
     }
 
+    /**
+     * Removes all items from the collection
+     */
+    public function clear()
+    {
+        if ( $this->count() && $this->_entity ) {
+            $this->_entity->setDirty();
+        }
+        parent::clear();
+    }
+    
     /**
      * Gets the base state of this set
      *
@@ -199,5 +210,50 @@ abstract class Xyster_Orm_Set extends Xyster_Data_Set
         }
         $this->_relation = $relation;
         $this->_entity = $entity;
+    }
+    
+    /**
+     * Removes the specified value from the collection
+     *
+     * @param mixed $item The value to remove
+     * @return boolean If the value was in the collection
+     */
+    public function remove( $item )
+    {
+        $removed = parent::remove($item);
+        if ( $removed && $this->_entity ) {
+            $this->_entity->setDirty();
+        }
+        return $removed;
+    }
+    /**
+     * Removes all of the specified values from the collection
+     *
+     * @param Xyster_Collection_Interface $values The values to remove
+     * @return boolean Whether the collection changed as a result of this method
+     */
+    public function removeAll( Xyster_Collection_Interface $values )
+    {
+        $removed = parent::removeAll($values);
+        if ( $removed && $this->_entity ) {
+            $this->_entity->setDirty();
+        }
+        return $removed;
+    }
+    /**
+     * Removes all values from the collection except for the ones specified
+     * 
+     * {@inherit}
+     *
+     * @param Xyster_Collection_Interface $values The values to keep
+     * @return boolean Whether the collection changed as a result of this method
+     */
+    public function retainAll( Xyster_Collection_Interface $values )
+    {
+        $removed = parent::retainAll($values);
+        if ( $removed && $this->_entity ) {
+            $this->_entity->setDirty();
+        }
+        return $removed;
     }
 }

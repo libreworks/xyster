@@ -19,14 +19,6 @@
  * @version   $Id$
  */
 /**
- * @see Xyster_Orm_Entity
- */
-require_once 'Xyster/Orm/Entity.php';
-/**
- * @see Xyster_Orm_Cache
- */
-require_once 'Xyster/Orm/Cache.php';
-/**
  * @see Xyster_Orm_Loader
  */
 require_once 'Xyster/Orm/Loader.php';
@@ -34,10 +26,6 @@ require_once 'Xyster/Orm/Loader.php';
  * @see Xyster_String
  */
 require_once 'Xyster/String.php';
-/**
- * @see Xyster_Collection_Map_Entry
- */
-require_once 'Xyster/Collection/Map/Entry.php';
 /**
  * @see Xyster_Collection_Map_String
  */
@@ -75,45 +63,6 @@ class Xyster_Orm_Repository
      * @var array
      */
     protected $_items = array();
-    /**
-     * Contains entities that should be removed at the end of the request
-     * 
-     * @var array
-     */
-    protected $_request = array();
-    /**
-     * Contains times when entities were inserted
-     * 
-     * @var array
-     */
-    protected $_timed = array();
-
-    /**
-     * Method called before object is serialized
-     * 
-     * @magic
-     */
-    public function __sleep()
-    {
-        // remove all entities cached per this request
-        foreach( $this->_request as $entity ) {
-            $this->remove($entity);
-        }
-        $this->_request = array();
-        
-        // remove all timed entries
-	    $time = time();
-	    $lifetime = Xyster_Orm::getLifetime();
-	    foreach( $this->_timed as $k => $timed ) {
-	        
-	        if ( $timed->getValue() + $lifetime < $time ) {
-	            $this->remove($timed->getKey());
-	            unset($this->_timed[$k]);
-	        }
-	    }
-
-	    return array('_items','_timed');
-    }
     
     /**
      * Adds an entity to the repository
@@ -123,22 +72,12 @@ class Xyster_Orm_Repository
     public function add( Xyster_Orm_Entity $entity )
     {
         $this->_getByKeyMap($entity)->set( $this->_stringifyPrimaryKey($entity), $entity );
-        $map = $this->_getMapper($entity);
-
-        if ( $map->getCache() === Xyster_Orm_Cache::Timeout() ) {
-            $this->_timed[] = new Xyster_Collection_Map_Entry($entity, time());
-            
-        } else if ( $map->getCache() === Xyster_Orm_Cache::Request() ) {
-            
-            $this->_request[] = $entity;
-            
-        }
 
         /*
          * Add the entity to its appropriate index(es)
          */
         $indexMap = $this->_getByIndexMap($entity);
-        foreach( $map->getIndex() as $index ) {
+        foreach( $this->_getMapper($entity)->getIndex() as $index ) {
 	        if ( is_array($index) && count($index) ) {
 				$hash = array();
 				foreach( $index as $name ) {
@@ -149,6 +88,7 @@ class Xyster_Orm_Repository
 			}
         }
     }
+
     /**
      * Adds a set to the repository
      * 
@@ -207,6 +147,16 @@ class Xyster_Orm_Repository
     }
     
     /**
+     * Gets the names of classes that are currently stored in this map
+     *
+     * @return array The names of the classes stored
+     */
+    public function getClasses()
+    {
+        return array_keys($this->_items);
+    }
+    
+    /**
      * Gets all entities of a particular type 
      * 
      * @return Xyster_Collection_Interface
@@ -240,6 +190,7 @@ class Xyster_Orm_Repository
         $this->_removeEntity($entity);
         $this->setHasAll( get_class($entity), false );
     }
+
     /**
      * Removes an entity by class and primary key
      * 
@@ -251,6 +202,7 @@ class Xyster_Orm_Repository
         Xyster_Orm_Loader::loadEntityClass($class);
         $this->_removeByClassAndKey($class,$key);
     }
+
     /**
      * Removes all entities supplied from the repository
      * 
@@ -263,6 +215,7 @@ class Xyster_Orm_Repository
         }
         $this->setHasAll( $set->getEntityName(), false );
     }
+
     /**
      * Removes all entities by class and primary keys
      * 
@@ -308,6 +261,7 @@ class Xyster_Orm_Repository
         }
         return $this->_items[$class]['byKey'];
     }
+
     /**
      * Convenience method to get the map (and create it if necessary)
      * 
@@ -327,6 +281,7 @@ class Xyster_Orm_Repository
         }
         return $this->_items[$class]['byIndex']; 
     }
+
     /**
      * Convenience method to get the entity's mapper
      * 
@@ -337,6 +292,7 @@ class Xyster_Orm_Repository
         require_once 'Xyster/Orm/Mapper.php';
         return Xyster_Orm_Mapper::factory( get_class($entity) );
     }
+
     /**
      * Convenience method to remove an entity
      * 
@@ -351,6 +307,7 @@ class Xyster_Orm_Repository
             $this->_removeEntity( $entity );
         }
     }
+
     /**
      * Removes an entity from both maps
      *
@@ -368,6 +325,7 @@ class Xyster_Orm_Repository
         $keyMap = $this->_getByKeyMap($entity);
         $keyMap->remove( $this->_stringifyPrimaryKey($entity) );
     }
+
     /**
      * Convenience method to stringify the primary key
      * 

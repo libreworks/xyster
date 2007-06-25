@@ -425,14 +425,14 @@ class Xyster_Orm_Relation
 
 				} else if ( $relation->_type == 'joined' ) {
 
-					$map = $orm->getMapper($relation->_from);
+					$map = Xyster_Orm_Mapper::factory($relation->_from);
 					$linked = $map->getJoined($entity,$name);
 
 				}
 				
 			} else {
 			    
-			    $linked = $orm->getMapper($relation->_to)->getSet();
+			    $linked = Xyster_Orm_Mapper::factory($relation->_to)->getSet();
 			    
 			}
 			

@@ -19,6 +19,10 @@
  * @version   $Id$
  */
 /**
+ * @see Xyster_Orm_Loader
+ */
+require_once 'Xyster/Orm/Loader.php';
+/**
  * Responsible for translating data store records into entities
  * 
  * Fowler describes a data mapper as "A layer of Mappers that moves data between
@@ -40,13 +44,6 @@ abstract class Xyster_Orm_Mapper
      * @var string
      */
     protected $_backend = "sql";
-
-    /**
-     * The type of cache the entity uses
-     * 
-     * @var string
-     */
-    protected $_cache = "Request"; // one of Session, Request, Timeout
     
     /**
      * The domain associated with the entity
@@ -77,6 +74,16 @@ abstract class Xyster_Orm_Mapper
      */
     protected $_index = array();
 
+    /**
+     * The period of time entities should persist in the secondary cache
+     * 
+     * A value of -1 means the entity shouldn't be added to secondary cache. A
+     * value of 0 means the entity should be stored indefinitely.
+     * 
+     * @var int
+     */
+    protected $_lifetime = 60;
+    
     /**
      * Any additional options
      * 
@@ -221,24 +228,11 @@ abstract class Xyster_Orm_Mapper
     }
 
     /**
-     * Gets the type of caching allowed with this mapper's entities
-     *
-     * This enum is parsed based on the name in the $_cache property
-     *
-     * @return Xyster_Orm_Cache The type of caching allowed
-     */
-    final public function getCache()
-    {
-        require_once 'Xyster/Enum.php';
-        return Xyster_Enum::parse('Xyster_Orm_Cache',$this->_cache);
-    }
-
-    /**
      * Gets the name of the domain to which this mapper belongs
      * 
      * @return string  The domain
      */
-    public function getDomain()
+    final public function getDomain()
     {
         return $this->_domain;
     }
@@ -261,7 +255,7 @@ abstract class Xyster_Orm_Mapper
      *
      * @return array  The fields (Array of {@link Xyster_Orm_Field} objects)
      */
-    public function getFields()
+    final public function getFields()
     {
         if ( !count($this->_fields) ) {
             require_once 'Xyster/Orm/Entity/Field.php';
@@ -282,17 +276,27 @@ abstract class Xyster_Orm_Mapper
      *
      * @return array
      */
-    public function getIndex()
+    final public function getIndex()
     {
         return $this->_index;
     }
 
+	/**
+	 * Gets the time in seconds an entity should be cached
+	 *
+	 * @return int
+	 */
+	final public function getLifetime()
+	{
+		return $this->_lifetime;
+	}
+    
     /**
      * Gets the metadata cache
      *
      * @return Zend_Cache_Core
      */
-    public function getMetadataCache()
+    final public function getMetadataCache()
     {
         return $this->_metadataCache;
     }
@@ -302,7 +306,7 @@ abstract class Xyster_Orm_Mapper
      *
      * @return array
      */
-    public function getOptions()
+    final public function getOptions()
     {
         return $this->_options;
     }
@@ -325,7 +329,7 @@ abstract class Xyster_Orm_Mapper
      * 
      * @return string The sequence
      */
-    public function getSequence()
+    final public function getSequence()
     {
         return $this->_sequence;
     }

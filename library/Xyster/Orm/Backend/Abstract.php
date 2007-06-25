@@ -48,10 +48,9 @@ abstract class Xyster_Orm_Backend_Abstract
      *
      * @param Xyster_Orm_Mapper $mapper  The mapper the backend is supporting
      */
-    final public function __construct( Xyster_Orm_Mapper $mapper, Zend_Cache_Core $metadataCache = null )
+    final public function __construct( Xyster_Orm_Mapper $mapper )
     {
         $this->_mapper = $mapper;
-        $this->_metadataCache = $metadataCache;
     }
 
     /**
