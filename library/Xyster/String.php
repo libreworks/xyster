@@ -59,6 +59,70 @@ class Xyster_String
 	}
 	
 	/**
+	 * Like explode(), but won't split inside of parentheses or double-quotes
+	 *
+	 * This method will split a string into an array using a string as a
+	 * seperator.  If the seperator is contained within a pair of double-quotes
+	 * or between matching parentheses, it will be ignored.  If the seperator is
+	 * not found, the method will return an array with one element containing
+	 * the entire string.
+	 *
+	 * Example:
+	 * <code>
+	 * $haystack = 'A (great (test)) of "this method"';
+	 * print_r( wfString::smartSplit(' ',$haystack) );
+	 * </code>
+	 *
+	 * Would print:
+	 * <pre>
+	 * array (
+	 *    [0]=>A
+	 * 	  [1]=>(great (test))
+	 * 	  [2]=>of
+	 * 	  [3]=>"this method"
+	 * )
+	 * </pre>
+	 *
+	 * @param string $needle  String used as seperator
+	 * @param string $haystack  String to split
+	 * @param bool $caseInsensitive  Whether to ignore case
+	 * @return array  Split parts of $haystack
+	 */
+	static public function smartSplit( $needle, $haystack, $caseInsensitive=true )
+	{
+		$split = array();
+		$buff = "";
+		$inPar = 0;
+		$inStr = false;
+		for( $i=0; $i<strlen($haystack); $i++ ) {
+			$currNeed = substr( $haystack, $i, strlen($needle) );
+			$curr = $currNeed{0};
+			$last = ( $i ) ? $haystack{$i-1} : "";
+			if ( $curr == '"' && ( ( $inStr && $last != "\\") || !$inStr ) ) {
+				$inStr = !$inStr;
+			}
+			if ( !$inStr ) {
+				if ( $curr == "(" ) {
+					$inPar++;
+				} else if ( $curr == ")" ) {
+					$inPar--;
+				}
+			}
+			if ( !$inPar && !$inStr &&
+				( $currNeed == $needle ||
+				( $caseInsensitive && strcasecmp($currNeed,$needle) == 0 ) ) ) {
+				$split[] = $buff;
+				$buff = "";
+				$i = $i+(strlen($needle)-1);
+			} else {
+				$buff .= $curr;
+			}
+		}
+		$split[] = $buff;
+		return $split;
+	}
+	
+	/**
 	 * Converts a string to title case
 	 * 
 	 * @return string The input in title case

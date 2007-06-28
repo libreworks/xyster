@@ -48,4 +48,23 @@ class Xyster_Orm_Entity_Meta
         $map = Xyster_Orm_Mapper::factory($class);
         return $map->getFields();
     }
+    
+	/**
+	 * Gets an array of all of the class' properties, methods, and relationships
+	 *
+	 * @param string $className
+	 * @return array
+	 */
+	static public function getMembers( $className )
+	{
+		if ( !isset(self::$_members[$className]) ) {
+			$members = array('id');
+			$members = array_merge($members,self::getFields($className));
+			$members = array_merge($members,Xyster_Orm_Relation::getNames($className));
+			$members = array_merge($members,get_class_methods($className));
+			self::$_members[$className] = $members;
+		}
+
+		return self::$_members[$className];
+	}
 }

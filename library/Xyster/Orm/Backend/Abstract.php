@@ -113,6 +113,13 @@ abstract class Xyster_Orm_Backend_Abstract
      */
     abstract public function insert( Xyster_Orm_Entity $entity );
     /**
+     * Runs a query in the backend
+     *
+     * @param Xyster_Orm_Query $query
+     * @return Xyster_Data_Set either a data set with values or an orm set
+     */
+    abstract public function query( Xyster_Orm_Query $query );
+    /**
      * Reloads an entity's values with fresh ones from the backend
      *
      * @param Xyster_Orm_Entity $entity  The entity to refresh

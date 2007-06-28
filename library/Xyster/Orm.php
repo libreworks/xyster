@@ -303,6 +303,23 @@ class Xyster_Orm
 		}
 		$this->_work->registerNew($entity);
 	}
+
+	/**
+	 * Creates a query object to return entities
+	 *
+	 * @param string $className The entity class name
+	 * @param string $xsql The XSQL expression to use
+	 * @return Xyster_Orm_Query The query object
+	 */
+	public function query( $className, $xsql = null )
+	{
+	    require_once 'Xyster/Orm/Query.php';
+	    require_once 'Xyster/Orm/Query/Parser.php';
+	    
+	    return ( $xsql ) ?
+	        Xyster_Orm_Query_Parser::parseQuery($className, $xsql) :
+	        new Xyster_Orm_Query($className);
+	}
 	
 	/**
 	 * Refreshes the values of an entity 
@@ -320,6 +337,23 @@ class Xyster_Orm
 	public function remove( Xyster_Orm_Entity $entity )
 	{
 		$this->_work->registerRemoved($entity);
+	}
+	
+	/**
+	 * Creates a report query object to return a data set
+	 *
+	 * @param string $className The entity class name
+	 * @param string $xsql The XSQL expression to use
+	 * @return Xyster_Orm_Query_Report The report query object
+	 */
+	public function reportQuery( $className, $xsql = null )
+	{
+	    require_once 'Xyster/Orm/Query/Report.php';
+	    require_once 'Xyster/Orm/Query/Parser.php';
+	    
+	    return ( $xsql ) ?
+	        Xyster_Orm_Query_Parser::parseReportQuery($className, $xsql) :
+	        new Xyster_Orm_Query_Report($className);
 	}
 
 	/**

@@ -159,13 +159,10 @@ class Xyster_Orm_Relation
 		    $id = array($id);
 		}
 
-		/**
-		 * @todo do something with filters
-		 */
-        $filters = ( array_key_exists('filters',$options) ) ? $options['filters'] : null;
-//		if ( $filters ) {
-//			$filters = wfDataSyntax::parseCriterion($filters);
-//		}
+		$filters = ( array_key_exists('filters',$options) ) ? $options['filters'] : null;
+		if ( $filters ) {
+			$filters = Xyster_Orm_Query_Parser::parseCriterion($filters);
+		}
 
 	    $this->_name = $name;
 		$this->_from = $declaringClass;

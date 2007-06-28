@@ -137,7 +137,7 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
 	    if ( $criteria instanceof Xyster_Data_Criterion ) {
 	        
 	        $translator = new Xyster_Db_Translator( $this->_getAdapter() );
-		    $translator->setRenameCallback(array($this->mapper,'untranslateField'));
+		    $translator->setRenameCallback(array($this->_mapper, 'untranslateField'));
 		    
 		    $select = $this->_getAdapter()->select();
 		    $select->from(array('t1', $this->_mapper->getTable()));
@@ -146,11 +146,8 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
 			$token = $translator->translate($criteria);
 			$select->where( $token->getSql() );
 			$binds += $token->getBindValues();
-			
-			$find = $this->_getAdapter()->prepare($sql);
-			$find->execute( $binds );
 
-			return $this->_mapEntity( $find );
+			return $this->_mapEntity($this->_getAdapter()->query($select, $binds));
 			
 	    } else if ( is_array($criteria) ) {
 	        
@@ -285,10 +282,7 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
 		    }
 	    }
 	    
-		$find = $this->_getAdapter()->prepare($select);
-		$find->execute( $binds );
-	    
-	    return $this->_mapSet( $find );
+	    return $this->_mapSet($this->_getAdapter()->query($select, $binds));
 	}
 	
     
@@ -419,6 +413,57 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
     	return $newPrimaryKey;
 	}
 
+	/**
+	 * Performs a query
+	 * 
+	 * @param Xyster_Orm_Query $query  The query details
+	 * @return Xyster_Data_Set
+	 */
+	public function query( Xyster_Orm_Query $query ) 
+	{
+	    require_once 'Xyster/Orm/Backend/Sql/Translator.php';
+		$translator = new Xyster_Orm_Backend_Sql_Translator($this->_getAdapter(), $this->_mapper->getEntityName());
+
+		$binds = array();
+		if (! $query instanceof Xyster_Orm_Query_Report ) {
+		    
+		    $select = new Zend_Db_Select($this->_getAdapter());
+			
+			foreach( $query->getWhere() as $criterion ) {
+				$whereToken = $translator->translateCriterion($criterion);
+				$select->where( $whereToken->getSql() );
+				$binds += $whereToken->getBindValues();
+			}
+
+			if ( !$query->hasRuntimeOrder() && count($query->getOrder()) ) {
+				foreach( $query->getOrder() as $sort ) {
+					$select->order( $translator->translateSort($sort)->getSql() );
+				}
+			}
+			
+			$select->from(array($translator->getMain(), $this->_mapper->getTable()), $this->_selectColumns());
+
+			foreach( $translator->getFromClause() as $table => $joinToken ) {
+			    $select->joinLeft($table, $joinToken->getSql(), array());
+			    $binds += $joinToken->getBindValues();
+			}
+
+			if ( $query->getLimit() && !$query->hasRuntimeOrder() && 
+			    !$query->hasRuntimeWhere() ) {
+			    $select->limit($query->getLimit(), $query->getOffset());	
+			}
+
+			return $this->_mapSet($this->_getAdapter()->query($select, $binds));
+
+		} else {
+		    
+		    /**
+		     * @todo implement report queries
+		     */
+		    
+		}
+	}
+	
 	/**
 	 * Reloads an entity's values with fresh ones from the backend
 	 *
