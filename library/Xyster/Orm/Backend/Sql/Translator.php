@@ -59,7 +59,8 @@ class Xyster_Orm_Backend_Sql_Translator extends Xyster_Db_Translator
 	    require_once 'Xyster/Orm/Loader.php';
 	    Xyster_Orm_Loader::loadEntityClass($className);
 	    $this->_class = $className;
-	    $this->aliasField(current((array) Xyster_Orm_Mapper::factory($className)->getPrimary()));
+	    $map = Xyster_Orm_Mapper::factory($className);
+	    $this->aliasField($map->translateField(current((array) $map->getPrimary())));
 	}
 	
 	/**
@@ -79,7 +80,7 @@ class Xyster_Orm_Backend_Sql_Translator extends Xyster_Db_Translator
 	 * @throws Xyster_Orm_Backend_Sql_Exception if $column is runtime
 	 * @return string
 	 */
-	public function aliasField( $column )
+	public function aliasField( $field )
 	{
 		if ( Xyster_Orm_Query_Parser::isRuntime(Xyster_Data_Field::named($field), $this->_class) ) {
 			require_once 'Xyster/Orm/Backend/Sql/Exception.php';
@@ -128,7 +129,7 @@ class Xyster_Orm_Backend_Sql_Translator extends Xyster_Db_Translator
 	 * @param Xyster_Data_Field $tosql
 	 * @return Xyster_Db_Token
 	 */
-	public function translateField( Xyster_Data_Field $tosql )
+	public function translateField( Xyster_Data_Field $tosql, $quote = true )
 	{
 		$prefixes = Xyster_String::smartSplit('->',$tosql->getName());
 		$className = $this->_class;
@@ -142,7 +143,7 @@ class Xyster_Orm_Backend_Sql_Translator extends Xyster_Db_Translator
 		$tableName = $this->aliasField($tosql->getName());
 		$rename = Xyster_Orm_Mapper::factory($className)
 			->untranslateField($prefixes[count($prefixes)-1]);
-		$field = $tableName.".".$this->_adapter->quoteIdentifier($rename);
+		$field = $tableName.".".(($quote)?$this->_adapter->quoteIdentifier($rename):$rename);
 
 		return new Xyster_Db_Token( $tosql instanceof Xyster_Data_Field_Aggregate ?
 			$tosql->getAggregate()->getValue().'('.$field.')' : $field );
@@ -178,7 +179,7 @@ class Xyster_Orm_Backend_Sql_Translator extends Xyster_Db_Translator
 				$class = $details->getTo();
 				$toMap = Xyster_Orm_Mapper::factory($class);
 				$fromMap = Xyster_Orm_Mapper::factory($container);
-				$alias = $this->aliasField($prefixsofar.'id');
+				$alias = $this->aliasField($prefixsofar.$toMap->translateField(current((array) $toMap->getPrimary())));
 
 				$binds = array();
 			    $joinTableSql = $toMap->getTable() . ' AS ' . $alias;

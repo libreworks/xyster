@@ -197,7 +197,7 @@ class Xyster_Orm_Query
      */
     public function order( Xyster_Data_Sort $order )
     {
-        Xyster_Orm_Query_Parser::assertValidColumnForClass($order->getField(), $this->_table);
+        Xyster_Orm_Query_Parser::assertValidFieldForClass($order->getField(), $this->_table);
         $this->_runtime[self::ORDER] |= Xyster_Orm_Query_Parser::isRuntime($order, $this->_table);
             
         $this->_parts[self::ORDER][] = $order;
@@ -213,8 +213,8 @@ class Xyster_Orm_Query
      */
     public function where( Xyster_Data_Criterion $where )
     {
-        foreach( $where->getFields() as $field ) {
-            if ( $field->getAggregate() ) {
+        foreach( Xyster_Data_Criterion::getFields($where) as $field ) {
+            if ( $field instanceof Xyster_Data_Field_Aggregate ) {
                 require_once 'Xyster/Orm/Query/Exception.php';
                 throw new Xyster_Orm_Query_Exception('Aggregated fields are not allowed in this query');
             }

@@ -169,6 +169,7 @@ abstract class Xyster_Orm_Mapper
     {
         if ( !isset(self::$_mappers[$className]) ) {
             
+            $mapperName = $className . 'Mapper';
             Xyster_Orm_Loader::loadMapperClass($className);
             self::$_mappers[$className] = new $mapperName();
             self::$_mappers[$className]->init();
@@ -341,9 +342,9 @@ abstract class Xyster_Orm_Mapper
      */
     public function getSet( Xyster_Collection_Interface $entities = null )
     {
-        Xyster_Orm_Loader::loadSetClass($this->getEntityName());
+        $set = Xyster_Orm_Loader::loadSetClass($this->getEntityName());
 
-        return new $collection($entities);
+        return new $set($entities);
     }
 
     /**

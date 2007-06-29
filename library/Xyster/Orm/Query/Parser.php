@@ -41,7 +41,7 @@ class Xyster_Orm_Query_Parser
 	 * @param string $className
 	 * @throws Xyster_Orm_Query_Parser_Exception
 	 */
-	static public function assertValidFieldForClass( $column, $className )
+	static public function assertValidFieldForClass( $field, $className )
 	{
 	    require_once 'Xyster/Orm/Relation.php';
 	    require_once 'Xyster/Orm/Entity/Meta.php';
@@ -88,7 +88,7 @@ class Xyster_Orm_Query_Parser
 			if ( preg_match("/^(?P<name>[a-z0-9_]+)(?P<meth>\((?P<args>[\w\W]*)\))$/i", $field, $matches) ) {
 				if ( $className != "" && !in_array($matches['name'], Xyster_Orm_Entity_Meta::getMembers($className)) ) {
 					require_once 'Xyster/Orm/Query/Parser/Exception.php';
-			        throw new Xyster_Orm_Query_Parser_Exception('ORM_NOT_MEMBER', $matches['name'],$className );
+			        throw new Xyster_Orm_Query_Parser_Exception($matches['name'] . ' is not a member of the ' . $className . ' class' );
 				}
 				$args = array();
 				if ( strlen(trim($matches['args'])) ) {
@@ -104,7 +104,7 @@ class Xyster_Orm_Query_Parser
 			*/
 			} else if ( $className != "" && !in_array($field, Xyster_Orm_Entity_Meta::getMembers($className)) ) {
 				require_once 'Xyster/Orm/Query/Parser/Exception.php';
-			    throw new Xyster_Orm_Query_Parser_Exception('ORM_NOT_MEMBER',$field,$className );
+			    throw new Xyster_Orm_Query_Parser_Exception($field . ' is not a member of the ' . $className . ' class');
 			}
 		}
 	}
@@ -131,7 +131,7 @@ class Xyster_Orm_Query_Parser
 	{
 		if ( $object instanceof Xyster_Data_Criterion ) {
 		    
-			foreach( $object->getFields() as $v ) {
+			foreach( Xyster_Data_Criterion::getFields($object) as $v ) {
 				if ( self::isRuntime($v,$class) ) {
 					return true;
 				}
@@ -446,12 +446,14 @@ class Xyster_Orm_Query_Parser
 		Xyster_Orm_Loader::loadEntityClass($className);
 
 		$calls = Xyster_String::smartSplit('->',trim($field));
+		
+		echo $field;
 
 		if ( count($calls) == 1 ) {
 		    
 		    // the call isn't composite - could be a member or a relation
 			return ( self::isMethodCall($calls[0]) ) ? true :
-				( !in_array($field,Xyster_Orm_Entity_Meta::getFields($className))
+				( !in_array($field,array_keys(Xyster_Orm_Entity_Meta::getFields($className)))
 					&& !Xyster_Orm_Relation::isValid($className, $field) );
 					
 		} else {
@@ -464,7 +466,7 @@ class Xyster_Orm_Query_Parser
 					return true;
 				} else {
 					$isRel = Xyster_Orm_Relation::isValid($container, $call);
-					if ( !in_array($call, Xyster_Orm_Entity_Meta::getFields($container))
+					if ( !in_array($call, array_keys(Xyster_Orm_Entity_Meta::getFields($container)))
 						&& !$isRel ) {
 						return true;
 					} else if ( $isRel ) { 

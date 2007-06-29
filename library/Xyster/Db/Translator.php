@@ -91,14 +91,14 @@ class Xyster_Db_Translator
 	 * @param mixed $object
 	 * @return Xyster_Db_Token
 	 */
-	public function translate( $object )
+	public function translate( $object, $quote = true )
 	{
 		if ( $object instanceof Xyster_Data_Field ) {
-			return $this->translateField($object);
+			return $this->translateField($object, $quote);
 		} else if ( $object instanceof Xyster_Data_Sort ) {
-			return $this->translateSort($object);
+			return $this->translateSort($object, $quote);
 		} else if ( $object instanceof Xyster_Data_Criterion ) {
-			return $this->translateCriterion($object);
+			return $this->translateCriterion($object, $quote);
 		}
 		require 'Xyster/Db/Exception.php';
 		throw new Xyster_Db_Exception('Invalid object');
@@ -109,14 +109,14 @@ class Xyster_Db_Translator
 	 * @param Xyster_Data_Field $tosql  The field to translate
 	 * @return Xyster_Db_Token  The translated SQL syntax
 	 */
-	public function translateField( Xyster_Data_Field $tosql )
+	public function translateField( Xyster_Data_Field $tosql, $quote = true )
 	{
 		$tableName = $this->_table;
 		$rename = $tosql->getName();
 		if ( $this->_renameCallback !== null ) {
 			$rename = call_user_func( $this->_renameCallback, $tosql );
 		}
-		$column = $this->_adapter->quoteIdentifier($rename);
+		$column = ( $quote ) ? $this->_adapter->quoteIdentifier($rename) : $rename;
 		if ( $tableName ) {
 			$column = "$tableName.$column";
 		}
@@ -129,10 +129,10 @@ class Xyster_Db_Translator
 	 * @param Xyster_Data_Sort $tosql  The Sort to translate
 	 * @return Xyster_Db_Token  The translated SQL syntax
 	 */
-	public function translateSort( Xyster_Data_Sort $tosql )
+	public function translateSort( Xyster_Data_Sort $tosql, $quote = true )
 	{
 		return new Xyster_Db_Token(
-		    $this->translateField($tosql->getField())->getSql() . " "
+		    $this->translateField($tosql->getField(), $quote)->getSql() . " "
 			. $tosql->getDirection() );
 	}
 	/**
@@ -141,12 +141,12 @@ class Xyster_Db_Translator
 	 * @param Xyster_Data_Criterion $tosql  The Criterion to translate
 	 * @return Xyster_Db_Token  The translated SQL syntax
 	 */
-	public function translateCriterion( Xyster_Data_Criterion $tosql )
+	public function translateCriterion( Xyster_Data_Criterion $tosql, $quote = true )
 	{
 		if ( $tosql instanceof Xyster_Data_Expression ) {
-			return self::translateExpression($tosql);
+			return self::translateExpression($tosql, $quote);
 		} else if ( $tosql instanceof Xyster_Data_Junction ) {
-			return self::translateJunction($tosql);
+			return self::translateJunction($tosql, $quote);
 		}
 	}
 	/**
@@ -155,11 +155,11 @@ class Xyster_Db_Translator
 	 * @param Xyster_Data_Junction $tosql  The Junction to translate
 	 * @return Xyster_Db_Token  The translated SQL syntax
 	 */
-	public function translateJunction( Xyster_Data_Junction $tosql )
+	public function translateJunction( Xyster_Data_Junction $tosql, $quote = true )
 	{
 		$criteria = array();
 		foreach( $tosql->getCriteria() as $v ) {
-			$loopToken = $this->translateCriterion($v);
+			$loopToken = $this->translateCriterion($v, $quote);
 			$criteria[$loopToken->getSql()] = $loopToken;
 		}
 		$token = new Xyster_Db_Token( "( " .
@@ -176,17 +176,17 @@ class Xyster_Db_Translator
 	 * @param Xyster_Data_Expression $tosql  The Expression to translate
 	 * @return Xyster_Db_Token  The translated SQL syntax
 	 */
-	public function translateExpression( Xyster_Data_Expression $tosql )
+	public function translateExpression( Xyster_Data_Expression $tosql, $quote = true )
 	{
 		$binds = array();
-		$sql = $this->translateField($tosql->getLeft())->getSql() . ' ';
+		$sql = $this->translateField($tosql->getLeft(), $quote)->getSql() . ' ';
 		$val = $tosql->getRight();
 		$sql .= ( $val === null || $val == "NULL" ) ? 'IS' : $tosql->getOperator();
 		$sql .= ' ';
 		if ( $val == "NULL" || $val === null ) {
 			$sql .= 'NULL';
 		} else if ( $val instanceof Xyster_Data_Field ) {
-			$sql .= $this->translateField($val)->getSql();
+			$sql .= $this->translateField($val, $quote)->getSql();
 		} else {
 			$bindName = ':P'.str_pad(dechex(crc32((string)$tosql)), 8, '0', STR_PAD_LEFT);
 			if ( is_array($val) ) {

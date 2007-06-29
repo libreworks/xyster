@@ -437,11 +437,11 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
 
 			if ( !$query->hasRuntimeOrder() && count($query->getOrder()) ) {
 				foreach( $query->getOrder() as $sort ) {
-					$select->order( $translator->translateSort($sort)->getSql() );
+					$select->order( $translator->translateSort($sort,false)->getSql() );
 				}
 			}
 			
-			$select->from(array($translator->getMain(), $this->_mapper->getTable()), $this->_selectColumns());
+			$select->from(array($translator->getMain() => $this->_mapper->getTable()), $this->_selectColumns());
 
 			foreach( $translator->getFromClause() as $table => $joinToken ) {
 			    $select->joinLeft($table, $joinToken->getSql(), array());
@@ -452,7 +452,7 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
 			    !$query->hasRuntimeWhere() ) {
 			    $select->limit($query->getLimit(), $query->getOffset());	
 			}
-
+			
 			return $this->_mapSet($this->_getAdapter()->query($select, $binds));
 
 		} else {

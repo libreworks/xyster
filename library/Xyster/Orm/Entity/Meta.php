@@ -28,6 +28,11 @@
  */
 class Xyster_Orm_Entity_Meta
 {
+    /**
+     * @var array 
+     */
+    static protected $_members = array();
+
     private function __construct()
     {
     }
@@ -59,7 +64,7 @@ class Xyster_Orm_Entity_Meta
 	{
 		if ( !isset(self::$_members[$className]) ) {
 			$members = array('id');
-			$members = array_merge($members,self::getFields($className));
+			$members = array_merge($members,array_keys(self::getFields($className)));
 			$members = array_merge($members,Xyster_Orm_Relation::getNames($className));
 			$members = array_merge($members,get_class_methods($className));
 			self::$_members[$className] = $members;

@@ -139,6 +139,7 @@ class Xyster_Orm_Loader
      * 'Person'.
      * 
      * @param string $className the name of the entity class
+     * @return string the class name
      * @throws Xyster_Orm_Exception if the class loaded is not a derivitive of Xyster_Orm_Mapper
      */
     public static function loadMapperClass( $className )
@@ -153,6 +154,8 @@ class Xyster_Orm_Loader
             !is_subclass_of($mapper, 'Xyster_Orm_Mapper')) {
             throw new Xyster_Orm_Exception("'" . $mapper . "' is not a subclass of Xyster_Orm_Mapper");
         }
+        
+        return $mapper;
     }
 
     /**
@@ -161,6 +164,7 @@ class Xyster_Orm_Loader
      * @param string $className the name of the set class
      * @param boolean $autoSuffix whether to append 'Set' to the end of the class
      * @throws Xyster_Orm_Exception if the class loaded is not a derivitive of Xyster_Orm_Set
+     * @return string the class name
      */
     public static function loadSetClass( $className, $autoSuffix = true )
     {
@@ -171,6 +175,8 @@ class Xyster_Orm_Loader
             !is_subclass_of($set, 'Xyster_Orm_Set')) {
             throw new Xyster_Orm_Exception("'" . $set . "' is not a subclass of Xyster_Orm_Set");
         }
+        
+        return $set;
     }
     
     /**
