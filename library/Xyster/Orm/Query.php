@@ -65,7 +65,7 @@ class Xyster_Orm_Query
 		$set = $map->getBackEnd()->query($this);
 
 		if ( count($this->_runtime[self::WHERE]) ) {
-    		$set->filter( Xyster_Data_Junction::fromArray('AND',$this->_runtime[self::WHERE]) );
+    		$set->filter( Xyster_Data_Criterion::fromArray('AND',$this->_runtime[self::WHERE]) );
 		}
 
 		if ( ( $this->_parts[self::LIMIT] || $this->_parts[self::OFFSET] )
@@ -91,6 +91,16 @@ class Xyster_Orm_Query
 			$set->sortBy($this->_parts[self::ORDER]);
 		}
 		return $set;
+    }
+    
+    /**
+     * Gets the criteria that can be run in the backend
+     *
+     * @return array
+     */
+    public function getBackendWhere()
+    {
+        return $this->_backend[self::WHERE];
     }
     
     /**

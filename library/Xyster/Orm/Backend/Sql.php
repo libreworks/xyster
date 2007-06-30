@@ -429,7 +429,7 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
 		    
 		    $select = new Zend_Db_Select($this->_getAdapter());
 			
-			foreach( $query->getWhere() as $criterion ) {
+			foreach( $query->getBackendWhere() as $criterion ) {
 				$whereToken = $translator->translateCriterion($criterion);
 				$select->where( $whereToken->getSql() );
 				$binds += $whereToken->getBindValues();

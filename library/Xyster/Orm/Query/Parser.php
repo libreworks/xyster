@@ -25,7 +25,7 @@ require_once 'Xyster/String.php';
 /**
  * A data entity: the basic data unit of the ORM package
  *
- * @category  Xyster
+ * @category  XysterColumn
  * @package   Xyster_Orm
  * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
@@ -121,7 +121,7 @@ class Xyster_Orm_Query_Parser
 	}
 	
 	/**
-	 * Verifies if a {@link Criterion} or {@link Column} is runtime
+	 * Verifies if a {@link Xyster_Data_Criterion} or {@link Xyster_Data_Field} is runtime
 	 * 
 	 * @param object $object 
 	 * @param string $class
