@@ -40,6 +40,7 @@ class Xyster_Data_Field
 	{
 		$this->_name = trim($name);
 		if ( !strlen($this->_name) ) {
+		    require_once 'Zend/Data/Field/Exception.php';
 		    throw new Zend_Data_Field_Exception('A field name cannot be empty');
 		}
 		$this->_alias = ( !strlen(trim($alias)) ) ? $name : trim($alias);

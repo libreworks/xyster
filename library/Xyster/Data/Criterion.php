@@ -35,6 +35,33 @@ abstract class Xyster_Data_Criterion
 	 */
     abstract public function evaluate( $value );
 
+	/**
+	 * Creates a Junction from an array of Criterion objects
+	 *
+	 * @param string $operator
+	 * @param array $criteria
+	 * @return Xyster_Data_Criterion
+	 * @throws Xyster_Data_Exception if the operator is unknown
+	 */
+	static public function fromArray( $operator, array $criteria )
+	{
+		if ( count($criteria) < 1 ) {
+			return;
+		}
+		if ( count($criteria) == 1 ) {
+			return $criteria[0];
+		}
+		else {
+			if ( strtoupper($operator) != 'AND' && strtoupper($operator) != 'OR' ) {
+				require_once 'Xyster/Data/Exception.php';
+				throw new Xyster_Data_Exception($operator . ' is not a valid Junction operator');
+			}
+			$j = new Xyster_Data_Junction($criteria[0], $criteria[1], strtoupper($operator));
+			$j->_criteria = $criteria;
+			return $j;
+		}
+	}
+    
     /**
      * Recursively gets all of the fields in the Criterion 
      *

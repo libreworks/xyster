@@ -18,6 +18,10 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 /**
+ * @see Xyster_Data_Field
+ */
+require_once 'Xyster/Data/Field.php';
+/**
  * A simple concept for data fields and columns
  *
  * @category  Xyster

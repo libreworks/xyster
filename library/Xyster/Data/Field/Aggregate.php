@@ -18,6 +18,10 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 /**
+ * @see Xyster_Data_Field
+ */
+require_once 'Xyster/Data/Field.php';
+/**
  * A field or column that has some aggregate function applied to it
  *
  * @category  Xyster
@@ -25,7 +29,7 @@
  * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Data_Field_Aggregate
+class Xyster_Data_Field_Aggregate extends Xyster_Data_Field
 {
     /**
      * @var Xyster_Data_Aggregate
@@ -53,5 +57,16 @@ class Xyster_Data_Field_Aggregate
 	public function getFunction()
 	{
 		return $this->_function;
+	}
+
+	/**
+	 * String representation of this object
+	 *
+	 * @magic
+	 * @return string
+	 */
+	public function __toString()
+	{
+	    return $this->_function->getValue() . '(' . parent::__toString() . ')';
 	}
 }

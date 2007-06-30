@@ -39,11 +39,12 @@ class Xyster_Data_Set extends Xyster_Collection_Set_Sortable
     /**
      * Creates a new data set
      *
-     * @param Xyster_Collection_Interface $values Any traversable type
+     * @param Xyster_Collection_Interface $values The values to add
      */
     public function __construct( Xyster_Collection_Interface $values = null )
     {
         $this->_columns = new Xyster_Collection_Set();
+
         if ( $values instanceof Xyster_Collection_Interface ) {
             if ( !count($this->_columns) && count($values) ) {
                 foreach( $values as $value ) {
@@ -124,7 +125,8 @@ class Xyster_Data_Set extends Xyster_Collection_Set_Sortable
             case "AVG":
                 $value = array_sum($this->fetchColumn($field))/count($this->_items);
                 break;
-            default: break;
+            default:
+                break;
         }
         return $value;
     }
@@ -138,8 +140,9 @@ class Xyster_Data_Set extends Xyster_Collection_Set_Sortable
     {
         $column = Xyster_Data_Field::named($name);
         $values = array();
-        foreach( $this->_items as $v )
+        foreach( $this->_items as $v ) {
             $values[] = $column->evaluate($v);
+        }
         return $values;
     }
     /**
@@ -168,8 +171,9 @@ class Xyster_Data_Set extends Xyster_Collection_Set_Sortable
         $column1 = Xyster_Data_Field::named($key);
         $column2 = Xyster_Data_Field::named($value);
         $pairs = array();
-        foreach( $this->_items as $v ) 
+        foreach( $this->_items as $v ) {
             $pairs[ $column1->evaluate($v) ] = $column2->evaluate($v);
+        }
         return $pairs;
     }
     /**
@@ -184,25 +188,26 @@ class Xyster_Data_Set extends Xyster_Collection_Set_Sortable
     /**
      * Sorts the collection by one or more columns and directions
      * 
-     * The $sorts parameter can either be an array of {@link Xyster_Data_Sort}
-     * objects, an array of strings containing column and direction, or a
-     * comma-delimited list of columns and directions.
+     * The $sorts parameter can either be a single {@link Xyster_Data_Sort} or
+     * an array containing multiple.
      * 
-     * @param array $sorts The sorts to include 
+     * @param mixed $sorts The sorts to include 
      */
     public function sortBy( $sorts )
     {
         if ( !is_array($sorts) ) {
-            $sorts = Xyster_String::smartSplit(',',$sorts);
+            $sorts = array($sorts);
         }
-        $values = array();
-        require_once 'Xyster/Data/Sort.php';
-        foreach( $sorts as $v ) { 
-            $values[] = ( $v instanceof Xyster_Data_Sort ) ?
-                $v : Xyster_Data_Sort::parse($v);
+
+        foreach( $sorts as $v ) {
+            if (! $v instanceof Xyster_Data_Sort ) {
+                require_once 'Xyster/Data/Set/Exception.php';
+                throw new Xyster_Data_Set_Exception('The argument must be one or more Xyster_Data_Sort objects');
+            }
         }
+
         require_once 'Xyster/Data/Comparator.php';
-        $this->sort( new Xyster_Data_Comparator($values) );
+        $this->sort( new Xyster_Data_Comparator($sorts) );
     }
 
     /**
