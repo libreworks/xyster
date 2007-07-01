@@ -177,6 +177,7 @@ class Xyster_Orm_Repository
     public function hasAll( $class )
     {
         return array_key_exists( $class, $this->_items ) &&
+            array_key_exists('hasAll', $this->_items[$class]) &&
             $this->_items[$class]['hasAll'];
     }
     

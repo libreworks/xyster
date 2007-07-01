@@ -94,7 +94,8 @@ class Xyster_Data_Field
 			}
 		    $value = $object[$this->_name];
 		} else if ( is_object($object) ) {
-		    $value = $object->{$this->_name};
+		    // this is eval'ed becuse $this->_name might be a method call 
+		    eval("\$value = \$object->{$this->_name};");
 		} else {
 		    require_once 'Xyster/Data/Field/Exception.php';
 			throw new Xyster_Data_Field_Exception("Only objects or arrays can be evaluated");
