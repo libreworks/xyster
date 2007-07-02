@@ -186,6 +186,16 @@ class Xyster_Orm_Query
     }
     
     /**
+     * Gets whether this query has parts that are evaluated at runtime
+     *
+     * @return boolean
+     */
+    public function isRuntime()
+    {
+        return $this->hasRuntimeOrder() || $this->hasRuntimeWhere();
+    }
+    
+    /**
      * Impose a maximum number of records to return and a number to skip
      *
      * @param int $limit The maximum number of records to return

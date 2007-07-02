@@ -424,22 +424,26 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
 	    require_once 'Xyster/Orm/Backend/Sql/Translator.php';
 		$translator = new Xyster_Orm_Backend_Sql_Translator($this->_getAdapter(), $this->_mapper->getEntityName());
 
+		$select = $this->_getAdapter()->select();
 		$binds = array();
-		if (! $query instanceof Xyster_Orm_Query_Report ) {
-		    
-		    $select = new Zend_Db_Select($this->_getAdapter());
-			
-			foreach( $query->getBackendWhere() as $criterion ) {
-				$whereToken = $translator->translateCriterion($criterion);
-				$select->where( $whereToken->getSql() );
-				$binds += $whereToken->getBindValues();
-			}
+		
+		foreach( $query->getBackendWhere() as $criterion ) {
+			$whereToken = $translator->translateCriterion($criterion);
+			$select->where( $whereToken->getSql() );
+			$binds += $whereToken->getBindValues();
+		}
 
-			if ( !$query->hasRuntimeOrder() && count($query->getOrder()) ) {
-				foreach( $query->getOrder() as $sort ) {
-					$select->order( $translator->translateSort($sort,false)->getSql() );
-				}
+		if ( !$query->hasRuntimeOrder() ) {
+			foreach( $query->getOrder() as $sort ) {
+				$select->order($translator->translateSort($sort, false)->getSql());
 			}
+		}
+		
+		if ( !$query->isRuntime() && $query->getLimit() ) {
+		    $select->limit($query->getLimit(), $query->getOffset());
+		}
+		
+		if (! $query instanceof Xyster_Orm_Query_Report ) {
 			
 			$select->from(array($translator->getMain() => $this->_mapper->getTable()), $this->_selectColumns());
 
@@ -447,20 +451,68 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
 			    $select->joinLeft($table, $joinToken->getSql(), array());
 			    $binds += $joinToken->getBindValues();
 			}
-
-			if ( $query->getLimit() && !$query->hasRuntimeOrder() && 
-			    !$query->hasRuntimeWhere() ) {
-			    $select->limit($query->getLimit(), $query->getOffset());	
-			}
 			
 			return $this->_mapSet($this->_getAdapter()->query($select, $binds));
 
 		} else {
-		    
-		    /**
-		     * @todo implement report queries
-		     */
-		    
+            
+	        if ( $query->isDistinct() ) {
+	            $select->distinct();
+	        }
+
+	        $fields = array();
+			if ( !$query->isRuntime() ) {
+
+				foreach( $query->getFields() as $k=>$field ) {
+				    // we want to quote the field names for aggregates!
+				    $quote = (! $field instanceof Xyster_Data_Field_Aggregate);
+				    $fieldName = $translator->translateField($field, $quote)->getSql();
+				    if ( $field->getAlias() == $field->getName() ) {
+				        $fields[] = $fieldName;
+				    } else {
+				        $fields[$field->getAlias()] = $fieldName;
+				    }
+				}
+				
+				if ( count($query->getGroup()) ) {
+					foreach( $query->getGroup() as $k=>$grp ) {
+						$fieldName = $translator->translateField($grp, false)->getSql();
+						if ( $grp->getAlias() == $grp->getName() ) {
+						    $fields[] = $fieldName;
+						} else {
+						    $fields[$grp->getAlias()] = $fieldName;
+						}
+						$select->group($fieldName);
+					}
+					foreach( $query->getHaving() as $k=>$crit ) {
+						$whereToken = $translator->translateCriterion($crit);
+						$select->having($whereToken->getSql());
+						$binds += $whereToken->getBindValues();
+					}
+				}
+
+			} else {
+			    // it's runtime
+			    $fields = $this->_selectColumns();
+			}
+			
+		    $select->from(array($translator->getMain() => $this->_mapper->getTable()), $fields);
+
+			foreach( $translator->getFromClause() as $table => $joinToken ) {
+			    $select->joinLeft($table, $joinToken->getSql(), array());
+			    $binds += $joinToken->getBindValues();
+			}
+
+			$db = $this->_getAdapter();
+
+			if ( !$query->isRuntime() ) {
+			    $result = $db->query($select, $binds)->fetchAll(Zend_Db::FETCH_ASSOC);
+
+				require_once 'Xyster/Data/Set.php';
+				return new Xyster_Data_Set(Xyster_Collection::using($result));
+			} else {
+			    return $this->_mapSet($db->query($select, $binds)); 
+			}
 		}
 	}
 	

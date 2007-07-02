@@ -34,39 +34,51 @@ class Xyster_Data_Field_Aggregate extends Xyster_Data_Field
     /**
      * @var Xyster_Data_Aggregate
      */
-   	protected $_function;
+    protected $_function;
 
-	/**
-	 * Creates a new Aggregate Field
-	 *
-	 * @param Xyster_Data_Aggregate $function The aggregate function applied
-	 * @param string $name  The field name (be it a property, column, whatever)
-	 * @param string $alias  The alias for this field
-	 */
-	protected function __construct( Xyster_Data_Aggregate $function, $name, $alias=null )
-	{
-		parent::__construct($name,$alias);
-		$this->_function = $function;
-	}
+    /**
+     * Creates a new Aggregate Field
+     *
+     * @param Xyster_Data_Aggregate $function The aggregate function applied
+     * @param string $name  The field name (be it a property, column, whatever)
+     * @param string $alias  The alias for this field
+     */
+    protected function __construct( Xyster_Data_Aggregate $function, $name, $alias=null )
+    {
+        parent::__construct($name, $alias);
+        $this->_function = $function;
+    }
 
-	/**
-	 * Gets the aggregate function associated with this field
-	 *
-	 * @return Xyster_Data_Aggregate The assigned aggregate function
-	 */
-	public function getFunction()
-	{
-		return $this->_function;
-	}
+    /**
+     * Evaluates the reference for the given object
+     *
+     * @param mixed $object
+     * @return mixed
+     */
+    public function evaluate( $object )
+    {
+        return ( $object instanceof Xyster_Data_Set ) ?
+            $object->aggregate($this) : parent::evaluate($object);
+    }
+    
+    /**
+     * Gets the aggregate function associated with this field
+     *
+     * @return Xyster_Data_Aggregate The assigned aggregate function
+     */
+    public function getFunction()
+    {
+        return $this->_function;
+    }
 
-	/**
-	 * String representation of this object
-	 *
-	 * @magic
-	 * @return string
-	 */
-	public function __toString()
-	{
-	    return $this->_function->getValue() . '(' . parent::__toString() . ')';
-	}
+    /**
+     * String representation of this object
+     *
+     * @magic
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->_function->getValue() . '(' . parent::__toString() . ')';
+    }
 }

@@ -36,154 +36,272 @@ class Xyster_Orm_Query_Report extends Xyster_Orm_Query
     const FIELDS = 'fields';
     const GROUP = 'group';
     const HAVING = 'having'; 
-	
-	/**
-	 * Turns excluding duplicate records on or off
-	 * 
-	 * @param boolean $distinct  True excludes duplicates
-	 */
-	public function distinct( $distinct = true )
-	{
-		$this->_parts[self::DISTINCT] = $distinct;
-		
-		return $this;
-	}
-	
-	/**
-	 * Executes the report query
-	 * 
-	 * If the entire query cannot be executed in the backend, this method will 
-	 * return full entities from the data store, put them in the cache, then do
-	 * any runtime calculations it needs to do.
-	 *
-	 * @return Xyster_Data_Set  The query result set
-	 * @throws Xyster_Orm_Query_Exception if there's a select column not aggregated or grouped
-	 */
-	public function execute()
-	{
-	    
-	}
-	
-	/**
-	 * Adds a projected field to this query 
-	 *
-	 * @param Xyster_Data_Field $field
-	 * @return Xyster_Orm_Query_Report provides a fluent interface
-	 */
-	public function field( Xyster_Data_Field $field )
-	{
-	    if ( $field instanceof Xyster_Data_Field_Grouped ) {
-	        return $this->group($field);
-	    }
-	    
-	    Xyster_Orm_Query_Parser::assertValidColumnForClass($field,$this->_table);
-	    $this->_runtime[self::FIELDS] |= Xyster_Orm_Query_Parser::isRuntime($field,$this->_table);
-	    
-	    return $this;
-	}
-	
-	/**
-	 * Gets the non-group {@link Xyster_Data_Field} objects added to the statement
-	 * 
-	 * @return array
-	 */
-	public function getFields()
-	{
-		return $this->getPart(self::FIELDS);
-	}
+    
+    /**
+     * Turns excluding duplicate records on or off
+     * 
+     * @param boolean $distinct  True excludes duplicates
+     */
+    public function distinct( $distinct = true )
+    {
+        $this->_parts[self::DISTINCT] = $distinct;
+        
+        return $this;
+    }
+    
+    /**
+     * Executes the report query
+     * 
+     * If the entire query cannot be executed in the backend, this method will 
+     * return full entities from the data store, put them in the cache, then do
+     * any runtime calculations it needs to do.
+     *
+     * @return Xyster_Data_Set  The query result set
+     * @throws Xyster_Orm_Query_Exception if there's a select column not aggregated or grouped
+     */
+    public function execute()
+    {
+        if ( count($this->_parts[self::GROUP]) ) {
+            $groups = array();
+            foreach( $this->_parts[self::GROUP] as $group ) {
+                $groups[] = $group->getName();
+            }
+            foreach( $this->_parts[self::FIELDS] as $field )
+                if ((!$field instanceof Xyster_Data_Field_Aggregate) &&
+                    !in_array($field->getName(), $groups)) {
+                    require_once 'Xyster/Orm/Query/Exception.php';
+                    throw new Xyster_Orm_Query_Exception($field->getName() . ' is not in the group clause');
+                }
+        }
 
-	/**
-	 * Gets the grouped {@link Xyster_Data_Field} objects added to the statement
-	 * 
-	 * @return array
-	 */
-	public function getGroup()
-	{
-		return $this->getPart(self::GROUP);
-	}
+        $map = Xyster_Orm_Mapper::factory($this->_table);
+        $collection = $map->getBackend()->query($this);
+        if ( $collection instanceof Xyster_Data_Set &&
+            ! $collection instanceof Xyster_Orm_Collection ) {
+            return $collection;
+        }
 
-	/**
-	 * Gets the {@link Xyster_Data_Aggregate} {@link Xyster_Data_Criterion} objects added to the statement
-	 * 
-	 * @return array
-	 */
-	public function getHaving()
-	{
-		return $this->getPart(self::HAVING);
-	}
-	
-	/**
-	 * Adds grouped field to this report query 
-	 *
-	 * @param Xyster_Data_Field_Grouped $group
-	 * @return Xyster_Orm_Query_Report provides a fluent interface
-	 */
-	public function group( Xyster_Data_Field_Grouped $group )
-	{
-	    Xyster_Orm_Query_Parser::assertValidFieldForClass($group,$this->_table);
-	    $this->_runtime[self::GROUP] |= Xyster_Orm_Query_Parser::isRuntime($group,$this->_table);
-	    
-	    return $this;
-	}
-	
-	/**
-	 * Adds a group-criterion to this query
-	 * 
-	 * All fields in the criterion must be instances of
-	 * {@link Xyster_Data_Field_Aggregate}, as a "having" clause is applied to
-	 * groups.
-	 *
-	 * @param Xyster_Data_Criterion $having
-	 * @return Xyster_Orm_Query_Report provides a fluent interface
-	 * @throws Xyster_Orm_Query_Exception if not all fields are aggregated
-	 */
-	public function having( Xyster_Data_Criterion $having )
-	{
-	    $aggs = 0;
-	    $fields = $having->getFields();
-		foreach ( $fields as $field ) {
-			Xyster_Orm_Query_Parser::assertValidFieldForClass($field,$this->_table);
-			$aggs += ($field instanceof Xyster_Data_Field_Aggregate) ? 1 : 0;
-		}
+        foreach( $collection as $entity ) {
+            $this->_putInSecondaryCache($entity);
+        }
 
-		if ( !$aggs || count($fields) != $aggs ) {
-        	require_once 'Xyster/Orm/Query/Exception.php';
-			throw new Xyster_Orm_Query_Excepton('The criterion provided must contain only aggregated fields');
-		}
-		
-		if ( Xyster_Orm_Query_Parser::isRuntime($having,$this->_table) ) {
-			$this->_runtime[self::GROUP] = true;
-		}
-		
-		$this->_parts[self::HAVING][] = $having;
-		
-		return $this;
-	}
-	
-	/**
-	 * Gets whether or not to exclude duplicate results
-	 *
-	 * @return boolean
-	 */
-	public function isDistinct()
-	{
-		return $this->getPart(self::DISTINCT);
-	}
-	
-	/**
-	 * Inits the parts of the query  
-	 *
-	 */
-	protected function _initParts()
-	{
-	    parent::_initParts();
-	    
-	    $this->_parts[self::DISTINCT] = false;
-	    $this->_parts[self::FIELDS] = array();
-	    $this->_parts[self::GROUP] = array();
-	    $this->_parts[self::HAVING] = array();
-	    
-	    $this->_runtime[self::FIELDS] = false;
-	    $this->_runtime[self::GROUP] = false;
-	}
+        if ( count($this->_runtime[Xyster_Orm_Query::WHERE]) ) {
+            $collection->filter(Xyster_Data_Criterion::fromArray('AND', $this->_runtime[Xyster_Orm_Query::WHERE]));
+        }
+
+        $rs = new Xyster_Data_Set();
+
+        foreach( array_merge($this->_parts[self::GROUP], $this->_parts[self::FIELDS]) as $field ) {
+            $rs->addColumn( $field->getAlias() );
+        }
+        if ( $this->_parts[self::GROUP] ) {
+            
+            Xyster_Data_Tuple::makeTuples(
+                $rs,
+                $collection,
+                array_merge($this->_parts[self::FIELDS], $this->_parts[self::GROUP]),
+                $this->_parts[self::HAVING],
+                $this->_parts[Xyster_Orm_Query::LIMIT],
+                $this->_parts[Xyster_Orm_Query::OFFSET]
+                );
+                
+        } else {
+            
+            $aggregate = false;
+            foreach( $this->_parts[self::FIELDS] as $field ) {
+                if ( $field instanceof Xyster_Data_Field_Aggregate ) {
+                    $aggregate = $field->getFunction();
+                    break;
+                }
+            }
+            if ( $aggregate ) {
+                $tuple = new Xyster_Data_Tuple(array(), $collection);
+                $rs->add($tuple->toRow($this->_parts[self::FIELDS]));
+            } else {
+                foreach( $collection as $offset=>$entity ) {
+                    if ( $offset >= $this->_parts[Xyster_Orm_Query::OFFSET] ) {
+                        $values = array();
+                        foreach( $this->_parts[self::FIELDS] as $field ) {
+                            $values[$field->getAlias()] = $field->evaluate($entity);
+                        }
+                        $rs->add( $values );
+                        if ( $this->_parts[Xyster_Orm_Query::LIMIT] > 0 &&
+                            count($rs) == $this->_parts[Xyster_Orm_Query::LIMIT] ) {
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        if ( $this->_runtime[Xyster_Orm_Query::ORDER] ) {
+            $sorts = array();
+            foreach( $this->_parts[Xyster_Orm_Query::ORDER] as $sort ) {
+                foreach( $this->_parts[self::FIELDS] as $field ) {
+                    if ( $sort->getField()->getName() == $field->getName() ) {
+                        $sorts[] = $sort;
+                        break;
+                    }
+                }
+            }
+            require_once 'Xyster/Data/Comparator.php';
+            $rs->sort(new Xyster_Data_Comparator($sorts));
+        }
+
+        return $rs;
+    }
+    
+    /**
+     * Adds a projected field to this query 
+     *
+     * @param Xyster_Data_Field $field
+     * @return Xyster_Orm_Query_Report provides a fluent interface
+     */
+    public function field( Xyster_Data_Field $field )
+    {
+        if ( $field instanceof Xyster_Data_Field_Grouped ) {
+            return $this->group($field);
+        }
+        
+        Xyster_Orm_Query_Parser::assertValidColumnForClass($field,$this->_table);
+        $this->_runtime[self::FIELDS] |= Xyster_Orm_Query_Parser::isRuntime($field,$this->_table);
+        
+        return $this;
+    }
+    
+    /**
+     * Gets the non-group {@link Xyster_Data_Field} objects added to the statement
+     * 
+     * @return array
+     */
+    public function getFields()
+    {
+        return $this->getPart(self::FIELDS);
+    }
+
+    /**
+     * Gets the grouped {@link Xyster_Data_Field} objects added to the statement
+     * 
+     * @return array
+     */
+    public function getGroup()
+    {
+        return $this->getPart(self::GROUP);
+    }
+
+    /**
+     * Gets the {@link Xyster_Data_Aggregate} {@link Xyster_Data_Criterion} objects added to the statement
+     * 
+     * @return array
+     */
+    public function getHaving()
+    {
+        return $this->getPart(self::HAVING);
+    }
+    
+    /**
+     * Adds grouped field to this report query 
+     *
+     * @param Xyster_Data_Field_Grouped $group
+     * @return Xyster_Orm_Query_Report provides a fluent interface
+     */
+    public function group( Xyster_Data_Field_Grouped $group )
+    {
+        Xyster_Orm_Query_Parser::assertValidFieldForClass($group,$this->_table);
+        $this->_runtime[self::GROUP] |= Xyster_Orm_Query_Parser::isRuntime($group,$this->_table);
+        
+        return $this;
+    }
+    
+    /**
+     * Adds a group-criterion to this query
+     * 
+     * All fields in the criterion must be instances of
+     * {@link Xyster_Data_Field_Aggregate}, as a "having" clause is applied to
+     * groups.
+     *
+     * @param Xyster_Data_Criterion $having
+     * @return Xyster_Orm_Query_Report provides a fluent interface
+     * @throws Xyster_Orm_Query_Exception if not all fields are aggregated
+     */
+    public function having( Xyster_Data_Criterion $having )
+    {
+        $aggs = 0;
+        $fields = $having->getFields();
+        foreach ( $fields as $field ) {
+            Xyster_Orm_Query_Parser::assertValidFieldForClass($field,$this->_table);
+            $aggs += ($field instanceof Xyster_Data_Field_Aggregate) ? 1 : 0;
+        }
+
+        if ( !$aggs || count($fields) != $aggs ) {
+            require_once 'Xyster/Orm/Query/Exception.php';
+            throw new Xyster_Orm_Query_Excepton('The criterion provided must contain only aggregated fields');
+        }
+        
+        if ( Xyster_Orm_Query_Parser::isRuntime($having,$this->_table) ) {
+            $this->_runtime[self::GROUP] = true;
+        }
+        
+        $this->_parts[self::HAVING][] = $having;
+        
+        return $this;
+    }
+    
+    /**
+     * Gets whether or not this report query has fields that evaluate at runtime
+     *
+     * @return boolean
+     */
+    public function hasRuntimeFields()
+    {
+        return $this->_runtime[self::FIELDS];
+    }
+    
+    /**
+     * Gets whether or not this report query has groups that evaluate at runtime
+     * 
+     * @return boolean
+     */
+    public function hasRuntimeGroup()
+    {
+        return $this->_runtime[self::GROUP];
+    }
+    
+    /**
+     * Gets whether or not to exclude duplicate results
+     *
+     * @return boolean
+     */
+    public function isDistinct()
+    {
+        return $this->getPart(self::DISTINCT);
+    }
+    
+    /**
+     * Gets whether this query has parts that are evaluated at runtime
+     *
+     * @return boolean
+     */
+    public function isRuntime()
+    {
+        return parent::isRuntime() || $this->hasRuntimeGroup() ||
+            $this->hasRuntimeFields();
+    }
+    
+    /**
+     * Inits the parts of the query  
+     *
+     */
+    protected function _initParts()
+    {
+        parent::_initParts();
+        
+        $this->_parts[self::DISTINCT] = false;
+        $this->_parts[self::FIELDS] = array();
+        $this->_parts[self::GROUP] = array();
+        $this->_parts[self::HAVING] = array();
+        
+        $this->_runtime[self::FIELDS] = false;
+        $this->_runtime[self::GROUP] = false;
+    }
 }

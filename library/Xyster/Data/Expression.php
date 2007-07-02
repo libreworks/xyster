@@ -167,7 +167,8 @@ class Xyster_Data_Expression extends Xyster_Data_Criterion
         $value = $this->_left->evaluate($object);
         $value2 = ( $this->_right instanceof Xyster_Data_Field ) ?
             $this->_right->evaluate($object) : $this->_right;
-            $bool = false;
+
+        $bool = false;
         $eval = "\$bool = (bool)( \$value %s \$value2 );";
         switch( $this->_operator ) {
             case "=":

@@ -51,10 +51,10 @@ class Xyster_Data_Set extends Xyster_Collection_Set_Sortable
                     $first = $value;
                     break;
                 }
-		        if ( !is_array($first) && !is_object($first) ) {
-		            require_once 'Xyster/Data/Set/Exception.php';
-		            throw new Xyster_Data_Set_Exception('This set can only contain arrays or objects');
-		        }
+                if ( !is_array($first) && !is_object($first) ) {
+                    require_once 'Xyster/Data/Set/Exception.php';
+                    throw new Xyster_Data_Set_Exception('This set can only contain arrays or objects');
+                }
                 $this->_createColumnsFromItem($first);
             }
             $this->merge($values);
@@ -107,8 +107,9 @@ class Xyster_Data_Set extends Xyster_Collection_Set_Sortable
      * @param Xyster_Data_Field|string $field
      * @return mixed
      */
-    public function aggregate( Xyster_Data_Aggregate $function, $field )
+    public function aggregate( Xyster_Data_Field_Aggregate $field )
     {
+        $function = $field->getFunction();
         switch( strtoupper($function->getValue()) ) {
             case "MAX":
                 $value = max($this->fetchColumn($field)); 
@@ -133,15 +134,17 @@ class Xyster_Data_Set extends Xyster_Collection_Set_Sortable
     /**
      * Converts an entire column of values to an array
      *
-     * @param string $name The name of the column to fetch
+     * @param mixed $field A {@link Xyster_Data_Field} or the name of the field to fetch
      * @return array The fetched values from the column
      */
-    public function fetchColumn( $name )
+    public function fetchColumn( $field )
     {
-        $column = Xyster_Data_Field::named($name);
+        if (! $field instanceof Xyster_Data_Field ) {
+            $field = Xyster_Data_Field::named($field);
+        }
         $values = array();
         foreach( $this->_items as $v ) {
-            $values[] = $column->evaluate($v);
+            $values[] = $field->evaluate($v);
         }
         return $values;
     }
@@ -162,17 +165,21 @@ class Xyster_Data_Set extends Xyster_Collection_Set_Sortable
         return $value;
     }
     /**
-     * Converts 2 columns into an associative array
+     * Converts 2 fields into an associative array
      *
-     * @return array The translated columns
+     * @param mixed $key A {@link Xyster_Data_Field} or the name of the field to fetch
+     * @param mixed $value A {@link Xyster_Data_Field} or the name of the field to fetch
+     * @return array The translated fields
      */
     public function fetchPairs( $key, $value )
     {
-        $column1 = Xyster_Data_Field::named($key);
-        $column2 = Xyster_Data_Field::named($value);
+        $field1 = (! $field1 instanceof Xyster_Data_Field) ?
+            Xyster_Data_Field::named($key) : $key;
+        $field2 = (! $field2 instanceof Xyster_Data_Field) ? 
+            Xyster_Data_Field::named($value) : $value;
         $pairs = array();
         foreach( $this->_items as $v ) {
-            $pairs[ $column1->evaluate($v) ] = $column2->evaluate($v);
+            $pairs[ $field1->evaluate($v) ] = $field2->evaluate($v);
         }
         return $pairs;
     }
@@ -183,7 +190,7 @@ class Xyster_Data_Set extends Xyster_Collection_Set_Sortable
      */
     public function filter( Xyster_Data_Criterion $criteria )
     {
-        $this->_items = array_filter( $this->_items, array( $criteria, 'evaluate' ) );
+        $this->_items = array_filter($this->_items, array($criteria, 'evaluate'));
     }
     /**
      * Sorts the collection by one or more columns and directions
