@@ -149,9 +149,10 @@ class Xyster_Data_Junction extends Xyster_Data_Criterion
     public function __toString()
     {
         $criteria = array();
-        foreach( $this->_criteria as $v )
+        foreach( $this->_criteria as $v ) {
             $criteria[] = $v->__toString();
-        return "( ".implode( " ".$this->_operator." ", $criteria )." )";
+        }
+        return "( " . implode(" " . $this->_operator . " ", $criteria) . " )";
     }
 
     /**
@@ -163,7 +164,7 @@ class Xyster_Data_Junction extends Xyster_Data_Criterion
      */
     static public function any( Xyster_Data_Criterion $left, Xyster_Data_Criterion $right )
     {
-        return new Xyster_Data_Junction( $left, $right, 'OR' ); 
+        return new Xyster_Data_Junction($left, $right, 'OR'); 
     }
     /**
      * Create a new 'AND' junction, i.e. ( x AND y )
@@ -174,6 +175,6 @@ class Xyster_Data_Junction extends Xyster_Data_Criterion
      */
     static public function all( Xyster_Data_Criterion $left, Xyster_Data_Criterion $right )
     {
-        return new Xyster_Data_Junction( $left, $right, 'AND' );
+        return new Xyster_Data_Junction($left, $right, 'AND');
     }
 }
