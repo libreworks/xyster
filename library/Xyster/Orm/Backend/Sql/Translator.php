@@ -84,7 +84,7 @@ class Xyster_Orm_Backend_Sql_Translator extends Xyster_Db_Translator
 	{
 		if ( Xyster_Orm_Query_Parser::isRuntime(Xyster_Data_Field::named($field), $this->_class) ) {
 			require_once 'Xyster/Orm/Backend/Sql/Exception.php';
-			throw new Xyster_Orm_Backend_Sql_Exception('ORM_RUNTIME_ALIAS');
+			throw new Xyster_Orm_Backend_Sql_Exception('Runtime fields cannot be aliased for the backend');
 		}
 
 		$prefix = "";

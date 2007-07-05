@@ -53,7 +53,7 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
     {
         require_once 'Zend/Registry.php';
         require_once 'Zend/Db.php';
-        Zend_Registry::set( md5($dsn), Zend_Db::factory($driver,$config) );
+        Zend_Registry::set(md5($dsn), Zend_Db::factory($driver,$config));
     }
 
 	/**
@@ -63,13 +63,13 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
 	 */
 	public function delete( Xyster_Data_Criterion $where )
 	{
-	    $translator = new Xyster_Db_Translator( $this->_getAdapter() );
-		$translator->setRenameCallback( array($this->_mapper,'untranslateField') );
+	    $translator = new Xyster_Db_Translator($this->_getAdapter());
+		$translator->setRenameCallback(array($this->_mapper, 'untranslateField'));
 		$token = $translator->translateCriterion($where);
-		$stmt = $this->_getAdapter()->prepare( "DELETE FROM "
+		$stmt = $this->_getAdapter()->prepare('DELETE FROM '
 			. $this->_getAdapter()->quoteIdentifier($this->_mapper->getTable())
-		    . " WHERE " . $token->getSql() );
-		$stmt->execute( $token->getBindValues() );
+		    . ' WHERE ' . $token->getSql());
+		$stmt->execute($token->getBindValues());
 	}
     
 	/**
@@ -95,7 +95,7 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
             $keyValues = array();
             foreach( $id as $name => $value ) {
                 $dbName = $this->_mapper->untranslateField($name);
-                if ( !in_array($dbName,$keyNames) ) {
+                if (!in_array($dbName, $keyNames)) {
                     require_once 'Xyster/Orm/Backend/Exception.php';
                     throw new Xyster_Orm_Backend_Exception("'$dbName' is not a primary key");
                 }
@@ -115,12 +115,12 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
 	    $whereParts = array();
         foreach( $keyValues as $name => $value ) {
             if ( $value === null ) {
-                $whereParts[] = $this->_getAdapter()->quoteIdentifier($name) . ' is null';
+                $whereParts[] = $this->_getAdapter()->quoteIdentifier($name) . ' IS NULL';
             } else {
                 $whereParts[ $this->_getAdapter()->quoteIdentifier($name) . ' = ?' ] = $value;
             }
         }
-        return $this->_mapEntity( $this->_fetch( $whereParts, null, 1 ) );
+        return $this->_mapEntity($this->_fetch($whereParts, null, 1));
 	}
 
 	/**
@@ -136,7 +136,7 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
 	{
 	    if ( $criteria instanceof Xyster_Data_Criterion ) {
 	        
-	        $translator = new Xyster_Db_Translator( $this->_getAdapter() );
+	        $translator = new Xyster_Db_Translator($this->_getAdapter());
 		    $translator->setRenameCallback(array($this->_mapper, 'untranslateField'));
 		    
 		    $select = $this->_getAdapter()->select();
@@ -159,9 +159,9 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
                 if (is_array($value)) {
                     $orParts = array();
                     foreach( $value as $v ) {
-                        $orParts[] = $this->_getAdapter()->quoteInto( $expr, $v );
+                        $orParts[] = $this->_getAdapter()->quoteInto($expr, $v);
                     }
-                    $whereParts[] = '( ' . implode(' OR ',$orParts) . ' )';
+                    $whereParts[] = '( ' . implode(' OR ', $orParts) . ' )';
                 } else if ( $value === null ) {
                     $whereParts[] = $this->_getAdapter()->quoteIdentifier($name) . ' IS NULL';
                 } else {
@@ -169,7 +169,7 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
                 }
             }
             
-            return $this->_mapEntity( $this->_fetch( $whereParts, null, 1 ) );
+            return $this->_mapEntity($this->_fetch($whereParts, null, 1));
 	    }
 	}
 
@@ -220,7 +220,7 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
 
 	    $where = implode(' OR ', $orWhere);
 	    
-	    return $this->_mapSet( $this->_fetch( $where, null ) );
+	    return $this->_mapSet($this->_fetch($where, null));
 	}
 
 	/**
@@ -238,8 +238,8 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
 		$select->from( array('t1' => $this->_mapper->getTable()),
 		    $this->_selectColumns() );
 	    
-        $translator = new Xyster_Db_Translator( $this->_getAdapter() );
-		$translator->setRenameCallback(array($this->_mapper,'untranslateField'));
+        $translator = new Xyster_Db_Translator($this->_getAdapter());
+		$translator->setRenameCallback(array($this->_mapper, 'untranslateField'));
 		
 	    if ( $criteria instanceof Xyster_Data_Criterion ) {
 
@@ -421,32 +421,38 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
 	 */
 	public function query( Xyster_Orm_Query $query ) 
 	{
+	    // we might as well require this now...
+        require_once 'Xyster/Data/Set.php';
 	    require_once 'Xyster/Orm/Backend/Sql/Translator.php';
-		$translator = new Xyster_Orm_Backend_Sql_Translator($this->_getAdapter(), $this->_mapper->getEntityName());
+		$translator = new Xyster_Orm_Backend_Sql_Translator($this->_getAdapter(),
+		    $this->_mapper->getEntityName());
 
 		$select = $this->_getAdapter()->select();
 		$binds = array();
 		
+		// apply the where clause that can be run on the database
 		foreach( $query->getBackendWhere() as $criterion ) {
 			$whereToken = $translator->translateCriterion($criterion);
 			$select->where( $whereToken->getSql() );
 			$binds += $whereToken->getBindValues();
 		}
 
+		// apply the order by clause that can be run on the database
 		if ( !$query->hasRuntimeOrder() ) {
 			foreach( $query->getOrder() as $sort ) {
 				$select->order($translator->translateSort($sort, false)->getSql());
 			}
 		}
 		
+		// if the query is entirely against the database, add limit & offset
 		if ( !$query->isRuntime() && $query->getLimit() ) {
 		    $select->limit($query->getLimit(), $query->getOffset());
 		}
 		
 		if (! $query instanceof Xyster_Orm_Query_Report ) {
-			
-			$select->from(array($translator->getMain() => $this->_mapper->getTable()), $this->_selectColumns());
 
+		    // add the from clause, joins, and columns
+			$select->from(array($translator->getMain() => $this->_mapper->getTable()), $this->_selectColumns());
 			foreach( $translator->getFromClause() as $table => $joinToken ) {
 			    $select->joinLeft($table, $joinToken->getSql(), array());
 			    $binds += $joinToken->getBindValues();
@@ -456,6 +462,7 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
 
 		} else {
             
+		    // pretty self explanitory...
 	        if ( $query->isDistinct() ) {
 	            $select->distinct();
 	        }
@@ -465,6 +472,7 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
 
 				foreach( $query->getFields() as $k=>$field ) {
 				    // we want to quote the field names for aggregates!
+	                // Zend_Db_Select does not do this for functions
 				    $quote = (! $field instanceof Xyster_Data_Field_Aggregate);
 				    $fieldName = $translator->translateField($field, $quote)->getSql();
 				    if ( $field->getAlias() == $field->getName() ) {
@@ -475,6 +483,7 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
 				}
 				
 				if ( count($query->getGroup()) ) {
+				    // add the group clause 
 					foreach( $query->getGroup() as $k=>$grp ) {
 						$fieldName = $translator->translateField($grp, false)->getSql();
 						if ( $grp->getAlias() == $grp->getName() ) {
@@ -484,6 +493,7 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
 						}
 						$select->group($fieldName);
 					}
+					// add the having clause
 					foreach( $query->getHaving() as $k=>$crit ) {
 						$whereToken = $translator->translateCriterion($crit);
 						$select->having($whereToken->getSql());
@@ -492,12 +502,12 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
 				}
 
 			} else {
-			    // it's runtime
+			    // it's runtime, just pull back all fields in the main table
 			    $fields = $this->_selectColumns();
 			}
 			
+			// add the from clause, joins, and columns
 		    $select->from(array($translator->getMain() => $this->_mapper->getTable()), $fields);
-
 			foreach( $translator->getFromClause() as $table => $joinToken ) {
 			    $select->joinLeft($table, $joinToken->getSql(), array());
 			    $binds += $joinToken->getBindValues();
@@ -507,8 +517,6 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
 
 			if ( !$query->isRuntime() ) {
 			    $result = $db->query($select, $binds)->fetchAll(Zend_Db::FETCH_ASSOC);
-
-				require_once 'Xyster/Data/Set.php';
 				return new Xyster_Data_Set(Xyster_Collection::using($result));
 			} else {
 			    return $this->_mapSet($db->query($select, $binds)); 
@@ -534,11 +542,11 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
 	 */
 	public function update( Xyster_Orm_Entity $entity )
 	{
-	    $whereParts = $this->_getPrimaryKeyWhere($entity,true);
+	    $whereParts = $this->_getPrimaryKeyWhere($entity, true);
 	    
 	    $where = array();
 	    foreach( $whereParts as $sql => $bind ) {
-	        $where[] = $this->_getAdapter()->quoteInto($sql,$bind);
+	        $where[] = $this->_getAdapter()->quoteInto($sql, $bind);
 	    }
 	    
     	$values = array();
@@ -547,7 +555,7 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
     	}
     	
     	if ( count($values) > 0 ) {
-    	    $this->_getAdapter()->update( $this->_mapper->getTable(), $values, $where );
+    	    $this->_getAdapter()->update($this->_mapper->getTable(), $values, $where);
     	}
     	
     	// this is in case any triggers in the db have changed the record
@@ -561,9 +569,10 @@ class Xyster_Orm_Backend_Sql extends Xyster_Orm_Backend_Abstract
      * @param  mixed $order  OPTIONAL An SQL ORDER clause.
      * @param  int          $count  OPTIONAL An SQL LIMIT count.
      * @param  int          $offset OPTIONAL An SQL LIMIT offset.
+     * @param  array $binds  The bind values to use on the query
      * @return Zend_Db_Statement_Interface The row results, in FETCH_ASSOC mode.
      */
-    protected function _fetch($where = null, $order = null, $count = null, $offset = null)
+    protected function _fetch( $where = null, $order = null, $count = null, $offset = null, array $binds = array() )
     {
         // selection tool
         $select = $this->_getAdapter()->select();

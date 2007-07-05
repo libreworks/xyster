@@ -132,7 +132,7 @@ class Xyster_Orm_Query_Parser
         if ( $object instanceof Xyster_Data_Criterion ) {
             
             foreach( Xyster_Data_Criterion::getFields($object) as $v ) {
-                if ( self::isRuntime($v,$class) ) {
+                if (self::isRuntime($v, $class)) {
                     return true;
                 }
             }
@@ -148,12 +148,12 @@ class Xyster_Orm_Query_Parser
             
         } else if ( $object instanceof Xyster_Data_Sort ) {
             
-            return self::isRuntime($object->getField(),$class);
+            return self::isRuntime($object->getField(), $class);
             
         }
         
         require_once 'Xyster/Orm/Query/Parser/Exception.php';
-        throw new Xyster_Orm_Query_Parser_Exception('FRAMEWORK_BAD_TYPE',gettype($object));
+        throw new Xyster_Orm_Query_Parser_Exception('Unexpected type: ' . gettype($object));
     }
     
     /**
@@ -281,14 +281,14 @@ class Xyster_Orm_Query_Parser
 
         if ( !Xyster_Data_Expression::isOperator($operator) ) {
             require_once 'Xyster/Orm/Query/Parser/Exception.php';
-            throw new Xyster_Orm_Query_Parser_Exception('DATA_BAD_OPERATOR', $operator, 'EXPRESSION');
+            throw new Xyster_Orm_Query_Parser_Exception('Invalid expression operator: ' . $operator);
         }
 
         array_shift($exp);
 
         if ( ( $operator == "BETWEEN" || $operator == "NOT BETWEEN" ) && count($exp) != 3 ) {
             require_once 'Xyster/Orm/Query/Parser/Exception.php';
-            throw new Xyster_Orm_Query_Parser_Exception('DATA_BAD_LITERAL', implode(" ",$exp));
+            throw new Xyster_Orm_Query_Parser_Exception('Invalid literal: ' . implode(" ",$exp));
         }
 
         if ( $operator == "IN" || $operator == "NOT IN" ) {
@@ -296,7 +296,7 @@ class Xyster_Orm_Query_Parser
             $matches = array();
             if ( !preg_match('/^\([\s]*(?P<choices>.*)[\s]*\)$/',$rightlit,$matches) ) {
                 require_once 'Xyster/Orm/Query/Parser/Exception.php';
-                throw new Xyster_Orm_Query_Parser_Exception('DATA_BAD_LITERAL',$rightlit );
+                throw new Xyster_Orm_Query_Parser_Exception('Invalid literal: ' . $rightlit);
             }
             else {
                 $inChoices = Xyster_String::smartSplit(',',$matches['choices']);
@@ -409,7 +409,7 @@ class Xyster_Orm_Query_Parser
         $parts = self::_baseParseQuery($query,$statement,$expecting);
         if ( empty($parts['select']) ) {
             require_once 'Xyster/Orm/Query/Parser/Exception.php';
-            throw new Xyster_Orm_Query_Parser_Exception('ORM_BAD_STATEMENT', $statement );
+            throw new Xyster_Orm_Query_Parser_Exception('Invalid statement: ' . $statement);
         }
 
         $matches = array();
@@ -444,18 +444,15 @@ class Xyster_Orm_Query_Parser
     {
         $statement = trim($statement);
         $matches = array();
-        $dir = "ASC";
+        $dir = 'ASC';
 
-        if ( preg_match("/[\s]+(?P<dir>ASC|DESC)$/i",$statement,$matches) ) {
+        if ( preg_match('/\s+(?P<dir>ASC|DESC)$/i', $statement, $matches) ) {
             $dir = $matches["dir"];
-            $statement = trim(str_replace($matches[0],"",$statement));
+            $statement = trim(str_replace($matches[0], "", $statement));
         }
-        $field = self::parseField($statement);
-        
-        require_once 'Xyster/Data/Sort.php';
 
-        return ( !strcasecmp($dir,"DESC") ) ? Xyster_Data_Sort::desc($field) :
-            Xyster_Data_Sort::asc($field);
+        $field = self::parseField($statement);
+        return (!strcasecmp($dir, 'DESC')) ? $field->desc() : $field->asc();
     }
     
     /**
@@ -472,7 +469,7 @@ class Xyster_Orm_Query_Parser
             }
         } else if ( !self::_checkLiteral($lit) ) {
             require_once 'Xyster/Orm/Query/Parser/Exception.php';
-            throw new Xyster_Orm_Query_Parser_Exception('DATA_BAD_LITERAL',$lit );
+            throw new Xyster_Orm_Query_Parser_Exception('Invalid literal: ' . $lit);
         }
     }
     
@@ -569,8 +566,6 @@ class Xyster_Orm_Query_Parser
         Xyster_Orm_Loader::loadEntityClass($className);
 
         $calls = Xyster_String::smartSplit('->',trim($field));
-        
-        echo $field;
 
         if ( count($calls) == 1 ) {
             
@@ -662,7 +657,7 @@ class Xyster_Orm_Query_Parser
     {
         if (!in_array($type, array('select', 'group', 'order'))) {
             require_once 'Xyster/Orm/Query/Parser/Exception.php';
-            throw new Xyster_Orm_Query_Parser_Exception('ORM_CLAUSE_TYPE');
+            throw new Xyster_Orm_Query_Parser_Exception('Unknown clause type: ' . $type);
         }
 
         $call = array(

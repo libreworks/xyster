@@ -61,6 +61,7 @@ class Xyster_Orm_Query_Report extends Xyster_Orm_Query
      */
     public function execute()
     {
+        // make sure all fields are either grouped or aggregates
         if ( count($this->_parts[self::GROUP]) ) {
             $groups = array();
             foreach( $this->_parts[self::GROUP] as $group ) {
@@ -74,32 +75,41 @@ class Xyster_Orm_Query_Report extends Xyster_Orm_Query
                 }
         }
 
-        $map = Xyster_Orm_Mapper::factory($this->_table);
+        $map = Xyster_Orm_Mapper::factory($this->_class);
+        // run the query in the backend
         $collection = $map->getBackend()->query($this);
         if ( $collection instanceof Xyster_Data_Set &&
-            ! $collection instanceof Xyster_Orm_Collection ) {
+            ! $collection instanceof Xyster_Orm_Set ) {
+            // if it's not an entity set, the whole thing was in the backend;
+	        // it's safe to just return it
             return $collection;
         }
 
+        // put all returned entities in the cache
         foreach( $collection as $entity ) {
             $this->_putInSecondaryCache($entity);
         }
 
+        // apply any runtime filters to the entity set
         if ( count($this->_runtime[Xyster_Orm_Query::WHERE]) ) {
             $collection->filter(Xyster_Data_Criterion::fromArray('AND', $this->_runtime[Xyster_Orm_Query::WHERE]));
         }
 
+        $fieldsAndGroups = array_merge($this->_parts[self::GROUP], $this->_parts[self::FIELDS]);
+        
+        // setup the Xyster_Data_Set and add the columns to return
         $rs = new Xyster_Data_Set();
-
-        foreach( array_merge($this->_parts[self::GROUP], $this->_parts[self::FIELDS]) as $field ) {
+        foreach( $fieldsAndGroups  as $field ) {
             $rs->addColumn( $field->getAlias() );
         }
+
         if ( $this->_parts[self::GROUP] ) {
             
+            // let Xyster_Data_Tuple do the work for runtime grouping
             Xyster_Data_Tuple::makeTuples(
                 $rs,
                 $collection,
-                array_merge($this->_parts[self::FIELDS], $this->_parts[self::GROUP]),
+                $fieldsAndGroups,
                 $this->_parts[self::HAVING],
                 $this->_parts[Xyster_Orm_Query::LIMIT],
                 $this->_parts[Xyster_Orm_Query::OFFSET]
@@ -107,6 +117,7 @@ class Xyster_Orm_Query_Report extends Xyster_Orm_Query
                 
         } else {
             
+            // check to see if the fields contain an aggregate
             $aggregate = false;
             foreach( $this->_parts[self::FIELDS] as $field ) {
                 if ( $field instanceof Xyster_Data_Field_Aggregate ) {
@@ -115,9 +126,11 @@ class Xyster_Orm_Query_Report extends Xyster_Orm_Query
                 }
             }
             if ( $aggregate ) {
+                // just one row that contains aggregates
                 $tuple = new Xyster_Data_Tuple(array(), $collection);
                 $rs->add($tuple->toRow($this->_parts[self::FIELDS]));
             } else {
+                // add the values to the set (enforcing limit & offset)
                 foreach( $collection as $offset=>$entity ) {
                     if ( $offset >= $this->_parts[Xyster_Orm_Query::OFFSET] ) {
                         $values = array();
@@ -134,10 +147,12 @@ class Xyster_Orm_Query_Report extends Xyster_Orm_Query
             }
         }
 
+        // apply any runtime sort order to the entity set
         if ( $this->_runtime[Xyster_Orm_Query::ORDER] ) {
             $sorts = array();
             foreach( $this->_parts[Xyster_Orm_Query::ORDER] as $sort ) {
                 foreach( $this->_parts[self::FIELDS] as $field ) {
+                    // make sure the sort field is actually in those returned
                     if ( $sort->getField()->getName() == $field->getName() ) {
                         $sorts[] = $sort;
                         break;
@@ -159,12 +174,12 @@ class Xyster_Orm_Query_Report extends Xyster_Orm_Query
      */
     public function field( Xyster_Data_Field $field )
     {
-        if ( $field instanceof Xyster_Data_Field_Grouped ) {
+        if ( $field instanceof Xyster_Data_Field_Group ) {
             return $this->group($field);
         }
         
-        Xyster_Orm_Query_Parser::assertValidColumnForClass($field,$this->_table);
-        $this->_runtime[self::FIELDS] |= Xyster_Orm_Query_Parser::isRuntime($field,$this->_table);
+        Xyster_Orm_Query_Parser::assertValidColumnForClass($field, $this->_class);
+        $this->_runtime[self::FIELDS] |= Xyster_Orm_Query_Parser::isRuntime($field, $this->_class);
         
         return $this;
     }
@@ -202,13 +217,13 @@ class Xyster_Orm_Query_Report extends Xyster_Orm_Query
     /**
      * Adds grouped field to this report query 
      *
-     * @param Xyster_Data_Field_Grouped $group
+     * @param Xyster_Data_Field_Group $group
      * @return Xyster_Orm_Query_Report provides a fluent interface
      */
-    public function group( Xyster_Data_Field_Grouped $group )
+    public function group( Xyster_Data_Field_Group $group )
     {
-        Xyster_Orm_Query_Parser::assertValidFieldForClass($group,$this->_table);
-        $this->_runtime[self::GROUP] |= Xyster_Orm_Query_Parser::isRuntime($group,$this->_table);
+        Xyster_Orm_Query_Parser::assertValidFieldForClass($group, $this->_class);
+        $this->_runtime[self::GROUP] |= Xyster_Orm_Query_Parser::isRuntime($group, $this->_class);
         
         return $this;
     }
@@ -229,7 +244,7 @@ class Xyster_Orm_Query_Report extends Xyster_Orm_Query
         $aggs = 0;
         $fields = $having->getFields();
         foreach ( $fields as $field ) {
-            Xyster_Orm_Query_Parser::assertValidFieldForClass($field,$this->_table);
+            Xyster_Orm_Query_Parser::assertValidFieldForClass($field, $this->_class);
             $aggs += ($field instanceof Xyster_Data_Field_Aggregate) ? 1 : 0;
         }
 
@@ -238,7 +253,7 @@ class Xyster_Orm_Query_Report extends Xyster_Orm_Query
             throw new Xyster_Orm_Query_Excepton('The criterion provided must contain only aggregated fields');
         }
         
-        if ( Xyster_Orm_Query_Parser::isRuntime($having,$this->_table) ) {
+        if ( Xyster_Orm_Query_Parser::isRuntime($having, $this->_class) ) {
             $this->_runtime[self::GROUP] = true;
         }
         

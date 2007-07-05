@@ -36,20 +36,40 @@ class Xyster_Orm_Query
     const ORDER = 'order';
     const LIMIT = 'limit';
     const OFFSET = 'offset';
-    
-    protected $_table = "";
+
+    /**
+     * The entity being queried
+     *
+     * @var string
+     */
+    protected $_class = '';
+    /**
+     * The parts of the query
+     * 
+     * @var array
+     */
     protected $_parts = array();
+    /**
+     * The parts of the query that can be used in the backend
+     *
+     * @var array
+     */
     protected $_backend = array();
+    /**
+     * The parts of the query that must be used at runtime
+     *
+     * @var array
+     */
     protected $_runtime = array();
 
     /**
      * Creates a new query object
      *
-     * @param string $table  The table to query
+     * @param string $class  The entity to query
      */
-    public function __construct( $table )
+    public function __construct( $class )
     {
-        $this->_table = $table;
+        $this->_class = $class;
         $this->_initParts();
     }
     
@@ -60,17 +80,23 @@ class Xyster_Orm_Query
      */
     public function execute()
     {
-        $map = Xyster_Orm_Mapper::factory($this->_table);
+        $map = Xyster_Orm_Mapper::factory($this->_class);
 
+        // execute the query in the backend
 		$set = $map->getBackEnd()->query($this);
+		// add returned entities to the cache
+        foreach( $set as $entity ) {
+            $this->_putInSecondaryCache($entity);
+        }
 
+        // apply any runtime filters to the entity set
 		if ( count($this->_runtime[self::WHERE]) ) {
-    		$set->filter( Xyster_Data_Criterion::fromArray('AND',$this->_runtime[self::WHERE]) );
+    		$set->filter(Xyster_Data_Criterion::fromArray('AND', $this->_runtime[self::WHERE]));
 		}
 
+		// if the query is runtime, enforce the offset and limit
 		if ( ( $this->_parts[self::LIMIT] || $this->_parts[self::OFFSET] )
-		    && ( $this->_runtime[self::ORDER] || count($this->_runtime[self::WHERE]) ) ) {
-
+		    && $this->isRuntime() ) {
 			$entities = $map->getSet();
 			$offset = 0;
 			foreach( $set as $entity ) {
@@ -78,7 +104,6 @@ class Xyster_Orm_Query
 				    $offset++;
 				} else { 
 				    $entities->add($entity);
-				    $this->_putInSecondaryCache($entity);
 				}
 				if ( $this->_parts[self::LIMIT] && count($entities) == $this->_parts[self::LIMIT] ) {
 				    break;
@@ -87,6 +112,7 @@ class Xyster_Orm_Query
 			$set = $entities;
 		}
 		
+		// apply any runtime sort ordering to the entity set
 		if ( $this->_runtime[self::ORDER] ) {
 			$set->sortBy($this->_parts[self::ORDER]);
 		}
@@ -110,7 +136,7 @@ class Xyster_Orm_Query
      */
     public function getFrom()
     {
-        return $this->_table;
+        return $this->_class;
     }
 
     /**
@@ -120,7 +146,7 @@ class Xyster_Orm_Query
      */
     public function getLimit()
     {
-        return $this->getPart( self::LIMIT );
+        return $this->getPart(self::LIMIT);
     }
 
     /**
@@ -130,7 +156,7 @@ class Xyster_Orm_Query
      */
     public function getOffset()
     {
-        return $this->getPart( self::OFFSET );
+        return $this->getPart(self::OFFSET);
     }
 
     /**
@@ -140,7 +166,7 @@ class Xyster_Orm_Query
      */
     public function getOrder()
     {
-        return $this->getPart( self::ORDER );
+        return $this->getPart(self::ORDER);
     }
 
     /**
@@ -151,7 +177,7 @@ class Xyster_Orm_Query
      */
     public function getPart( $part )
     {
-        return ( array_key_exists($part,$this->_parts) ) ?
+        return ( array_key_exists($part, $this->_parts) ) ?
             $this->_parts[$part] : null;
     }
 
@@ -162,7 +188,7 @@ class Xyster_Orm_Query
      */
     public function getWhere()
     {
-        return $this->getPart( self::WHERE );
+        return $this->getPart(self::WHERE);
     }
 
     /**
@@ -217,8 +243,8 @@ class Xyster_Orm_Query
      */
     public function order( Xyster_Data_Sort $order )
     {
-        Xyster_Orm_Query_Parser::assertValidFieldForClass($order->getField(), $this->_table);
-        $this->_runtime[self::ORDER] |= Xyster_Orm_Query_Parser::isRuntime($order, $this->_table);
+        Xyster_Orm_Query_Parser::assertValidFieldForClass($order->getField(), $this->_class);
+        $this->_runtime[self::ORDER] |= Xyster_Orm_Query_Parser::isRuntime($order, $this->_class);
             
         $this->_parts[self::ORDER][] = $order;
         
@@ -238,10 +264,10 @@ class Xyster_Orm_Query
                 require_once 'Xyster/Orm/Query/Exception.php';
                 throw new Xyster_Orm_Query_Exception('Aggregated fields are not allowed in this query');
             }
-            Xyster_Orm_Query_Parser::assertValidFieldForClass($field,$this->_table);
+            Xyster_Orm_Query_Parser::assertValidFieldForClass($field, $this->_class);
         }
         
-        if ( Xyster_Orm_Query_Parser::isRuntime($where, $this->_table) ) {
+        if ( Xyster_Orm_Query_Parser::isRuntime($where, $this->_class) ) {
             $this->_runtime[self::WHERE][] = $where;
         } else {
             $this->_backend[self::WHERE][] = $where;
@@ -285,12 +311,12 @@ class Xyster_Orm_Query
         // that's why we have the primary repository
         if ( $repo && $cacheLifetime > -1 ) {
             
-            $repoId = array( 'Xyster_Orm', $map->getDomain(), $className );
+            $repoId = array('Xyster_Orm', $map->getDomain(), $className);
             foreach( $entity->getPrimaryKey() as $key => $value ) {
                 $repoId[] = $key . '=' . $value;
             }
-            $repoId = md5(implode("/",$repoId));
-            $repo->save( $repoId, $entity, null, $cacheLifetime );
+            $repoId = md5(implode("/", $repoId));
+            $repo->save($repoId, $entity, null, $cacheLifetime);
 
         }
     }

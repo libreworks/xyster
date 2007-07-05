@@ -43,7 +43,7 @@ class Xyster_Data_Field_Aggregate extends Xyster_Data_Field
      * @param string $name  The field name (be it a property, column, whatever)
      * @param string $alias  The alias for this field
      */
-    protected function __construct( Xyster_Data_Aggregate $function, $name, $alias=null )
+    protected function __construct( Xyster_Data_Aggregate $function, $name, $alias = null )
     {
         parent::__construct($name, $alias);
         $this->_function = $function;
