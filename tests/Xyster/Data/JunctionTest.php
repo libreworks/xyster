@@ -29,6 +29,10 @@ require_once 'PHPUnit/Framework/TestCase.php';
  */
 require_once 'Xyster/Data/Junction.php';
 /**
+ * @see Xyster_Data_Expression
+ */
+require_once 'Xyster/Data/Expression.php';
+/**
  * Test for Xyster_Data_Junction
  *
  */
@@ -46,7 +50,7 @@ class Xyster_Data_JunctionTest extends PHPUnit_Framework_TestCase
         $expr1 = Xyster_Data_Expression::eq('field1', 'foo');
         $expr2 = Xyster_Data_Expression::like('field2', '%bar');
         $all = Xyster_Data_Junction::all($expr1, $expr2);
-        $this->_testStaticFactory($all, 'ANY', $expr1, $expr2);
+        $this->_testStaticFactory($all, 'AND', $expr1, $expr2);
     }
     public function testToString()
     {
@@ -55,7 +59,7 @@ class Xyster_Data_JunctionTest extends PHPUnit_Framework_TestCase
         $expr3 = Xyster_Data_Expression::gt('field3', 1);
         $all = Xyster_Data_Junction::all($expr1, $expr2);
         $all->add($expr3);
-        $this->assertEquals("( $expr1 AND $expr2 AND $expr3 )");
+        $this->assertEquals("( $expr1 AND $expr2 AND $expr3 )", (string)$all);
     }
     /**
      * @todo test add
@@ -63,7 +67,8 @@ class Xyster_Data_JunctionTest extends PHPUnit_Framework_TestCase
      */
     public function testAdd()
     {
-        
+        // test criteria is added to junction
+	    // if criteria is junction with same operator, just append contents
     }
     public function testGetCriteria()
     {

@@ -98,7 +98,7 @@ class Xyster_Data_Field
     {
         $value = null;
         if ( is_array($object) || $object instanceof ArrayAccess ) {
-            if ( !isset($object[$this->_name]) ) {
+            if ( !isset($object[$this->_name]) && !array_key_exists($this->_name, $object) ) {
                 require_once 'Xyster/Data/Field/Exception.php';
                 throw new Xyster_Data_Field_Exception("Field name '{$this->_name}' is invalid");
             }

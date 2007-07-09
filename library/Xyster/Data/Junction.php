@@ -55,7 +55,7 @@ class Xyster_Data_Junction extends Xyster_Data_Criterion
      * @param Xyster_Data_Criterion $rc
      * @param string $operator
      */
-    private function __construct( Xyster_Data_Criterion $lc, Xyster_Data_Criterion $rc, $operator )
+    protected function __construct( Xyster_Data_Criterion $lc, Xyster_Data_Criterion $rc, $operator )
     {
         $this->_operator = $operator;
 
@@ -128,7 +128,7 @@ class Xyster_Data_Junction extends Xyster_Data_Criterion
     public function getCriteria()
     {
         require_once 'Xyster/Collection.php';
-        return Xyster_Collection::fixedCollection($this->_criteria);
+        return Xyster_Collection::using($this->_criteria, true);
     }
 
     /**

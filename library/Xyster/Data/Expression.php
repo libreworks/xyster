@@ -77,9 +77,10 @@ class Xyster_Data_Expression extends Xyster_Data_Criterion
      * @param string $operator
      * @param mixed $value
      */
-    private function __construct( $field, $operator, $value )
+    protected function __construct( $field, $operator, $value )
     {
         if (! $field instanceof Xyster_Data_Field) {
+            require_once 'Xyster/Data/Field.php';
             $field = Xyster_Data_Field::named($field);
         }
         $this->_left = $field;

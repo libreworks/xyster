@@ -33,6 +33,7 @@ require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once 'Xyster/Data/AggregateTest.php';
+require_once 'Xyster/Data/JunctionTest.php';
 
 error_reporting(E_ALL | E_STRICT);
 
@@ -47,6 +48,7 @@ class Xyster_Data_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Xyster Framework - Xyster_Data');
         $suite->addTestSuite('Xyster_Data_AggregateTest');
+        $suite->addTestSuite('Xyster_Data_JunctionTest');
         return $suite;
     }
 }
