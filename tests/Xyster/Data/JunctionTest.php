@@ -52,6 +52,20 @@ class Xyster_Data_JunctionTest extends PHPUnit_Framework_TestCase
         $all = Xyster_Data_Junction::all($expr1, $expr2);
         $this->_testStaticFactory($all, 'AND', $expr1, $expr2);
     }
+    public function testSameOperator()
+    {
+        $all = Xyster_Data_Junction::all(
+            Xyster_Data_Junction::all(
+                Xyster_Data_Expression::eq('field1', 'foo'),
+                Xyster_Data_Expression::like('field2', '%bar')
+            ),
+            Xyster_Data_Junction::all(
+                Xyster_Data_Expression::eq('field3', 'foo'),
+                Xyster_Data_Expression::like('field4', '%bar')
+            )
+        );
+        $this->assertEquals(4, count($all->getCriteria()));
+    }
     public function testToString()
     {
         $expr1 = Xyster_Data_Expression::eq('field1', 'foo');
@@ -61,14 +75,20 @@ class Xyster_Data_JunctionTest extends PHPUnit_Framework_TestCase
         $all->add($expr3);
         $this->assertEquals("( $expr1 AND $expr2 AND $expr3 )", (string)$all);
     }
-    /**
-     * @todo test add
-     *
-     */
     public function testAdd()
     {
+        $junc = Xyster_Data_Junction::all( 
+            Xyster_Data_Expression::eq('foo', 'bar'),
+            Xyster_Data_Expression::eq('meaning', 42));
         // test criteria is added to junction
+        $junc->add(Xyster_Data_Expression::eq('capitalOfNebraska', 'Lincoln'));
+
+        $junc2 = Xyster_Data_Junction::all(
+	        Xyster_Data_Expression::eq('username', 'hawk'),
+                Xyster_Data_Expression::gt('posted', '2007-07-07'));
 	    // if criteria is junction with same operator, just append contents
+	    $junc->add($junc2);
+        $this->assertTrue($junc->getCriteria()->containsAll($junc2->getCriteria()));
     }
     public function testGetCriteria()
     {
@@ -104,7 +124,7 @@ class Xyster_Data_JunctionTest extends PHPUnit_Framework_TestCase
 	    $this->assertTrue($any->evaluate(array('category'=>'Misc',
 	        'title'=>'Testing framework', 'isTest'=>'Yeah')));
 	    // test 'OR' is false
-	    $this->assertTrue($any->evaluate(array('category'=>'Misc',
+	    $this->assertFalse($any->evaluate(array('category'=>'Misc',
 	        'title'=>'Testing framework', 'isTest'=>null)));
     }
     

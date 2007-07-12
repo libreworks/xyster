@@ -71,7 +71,7 @@ abstract class Xyster_Data_Criterion
     static public function getFields( Xyster_Data_Criterion $criteria )
     {
         require_once 'Xyster/Collection.php';
-        return Xyster_Collection::using( self::_getFields($criteria), true );
+        return Xyster_Collection::using(self::_getFields($criteria), true);
     }
 
     /**
@@ -85,12 +85,10 @@ abstract class Xyster_Data_Criterion
         $fields = array();
         if ( $criteria instanceof Xyster_Data_Junction ) {
             foreach( $criteria->_criteria as $crit ) {
-                $fields += self::_getFields($crit);
+                $fields = array_merge($fields, self::_getFields($crit));
             }
         } else {
-            if ( $criteria->getLeft() instanceof Xyster_Data_Field ) {
-                $fields[] = $criteria->getLeft();
-            }
+            $fields[] = $criteria->getLeft();
             if ( $criteria->getRight() instanceof Xyster_Data_Field ) {
                 $fields[] = $criteria->getRight();
             }

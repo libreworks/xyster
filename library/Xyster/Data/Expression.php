@@ -85,8 +85,8 @@ class Xyster_Data_Expression extends Xyster_Data_Criterion
         }
         $this->_left = $field;
         $this->_operator = $operator;
-        if ( $value === null ) {
-            $value = "NULL";
+        if ( $value == "NULL" ) {
+            $value = null;
         }
         $this->_right = $value;
     }
@@ -180,13 +180,6 @@ class Xyster_Data_Expression extends Xyster_Data_Criterion
                 eval(sprintf($eval,'!='));
                 break;
                 
-            case ">":
-            case "<":
-            case ">=":
-            case "<=":
-                eval(sprintf($eval,$this->_operator));
-                break;
-                
             case "LIKE":
             case "NOT LIKE":
                 $lookend = ( substr($value2,0,1) == '%' );
@@ -218,10 +211,15 @@ class Xyster_Data_Expression extends Xyster_Data_Criterion
                 break;
 
             case "NOT BETWEEN":
-                $bool = ( $value < $value2[0] ) && ( $value > $value2[1] );
+                $bool = ( $value < $value2[0] ) || ( $value > $value2[1] );
                 break;
     
+            case ">":
+            case "<":
+            case ">=":
+            case "<=":
             default:
+                eval(sprintf($eval,$this->_operator));
                 break;
         }
         return $bool;

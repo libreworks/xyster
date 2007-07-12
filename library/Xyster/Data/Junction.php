@@ -83,7 +83,7 @@ class Xyster_Data_Junction extends Xyster_Data_Criterion
      */
     public function add( Xyster_Data_Criterion $c )
     {
-        if ( $c instanceof Xyster_Data_Junction && $c->_operator == $operator ) {
+        if ( $c instanceof Xyster_Data_Junction && $c->_operator == $this->_operator ) {
             foreach( $c->_criteria as $criterion ) {
                 $this->_criteria[] = $criterion;
             }
