@@ -33,6 +33,10 @@ require_once 'Xyster/Data/Field.php';
  */
 require_once 'Xyster/Data/Aggregate.php';
 /**
+ * @see Xyster_Data_Set
+ */
+require_once 'Xyster/Data/Set.php';
+/**
  * Test for Xyster_Data_Field
  *
  */
@@ -51,9 +55,12 @@ class Xyster_Data_FieldAggregateTest extends PHPUnit_Framework_TestCase
     {
         $this->assertEquals('Smith', $this->_commonField->evaluate(array('userid'=>'Smith')));
         
-        /**
-         * @todo do something with dataset
-         */
+        $set = new Xyster_Data_Set();
+        $set->add(array('userid'=>'Smith'));
+        $set->add(array('userid'=>'Jones'));
+        $set->add(array('userid'=>'Brown'));
+        // test Field_Aggregate passes evaluation to the Data_Set
+        $this->assertEquals(3, $this->_commonField->evaluate($set));
     }
     public function testToString()
     {

@@ -39,6 +39,7 @@ require_once 'Xyster/Data/CriterionTest.php';
 require_once 'Xyster/Data/FieldTest.php';
 require_once 'Xyster/Data/FieldAggregateTest.php';
 require_once 'Xyster/Data/SortTest.php';
+require_once 'Xyster/Data/SetTest.php';
 
 error_reporting(E_ALL | E_STRICT);
 
@@ -59,6 +60,7 @@ class Xyster_Data_AllTests
         $suite->addTestSuite('Xyster_Data_FieldTest');
         $suite->addTestSuite('Xyster_Data_FieldAggregateTest');
         $suite->addTestSuite('Xyster_Data_SortTest');
+        $suite->addTestSuite('Xyster_Data_SetTest');
         return $suite;
     }
 }

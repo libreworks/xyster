@@ -65,9 +65,9 @@ class Xyster_Collection_BaseCollectionTest extends PHPUnit_Framework_TestCase
     public function testCount()
     {
         $c = $this->_getNewCollection();
-        $c->add(123);
-        $c->add(456);
-        $c->add(789);
+        $c->add($this->_getNewValue());
+        $c->add($this->_getNewValue());
+        $c->add($this->_getNewValue());
         $this->assertEquals(3,$c->count());
     }
     public function testAdd()
@@ -130,7 +130,7 @@ class Xyster_Collection_BaseCollectionTest extends PHPUnit_Framework_TestCase
         $val = $this->_getNewValue();
         $val2 = $this->_getNewValue();
         $val3 = $this->_getNewValue();
-        $val4 = 42; // the answer to everything
+        $val4 = $this->_getNewValue(); // the answer to everything
         $c->add( $val );
         $c->add( $val2 );
         $c->add( $val3 );
@@ -160,10 +160,10 @@ class Xyster_Collection_BaseCollectionTest extends PHPUnit_Framework_TestCase
     public function testToArray()
     {
         $c = $this->_getNewCollection();
-        $c->add(123);
-        $c->add(456);
-        $c->add(789);
-        $this->assertArrayHasKey(2,$c->toArray()); // 3 elements in array
+        $c->add($this->_getNewValue());
+        $c->add($this->_getNewValue());
+        $c->add($this->_getNewValue());
+        $this->assertArrayHasKey(2, $c->toArray()); // 3 elements in array
     }
     protected function _addRandomValues( Xyster_Collection_Interface $c )
     {

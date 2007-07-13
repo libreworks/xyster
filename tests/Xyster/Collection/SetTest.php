@@ -23,7 +23,7 @@
 /**
  * PHPUnit test case
  */
-require_once 'Xyster/Collection/CollectionTest.php';
+require_once 'Xyster/Collection/BaseCollectionTest.php';
 /**
  * Xyster_Collection
  */
@@ -32,7 +32,7 @@ require_once 'Xyster/Collection/Set.php';
  * Test for Xyster_Collection
  *
  */
-class Xyster_Collection_SetTest extends Xyster_Collection_CollectionTest
+class Xyster_Collection_SetTest extends Xyster_Collection_BaseCollectionTest
 {
     protected $_className = 'Xyster_Collection_Set';
 

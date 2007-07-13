@@ -98,7 +98,7 @@ class Xyster_Data_Set extends Xyster_Collection_Set_Sortable
             require_once 'Xyster/Data/Set/Exception.php';
             throw new Xyster_Data_Set_Exception('Columns cannot be added once items have been added');
         }
-        $this->_columns[$column] = Xyster_Data_Field::named($column);
+        $this->_columns->add(Xyster_Data_Field::named($column));
     }
     /**
      * Perform an aggregate function on a column
@@ -117,17 +117,15 @@ class Xyster_Data_Set extends Xyster_Collection_Set_Sortable
             case "MIN":
                 $value = min($this->fetchColumn($field));
                 break;
-            case "COUNT":
-                $value = count($this->_items);
-                break;
             case "SUM":
                 $value = array_sum($this->fetchColumn($field));
                 break;
             case "AVG":
                 $value = array_sum($this->fetchColumn($field))/count($this->_items);
                 break;
+            case "COUNT":
             default:
-                break;
+                $value = count($this->_items);
         }
         return $value;
     }
@@ -156,7 +154,7 @@ class Xyster_Data_Set extends Xyster_Collection_Set_Sortable
     public function fetchOne()
     {
         $value = null;
-        if ( $item = reset($this->_items) ) {
+        if ( $item = current($this->_items) ) {
             foreach( $item as $k=>$v ) {
                 $value = $v;
                 break;
@@ -173,9 +171,9 @@ class Xyster_Data_Set extends Xyster_Collection_Set_Sortable
      */
     public function fetchPairs( $key, $value )
     {
-        $field1 = (! $field1 instanceof Xyster_Data_Field) ?
+        $field1 = (! $key instanceof Xyster_Data_Field) ?
             Xyster_Data_Field::named($key) : $key;
-        $field2 = (! $field2 instanceof Xyster_Data_Field) ? 
+        $field2 = (! $value instanceof Xyster_Data_Field) ? 
             Xyster_Data_Field::named($value) : $value;
         $pairs = array();
         foreach( $this->_items as $v ) {
@@ -191,6 +189,15 @@ class Xyster_Data_Set extends Xyster_Collection_Set_Sortable
     public function filter( Xyster_Data_Criterion $criteria )
     {
         $this->_items = array_filter($this->_items, array($criteria, 'evaluate'));
+    }
+    /**
+     * Gets the columns that have been added to the set
+     *
+     * @return Xyster_Collection_Set
+     */
+    public function getColumns()
+    {
+        return Xyster_Collection::fixedSet($this->_columns);
     }
     /**
      * Sorts the collection by one or more columns and directions

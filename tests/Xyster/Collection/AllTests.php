@@ -34,6 +34,7 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once 'Xyster/Collection/CollectionTest.php';
 require_once 'Xyster/Collection/SetTest.php';
+require_once 'Xyster/Collection/SortableSetTest.php';
 require_once 'Xyster/Collection/ListTest.php';
 require_once 'Xyster/Collection/MapTest.php';
 require_once 'Xyster/Collection/MapStringTest.php';
@@ -57,6 +58,7 @@ class Xyster_Collection_AllTests
         $suite = new PHPUnit_Framework_TestSuite('Xyster Framework - Xyster_Collection');
         $suite->addTestSuite('Xyster_Collection_CollectionTest');
         $suite->addTestSuite('Xyster_Collection_SetTest');
+        $suite->addTestSuite('Xyster_Collection_SortableSetTest');
         $suite->addTestSuite('Xyster_Collection_ListTest');
         $suite->addTestSuite('Xyster_Collection_MapTest');
         $suite->addTestSuite('Xyster_Collection_MapStringTest');
