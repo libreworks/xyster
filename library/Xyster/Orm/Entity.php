@@ -47,7 +47,7 @@ class Xyster_Orm_Entity
     protected $_dirty = false;
     
     /**
-     * The primary keys
+     * The primary key(s)
      * 
      * @var array
      */
@@ -75,11 +75,13 @@ class Xyster_Orm_Entity
     public function __construct( array $values = null )
     {
         foreach( Xyster_Orm_Entity_Meta::getFields($this) as $name => $field ) {
+            /* @var $field Xyster_Orm_Entity_Field */
             $this->_values[$name] = null;
             if ( $field->isPrimary() ) {
                 $this->_primary[] = $name;
             }
         }
+
         if ( $values ) {
             $this->import($values);
         }
@@ -123,7 +125,7 @@ class Xyster_Orm_Entity
     public function __get( $name )
     {
         $isField = array_key_exists($name, $this->_values); 
-        if ( !$isField && !Xyster_Orm_Relation::isValid($this,$name) ) {
+        if ( !$isField && !Xyster_Orm_Relation::isValid($this, $name) ) {
             require_once 'Xyster/Orm/Entity/Exception.php';
             throw new Xyster_Orm_Entity_Exception("'" . $name . "' is not a valid field or relation name");
         }
@@ -163,13 +165,7 @@ class Xyster_Orm_Entity
         if ( !$this->_base ) {
             return $this->_values;
         }
-        $dirty = array();
-        foreach( $this->_values as $name => $value ) {
-            if ( $this->_base[$name] != $value ) {
-                 $dirty[$name] = $value;
-            }
-        }
-        return $dirty;
+        return array_diff_assoc($this->_values, $this->_base);
     }
 
     /**
@@ -180,12 +176,8 @@ class Xyster_Orm_Entity
      */
     public function getPrimaryKey( $base = false )
     {
-        $primary = array_flip($this->_primary);
-        if (!$base) {
-            return array_intersect_key($this->_values, $primary);
-        } else {
-            return array_intersect_key($this->_base, $primary);
-        }
+        return array_intersect_key((!$base ? $this->_values : $this->_base),
+            array_flip($this->_primary));
     }
 
     /**
@@ -202,12 +194,12 @@ class Xyster_Orm_Entity
         $criteria = null;
         foreach( $key as $name => $value ) {
             require_once 'Xyster/Data/Expression.php';
-            $thiskey = Xyster_Data_Expression::eq($name,$value);
+            $thiskey = Xyster_Data_Expression::eq($name, $value);
             if ( !$criteria ) {
                 $criteria = $thiskey;
             } else if ( $criteria instanceof Xyster_Data_Expression ) {
                 require_once 'Xyster/Data/Junction.php';
-                $criteria = Xyster_Data_Junction::all( $criteria, $thiskey );
+                $criteria = Xyster_Data_Junction::all($criteria, $thiskey);
             } else if ( $criteria instanceof Xyster_Data_Junction ) {
                 $criteria->add($thiskey);
             }
@@ -224,7 +216,7 @@ class Xyster_Orm_Entity
     public function import( array $values )
     {
         foreach( array_keys($this->_values) as $field ) {
-            $this->_values[$field] = array_key_exists($field,$values) ?
+            $this->_values[$field] = array_key_exists($field, $values) ?
                 $values[$field] : null;
         }
         $this->_base = $this->_values;
@@ -306,14 +298,10 @@ class Xyster_Orm_Entity
      */
     protected function _getRelated( $name )
     {
-        $linked = null;
-        if ( array_key_exists($name, $this->_related) ) {
-            $linked = $this->_related[$name];
-        } else {
-            $linked = Xyster_Orm_Relation::load($this, $name);
-            $this->_related[$name] = $linked;
+        if ( !array_key_exists($name, $this->_related) ) {
+            $this->_related[$name] = Xyster_Orm_Relation::load($this, $name);
         }
-        return $linked;
+        return $this->_related[$name];
     }
     
     /**

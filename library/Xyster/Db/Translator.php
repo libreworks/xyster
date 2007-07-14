@@ -19,6 +19,10 @@
  * @version   $Id$
  */
 /**
+ * @see Xyster_Db_Token
+ */
+require_once 'Xyster/Db/Token.php';
+/**
  * Translates objects in the Xyster_Data package into SQL fragments
  *
  * @category  Xyster
@@ -179,17 +183,22 @@ class Xyster_Db_Translator
 	public function translateExpression( Xyster_Data_Expression $tosql, $quote = true )
 	{
 		$binds = array();
+		
 		$sql = $this->translateField($tosql->getLeft(), $quote)->getSql() . ' ';
 		$val = $tosql->getRight();
 		$sql .= ( $val === null || $val == "NULL" ) ? 'IS' : $tosql->getOperator();
 		$sql .= ' ';
+		
 		if ( $val == "NULL" || $val === null ) {
 			$sql .= 'NULL';
 		} else if ( $val instanceof Xyster_Data_Field ) {
 			$sql .= $this->translateField($val, $quote)->getSql();
 		} else {
+		    
 			$bindName = ':P'.str_pad(dechex(crc32((string)$tosql)), 8, '0', STR_PAD_LEFT);
+			
 			if ( is_array($val) ) {
+			    
 				if ( substr($tosql->getOperator(),-7) == 'BETWEEN' ) {
 					$sql .= "{$bindName}1 AND {$bindName}2";
 					$binds[$bindName.'1'] = $val[0];
@@ -202,11 +211,14 @@ class Xyster_Db_Translator
 					}
 					$sql .= '('. implode(',',$quoted) . ')';
 				}
+				
 			} else {
 				$sql .= $bindName;
 				$binds[$bindName] = $val;
 			}
+			
 		}
-		return new Xyster_Db_Token($sql,$binds);
+
+		return new Xyster_Db_Token($sql, $binds);
 	}
 }

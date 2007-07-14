@@ -117,7 +117,7 @@ class Xyster_Orm_Relation
      * 
      * @var array
      */
-	static private $_types = array( 'belongs','one','many','joined' );
+	static private $_types = array('belongs', 'one', 'many', 'joined');
     
     /**
 	 * Create a new relationship
@@ -131,12 +131,12 @@ class Xyster_Orm_Relation
 	{	
 	    $declaringClass = $map->getEntityName();
 	    
-		if ( !in_array($type,self::$_types) ) {
+		if ( !in_array($type, self::$_types) ) {
 			require_once 'Xyster/Orm/Relation/Exception.php';
 			throw new Xyster_Orm_Relation_Exception("'" . $type . "' is an invalid relationship type");
 		}
 		
-		$class = ( array_key_exists('class',$options) ) ? $options['class'] : null;
+		$class = ( array_key_exists('class', $options) ) ? $options['class'] : null;
 		// determine the class if not provided
 		if ( !$class && ( $type == 'one' || $type == 'belongs' ) ) {
 			$class = ucfirst($name);
@@ -159,7 +159,8 @@ class Xyster_Orm_Relation
 		    $id = array($id);
 		}
 
-		$filters = ( array_key_exists('filters',$options) ) ? $options['filters'] : null;
+		$filters = ( array_key_exists('filters', $options) ) ?
+		    $options['filters'] : null;
 		if ( $filters ) {
 			$filters = Xyster_Orm_Query_Parser::parseCriterion($filters);
 		}
@@ -182,11 +183,11 @@ class Xyster_Orm_Relation
 			if ( $type == 'joined' ) {
 				$leftMap = $map;
 				$rightMap = Xyster_Orm_Mapper::factory($class);
-				$this->_joinTable = array_key_exists('table',$options) ? 
+				$this->_joinTable = array_key_exists('table', $options) ? 
 					$options['table'] : $leftMap->getTable().'_'.$rightMap->getTable();
-				$this->_joinLeft = array_key_exists('left',$options) ? 
+				$this->_joinLeft = array_key_exists('left', $options) ? 
 					$options['left'] : $leftMap->getPrimary();
-				$this->_joinRight = array_key_exists('right',$options) ?
+				$this->_joinRight = array_key_exists('right', $options) ?
 					$options['right'] : $rightMap->getPrimary();
 			}
 		}
@@ -334,7 +335,7 @@ class Xyster_Orm_Relation
             $entity = get_class($entity);
         }
 
-        return ( array_key_exists($entity,self::$_registry) ) ?
+        return ( array_key_exists($entity, self::$_registry) ) ?
             array_keys(self::$_registry[$entity]) : array();
     }
     /**
@@ -408,7 +409,7 @@ class Xyster_Orm_Relation
 			                $criteria = $thiskey;
 			            } else if ( $criteria instanceof Xyster_Data_Expression ) {
 			                require_once 'Xyster/Data/Junction.php';
-			                $criteria = Xyster_Data_Junction::all( $criteria, $thiskey );
+			                $criteria = Xyster_Data_Junction::all($criteria, $thiskey);
 			            } else if ( $criteria instanceof Xyster_Data_Junction ) {
 			                $criteria->add($thiskey);
 			            }
@@ -423,7 +424,7 @@ class Xyster_Orm_Relation
 				} else if ( $relation->_type == 'joined' ) {
 
 					$map = Xyster_Orm_Mapper::factory($relation->_from);
-					$linked = $map->getJoined($entity,$name);
+					$linked = $map->getJoined($entity, $name);
 
 				}
 				
@@ -626,7 +627,7 @@ class Xyster_Orm_Relation
     {
         $bt = debug_backtrace();
         if ( !isset($bt[2]) || !isset($bt[2]['class'])
-            || substr($bt[2]['class'],-6,6) != 'Mapper' ) {
+            || substr($bt[2]['class'], -6, 6) != 'Mapper' ) {
             require_once 'Xyster/Orm/Relation/Exception.php';
             throw new Xyster_Orm_Relation_Exception("This method must only be called from inside a Xyster_Orm_Mapper");
         }
@@ -640,7 +641,7 @@ class Xyster_Orm_Relation
         }
 
         self::$_registry[$declaringClass][$name] = 
-            new self($map,$type,$name,$options);
+            new self($map, $type, $name, $options);
             
         return self::$_registry[$declaringClass][$name];
     }
