@@ -43,18 +43,35 @@ class Xyster_Orm_Query
      * @var string
      */
     protected $_class = '';
+    
     /**
      * The parts of the query
      * 
      * @var array
      */
     protected $_parts = array();
+    
     /**
      * The parts of the query that can be used in the backend
      *
      * @var array
      */
     protected $_backend = array();
+    
+    /**
+     * The mapper factory
+     *
+     * @var Xyster_Orm_Mapper_Factory_Interface
+     */
+    protected $_mapFactory;
+    
+    /**
+     * The query parser
+     *
+     * @var Xyster_Orm_Query_Parser
+     */
+    protected $_parser;
+    
     /**
      * The parts of the query that must be used at runtime
      *
@@ -67,10 +84,12 @@ class Xyster_Orm_Query
      *
      * @param string $class  The entity to query
      */
-    public function __construct( $class )
+    public function __construct( $class, Xyster_Orm_Mapper_Factory_Interface $mapFactory )
     {
         $this->_class = $class;
+        $this->_mapFactory = $mapFactory;
         $this->_initParts();
+        $this->_parser = new Xyster_Orm_Query_Parser($mapFactory);
     }
     
     /**
@@ -80,10 +99,10 @@ class Xyster_Orm_Query
      */
     public function execute()
     {
-        $map = Xyster_Orm_Mapper::factory($this->_class);
+        $map = $this->_mapFactory($this->_class);
 
         // execute the query in the backend
-		$set = $map->getBackEnd()->query($this);
+		$set = $map->query($this);
 		// add returned entities to the cache
         foreach( $set as $entity ) {
             $this->_putInSecondaryCache($entity);
@@ -243,8 +262,8 @@ class Xyster_Orm_Query
      */
     public function order( Xyster_Data_Sort $order )
     {
-        Xyster_Orm_Query_Parser::assertValidFieldForClass($order->getField(), $this->_class);
-        $this->_runtime[self::ORDER] |= Xyster_Orm_Query_Parser::isRuntime($order, $this->_class);
+        $this->_parser->assertValidFieldForClass($order->getField(), $this->_class);
+        $this->_runtime[self::ORDER] |= $this->_parser->isRuntime($order, $this->_class);
             
         $this->_parts[self::ORDER][] = $order;
         
@@ -264,10 +283,10 @@ class Xyster_Orm_Query
                 require_once 'Xyster/Orm/Query/Exception.php';
                 throw new Xyster_Orm_Query_Exception('Aggregated fields are not allowed in this query');
             }
-            Xyster_Orm_Query_Parser::assertValidFieldForClass($field, $this->_class);
+            $this->_parser->assertValidFieldForClass($field, $this->_class);
         }
         
-        if ( Xyster_Orm_Query_Parser::isRuntime($where, $this->_class) ) {
+        if ( $this->_parser->isRuntime($where, $this->_class) ) {
             $this->_runtime[self::WHERE][] = $where;
         } else {
             $this->_backend[self::WHERE][] = $where;
@@ -304,7 +323,7 @@ class Xyster_Orm_Query
     {
         $repo = Xyster_Orm::getSecondaryCache();
         $className = get_class($entity);
-        $map = Xyster_Orm_Mapper::factory($className);
+        $map = $this->_mapFactory($className);
         $cacheLifetime = $map->getLifetime();
 
         // only store the entity if it should be cached longer than the request

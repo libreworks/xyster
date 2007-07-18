@@ -47,13 +47,6 @@ class Xyster_Orm_Entity
     protected $_dirty = false;
     
     /**
-     * The primary key(s)
-     * 
-     * @var array
-     */
-    protected $_primary = array();
-    
-    /**
      * Related entities or sets
      * 
      * @var array 
@@ -68,18 +61,21 @@ class Xyster_Orm_Entity
     protected $_values = array();
 
     /**
+     * Entity meta-data (fields, relations, etc.)
+     *
+     * @var Xyster_Orm_Entity_Meta[]
+     */
+    static private $_meta = array();
+    
+    /**
      * Creates a new entity
      * 
      * @param array $values Values for the entity
      */
     public function __construct( array $values = null )
     {
-        foreach( Xyster_Orm_Entity_Meta::getFields($this) as $name => $field ) {
-            /* @var $field Xyster_Orm_Entity_Field */
+        foreach( $this->_getMeta()->getFieldNames() as $name ) {
             $this->_values[$name] = null;
-            if ( $field->isPrimary() ) {
-                $this->_primary[] = $name;
-            }
         }
 
         if ( $values ) {
@@ -87,6 +83,23 @@ class Xyster_Orm_Entity
         }
     }
 
+    /**
+     * Adds an entity meta information object
+     * 
+     * This shouldn't be called except by the Xyster_Orm_Mapper
+     * 
+     * @param Xyster_Orm_Entity_Meta $meta
+     * @throws Xyster_Orm_Entity_Exception if the metainfo for the class is already defined
+     */
+    static public function setMeta( Xyster_Orm_Entity_Meta $meta )
+    {
+        if ( array_key_exists($meta->getEntityName(), self::$_meta) ) {
+            require_once 'Xyster/Orm/Entity/Exception.php';
+            throw new Xyster_Orm_Entity_Exception('Metadata already defined for ' . $meta->getEntityName());
+        }
+        self::$_meta[ $meta->getEntityName() ] = $meta;
+    }
+    
     /**
      * Overloader for getting/setting linked properties
      *
@@ -125,7 +138,7 @@ class Xyster_Orm_Entity
     public function __get( $name )
     {
         $isField = array_key_exists($name, $this->_values); 
-        if ( !$isField && !Xyster_Orm_Relation::isValid($this, $name) ) {
+        if ( !$isField && !$this->_getMeta()->isRelation($name) ) {
             require_once 'Xyster/Orm/Entity/Exception.php';
             throw new Xyster_Orm_Entity_Exception("'" . $name . "' is not a valid field or relation name");
         }
@@ -177,7 +190,7 @@ class Xyster_Orm_Entity
     public function getPrimaryKey( $base = false )
     {
         return array_intersect_key((!$base ? $this->_values : $this->_base),
-            array_flip($this->_primary));
+            array_flip($this->_getMeta()->getPrimary()));
     }
 
     /**
@@ -241,7 +254,7 @@ class Xyster_Orm_Entity
      */
     public function isLoaded( $name )
     {
-        Xyster_Orm_Relation::get(get_class($this), $name); // to test validity
+        $this->_getMeta()->getRelation($name); // to test validity
 	    return array_key_exists($name, $this->_related);
     }
     
@@ -299,7 +312,7 @@ class Xyster_Orm_Entity
     protected function _getRelated( $name )
     {
         if ( !array_key_exists($name, $this->_related) ) {
-            $this->_related[$name] = Xyster_Orm_Relation::load($this, $name);
+            $this->_related[$name] = $this->_getMeta()->getRelation($name)->load($this);
         }
         return $this->_related[$name];
     }
@@ -329,7 +342,7 @@ class Xyster_Orm_Entity
      */
     protected function _setRelated( $name, $value )
     {
-        $info = Xyster_Orm_Relation::get($this, $name);
+        $info = $this->_getMeta()->getRelation($name);
         $class = $info->getTo();
 
         if (! $value instanceof $class ) {
@@ -356,5 +369,16 @@ class Xyster_Orm_Entity
 
         $this->_related[$name] = $value;
         $this->_dirty = true;
+    }
+    
+    /**
+     * Gets the entity meta
+     * 
+     * @return Xyster_Orm_Entity_Meta
+     */
+    protected function _getMeta()
+    {
+        return array_key_exists(get_class($this), self::$_meta) ?
+            self::$_meta[get_class($this)] : null; 
     }
 }

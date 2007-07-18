@@ -65,6 +65,23 @@ class Xyster_Orm_Repository
     protected $_items = array();
     
     /**
+     * The mapper factory
+     *
+     * @var Xyster_Orm_Mapper_Factory_Interface
+     */
+    protected $_mapFactory;
+    
+    /**
+     * Creates a new entity repository
+     *
+     * @param Xyster_Orm_Mapper_Factory_Interface $mapFactory
+     */
+    public function __construct( Xyster_Orm_Mapper_Factory_Interface $mapFactory )
+    {
+        $this->_mapFactory = $mapFactory;
+    }
+    
+    /**
      * Adds an entity to the repository
      * 
      * @param Xyster_Orm_Entity $entity
@@ -290,8 +307,7 @@ class Xyster_Orm_Repository
      */
     protected function _getMapper( Xyster_Orm_Entity $entity )
     {
-        require_once 'Xyster/Orm/Mapper.php';
-        return Xyster_Orm_Mapper::factory( get_class($entity) );
+        $this->_mapFactory->get(get_class($entity));
     }
 
     /**

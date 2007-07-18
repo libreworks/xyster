@@ -19,10 +19,6 @@
  * @version   $Id$
  */
 /**
- * @see Xyster_Orm_Mapper
- */
-require_once 'Xyster/Orm/Mapper.php';
-/**
  * A factory and instance for entity relationships
  *
  * @category  Xyster
@@ -107,11 +103,12 @@ class Xyster_Orm_Relation
     protected $_reverse;
     
     /**
-     * The container for instantiated relations
+     * The mapper factory
      *
-     * @var array 
+     * @var Xyster_Orm_Mapper_Factory_Interface
      */
-    static protected $_registry = array();
+    protected $_mapFactory;
+
     /**
      * The acceptable types
      * 
@@ -127,33 +124,33 @@ class Xyster_Orm_Relation
 	 * @param string $name  The name of the relationship
 	 * @param array $options  An array of options
 	 */
-	protected function __construct( Xyster_Orm_Mapper $map, $type, $name, array $options = array() )
+	public function __construct( Xyster_Orm_Entity_Meta $meta, $type, $name, array $options = array() )
 	{	
-	    $declaringClass = $map->getEntityName();
+	    $declaringClass = $meta->getEntityName();
+	    $this->_mapFactory = $meta->getMapperFactory();
 	    
 		if ( !in_array($type, self::$_types) ) {
 			require_once 'Xyster/Orm/Relation/Exception.php';
 			throw new Xyster_Orm_Relation_Exception("'" . $type . "' is an invalid relationship type");
 		}
-		
+
 		$class = ( array_key_exists('class', $options) ) ? $options['class'] : null;
 		// determine the class if not provided
 		if ( !$class && ( $type == 'one' || $type == 'belongs' ) ) {
 			$class = ucfirst($name);
 		} else if ( !$class && ( $type == 'many' || $type == 'joined' ) ) { 
-			$class = ( substr($name,-1) == 's' ) ? substr($name,0,-1) : $name;
+			$class = ( substr($name,-1) == 's' ) ? substr($name, 0, -1) : $name;
 			$class = ucfirst($class);
 		}
 
-		$id = ( array_key_exists('id',$options) ) ? $options['id'] : null;
+		$id = ( array_key_exists('id', $options) ) ? $options['id'] : null;
 		// get the primary key from the mapper if not provided
 		if ( !$id && $type != 'joined' ) {
-		    $map = ( $type == 'many' ) ? $map : Xyster_Orm_Mapper::factory($class);
-	        $fields = $map->getFields();
-	        $id = array();
-	        foreach ( $fields as $field ) {
-	            $id[] = $field->getName();
-	        }
+		    // if it's a one-to-many, we're just using the declaring class' key
+	        // if it's a one-to-one, we need the related class' key
+		    $meta = ( $type == 'many' ) ? $meta :
+		        $this->_mapFactory->get($class)->getEntityMeta();
+	        $id = $meta->getPrimary();
 		}
 		if ( !is_array($id) ) {
 		    $id = array($id);
@@ -162,7 +159,9 @@ class Xyster_Orm_Relation
 		$filters = ( array_key_exists('filters', $options) ) ?
 		    $options['filters'] : null;
 		if ( $filters ) {
-			$filters = Xyster_Orm_Query_Parser::parseCriterion($filters);
+		    require_once 'Xyster/Orm/Query/Parser.php';
+		    $parser = new Xyster_Orm_Query_Parser($this->_mapFactory);
+			$filters = $parser->parseCriterion($filters);
 		}
 
 	    $this->_name = $name;
@@ -181,264 +180,16 @@ class Xyster_Orm_Relation
 //					$options['remove'] : (bool)$options['remove'];
 //			}
 			if ( $type == 'joined' ) {
-				$leftMap = $map;
-				$rightMap = Xyster_Orm_Mapper::factory($class);
+				$leftMap = $this->_mapFactory->get($declaringClass);
+				$rightMap = $this->_mapFactory->get($class);
 				$this->_joinTable = array_key_exists('table', $options) ? 
 					$options['table'] : $leftMap->getTable().'_'.$rightMap->getTable();
 				$this->_joinLeft = array_key_exists('left', $options) ? 
-					$options['left'] : $leftMap->getPrimary();
+					$options['left'] : $leftMap->getEntityMeta()->getPrimary();
 				$this->_joinRight = array_key_exists('right', $options) ?
-					$options['right'] : $rightMap->getPrimary();
+					$options['right'] : $rightMap->getEntityMeta()->getPrimary();
 			}
 		}
-    }
-
-	/**
-	 * Creates a 'one to one' relationship for entities on the 'many' end of a 'one to many' relationship
-	 * 
-	 * Options can contain the following values:
-	 * 
-	 * <dl>
-	 * <dt>class</dt><dd>The foreign class. The relation name by default</dd>
-	 * <dt>id</dt><dd>The name of the foreign key field(s) on the declaring
-	 * entity.  This should either be an array (if multiple) or a string (if
-	 * one).  By default, this is <var>class</var>Id</dd>
-	 * <dt>filters</dt><dd>In XSQL, any Criteria that should be used
-	 * against the entity to be loaded</dd>
-	 * </dl>
-	 * 
-	 * @param string $name  The name of the relationship
-	 * @param array $options  An array of options
-	 * @return Xyster_Orm_Relation  The relationship created
-	 */
-	static public function belongs( $name, array $options = array() )
-	{
-		return self::_baseCreate('belongs',$name,$options);
-	}
-	/**
-	 * Creates a 'one to one' relationship
-	 * 
-	 * Options can contain the following values:
-	 * 
-	 * <dl>
-	 * <dt>class</dt><dd>The foreign class. The relation name by default</dd>
-	 * <dt>id</dt><dd>The name of the foreign key field(s) on the declaring
-	 * entity.  This should either be an array (if multiple) or a string (if
-	 * one).  By default, this is <var>class</var>Id</dd>
-	 * <dt>filters</dt><dd>In XSQL, any Criteria that should be used
-	 * against the entity to be loaded</dd>
-	 * </dl>
-	 * 
-	 * @param string $name  The name of the relationship
-	 * @param array $options  An array of options
-	 * @return Xyster_Orm_Relation  The relationship created
-	 */
-	static public function one( $name, array $options = array() )
-	{
-		return self::_baseCreate('one',$name,$options);
-	}
-	/**
-	 * Creates a 'one to many' relationship 
-	 * 
-	 * Options can contain the following values:
-	 * 
-	 * <dl>
-	 * <dt>class</dt><dd>The foreign class.  The relation name minus a trailing
-	 * 's' by default</dd>
-	 * <dt>id</dt><dd>The name of the foreign key field(s) on the related
-	 * entity.  This should either be an array (if multiple) or a string (if
-	 * one).  By default, this is <var>class</var>Id</dd>
-	 * <dt>filters</dt><dd>In XSQL, any Criteria that should be used
-	 * against the entities to be loaded</dd>
-	 * </dl>
-	 * 
-	 * @param string $name  The name of the relationship
-	 * @param array $options  An array of options
-	 * @return Xyster_Orm_Relation  The relationship created 
-	 */	
-	static public function many( $name, array $options = array() )
-	{
-		return self::_baseCreate('many',$name,$options);
-	}
-	/**
-	 * Creates a 'many to many' relationship
-	 * 
-	 * <dl>
-	 * <dt>class</dt><dd>The class of entity to load through the join table. It
-	 * will be the relationship name minus a trailing 's' by default.</dd>
-	 * <dt>table</dt><dd>The join table name.  By default this will be
-	 * <var>declaring_class</var>_<var>class</var></dd>
-	 * <dt>left</dt><dd>The column(s) in the join table referencing the 
-	 * declaringClass entity. By default: <var>declaring_class</var>_id</dd>
-	 * <dt>right</dt><dd>The column(s) in the join table referencing the
-	 * foreign entity.  By default, it's <var>class_name</var>_id</dd>
-	 * <dt>filters</dt><dd>In XSQL, any Criteria that should be used
-	 * against the join table.  Column names should be specified in the format 
-	 * native to the data store (i.e. with underscores, not camelCase)</dd>
-	 * </dl>
-	 * 
-	 * @param string $name  The name of the relationship
-	 * @param array $options  An array of options
-	 * @return Xyster_Orm_Relation  The relationship created
-	 */
-	static public function joined( $name, array $options = array() )
-	{
-		return self::_baseCreate('joined',$name,$options);
-	}
-
-    /**
-     * Gets the relationship by name and entity
-     *
-     * @param mixed $entity Either a {@link Xyster_Orm_Entity} or the class name
-     * @param string $name The name of the relationship
-     * @return Xyster_Orm_Relation
-     * @throws Xyster_Orm_Relation_Exception if the relationship name is invalid 
-     */
-    static public function get( $entity, $name )
-    {
-        if ( is_object($entity) ) {
-            $entity = get_class($entity);
-        }
-
-        if ( !self::isValid($entity, $name) ) {
-            require_once 'Xyster/Orm/Relation/Exception.php';
-            throw new Xyster_Orm_Relation_Exception("'" . $name
-                . "' is not a valid relation for the '" . $entity . "' class");
-        }
-
-        return self::$_registry[$entity][$name];
-    }
-    /**
-     * Gets all relationships by entity
-     * 
-     * @param mixed $entity Either a {@link Xyster_Orm_Entity} or the class name
-     * @return array
-     */
-    static public function getAll( $entity )
-    {
-        if ( is_object($entity) ) {
-            $entity = get_class($entity);
-        }
-
-        return ( isset(self::$_registry[$entity]) ) ?
-            self::$_registry[$entity] : array();
-    }
-    /**
-     * Gets the names of any relationships the entity has
-     * 
-     * @param mixed $entity Either a {@link Xyster_Orm_Entity} or the class name
-     * @return array
-     */
-    static public function getNames( $entity )
-    {
-        if ( is_object($entity) ) {
-            $entity = get_class($entity);
-        }
-
-        return ( array_key_exists($entity, self::$_registry) ) ?
-            array_keys(self::$_registry[$entity]) : array();
-    }
-    /**
-     * Whether the entity supplied has a relationship with the name supplied
-     * 
-     * @param mixed $entity Either a {@link Xyster_Orm_Entity} or the class name
-     * @param string $name The name of the relationship
-     * @return boolean
-     */
-    static public function isValid( $entity, $name )
-    {
-        return in_array($name, self::getNames($entity));
-    }
-
-	/**
-	 * Loads the {@link Xyster_Orm_Entity} or {@link Xyster_Orm_Set}
-	 *
-	 * @param Xyster_Orm_Entity $entity
-	 * @param string $name
-	 * @return mixed
-	 */
-	static public function load( Xyster_Orm_Entity $entity, $name )
-	{
-		$linked = null;
-		$relation = self::get($entity,$name);
-
-		require_once 'Xyster/Orm.php';
-		$orm = Xyster_Orm::getInstance();
-		
-		if ( !$relation->isCollection() && $relation->_filters ) {
-
-		    /*
-		     * A one-to-one with filters
-		     */
-		    $criteria = Xyster_Data_Junction::all($relation->_filters,
-		        $entity->getPrimaryKeyAsCriterion());
-			$linked = $orm->find($relation->_to, $criteria);
-			
-		} else if ( !$relation->isCollection() ) {
-		    
-		    /*
-		     * A one-to-one without filters
-		     */
-            $key = array();
-            foreach( $relation->_id as $name ) {
-                $key[$name] = $entity->$name;
-            }
-		    $linked = $orm->get($relation->_to, $key);
-			
-		} else {
-		    
-		    /*
-		     * A one-to-many or many-to-many with filters
-		     * We will use the base primary key value
-		     */
-            $key = $entity->getPrimaryKey(true);
-			if ( $key ) {
-			    
-				if ( $relation->_type == 'many' ) {
-                    
-				    $keyNames = array_keys($key);
-				    $criteria = null;
-				    for( $i=0; $i<count($key); $i++ ) {
-				        $keyName = $keyNames[$i];
-				        $keyValue = $key[$keyName];
-				        // build a criterion object based on the primary key(s)
-			            require_once 'Xyster/Data/Expression.php';
-			            $thiskey = Xyster_Data_Expression::eq($relation->_id[$i],
-			                $keyValue);
-			            if ( !$criteria ) {
-			                $criteria = $thiskey;
-			            } else if ( $criteria instanceof Xyster_Data_Expression ) {
-			                require_once 'Xyster/Data/Junction.php';
-			                $criteria = Xyster_Data_Junction::all($criteria, $thiskey);
-			            } else if ( $criteria instanceof Xyster_Data_Junction ) {
-			                $criteria->add($thiskey);
-			            }
-				    }
-				    if ( $relation->_filters ) {
-				        require_once 'Xyster/Data/Junction.php';
-				        $criteria = Xyster_Data_Junction::all($criteria,
-				            $relation->_filters);
-				    }
-					$linked = $orm->findAll($relation->_to,$criteria);
-
-				} else if ( $relation->_type == 'joined' ) {
-
-					$map = Xyster_Orm_Mapper::factory($relation->_from);
-					$linked = $map->getJoined($entity, $name);
-
-				}
-				
-			} else {
-			    
-			    $linked = Xyster_Orm_Mapper::factory($relation->_to)->getSet();
-			    
-			}
-			
-			$linked->relateTo($relation, $entity);
-			
-		}
-
-		return $linked;
 	}
 
     /**
@@ -450,6 +201,7 @@ class Xyster_Orm_Relation
     {
         return $this->_filters;
     }
+    
     /**
      * Gets the class that owns the relationship
      * 
@@ -459,6 +211,7 @@ class Xyster_Orm_Relation
     {
         return $this->_from;
     }
+    
     /**
      * Gets the ids involved
      * 
@@ -468,6 +221,7 @@ class Xyster_Orm_Relation
     {
         return $this->_id;
     }
+    
     /**
      * Gets the left entity column name in the join table
      * 
@@ -477,6 +231,7 @@ class Xyster_Orm_Relation
     {
         return $this->_joinLeft;
     }
+    
     /**
      * Gets the name of the relationship
      * 
@@ -486,6 +241,7 @@ class Xyster_Orm_Relation
     {
         return $this->_name;
     }
+    
     /**
      * Gets the right entity column name in the join table
      * 
@@ -495,6 +251,7 @@ class Xyster_Orm_Relation
     {
         return $this->_joinRight;
     }
+    
     /**
      * Gets the join table name
      * 
@@ -504,6 +261,7 @@ class Xyster_Orm_Relation
     {
         return $this->_joinTable;
     }
+    
     /**
      * Gets the class of the relationship
      * 
@@ -513,6 +271,7 @@ class Xyster_Orm_Relation
     {
         return $this->_to;
     }
+    
     /**
      * Gets the type of the relationship
      * 
@@ -522,6 +281,7 @@ class Xyster_Orm_Relation
     {
         return $this->_type;
     }
+    
     /**
      * If this relation is a 'many', this returns the 'belongs' relation
      *
@@ -536,7 +296,9 @@ class Xyster_Orm_Relation
         }
         
         if ( $this->_reverse === null ) {
-	        foreach( self::getAll($this->_to) as $relation ) {
+            $meta = $this->_mapFactory->get($this->_to)->getEntityMeta();
+	        foreach( $meta->getRelations() as $relation ) {
+	            /* @var $relation Xyster_Orm_Relation */
 	            if ( $relation->_type == 'belongs' && $relation->_to == $this->_from ) {
 	                $this->_reverse = $relation;
 	                break;
@@ -550,6 +312,7 @@ class Xyster_Orm_Relation
         
         return $this->_reverse;
     }
+    
 	/**
 	 * Checks to see if the class referenced by this relationship has a belongs
 	 * 
@@ -562,6 +325,7 @@ class Xyster_Orm_Relation
 	{
 		return $this->getReverse() instanceof self;
 	}
+	
     /**
      * This returns true if the type is 'many' or 'joined', false otherwise
      *
@@ -571,6 +335,98 @@ class Xyster_Orm_Relation
     {
         return $this->_type == 'many' || $this->_type == 'joined';
     }
+
+
+	/**
+	 * Loads the {@link Xyster_Orm_Entity} or {@link Xyster_Orm_Set}
+	 *
+	 * @param Xyster_Orm_Entity $entity The entity to use
+	 * @param string $name
+	 * @return mixed
+	 */
+	public function load( Xyster_Orm_Entity $entity )
+	{
+		$linked = null;
+
+		require_once 'Xyster/Orm.php';
+		$orm = Xyster_Orm::getInstance();
+		
+		if ( !$this->isCollection() && $this->_filters ) {
+
+		    /*
+		     * A one-to-one with filters
+		     */
+		    $criteria = Xyster_Data_Junction::all($this->_filters,
+		        $entity->getPrimaryKeyAsCriterion());
+			$linked = $orm->find($this->_to, $criteria);
+			
+		} else if ( !$this->isCollection() ) {
+		    
+		    /*
+		     * A one-to-one without filters
+		     */
+            $key = array();
+            foreach( $this->_id as $name ) {
+                $key[$name] = $entity->$name;
+            }
+		    $linked = $orm->get($this->_to, $key);
+			
+		} else {
+		    
+		    /*
+		     * A one-to-many or many-to-many with filters
+		     * We will use the base primary key value
+		     */
+            $key = $entity->getPrimaryKey(true);
+			if ( $key ) {
+			    
+				if ( $this->_type == 'many' ) {
+                    
+				    $keyNames = array_keys($key);
+				    $criteria = null;
+				    for( $i=0; $i<count($key); $i++ ) {
+				        $keyName = $keyNames[$i];
+				        $keyValue = $key[$keyName];
+				        // build a criterion object based on the primary key(s)
+			            require_once 'Xyster/Data/Expression.php';
+			            $thiskey = Xyster_Data_Expression::eq($this->_id[$i],
+			                $keyValue);
+			            if ( !$criteria ) {
+			                $criteria = $thiskey;
+			            } else if ( $criteria instanceof Xyster_Data_Expression ) {
+			                require_once 'Xyster/Data/Junction.php';
+			                $criteria = Xyster_Data_Junction::all($criteria, $thiskey);
+			            } else if ( $criteria instanceof Xyster_Data_Junction ) {
+			                $criteria->add($thiskey);
+			            }
+				    }
+				    if ( $this->_filters ) {
+				        require_once 'Xyster/Data/Junction.php';
+				        $criteria = Xyster_Data_Junction::all($criteria,
+				            $this->_filters);
+				    }
+					$linked = $orm->findAll($this->_to,$criteria);
+
+				} else if ( $this->_type == 'joined' ) {
+
+					$map = $this->_mapFactory->get($this->_from);
+					$linked = $map->getJoined($entity, $name);
+
+				}
+				
+			} else {
+			    
+			    $linked = $this->_mapFactory->get($this->_to)->getSet();
+			    
+			}
+			
+			$linked->relateTo($this, $entity);
+			
+		}
+
+		return $linked;
+	}
+    
     /**
      * Relates one entity to another (if one-to-one)
      *
@@ -580,27 +436,32 @@ class Xyster_Orm_Relation
      */
     public function relate( Xyster_Orm_Entity $from, Xyster_Orm_Entity $to )
     {
+        // make sure this relation type is 'many'
         if ( $this->_type != 'many' ) {
             require_once 'Xyster/Orm/Relation/Exception.php';
             throw new Xyster_Orm_Relation_Exception('This can only be done with "many" relations');
         }
 
+        // make sure the $from object is the $this->_from class
         $fromClass = $this->_from;
         if (! $from instanceof $fromClass ) {
             require_once 'Xyster/Orm/Relation/Exception.php';
             throw new Xyster_Orm_Relation_Exception('$from must be an instance of '.$fromClass);
         }
         
+        // make sure the $to object is the $this->_to class
         $toClass = $this->_to;
         if (! $to instanceof $toClass ) {
             require_once 'Xyster/Orm/Relation/Exception.php';
             throw new Xyster_Orm_Relation_Exception('$to must be an instance of '.$toClass);
         }
         
+        // there's only work to do if there's a belongsTo relationship
         if ( $this->hasBelongsTo() ) {
             $relation = $this->getReverse();
             $name = $relation->getName();
             $to->$name = $from;
+
             $primary = $from->getPrimaryKey(true);
             if ( $primary ) {
                 $keyNames = array_keys($primary);
@@ -612,37 +473,5 @@ class Xyster_Orm_Relation
                 }
             }
         }
-    }
-    
-    /**
-     * Base creator method
-     * 
-     * @param string $type The type of the relationship
-     * @param string $name The name of the relationship
-     * @param array $options An array of options
-     * @return Xyster_Orm_Relation
-     * @throws Xyster_Orm_Relation_Exception if the relationship is already defined
-     */
-    static protected function _baseCreate( $type, $name, array $options )
-    {
-        $bt = debug_backtrace();
-        if ( !isset($bt[2]) || !isset($bt[2]['class'])
-            || substr($bt[2]['class'], -6, 6) != 'Mapper' ) {
-            require_once 'Xyster/Orm/Relation/Exception.php';
-            throw new Xyster_Orm_Relation_Exception("This method must only be called from inside a Xyster_Orm_Mapper");
-        }
-        // the 'object' entry of the bt array should be the mapper
-	    $map = $bt[2]['object'];
-        $declaringClass = $map->getEntityName();
-        
-        if ( self::isValid($declaringClass, $name) ) {
-            require_once 'Xyster/Orm/Relation/Exception.php';
-            throw new Xyster_Orm_Relation_Exception("The relationship '" . $name . "' already exists");
-        }
-
-        self::$_registry[$declaringClass][$name] = 
-            new self($map, $type, $name, $options);
-            
-        return self::$_registry[$declaringClass][$name];
     }
 }

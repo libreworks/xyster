@@ -141,10 +141,10 @@ abstract class Xyster_Orm_Backend_Abstract
     protected function _checkPropertyNames( array $criteria )
     {
         // get the array of Xyster_Orm_Entity_Field objects
-        $fields = $this->_mapper->getFields();
+        $fields = $this->_mapper->getEntityMeta()->getFieldNames();
         
         foreach( $criteria as $k => $v ) { 
-            if ( !array_key_exists($k,$fields) ) {
+            if ( !in_array($k, $fields) ) {
                 require_once 'Xyster/Orm/Backend/Exception.php';
                 throw new Xyster_Orm_Backend_Exception("'" . $k
                     . "' is not a valid field for "

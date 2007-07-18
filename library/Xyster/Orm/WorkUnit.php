@@ -38,7 +38,14 @@ class Xyster_Orm_WorkUnit
      * @var Xyster_Collection_Set
      */
     protected $_dirty;
-
+    
+    /**
+     * The mapper factory
+     *
+     * @var Xyster_Orm_Mapper_Factory_Interface
+     */
+    protected $_mapFactory;
+    
     /**
      * Entities that are in queue for insertion
      *
@@ -59,18 +66,18 @@ class Xyster_Orm_WorkUnit
      * @var Xyster_Orm_Repository
      */
     protected $_repository;
-
     /**
      * Creates a new Xyster_Orm_WorkUnit object
      *
      * @param Xyster_Orm_Repository $repo The repository in use by the manager
      */
-    public function __construct( Xyster_Orm_Repository $repo )
+    public function __construct( Xyster_Orm_Repository $repo, Xyster_Orm_Mapper_Factory_Interface $mapFactory )
     {
         $this->_new = new Xyster_Collection_Set();
         $this->_dirty = new Xyster_Collection_Set();
         $this->_removed = new Xyster_Collection_Set();
         $this->_repository = $repo;
+        $this->_mapFactory = $mapFactory;
     }
 
     /**
@@ -83,7 +90,7 @@ class Xyster_Orm_WorkUnit
 	     * Save all new entities
 	     */
 		foreach( $this->_new as $v ) {
-			Xyster_Orm_Mapper::factory(get_class($v))->save($v);
+			$this->_mapFactory->get(get_class($v))->save($v);
 			$this->_repository->add($v);
 		}
 		$this->_new->clear();
@@ -92,7 +99,7 @@ class Xyster_Orm_WorkUnit
 		 * Update any existing entities
 		 */
 		foreach( $this->_dirty as $v ) {
-			Xyster_Orm_Mapper::factory(get_class($v))->save($v);
+			$this->_mapFactory->get(get_class($v))->save($v);
 		}
 		$this->_dirty->clear();
 		
@@ -100,10 +107,20 @@ class Xyster_Orm_WorkUnit
 		 * Delete entities to be removed
 		 */
 		foreach( $this->_removed as $v ) {
-			Xyster_Orm_Mapper::factory(get_class($v))->delete($v);
+			$this->_mapFactory->get(get_class($v))->delete($v);
 			$this->_repository->remove($v);
 		}
 		$this->_removed->clear();
+    }
+
+    /**
+     * Gets the factory for entity mappers
+     *
+     * @return Xyster_Orm_Mapper_Factory_Interface
+     */
+    public function getMapperFactory()
+    {
+        return $this->_mapFactory;
     }
 
     /**
@@ -167,5 +184,15 @@ class Xyster_Orm_WorkUnit
         $this->_new->clear();
         $this->_removed->clear();
         $this->_dirty->clear();
+    }
+    
+    /**
+     * Sets the factory for entity mappers
+     *
+     * @param Xyster_Orm_Mapper_Factory_Interface $mapFactory
+     */
+    public function setMapperFactory( Xyster_Orm_Mapper_Factory_Interface $mapFactory )
+    {
+        $this->_mapFactory = $mapFactory;
     }
 }

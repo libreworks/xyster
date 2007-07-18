@@ -23,26 +23,34 @@
  */
 require_once 'Xyster/Db/Translator.php';
 /**
- * @see Xyster_Orm_Relation
- */
-require_Once 'Xyster/Orm/Relation.php';
-/**
  * @see Xyster_Orm_Query_Parser
  */
 require_once 'Xyster/Orm/Query/Parser.php';
 /**
- * An exception for Xyster_Orm_Backend_Sql
+ * A translator for db fields that is smart about ORM
  *
  * @category  Xyster
  * @package   Xyster_Orm
  * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Orm_Backend_Sql_Translator extends Xyster_Db_Translator
+class Xyster_Orm_Mapper_Translator extends Xyster_Db_Translator
 {
 	protected $_aliases = array();
 	protected $_tables = array();
 	protected $_class;
+	/**
+	 * The mapper factory
+	 *
+	 * @var Xyster_Orm_Mapper_Factory_Interface
+	 */
+	protected $_mapFactory;
+	/**
+	 * The query parser
+	 *
+	 * @var Xyster_Orm_Query_Parser
+	 */
+	protected $_parser;
 	protected $_main;
 
 	/**
@@ -52,14 +60,17 @@ class Xyster_Orm_Backend_Sql_Translator extends Xyster_Db_Translator
 	 * @param Zend_Db_Adapter_Abstract $db
 	 * @param string $className
 	 */
-	public function __construct( Zend_Db_Adapter_Abstract $db, $className )
+	public function __construct( Zend_Db_Adapter_Abstract $db, $className, Xyster_Orm_Mapper_Factory_Interface $mapFactory )
 	{
 	    parent::__construct($db);
 	    
 	    require_once 'Xyster/Orm/Loader.php';
 	    Xyster_Orm_Loader::loadEntityClass($className);
 	    $this->_class = $className;
-	    $map = Xyster_Orm_Mapper::factory($className);
+	    $this->_mapFactory = $mapFactory;
+	    require_once 'Xyster/Orm/Query/Parser.php';
+	    $this->_parser = new Xyster_Orm_Query_Parser();
+	    $map = $mapFactory->get($className);
 	    $this->aliasField($map->translateField(current($map->getEntityMeta()->getPrimary())));
 	}
 	
@@ -82,14 +93,14 @@ class Xyster_Orm_Backend_Sql_Translator extends Xyster_Db_Translator
 	 */
 	public function aliasField( $field )
 	{
-		if ( Xyster_Orm_Query_Parser::isRuntime(Xyster_Data_Field::named($field), $this->_class) ) {
-			require_once 'Xyster/Orm/Backend/Sql/Exception.php';
-			throw new Xyster_Orm_Backend_Sql_Exception('Runtime fields cannot be aliased for the backend');
+		if ( $this->_parser->isRuntime(Xyster_Data_Field::named($field), $this->_class) ) {
+			require_once 'Xyster/Orm/Mapper/Exception.php';
+			throw new Xyster_Orm_Mapper_Exception('Runtime fields cannot be aliased for the backend');
 		}
 
 		$prefix = "";
 		$className = $this->_class;
-        $currentMeta = Xyster_Orm_Mapper::factory($className)->getEntityMeta();
+        $currentMeta = $this->_mapFactory->get($className)->getEntityMeta();
 		
 		$calls = Xyster_String::smartSplit('->',$field);
 		if ( count($calls) > 1 ) {
@@ -98,14 +109,14 @@ class Xyster_Orm_Backend_Sql_Translator extends Xyster_Db_Translator
 			    if ( $currentMeta->isRelation($call) ) {
     				$prefixes[] = $call;
 				    $className = $currentMeta->getRelation($call)->getTo();
-				    $currentMeta = Xyster_Orm_Mapper::factory($className)->getEntityMeta();
+				    $currentMeta = $this->_mapFactory->get($className)->getEntityMeta();
 			    }
 			}
 			$prefix = implode('->',$prefixes).'->';
 		}
 
 		if ( !in_array($prefix, array_keys($this->_tables)) ) {
-			$tableName = Xyster_Orm_Mapper::factory($className)->getTable();
+			$tableName = $this->_mapFactory->get($className)->getTable();
 			$num = 1;
 			foreach( $this->_tables as $v ) { 
 				if ( $v == $tableName ) {
@@ -135,17 +146,17 @@ class Xyster_Orm_Backend_Sql_Translator extends Xyster_Db_Translator
 	{
 		$prefixes = Xyster_String::smartSplit('->',$tosql->getName());
 		$className = $this->_class;
-		$currentMeta = Xyster_Orm_Mapper::factory($className)->getEntityMeta();
+		$currentMeta = $this->_mapFactory->get($className)->getEntityMeta();
 		if ( count($prefixes) > 1 ) {
 			foreach( $prefixes as $call ) {
 				if ( $currentMeta->isRelation($call) ) {
 					$className = $currentMeta->getRelation($call)->getTo();
-		            $currentMeta = Xyster_Orm_Mapper::factory($className)->getEntityMeta();
+		            $currentMeta = $this->_mapFactory->get($className)->getEntityMeta();
 				}
 			}
 		}
 		$tableName = $this->aliasField($tosql->getName());
-		$rename = Xyster_Orm_Mapper::factory($className)
+		$rename = $this->_mapFactory->get($className)
 			->untranslateField($prefixes[count($prefixes)-1]);
 		$field = $tableName.".".(($quote)?$this->_adapter->quoteIdentifier($rename):$rename);
 
@@ -179,11 +190,11 @@ class Xyster_Orm_Backend_Sql_Translator extends Xyster_Db_Translator
 				}
 
 				$prefixsofar .= $v.'->';
-				$fromMap = Xyster_Orm_Mapper::factory($container);
+				$fromMap = $this->_mapFactory->get($container);
 				$fromMeta = $fromMap->getEntityMeta();
 				$details = $fromMeta->getRelation($v);
 				$class = $details->getTo();
-				$toMap = Xyster_Orm_Mapper::factory($class);
+				$toMap = $this->_mapFactory->get($class);
 				$alias = $this->aliasField($prefixsofar.$toMap->translateField(current((array) $toMap->getEntityMeta()->getPrimary())));
 
 				$binds = array();

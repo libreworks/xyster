@@ -19,9 +19,9 @@
  * @version   $Id$
  */
 /**
- * @see Xyster_Orm_Mapper
+ * @see Xyster_Orm_WorkUnit
  */
-require_once 'Xyster/Orm/Mapper.php';
+require_once 'Xyster/Orm/WorkUnit.php';
 /**
  * @see Xyster_Orm_Repository
  */
@@ -51,6 +51,13 @@ class Xyster_Orm
     static protected $_secondaryCache;
     
     /**
+     * Mapper factory
+     *
+     * @var Xyster_Orm_Mapper_Factory_Interface
+     */
+    static protected $_mapFactory;
+    
+    /**
      * The entity repository (identity map)
      *
      * @var Xyster_Orm_Repository
@@ -65,12 +72,10 @@ class Xyster_Orm
     protected $_work;
 
     /**
-     * Creates a new Xyster_Orm object
+     * Creates a new Xyster_Orm object, hide from userland
      */
     protected function __construct()
     {
-        $this->_repository = new Xyster_Orm_Repository();
-        $this->_work = new Xyster_Orm_WorkUnit( $this->_repository );
     }
 
     /**
@@ -117,6 +122,30 @@ class Xyster_Orm
     }
     
     /**
+     * Sets the factory for entity mappers
+     *
+     * @param Xyster_Orm_Mapper_Factory_Interface $mapFactory
+     */
+    public static function setMapperFactory( Xyster_Orm_Mapper_Factory_Interface $mapFactory )
+    {
+        self::$_mapFactory = $mapFactory;
+    }
+    
+    /**
+     * Gets the factory for entity mappers
+     *
+     * @return Xyster_Orm_Mapper_Factory_Interface
+     */
+    public static function getMapperFactory()
+    {
+        if ( !self::$_mapFactory ) {
+            require_once 'Xyster/Orm/Mapper/Factory.php';
+            self::$_mapFactory = new Xyster_Orm_Mapper_Factory();
+        }
+        return self::$_mapFactory;
+    }
+    
+    /**
      * Abandons the current session
      * 
      * This will unload the repository and unset the singleton instance.  The
@@ -125,7 +154,7 @@ class Xyster_Orm
     public function clear()
     {
         $this->_repository = null;
-        $this->_work->rollback();
+        $this->_getWorkUnit()->rollback();
         self::$_instance = null;
     }
     
@@ -135,11 +164,11 @@ class Xyster_Orm
      */
     public function commit()
     {
-        foreach( $this->_repository->getClasses() as $class ) {
-            foreach( $this->_repository->getAll($class) as $entity ) {
+        foreach( $this->_getRepository()->getClasses() as $class ) {
+            foreach( $this->_getRepository()->getAll($class) as $entity ) {
                 if ( $entity->isDirty() ) {
                     try {
-                        $this->_work->registerDirty($entity);
+                        $this->_getWorkUnit()->registerDirty($entity);
                     } catch ( Xyster_Orm_Exception $thrown ) {
                         // do nothing - the entity was probably pending delete 
                     }
@@ -147,7 +176,7 @@ class Xyster_Orm
             }
         }
 
-        $this->_work->commit();
+        $this->_getWorkUnit()->commit();
     }
 
     /**
@@ -159,27 +188,27 @@ class Xyster_Orm
      */
     public function get( $className, $id )
     {
-        $map = Xyster_Orm_Mapper::factory($className);
+        $map = self::getMapperFactory()->get($className);
         
         if ( is_scalar($id) ) {
             $keyNames = (array) $map->getPrimary();
             $id = array( $map->translateField($keyNames[0]) => $id );
         }
         
-        $entity = $this->_repository->get($className,$id);
+        $entity = $this->_getRepository()->get($className,$id);
         if ( $entity ) {
             return $entity;
         }
 
         $entity = $this->_getFromSecondaryCache($className,$id);
         if ( $entity ) {
-            $this->_repository->add($entity);
+            $this->_getRepository()->add($entity);
             return $entity;
         }
 
         $entity = $map->get($id); 
         if ( $entity ) {
-            $this->_repository->add($entity);
+            $this->_getRepository()->add($entity);
             $this->_putInSecondaryCache($entity);
             return $entity;
         }
@@ -195,19 +224,19 @@ class Xyster_Orm
     public function getAll( $className, array $ids = null )
     {
         $all = null;
-        $map = Xyster_Orm_Mapper::factory($className);
+        $map = self::getMapperFactory()->get($className);
         
         if ( is_array($ids) && count($ids) ) {
             // we're getting a few entities by primary key
 
-            if ( $this->_repository->hasAll($className) ) {
+            if ( $this->_getRepository()->hasAll($className) ) {
                 $keyNames = (array) $map->getPrimary();
                 $all = $map->getSet();
                 foreach( $ids as $id ) {
                     if ( is_scalar($id) ) {
                         $id = array( $map->translateField($keyNames[0]) => $id );
                     }
-                    $entity = $this->_repository->get($className,$id);
+                    $entity = $this->_getRepository()->get($className,$id);
                     if ( $entity ) {
                         $all->add( $entity );
                     } else {
@@ -219,7 +248,7 @@ class Xyster_Orm
                 }
             } else {
                 $all = $map->getAll($ids);
-                $this->_repository->addAll($all);
+                $this->_getRepository()->addAll($all);
                 foreach( $all as $entity ) {
                     $this->_putInSecondaryCache($entity);
                 }
@@ -228,18 +257,18 @@ class Xyster_Orm
         } else {
             // we're getting ALL entities from the source
 
-            if ( $this->_repository->hasAll($className) ) {
-                $all = $this->_repository->getAll($className);
+            if ( $this->_getRepository()->hasAll($className) ) {
+                $all = $this->_getRepository()->getAll($className);
                 if ( is_array($all) ) {
                     $all = $map->getSet( Xyster_Collection::using($all) );
                 }
             } else {
                 $all = $map->getAll();
-                $this->_repository->addAll($all);
+                $this->_getRepository()->addAll($all);
                 foreach( $all as $entity ) {
                     $this->_putInSecondaryCache($entity);
                 }
-                $this->_repository->setHasAll($className,true);
+                $this->_getRepository()->setHasAll($className,true);
             }
             
         }
@@ -255,16 +284,16 @@ class Xyster_Orm
      */
     public function find( $className, array $criteria )
     {
-        if ( $entity = $this->_repository->find($className,$criteria) ) {
+        if ( $entity = $this->_getRepository()->find($className,$criteria) ) {
             
             return $entity;
             
         } else {
             
-            $map = Xyster_Orm_Mapper::factory($className);
+            $map = self::getMapperFactory()->get($className);
             $entity = $map->find($criteria);
             if ( $entity ) {
-                $this->_repository->add($entity);
+                $this->_getRepository()->add($entity);
             }
             return $entity;
         }
@@ -278,9 +307,10 @@ class Xyster_Orm
      */
     public function findAll( $className, $criteria, $sorts = null )
     {
-        $all = Xyster_Orm_Mapper::factory($className)->findAll($criteria,$sorts);
+        $map = self::getMapperFactory()->get($className);
+        $all = $map->findAll($criteria,$sorts);
         if ( count($all) ) {
-            $this->_repository->addAll($all);
+            $this->_getRepository()->addAll($all);
         }
         return $all;
     }
@@ -297,7 +327,7 @@ class Xyster_Orm
             require_once 'Xyster/Orm/Exception.php';
             throw new Xyster_Orm_Exception('This entity is already persisted');
         }
-        $this->_work->registerNew($entity);
+        $this->_getWorkUnit()->registerNew($entity);
     }
 
     /**
@@ -312,9 +342,16 @@ class Xyster_Orm
         require_once 'Xyster/Orm/Query.php';
         require_once 'Xyster/Orm/Query/Parser.php';
         
-        return ( $xsql ) ?
-            Xyster_Orm_Query_Parser::parseQuery($className, $xsql) :
-            new Xyster_Orm_Query($className);
+        $query = null;
+        
+        if ( $xsql ) {
+            $parser = new Xyster_Orm_Query_Parser(self::getMapperFactory());
+            $query = $parser->parseQuery($className, $xsql);
+        } else { 
+            $query = new Xyster_Orm_Query($className, self::getMapperFactory());
+        }
+        
+        return $query;
     }
     
     /**
@@ -322,7 +359,7 @@ class Xyster_Orm
      */
     public function refresh( Xyster_Orm_Entity $entity )
     {
-        Xyster_Orm_Mapper::factory(get_class($entity))->refresh($entity);
+        self::getMapperFactory()->get($className)->refresh($entity);
     }
 
     /**
@@ -332,7 +369,7 @@ class Xyster_Orm
      */
     public function remove( Xyster_Orm_Entity $entity )
     {
-        $this->_work->registerRemoved($entity);
+        $this->_getWorkUnit()->registerRemoved($entity);
     }
     
     /**
@@ -347,9 +384,16 @@ class Xyster_Orm
         require_once 'Xyster/Orm/Query/Report.php';
         require_once 'Xyster/Orm/Query/Parser.php';
         
-        return ( $xsql ) ?
-            Xyster_Orm_Query_Parser::parseReportQuery($className, $xsql) :
-            new Xyster_Orm_Query_Report($className);
+        $query = null;
+        
+        if ( $xsql ) {
+            $parser = new Xyster_Orm_Query_Parser(self::getMapperFactory());
+            $query = $parser->parseReportQuery($className, $xsql);
+        } else { 
+            $query = new Xyster_Orm_Query_Report($className, self::getMapperFactory());
+        }
+        
+        return $query;
     }
 
     /**
@@ -364,7 +408,8 @@ class Xyster_Orm
         $repo = self::getSecondaryCache();
         if ( $repo ) {
             $repoId = array( 'Xyster_Orm',
-                Xyster_Orm_Mapper::factory($className)->getDomain(), $className );
+                self::getMapperFactory()->get($className)->getDomain(),
+                $className );
             foreach( $id as $key => $value ) {
                 $repoId[] = $key . '=' . $value;
             }
@@ -375,6 +420,34 @@ class Xyster_Orm
 
         return null;
     }
+    
+    /**
+     * Gets the entity repository
+     *
+     * @return Xyster_Orm_Repository
+     */
+    protected function _getRepository()
+    {
+        if ( !$this->_repository ) {
+            $this->_repository = new Xyster_Orm_Repository(self::getMapperFactory());
+        }
+        return $this->_repository;
+    }
+    
+    /**
+     * Gets the work unit
+     *
+     * @return Xyster_Orm_WorkUnit
+     */
+    protected function _getWorkUnit()
+    {
+        if ( !$this->_work ) {
+            $this->_work = new Xyster_Orm_WorkUnit($this->_getRepository(),
+                self::getMapperFactory());
+        }
+        return $this->_work;
+    }
+    
     /**
      * Puts the entity in the secondary repository
      * 
@@ -384,7 +457,7 @@ class Xyster_Orm
     {
         $repo = self::getSecondaryCache();
         $className = get_class($entity);
-        $map = Xyster_Orm_Mapper::factory($className);
+        $map = self::getMapperFactory()->get($className);
         $cacheLifetime = $map->getLifetime();
 
         // only store the entity if it should be cached longer than the request
