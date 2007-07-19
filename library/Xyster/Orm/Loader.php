@@ -140,7 +140,7 @@ class Xyster_Orm_Loader
      * 
      * @param string $className the name of the entity class
      * @return string the class name
-     * @throws Xyster_Orm_Exception if the class loaded is not a derivitive of Xyster_Orm_Mapper
+     * @throws Xyster_Orm_Exception if the class loaded is not a derivitive of Xyster_Orm_Mapper_Interface
      */
     public static function loadMapperClass( $className )
     {
@@ -150,9 +150,9 @@ class Xyster_Orm_Loader
         
         self::loadClass($mapper);
         
-        if (!($mapper instanceof Xyster_Orm_Mapper) &&
-            !is_subclass_of($mapper, 'Xyster_Orm_Mapper')) {
-            throw new Xyster_Orm_Exception("'" . $mapper . "' is not a subclass of Xyster_Orm_Mapper");
+        if (!($mapper instanceof Xyster_Orm_Mapper_Interface) &&
+            !is_subclass_of($mapper, 'Xyster_Orm_Mapper_Abstract')) {
+            throw new Xyster_Orm_Exception("'" . $mapper . "' is not a subclass of Xyster_Orm_Mapper_Interface");
         }
         
         return $mapper;

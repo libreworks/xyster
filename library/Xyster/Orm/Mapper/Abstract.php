@@ -257,7 +257,6 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
      * Saves an entity (insert or update)
      *
      * @param Xyster_Orm_Entity $entity  The entity to save
-     * @todo This method needs access to the mapper factory
      */
     public function save( Xyster_Orm_Entity $entity )
     {

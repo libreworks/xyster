@@ -195,7 +195,7 @@ class Xyster_Orm_Mapper_Translator extends Xyster_Db_Translator
 				$details = $fromMeta->getRelation($v);
 				$class = $details->getTo();
 				$toMap = $this->_mapFactory->get($class);
-				$alias = $this->aliasField($prefixsofar.$toMap->translateField(current((array) $toMap->getEntityMeta()->getPrimary())));
+				$alias = $this->aliasField($prefixsofar.$toMap->translateField(current($toMap->getEntityMeta()->getPrimary())));
 
 				$binds = array();
 			    $joinTableSql = $toMap->getTable() . ' AS ' . $alias;
@@ -203,7 +203,7 @@ class Xyster_Orm_Mapper_Translator extends Xyster_Db_Translator
 				
 				if (!in_array($prefixsofar, $joined)) {
 
-                    $keyMap = array_combine($details->getId(), (array) $toMap->getEntityMeta()->getPrimary());
+                    $keyMap = array_combine($details->getId(), $toMap->getEntityMeta()->getPrimary());
 					$first = true;
 					foreach( $keyMap as $fromKey=>$toKey ) {
 					    if ( !$first ) {

@@ -19,10 +19,6 @@
  * @version   $Id$
  */
 /**
- * @see Xyster_Orm_Entity_Meta
- */
-require_once 'Xyster/Orm/Entity/Meta.php';
-/**
  * A data entity: the basic data unit of the ORM package
  *
  * @category  Xyster
