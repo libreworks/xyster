@@ -176,7 +176,8 @@ class Xyster_Orm
             }
         }
 
-        $this->_getWorkUnit()->commit();
+        $this->_getWorkUnit()->commit($this->_getRepository(), 
+            self::getMapperFactory());
     }
 
     /**
@@ -442,8 +443,7 @@ class Xyster_Orm
     protected function _getWorkUnit()
     {
         if ( !$this->_work ) {
-            $this->_work = new Xyster_Orm_WorkUnit($this->_getRepository(),
-                self::getMapperFactory());
+            $this->_work = new Xyster_Orm_WorkUnit();
         }
         return $this->_work;
     }

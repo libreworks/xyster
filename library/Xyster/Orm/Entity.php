@@ -80,6 +80,21 @@ class Xyster_Orm_Entity
     }
 
     /**
+     * Gets an entity meta information object
+     * 
+     * This shouldn't be called except by the Xyster_Orm_Mapper
+     *
+     * @param string $className
+     * @return Xyster_Orm_Entity_Meta 
+     */
+    static public function getMeta( $className )
+    {
+        Xyster_Orm_Loader::loadEntityClass($className);
+        return array_key_exists($className, self::$_meta) ?
+            self::$_meta[$className] : null;
+    }
+    
+    /**
      * Adds an entity meta information object
      * 
      * This shouldn't be called except by the Xyster_Orm_Mapper
@@ -341,9 +356,17 @@ class Xyster_Orm_Entity
         $info = $this->_getMeta()->getRelation($name);
         $class = $info->getTo();
 
-        if (! $value instanceof $class ) {
-            require_once 'Xyster/Orm/Exception.php';
-            throw new Xyster_Orm_Exception("'" . $name . "' must be an instance of '" . $class . "'");
+        if ( !$info->isCollection() ) {
+            if (! $value instanceof $class ) {
+                require_once 'Xyster/Orm/Exception.php';
+                throw new Xyster_Orm_Exception("'" . $name . "' must be an instance of '" . $class . "'");
+            }
+        } else {
+            $setClass = get_class($this->_getMeta()->getMapperFactory()->get($class)->getSet());
+            if (! $value instanceof $setClass ) {
+                require_once 'Xyster/Orm/Exception.php';
+                throw new Xyster_Orm_Exception("'" . $name . "' must be an instance of '" . $setClass . "'");
+            }
         }
 
         if ( $info->isCollection() ) {

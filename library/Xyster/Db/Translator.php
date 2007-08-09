@@ -36,12 +36,14 @@ class Xyster_Db_Translator
 	 * @var Zend_Db_Adapter_Abstract
 	 */
 	protected $_adapter;
+	
 	/**
 	 * The callback for column renaming
 	 *
 	 * @var mixed
 	 */
 	protected $_renameCallback;
+	
 	/**
 	 * A table name to prefix columns
 	 * 
@@ -65,7 +67,7 @@ class Xyster_Db_Translator
 	 * This can be any valid PHP callback.  It's passed the column object.
 	 *
 	 * @param mixed $callback
-	 * @return Xyster_Db_Translator  Provides a fluid interface
+	 * @return Xyster_Db_Translator  Provides a fluent interface
 	 */
 	public function setRenameCallback( $callback )
 	{
@@ -76,19 +78,19 @@ class Xyster_Db_Translator
 		$this->_renameCallback = $callback;
 		return $this;
 	}
+	
 	/**
 	 * Sets a table name to prefix to columns
 	 * 
-	 * If the table callback is set, this will not be used
-	 * 
 	 * @param string $table
-	 * @return Xyster_Db_Translator  Provides a fluid interface
+	 * @return Xyster_Db_Translator  Provides a fluent interface
 	 */
 	public function setTable( $table )
 	{
 		$this->_table = $table;
 		return $this;
 	}
+	
 	/**
 	 * Translates one of the Xyster Data objects into a SQL token
 	 *
@@ -107,6 +109,7 @@ class Xyster_Db_Translator
 		require 'Xyster/Db/Exception.php';
 		throw new Xyster_Db_Exception('Invalid object');
 	}
+	
 	/**
 	 * Converts a field to SQL
 	 *
@@ -115,18 +118,18 @@ class Xyster_Db_Translator
 	 */
 	public function translateField( Xyster_Data_Field $tosql, $quote = true )
 	{
-		$tableName = $this->_table;
-		$rename = $tosql->getName();
-		if ( $this->_renameCallback !== null ) {
-			$rename = call_user_func( $this->_renameCallback, $tosql );
-		}
-		$column = ( $quote ) ? $this->_adapter->quoteIdentifier($rename) : $rename;
+		$rename = $this->_getRenamedField($tosql);
+		$tableName = $this->_getTableName($tosql);
+		
+		$field = ( $quote ) ? $this->_adapter->quoteIdentifier($rename) : $rename;
 		if ( $tableName ) {
-			$column = "$tableName.$column";
+			$field = "$tableName.$field";
 		}
+		
 		return new Xyster_Db_Token( $tosql instanceof Xyster_Data_Field_Aggregate ?
-				$tosql->getFunction()->getValue().'('.$column.')' : $column );
+				$tosql->getFunction()->getValue().'('.$field.')' : $field );
 	}
+	
 	/**
 	 * Converts a sort to SQL
 	 *
@@ -139,6 +142,7 @@ class Xyster_Db_Translator
 		    $this->translateField($tosql->getField(), $quote)->getSql() . " "
 			. $tosql->getDirection() );
 	}
+	
 	/**
 	 * Converts a criterion to SQL
 	 *
@@ -153,6 +157,7 @@ class Xyster_Db_Translator
 			return self::translateJunction($tosql, $quote);
 		}
 	}
+	
 	/**
 	 * Converts a Junction to SQL
 	 *
@@ -174,6 +179,7 @@ class Xyster_Db_Translator
 		}
 		return $token;
 	}
+	
 	/**
 	 * Converts an expression to SQL
 	 *
@@ -220,5 +226,34 @@ class Xyster_Db_Translator
 		}
 
 		return new Xyster_Db_Token($sql, $binds);
+	}
+	
+	/**
+	 * Gets the renamed value of the field if appropriate
+	 * 
+	 * This can be overridden to provide a custom renaming strategy
+	 *
+	 * @param Xyster_Data_Field $field
+	 * @return string
+	 */
+	protected function _getRenamedField( Xyster_Data_Field $field )
+	{
+	    $rename = $field->getName();
+		if ( $this->_renameCallback !== null ) {
+			$rename = call_user_func($this->_renameCallback, $tosql);
+		}
+	}
+
+	/**
+	 * Gets the name of the table to use to prefix columns
+	 * 
+	 * This can be extended to provide a custom table name
+	 *
+	 * @param Xyster_Data_Field $field
+	 * @return string
+	 */
+	protected function _getTableName( Xyster_Data_Field $field )
+	{
+	    return $this->_table;
 	}
 }

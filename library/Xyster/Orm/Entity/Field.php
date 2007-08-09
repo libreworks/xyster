@@ -57,7 +57,7 @@ class Xyster_Orm_Entity_Field
         $this->_default = $details['DEFAULT'];
         $this->_primary = $details['PRIMARY'];
         $this->_primaryPosition = $details['PRIMARY_POSITION'];
-        $this->_identity = $details['IDENTITY'];
+        $this->_identity = (isset($details['IDENTITY'])) ? $details['IDENTITY'] : null;
     }
 
     /**

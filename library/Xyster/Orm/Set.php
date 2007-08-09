@@ -100,7 +100,12 @@ abstract class Xyster_Orm_Set extends Xyster_Data_Set
             $this->_relation->relate($this->_entity, $item);
         }
 
-        return parent::add($item);
+        $added = parent::add($item);
+
+        if ( $added && $this->_entity ) {
+            $this->_entity->setDirty();
+        }
+        return $added;
     }
 
     /**
@@ -145,7 +150,7 @@ abstract class Xyster_Orm_Set extends Xyster_Data_Set
      */
     public function getDiffAdded()
     {
-        return array_diff($this->_items,$this->_base);
+        return array_values(array_diff($this->_items,$this->_base));
     }
 
     /**
@@ -155,7 +160,7 @@ abstract class Xyster_Orm_Set extends Xyster_Data_Set
      */
     public function getDiffRemoved()
     {
-        return array_diff($this->_base,$this->_items);
+        return array_values(array_diff($this->_base,$this->_items));
     }
 
     /**
@@ -173,6 +178,21 @@ abstract class Xyster_Orm_Set extends Xyster_Data_Set
     public function getEntityName()
     {
         return substr(get_class($this),0,-3);
+    }
+    
+    /**
+     * Gets the primary keys of the entities in the set
+     *
+     * @return array 
+     */
+    public function getPrimaryKeys()
+    {
+        $keys = array();
+        foreach( $this->_items as $entity ) {
+            /* @var $entity Xyster_Orm_Entity */
+            $keys[] = $entity->getPrimaryKey(); 
+        }
+        return $keys;
     }
 
     /**

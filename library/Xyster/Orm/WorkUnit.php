@@ -40,13 +40,6 @@ class Xyster_Orm_WorkUnit
     protected $_dirty;
     
     /**
-     * The mapper factory
-     *
-     * @var Xyster_Orm_Mapper_Factory_Interface
-     */
-    protected $_mapFactory;
-    
-    /**
      * Entities that are in queue for insertion
      *
      * @var Xyster_Collection_Set
@@ -61,37 +54,30 @@ class Xyster_Orm_WorkUnit
     protected $_removed;
     
     /**
-     * A reference to the repository in use by the orm manager
-     *
-     * @var Xyster_Orm_Repository
-     */
-    protected $_repository;
-    /**
      * Creates a new Xyster_Orm_WorkUnit object
      *
-     * @param Xyster_Orm_Repository $repo The repository in use by the manager
      */
-    public function __construct( Xyster_Orm_Repository $repo, Xyster_Orm_Mapper_Factory_Interface $mapFactory )
+    public function __construct()
     {
         $this->_new = new Xyster_Collection_Set();
         $this->_dirty = new Xyster_Collection_Set();
         $this->_removed = new Xyster_Collection_Set();
-        $this->_repository = $repo;
-        $this->_mapFactory = $mapFactory;
     }
 
     /**
      * Execute pending transactions
      *
+     * @param Xyster_Orm_Repository $repo The repository in use by the manager
+     * @param Xyster_Orm_Mapper_Factory_Interface $mapFactory The mapper factory 
      */
-    public function commit()
+    public function commit( Xyster_Orm_Repository $repo, Xyster_Orm_Mapper_Factory_Interface $mapFactory )
     {
         /*
 	     * Save all new entities
 	     */
 		foreach( $this->_new as $v ) {
-			$this->_mapFactory->get(get_class($v))->save($v);
-			$this->_repository->add($v);
+			$mapFactory->get(get_class($v))->save($v);
+			$repo->add($v);
 		}
 		$this->_new->clear();
 		
@@ -99,7 +85,7 @@ class Xyster_Orm_WorkUnit
 		 * Update any existing entities
 		 */
 		foreach( $this->_dirty as $v ) {
-			$this->_mapFactory->get(get_class($v))->save($v);
+			$mapFactory->get(get_class($v))->save($v);
 		}
 		$this->_dirty->clear();
 		
@@ -107,20 +93,10 @@ class Xyster_Orm_WorkUnit
 		 * Delete entities to be removed
 		 */
 		foreach( $this->_removed as $v ) {
-			$this->_mapFactory->get(get_class($v))->delete($v);
-			$this->_repository->remove($v);
+			$mapFactory->get(get_class($v))->delete($v);
+			$repo->remove($v);
 		}
 		$this->_removed->clear();
-    }
-
-    /**
-     * Gets the factory for entity mappers
-     *
-     * @return Xyster_Orm_Mapper_Factory_Interface
-     */
-    public function getMapperFactory()
-    {
-        return $this->_mapFactory;
     }
 
     /**
@@ -148,7 +124,8 @@ class Xyster_Orm_WorkUnit
      */
     public function registerDirty( Xyster_Orm_Entity $entity )
     {
-        if ( !$entity->getPrimaryKey() ) {
+        $key = $entity->getPrimaryKey();
+        if ( array_keys($key, null, true) == array_keys($key) ) {
             require_once 'Xyster/Orm/Exception.php';
             throw new Xyster_Orm_Exception('This entity cannot be saved, it must first be persisted');
         }
@@ -184,15 +161,5 @@ class Xyster_Orm_WorkUnit
         $this->_new->clear();
         $this->_removed->clear();
         $this->_dirty->clear();
-    }
-    
-    /**
-     * Sets the factory for entity mappers
-     *
-     * @param Xyster_Orm_Mapper_Factory_Interface $mapFactory
-     */
-    public function setMapperFactory( Xyster_Orm_Mapper_Factory_Interface $mapFactory )
-    {
-        $this->_mapFactory = $mapFactory;
     }
 }

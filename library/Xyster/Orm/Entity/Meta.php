@@ -74,16 +74,6 @@ class Xyster_Orm_Entity_Meta
     {
         return $this->_class;
     }
-
-    /**
-     * Gets the mapper factory
-     *
-     * @return Xyster_Orm_Mapper_Factory_Interface
-     */
-    public function getMapperFactory()
-    {
-        return $this->_mapFactory;
-    }
     
     /**
      * Gets the names of the fields for the entity
@@ -104,6 +94,16 @@ class Xyster_Orm_Entity_Meta
     {
         return $this->_fields;
     }
+
+    /**
+     * Gets the mapper factory
+     *
+     * @return Xyster_Orm_Mapper_Factory_Interface
+     */
+    public function getMapperFactory()
+    {
+        return $this->_mapFactory;
+    }
     
     /**
      * Gets all available class members (fields, relations, and methods)
@@ -117,6 +117,7 @@ class Xyster_Orm_Entity_Meta
             array_merge($this->_members, $this->getRelationNames());
             array_merge($this->_members, get_class_methods($this->_class));
         }
+        return $this->_members;
     }
     
     /**

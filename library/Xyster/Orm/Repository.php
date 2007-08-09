@@ -88,7 +88,7 @@ class Xyster_Orm_Repository
      */
     public function add( Xyster_Orm_Entity $entity )
     {
-        $this->_getByKeyMap($entity)->set( $this->_stringifyPrimaryKey($entity), $entity );
+        $this->_getByKeyMap($entity)->set($this->_stringifyPrimaryKey($entity), $entity);
 
         /*
          * Add the entity to its appropriate index(es)
@@ -100,7 +100,7 @@ class Xyster_Orm_Repository
 				foreach( $index as $name ) {
 					$hash[] = $name . '=' . $entity->$name;
 				}
-				$hash = implode(',',$hash);
+				$hash = implode(',', $hash);
 				$indexMap->set($hash, $entity);
 			}
         }
@@ -114,7 +114,7 @@ class Xyster_Orm_Repository
     public function addAll( Xyster_Orm_Set $set )
     {
         foreach( $set as $entity ) {
-            $this->add( $entity );
+            $this->add($entity);
         }
     }
 
@@ -144,7 +144,7 @@ class Xyster_Orm_Repository
 		foreach( $values as $name => $value ) {
 			$hash[] = $name . "=" . $value;
 		}
-		$hash = implode(',',$hash);
+		$hash = implode(',', $hash);
 
 		return $this->_getByIndexMap($class)->get($hash);
     }
@@ -193,7 +193,7 @@ class Xyster_Orm_Repository
      */
     public function hasAll( $class )
     {
-        return array_key_exists( $class, $this->_items ) &&
+        return array_key_exists($class, $this->_items) &&
             array_key_exists('hasAll', $this->_items[$class]) &&
             $this->_items[$class]['hasAll'];
     }
@@ -206,7 +206,7 @@ class Xyster_Orm_Repository
     public function remove( Xyster_Orm_Entity $entity )
     {
         $this->_removeEntity($entity);
-        $this->setHasAll( get_class($entity), false );
+        $this->setHasAll(get_class($entity), false);
     }
 
     /**
@@ -218,7 +218,8 @@ class Xyster_Orm_Repository
     public function removeByKey( $class, $key )
     {
         Xyster_Orm_Loader::loadEntityClass($class);
-        $this->_removeByClassAndKey($class,$key);
+        $this->_removeByClassAndKey($class, $key);
+        $this->setHasAll($class, false);
     }
 
     /**
@@ -231,7 +232,7 @@ class Xyster_Orm_Repository
         foreach( $set as $entity ) {
             $this->_removeEntity($entity);
         }
-        $this->setHasAll( $set->getEntityName(), false );
+        $this->setHasAll($set->getEntityName(), false);
     }
 
     /**
@@ -244,9 +245,9 @@ class Xyster_Orm_Repository
     {
         Xyster_Orm_Loader::loadEntityClass($class);
         foreach( $ids as $key ) {
-            $this->_removeByClassAndKey($class,$key);
+            $this->_removeByClassAndKey($class, $key);
         }
-        $this->setHasAll($class,false);
+        $this->setHasAll($class, false);
     }
     
     /**
@@ -268,16 +269,7 @@ class Xyster_Orm_Repository
      */
     protected function _getByKeyMap( $class )
     {
-        if ( is_object($class) ) {
-            $class = get_class($class);
-        }
-        if ( !array_key_exists($class,$this->_items) ) {
-            $this->_items[$class] = array();
-        }
-        if ( !array_key_exists('byKey',$this->_items[$class]) ) {
-            $this->_items[$class]['byKey'] = new Xyster_Collection_Map_String();
-        }
-        return $this->_items[$class]['byKey'];
+        return $this->_getByHelper($class, 'byKey');
     }
 
     /**
@@ -288,16 +280,28 @@ class Xyster_Orm_Repository
      */
     protected function _getByIndexMap( $class )
     {
+        return $this->_getByHelper($class, 'byIndex');
+    }
+    
+    /**
+     * Sets up the array and class name
+     *
+     * @param mixed $class
+     * @param string $key
+     * @return string
+     */
+    protected function _getByHelper( $class, $key )
+    {
         if ( is_object($class) ) {
             $class = get_class($class);
         }
-        if ( !array_key_exists($class,$this->_items) ) {
+        if ( !array_key_exists($class, $this->_items) ) {
             $this->_items[$class] = array();
         }
-        if ( !array_key_exists('byIndex',$this->_items[$class]) ) {
-            $this->_items[$class]['byIndex'] = new Xyster_Collection_Map_String();
+        if ( !array_key_exists($key, $this->_items[$class]) ) {
+            $this->_items[$class][$key] = new Xyster_Collection_Map_String();
         }
-        return $this->_items[$class]['byIndex']; 
+        return $this->_items[$class][$key]; 
     }
 
     /**
@@ -307,7 +311,7 @@ class Xyster_Orm_Repository
      */
     protected function _getMapper( Xyster_Orm_Entity $entity )
     {
-        $this->_mapFactory->get(get_class($entity));
+        return $this->_mapFactory->get(get_class($entity));
     }
 
     /**
@@ -319,9 +323,9 @@ class Xyster_Orm_Repository
     protected function _removeByClassAndKey( $class, $key )
     {
         $map = $this->_getByKeyMap($class);
-        $entity = $map->get( $this->_stringifyPrimaryKey($key) );
+        $entity = $map->get($this->_stringifyPrimaryKey($key));
         if ( $entity ) {
-            $this->_removeEntity( $entity );
+            $this->_removeEntity($entity);
         }
     }
 
@@ -340,7 +344,7 @@ class Xyster_Orm_Repository
         
         // remove the entity from the key map
         $keyMap = $this->_getByKeyMap($entity);
-        $keyMap->remove( $this->_stringifyPrimaryKey($entity) );
+        $keyMap->remove($this->_stringifyPrimaryKey($entity));
     }
 
     /**

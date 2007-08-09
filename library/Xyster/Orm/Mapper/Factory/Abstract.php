@@ -19,27 +19,27 @@
  * @version   $Id$
  */
 /**
- * Provides the ability to create mappers
+ * @see Xyster_Orm_Mapper_Factory_Interface
+ */
+require_once 'Xyster/Orm/Mapper/Factory/Interface.php';
+/**
+ * A simple factory for creating mappers
  *
  * @category  Xyster
  * @package   Xyster_Orm
  * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-interface Xyster_Orm_Mapper_Factory_Interface
+abstract class Xyster_Orm_Mapper_Factory_Abstract implements Xyster_Orm_Mapper_Factory_Interface
 {
     /**
      * Gets the mapper for a given class
      * 
      * @param string $className The name of the entity class
-     * @return Xyster_Orm_Mapper_Interface The mapper object
+     * @return Xyster_Orm_Mapper The mapper object
      */
-    function get( $className );
-    /**
-     * A convenience method to get the entity meta for a given class
-     *
-     * @param string $className The name of the entity class
-     * @return Xyster_Orm_Entity_Meta
-     */
-    function getEntityMeta( $className );
+    public function getEntityMeta( $className )
+    {
+        return $this->get($className)->getEntityMeta();
+    }
 }

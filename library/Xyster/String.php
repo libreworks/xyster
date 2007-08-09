@@ -55,7 +55,7 @@ class Xyster_String
 	    foreach( $array as $key => $value ) {
 	        $string[] = $key . '=' . $value;
 	    }
-	    return implode(',',$string);
+	    return implode(',', $string);
 	}
 	
 	/**

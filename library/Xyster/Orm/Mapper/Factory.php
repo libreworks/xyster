@@ -19,9 +19,9 @@
  * @version   $Id$
  */
 /**
- * @see Xyster_Orm_Mapper_Factory_Interface
+ * @see Xyster_Orm_Mapper_Factory_Abstract
  */
-require_once 'Xyster/Orm/Mapper/Factory/Interface.php';
+require_once 'Xyster/Orm/Mapper/Factory/Abstract.php';
 /**
  * A simple factory for creating mappers
  *
@@ -30,7 +30,7 @@ require_once 'Xyster/Orm/Mapper/Factory/Interface.php';
  * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Orm_Mapper_Factory implements Xyster_Orm_Mapper_Factory_Interface
+class Xyster_Orm_Mapper_Factory extends Xyster_Orm_Mapper_Factory_Abstract
 {
     /**
      * Default cache for meta information provided by the backend

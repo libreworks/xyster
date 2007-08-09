@@ -19,7 +19,7 @@
  * @version   $Id$
  */
 /**
- * Xyster_Db_Translator
+ * @see Xyster_Db_Translator
  */
 require_once 'Xyster/Db/Translator.php';
 /**
@@ -36,22 +36,40 @@ require_once 'Xyster/Orm/Query/Parser.php';
  */
 class Xyster_Orm_Mapper_Translator extends Xyster_Db_Translator
 {
-	protected $_aliases = array();
-	protected $_tables = array();
+    /**
+     * This is the anchor class for translations
+     *
+     * @var string 
+     */	
 	protected $_class;
+	
+	/**
+	 * Associative array of prefixes to table aliases
+	 *
+	 * @var array
+	 */
+	protected $_aliases = array();
+
+	/**
+	 * Associative array of prefixes to table names
+	 *
+	 * @var array
+	 */
+	protected $_tables = array();
+	
 	/**
 	 * The mapper factory
 	 *
 	 * @var Xyster_Orm_Mapper_Factory_Interface
 	 */
 	protected $_mapFactory;
+	
 	/**
 	 * The query parser
 	 *
 	 * @var Xyster_Orm_Query_Parser
 	 */
 	protected $_parser;
-	protected $_main;
 
 	/**
 	 * Creates a new orm sql translator
@@ -71,7 +89,7 @@ class Xyster_Orm_Mapper_Translator extends Xyster_Db_Translator
 	    require_once 'Xyster/Orm/Query/Parser.php';
 	    $this->_parser = new Xyster_Orm_Query_Parser();
 	    $map = $mapFactory->get($className);
-	    $this->aliasField($map->translateField(current($map->getEntityMeta()->getPrimary())));
+	    $this->aliasField(current($map->getEntityMeta()->getPrimary()));
 	}
 	
 	/**
@@ -81,7 +99,7 @@ class Xyster_Orm_Mapper_Translator extends Xyster_Db_Translator
 	 */
 	public function getMain()
 	{
-		return $this->_main;
+		return array_key_exists('', $this->_aliases) ? $this->_aliases[''] : null;
 	}
 
 	/**
@@ -98,25 +116,26 @@ class Xyster_Orm_Mapper_Translator extends Xyster_Db_Translator
 			throw new Xyster_Orm_Mapper_Exception('Runtime fields cannot be aliased for the backend');
 		}
 
-		$prefix = "";
+		$factory = $this->_mapFactory;
 		$className = $this->_class;
-        $currentMeta = $this->_mapFactory->get($className)->getEntityMeta();
-		
+		$prefix = "";
+        $currentMeta = $factory->getEntityMeta($className);
 		$calls = Xyster_String::smartSplit('->',$field);
+		
 		if ( count($calls) > 1 ) {
 			$prefixes = array();
 			foreach( $calls as $call ) {
 			    if ( $currentMeta->isRelation($call) ) {
     				$prefixes[] = $call;
 				    $className = $currentMeta->getRelation($call)->getTo();
-				    $currentMeta = $this->_mapFactory->get($className)->getEntityMeta();
+				    $currentMeta = $factory->getEntityMeta($className);
 			    }
 			}
-			$prefix = implode('->',$prefixes).'->';
+			$prefix = implode('->', $prefixes) . '->';
 		}
 
 		if ( !in_array($prefix, array_keys($this->_tables)) ) {
-			$tableName = $this->_mapFactory->get($className)->getTable();
+			$tableName = $factory->get($className)->getTable();
 			$num = 1;
 			foreach( $this->_tables as $v ) { 
 				if ( $v == $tableName ) {
@@ -124,45 +143,13 @@ class Xyster_Orm_Mapper_Translator extends Xyster_Db_Translator
 				}
 			}
 			$this->_tables[$prefix] = $tableName;
-			$this->_aliases[$prefix] = preg_replace( '/[`\]\s]*/i', '',
+			$this->_aliases[$prefix] = preg_replace('/[`\]\s]*/i', '',
 				$tableName) . $num;
-		}
-
-		if ( $prefix == '' && !$this->_main ) {
-			$this->_main = $this->_aliases[$prefix];
 		}
 
 		return $this->_aliases[$prefix];
 	}
-	/**
-	 * Translates a field
-	 * 
-	 * {@inherit}
-	 * 
-	 * @param Xyster_Data_Field $tosql
-	 * @return Xyster_Db_Token
-	 */
-	public function translateField( Xyster_Data_Field $tosql, $quote = true )
-	{
-		$prefixes = Xyster_String::smartSplit('->',$tosql->getName());
-		$className = $this->_class;
-		$currentMeta = $this->_mapFactory->get($className)->getEntityMeta();
-		if ( count($prefixes) > 1 ) {
-			foreach( $prefixes as $call ) {
-				if ( $currentMeta->isRelation($call) ) {
-					$className = $currentMeta->getRelation($call)->getTo();
-		            $currentMeta = $this->_mapFactory->get($className)->getEntityMeta();
-				}
-			}
-		}
-		$tableName = $this->aliasField($tosql->getName());
-		$rename = $this->_mapFactory->get($className)
-			->untranslateField($prefixes[count($prefixes)-1]);
-		$field = $tableName.".".(($quote)?$this->_adapter->quoteIdentifier($rename):$rename);
-
-		return new Xyster_Db_Token( $tosql instanceof Xyster_Data_Field_Aggregate ?
-			$tosql->getAggregate()->getValue().'('.$field.')' : $field );
-	}
+	
 	/**
 	 * Returns a from clause for a SQL query
 	 * 
@@ -172,9 +159,11 @@ class Xyster_Orm_Mapper_Translator extends Xyster_Db_Translator
 	{
 		$joined = array();
 		$from = array();
+		$factory = $this->_mapFactory;
+		$db = $this->_adapter;
 
 		foreach( array_keys($this->_aliases) as $prefix ) {
-			if ( $prefix == "" ) {
+			if ( $prefix == '' ) {
 				continue;
 			}
 
@@ -182,7 +171,7 @@ class Xyster_Orm_Mapper_Translator extends Xyster_Db_Translator
 			$container = $this->_class;
 			$prefixsofar = '';
 			$lastTable = $this->_tables[''];
-			$lastAlias = $this->_main;
+			$lastAlias = $this->getMain();
 
 			foreach( $prefixes as $v ) {
 				if ( !$v ) {
@@ -190,20 +179,19 @@ class Xyster_Orm_Mapper_Translator extends Xyster_Db_Translator
 				}
 
 				$prefixsofar .= $v.'->';
-				$fromMap = $this->_mapFactory->get($container);
+				$fromMap = $factory->get($container);
 				$fromMeta = $fromMap->getEntityMeta();
-				$details = $fromMeta->getRelation($v);
-				$class = $details->getTo();
-				$toMap = $this->_mapFactory->get($class);
-				$alias = $this->aliasField($prefixsofar.$toMap->translateField(current($toMap->getEntityMeta()->getPrimary())));
+				$relation = $fromMeta->getRelation($v);
+				$class = $relation->getTo();
+				$toMap = $factory->get($class);
+				$alias = $this->aliasField($prefixsofar.current($toMap->getEntityMeta()->getPrimary()));
 
 				$binds = array();
-			    $joinTableSql = $toMap->getTable() . ' AS ' . $alias;
 			    $localFrom = '';
 				
 				if (!in_array($prefixsofar, $joined)) {
 
-                    $keyMap = array_combine($details->getId(), $toMap->getEntityMeta()->getPrimary());
+                    $keyMap = array_combine($relation->getId(), $toMap->getEntityMeta()->getPrimary());
 					$first = true;
 					foreach( $keyMap as $fromKey=>$toKey ) {
 					    if ( !$first ) {
@@ -212,15 +200,15 @@ class Xyster_Orm_Mapper_Translator extends Xyster_Db_Translator
 					        $first = false;
 					    }
 					    $localFrom .= $lastAlias . '.'
-							. $this->_adapter->quoteIdentifier($fromMap->untranslateField($fromKey))
-					        . ' = ' . $alias . '.' . $this->_adapter->quoteIdentifier($toKey);
+							. $db->quoteIdentifier($fromMap->untranslateField($fromKey))
+					        . ' = ' . $alias . '.' . $toMap->untranslateField($db->quoteIdentifier($toKey));
 					}
 
-					if ( $details->getFilters() ) {
-						$translator = new Xyster_Db_Translator($this->_adapter);
+					if ( $relation->getFilters() ) {
+						$translator = new Xyster_Db_Translator($db);
 						$translator->setRenameCallback(array($toMap, 'untranslateField'));
 						$translator->setTable($alias);
-						$fToken = $translator->translate($details->getFilters());
+						$fToken = $translator->translate($relation->getFilters());
 						$localFrom .= ' AND '. $fToken->getSql();
 						$binds += $fToken->getBindValues();
 					}
@@ -230,10 +218,51 @@ class Xyster_Orm_Mapper_Translator extends Xyster_Db_Translator
 				$lastTable = $toMap->getTable();
 				$container = $class;
 				
-				$from[ $joinTableSql ] = new Xyster_Db_Token($localFrom, $binds);
+				$from[ $toMap->getTable() . ' AS ' . $alias ] =
+				    new Xyster_Db_Token($localFrom, $binds);
 			}
 		}
 
 		return $from;
+	}
+	
+	/**
+	 * {@inherit}
+	 *
+	 * @param Xyster_Data_Field $field
+	 * @return string
+	 */
+	protected function _getRenamedField( Xyster_Data_Field $field )
+	{
+	    $factory = $this->_mapFactory;
+		$className = $this->_class;
+		
+	    $prefixes = Xyster_String::smartSplit('->', $field->getName());
+		$meta = $factory->getEntityMeta($className);
+
+		if ( count($prefixes) > 1 ) {
+			foreach( $prefixes as $call ) {
+				if ( $meta->isRelation($call) ) {
+					$className = $meta->getRelation($call)->getTo();
+		            $meta = $factory->getEntityMeta($className);
+				}
+			}
+		}
+
+		$rename = $factory->get($className)
+			->untranslateField($prefixes[count($prefixes)-1]);
+	    
+	    return $rename;
+	}
+	
+	/**
+	 * {@inherit}
+	 *
+	 * @param Xyster_Data_Field $field
+	 * @return string
+	 */
+	protected function _getTableName( Xyster_Data_Field $field )
+	{
+	    return $this->aliasField($field->getName());
 	}
 }

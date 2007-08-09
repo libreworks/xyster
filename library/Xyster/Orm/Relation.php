@@ -299,7 +299,9 @@ class Xyster_Orm_Relation
             $meta = $this->_mapFactory->get($this->_to)->getEntityMeta();
 	        foreach( $meta->getRelations() as $relation ) {
 	            /* @var $relation Xyster_Orm_Relation */
-	            if ( $relation->_type == 'belongs' && $relation->_to == $this->_from ) {
+	            if ( $relation->_type == 'belongs'
+					&& $relation->_to == $this->_from
+	                && $relation->_id == $this->_id ) {
 	                $this->_reverse = $relation;
 	                break;
 	            }
@@ -351,19 +353,10 @@ class Xyster_Orm_Relation
 		require_once 'Xyster/Orm.php';
 		$orm = Xyster_Orm::getInstance();
 		
-		if ( !$this->isCollection() && $this->_filters ) {
-
-		    /*
-		     * A one-to-one with filters
-		     */
-		    $criteria = Xyster_Data_Junction::all($this->_filters,
-		        $entity->getPrimaryKeyAsCriterion());
-			$linked = $orm->find($this->_to, $criteria);
-			
-		} else if ( !$this->isCollection() ) {
+		if ( !$this->isCollection() ) {
 		    
 		    /*
-		     * A one-to-one without filters
+		     * A one-to-one
 		     */
             $key = array();
             foreach( $this->_id as $name ) {
@@ -377,35 +370,17 @@ class Xyster_Orm_Relation
 		     * A one-to-many or many-to-many with filters
 		     * We will use the base primary key value
 		     */
-            $key = $entity->getPrimaryKey(true);
-			if ( $key ) {
+            $criteria = $entity->getPrimaryKeyAsCriterion(true);
+			if ( $criteria ) {
 			    
 				if ( $this->_type == 'many' ) {
                     
-				    $keyNames = array_keys($key);
-				    $criteria = null;
-				    for( $i=0; $i<count($key); $i++ ) {
-				        $keyName = $keyNames[$i];
-				        $keyValue = $key[$keyName];
-				        // build a criterion object based on the primary key(s)
-			            require_once 'Xyster/Data/Expression.php';
-			            $thiskey = Xyster_Data_Expression::eq($this->_id[$i],
-			                $keyValue);
-			            if ( !$criteria ) {
-			                $criteria = $thiskey;
-			            } else if ( $criteria instanceof Xyster_Data_Expression ) {
-			                require_once 'Xyster/Data/Junction.php';
-			                $criteria = Xyster_Data_Junction::all($criteria, $thiskey);
-			            } else if ( $criteria instanceof Xyster_Data_Junction ) {
-			                $criteria->add($thiskey);
-			            }
-				    }
 				    if ( $this->_filters ) {
 				        require_once 'Xyster/Data/Junction.php';
 				        $criteria = Xyster_Data_Junction::all($criteria,
 				            $this->_filters);
 				    }
-					$linked = $orm->findAll($this->_to,$criteria);
+					$linked = $orm->findAll($this->_to, $criteria);
 
 				} else if ( $this->_type == 'joined' ) {
 

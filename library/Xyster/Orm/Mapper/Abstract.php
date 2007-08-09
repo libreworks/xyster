@@ -87,6 +87,13 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
     protected $_lifetime = 60;
     
     /**
+     * The class meta data
+     *
+     * @var Xyster_Orm_Entity_Meta
+     */
+    private $_meta;
+    
+    /**
      * Any additional options
      * 
      * <dl>
@@ -113,24 +120,7 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
      */
     public function delete( Xyster_Orm_Entity $entity )
     {
-        $key = $entity->getPrimaryKey();
-
-        // build a criterion object based on the primary key(s)
-        $criteria = null;
-        foreach( $key as $name => $value ) {
-            require_once 'Xyster/Data/Expression.php';
-            $thiskey = Xyster_Data_Expression::eq($name,$value);
-            if ( !$criteria ) {
-                $criteria = $thiskey;
-            } else if ( $criteria instanceof Xyster_Data_Expression ) {
-                require_once 'Xyster/Data/Junction.php';
-                $criteria = Xyster_Data_Junction::all( $criteria, $thiskey );
-            } else if ( $criteria instanceof Xyster_Data_Junction ) {
-                $criteria->add($thiskey);
-            }
-        }
-
-        $this->_delete( $criteria );
+        $this->_delete( $entity->getPrimaryKeyAsCriterion() );
     }
     
     /**
@@ -152,7 +142,9 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
     {
         if ( !$this->_meta ) {
             $this->_meta = new Xyster_Orm_Entity_Meta($this);
-            Xyster_Orm_Entity::setMeta($this->_meta);
+            if ( !Xyster_Orm_Entity::getMeta($this->getEntityName()) ) {
+                Xyster_Orm_Entity::setMeta($this->_meta);
+            }
         }
         return $this->_meta;
     }
@@ -355,22 +347,6 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
     }
     
     /**
-     * Ensures the parameter passed is either an array or a {@link Xyster_Data_Criterion}
-     *
-     * @param mixed $criteria
-     * @throws Xyster_Orm_Mapper_Exception if the value passed is invalid
-     */
-    static protected function _assertCriteria( $criteria )
-    {
-        if ( !is_array($criteria) && 
-            ! $criteria instanceof Xyster_Data_Criterion &&
-            $criteria !== null ) {
-            require_once 'Xyster/Orm/Mapper/Exception.php';
-            throw new Xyster_Orm_Mapper_Exception('Invalid criteria: ' . gettype($criteria) );
-        }
-    }
-    
-    /**
      * Removes entities from the backend
      *
      * @param Xyster_Data_Criterion $where  The criteria on which to remove entities
@@ -391,6 +367,69 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
      * @param Xyster_Orm_Entity $entity  The entity to update
      */
     abstract protected function _update( Xyster_Orm_Entity $entity );
+        
+    /**
+     * Ensures the parameter passed is a Criterion
+     *
+     * @param Xyster_Data_Criterion|array $criteria
+     * @return Xyster_Data_Criterion
+     */
+    protected function _buildCriteria( $criteria )
+    {
+        if ( !is_array($criteria) && 
+            ! $criteria instanceof Xyster_Data_Criterion &&
+            $criteria !== null ) {
+            require_once 'Xyster/Orm/Mapper/Exception.php';
+            throw new Xyster_Orm_Mapper_Exception('Invalid criteria: ' . gettype($criteria) );
+        }
+        
+        $_criteria = null;
+        
+        if ( is_array($criteria) ) {
+            foreach( $criteria as $name => $value ) {
+                require_once 'Xyster/Data/Expression.php';
+                $thiskey = Xyster_Data_Expression::eq($name,$value);
+                if ( !$_criteria ) {
+                    $_criteria = $thiskey;
+                } else if ( $_criteria instanceof Xyster_Data_Expression ) {
+                    require_once 'Xyster/Data/Junction.php';
+                    $_criteria = Xyster_Data_Junction::all( $_criteria, $thiskey );
+                } else if ( $_criteria instanceof Xyster_Data_Junction ) {
+                    $_criteria->add($thiskey);
+                }
+            }
+        } else {
+            $_criteria = $criteria;
+        }
+        
+        return $_criteria;
+    }
+    
+    /**
+     * Checks an array for correct primary key names
+     *
+     * @param mixed $key
+     */
+    protected function _checkPrimaryKey( $id )
+    {
+        $keyNames = $this->getEntityMeta()->getPrimary();
+        
+        if ( (!is_array($id) && count($keyNames) > 1) || count($id) != count($keyNames)) {
+            require_once 'Xyster/Orm/Mapper/Exception.php';
+            throw new Xyster_Orm_Mapper_Exception("Missing value(s) for the primary key");
+        }
+        
+        if ( !is_array($id) ) {
+            $id = array( $keyNames[0] => $id );
+        }
+        
+        foreach( array_keys($id) as $name ) {
+            if ( !in_array($name, $keyNames) ) {
+                require_once 'Xyster/Orm/Mapper/Exception.php';
+                throw new Xyster_Orm_Mapper_Exception("'$name' is not a primary key");
+            }
+        }
+    }
     
     /**
      * Asserts the correct property names in a criteria array
