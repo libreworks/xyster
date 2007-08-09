@@ -30,7 +30,7 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 require_once 'Xyster/EnumTest.php';
 require_once 'Xyster/Collection/AllTests.php';
 require_once 'Xyster/Data/AllTests.php';
-
+require_once 'Xyster/Orm/AllTests.php';
 
 class Xyster_AllTests
 {
@@ -45,6 +45,7 @@ class Xyster_AllTests
         $suite->addTestSuite('Xyster_EnumTest');
         $suite->addTest( Xyster_Collection_AllTests::suite() );
         $suite->addTest( Xyster_Data_AllTests::suite() );
+        $suite->addTest( Xyster_Orm_AllTests::suite() );
         return $suite;
     }
 }

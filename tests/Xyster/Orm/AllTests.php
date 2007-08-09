@@ -19,18 +19,26 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
-if (is_readable('TestConfiguration.php')) {
-    require_once('TestConfiguration.php');
-} else {
-    require_once('TestConfiguration.php.dist');
-}
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Xyster_Orm_AllTests::main');
 }
 
+/**
+ * Test helper
+ */
+require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
+
+require_once 'Xyster/Orm/EntityTest.php';
+require_once 'Xyster/Orm/EntityFieldTest.php';
+require_once 'Xyster/Orm/EntityMetaTest.php';
+require_once 'Xyster/Orm/SetTest.php';
+require_once 'Xyster/Orm/WorkUnitTest.php';
+require_once 'Xyster/Orm/RepositoryTest.php';
+//require_once 'Xyster/Orm/RelationTest.php';
 
 error_reporting(E_ALL | E_STRICT);
 
@@ -44,6 +52,13 @@ class Xyster_Orm_AllTests
     public static function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('Xyster Framework - Xyster_Orm');
+        $suite->addTestSuite('Xyster_Orm_EntityTest');
+        $suite->addTestSuite('Xyster_Orm_Entity_FieldTest');
+        $suite->addTestSuite('Xyster_Orm_Entity_MetaTest');
+        $suite->addTestSuite('Xyster_Orm_SetTest');
+        $suite->addTestSuite('Xyster_Orm_WorkUnitTest');
+        $suite->addTestSuite('Xyster_Orm_RepositoryTest');
+        //$suite->addTestSuite('Xyster_Orm_RelationTest');
         return $suite;
     }
 }
