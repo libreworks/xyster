@@ -18,9 +18,13 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 /**
- * Xyster_Collection_Set_Abstract
+ * @see Xyster_Collection
  */
-require_once 'Xyster/Collection/Set/Abstract.php';
+require_once 'Xyster/Collection.php';
+/**
+ * @see Xyster_Collection_Set_Interface
+ */
+require_once 'Xyster/Collection/Set/Interface.php';
 /**
  * Simple implementation of the no-duplicate collection
  *

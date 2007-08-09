@@ -18,9 +18,9 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 /**
- * Xyster_Collection_Map_Interface
+ * @see Xyster_Collection_Map_Abstract
  */
-require_once 'Xyster/Collection/Map/Interface.php';
+require_once 'Xyster/Collection/Map/Abstract.php';
 /**
  * A simple string key-based map
  *
