@@ -56,12 +56,27 @@ class Xyster_Orm_EntityTest extends Xyster_Orm_TestSetup
     }
     
     /**
+     * Tests that constructing an entity before its metadata is defined errors
+     *
+     */
+    public function testConstructBeforeMetadata()
+    {
+        try {
+            Xyster_Orm_Loader::loadEntityClass('MockBugProduct');
+            $product = new MockBugProduct();
+        } catch ( Xyster_Orm_Entity_Exception $thrown ) {
+            return;
+        }
+        $this->fail('Exception not thrown');
+    }
+    
+    /**
      * Tests that 'setMeta' will throw an exception if meta helper already set
      *
      */
     public function testSetMetaWhenExists()
     {
-        $meta = self::$_mockFactory->getEntityMeta('MockBug');
+        $meta = $this->_mockFactory()->getEntityMeta('MockBug');
         try {
             Xyster_Orm_Entity::setMeta($meta);
         } catch ( Xyster_Orm_Exception $thrown ) {
@@ -155,6 +170,7 @@ class Xyster_Orm_EntityTest extends Xyster_Orm_TestSetup
      */
     public function testGetPrimaryKeyAsCriterionCompositeKey()
     {
+        $this->_setupClass('MockBugProduct');
         $entity = new MockBugProduct();
         $this->assertType('Xyster_Data_Junction', $entity->getPrimaryKeyAsCriterion());
     }
@@ -252,6 +268,7 @@ class Xyster_Orm_EntityTest extends Xyster_Orm_TestSetup
         $this->assertTrue($entity->isDirty());
         $entity->setDirty(false);
         
+        Xyster_Orm_Loader::loadSetClass('MockProduct');
         $products = new MockProductSet();
         $entity->products = $products;
         $this->assertSame($products, $entity->products);

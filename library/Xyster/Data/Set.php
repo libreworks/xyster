@@ -18,9 +18,13 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 /**
- * Xyster_Collection_Set_Sortable
+ * @see Xyster_Collection_Set_Sortable
  */
 require_once 'Xyster/Collection/Set/Sortable.php';
+/**
+ * @see Xyster_Collection_Set
+ */
+require_once 'Xyster/Collection/Set.php';
 /**
  * A set that holds rows and columns
  *

@@ -174,13 +174,12 @@ class Xyster_Orm_SetTest extends Xyster_Orm_TestSetup
     /**
      * Tests the relateTo method will assign the entity and relation
      *
-     * @todo Mock the Mapper Factory
      */
     public function testRelateTo()
     {
         $set = $this->_getMockSet();
         
-        $mf = self::$_mockFactory;
+        $mf = $this->_mockFactory();
         $map = $mf->get('MockAccount');
         $meta = $map->getEntityMeta();
         $relation = $meta->getRelation('reported');

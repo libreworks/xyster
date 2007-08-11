@@ -33,13 +33,40 @@ require_once 'Xyster/Orm/Mapper/Factory/Interface.php';
 abstract class Xyster_Orm_Mapper_Factory_Abstract implements Xyster_Orm_Mapper_Factory_Interface
 {
     /**
-     * Gets the mapper for a given class
+     * The manager containing this factory
+     *
+     * @var Xyster_Orm_Manager
+     */
+    protected $_manager;
+    
+    /**
+     * Gets the entity meta for a given class
      * 
      * @param string $className The name of the entity class
-     * @return Xyster_Orm_Mapper The mapper object
+     * @return Xyster_Orm_Entity_Meta The meta object
      */
     public function getEntityMeta( $className )
     {
         return $this->get($className)->getEntityMeta();
+    }
+    
+    /**
+     * Gets the manager containing this factory
+     *
+     * @return Xyster_Orm_Manager
+     */
+    public function getManager()
+    {
+        return $this->_manager;
+    }
+    
+    /**
+     * Sets the manager that contains this factory
+     *
+     * @param Xyster_Orm_Manager $manager
+     */
+    public function setManager( Xyster_Orm_Manager $manager )
+    {
+        $this->_manager = $manager;
     }
 }

@@ -47,7 +47,7 @@ class Xyster_Orm_Entity_MetaTest extends Xyster_Orm_TestSetup
     {
         parent::setUp();
         
-        $map = self::$_mockFactory->get('MockBug');
+        $map = $this->_mockFactory()->get('MockBug');
         $this->_meta = $map->getEntityMeta();
     }
     
@@ -89,7 +89,7 @@ class Xyster_Orm_Entity_MetaTest extends Xyster_Orm_TestSetup
      */
     public function testGetMapperFactory()
     {
-        $this->assertSame(self::$_mockFactory, $this->_meta->getMapperFactory());
+        $this->assertSame($this->_mockFactory(), $this->_meta->getMapperFactory());
     }
     
     /**
@@ -192,6 +192,16 @@ class Xyster_Orm_Entity_MetaTest extends Xyster_Orm_TestSetup
     
     public function testHasOne()
     {
-        
+        $this->_meta->hasOne('reportingAccount', array('class'=>'MockAccount','id'=>'reportedBy'));
+    }
+    
+    public function testCreateExistingRelation()
+    {
+        try {
+            $this->_meta->belongsTo('reporter', array('class'=>'MockAccount','id'=>'reportedBy'));
+        } catch ( Xyster_Orm_Relation_Exception $thrown ) {
+            return;
+        }
+        $this->fail('Exception not thrown');
     }
 }

@@ -75,19 +75,13 @@ class Xyster_Orm_Query_Report extends Xyster_Orm_Query
                 }
         }
 
-        $map = $this->_mapFactory($this->_class);
         // run the query in the backend
-        $collection = $map->query($this);
+        $collection = $this->_manager->executeQuery($this);
         if ( $collection instanceof Xyster_Data_Set &&
             ! $collection instanceof Xyster_Orm_Set ) {
             // if it's not an entity set, the whole thing was in the backend;
 	        // it's safe to just return it
             return $collection;
-        }
-
-        // put all returned entities in the cache
-        foreach( $collection as $entity ) {
-            $this->_putInSecondaryCache($entity);
         }
 
         // apply any runtime filters to the entity set

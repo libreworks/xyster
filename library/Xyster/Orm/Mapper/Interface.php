@@ -111,6 +111,14 @@ interface Xyster_Orm_Mapper_Interface
      */
     function getIndex();
     /**
+     * Gets entities via a many-to-many table
+     *
+     * @param Xyster_Orm_Entity $entity
+     * @param Xyster_Orm_Relation $relation
+     * @return Xyster_Orm_Set
+     */
+    function getJoined( Xyster_Orm_Entity $entity, Xyster_Orm_Relation $relation );
+    /**
 	 * Gets the time in seconds an entity should be cached
 	 *
 	 * @return int
@@ -146,6 +154,13 @@ interface Xyster_Orm_Mapper_Interface
      * @return string The table name
      */
     function getTable();
+    /**
+	 * Performs a query
+	 * 
+	 * @param Xyster_Orm_Query $query  The query details
+	 * @return Xyster_Data_Set
+	 */
+	function query( Xyster_Orm_Query $query ); 
     /**
 	 * Reloads an entity's values with fresh ones from the backend
 	 *

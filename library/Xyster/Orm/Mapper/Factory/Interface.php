@@ -42,4 +42,16 @@ interface Xyster_Orm_Mapper_Factory_Interface
      * @return Xyster_Orm_Entity_Meta
      */
     function getEntityMeta( $className );
+    /**
+     * Gets the manager that contains the factory
+     *
+     * @return Xyster_Orm_Manager
+     */
+    function getManager();
+    /**
+     * Sets the manager that contains the factory
+     *
+     * @param Xyster_Orm_Manager $manager
+     */
+    function setManager( Xyster_Orm_Manager $manager );
 }

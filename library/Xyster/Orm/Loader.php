@@ -63,27 +63,6 @@ class Xyster_Orm_Loader
     }
     
     /**
-     * spl_autoload() suitable implementation for supporting class autoloading.
-     *
-     * Attach to spl_autoload() using the following:
-     * <code>
-     * spl_autoload_register(array('Xyster_Orm', 'autoload'));
-     * </code>
-     * 
-     * @param string $class 
-     * @return mixed string class name on success; false on failure
-     */
-    public static function autoload($class)
-    {
-        try {
-            self::loadClass($class);
-            return $class;
-        } catch (Exception $e) {
-            return false;
-        }
-    }
-    
-    /**
      * Tries to load the class in one of the paths defined for entities
      *
      * @param string $className
@@ -128,6 +107,7 @@ class Xyster_Orm_Loader
 
         if (!($className instanceof Xyster_Orm_Entity) &&
             !is_subclass_of($className, 'Xyster_Orm_Entity')) {
+            require_once 'Xyster/Orm/Exception.php';
             throw new Xyster_Orm_Exception("'" . $className . "' is not a subclass of Xyster_Orm_Entity");
         }
     }
@@ -152,6 +132,7 @@ class Xyster_Orm_Loader
         
         if (!($mapper instanceof Xyster_Orm_Mapper_Interface) &&
             !is_subclass_of($mapper, 'Xyster_Orm_Mapper_Abstract')) {
+            require_once 'Xyster/Orm/Exception.php';
             throw new Xyster_Orm_Exception("'" . $mapper . "' is not a subclass of Xyster_Orm_Mapper_Interface");
         }
         
@@ -173,19 +154,10 @@ class Xyster_Orm_Loader
         
         if (!($set instanceof Xyster_Orm_Set) &&
             !is_subclass_of($set, 'Xyster_Orm_Set')) {
+            require_once 'Xyster/Orm/Exception.php';
             throw new Xyster_Orm_Exception("'" . $set . "' is not a subclass of Xyster_Orm_Set");
         }
         
         return $set;
-    }
-    
-    /**
-     * Register {@link autoload()} with spl_autoload()
-     * 
-     * @throws Zend_Exception if spl_autoload() is not found or if the specified class does not have an autoload() method.
-     */
-    public static function registerAutoload()
-    {
-        Zend_Loader::registerAutoload(__CLASS__);
     }
 }

@@ -140,7 +140,41 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
 	    
 	    return $this->_mapSet($this->_getAdapter()->query($select, $binds));
     }
-    
+
+    /**
+     * Gets all entities from the data store
+     *
+     * @param array $ids  An array of ids for which entities to retrieve
+     * @return Xyster_Orm_Set  A collection of the entities
+     */
+    final public function getAll( array $ids = null )
+    {
+	    $orWhere = array();
+	    if ( !$ids ) {
+	        $ids = array();
+	    }
+
+        foreach( $ids as $id ) {
+    	    $id = $this->_checkPrimaryKey($id);
+            $orWhere[] = $this->_buildCriteria($id);
+        }
+
+	    $where = ( count($orWhere) ) ?
+	        Xyster_Data_Junction::fromArray('OR', $orWhere) : null;
+	    
+	    $select = $this->_buildSimpleSelect();
+        $translator = $this->_buildTranslator();
+        $binds = array();
+        
+        if ( $where ) {
+            $token = $translator->translate($where);
+    		$select->where($token->getSql());
+		    $binds += $token->getBindValues();
+        }
+	        
+	    return $this->_mapSet($this->_getAdapter()->query($select, $binds));
+    }
+        
     /**
 	 * Gets the fields for an entity as they appear in the backend
 	 * 
@@ -180,6 +214,58 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
     }
     
     /**
+     * Gets entities via a many-to-many table
+     *
+     * @param Xyster_Orm_Entity $entity
+     * @param Xyster_Orm_Relation $relation
+     * @return Xyster_Orm_Set
+     */
+    public function getJoined( Xyster_Orm_Entity $entity, Xyster_Orm_Relation $relation )
+    {
+        $leftMap = $this->_factory->get($relation->getFrom());
+        $rightMap = $this->_factory->get($relation->getTo());
+        
+        $targetTable = $rightMap->getTable();
+		$targetTableAlias = 't2';
+        $columns = array();
+		foreach( $rightMap->getFields() as $name => $v ) {
+			$alias = $rightMap->translateField($name);
+			$columns[$alias] = $targetTableAlias.'.'.$name;
+		}
+
+		// get the join SQL for the left to the middle
+		$firstCond = '';
+		$left = $relation->getLeft();
+		foreach( $leftMap->getEntityMeta()->getPrimary() as $k=>$primary ) {
+		    if ( $k > 0 ) {
+		        $firstCond .= ' AND ';
+		    }
+		    $firstCond = 't1.' . $map->untranslateField($primary) . ' = ' .
+		        $relation->getTable() . '.' . $left[$k];
+		}
+		
+		// get the join SQL for the middle to the right 
+		$secondCond = '';
+		$right = $relation->getRight();
+		foreach( $rightMap->getEntityMeta()->getPrimary() as $k=>$primary ) {
+		    if ( $k > 0 ) {
+		        $secondCond .= ' AND ';
+		    }
+		    $secondCond = $relation->getTable() . '.' . $right[$k] . ' = ' .
+		        $targetTableAlias . '.' . $rightMap->untranslateField($primary); 
+		}
+		
+		$select = $this->_getAdapter()->select();
+		
+		$binds = array();
+		$select->from(array('t1', $this->getTable()), array())
+		    ->join($relation->getTable(), $firstCond, array())
+		    ->join(array($targetTableAlias,$targetTable), $secondCond, $columns);
+		    		
+		return $this->_mapSet($this->_getAdapter()->query($select, $binds));		
+    }
+    
+    /**
      * Gets the metadata cache
      *
      * @return Zend_Cache_Core
@@ -197,70 +283,6 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
     final public function getSequence()
     {
         return $this->getOption('sequence');
-    }
-
-    /**
-     * Gets an entity with the supplied identifier
-     *
-     * @param mixed $id  The id of the entity to get
-     * @return Xyster_Orm_Entity  The data entity found, or null if none
-     */
-    final public function get( $id )
-    {
-        $keyNames = $this->getEntityMeta()->getPrimary();
-        $keyValues = array();
-        
-	    if ( count($keyNames) > 1 ) {
-	        
-    	    $this->_checkPrimaryKey($id);
-    	    $keyValues = $id;
-	        
-	    } else if ( is_array($id) ) {
-	        
-	        $keyValues = array( current($keyNames) => current($id) );
-	        
-	    } else {
-
-	        $keyValues = array( $keyNames[0] => $id );
-
-	    }
-	    
-	    return $this->find($keyValues);
-    }
-
-    /**
-     * Gets all entities from the data store
-     *
-     * @param array $ids  An array of ids for which entities to retrieve
-     * @return Xyster_Orm_Set  A collection of the entities
-     */
-    final public function getAll( array $ids = null )
-    {
-        $keyNames = $this->getEntityMeta()->getPrimary();
-	    $orWhere = array();
-	    if ( !$ids ) {
-	        $ids = array();
-	    }
-
-        foreach( $ids as $id ) {
-    	    $this->_checkPrimaryKey($id);
-            $orWhere[] = $this->_buildCriteria($id);
-        }
-
-	    $where = ( count($orWhere) ) ?
-	        Xyster_Data_Junction::fromArray('OR', $orWhere) : null;
-	    
-	    $select = $this->_buildSimpleSelect();
-        $translator = $this->_buildTranslator();
-        $binds = array();
-        
-        if ( $where ) {
-            $token = $translator->translate($where);
-    		$select->where($token->getSql());
-		    $binds += $token->getBindValues();
-        }
-	        
-	    return $this->_mapSet($this->_getAdapter()->query($select, $binds));
     }
 
     /**
@@ -496,7 +518,6 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
 	 *
 	 * @param Xyster_Orm_Entity $entity  The entity to insert
 	 * @return mixed  The new primary key
-	 * @todo primary key needs to be untranslated
 	 */
 	protected function _insert( Xyster_Orm_Entity $entity )
 	{
@@ -510,7 +531,7 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
          * and one of the columns in the key uses a sequence,
          * it's the _first_ column in the compound key.
          */
-        $primary = $this->getEntityMeta()->getPrimary();
+        $primary = array_map(array($this, 'untranslateField'), $this->getEntityMeta()->getPrimary());
         $pkIdentity = $primary[0];
         if ( count($primary) > 0 ) {  
 	        $fields = $this->getEntityMeta()->getFields();

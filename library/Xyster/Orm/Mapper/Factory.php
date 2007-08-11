@@ -54,8 +54,7 @@ class Xyster_Orm_Mapper_Factory extends Xyster_Orm_Mapper_Factory_Abstract
     {
         if ( !isset($this->_mappers[$className]) ) {
             
-            $mapperName = $className . 'Mapper';
-            Xyster_Orm_Loader::loadMapperClass($className);
+            $mapperName = Xyster_Orm_Loader::loadMapperClass($className);
             $this->_mappers[$className] = new $mapperName($this->getDefaultMetadataCache());
             $this->_mappers[$className]->setFactory($this);
             $this->_mappers[$className]->init();

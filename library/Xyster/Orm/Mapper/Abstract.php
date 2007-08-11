@@ -122,6 +122,35 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
     {
         $this->_delete( $entity->getPrimaryKeyAsCriterion() );
     }
+
+    /**
+     * Gets an entity with the supplied identifier
+     *
+     * @param mixed $id  The id of the entity to get
+     * @return Xyster_Orm_Entity  The data entity found, or null if none
+     */
+    final public function get( $id )
+    {
+        $keyNames = $this->getEntityMeta()->getPrimary();
+        $keyValues = array();
+        
+	    if ( count($keyNames) > 1 ) {
+	        
+    	    $this->_checkPrimaryKey($id);
+    	    $keyValues = $id;
+	        
+	    } else if ( is_array($id) ) {
+	        
+	        $keyValues = array( current($keyNames) => current($id) );
+	        
+	    } else {
+
+	        $keyValues = array( $keyNames[0] => $id );
+
+	    }
+	    
+	    return $this->find($keyValues);
+    }
     
     /**
      * Gets the name of the domain to which this mapper belongs
@@ -429,6 +458,8 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
                 throw new Xyster_Orm_Mapper_Exception("'$name' is not a primary key");
             }
         }
+        
+        return $id;
     }
     
     /**

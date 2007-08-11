@@ -85,13 +85,13 @@ class Xyster_Orm_Relation
     /**
      * The join table field linking to the left entity's primary key fields
      *
-     * @var string 
+     * @var array 
      */
     protected $_joinLeft;
     /**
      * The join table field linking to the right entity's primary key fields
      *
-     * @var string
+     * @var array
      */
     protected $_joinRight;
     
@@ -149,10 +149,10 @@ class Xyster_Orm_Relation
 		    // if it's a one-to-many, we're just using the declaring class' key
 	        // if it's a one-to-one, we need the related class' key
 		    $meta = ( $type == 'many' ) ? $meta :
-		        $this->_mapFactory->get($class)->getEntityMeta();
+		        $this->_mapFactory->getEntityMeta($class);
 	        $id = $meta->getPrimary();
 		}
-		if ( !is_array($id) ) {
+		if ( $type != 'joined' && !is_array($id) ) {
 		    $id = array($id);
 		}
 
@@ -173,21 +173,42 @@ class Xyster_Orm_Relation
 
 		if ( $type == 'many' || $type == 'joined' ) {
 		    /**
-		     * @todo replace this with the onDelete/onUpdate stuff
+		     * @todo put in the onDelete/onUpdate stuff
 		     */
-//			if ( isset($options['remove']) ) {
-//				$this->_remove = ( is_array($options['remove']) ) ?
-//					$options['remove'] : (bool)$options['remove'];
-//			}
 			if ( $type == 'joined' ) {
 				$leftMap = $this->_mapFactory->get($declaringClass);
 				$rightMap = $this->_mapFactory->get($class);
+				$leftMeta = $leftMap->getEntityMeta();
+				$rightMeta = $rightMap->getEntityMeta();
+
 				$this->_joinTable = array_key_exists('table', $options) ? 
-					$options['table'] : $leftMap->getTable().'_'.$rightMap->getTable();
-				$this->_joinLeft = array_key_exists('left', $options) ? 
-					$options['left'] : $leftMap->getEntityMeta()->getPrimary();
-				$this->_joinRight = array_key_exists('right', $options) ?
-					$options['right'] : $rightMap->getEntityMeta()->getPrimary();
+				    $options['table'] : $leftMap->getTable().'_'.$rightMap->getTable();
+				
+				if ( isset($options['left']) ) {
+				    // make sure number of fields matches number of primary keys
+				    $leftCount = is_array($options['left']) ?
+				        count($options['left']) : 1;
+				    if ( $leftCount != count($leftMeta->getPrimary()) ) {
+				        require_once 'Xyster/Orm/Relation/Exception.php';
+				        throw new Xyster_Orm_Relation_Exception('Number of "left" keys do not match number of keys in left table');
+				    }
+				    $this->_joinLeft = (array) $options['left'];
+				} else {
+				    $this->_joinLeft = array_map(array($leftMap,'untranslateField'), $leftMeta->getPrimary());
+				}
+
+				if ( isset($options['right']) ) {
+				    // make sure number of fields matches number of primary keys
+				    $rightCount = is_array($options['right']) ?
+				        count($options['right']) : 1;
+				    if ( $rightCount != count($rightMeta->getPrimary()) ) {
+				        require_once 'Xyster/Orm/Relation/Exception.php';
+				        throw new Xyster_Orm_Relation_Exception('Number of "right" keys do not match number of keys in right table');
+				    }
+				    $this->_joinRight = (array) $options['right'];
+				} else {
+				    $this->_joinRight = array_map(array($rightMap,'untranslateField'), $rightMeta->getPrimary());
+				}
 			}
 		}
 	}
@@ -225,7 +246,7 @@ class Xyster_Orm_Relation
     /**
      * Gets the left entity column name in the join table
      * 
-     * @return string
+     * @return array
      */
     public function getLeft()
     {
@@ -245,7 +266,7 @@ class Xyster_Orm_Relation
     /**
      * Gets the right entity column name in the join table
      * 
-     * @return string
+     * @return array
      */
     public function getRight()
     {
@@ -296,7 +317,7 @@ class Xyster_Orm_Relation
         }
         
         if ( $this->_reverse === null ) {
-            $meta = $this->_mapFactory->get($this->_to)->getEntityMeta();
+            $meta = $this->_mapFactory->getEntityMeta($this->_to);
 	        foreach( $meta->getRelations() as $relation ) {
 	            /* @var $relation Xyster_Orm_Relation */
 	            if ( $relation->_type == 'belongs'
@@ -349,9 +370,7 @@ class Xyster_Orm_Relation
 	public function load( Xyster_Orm_Entity $entity )
 	{
 		$linked = null;
-
-		require_once 'Xyster/Orm.php';
-		$orm = Xyster_Orm::getInstance();
+		$manager = $this->_mapFactory->getManager();
 		
 		if ( !$this->isCollection() ) {
 		    
@@ -359,10 +378,11 @@ class Xyster_Orm_Relation
 		     * A one-to-one
 		     */
             $key = array();
-            foreach( $this->_id as $name ) {
-                $key[$name] = $entity->$name;
+            $keys = $this->_mapFactory->getEntityMeta($this->_to)->getPrimary();
+            foreach( $this->_id as $i => $name ) {
+                $key[$keys[$i]] = $entity->$name;
             }
-		    $linked = $orm->get($this->_to, $key);
+		    $linked = $manager->get($this->_to, $key);
 			
 		} else {
 		    
@@ -370,22 +390,31 @@ class Xyster_Orm_Relation
 		     * A one-to-many or many-to-many with filters
 		     * We will use the base primary key value
 		     */
-            $criteria = $entity->getPrimaryKeyAsCriterion(true);
-			if ( $criteria ) {
+            $primaryKey = $entity->getPrimaryKey(true);
+            
+			if ( count($primaryKey) && current($primaryKey) ) {
 			    
-				if ( $this->_type == 'many' ) {
-                    
+			    if ( $this->_type == 'many' ) {
+
+           		    $find = array();
+        		    $id = (array) $this->_id;
+        		    $i = 0;
+                    foreach( $primaryKey as $keyName => $keyValue ) {
+                        $find[] = Xyster_Data_Expression::eq($id[$i], $keyValue);
+                        $i++;
+                    }
+                    $criteria = Xyster_Data_Criterion::fromArray('AND', $find);
+    			        
 				    if ( $this->_filters ) {
 				        require_once 'Xyster/Data/Junction.php';
 				        $criteria = Xyster_Data_Junction::all($criteria,
 				            $this->_filters);
 				    }
-					$linked = $orm->findAll($this->_to, $criteria);
+					$linked = $manager->findAll($this->_to, $criteria);
 
 				} else if ( $this->_type == 'joined' ) {
 
-					$map = $this->_mapFactory->get($this->_from);
-					$linked = $map->getJoined($entity, $name);
+					$linked = $manager->getJoined($entity, $this);
 
 				}
 				

@@ -70,6 +70,11 @@ class Xyster_Orm_Entity
      */
     public function __construct( array $values = null )
     {
+        if (! $this->_getMeta() instanceof Xyster_Orm_Entity_Meta ) {
+            require_once 'Xyster/Orm/Entity/Exception.php';
+            throw new Xyster_Orm_Entity_Exception('The metadata for ' . get_class($this) . 'has not been setup');
+        }
+
         foreach( $this->_getMeta()->getFieldNames() as $name ) {
             $this->_values[$name] = null;
         }

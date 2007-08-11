@@ -38,7 +38,8 @@ require_once 'Xyster/Orm/EntityMetaTest.php';
 require_once 'Xyster/Orm/SetTest.php';
 require_once 'Xyster/Orm/WorkUnitTest.php';
 require_once 'Xyster/Orm/RepositoryTest.php';
-//require_once 'Xyster/Orm/RelationTest.php';
+require_once 'Xyster/Orm/RelationTest.php';
+require_once 'Xyster/Orm/ManagerTest.php';
 
 error_reporting(E_ALL | E_STRICT);
 
@@ -58,7 +59,8 @@ class Xyster_Orm_AllTests
         $suite->addTestSuite('Xyster_Orm_SetTest');
         $suite->addTestSuite('Xyster_Orm_WorkUnitTest');
         $suite->addTestSuite('Xyster_Orm_RepositoryTest');
-        //$suite->addTestSuite('Xyster_Orm_RelationTest');
+        $suite->addTestSuite('Xyster_Orm_RelationTest');
+        $suite->addTestSuite('Xyster_Orm_ManagerTest');
         return $suite;
     }
 }

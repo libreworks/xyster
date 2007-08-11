@@ -161,7 +161,7 @@ class Xyster_Orm_WorkUnitTest extends Xyster_Orm_TestSetup
         $new = new MockBug();
         $wu->registerNew($new);
         
-        $fact = self::$_mockFactory;
+        $fact = $this->_mockFactory();
         $repo = new Xyster_Orm_Repository($fact);
         
         $wu->commit($repo, $fact);

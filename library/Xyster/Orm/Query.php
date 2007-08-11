@@ -59,11 +59,11 @@ class Xyster_Orm_Query
     protected $_backend = array();
     
     /**
-     * The mapper factory
+     * The orm manager
      *
-     * @var Xyster_Orm_Mapper_Factory_Interface
+     * @var Xyster_Orm_Manager
      */
-    protected $_mapFactory;
+    protected $_manager;
     
     /**
      * The query parser
@@ -84,12 +84,12 @@ class Xyster_Orm_Query
      *
      * @param string $class  The entity to query
      */
-    public function __construct( $class, Xyster_Orm_Mapper_Factory_Interface $mapFactory )
+    public function __construct( $class, Xyster_Orm_Manager $manager )
     {
         $this->_class = $class;
-        $this->_mapFactory = $mapFactory;
+        $this->_manager = $manager;
         $this->_initParts();
-        $this->_parser = new Xyster_Orm_Query_Parser($mapFactory);
+        $this->_parser = new Xyster_Orm_Query_Parser($manager->getMapperFactory());
     }
     
     /**
@@ -99,14 +99,10 @@ class Xyster_Orm_Query
      */
     public function execute()
     {
-        $map = $this->_mapFactory($this->_class);
+        $map = $this->_manager->getMapperFactory()->get($this->_class);
 
         // execute the query in the backend
-		$set = $map->query($this);
-		// add returned entities to the cache
-        foreach( $set as $entity ) {
-            $this->_putInSecondaryCache($entity);
-        }
+		$set = $this->_manager->executeQuery($this);
 
         // apply any runtime filters to the entity set
 		if ( count($this->_runtime[self::WHERE]) ) {
@@ -312,31 +308,5 @@ class Xyster_Orm_Query
         $this->_runtime[self::ORDER] = false;
         
         $this->_backend[self::WHERE] = array();
-    }
-    
-    /**
-     * Puts the entity in the secondary repository
-     * 
-     * @param Xyster_Orm_Entity $entity
-     */
-    protected function _putInSecondaryCache( Xyster_Orm_Entity $entity )
-    {
-        $repo = Xyster_Orm::getSecondaryCache();
-        $className = get_class($entity);
-        $map = $this->_mapFactory($className);
-        $cacheLifetime = $map->getLifetime();
-
-        // only store the entity if it should be cached longer than the request
-        // that's why we have the primary repository
-        if ( $repo && $cacheLifetime > -1 ) {
-            
-            $repoId = array('Xyster_Orm', $map->getDomain(), $className);
-            foreach( $entity->getPrimaryKey() as $key => $value ) {
-                $repoId[] = $key . '=' . $value;
-            }
-            $repoId = md5(implode("/", $repoId));
-            $repo->save($repoId, $entity, null, $cacheLifetime);
-
-        }
     }
 }

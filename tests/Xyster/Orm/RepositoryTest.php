@@ -33,25 +33,36 @@ require_once 'Xyster/Orm/Repository.php';
  *
  */
 class Xyster_Orm_RepositoryTest extends Xyster_Orm_TestSetup
-{    
+{
+    /**
+     * @var Xyster_Orm_Repository
+     */
+    protected $_repo;
+    
+    public function setUp()
+    {
+        parent::setUp();
+        
+        $this->_repo = new Xyster_Orm_Repository($this->_mockFactory());
+    }
+    
     /**
      * Tests the 'addAll' and 'getAll' methods
      *
      */
     public function testAddAll()
     {
-        $repo = new Xyster_Orm_Repository(self::$_mockFactory);
         $bugs = new MockBugSet();
         
         $entities = $this->_getMockEntities();
         
         $bugs->merge($entities);
-        $repo->addAll($entities);
+        $this->_repo->addAll($entities);
         
         foreach( $bugs as $bug ) {
-            $this->assertTrue($repo->contains($bug));
+            $this->assertTrue($this->_repo->contains($bug));
         }
-        $this->assertTrue($repo->getAll('MockBug')->containsAll($bugs));
+        $this->assertTrue($this->_repo->getAll('MockBug')->containsAll($bugs));
     }
     
     /**
@@ -60,16 +71,14 @@ class Xyster_Orm_RepositoryTest extends Xyster_Orm_TestSetup
      */
     public function testContains()
     {
-        $repo = new Xyster_Orm_Repository(self::$_mockFactory);
-        
         $entity = $this->_getMockEntity();
-        $repo->add($entity);
+        $this->_repo->add($entity);
         
         $account = new MockAccount();
         $account->accountName = 'gandalf';
 
-        $this->assertTrue($repo->contains($entity));
-        $this->assertFalse($repo->contains($account));
+        $this->assertTrue($this->_repo->contains($entity));
+        $this->assertFalse($this->_repo->contains($account));
     }
     
     /**
@@ -78,16 +87,14 @@ class Xyster_Orm_RepositoryTest extends Xyster_Orm_TestSetup
      */
     public function testFind()
     {
-        $repo = new Xyster_Orm_Repository(self::$_mockFactory);
-        
         $prod = new MockProduct();
         $prod->productId = 199;
         $prod->productName = 'Widget';
         
-        $repo->add($prod);
+        $this->_repo->add($prod);
         
-        $this->assertTrue($repo->contains($prod));
-        $this->assertSame($prod, $repo->find('MockProduct', array('productName'=>'Widget')));
+        $this->assertTrue($this->_repo->contains($prod));
+        $this->assertSame($prod, $this->_repo->find('MockProduct', array('productName'=>'Widget')));
     }
     
     /**
@@ -96,13 +103,11 @@ class Xyster_Orm_RepositoryTest extends Xyster_Orm_TestSetup
      */
     public function testGet()
     {
-        $repo = new Xyster_Orm_Repository(self::$_mockFactory);
-        
         $entity = $this->_getMockEntity();
-        $repo->add($entity);
+        $this->_repo->add($entity);
         
-        $this->assertSame($entity, $repo->get('MockBug', $entity->getPrimaryKey()));
-        $this->assertNull($repo->get('MockBug', array('bugId'=>99)));
+        $this->assertSame($entity, $this->_repo->get('MockBug', $entity->getPrimaryKey()));
+        $this->assertNull($this->_repo->get('MockBug', array('bugId'=>99)));
     }
     
     /**
@@ -111,20 +116,18 @@ class Xyster_Orm_RepositoryTest extends Xyster_Orm_TestSetup
      */
     public function testGetClasses()
     {
-        $repo = new Xyster_Orm_Repository(self::$_mockFactory);
-        
-        $this->assertEquals(0, count($repo->getClasses()));
+        $this->assertEquals(0, count($this->_repo->getClasses()));
         
         $entity = $this->_getMockEntity();
-        $repo->add($entity);
+        $this->_repo->add($entity);
         
         $account = new MockAccount();
         $account->accountName = 'gandalf';
-        $repo->add($account);
+        $this->_repo->add($account);
         
-        $repo->setHasAll('MockProduct', false);
+        $this->_repo->setHasAll('MockProduct', false);
         
-        $classes = $repo->getClasses();
+        $classes = $this->_repo->getClasses();
         $this->assertContains('MockBug', $classes);
         $this->assertContains('MockAccount', $classes);
         $this->assertContains('MockProduct', $classes);
@@ -135,13 +138,11 @@ class Xyster_Orm_RepositoryTest extends Xyster_Orm_TestSetup
      */
     public function testHasAll()
     {
-        $repo = new Xyster_Orm_Repository(self::$_mockFactory);
-        
-        $this->assertFalse($repo->hasAll('MockBug'));
-        $repo->setHasAll('MockBug');
-        $this->assertTrue($repo->hasAll('MockBug'));
-        $repo->setHasAll('MockBug', false);
-        $this->assertFalse($repo->hasAll('MockBug'));
+        $this->assertFalse($this->_repo->hasAll('MockBug'));
+        $this->_repo->setHasAll('MockBug');
+        $this->assertTrue($this->_repo->hasAll('MockBug'));
+        $this->_repo->setHasAll('MockBug', false);
+        $this->assertFalse($this->_repo->hasAll('MockBug'));
     }
     
     /**
@@ -150,19 +151,17 @@ class Xyster_Orm_RepositoryTest extends Xyster_Orm_TestSetup
      */
     public function testRemove()
     {
-        $repo = new Xyster_Orm_Repository(self::$_mockFactory);
-        
         $entity = $this->_getMockEntity();
-        $repo->add($entity);
+        $this->_repo->add($entity);
         
-        $this->assertSame($entity, $repo->get('MockBug', $entity->getPrimaryKey()));
+        $this->assertSame($entity, $this->_repo->get('MockBug', $entity->getPrimaryKey()));
         
-        $repo->setHasAll('MockBug');
-        $repo->remove($entity);
+        $this->_repo->setHasAll('MockBug');
+        $this->_repo->remove($entity);
 
-        $this->assertFalse($repo->contains($entity));
-        $this->assertFalse($repo->hasAll('MockBug'));
-        $this->assertNull($repo->get('MockBug', $entity->getPrimaryKey()));
+        $this->assertFalse($this->_repo->contains($entity));
+        $this->assertFalse($this->_repo->hasAll('MockBug'));
+        $this->assertNull($this->_repo->get('MockBug', $entity->getPrimaryKey()));
     }
     
     /**
@@ -171,18 +170,16 @@ class Xyster_Orm_RepositoryTest extends Xyster_Orm_TestSetup
      */
     public function testRemoveWithIndex()
     {
-        $repo = new Xyster_Orm_Repository(self::$_mockFactory);
-        
         $entity = new MockProduct();
         $entity->productId = 12345;
         $entity->productName = 'Widget';
-        $repo->add($entity);
+        $this->_repo->add($entity);
         
-        $this->assertSame($entity, $repo->find('MockProduct', array('productName'=>'Widget')));
-        $repo->remove($entity);
+        $this->assertSame($entity, $this->_repo->find('MockProduct', array('productName'=>'Widget')));
+        $this->_repo->remove($entity);
         
-        $this->assertFalse($repo->contains($entity));
-        $this->assertNull($repo->find('MockProduct', array('productName'=>'Widget')));
+        $this->assertFalse($this->_repo->contains($entity));
+        $this->assertNull($this->_repo->find('MockProduct', array('productName'=>'Widget')));
     }
     
     /**
@@ -191,18 +188,17 @@ class Xyster_Orm_RepositoryTest extends Xyster_Orm_TestSetup
      */
     public function testRemoveAll()
     {
-        $repo = new Xyster_Orm_Repository(self::$_mockFactory);
         $bugs = new MockBugSet();
         
         $entities = $this->_getMockEntities();
         $bugs->merge($entities);
-        $repo->addAll($entities);
+        $this->_repo->addAll($entities);
         
-        $repo->setHasAll('MockBug');
-        $repo->removeAll($bugs);
+        $this->_repo->setHasAll('MockBug');
+        $this->_repo->removeAll($bugs);
         
-        $this->assertFalse($repo->getAll('MockBug')->containsAny($bugs));
-        $this->assertFalse($repo->hasAll('MockBug'));
+        $this->assertFalse($this->_repo->getAll('MockBug')->containsAny($bugs));
+        $this->assertFalse($this->_repo->hasAll('MockBug'));
     }
     
     /**
@@ -211,19 +207,17 @@ class Xyster_Orm_RepositoryTest extends Xyster_Orm_TestSetup
      */
     public function testRemoveByKey()
     {
-        $repo = new Xyster_Orm_Repository(self::$_mockFactory);
-        
         $entity = $this->_getMockEntity();
-        $repo->add($entity);
+        $this->_repo->add($entity);
         
-        $this->assertSame($entity, $repo->get('MockBug', $entity->getPrimaryKey()));
+        $this->assertSame($entity, $this->_repo->get('MockBug', $entity->getPrimaryKey()));
         
-        $repo->setHasAll('MockBug');
-        $repo->removeByKey('MockBug', $entity->getPrimaryKey());
+        $this->_repo->setHasAll('MockBug');
+        $this->_repo->removeByKey('MockBug', $entity->getPrimaryKey());
         
-        $this->assertFalse($repo->contains($entity));
-        $this->assertFalse($repo->hasAll('MockBug'));
-        $this->assertNull($repo->get('MockBug', $entity->getPrimaryKey()));
+        $this->assertFalse($this->_repo->contains($entity));
+        $this->assertFalse($this->_repo->hasAll('MockBug'));
+        $this->assertNull($this->_repo->get('MockBug', $entity->getPrimaryKey()));
     }
     
     /**
@@ -232,17 +226,16 @@ class Xyster_Orm_RepositoryTest extends Xyster_Orm_TestSetup
      */
     public function testRemoveAllByKey()
     {
-        $repo = new Xyster_Orm_Repository(self::$_mockFactory);
         $bugs = new MockBugSet();
         
         $entities = $this->_getMockEntities();
         $bugs->merge($entities);
-        $repo->addAll($entities);
+        $this->_repo->addAll($entities);
         
-        $repo->setHasAll('MockBug');
-        $repo->removeAllByKey('MockBug', $bugs->getPrimaryKeys());
+        $this->_repo->setHasAll('MockBug');
+        $this->_repo->removeAllByKey('MockBug', $bugs->getPrimaryKeys());
         
-        $this->assertFalse($repo->getAll('MockBug')->containsAny($bugs));
-        $this->assertFalse($repo->hasAll('MockBug'));
+        $this->assertFalse($this->_repo->getAll('MockBug')->containsAny($bugs));
+        $this->assertFalse($this->_repo->hasAll('MockBug'));
     }
 }
