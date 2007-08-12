@@ -37,8 +37,6 @@ class Xyster_String
 		'but','is','if','then','else','when', 'at','from','by','on','off','for',
 		'in','out','over','to','into','with' );
 
-	private function __construct() {}
-
 	/**
 	 * Converts an associative array into a string representation
 	 * 

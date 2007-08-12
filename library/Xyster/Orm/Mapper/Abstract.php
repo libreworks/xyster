@@ -114,6 +114,14 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
     protected $_table = "";
 
     /**
+     * Allows for subclassing without overwriting constructor
+     *
+     */
+    public function init()
+    {
+    }
+    
+    /**
      * Deletes an entity
      *
      * @param Xyster_Orm_Entity $entity The entity to delete
@@ -348,6 +356,7 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
     public function setFactory( Xyster_Orm_Mapper_Factory_Interface $factory )
     {
         if ( $this->_factory ) {
+            require_once 'Xyster/Orm/Mapper/Exception.php';
             throw new Xyster_Orm_Mapper_Exception('The factory for this mapper has already been set');
         }
         $this->_factory = $factory;
@@ -415,6 +424,7 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
         $_criteria = null;
         
         if ( is_array($criteria) ) {
+            $this->_checkPropertyNames($criteria);
             foreach( $criteria as $name => $value ) {
                 require_once 'Xyster/Data/Expression.php';
                 $thiskey = Xyster_Data_Expression::eq($name,$value);
@@ -478,7 +488,7 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
                 require_once 'Xyster/Orm/Mapper/Exception.php';
                 throw new Xyster_Orm_Mapper_Exception("'" . $k
                     . "' is not a valid field for "
-                    . $this->_mapper->getEntityName() );
+                    . $this->getEntityName() );
             }
         }
     }

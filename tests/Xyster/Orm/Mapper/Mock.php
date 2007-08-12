@@ -34,10 +34,6 @@ abstract class Xyster_Orm_Mapper_Mock extends Xyster_Orm_Mapper_Abstract
     protected $_domain = 'mock';
     protected $_saved = array();
     protected $_deleted = array();
-
-    public function init()
-    {
-    }
     
     public function find( $criteria )
     {
@@ -113,6 +109,7 @@ abstract class Xyster_Orm_Mapper_Mock extends Xyster_Orm_Mapper_Abstract
     
     public function save( Xyster_Orm_Entity $entity )
     {
+        parent::save($entity);
         $this->_saved[] = $entity;
     }
     

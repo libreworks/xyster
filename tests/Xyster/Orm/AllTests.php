@@ -32,6 +32,7 @@ require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHe
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
+require_once 'Xyster/Orm/LoaderTest.php';
 require_once 'Xyster/Orm/EntityTest.php';
 require_once 'Xyster/Orm/EntityFieldTest.php';
 require_once 'Xyster/Orm/EntityMetaTest.php';
@@ -40,6 +41,8 @@ require_once 'Xyster/Orm/WorkUnitTest.php';
 require_once 'Xyster/Orm/RepositoryTest.php';
 require_once 'Xyster/Orm/RelationTest.php';
 require_once 'Xyster/Orm/ManagerTest.php';
+require_once 'Xyster/Orm/Mapper/FactoryTest.php';
+require_once 'Xyster/Orm/Mapper/AbstractTest.php';
 
 error_reporting(E_ALL | E_STRICT);
 
@@ -53,6 +56,7 @@ class Xyster_Orm_AllTests
     public static function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('Xyster Framework - Xyster_Orm');
+        $suite->addTestSuite('Xyster_Orm_LoaderTest');
         $suite->addTestSuite('Xyster_Orm_EntityTest');
         $suite->addTestSuite('Xyster_Orm_Entity_FieldTest');
         $suite->addTestSuite('Xyster_Orm_Entity_MetaTest');
@@ -61,6 +65,8 @@ class Xyster_Orm_AllTests
         $suite->addTestSuite('Xyster_Orm_RepositoryTest');
         $suite->addTestSuite('Xyster_Orm_RelationTest');
         $suite->addTestSuite('Xyster_Orm_ManagerTest');
+        $suite->addTestSuite('Xyster_Orm_Mapper_FactoryTest');
+        $suite->addTestSuite('Xyster_Orm_Mapper_AbstractTest');
         return $suite;
     }
 }

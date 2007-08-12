@@ -30,8 +30,10 @@ require_once 'Xyster/Orm/Mapper/Mock.php';
  *
  */
 class MockBugProductMapper extends Xyster_Orm_Mapper_Mock
-{
-    protected $_table = 'zfbugs_products';
+{    
+    protected $_options = array('testing'=>1234);
+    
+    protected $_lifetime = 99;
     
     /**
      * Gets the fields
@@ -78,28 +80,34 @@ class MockBugProductMapper extends Xyster_Orm_Mapper_Mock
     {
         return array(
             array(
-                'bug_id'       => 1,
-                'product_id'   => 1
+                'bugId'       => 1,
+                'productId'   => 1,
+                'versionId'   => 2
             ),
             array(
-                'bug_id'       => 1,
-                'product_id'   => 2
+                'bugId'       => 1,
+                'productId'   => 2,
+                'versionId'   => 2
+                ),
+            array(
+                'bugId'       => 1,
+                'productId'   => 3,
+                'versionId'   => 2
             ),
             array(
-                'bug_id'       => 1,
-                'product_id'   => 3
+                'bugId'       => 2,
+                'productId'   => 3,
+                'versionId'   => 2
             ),
             array(
-                'bug_id'       => 2,
-                'product_id'   => 3
+                'bugId'       => 3,
+                'productId'   => 2,
+                'versionId'   => 2
             ),
             array(
-                'bug_id'       => 3,
-                'product_id'   => 2
-            ),
-            array(
-                'bug_id'       => 3,
-                'product_id'   => 3
+                'bugId'       => 3,
+                'productId'   => 3,
+                'versionId'   => 2
             ),
         );
     }

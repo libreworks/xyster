@@ -130,12 +130,26 @@ class Xyster_Orm_ManagerTest extends Xyster_Orm_TestSetup
      */
     public function testFindAll()
     {
-        $set = $this->_manager->findAll('MockBug', array('reporter'=>'doublecompile'));
+        $set = $this->_manager->findAll('MockBug', array('reportedBy'=>'doublecompile'));
         
         $this->assertType('Xyster_Orm_Set', $set);
         foreach( $set as $entity ) {
             $this->assertTrue($this->_manager->getRepository()->contains($entity));
         }
+    }
+
+    /**
+     * Tests the 'findAll' method with a non-criteria type
+     *
+     */
+    public function testFindAllBadCriteria()
+    {
+        try {
+            $set = $this->_manager->findAll('MockBug', new MockBug());
+        } catch ( Xyster_Orm_Exception $thrown ) {
+            return;
+        }
+        $this->fail('Exception not thrown');
     }
     
     /**

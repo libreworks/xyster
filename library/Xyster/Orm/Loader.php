@@ -39,10 +39,6 @@ class Xyster_Orm_Loader
      */
     static protected $_paths = array();
 
-    private function __construct()
-    {
-    }
-
     /**
      * Adds a path to where class files for entities can be found
      *

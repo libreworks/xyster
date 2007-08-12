@@ -33,6 +33,11 @@
 interface Xyster_Orm_Mapper_Interface
 {
     /**
+     * Allows for subclassing without overwriting constructor
+     *
+     */
+    function init();
+    /**
      * Deletes an entity
      *
      * @param Xyster_Orm_Entity $entity The entity to delete
