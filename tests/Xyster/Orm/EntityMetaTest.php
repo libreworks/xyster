@@ -99,9 +99,9 @@ class Xyster_Orm_Entity_MetaTest extends Xyster_Orm_TestSetup
     public function testGetMembers()
     {
         $membs = array();
-        array_merge($membs, $this->_meta->getFieldNames());
-        array_merge($membs, $this->_meta->getRelationNames());
-        array_merge($membs, get_class_methods($this->_meta->getEntityName()));
+        $membs = array_merge($membs, $this->_meta->getFieldNames());
+        $membs = array_merge($membs, $this->_meta->getRelationNames());
+        $membs = array_merge($membs, get_class_methods($this->_meta->getEntityName()));
         
         $this->assertEquals($membs, $this->_meta->getMembers());
     }

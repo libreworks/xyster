@@ -91,9 +91,22 @@ abstract class Xyster_Orm_Mapper_Mock extends Xyster_Orm_Mapper_Abstract
     
     public function query( Xyster_Orm_Query $query )
     {
-        require_once 'Xyster/Data/Set.php';
-        return $query instanceof Xyster_Orm_Query_Report ?
-            new Xyster_Data_Set() : $this->getSet();
+        $set = $this->getAll();
+        
+        if ( count($query->getBackendWhere()) ) {
+            $set->filter(Xyster_Data_Criterion::fromArray('AND', $query->getBackendWhere()));
+        }
+        
+        if ( !$query->isRuntime() && count($query->getOrder()) ) {
+            $set->sortBy($query->getOrder());
+        }
+        
+        if ( !$query->isRuntime() && $query instanceof Xyster_Orm_Query_Report ) {
+            require_once 'Xyster/Data/Set.php';
+            return new Xyster_Data_Set($set);
+        }
+        
+        return $set;
     }
     
     public function refresh( Xyster_Orm_Entity $entity )
