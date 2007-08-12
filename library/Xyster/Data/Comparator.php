@@ -68,9 +68,7 @@ class Xyster_Data_Comparator implements Xyster_Collection_Comparator_Interface
 		foreach( $this->_sorts as $sort ) {
 			$av = $sort->getField()->evaluate($a);
 			$bv = $sort->getField()->evaluate($b);
-			if ( $av == $bv ) {
-				continue;
-			} else if ( $av < $bv ) { 
+			if ( $av < $bv ) { 
 				return ( $sort->getDirection() == 'ASC' ) ? -1 : 1;
 			} else if ( $av > $bv ) {
 				return ( $sort->getDirection() == 'ASC' ) ? 1 : -1;

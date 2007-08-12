@@ -106,7 +106,7 @@ class Xyster_Data_Tuple extends Xyster_Data_Set
 	 * @param int $offset  Optional.  The number of tuples to skip before adding
 	 * @throws Xyster_Data_Set_Exception if there are no grouped columns in the $fields array
 	 */
-	static public function makeTuples( Xyster_Data_Set $rs, $collection, array $fields, $having=null, $limit=0, $offset=0 )
+	static public function makeTuples( Xyster_Data_Set $rs, $collection, array $fields, array $having = null, $limit = 0, $offset = 0 )
 	{
 		$groups = array();
 		foreach( $fields as $v ) {

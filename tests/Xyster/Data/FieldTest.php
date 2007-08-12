@@ -88,6 +88,17 @@ class Xyster_Data_FieldTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('username', $field->getName());
         $this->assertEquals('theusername', $field->getAlias());
     }
+    
+    /**
+     * Tests passing an aggregate to the 'name' method
+     *
+     */
+    public function testNameAggregate()
+    {
+        $field = Xyster_Data_Field::named('COUNT(testing)', 'countOfTesting');
+        $this->assertType('Xyster_Data_Field_Aggregate', $field);
+    }
+    
     public function testBadName()
     {
         try {

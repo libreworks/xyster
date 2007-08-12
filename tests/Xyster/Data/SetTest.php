@@ -57,6 +57,21 @@ class Xyster_Data_SetTest extends Xyster_Collection_SortableSetTest
         array('first'=>'Thomas', 'last'=>'Jefferson'),
         array('first'=>'Andrew', 'last'=>'Jackson'));
 
+    /**
+     * Tests using the constructor with bad items
+     *
+     */
+    public function testConstructBadItem()
+    {
+        $badItems = Xyster_Collection::using(array(1,2,3,4));
+        try {
+            $set = $this->_getNewCollection($badItems);
+        } catch ( Xyster_Data_Set_Exception $thrown ) {
+            return;
+        }
+        $this->fail('Exception not thrown');
+    }
+        
     public function testAdd()
     {
         $set = $this->_getNewCollection();
@@ -221,12 +236,93 @@ class Xyster_Data_SetTest extends Xyster_Collection_SortableSetTest
         $this->assertEquals($expected, $set->fetchPairs(Xyster_Data_Field::named('last'),
              Xyster_Data_Field::named('first')));
     }
+    
+    /**
+     * Tests the 'filter' method
+     *
+     */
     public function testFilter()
     {
+        $set = $this->_getNewCollectionWithRandomValues();
+        /* @var $set Xyster_Data_Set */
         
+        $values = $set->toArray();
+        $filter = Xyster_Data_Expression::gt('foo',5);
+        $filtered = array_filter($values, array($filter,'evaluate'));
+        
+        $set->filter($filter);
+        
+        $this->assertSame(array_values($filtered), $set->toArray());
     }
-    public function testSortBy()
+    
+    /**
+     * Tests passing a sort object to the 'sortBy' method
+     *
+     */
+    public function testSortByOneSort()
     {
+        $set = $this->_getNewCollectionWithRandomValues();
+        /* @var $set Xyster_Data_Set */
         
+        $sorts = array(Xyster_Data_Sort::asc('foo'));
+        
+        $values = $set->toArray();
+        $set->sortBy($sorts[0]);
+        
+        $comparator = new Xyster_Data_Comparator($sorts);
+        usort($values, array($comparator, 'compare'));
+        $this->assertSame($values, $set->toArray());
+    }
+    
+    /**
+     * Tests passing an array of sort objects
+     *
+     */
+    public function testSortByArrayOfSorts()
+    {
+        $set = $this->_getNewCollectionWithRandomValues();
+        $first = $set->getIterator()->current();
+        $set->add( clone $first );
+        
+        /* @var $set Xyster_Data_Set */
+        
+        $sorts = array(Xyster_Data_Sort::asc('foo'));
+        
+        $values = $set->toArray();
+        $set->sortBy($sorts);
+        
+        $comparator = new Xyster_Data_Comparator($sorts);
+        usort($values, array($comparator, 'compare'));
+        $this->assertSame($values, $set->toArray());
+    }
+    
+    /**
+     * Tests passing a bad type to the 'sortBy' method
+     *
+     */
+    public function testSortByBadType()
+    {
+        $set = $this->_getNewCollectionWithRandomValues();
+        /* @var $set Xyster_Data_Set */
+        try {
+            $set->sortBy(Xyster_Data_Field::named('foo'));
+        } catch ( Xyster_Data_Set_Exception $thrown ) {
+            return;
+        }
+        $this->fail('Exception not thrown');
+    }
+    
+    /**
+     * Tests creating a comparator with bad values
+     *
+     */
+    public function testCreateComparator()
+    {
+        try {
+            $comparator = new Xyster_Data_Comparator(array(Xyster_Data_Field::named('foo')));
+        } catch ( Xyster_Data_Exception $thrown ) {
+            return; 
+        }
+        $this->fail('Exception not thrown');
     }
 }

@@ -51,10 +51,7 @@ class Xyster_Data_Set extends Xyster_Collection_Set_Sortable
 
         if ( $values instanceof Xyster_Collection_Interface ) {
             if ( !count($this->_columns) && count($values) ) {
-                foreach( $values as $value ) {
-                    $first = $value;
-                    break;
-                }
+                $first = $values->getIterator()->current();
                 if ( !is_array($first) && !is_object($first) ) {
                     require_once 'Xyster/Data/Set/Exception.php';
                     throw new Xyster_Data_Set_Exception('This set can only contain arrays or objects');
@@ -159,10 +156,7 @@ class Xyster_Data_Set extends Xyster_Collection_Set_Sortable
     {
         $value = null;
         if ( $item = current($this->_items) ) {
-            foreach( $item as $k=>$v ) {
-                $value = $v;
-                break;
-            }
+            $value = current((array) $item);
         }
         return $value;
     }
@@ -192,7 +186,7 @@ class Xyster_Data_Set extends Xyster_Collection_Set_Sortable
      */
     public function filter( Xyster_Data_Criterion $criteria )
     {
-        $this->_items = array_filter($this->_items, array($criteria, 'evaluate'));
+        $this->_items = array_values(array_filter($this->_items, array($criteria, 'evaluate')));
     }
     /**
      * Gets the columns that have been added to the set

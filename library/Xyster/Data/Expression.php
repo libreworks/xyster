@@ -133,7 +133,7 @@ class Xyster_Data_Expression extends Xyster_Data_Criterion
         $val = $this->_right;
         if ( $val == "NULL" || $val === null ) {
             $string .= 'NULL';
-        } else if ( is_array($val) && strpos($this->_operator,'BETWEEN') ) {
+        } else if ( is_array($val) && strpos($this->_operator,'BETWEEN') !== false ) {
             $string .= ( preg_match("/^[0-9.]+$/",$val[0]) ) ?
                 $val[0] : "'".str_replace("'","''",$val[0])."'";
             $string .= ' AND ';
@@ -219,8 +219,7 @@ class Xyster_Data_Expression extends Xyster_Data_Criterion
             case ">=":
             case "<=":
             default:
-                eval(sprintf($eval,$this->_operator));
-                break;
+                eval(sprintf($eval, $this->_operator));
         }
         return $bool;
     }
