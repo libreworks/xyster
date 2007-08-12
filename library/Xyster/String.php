@@ -94,8 +94,8 @@ class Xyster_String
 		$inStr = false;
 		for( $i=0; $i<strlen($haystack); $i++ ) {
 			$currNeed = substr( $haystack, $i, strlen($needle) );
-			$curr = $currNeed{0};
-			$last = ( $i ) ? $haystack{$i-1} : "";
+			$curr = $currNeed[0];
+			$last = ( $i ) ? $haystack[$i-1] : "";
 			if ( $curr == '"' && ( ( $inStr && $last != "\\") || !$inStr ) ) {
 				$inStr = !$inStr;
 			}

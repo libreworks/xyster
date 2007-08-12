@@ -76,7 +76,13 @@ class Xyster_Orm_Query_Parser
         $field = ( $field instanceof Xyster_Data_Field ) ?
             trim($field->getName()) : trim($field);
             
-        $calls = Xyster_String::smartSplit("->",$field);
+        require_once 'Xyster/Data/Field/Aggregate.php';
+        $matches = Xyster_Data_Field_Aggregate::match($field);
+        if ( count($matches) ) {
+            $field = trim($matches["field"]);
+        }
+            
+        $calls = Xyster_String::smartSplit("->", $field);
         /*
             for composite references (i.e.  supervisor->name )
             - check each column exists in its container
@@ -101,11 +107,7 @@ class Xyster_Orm_Query_Parser
             }
             
         } else {
-            
-            $matches = Xyster_Data_Field_Aggregate::match($field);
-            if ( count($matches) ) {
-                $field = trim($matches["field"]);
-            }
+
             /*
                 for method calls
                 - check method exists in class
@@ -143,7 +145,7 @@ class Xyster_Orm_Query_Parser
      */
     public function isMethodCall( $field )
     {
-        return preg_match( "/^[a-z_][a-z0-9_]*\([\w\W]*\)$/i", $field );
+        return (bool) preg_match("/^[a-z_][a-z0-9_]*\([\w\W]*\)$/i", $field);
     }
     
     /**
@@ -190,10 +192,11 @@ class Xyster_Orm_Query_Parser
      */
     public function isValidField( $field )
     {
+        $field = trim($field);
+
         $ok = true;
-        if ( !preg_match("/^[a-z][a-z0-9_]*(->[a-z0-9_]+(\([\s]*\))?)*$/i",trim($field)) ) {
-            $mcs = Xyster_String::smartSplit("->",trim($field));
-            $ok = true;
+        if ( !preg_match("/^[a-z][a-z0-9_]*(->[a-z0-9_]+(\([\s]*\))?)*$/i", $field) ) {
+            $mcs = Xyster_String::smartSplit("->", $field);
             foreach( $mcs as $mc ) {
                 $matches = array();
                 $match = preg_match( "/^[a-z][a-z0-9_]*(\((?P<params>[\w\W]*)\))?$/i", $mc, $matches );
@@ -221,17 +224,21 @@ class Xyster_Orm_Query_Parser
         $statement = trim($statement);
         $groups = $this->_matchGroups($statement);
         if ( count($groups) == 1 && strlen($groups[0]) == strlen($statement) ) {
-            $statement = trim(substr($statement,1,-2));
+            $statement = trim(substr($statement,1,-1));
         }
 
-        $crits = Xyster_String::smartSplit(" AND ",$statement);
-
+        $crits = Xyster_String::smartSplit(" AND ", $statement, true);
+        // in case it split the and of a "BETWEEN x AND y"
+        if ( count($crits) == 2 && $this->_checkLiteral($crits[1]) ) {
+            $crits = array($statement);
+        }
+        
         if ( count($crits) < 2 ) {
            
-            $subcrits = Xyster_String::smartSplit(" OR ",$statement);
+            $subcrits = Xyster_String::smartSplit(" OR ", $statement, true);
             if ( count($subcrits) < 2 ) {
                 $groups = $this->_matchGroups(trim($subcrits[0]));
-                $crit = ( count($groups) > 1 ) ?
+                $crit = ( count($groups) > 0 && strlen($groups[0]) > 2 ) ?
                     $this->parseCriterion($subcrits[0]) :
                     $this->parseExpression($subcrits[0]);
             } else {
@@ -245,9 +252,10 @@ class Xyster_Orm_Query_Parser
             }
 
         } else {
-            
+        
             $crit = Xyster_Data_Junction::all( $this->parseCriterion($crits[0]),
                 $this->parseCriterion($crits[1]) );
+                
             if ( count($crits) > 2 ) {
                 for ( $i=2; $i<count($crits); $i++ ) {
                     $crit->add( $this->parseCriterion( $crits[$i] ) );
@@ -314,6 +322,7 @@ class Xyster_Orm_Query_Parser
             else {
                 $inChoices = Xyster_String::smartSplit(',',$matches['choices']);
                 foreach( $inChoices as $k=>$choice ) {
+                    $choice = trim($choice);
                     $this->_assertLiteral($choice);
                     if ( preg_match('/^"[^"]*"$/i',$choice) )
                         $inChoices[$k] = substr($choice,1,-1);
@@ -387,7 +396,9 @@ class Xyster_Orm_Query_Parser
             $statement = str_replace($matches[0], "", $statement);
         }
 
-        return $this->parseField($statement)->setAlias($alias);
+        $field = $this->parseField($statement);
+        $field->setAlias($alias);
+        return $field;
     }
     
     /**
@@ -400,7 +411,7 @@ class Xyster_Orm_Query_Parser
     {
         $expecting = array('where','order');
 
-        $parts = $this->_baseParseQuery($query,$statement,$expecting);
+        $parts = $this->_baseParseQuery($query, $statement, $expecting);
         if ( !empty($parts['where']) ) {
             $query->where($this->parseCriterion($parts['where']));
         }
@@ -505,24 +516,25 @@ class Xyster_Orm_Query_Parser
         if ( $limit ) { 
             $query->limit($limit,$offset);
         }
-
+        
         $parts = array();
         $part = '';
-        $split = Xyster_String::smartSplit(' ',trim($statement));
+        $split = Xyster_String::smartSplit(' ', trim($statement));
+
         foreach( $split as $v ) {
-            if ( in_array($part,array('order','group')) && !strcasecmp($v,'by') ) {
+            if ( in_array($part, array('order','group')) && !strcasecmp($v, 'by') ) {
                 continue;
             }
             foreach( $expecting as $epart ) {
-                if ( !strcasecmp($v,$epart) ) {
+                if ( !strcasecmp($v, $epart) ) {
                     $part = strtolower($v);
                 }
             }
-            if ( !in_array($v,$expecting) ) {
+            if ( !in_array(strtolower($v), $expecting) ) {
                 if ( !isset($parts[$part]) ) {
                     $parts[$part] = "";
                 }
-                $parts[$part] .= $v." ";
+                $parts[$part] .= $v . " ";
             }
         }
 
@@ -531,8 +543,6 @@ class Xyster_Orm_Query_Parser
     
     /**
      * Checks a literal for syntactical correctness
-     * 
-     * Maybe use this later: '/"[^"\\\\]*(\\\\.[^"\\\\]*)*"/'
      *
      * @param string $lit
      * @return boolean
@@ -543,7 +553,7 @@ class Xyster_Orm_Query_Parser
             // either a string or a number or the word "null"
             preg_match("/^(\"[^\"]*\"|[\d]+(.[\d]+)?|null)$/i", trim($lit))
             //  a string with escapes in it
-            || preg_match('/^(?:"[^"]*\\(?:.[^"]*\\)*.[^"]*")|(?:"[^"]*")$/', trim($lit))
+            || preg_match('/^"[^"\\\\]*(\\\\.[^"\\\\]*)*"$/', trim($lit))
             // check to see if it's a field
             || $this->isValidField($lit)
         );
@@ -623,7 +633,7 @@ class Xyster_Orm_Query_Parser
      */
     protected function _matchGroups( $string )
     {
-        if ( strpos($string,'(') < 0 ) {
+        if ( strpos($string, '(') === false ) {
             return array();
         }
 
@@ -679,8 +689,8 @@ class Xyster_Orm_Query_Parser
         }
 
         $call = array(
-                'select'=>array('Xyster_Orm_Query_Parser', 'parseFieldAlias'),
-                'order'=>array('Xyster_Orm_Query_Parser', 'parseSort'),
+                'select'=>array($this, 'parseFieldAlias'),
+                'order'=>array($this, 'parseSort'),
                 'group'=>array('Xyster_Data_Field', 'group')
             );
         $method = array('select'=>'field', 'order'=>'order', 'group'=>'group');
