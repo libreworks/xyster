@@ -102,9 +102,9 @@ class Xyster_Orm_Query_Parser
             
         } else {
             
-            $matches = $this->matchAggregate($field);
+            $matches = Xyster_Data_Field_Aggregate::match($field);
             if ( count($matches) ) {
-                $field = trim($matches["col"]);
+                $field = trim($matches["field"]);
             }
             /*
                 for method calls
@@ -205,19 +205,6 @@ class Xyster_Orm_Query_Parser
             }
         }
         return $ok;
-    }
-    
-    /**
-     * Matches for aggregate functions
-     *
-     * @param string $haystack
-     * @return array
-     */
-    public function matchAggregate( $haystack )
-    {
-        $matches = array();
-        preg_match('/^(?P<func>AVG|MAX|MIN|COUNT|SUM)\((?P<col>[\w\W]*)\)$/i', trim($haystack), $matches);
-        return $matches;
     }
 
     /**
@@ -363,20 +350,20 @@ class Xyster_Orm_Query_Parser
      */
     public function parseField( $name )
     {
-        require_once 'Xyster/Enum.php';
-        require_once 'Xyster/Data/Field.php';
-        
         $name = trim($name);
-        $function = null;
-        $matches = $this->matchAggregate($name);
 
-        if ( count($matches) ) {
-            $function = Xyster_Enum::valueOf('Xyster_Data_Aggregate', strtoupper($matches["func"]));
-            $name = trim($matches["col"]);
+        require_once 'Xyster/Data/Field/Aggregate.php';
+        $match = Xyster_Data_Field_Aggregate::match($name);
+
+        if ( $match ) {
+            require_once 'Xyster/Enum.php';
+            $function = Xyster_Enum::valueOf('Xyster_Data_Aggregate', strtoupper($match['function']));
+            $field = Xyster_Data_Field::aggregate($function, trim($match['field']));
+        } else {
+            $field = Xyster_Data_Field::named($name);
         }
 
-        return ( $function ) ? Xyster_Data_Field::aggregate($name, $function) :
-            Xyster_Data_Field::named($name);
+        return $field;
     }
     
     /**
@@ -544,6 +531,8 @@ class Xyster_Orm_Query_Parser
     
     /**
      * Checks a literal for syntactical correctness
+     * 
+     * Maybe use this later: '/"[^"\\\\]*(\\\\.[^"\\\\]*)*"/'
      *
      * @param string $lit
      * @return boolean

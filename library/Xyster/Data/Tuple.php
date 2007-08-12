@@ -42,7 +42,7 @@ class Xyster_Data_Tuple extends Xyster_Data_Set
 	 */
 	public function __construct( array $values, Xyster_Collection_Interface $contents = null )
 	{
-	    parent::__construct($values);
+	    parent::__construct($contents);
 	    
 	    $this->_values = $values;
 	    $this->_names = array_keys($values);
@@ -127,6 +127,7 @@ class Xyster_Data_Tuple extends Xyster_Data_Set
 		$tupleValues = array();
 		foreach( $collection as $v ) {
 			$groupValues = array();
+			$groupHash = '';
 			foreach( $groups as $group ) {
 				$value = $group->evaluate($v);
 				$groupValues[$group->getAlias()] = $value;

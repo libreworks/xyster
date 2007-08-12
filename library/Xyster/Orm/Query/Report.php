@@ -99,6 +99,7 @@ class Xyster_Orm_Query_Report extends Xyster_Orm_Query
 
         if ( $this->_parts[self::GROUP] ) {
             
+            require_once 'Xyster/Data/Tuple.php';
             // let Xyster_Data_Tuple do the work for runtime grouping
             Xyster_Data_Tuple::makeTuples(
                 $rs,
@@ -121,6 +122,7 @@ class Xyster_Orm_Query_Report extends Xyster_Orm_Query
             }
             if ( $aggregate ) {
                 // just one row that contains aggregates
+                require_once 'Xyster/Data/Tuple.php';
                 $tuple = new Xyster_Data_Tuple(array(), $collection);
                 $rs->add($tuple->toRow($this->_parts[self::FIELDS]));
             } else {
@@ -172,8 +174,9 @@ class Xyster_Orm_Query_Report extends Xyster_Orm_Query
             return $this->group($field);
         }
         
-        $this->_parser->assertValidColumnForClass($field, $this->_class);
+        $this->_parser->assertValidFieldForClass($field, $this->_class);
         $this->_runtime[self::FIELDS] |= $this->_parser->isRuntime($field, $this->_class);
+        $this->_parts[self::FIELDS][] = $field;
         
         return $this;
     }
@@ -219,6 +222,8 @@ class Xyster_Orm_Query_Report extends Xyster_Orm_Query
         $this->_parser->assertValidFieldForClass($group, $this->_class);
         $this->_runtime[self::GROUP] |= $this->_parser->isRuntime($group, $this->_class);
         
+        $this->_parts[self::GROUP][] = $group;
+        
         return $this;
     }
     
@@ -236,7 +241,7 @@ class Xyster_Orm_Query_Report extends Xyster_Orm_Query
     public function having( Xyster_Data_Criterion $having )
     {
         $aggs = 0;
-        $fields = $having->getFields();
+        $fields = Xyster_Data_Criterion::getFields($having);
         foreach ( $fields as $field ) {
             $this->_parser->assertValidFieldForClass($field, $this->_class);
             $aggs += ($field instanceof Xyster_Data_Field_Aggregate) ? 1 : 0;
@@ -244,7 +249,7 @@ class Xyster_Orm_Query_Report extends Xyster_Orm_Query
 
         if ( !$aggs || count($fields) != $aggs ) {
             require_once 'Xyster/Orm/Query/Exception.php';
-            throw new Xyster_Orm_Query_Excepton('The criterion provided must contain only aggregated fields');
+            throw new Xyster_Orm_Query_Exception('The criterion provided must contain only aggregated fields');
         }
         
         if ( $this->_parser->isRuntime($having, $this->_class) ) {
@@ -263,7 +268,7 @@ class Xyster_Orm_Query_Report extends Xyster_Orm_Query
      */
     public function hasRuntimeFields()
     {
-        return $this->_runtime[self::FIELDS];
+        return (bool) $this->_runtime[self::FIELDS];
     }
     
     /**
@@ -273,7 +278,7 @@ class Xyster_Orm_Query_Report extends Xyster_Orm_Query
      */
     public function hasRuntimeGroup()
     {
-        return $this->_runtime[self::GROUP];
+        return (bool) $this->_runtime[self::GROUP];
     }
     
     /**

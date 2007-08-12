@@ -18,6 +18,12 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
+
+/**
+ * @see Zend_Loader
+ */
+require_once 'Zend/Loader.php';
+ 
 /**
  * Enumerable type object
  *
@@ -128,7 +134,7 @@ abstract class Xyster_Enum
 	{
 		foreach( self::values($className) as $constValue=>$constName ) {
 			if ( strcasecmp( $constName, $name ) == 0 ) {
-				return self::_factory($className,$constName);
+				return self::_factory($className, $constName);
 			}
 		}
 		throw new Exception();
@@ -149,7 +155,7 @@ abstract class Xyster_Enum
 	{
 		foreach( self::values($className) as $constValue=>$constName ) {
 			if ( strcasecmp( $constValue, $value ) == 0 ) {
-				return self::_factory($className,$constName);
+				return self::_factory($className, $constName);
 			}
 		}
 		throw new Exception();
@@ -169,7 +175,8 @@ abstract class Xyster_Enum
 	 */
 	static public function values( $className )
 	{
-		if ( !is_subclass_of($className,__CLASS__) ) {
+	    Zend_Loader::loadClass($className);
+		if ( !is_subclass_of($className, __CLASS__) ) {
 			throw new Exception();
 		}
 		$rc = new ReflectionClass($className);

@@ -213,7 +213,7 @@ class Xyster_Orm_Query
      */
     public function hasRuntimeOrder()
     {
-        return $this->_runtime[self::ORDER];
+        return (bool) $this->_runtime[self::ORDER];
     }
 
     /**

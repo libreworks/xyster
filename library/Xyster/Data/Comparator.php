@@ -36,7 +36,7 @@ class Xyster_Data_Comparator implements Xyster_Collection_Comparator_Interface
 	 *
 	 * @var array
 	 */
-	protected $_sorts;
+	protected $_sorts = array();
 
 	/**
 	 * Create a new Data Comparator object

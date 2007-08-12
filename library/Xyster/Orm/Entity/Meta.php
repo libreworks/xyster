@@ -113,9 +113,9 @@ class Xyster_Orm_Entity_Meta
     public function getMembers()
     {
         if ( !$this->_members ) {
-            array_merge($this->_members, array_keys($this->_fields));
-            array_merge($this->_members, $this->getRelationNames());
-            array_merge($this->_members, get_class_methods($this->_class));
+            $this->_members = array_merge($this->_members, array_keys($this->_fields));
+            $this->_members = array_merge($this->_members, $this->getRelationNames());
+            $this->_members = array_merge($this->_members, get_class_methods($this->_class));
         }
         return $this->_members;
     }

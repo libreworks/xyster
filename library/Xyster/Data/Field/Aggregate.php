@@ -32,10 +32,16 @@ require_once 'Xyster/Data/Field.php';
 class Xyster_Data_Field_Aggregate extends Xyster_Data_Field
 {
     /**
+     * The pattern to match aggregate function fields
+     *
+     */
+    const AGGREGATE_REGEX = '/^(?P<function>AVG|MAX|MIN|COUNT|SUM)\((?P<field>[\w\W]*)\)$/i';
+    
+    /**
      * @var Xyster_Data_Aggregate
      */
     protected $_function;
-
+    
     /**
      * Creates a new Aggregate Field
      *
@@ -80,5 +86,18 @@ class Xyster_Data_Field_Aggregate extends Xyster_Data_Field
     public function __toString()
     {
         return $this->_function->getValue() . '(' . parent::__toString() . ')';
+    }
+    
+    /**
+     * Matches for aggregate functions
+     *
+     * @param string $haystack
+     * @return array
+     */
+    static public function match( $haystack )
+    {
+        $matches = array();
+        preg_match(self::AGGREGATE_REGEX, trim($haystack), $matches);
+        return $matches;
     }
 }

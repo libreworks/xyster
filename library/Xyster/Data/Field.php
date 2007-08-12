@@ -17,6 +17,12 @@
  * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
+ 
+/**
+ * @see Xyster_Data_Aggregate
+ */
+require_once 'Xyster/Data/Aggregate.php';
+ 
 /**
  * A simple concept for data fields and columns
  *
@@ -294,8 +300,16 @@ class Xyster_Data_Field
      */
     static public function named( $name, $alias = null )
     {
-        return new Xyster_Data_Field($name, $alias);
+        require_once 'Xyster/Data/Field/Aggregate.php';
+        if ( $match = Xyster_Data_Field_Aggregate::match($name) ) {
+            require_once 'Xyster/Enum.php';
+            $function = Xyster_Enum::valueOf('Xyster_Data_Aggregate', $match['function']);
+            return self::aggregate($function, $match['field'], $alias);
+        } else {
+            return new Xyster_Data_Field($name, $alias);
+        }
     }
+
     /**
      * Creates a Xyster_Data_Field that defines a group in a result
      *
