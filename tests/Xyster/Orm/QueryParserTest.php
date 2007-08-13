@@ -228,6 +228,18 @@ class Xyster_Orm_Query_ParserTest extends Xyster_Orm_TestSetup
     }
     
     /**
+     * Tests the 'parseCriterion' method with nested 'OR' junctions
+     *
+     */
+    public function testParseCriterionWithSubsAndAggregates()
+    {
+        $result = $this->_parser->parseCriterion('( (max(username) = "mmouse" OR max(username) = "dduck" OR max(username) = "goofy") AND (((min(country) <> "United States" AND min(city) = "Paris")) OR (min(country) <> "Japan")) )');
+
+        $this->assertType('Xyster_Data_Junction', $result);
+        $this->assertEquals(6, count(Xyster_Data_Criterion::getFields($result)));
+    }
+    
+    /**
      * Tests parsing an expression with a bad literal
      *
      */
@@ -349,8 +361,7 @@ class Xyster_Orm_Query_ParserTest extends Xyster_Orm_TestSetup
     
     /**
      * Tests the 'parseReportQuery' method
-     *
-     * @todo 'HAVING' parsing is currently broken because of parentheses
+     * 
      */
     public function testParseReportQuery()
     {
@@ -359,7 +370,7 @@ class Xyster_Orm_Query_ParserTest extends Xyster_Orm_TestSetup
         $xsql = 'SelecT DISTINCT reportedBy, count(bugId) as numOfBugs '
             . 'WHerE getCapitalOfNebraska() = "Lincoln" aND bugId > 0 ' 
         	. 'GRoup By reportedBy '
-        	//. 'HaVING count(bugId) > 0 '
+        	. 'HaVING count(bugId) > 0 '
             . 'ORDeR bY reportedBy asc LIMIT 5 OFFSET 0';
         $this->_parser->parseReportQuery($query, $xsql);
         
@@ -367,6 +378,8 @@ class Xyster_Orm_Query_ParserTest extends Xyster_Orm_TestSetup
         $this->assertEquals(1, count($query->getGroup()));
         $this->assertEquals(1, count($query->getWhere()));
         $this->assertEquals(1, count($query->getOrder()));
+        $this->assertEquals(1, count($query->getHaving()));
+        $this->assertEquals(Xyster_Data_Expression::gt('count(bugId)', '0'), current($query->getHaving()));
         
         try {
             $this->_parser->parseReportQuery($query, 'doesnT start with "select"');

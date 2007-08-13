@@ -32,6 +32,8 @@ require_once 'Xyster/String.php';
  */
 class Xyster_Orm_Query_Parser
 {
+    const PARENTH_QUOTE_REGEX = '/(?<![\w\d])(\(((?:"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"|[^()])|(?1))+\))/';
+    
     /**
      * The mapper factory
      *
@@ -222,6 +224,7 @@ class Xyster_Orm_Query_Parser
         
         $crit = null;
         $statement = trim($statement);
+        
         $groups = $this->_matchGroups($statement);
         if ( count($groups) == 1 && strlen($groups[0]) == strlen($statement) ) {
             $statement = trim(substr($statement,1,-1));
@@ -238,17 +241,12 @@ class Xyster_Orm_Query_Parser
             $subcrits = Xyster_String::smartSplit(" OR ", $statement, true);
             if ( count($subcrits) < 2 ) {
                 $groups = $this->_matchGroups(trim($subcrits[0]));
-                $crit = ( count($groups) > 0 && strlen($groups[0]) > 2 ) ?
+                $crit = ( count($groups) > 0 && strlen($groups[0]) ) ?
                     $this->parseCriterion($subcrits[0]) :
                     $this->parseExpression($subcrits[0]);
             } else {
-                $crit = Xyster_Data_Junction::any( $this->parseCriterion($subcrits[0]),
-                    $this->parseCriterion($subcrits[1]) );
-                if ( count($subcrits) > 2 ) {
-                    for ( $i=2; $i<count($subcrits); $i++ ) {
-                        $crit->add( $this->parseCriterion( $subcrits[$i] ) );
-                    }
-                }
+                $criteria = array_map(array($this, 'parseCriterion'), $subcrits);
+                $crit = Xyster_Data_Criterion::fromArray('OR', $criteria);
             }
 
         } else {
@@ -626,7 +624,7 @@ class Xyster_Orm_Query_Parser
     }
     
     /**
-     * Match nested parentheses groups
+     * Match nested parentheses groups respecting escaped quotes
      *
      * @param string $string
      * @return array
@@ -636,40 +634,13 @@ class Xyster_Orm_Query_Parser
         if ( strpos($string, '(') === false ) {
             return array();
         }
-
+        
+        $matches = array();
+        preg_match_all(self::PARENTH_QUOTE_REGEX, $string, $matches, PREG_SET_ORDER);
+        
         $groups = array();
-        $buffer = "";
-        $inParenth = 0;
-        $inString = false;
-
-        for ( $i=0; $i<strlen($string); $i++ ) {
-
-            $curr = $string[$i];
-            $last = ( $i ) ? $string[$i-1] : "";
-            if ( $curr == '"' && ( ( $inString && $last != "\\") || !$inString ) ) {
-                $inString = !$inString;
-            }
-
-            if ( !$inString ) {
-                if ( $curr == '(' ) {
-                    $inParenth++;
-                } else if ( $curr == ')' ) {
-                    if ( $inParenth == 1 ) {
-                        $buffer .= $curr;
-                    }
-                    $inParenth--;
-                }
-            }
-
-            if ( $inParenth ) {
-                $buffer .= $curr;
-            } else if ( strlen($buffer) ) {
-                $groups[] = $buffer;
-                $buffer = "";
-            }
-        }
-        if ( strlen($buffer) ) {
-            $groups[] = $buffer;
+        foreach( $matches as $group ) {
+            $groups[] = $group[0];
         }
         return $groups;
     }
@@ -683,11 +654,6 @@ class Xyster_Orm_Query_Parser
      */
     protected function _parseClause( Xyster_Orm_Query $query, $type, $statement )
     {
-        if (!in_array($type, array('select', 'group', 'order'))) {
-            require_once 'Xyster/Orm/Query/Parser/Exception.php';
-            throw new Xyster_Orm_Query_Parser_Exception('Unknown clause type: ' . $type);
-        }
-
         $call = array(
                 'select'=>array($this, 'parseFieldAlias'),
                 'order'=>array($this, 'parseSort'),
