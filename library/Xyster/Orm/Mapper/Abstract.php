@@ -295,8 +295,9 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
 		foreach( $this->getEntityMeta()->getRelations() as $k=>$v ) {
 			if ( !$v->isCollection() && $entity->isLoaded($k) ) {
 				$linked = $entity->$k;
-				$key = $linked->getPrimaryKey();
-				if ( !$key ) {
+				// get the original primary key, in case it's not auto-generated
+				$key = $linked->getPrimaryKey(true);
+				if ( !count($key) || !current($key) ) {
 					$this->_factory->get($v->getTo())->save($linked);
 					$key = $linked->getPrimaryKey();
 				}
@@ -333,11 +334,11 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
 				}
 
 				$map = $this->_factory->get($v->getTo());
-				foreach( $added as $entity ) {
-				    $map->save($entity);
+				foreach( $added as $aentity ) {
+				    $map->save($aentity);
 				}
-				foreach( $removed as $entity ) {
-				    $map->delete($entity);
+				foreach( $removed as $rentity ) {
+				    $map->delete($rentity);
 				}
 				$set->baseline();
 			}

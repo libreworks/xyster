@@ -87,7 +87,7 @@ class Xyster_Orm_Mapper_Translator extends Xyster_Db_Translator
 	    $this->_class = $className;
 	    $this->_mapFactory = $mapFactory;
 	    require_once 'Xyster/Orm/Query/Parser.php';
-	    $this->_parser = new Xyster_Orm_Query_Parser();
+	    $this->_parser = new Xyster_Orm_Query_Parser($mapFactory);
 	    $map = $mapFactory->get($className);
 	    $this->aliasField(current($map->getEntityMeta()->getPrimary()));
 	}

@@ -192,7 +192,11 @@ class Xyster_Db_Translator
 		
 		$sql = $this->translateField($tosql->getLeft(), $quote)->getSql() . ' ';
 		$val = $tosql->getRight();
-		$sql .= ( $val === null || $val == "NULL" ) ? 'IS' : $tosql->getOperator();
+		if ( $val === null || $val == "NULL" ) {
+		    $sql .= ( $tosql->getOperator() == '=' ) ? 'IS' : 'IS NOT';
+		} else {
+		    $sql .= $tosql->getOperator();
+		}
 		$sql .= ' ';
 		
 		if ( $val == "NULL" || $val === null ) {
@@ -240,8 +244,9 @@ class Xyster_Db_Translator
 	{
 	    $rename = $field->getName();
 		if ( $this->_renameCallback !== null ) {
-			$rename = call_user_func($this->_renameCallback, $tosql);
+			$rename = call_user_func($this->_renameCallback, $field);
 		}
+		return $rename;
 	}
 
 	/**

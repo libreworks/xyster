@@ -62,22 +62,13 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
      * Creates a new mapper
      * 
      */
-    final public function __construct( Zend_Cache_Core $cache )
+    final public function __construct( Zend_Cache_Core $cache = null )
     {
         if ( $cache ) {
             $this->_metadataCache = $cache;
         } else if ( array_key_exists('metadataCache', $this->_options) ) {
             $this->_metadataCache = self::_setupMetadataCache($this->_options['metadataCache']); 
         }
-    }
-    
-    /**
-     * Allows for customization of mapper at construction
-     * 
-     * Class authors should override this method.
-     */
-    public function init()
-    {
     }
     
     /**
@@ -94,7 +85,10 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
     {
         require_once 'Zend/Registry.php';
         require_once 'Zend/Db.php';
-        Zend_Registry::set(md5($dsn), Zend_Db::factory($driver, $config));
+        
+        $adapter = ( $driver instanceof Zend_Db_Adapter_Abstract ) ?
+            $driver : Zend_Db::factory($driver, $config);
+        Zend_Registry::set(md5($dsn), $adapter);
     }
 
     /**
@@ -113,10 +107,10 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
      * Gets all entities from the data store matching the criteria
      *
      * @param mixed $criteria  
-     * @param mixed $sorts
+     * @param mixed $sort
      * @return Xyster_Orm_Set  A collection of the entities
      */
-    final public function findAll( $criteria, $sorts = null )
+    final public function findAll( $criteria, $sort = null )
     {
 	    $select = $this->_buildSimpleSelect();
         $translator = $this->_buildTranslator();
@@ -159,6 +153,7 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
             $orWhere[] = $this->_buildCriteria($id);
         }
 
+        require_once 'Xyster/Data/Junction.php';
 	    $where = ( count($orWhere) ) ?
 	        Xyster_Data_Junction::fromArray('OR', $orWhere) : null;
 	    
@@ -195,7 +190,7 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
 	            // Define the cache identifier where the metadata are saved
 	            $cacheId = md5($this->getTable());
 	        }
-	
+
 	        // If $this has no metadata cache or metadata cache misses
 	        if (null === $cache || !($metadata = $cache->load($cacheId))) {
 	            // Fetch metadata from the adapter's describeTable() method
@@ -222,7 +217,6 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
      */
     public function getJoined( Xyster_Orm_Entity $entity, Xyster_Orm_Relation $relation )
     {
-        $leftMap = $this->_factory->get($relation->getFrom());
         $rightMap = $this->_factory->get($relation->getTo());
         
         $targetTable = $rightMap->getTable();
@@ -234,35 +228,36 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
 		}
 
 		// get the join SQL for the left to the middle
-		$firstCond = '';
+		$firstCond = array();
 		$left = $relation->getLeft();
-		foreach( $leftMap->getEntityMeta()->getPrimary() as $k=>$primary ) {
-		    if ( $k > 0 ) {
-		        $firstCond .= ' AND ';
-		    }
-		    $firstCond = 't1.' . $map->untranslateField($primary) . ' = ' .
+		foreach( $this->getEntityMeta()->getPrimary() as $k=>$primary ) {
+		    $firstCond[] = 't1.' . $this->untranslateField($primary) . ' = ' .
 		        $relation->getTable() . '.' . $left[$k];
 		}
+		$firstCond = implode(' AND ', $firstCond);
 		
 		// get the join SQL for the middle to the right 
-		$secondCond = '';
+		$secondCond = array();
 		$right = $relation->getRight();
 		foreach( $rightMap->getEntityMeta()->getPrimary() as $k=>$primary ) {
-		    if ( $k > 0 ) {
-		        $secondCond .= ' AND ';
-		    }
-		    $secondCond = $relation->getTable() . '.' . $right[$k] . ' = ' .
+		    $secondCond[] = $relation->getTable() . '.' . $right[$k] . ' = ' .
 		        $targetTableAlias . '.' . $rightMap->untranslateField($primary); 
 		}
+		$secondCond = implode(' AND ', $secondCond);
 		
 		$select = $this->_getAdapter()->select();
 		
-		$binds = array();
-		$select->from(array('t1', $this->getTable()), array())
+		$translator = $this->_buildTranslator();
+		$translator->setTable('t1');
+		$token = $translator->translate($entity->getPrimaryKeyAsCriterion());
+		
+		$binds = $token->getBindValues();
+		$select->from(array('t1'=>$this->getTable()), array())
 		    ->join($relation->getTable(), $firstCond, array())
-		    ->join(array($targetTableAlias,$targetTable), $secondCond, $columns);
-		    		
-		return $this->_mapSet($this->_getAdapter()->query($select, $binds));		
+		    ->join(array($targetTableAlias=>$targetTable), $secondCond, $columns)
+		    ->where($token->getSql());
+
+		return $rightMap->_mapSet($this->_getAdapter()->query($select, $binds));		
     }
     
     /**
@@ -345,7 +340,7 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
 				foreach( $query->getFields() as $k=>$field ) {
 				    // we want to quote the field names for aggregates!
 	                // Zend_Db_Select does not do this for functions
-				    $quote = (! $field instanceof Xyster_Data_Field_Aggregate);
+				    $quote = ($field instanceof Xyster_Data_Field_Aggregate);
 				    $fieldName = $translator->translateField($field, $quote)->getSql();
 				    if ( $field->getAlias() == $field->getName() ) {
 				        $fields[] = $fieldName;
@@ -462,7 +457,7 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
 		$translator = $this->_buildTranslator();
 	    $token = $translator->translate($where);
 		$select->where($token->getSql());
-
+		
 		return $this->_getAdapter()->query($select, $token->getBindValues());
 	}
 	
@@ -474,44 +469,20 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
 	 */
 	final protected function _getAdapter()
 	{
-	    if ( $this->_db instanceof Zend_Db_Adapter_Abstract ) {
-	        return $this->_db;
+	    if (! $this->_db instanceof Zend_Db_Adapter_Abstract ) {
+            $key = md5($this->getDomain());
+            require_once 'Zend/Registry.php';
+            $db = Zend_Registry::isRegistered($key) ? Zend_Registry::get($key) : null;
+            
+            if (!$db instanceof Zend_Db_Adapter_Abstract) {
+                require_once 'Xyster/Orm/Mapper/Exception.php';
+                throw new Xyster_Orm_Mapper_Exception('A database connection has not been defined.  Please call the static "dsn" method to do so.');
+            }
+            $this->_db = $db;
 	    }
-
-		$dsn = $this->getDomain();
-		
-        if ($dsn === null) {
-            return null;
-        }
-        require_once 'Zend/Registry.php';
-        $db = Zend_Registry::get( md5($dsn) );
-        if (!$db instanceof Zend_Db_Adapter_Abstract) {
-            require_once 'Xyster/Orm/Mapper/Exception.php';
-            throw new Xyster_Orm_Mapper_Exception('Argument must be a Registry key where a Zend_Db_Adapter_Abstract object is stored');
-        }
-        return $db;
+        
+        return $this->_db;
     }
-    
-    /**
-	 * Gets the where items for the primary key of the entity
-	 * 
-	 * @param Xyster_Orm_Entity $entity The entity whose key is used
-	 * @param boolean $base True to get the original primary key (if changed)
-	 * @return array 
-	 */
-	protected function _getPrimaryKeyWhere( Xyster_Orm_Entity $entity, $base = false )
-	{
-	    $keyNames = $this->getEntityMeta()->getPrimary();
-	    $key = $entity->getPrimaryKey($base);
-	    
-	    $whereParts = array();
-	    foreach( $keyNames as $name ) {
-    	    $whereParts[ $this->_getAdapter()->quoteIdentifier($this->untranslateField($name)) . ' = ?' ] = 
-    	        $key[$name];
-    	}
-    	
-    	return $whereParts;
-	}	
 
     /**
 	 * Saves a new entity into the backend
@@ -555,8 +526,8 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
          * to the row.  We assume that only the first column in a compound
          * primary key takes a value from a sequence.
          */
-        if ( $this->getSequence() && !$data[$pkIdentity]) {
-            $data[$pkIdentity] = $this->_getAdapter()->nextSequenceId($this->getSequence());
+        if ( $sequence && !$data[$pkIdentity]) {
+            $data[$pkIdentity] = $this->_getAdapter()->nextSequenceId($sequence);
         }
 
         $this->_getAdapter()->insert($this->getTable(), $data);
@@ -576,7 +547,7 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
             }
         }
 
-        if (!$this->getSequence()) {
+        if (!$sequence) {
             /**
              * Return the most recent ID generated by an auto-increment column
              */
@@ -586,11 +557,8 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
         /**
          * Normalize the result to an array indexed by primary key column(s).
          */
-        if (is_array($primaryKey)) {
-            $newPrimaryKey = $primaryKey;
-        } else {
-            $newPrimaryKey = array(current($primary) => $primaryKey);
-        }
+        $newPrimaryKey = is_array($primaryKey) ?
+            $primaryKey : array(current($primary) => $primaryKey);
 
         foreach( $newPrimaryKey as $name => $value ) {
             $field = $this->translateField($name);
@@ -666,16 +634,20 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
 	 */
 	protected function _update( Xyster_Orm_Entity $entity )
 	{
-	    $whereParts = $this->_getPrimaryKeyWhere($entity, true);
-	    
-	    $where = array();
-	    foreach( $whereParts as $sql => $bind ) {
-	        $where[] = $this->_getAdapter()->quoteInto($sql, $bind);
-	    }
+	    $db = $this->_getAdapter();
 	    
     	$values = array();
     	foreach( $entity->getDirtyFields() as $name => $value ) {
     	    $values[ $this->untranslateField($name) ] = $value;
+    	}
+	    
+	    $keyNames = $this->getEntityMeta()->getPrimary();
+	    $key = $entity->getPrimaryKey(true);
+	    
+	    $where = array();
+	    foreach( $keyNames as $name ) {
+	        $sql = $db->quoteIdentifier($this->untranslateField($name)) . ' = ?';
+	        $where[] = $db->quoteInto($sql, $key[$name]); 
     	}
     	
     	if ( count($values) > 0 ) {

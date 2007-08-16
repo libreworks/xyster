@@ -58,7 +58,6 @@ class Xyster_Orm_Entity_Meta
             $translated = $map->translateField($name);
             $field = new Xyster_Orm_Entity_Field($translated, $values);
             $this->_fields[$translated] = $field;
-
             if ( $field->isPrimary() ) {
                 $this->_primary[] = $translated;
             }

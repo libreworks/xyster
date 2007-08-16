@@ -231,8 +231,10 @@ abstract class Xyster_Orm_Set extends Xyster_Data_Set
         $this->_relation = $relation;
         $this->_entity = $entity;
         
-        foreach( $this->_items as $item ) {
-            $this->_relation->relate($this->_entity, $item);
+        if ( $relation->getType() == 'many') {
+            foreach( $this->_items as $item ) {
+                $this->_relation->relate($this->_entity, $item);
+            }
         }
     }
     
