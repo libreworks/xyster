@@ -136,12 +136,7 @@ class Xyster_Orm_Mapper_Translator extends Xyster_Db_Translator
 
 		if ( !in_array($prefix, array_keys($this->_tables)) ) {
 			$tableName = $factory->get($className)->getTable();
-			$num = 1;
-			foreach( $this->_tables as $v ) { 
-				if ( $v == $tableName ) {
-					$num++;
-				}
-			}
+			$num = count(array_keys($this->_tables, $tableName));
 			$this->_tables[$prefix] = $tableName;
 			$this->_aliases[$prefix] = preg_replace('/[`\]\s]*/i', '',
 				$tableName) . $num;
@@ -187,19 +182,13 @@ class Xyster_Orm_Mapper_Translator extends Xyster_Db_Translator
 				$alias = $this->aliasField($prefixsofar.current($toMap->getEntityMeta()->getPrimary()));
 
 				$binds = array();
-			    $localFrom = '';
+			    $localFrom = array();
 				
 				if (!in_array($prefixsofar, $joined)) {
 
                     $keyMap = array_combine($relation->getId(), $toMap->getEntityMeta()->getPrimary());
-					$first = true;
 					foreach( $keyMap as $fromKey=>$toKey ) {
-					    if ( !$first ) {
-					        $localFrom .= " AND ";
-					    } else {
-					        $first = false;
-					    }
-					    $localFrom .= $lastAlias . '.'
+					    $localFrom[] = $lastAlias . '.'
 							. $db->quoteIdentifier($fromMap->untranslateField($fromKey))
 					        . ' = ' . $alias . '.' . $toMap->untranslateField($db->quoteIdentifier($toKey));
 					}
@@ -209,7 +198,7 @@ class Xyster_Orm_Mapper_Translator extends Xyster_Db_Translator
 						$translator->setRenameCallback(array($toMap, 'untranslateField'));
 						$translator->setTable($alias);
 						$fToken = $translator->translate($relation->getFilters());
-						$localFrom .= ' AND '. $fToken->getSql();
+						$localFrom[] = $fToken->getSql();
 						$binds += $fToken->getBindValues();
 					}
 					$joined[] = $prefixsofar;
@@ -219,7 +208,7 @@ class Xyster_Orm_Mapper_Translator extends Xyster_Db_Translator
 				$container = $class;
 				
 				$from[ $toMap->getTable() . ' AS ' . $alias ] =
-				    new Xyster_Db_Token($localFrom, $binds);
+				    new Xyster_Db_Token(implode(' AND ', $localFrom), $binds);
 			}
 		}
 

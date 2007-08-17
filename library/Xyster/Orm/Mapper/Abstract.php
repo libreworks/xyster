@@ -179,9 +179,7 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
     {
         if ( !$this->_meta ) {
             $this->_meta = new Xyster_Orm_Entity_Meta($this);
-            if ( !Xyster_Orm_Entity::getMeta($this->getEntityName()) ) {
-                Xyster_Orm_Entity::setMeta($this->_meta);
-            }
+            Xyster_Orm_Entity::setMeta($this->_meta);
         }
         return $this->_meta;
     }
@@ -323,8 +321,9 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
         /*
 		 * Step 3: work with many and joined relationships
 		 */
-		foreach( $this->getEntityMeta()->getRelations() as $k=>$v ) {
-			if ( $v->isCollection() && $entity->isLoaded($k) ) {
+		foreach( $this->getEntityMeta()->getRelations() as $k=>$relation ) {
+		    /* @var $relation Xyster_Orm_Relation */
+			if ( $relation->isCollection() && $entity->isLoaded($k) ) {
 				$set = $entity->$k;
 
 				$added = $set->getDiffAdded();
@@ -333,13 +332,19 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
 					continue;
 				}
 
-				$map = $this->_factory->get($v->getTo());
-				foreach( $added as $aentity ) {
-				    $map->save($aentity);
+				if ( $relation->getType() == 'joined' ) {
+				    
+				    $this->_joinedInsert($set);
+				    $this->_joinedDelete($set);
+				    
+				} else if ( $relation->getType() == 'many' ) {
+				    
+    				$map = $this->_factory->get($relation->getTo());
+    				array_walk($added, array($map, 'save'));
+    				array_walk($removed, array($map, 'delete'));
+    				
 				}
-				foreach( $removed as $rentity ) {
-				    $map->delete($rentity);
-				}
+
 				$set->baseline();
 			}
 		}
@@ -399,6 +404,20 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
      * @return mixed  The new primary key
      */
     abstract protected function _insert( Xyster_Orm_Entity $entity );
+    
+    /**
+     * Adds the entity to the many-to-many join
+     *
+     * @param Xyster_Orm_Set $set
+     */
+    abstract protected function _joinedInsert( Xyster_Orm_Set $set );
+    
+    /**
+     * Removes the entity from the many-to-many join
+     *
+     * @param Xyster_Orm_Set $set
+     */
+    abstract protected function _joinedDelete( Xyster_Orm_Set $set );
     
     /**
      * Updates the values of an entity in the backend

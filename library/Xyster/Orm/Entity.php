@@ -83,21 +83,6 @@ class Xyster_Orm_Entity
             $this->import($values);
         }
     }
-
-    /**
-     * Gets an entity meta information object
-     * 
-     * This shouldn't be called except by the Xyster_Orm_Mapper
-     *
-     * @param string $className
-     * @return Xyster_Orm_Entity_Meta 
-     */
-    static public function getMeta( $className )
-    {
-        Xyster_Orm_Loader::loadEntityClass($className);
-        return array_key_exists($className, self::$_meta) ?
-            self::$_meta[$className] : null;
-    }
     
     /**
      * Adds an entity meta information object
@@ -105,14 +90,9 @@ class Xyster_Orm_Entity
      * This shouldn't be called except by the Xyster_Orm_Mapper
      * 
      * @param Xyster_Orm_Entity_Meta $meta
-     * @throws Xyster_Orm_Entity_Exception if the metainfo for the class is already defined
      */
     static public function setMeta( Xyster_Orm_Entity_Meta $meta )
     {
-        if ( array_key_exists($meta->getEntityName(), self::$_meta) ) {
-            require_once 'Xyster/Orm/Entity/Exception.php';
-            throw new Xyster_Orm_Entity_Exception('Metadata already defined for ' . $meta->getEntityName());
-        }
         self::$_meta[ $meta->getEntityName() ] = $meta;
     }
     

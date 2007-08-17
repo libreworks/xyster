@@ -126,7 +126,7 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
 		            require_once 'Xyster/Orm/Mapper/Exception.php';
                     throw new Xyster_Orm_Mapper_Exception("The sort parameter must be a single Xyster_Data_Sort or an array with multiple");
 		        } else {
-		            $token = $translator->translateSort($s);
+		            $token = $translator->translateSort($s, false);
 		            $select->order($token->getSql());
 		        }
 		    }
@@ -194,6 +194,7 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
 	        // If $this has no metadata cache or metadata cache misses
 	        if (null === $cache || !($metadata = $cache->load($cacheId))) {
 	            // Fetch metadata from the adapter's describeTable() method
+	            $db = $this->_getAdapter();
 	            $metadata = $this->_getAdapter()->describeTable($this->getTable());
 	            // If $this has a metadata cache, then cache the metadata
 	            if (null !== $cache && !$cache->save($metadata, $cacheId)) {
@@ -217,6 +218,7 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
      */
     public function getJoined( Xyster_Orm_Entity $entity, Xyster_Orm_Relation $relation )
     {
+        $db = $this->_getAdapter();
         $rightMap = $this->_factory->get($relation->getTo());
         
         $targetTable = $rightMap->getTable();
@@ -231,8 +233,10 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
 		$firstCond = array();
 		$left = $relation->getLeft();
 		foreach( $this->getEntityMeta()->getPrimary() as $k=>$primary ) {
-		    $firstCond[] = 't1.' . $this->untranslateField($primary) . ' = ' .
-		        $relation->getTable() . '.' . $left[$k];
+		    $firstCond[] = $db->quoteIdentifier('t1') . '.'
+		        . $db->quoteIdentifier($this->untranslateField($primary))
+		        . ' = ' . $db->quoteIdentifier($relation->getTable()) . '.'
+		        . $db->quoteIdentifier($left[$k]);
 		}
 		$firstCond = implode(' AND ', $firstCond);
 		
@@ -240,8 +244,10 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
 		$secondCond = array();
 		$right = $relation->getRight();
 		foreach( $rightMap->getEntityMeta()->getPrimary() as $k=>$primary ) {
-		    $secondCond[] = $relation->getTable() . '.' . $right[$k] . ' = ' .
-		        $targetTableAlias . '.' . $rightMap->untranslateField($primary); 
+		    $secondCond[] = $db->quoteIdentifier($relation->getTable()) . '.'
+		        . $db->quoteIdentifier($right[$k]) . ' = '
+		        . $db->quoteIdentifier($targetTableAlias) . '.'
+		        . $db->quoteIdentifier($rightMap->untranslateField($primary)); 
 		}
 		$secondCond = implode(' AND ', $secondCond);
 		
@@ -256,7 +262,6 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
 		    ->join($relation->getTable(), $firstCond, array())
 		    ->join(array($targetTableAlias=>$targetTable), $secondCond, $columns)
 		    ->where($token->getSql());
-
 		return $rightMap->_mapSet($this->_getAdapter()->query($select, $binds));		
     }
     
@@ -467,7 +472,7 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
 	 * @return Zend_Db_Adapter_Abstract A connection to the database
 	 * @throws Xyster_Orm_Mapper_Exception
 	 */
-	final protected function _getAdapter()
+	final public function _getAdapter()
 	{
 	    if (! $this->_db instanceof Zend_Db_Adapter_Abstract ) {
             $key = md5($this->getDomain());
@@ -571,6 +576,77 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
     	return $newPrimaryKey;
 	}
     
+    /**
+     * Adds the entities to the many-to-many join
+     *
+     * @param Xyster_Orm_Set $set
+     */
+    protected function _joinedInsert( Xyster_Orm_Set $set )
+    {
+        $entity = $set->getRelatedEntity();
+        $relation = $set->getRelation();
+		
+        $leftValues = array();
+        $left = $relation->getLeft();
+        foreach( $this->getEntityMeta()->getPrimary() as $k=>$primary ) {
+            $leftValues[$left[$k]] = $entity->$primary;
+        }
+        
+        $rightMap = $this->getFactory()->get($relation->getTo());
+        $right = $relation->getRight();
+        $rightPrimary = $rightMap->getEntityMeta()->getPrimary();
+        
+        foreach( $set->getDiffAdded() as $added ) {
+            $values = $leftValues;
+            foreach( $rightPrimary as $k=>$primary ) {
+                $values[$right[$k]] = $added->$primary;
+            }
+            $this->_getAdapter()->insert($relation->getTable(), $values);
+        }
+    }
+    
+    /**
+     * Removes the entities from the many-to-many join
+     *
+     * @param Xyster_Orm_Set $set
+     */
+    protected function _joinedDelete( Xyster_Orm_Set $set )
+    {
+        $entity = $set->getRelatedEntity();
+        $relation = $set->getRelation();
+		
+		$firstCond = array();
+		$left = $relation->getLeft();
+		foreach( $this->getEntityMeta()->getPrimary() as $k=>$primary ) {
+		    $firstCond[] = Xyster_Data_Expression::eq($left[$k], $entity->$primary);
+		}
+		$leftCriteria = Xyster_Data_Criterion::fromArray('AND', $firstCond);		
+		
+        $rightMap = $this->getFactory()->get($relation->getTo());
+		$right = $relation->getRight();
+		$rightPrimary = $rightMap->getEntityMeta()->getPrimary();
+        
+		$secondCriteria = array();
+		foreach( $set->getDiffRemoved() as $removed ) {
+		    $secondCond = array();
+		    foreach( $rightPrimary as $k=>$primary ) {
+    		    $secondCond[] = Xyster_Data_Expression::eq($right[$k], $removed->$primary);
+    		}
+    		$secondCriteria[] = Xyster_Data_Criterion::fromArray('AND', $secondCond);
+		}
+		$allSecondCriteria = Xyster_Data_Criterion::fromArray('OR', $secondCriteria);
+		
+		$where = Xyster_Data_Junction::all($leftCriteria, $allSecondCriteria);
+		$translator = new Xyster_Db_Translator($this->_getAdapter());
+		$token = $translator->translate($where);
+		
+		$stmt = $this->_getAdapter()->prepare('DELETE FROM '
+		    . $this->_getAdapter()->quoteIdentifier($relation->getTable())
+		    . ' WHERE ' . $token->getSql());
+		    
+		$stmt->execute($token->getBindValues());
+    }
+    
 	/**
 	 * Translates the first row of a database recordset into an entity
 	 *
@@ -626,6 +702,26 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
 		}
 		return $columns;
 	}
+	
+    /**
+     * @param mixed $metadataCache Either a Cache object, or a string naming a Registry key
+     * @return Zend_Cache_Core
+     * @throws Xyster_Orm_Mapper_Exception
+     */
+    protected final function _setupMetadataCache($metadataCache)
+    {
+        if (is_string($metadataCache)) {
+            require_once 'Zend/Registry.php';
+            $metadataCache = Zend_Registry::get($metadataCache);
+        }
+        
+        if ($metadataCache === null || $metadataCache instanceof Zend_Cache_Core) {
+            return $metadataCache;
+        }
+        
+        require_once 'Xyster/Orm/Mapper/Exception.php';
+        throw new Xyster_Orm_Mapper_Exception('Argument must be of type Zend_Cache_Core, or a Registry key where a Zend_Cache_Core object is stored');
+    }
 		
 	/**
 	 * Updates the values of an entity in the backend
@@ -657,25 +753,4 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
     	// this is in case any triggers in the db have changed the record
     	$this->refresh($entity);
 	}
-    
-    /**
-     * @param mixed $metadataCache Either a Cache object, or a string naming a Registry key
-     * @return Zend_Cache_Core
-     * @throws Xyster_Orm_Mapper_Exception
-     */
-    protected final function _setupMetadataCache($metadataCache)
-    {
-        if ($metadataCache === null) {
-            return null;
-        }
-        if (is_string($metadataCache)) {
-            require_once 'Zend/Registry.php';
-            $metadataCache = Zend_Registry::get($metadataCache);
-        }
-        if (!$metadataCache instanceof Zend_Cache_Core) {
-            require_once 'Xyster/Orm/Mapper/Exception.php';
-            throw new Xyster_Orm_Mapper_Exception('Argument must be of type Zend_Cache_Core, or a Registry key where a Zend_Cache_Core object is stored');
-        }
-        return $metadataCache;
-    }
 }

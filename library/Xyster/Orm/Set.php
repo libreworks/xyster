@@ -96,7 +96,8 @@ abstract class Xyster_Orm_Set extends Xyster_Data_Set
         /*
          * Relate the owning entity to the new item
          */
-        if ( $this->_relation && $this->_entity ) {
+        if ( $this->_relation &&
+            $this->_relation->getType() == 'many' && $this->_entity ) {
             $this->_relation->relate($this->_entity, $item);
         }
 
