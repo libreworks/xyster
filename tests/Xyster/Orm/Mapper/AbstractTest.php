@@ -277,6 +277,41 @@ class Xyster_Orm_Mapper_AbstractTest extends PHPUnit_Framework_TestCase
     }
     
     /**
+     * Tests the 'save' method for relations
+     *
+     */
+    public function testSaveOneToMany()
+    {
+        $map = $this->_mockFactory()->get('MockAccount');
+        $bmap = $this->_mockFactory()->get('MockBug');
+        $entity = $map->get('mmouse');
+        
+        $newAccount = new MockAccount();
+        $newAccount->accountName = 'doublecompile';
+        
+        Xyster_Orm_Loader::loadSetClass('MockBug');
+        $set = new MockBugSet();
+        $bug = new MockBug();
+        $bug->bugDescription = 'Testing123';
+        $bug->verifier = $newAccount;
+        $set->add($bug);
+        
+        $entity->assigned; // just loading a set
+        $reported = $entity->reported;
+        $reported->merge($set);
+        $reported->retainAll($set);
+
+        $removed = $reported->getDiffRemoved();
+        $map->save($entity);
+        
+        $this->assertTrue($bmap->wasSaved($bug));
+        $this->assertTrue($map->wasSaved($newAccount));
+        foreach( $removed as $removedEntity ) {
+            $this->assertTrue($bmap->wasDeleted($removedEntity));
+        }
+    }
+    
+    /**
      * Tests setting a factory when one is already defined errors
      *
      */

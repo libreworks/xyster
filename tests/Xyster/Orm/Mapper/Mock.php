@@ -51,6 +51,7 @@ abstract class Xyster_Orm_Mapper_Mock extends Xyster_Orm_Mapper_Abstract
     {
         $set = $this->getSet($this->getAll());
         $set->filter($this->_buildCriteria($criteria));
+        $set->baseline();
         return $set;
     }
     
@@ -81,6 +82,7 @@ abstract class Xyster_Orm_Mapper_Mock extends Xyster_Orm_Mapper_Abstract
 	        }
 	    }
 	    
+	    $set->baseline();
 	    return $set;
     }
     
@@ -104,6 +106,8 @@ abstract class Xyster_Orm_Mapper_Mock extends Xyster_Orm_Mapper_Abstract
         if ( !$query->isRuntime() && $query instanceof Xyster_Orm_Query_Report ) {
             require_once 'Xyster/Data/Set.php';
             return new Xyster_Data_Set($set);
+        } else {
+            $set->baseline();
         }
         
         return $set;
@@ -145,6 +149,14 @@ abstract class Xyster_Orm_Mapper_Mock extends Xyster_Orm_Mapper_Abstract
     
     protected function _insert( Xyster_Orm_Entity $entity )
     {   
+    }
+    
+    protected function _joinedInsert( Xyster_Orm_Set $set )
+    {
+    }
+    
+    protected function _joinedDelete( Xyster_Orm_Set $set )
+    {
     }
     
     protected function _update( Xyster_Orm_Entity $entity )

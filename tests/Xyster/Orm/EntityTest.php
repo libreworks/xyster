@@ -71,21 +71,6 @@ class Xyster_Orm_EntityTest extends Xyster_Orm_TestSetup
     }
     
     /**
-     * Tests that 'setMeta' will throw an exception if meta helper already set
-     *
-     */
-    public function testSetMetaWhenExists()
-    {
-        $meta = $this->_mockFactory()->getEntityMeta('MockBug');
-        try {
-            Xyster_Orm_Entity::setMeta($meta);
-        } catch ( Xyster_Orm_Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
-    }
-    
-    /**
      * Tests the dirty methods
      *
      */

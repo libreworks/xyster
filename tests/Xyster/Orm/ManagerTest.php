@@ -372,12 +372,17 @@ class Xyster_Orm_CacheMock implements Zend_Cache_Backend_Interface
      */
     protected $_cache;
     
+    protected $_returnOnSave = true;
+    
     /**
      * Constructor
      *
+     * @param boolean $throwExceptionOnSave
      */
-    public function __construct()
+    public function __construct( $returnOnSave = true )
     {
+        $this->_returnOnSave = $returnOnSave;
+        
         require_once 'Xyster/Collection/Map/String.php';
         $this->_cache = new Xyster_Collection_Map_String();
     }
@@ -426,7 +431,7 @@ class Xyster_Orm_CacheMock implements Zend_Cache_Backend_Interface
     public function save($data, $id, $tags = array(), $specificLifetime = false)
     {
         $this->_cache->set($id, $data);
-        return true;
+        return $this->_returnOnSave;
     }
     
     /**
@@ -450,5 +455,15 @@ class Xyster_Orm_CacheMock implements Zend_Cache_Backend_Interface
      */
     public function clean($mode = Zend_Cache::CLEANING_MODE_ALL, $tags = array())
     { 
+    }
+    
+    /**
+     * Return true if the automatic cleaning is available for the backend
+     *
+     * @return boolean
+     */
+    public function isAutomaticCleaningAvailable()
+    {
+        return false;
     }
 }

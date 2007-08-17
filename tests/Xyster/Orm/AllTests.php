@@ -19,6 +19,8 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
+ 
+ ini_set('include_path','.:/usr/share/php:/home/doublecompile/workspace/Zend Framework Tests');
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Xyster_Orm_AllTests::main');
@@ -47,10 +49,17 @@ require_once 'Xyster/Orm/QueryTest.php';
 require_once 'Xyster/Orm/QueryReportTest.php';
 require_once 'Xyster/Orm/QueryParserTest.php';
 
+/**
+ * @see Zend_Db_SkipTests
+ */
+require_once 'Zend/Db/SkipTests.php';
+
 error_reporting(E_ALL | E_STRICT);
 
 class Xyster_Orm_AllTests
 {
+    protected static $_skipTestSuite = null;
+    
     public static function main()
     {
         PHPUnit_TextUI_TestRunner::run(self::suite());
@@ -70,10 +79,86 @@ class Xyster_Orm_AllTests
         $suite->addTestSuite('Xyster_Orm_ManagerTest');
         $suite->addTestSuite('Xyster_Orm_Mapper_FactoryTest');
         $suite->addTestSuite('Xyster_Orm_Mapper_AbstractTest');
+        
         $suite->addTestSuite('Xyster_Orm_Query_ParserTest');
         $suite->addTestSuite('Xyster_Orm_QueryTest');
         $suite->addTestSuite('Xyster_Orm_Query_ReportTest');
+        
+        /* self::_addDbTestSuites($suite, 'Db2');
+        self::_addDbTestSuites($suite, 'Mysqli');
+        self::_addDbTestSuites($suite, 'Oracle');
+
+        self::_addDbTestSuites($suite, 'Pdo_Mssql');
+        self::_addDbTestSuites($suite, 'Pdo_Mysql');
+        self::_addDbTestSuites($suite, 'Pdo_Oci');*/
+        self::_addDbTestSuites($suite, 'Pdo_Pgsql');
+        self::_addDbTestSuites($suite, 'Pdo_Sqlite');
+
+        if (self::$_skipTestSuite !== null) {
+            $suite->addTest(self::$_skipTestSuite);
+        }
+        
         return $suite;
+    }
+    
+     protected static function _addDbTestSuites($suite, $driver)
+    {
+        $DRIVER = strtoupper($driver);
+        $enabledConst = "TESTS_XYSTER_ORM_ADAPTER_{$DRIVER}_ENABLED";
+        if (!defined($enabledConst) || constant($enabledConst) != true) {
+            self::_skipTestSuite($driver, "this Adapter is not enabled in TestConfiguration.php");
+            return;
+        }
+
+        $ext = array(
+            'Oracle' => 'oci8',
+            'Db2'    => 'ibm_db2',
+            'Mysqli' => 'mysqli'
+        );
+
+        if (isset($ext[$driver]) && !extension_loaded($ext[$driver])) {
+            self::_skipTestSuite($driver, "extension '{$ext[$driver]}' is not loaded");
+            return;
+        }
+
+        if (preg_match('/^pdo_(.*)/i', $driver, $matches)) {
+            // check for PDO extension
+            if (!extension_loaded('pdo')) {
+                self::_skipTestSuite($driver, "extension 'PDO' is not loaded");
+                return;
+            }
+
+            // check the PDO driver is available
+            $pdo_driver = strtolower($matches[1]);
+            if (!in_array($pdo_driver, PDO::getAvailableDrivers())) {
+                self::_skipTestSuite($driver, "PDO driver '{$pdo_driver}' is not available");
+                return;
+            }
+        }
+
+        try {
+
+            Zend_Loader::loadClass("Xyster_Orm_Mapper_{$driver}Test");
+
+            // if we get this far, there have been no exceptions loading classes
+            // so we can add them as test suites
+            $suite->addTestSuite("Xyster_Orm_Mapper_{$driver}Test");
+        } catch (Zend_Exception $e) {
+            self::_skipTestSuite("cannot load test classes: " . $e->getMessage());
+        }
+    }
+    
+    protected static function _skipTestSuite($driver, $message = '')
+    {
+        $skipTestClass = "Zend_Db_Skip_{$driver}Test";
+        $skipTest = new $skipTestClass();
+        $skipTest->message = $message;
+
+        if (self::$_skipTestSuite === null) {
+            self::$_skipTestSuite = new PHPUnit_Framework_TestSuite('Xyster_Orm skipped test suites');
+        }
+
+        self::$_skipTestSuite->addTest($skipTest);
     }
 }
 
