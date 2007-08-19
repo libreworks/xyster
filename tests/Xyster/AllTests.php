@@ -18,16 +18,21 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
+
 if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'Zend_AllTests::main');
+    define('PHPUnit_MAIN_METHOD', 'Xyster_AllTests::main');
 }
 
-require_once 'TestHelper.php';
-
+/**
+ * Test helper
+ */
+require_once dirname(dirname(__FILE__)).'/TestHelper.php';
+               
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once 'Xyster/EnumTest.php';
+require_once 'Xyster/StringTest.php';
 require_once 'Xyster/Collection/AllTests.php';
 require_once 'Xyster/Data/AllTests.php';
 require_once 'Xyster/Orm/AllTests.php';
@@ -43,6 +48,7 @@ class Xyster_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Xyster Framework - Xyster');
         $suite->addTestSuite('Xyster_EnumTest');
+        $suite->addTestSuite('Xyster_StringTest');
         $suite->addTest( Xyster_Collection_AllTests::suite() );
         $suite->addTest( Xyster_Data_AllTests::suite() );
         $suite->addTest( Xyster_Orm_AllTests::suite() );

@@ -32,6 +32,20 @@
  * code repository.
  */
 
+/**
+ * Zend_Db_Adapter_Pdo_Mysql and Zend_Db_Adapter_Mysqli
+ *
+ * There are separate properties to enable tests for the PDO_MYSQL adapter and
+ * the native Mysqli adapters, but the other properties are shared between the
+ * two MySQL-related Zend_Db adapters.
+ */
+define('TESTS_XYSTER_ORM_ADAPTER_PDO_MYSQL_ENABLED',  false);
+define('TESTS_ZEND_DB_ADAPTER_MYSQLI_ENABLED',  false);
+define('TESTS_ZEND_DB_ADAPTER_MYSQL_HOSTNAME', '127.0.0.1');
+define('TESTS_ZEND_DB_ADAPTER_MYSQL_USERNAME', null);
+define('TESTS_ZEND_DB_ADAPTER_MYSQL_PASSWORD', null);
+define('TESTS_ZEND_DB_ADAPTER_MYSQL_DATABASE', 'test');
+define('TESTS_ZEND_DB_ADAPTER_MYSQL_PORT', 3306);
 
 /**
  * Zend_Db_Adapter_Pdo_Sqlite
@@ -49,3 +63,9 @@ define('TESTS_ZEND_DB_ADAPTER_PDO_PGSQL_HOSTNAME', '127.0.0.1');
 define('TESTS_ZEND_DB_ADAPTER_PDO_PGSQL_USERNAME', null);
 define('TESTS_ZEND_DB_ADAPTER_PDO_PGSQL_PASSWORD', null);
 define('TESTS_ZEND_DB_ADAPTER_PDO_PGSQL_DATABASE', 'postgres');
+
+/**
+ * PHPUnit Code Coverage / Test Report
+ */
+define('TESTS_GENERATE_REPORT', false);
+define('TESTS_GENERATE_REPORT_TARGET', '/path/to/target');

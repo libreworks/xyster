@@ -22,7 +22,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'AllTests::main');
 }
 
-require_once 'TestHelper.php';
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
 require_once 'Xyster/AllTests.php';
 

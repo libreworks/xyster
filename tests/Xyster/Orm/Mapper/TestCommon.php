@@ -77,10 +77,12 @@ abstract class Xyster_Orm_Mapper_TestCommon extends Xyster_Orm_Mapper_TestSetup
      */
     public function testDelete()
     {
+        try {
         $mapper = $this->_factory()->get('Bug');
         $bug = $mapper->get(1);
         
-        $mapper->delete($bug);
+            $mapper->delete($bug);
+        
         
         $all = $mapper->getAll();
         
@@ -90,6 +92,9 @@ abstract class Xyster_Orm_Mapper_TestCommon extends Xyster_Orm_Mapper_TestSetup
         
         $bug = $mapper->get(1);
         $this->assertNull($bug);
+        } catch ( Exception $thrown ) {
+            echo $thrown->getFile() .':' . $thrown->getLine();
+        }
     }
     
     /**

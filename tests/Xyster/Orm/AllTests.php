@@ -19,13 +19,11 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
- 
- ini_set('include_path','.:/usr/share/php:/home/doublecompile/workspace/Zend Framework Tests');
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Xyster_Orm_AllTests::main');
 }
-
+set_include_path('/usr/share/php:'.get_include_path());
 /**
  * Test helper
  */
@@ -85,14 +83,14 @@ class Xyster_Orm_AllTests
         $suite->addTestSuite('Xyster_Orm_QueryTest');
         $suite->addTestSuite('Xyster_Orm_Query_ReportTest');
         $suite->addTestSuite('Xyster_OrmTest');
-        
-        /* self::_addDbTestSuites($suite, 'Db2');
-        self::_addDbTestSuites($suite, 'Mysqli');
-        self::_addDbTestSuites($suite, 'Oracle');
 
-        self::_addDbTestSuites($suite, 'Pdo_Mssql');
+        //self::_addDbTestSuites($suite, 'Db2');
+        //self::_addDbTestSuites($suite, 'Mysqli');
+        //self::_addDbTestSuites($suite, 'Oracle');
+
+        //self::_addDbTestSuites($suite, 'Pdo_Mssql');
         self::_addDbTestSuites($suite, 'Pdo_Mysql');
-        self::_addDbTestSuites($suite, 'Pdo_Oci');*/
+        //self::_addDbTestSuites($suite, 'Pdo_Oci');
         self::_addDbTestSuites($suite, 'Pdo_Pgsql');
         self::_addDbTestSuites($suite, 'Pdo_Sqlite');
 

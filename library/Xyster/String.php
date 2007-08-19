@@ -30,9 +30,11 @@ class Xyster_String
 {
     /**
      * Used for matching parenthesis groups not inside quotes
-     *
+     * 
+     * It works, but this still matches parentheses inside quotes that aren't in
+     * parentheses.
      */
-    const PARENTH_QUOTE_REGEX = '/(?<![\w\d])(\(((?:"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"|[^()])|(?1))+\))/';
+    const PARENTH_QUOTE_REGEX = '/(?<![\w\d])(\(((?:"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"|[^()])|(?1))+\))/m';
     
 	/**
 	 * An array of words that shouldn't be capitalized in title case
@@ -90,6 +92,7 @@ class Xyster_String
      *
      * @param string $string
      * @return array
+     * @todo make this work with top-level strings with parenths in them
      */
     static public function matchGroups( $string )
     {
