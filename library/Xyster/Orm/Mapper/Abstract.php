@@ -114,8 +114,26 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
     protected $_table = "";
 
     /**
+     * Creates a new mapper
+     * 
+     * Class authors can overwrite this, but <em>be sure to call the parent</em>
+     * 
+     * @param Xyster_Orm_Mapper_Factory_Interface $factory
+     */
+    public function __construct( Xyster_Orm_Mapper_Factory_Interface $factory )
+    {
+        $this->_factory = $factory;
+        
+        $this->getEntityMeta(); // to assign the meta data to the entity class
+        $this->getSet(); // to make sure the class is defined
+    }
+    
+    /**
      * Allows for subclassing without overwriting constructor
      *
+     * The mapper factory calls this method.  This is necessary because the init
+     * method should contain the setup of relations, which might depend on the
+     * mapper that's still being instantiated in the factory. 
      */
     public function init()
     {
@@ -318,6 +336,9 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
             $this->_update($entity);
         }
         
+    	// this is in case any triggers in the db, etc. have changed the record
+    	$this->refresh($entity);
+        
         /*
 		 * Step 3: work with many and joined relationships
 		 */
@@ -348,24 +369,6 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
 				$set->baseline();
 			}
 		}
-    }
-    
-    /**
-     * Sets the factory that created the mapper
-     * 
-     * This should only be called by the factory itself immediately after the
-     * mapper is created.  It should throw an exception if the mapper is set
-     *
-     * @param Xyster_Orm_Mapper_Factory_Interface $factory
-     * @throws Xyster_Orm_Mapper_Exception if the factory is already set
-     */
-    public function setFactory( Xyster_Orm_Mapper_Factory_Interface $factory )
-    {
-        if ( $this->_factory ) {
-            require_once 'Xyster/Orm/Mapper/Exception.php';
-            throw new Xyster_Orm_Mapper_Exception('The factory for this mapper has already been set');
-        }
-        $this->_factory = $factory;
     }
     
     /**

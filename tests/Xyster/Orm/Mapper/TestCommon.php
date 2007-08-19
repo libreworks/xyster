@@ -14,7 +14,7 @@
  *
  * @category  Xyster
  * @package   UnitTests
- * @subpackage Xyster_Data
+ * @subpackage Xyster_Orm
  * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
@@ -168,10 +168,9 @@ abstract class Xyster_Orm_Mapper_TestCommon extends Xyster_Orm_Mapper_TestSetup
     public function testGetAdapterWithNoDb()
     {
         require_once dirname(__FILE__).'/../_files/CustomMapper.php';
-        $mapper = new CustomMapper();
         
         try {
-            $bug = $mapper->get(2);
+            $mapper = new CustomMapper($this->_factory());
             $this->fail('Exception not thrown');
         } catch ( Xyster_Orm_Mapper_Exception $thrown ) {
         }

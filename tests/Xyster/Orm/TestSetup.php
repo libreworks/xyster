@@ -14,7 +14,7 @@
  *
  * @category  Xyster
  * @package   UnitTests
- * @subpackage Xyster_Data
+ * @subpackage Xyster_Orm
  * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
@@ -112,7 +112,6 @@ class Xyster_Orm_TestSetup extends PHPUnit_Framework_TestCase
             Xyster_Orm_Loader::addPath(dirname(__FILE__).'/_files');
             require_once 'Xyster/Orm/Manager.php';
             $manager = new Xyster_Orm_Manager();
-            $this->_mockFactory->setManager($manager);
             $manager->setMapperFactory($this->_mockFactory);
             $this->_setupClass('MockBug');
         }
@@ -160,8 +159,7 @@ class Xyster_Orm_TestSetup extends PHPUnit_Framework_TestCase
      */
     protected function _setupClass( $className )
     {
-        Xyster_Orm_Loader::loadMapperClass($className);
-        Xyster_Orm_Loader::loadSetClass($className);
-        $this->_mockFactory()->getEntityMeta($className);
+        $map = $this->_mockFactory()->get($className);
+        $map->getSet();
     }
 }

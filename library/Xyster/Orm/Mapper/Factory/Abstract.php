@@ -40,6 +40,13 @@ abstract class Xyster_Orm_Mapper_Factory_Abstract implements Xyster_Orm_Mapper_F
     protected $_manager;
     
     /**
+     * A place to cache instantiated mappers 
+     * 
+     * @var array
+     */
+    protected $_mappers = array();
+    
+    /**
      * Gets the entity meta for a given class
      * 
      * @param string $className The name of the entity class

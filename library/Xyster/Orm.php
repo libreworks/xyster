@@ -64,15 +64,6 @@ class Xyster_Orm
     {
         $this->_manager = new Xyster_Orm_Manager();
     }
-
-    /**
-     * Called if the object is cloned - singletons cannot be cloned
-     * 
-     * @magic
-     */
-    private function __clone()
-    {
-    }
     
     /**
      * Gets an instance of Xyster_Orm
@@ -115,7 +106,7 @@ class Xyster_Orm
                     try {
                         $wu->registerDirty($entity);
                     } catch ( Xyster_Orm_Exception $thrown ) {
-                        // do nothing - the entity was probably pending delete 
+                        // do nothing - the entity was pending delete 
                     }
                 }
             }
@@ -133,7 +124,7 @@ class Xyster_Orm
      */
     public function find( $className, array $criteria )
     {
-        return $this->_manager->get($className, $id);
+        return $this->_manager->find($className, $criteria);
     }
     
     /**
@@ -145,7 +136,7 @@ class Xyster_Orm
      */
     public function findAll( $className, $criteria, $sorts = null )
     {
-        return $this->_manager->get($className, $id);
+        return $this->_manager->findAll($className, $criteria, $sorts);
     }
     
     /**
@@ -200,7 +191,8 @@ class Xyster_Orm
      */
     public function persist( Xyster_Orm_Entity $entity )
     {
-        if ( $entity->getPrimaryKey(true) ) {
+        $key = $entity->getPrimaryKey(true);
+        if ( count($key) && current($key) ) {
             require_once 'Xyster/Orm/Exception.php';
             throw new Xyster_Orm_Exception('This entity is already persisted');
         }
@@ -219,13 +211,11 @@ class Xyster_Orm
         require_once 'Xyster/Orm/Query.php';
         require_once 'Xyster/Orm/Query/Parser.php';
         
-        $query = null;
+        $query = new Xyster_Orm_Query($className, $this->_manager);
         
         if ( $xsql ) {
             $parser = new Xyster_Orm_Query_Parser($this->getMapperFactory());
-            $query = $parser->parseQuery($className, $xsql);
-        } else { 
-            $query = new Xyster_Orm_Query($className, $this->_manager);
+            $parser->parseQuery($query, $xsql);
         }
         
         return $query;
@@ -261,13 +251,11 @@ class Xyster_Orm
         require_once 'Xyster/Orm/Query/Report.php';
         require_once 'Xyster/Orm/Query/Parser.php';
         
-        $query = null;
-        
+        $query = new Xyster_Orm_Query_Report($className, $this->_manager);
+                
         if ( $xsql ) {
             $parser = new Xyster_Orm_Query_Parser($this->getMapperFactory());
-            $query = $parser->parseReportQuery($className, $xsql);
-        } else { 
-            $query = new Xyster_Orm_Query_Report($className, $this->_manager);
+            $parser->parseReportQuery($query, $xsql);
         }
         
         return $query;
@@ -297,6 +285,28 @@ class Xyster_Orm
     {
         $this->_manager->setSecondaryCache($repository);
         return $this;
+    }
+    
+    /**
+     * Makes sure all classes and metadata are defined for a type of entity
+     *
+     * This method should be called if you want to instantiate a new, blank
+     * type of entity and you haven't retrieved any from the data store.  
+     * 
+     * For instance, if you've used {@link findAll} to pull out a set of
+     * entities, the classes should be defined and the metadata should be
+     * loaded.  If you haven't done any interaction with the backend yet, it's
+     * necessary to call this method. 
+     * 
+     * @param string $className
+     */
+    public function setup( $className )
+    {
+        // this will load the 'entity' and 'mapper' classes, as well as look up
+        // the metadata
+        $map = $this->getMapperFactory()->get($className);
+        // this will load the 'set' class
+        $map->getSet();
     }
     
     /**

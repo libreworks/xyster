@@ -50,6 +50,9 @@ interface Xyster_Orm_Mapper_Factory_Interface
     function getManager();
     /**
      * Sets the manager that contains the factory
+     * 
+     * The factory should NOT call the manager's setMapperFactory method.  It is
+     * usually in response to this method that setManager is called.
      *
      * @param Xyster_Orm_Manager $manager
      */

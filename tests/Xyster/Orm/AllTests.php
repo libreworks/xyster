@@ -48,6 +48,7 @@ require_once 'Xyster/Orm/Mapper/AbstractTest.php';
 require_once 'Xyster/Orm/QueryTest.php';
 require_once 'Xyster/Orm/QueryReportTest.php';
 require_once 'Xyster/Orm/QueryParserTest.php';
+require_once 'Xyster/Orm/OrmTest.php';
 
 /**
  * @see Zend_Db_SkipTests
@@ -83,6 +84,7 @@ class Xyster_Orm_AllTests
         $suite->addTestSuite('Xyster_Orm_Query_ParserTest');
         $suite->addTestSuite('Xyster_Orm_QueryTest');
         $suite->addTestSuite('Xyster_Orm_Query_ReportTest');
+        $suite->addTestSuite('Xyster_OrmTest');
         
         /* self::_addDbTestSuites($suite, 'Db2');
         self::_addDbTestSuites($suite, 'Mysqli');
@@ -101,7 +103,7 @@ class Xyster_Orm_AllTests
         return $suite;
     }
     
-     protected static function _addDbTestSuites($suite, $driver)
+    protected static function _addDbTestSuites($suite, $driver)
     {
         $DRIVER = strtoupper($driver);
         $enabledConst = "TESTS_XYSTER_ORM_ADAPTER_{$DRIVER}_ENABLED";

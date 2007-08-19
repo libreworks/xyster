@@ -28,6 +28,12 @@
  */
 class Xyster_String
 {
+    /**
+     * Used for matching parenthesis groups not inside quotes
+     *
+     */
+    const PARENTH_QUOTE_REGEX = '/(?<![\w\d])(\(((?:"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"|[^()])|(?1))+\))/';
+    
 	/**
 	 * An array of words that shouldn't be capitalized in title case
 	 *
@@ -55,6 +61,51 @@ class Xyster_String
 	    }
 	    return implode(',', $string);
 	}
+	
+    /**
+     * Match nested parentheses groups not inside of double-quotes
+     * 
+     * This method will find all balanced parentheses not inside of double
+     * quotes.  It also respects escaped double quotes (i.e. with a preceding
+     * backslash).
+     * 
+     * For example, if you ran this method on a string containing JavaScript
+     * code: 
+     * <code>
+     * $string = <<<HEREDOC
+     * var n = navigator;
+     * return ( n.appName == "Netscape" ) || n.appVersion != "5.0 (Windows; en-US)";
+     * HEREDOC;
+     * </code> 
+     * 
+     * You would receive back an array containing:
+     * <pre>
+     * array (
+     *     [0]=>( n.appName == "Netscape" )
+     * );
+     * </pre>
+     * 
+     * The second matched parentheses are inside of quotation marks and thus
+     * should be treated as part of that string literal.
+     *
+     * @param string $string
+     * @return array
+     */
+    static public function matchGroups( $string )
+    {
+        if ( strpos($string, '(') === false ) {
+            return array();
+        }
+        
+        $matches = array();
+        preg_match_all(self::PARENTH_QUOTE_REGEX, $string, $matches, PREG_SET_ORDER);
+        
+        $groups = array();
+        foreach( $matches as $group ) {
+            $groups[] = $group[0];
+        }
+        return $groups;
+    }
 	
 	/**
 	 * Like explode(), but won't split inside of parentheses or double-quotes
@@ -139,6 +190,7 @@ class Xyster_String
 		
 		return implode(' ', $words);
 	}
+	
 	/**
 	 * Converts a string in Underscore case to Camel case
 	 *
@@ -156,6 +208,7 @@ class Xyster_String
 	{
 		return preg_replace("/_([a-z])/e", "strtoupper('\\1')", $name);
 	}
+	
 	/**
 	 * Converts a string in Camel case to Underscore case
 	 *

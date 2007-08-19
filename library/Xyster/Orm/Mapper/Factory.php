@@ -38,11 +38,6 @@ class Xyster_Orm_Mapper_Factory extends Xyster_Orm_Mapper_Factory_Abstract
      * @var Zend_Cache_Core
      */
     protected $_defaultMetadataCache;
-    
-    /**
-     * @var array
-     */
-    protected $_mappers = array();
 
     /**
      * Gets the mapper for a given class
@@ -52,11 +47,11 @@ class Xyster_Orm_Mapper_Factory extends Xyster_Orm_Mapper_Factory_Abstract
      */
     public function get( $className )
     {
-        if ( !array_key_exists($className, $this->_mappers) ) {
+        if ( !isset($this->_mappers[$className]) ) {
             
             $mapperName = Xyster_Orm_Loader::loadMapperClass($className);
-            $this->_mappers[$className] = new $mapperName($this->getDefaultMetadataCache());
-            $this->_mappers[$className]->setFactory($this);
+            $this->_mappers[$className] = new $mapperName($this,
+                $this->getDefaultMetadataCache());
             $this->_mappers[$className]->init();
 
         }
@@ -94,17 +89,16 @@ class Xyster_Orm_Mapper_Factory extends Xyster_Orm_Mapper_Factory_Abstract
      */
     protected function _setupMetadataCache($metadataCache)
     {
-        if ($metadataCache === null) {
-            return null;
-        }
         if (is_string($metadataCache)) {
             require_once 'Zend/Registry.php';
             $metadataCache = Zend_Registry::get($metadataCache);
         }
-        if (!$metadataCache instanceof Zend_Cache_Core) {
-            require_once 'Xyster/Orm/Mapper/Exception.php';
-            throw new Xyster_Orm_Mapper_Exception('Argument must be of type Zend_Cache_Core, or a Registry key where a Zend_Cache_Core object is stored');
+        
+        if ($metadataCache === null || $metadataCache instanceof Zend_Cache_Core) {
+            return $metadataCache;
         }
-        return $metadataCache;
+        
+        require_once 'Xyster/Orm/Mapper/Exception.php';
+        throw new Xyster_Orm_Mapper_Exception('Argument must be of type Zend_Cache_Core, or a Registry key where a Zend_Cache_Core object is stored');
     }
 }

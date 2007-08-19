@@ -14,7 +14,7 @@
  *
  * @category  Xyster
  * @package   UnitTests
- * @subpackage Xyster_Data
+ * @subpackage Xyster_Orm
  * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
@@ -67,6 +67,7 @@ abstract class Xyster_Orm_Mapper_Mock extends Xyster_Orm_Mapper_Abstract
             $orWhere[] = $this->_buildCriteria($id);
         }
 
+        require_once 'Xyster/Data/Junction.php';
 	    $where = ( count($orWhere) ) ?
 	        Xyster_Data_Junction::fromArray('OR', $orWhere) : null;
 	        
@@ -115,6 +116,10 @@ abstract class Xyster_Orm_Mapper_Mock extends Xyster_Orm_Mapper_Abstract
     
     public function refresh( Xyster_Orm_Entity $entity )
     {
+        if ( !$entity->getBase() ) {
+            $entity->import($entity->toArray());
+            return;
+        }
         $criteria = $entity->getPrimaryKeyAsCriterion(true);
         foreach( $this->getAll() as $currentEntity ) {
             if ( $criteria->evaluate($currentEntity) ) {

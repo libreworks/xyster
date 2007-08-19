@@ -14,7 +14,7 @@
  *
  * @category  Xyster
  * @package   UnitTests
- * @subpackage Xyster_Data
+ * @subpackage Xyster_Orm
  * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
@@ -32,11 +32,6 @@ require_once 'Xyster/Orm/Mapper/Factory/Abstract.php';
 class Xyster_Orm_Mapper_FactoryMock extends Xyster_Orm_Mapper_Factory_Abstract
 {
     /**
-     * @var array
-     */
-    protected $_mappers = array();
-
-    /**
      * Gets the mapper for a given class
      * 
      * @param string $className The name of the entity class
@@ -47,8 +42,7 @@ class Xyster_Orm_Mapper_FactoryMock extends Xyster_Orm_Mapper_Factory_Abstract
         if ( !isset($this->_mappers[$className]) ) {
             
             $mapperName = Xyster_Orm_Loader::loadMapperClass($className);
-            $this->_mappers[$className] = new $mapperName();
-            $this->_mappers[$className]->setFactory($this);
+            $this->_mappers[$className] = new $mapperName($this);
             $this->_mappers[$className]->init();
 
         }

@@ -57,7 +57,7 @@ class Xyster_Orm_Loader
         
         self::$_paths[$path] = $path; // no need for dups
     }
-    
+   
     /**
      * Tries to load the class in one of the paths defined for entities
      *

@@ -14,7 +14,7 @@
  *
  * @category  Xyster
  * @package   UnitTests
- * @subpackage Xyster_Data
+ * @subpackage Xyster_Orm
  * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
@@ -80,7 +80,6 @@ abstract class Xyster_Orm_Mapper_TestSetup extends Zend_Db_TestSetup
             $this->_factory = new Xyster_Orm_Mapper_Factory();
             require_once 'Xyster/Orm/Manager.php';
             $manager = new Xyster_Orm_Manager();
-            $this->_factory->setManager($manager);
             $manager->setMapperFactory($this->_factory);
             
             require_once 'Zend/Cache.php';
@@ -105,8 +104,7 @@ abstract class Xyster_Orm_Mapper_TestSetup extends Zend_Db_TestSetup
      */
     protected function _setupClass( $className )
     {
-        Xyster_Orm_Loader::loadMapperClass($className);
-        Xyster_Orm_Loader::loadSetClass($className);
-        $this->_factory()->getEntityMeta($className);
+        $map = $this->_factory()->get($className);
+        $map->getSet();
     }
 }

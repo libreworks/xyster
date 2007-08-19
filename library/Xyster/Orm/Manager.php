@@ -236,7 +236,7 @@ class Xyster_Orm_Manager
     {
         if ( !$this->_mapFactory ) {
             require_once 'Xyster/Orm/Mapper/Factory.php';
-            $this->_mapFactory = new Xyster_Orm_Mapper_Factory();
+            $this->setMapperFactory(new Xyster_Orm_Mapper_Factory());
         }
         return $this->_mapFactory;
     }
@@ -274,12 +274,16 @@ class Xyster_Orm_Manager
     
     /**
      * Sets the factory for entity mappers
+     * 
+     * This method also calls the 
+     * {@link Xyster_Orm_Mapper_Factory_Interface::setManager} method.
      *
      * @param Xyster_Orm_Mapper_Factory_Interface $mapFactory
      */
     public function setMapperFactory( Xyster_Orm_Mapper_Factory_Interface $mapFactory )
     {
         $this->_mapFactory = $mapFactory;
+        $mapFactory->setManager($this);
     }
     
     /**

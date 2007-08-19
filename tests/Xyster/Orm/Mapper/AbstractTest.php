@@ -14,7 +14,7 @@
  *
  * @category  Xyster
  * @package   UnitTests
- * @subpackage Xyster_Data
+ * @subpackage Xyster_Orm
  * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
@@ -309,20 +309,6 @@ class Xyster_Orm_Mapper_AbstractTest extends PHPUnit_Framework_TestCase
         foreach( $removed as $removedEntity ) {
             $this->assertTrue($bmap->wasDeleted($removedEntity));
         }
-    }
-    
-    /**
-     * Tests setting a factory when one is already defined errors
-     *
-     */
-    public function testSetFactory()
-    {
-        try {
-            $this->_mapper->setFactory(new Xyster_Orm_Mapper_FactoryMock());
-        } catch ( Xyster_Orm_Mapper_Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
     }
     
     /**

@@ -179,16 +179,6 @@ interface Xyster_Orm_Mapper_Interface
      */
     function save( Xyster_Orm_Entity $entity );
     /**
-     * Sets the factory that created the mapper
-     * 
-     * This should only be called by the factory itself immediately after the
-     * mapper is created.  It should throw an exception if the mapper is set
-     *
-     * @param Xyster_Orm_Mapper_Factory_Interface $factory
-     * @throws Xyster_Orm_Mapper_Exception if the factory is already set
-     */
-    function setFactory( Xyster_Orm_Mapper_Factory_Interface $factory );
-    /**
      * Translates the field from the original format into the entity field name
      * 
      * For instance, many database users prefer to use underscores for column 

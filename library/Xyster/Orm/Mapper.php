@@ -23,12 +23,14 @@
  */
 require_once 'Xyster/Orm/Mapper/Abstract.php';
 /**
- * Responsible for translating data store records into entities
+ * We might as well require this now... sets use it as well as the reportQuery
+ * @see Xyster_Data_Set
+ */
+require_once 'Xyster/Data/Set.php';
+/**
+ * A SQL implementation of the mapper interface
  * 
- * Fowler describes a data mapper as "A layer of Mappers that moves data between
- * objects and a database while keeping them independent of each other and the
- * mapper itself". {@link http://www.martinfowler.com/eaaCatalog/dataMapper.html}
- *
+ * @see       Xyster_Orm_Mapper_Interface
  * @category  Xyster
  * @package   Xyster_Orm
  * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
@@ -61,14 +63,18 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
     /**
      * Creates a new mapper
      * 
+     * @param Xyster_Orm_Mapper_Factory_Interface $factory
+     * @param Zend_Cache_Core $cache
      */
-    final public function __construct( Zend_Cache_Core $cache = null )
+    final public function __construct( Xyster_Orm_Mapper_Factory_Interface $factory, Zend_Cache_Core $cache = null )
     {
         if ( $cache ) {
             $this->_metadataCache = $cache;
         } else if ( array_key_exists('metadataCache', $this->_options) ) {
             $this->_metadataCache = self::_setupMetadataCache($this->_options['metadataCache']); 
         }
+
+        parent::__construct($factory);
     }
     
     /**
@@ -141,27 +147,21 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
      * @param array $ids  An array of ids for which entities to retrieve
      * @return Xyster_Orm_Set  A collection of the entities
      */
-    final public function getAll( array $ids = null )
+    final public function getAll( array $ids = array() )
     {
 	    $orWhere = array();
-	    if ( !$ids ) {
-	        $ids = array();
-	    }
-
         foreach( $ids as $id ) {
     	    $id = $this->_checkPrimaryKey($id);
             $orWhere[] = $this->_buildCriteria($id);
         }
-
-        require_once 'Xyster/Data/Junction.php';
-	    $where = ( count($orWhere) ) ?
-	        Xyster_Data_Junction::fromArray('OR', $orWhere) : null;
 	    
 	    $select = $this->_buildSimpleSelect();
-        $translator = $this->_buildTranslator();
         $binds = array();
         
-        if ( $where ) {
+        if ( count($orWhere) ) {
+            require_once 'Xyster/Data/Junction.php';
+            $translator = $this->_buildTranslator();
+            $where = Xyster_Data_Junction::fromArray('OR', $orWhere);
             $token = $translator->translate($where);
     		$select->where($token->getSql());
 		    $binds += $token->getBindValues();
@@ -194,7 +194,6 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
 	        // If $this has no metadata cache or metadata cache misses
 	        if (null === $cache || !($metadata = $cache->load($cacheId))) {
 	            // Fetch metadata from the adapter's describeTable() method
-	            $db = $this->_getAdapter();
 	            $metadata = $this->_getAdapter()->describeTable($this->getTable());
 	            // If $this has a metadata cache, then cache the metadata
 	            if (null !== $cache && !$cache->save($metadata, $cacheId)) {
@@ -262,6 +261,7 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
 		    ->join($relation->getTable(), $firstCond, array())
 		    ->join(array($targetTableAlias=>$targetTable), $secondCond, $columns)
 		    ->where($token->getSql());
+
 		return $rightMap->_mapSet($this->_getAdapter()->query($select, $binds));		
     }
     
@@ -293,13 +293,13 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
 	 */
 	public function query( Xyster_Orm_Query $query ) 
 	{
-	    // we might as well require this now...
-        require_once 'Xyster/Data/Set.php';
+	    $db = $this->_getAdapter();
+	    
         require_once 'Xyster/Orm/Mapper/Translator.php';
-		$translator = new Xyster_Orm_Mapper_Translator($this->_getAdapter(),
+		$translator = new Xyster_Orm_Mapper_Translator($db,
 		    $this->getEntityName(), $this->_factory);
 
-		$select = $this->_getAdapter()->select();
+		$select = $db->select();
 		$binds = array();
 		
 		// apply the where clause that can be run on the database
@@ -330,14 +330,12 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
 			    $binds += $joinToken->getBindValues();
 			}
 			
-			return $this->_mapSet($this->_getAdapter()->query($select, $binds));
+			return $this->_mapSet($db->query($select, $binds));
 
 		} else {
             
 		    // pretty self explanitory...
-	        if ( $query->isDistinct() ) {
-	            $select->distinct();
-	        }
+            $select->distinct($query->isDistinct());
 
 	        $fields = array();
 			if ( !$query->isRuntime() ) {
@@ -384,8 +382,6 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
 			    $select->joinLeft($table, $joinToken->getSql(), array());
 			    $binds += $joinToken->getBindValues();
 			}
-
-			$db = $this->_getAdapter();
 
 			if ( !$query->isRuntime() ) {
 			    $result = $db->query($select, $binds)->fetchAll(Zend_Db::FETCH_ASSOC);
@@ -472,7 +468,7 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
 	 * @return Zend_Db_Adapter_Abstract A connection to the database
 	 * @throws Xyster_Orm_Mapper_Exception
 	 */
-	final public function _getAdapter()
+	final protected function _getAdapter()
 	{
 	    if (! $this->_db instanceof Zend_Db_Adapter_Abstract ) {
             $key = md5($this->getDomain());
@@ -497,6 +493,8 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
 	 */
 	protected function _insert( Xyster_Orm_Entity $entity )
 	{
+	    $db = $this->_getAdapter();
+	    
 	    $data = array();
 	    foreach( $entity->toArray() as $name => $value ) {
 	        $data[ $this->untranslateField($name) ] = $value; 
@@ -507,7 +505,8 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
          * and one of the columns in the key uses a sequence,
          * it's the _first_ column in the compound key.
          */
-        $primary = array_map(array($this, 'untranslateField'), $this->getEntityMeta()->getPrimary());
+        $primary = array_map(array($this, 'untranslateField'),
+            $this->getEntityMeta()->getPrimary());
         $pkIdentity = $primary[0];
         if ( count($primary) > 0 ) {  
 	        $fields = $this->getEntityMeta()->getFields();
@@ -521,7 +520,7 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
         }
 
         $sequence = $this->getSequence();
-        if ( !$sequence && $this->_getAdapter() instanceof Zend_Db_Adapter_Pdo_Pgsql ) {
+        if ( !$sequence && $db instanceof Zend_Db_Adapter_Pdo_Pgsql ) {
             $sequence = $this->getTable() . "_" . $pkIdentity . "_seq";
         }
         
@@ -532,10 +531,10 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
          * primary key takes a value from a sequence.
          */
         if ( $sequence && !$data[$pkIdentity]) {
-            $data[$pkIdentity] = $this->_getAdapter()->nextSequenceId($sequence);
+            $data[$pkIdentity] = $db->nextSequenceId($sequence);
         }
 
-        $this->_getAdapter()->insert($this->getTable(), $data);
+        $db->insert($this->getTable(), $data);
 
         if ( $data[$pkIdentity] ) {
             /**
@@ -556,7 +555,7 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
             /**
              * Return the most recent ID generated by an auto-increment column
              */
-            $primaryKey = $this->_getAdapter()->lastInsertId();
+            $primaryKey = $db->lastInsertId();
         }
         
         /**
@@ -569,9 +568,6 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
             $field = $this->translateField($name);
             $entity->$field = $value;
         }
-        
-    	// this is in case any triggers in the db have changed the record
-    	$this->refresh($entity);
     	
     	return $newPrimaryKey;
 	}
@@ -749,8 +745,5 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
     	if ( count($values) > 0 ) {
     	    $this->_getAdapter()->update($this->getTable(), $values, $where);
     	}
-    	
-    	// this is in case any triggers in the db have changed the record
-    	$this->refresh($entity);
 	}
 }

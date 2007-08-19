@@ -24,6 +24,11 @@
 require_once 'Xyster/Collection/Set.php';
 /**
  * A transactional unit of work
+ * 
+ * Fowler describes a unit of work as "[Maintaining] a list of objects affected
+ * by a business transaction and [coordinating] the writing out of changes and
+ * the resolution of concurrency problems."
+ * {@link http://martinfowler.com/eaaCatalog/unitOfWork.html}
  *
  * @category  Xyster
  * @package   Xyster_Orm

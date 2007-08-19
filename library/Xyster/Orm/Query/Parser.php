@@ -31,9 +31,7 @@ require_once 'Xyster/String.php';
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 class Xyster_Orm_Query_Parser
-{
-    const PARENTH_QUOTE_REGEX = '/(?<![\w\d])(\(((?:"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"|[^()])|(?1))+\))/';
-    
+{    
     /**
      * The mapper factory
      *
@@ -225,7 +223,7 @@ class Xyster_Orm_Query_Parser
         $crit = null;
         $statement = trim($statement);
         
-        $groups = $this->_matchGroups($statement);
+        $groups = Xyster_String::matchGroups($statement);
         if ( count($groups) == 1 && strlen($groups[0]) == strlen($statement) ) {
             $statement = trim(substr($statement,1,-1));
         }
@@ -240,7 +238,7 @@ class Xyster_Orm_Query_Parser
            
             $subcrits = Xyster_String::smartSplit(" OR ", $statement, true);
             if ( count($subcrits) < 2 ) {
-                $groups = $this->_matchGroups(trim($subcrits[0]));
+                $groups = Xyster_String::matchGroups(trim($subcrits[0]));
                 $crit = ( count($groups) > 0 && strlen($groups[0]) ) ?
                     $this->parseCriterion($subcrits[0]) :
                     $this->parseExpression($subcrits[0]);
@@ -621,28 +619,6 @@ class Xyster_Orm_Query_Parser
             return false;
 
         }
-    }
-    
-    /**
-     * Match nested parentheses groups respecting escaped quotes
-     *
-     * @param string $string
-     * @return array
-     */
-    protected function _matchGroups( $string )
-    {
-        if ( strpos($string, '(') === false ) {
-            return array();
-        }
-        
-        $matches = array();
-        preg_match_all(self::PARENTH_QUOTE_REGEX, $string, $matches, PREG_SET_ORDER);
-        
-        $groups = array();
-        foreach( $matches as $group ) {
-            $groups[] = $group[0];
-        }
-        return $groups;
     }
     
     /**
