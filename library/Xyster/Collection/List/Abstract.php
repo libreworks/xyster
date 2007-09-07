@@ -73,7 +73,6 @@ abstract class Xyster_Collection_List_Abstract extends Xyster_Collection_Abstrac
 	 *
 	 * @param int $index The index at which to insert
 	 * @param mixed $value The value to insert
-	 * @throws InvalidArgumentException if the collection cannot contain the value
 	 * @throws OutOfBoundsException if the index is invalid
 	 */
 	public function insert( $index, $value )
@@ -93,7 +92,6 @@ abstract class Xyster_Collection_List_Abstract extends Xyster_Collection_Abstrac
 	 * 
 	 * @param int $index The index at which to insert
 	 * @param Xyster_Collection_Interface $values The value to insert
-	 * @throws InvalidArgumentException if the collection cannot contain a value
 	 * @throws OutOfBoundsException if the index is invalid
 	 */
 	public function insertAll( $index, Xyster_Collection_Interface $values )

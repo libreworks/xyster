@@ -43,7 +43,7 @@ class Xyster_Collection_Set extends Xyster_Collection implements Xyster_Collecti
 	 */
 	public function __construct( Xyster_Collection_Interface $c = null, $immutable = false )
 	{
-		parent::__construct($c,$immutable);
+		parent::__construct($c, $immutable);
 	}
 
 	/**
@@ -54,7 +54,7 @@ class Xyster_Collection_Set extends Xyster_Collection implements Xyster_Collecti
 	 *
 	 * @param mixed $item The item to add
 	 * @return boolean Whether the set changed as a result of this method
-	 * @throws BadMethodCallException if the collection cannot be modified
+	 * @throws Xyster_Collection_Exception if the collection cannot be modified
 	 */
 	public function add( $item )
 	{

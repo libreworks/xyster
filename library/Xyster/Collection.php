@@ -53,7 +53,6 @@ class Xyster_Collection extends Xyster_Collection_Abstract
 	 *
 	 * @param mixed $item The item to add
 	 * @return boolean Whether the collection changed as a result of this method
-	 * @throws InvalidArgumentException if the collection cannot contain the value
 	 * @throws Xyster_Collection_Exception if the collection cannot be modified
 	 */
 	public function add( $item )

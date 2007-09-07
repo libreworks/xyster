@@ -74,7 +74,6 @@ class Xyster_Data_Set extends Xyster_Collection_Set_Sortable
      * @param mixed $item The item to add
      * @return boolean Whether the set changed as a result of this method
      * @throws Xyster_Data_Set_Exception if the collection cannot contain the value
-     * @throws BadMethodCallException if the collection cannot be modified
      */
     public function add( $item )
     {

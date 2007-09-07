@@ -176,7 +176,6 @@ class Xyster_Collection_Map extends Xyster_Collection_Map_Abstract
 	 *
 	 * @param object $key The key to set
 	 * @param mixed $value The value to set
-	 * @throws InvalidArgumentException if the collection cannot contain the value
 	 * @throws Xyster_Collection_Exception if the collection cannot be modified
 	 */
 	public function offsetSet( $key, $value )

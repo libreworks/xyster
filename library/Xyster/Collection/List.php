@@ -52,7 +52,6 @@ class Xyster_Collection_List extends Xyster_Collection_List_Abstract
 	 *
 	 * @param mixed $item The item to add
 	 * @return boolean Whether the collection changed as a result of this method
-	 * @throws InvalidArgumentException if the collection cannot contain the value
 	 * @throws Xyster_Collection_Exception if the collection cannot be modified
 	 */
 	public function add( $item )
@@ -79,7 +78,6 @@ class Xyster_Collection_List extends Xyster_Collection_List_Abstract
 	 *
 	 * @param int $index The index at which to insert
 	 * @param mixed $value The value to insert
-	 * @throws InvalidArgumentException if the collection cannot contain the value
 	 * @throws Xyster_Collection_Exception if the collection cannot be modified
 	 * @throws OutOfBoundsException if the index is invalid
 	 */
@@ -96,7 +94,6 @@ class Xyster_Collection_List extends Xyster_Collection_List_Abstract
 	 * 
 	 * @param int $index The index at which to insert
 	 * @param Xyster_Collection_Interface $values The value to insert
-	 * @throws InvalidArgumentException if the collection cannot contain a value
 	 * @throws Xyster_Collection_Exception if the collection cannot be modified
 	 * @throws OutOfBoundsException if the index is invalid
 	 */
@@ -115,7 +112,6 @@ class Xyster_Collection_List extends Xyster_Collection_List_Abstract
 	 *
 	 * @param int $index The index to set
 	 * @param mixed $value The value to set
-	 * @throws InvalidArgumentException if the collection cannot contain the value
 	 * @throws Xyster_Collection_Exception if the collection cannot be modified
 	 * @throws OutOfBoundsException if the index is invalid
 	 */
