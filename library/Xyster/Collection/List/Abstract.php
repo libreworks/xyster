@@ -52,6 +52,7 @@ abstract class Xyster_Collection_List_Abstract extends Xyster_Collection_Abstrac
 	{
 		return $this->offsetGet($index);
 	}
+	
 	/**
 	 * Returns the first index found for the specified value
 	 *
@@ -60,8 +61,9 @@ abstract class Xyster_Collection_List_Abstract extends Xyster_Collection_Abstrac
 	 */
 	public function indexOf( $value )
 	{
-		return array_search($value,$this->_items,true);
+		return array_search($value, $this->_items, true);
 	}
+	
 	/**
 	 * Inserts a value into the list at the specified index
 	 * 
@@ -72,7 +74,6 @@ abstract class Xyster_Collection_List_Abstract extends Xyster_Collection_Abstrac
 	 * @param int $index The index at which to insert
 	 * @param mixed $value The value to insert
 	 * @throws InvalidArgumentException if the collection cannot contain the value
-	 * @throws BadMethodCallException if the collection cannot be modified
 	 * @throws OutOfBoundsException if the index is invalid
 	 */
 	public function insert( $index, $value )
@@ -80,8 +81,9 @@ abstract class Xyster_Collection_List_Abstract extends Xyster_Collection_Abstrac
 		if ( $index < 0 || $index > $this->count() ) {
 			throw new OutOfBoundsException("Invalid index given");
 		}
-		array_splice( $this->_items, $index, 0, $value );
+		array_splice($this->_items, $index, 0, $value);
 	}
+	
 	/**
 	 * Inserts the supplied values into the list at the specified index
 	 * 
@@ -92,7 +94,6 @@ abstract class Xyster_Collection_List_Abstract extends Xyster_Collection_Abstrac
 	 * @param int $index The index at which to insert
 	 * @param Xyster_Collection_Interface $values The value to insert
 	 * @throws InvalidArgumentException if the collection cannot contain a value
-	 * @throws BadMethodCallException if the collection cannot be modified
 	 * @throws OutOfBoundsException if the index is invalid
 	 */
 	public function insertAll( $index, Xyster_Collection_Interface $values )
@@ -100,8 +101,9 @@ abstract class Xyster_Collection_List_Abstract extends Xyster_Collection_Abstrac
 		if ( $index < 0 || $index > $this->count() ) {
 			throw new OutOfBoundsException("Invalid index given");
 		}
-		array_splice( $this->_items, $index, 0, $values->toArray() );
+		array_splice($this->_items, $index, 0, $values->toArray());
 	}
+	
 	/**
 	 * Gets whether the specified index exists in the list
 	 *
@@ -112,6 +114,7 @@ abstract class Xyster_Collection_List_Abstract extends Xyster_Collection_Abstrac
 	{
 		return $index > -1 && $index < $this->count();
 	}
+	
 	/**
 	 * Gets the value at a specified index
 	 * 
@@ -130,6 +133,7 @@ abstract class Xyster_Collection_List_Abstract extends Xyster_Collection_Abstrac
 		}
 		return $this->_items[$index];
 	}
+	
 	/**
 	 * Sets the value at a given index.
 	 * 
@@ -139,8 +143,6 @@ abstract class Xyster_Collection_List_Abstract extends Xyster_Collection_Abstrac
 	 *
 	 * @param int $index The index to set
 	 * @param mixed $value The value to set
-	 * @throws InvalidArgumentException if the collection cannot contain the value
-	 * @throws BadMethodCallException if the collection cannot be modified
 	 * @throws OutOfBoundsException if the index is invalid
 	 */
 	public function offsetSet( $index, $value )
@@ -150,6 +152,7 @@ abstract class Xyster_Collection_List_Abstract extends Xyster_Collection_Abstrac
 		}
 		$this->_items[$index] = $value;
 	}
+	
 	/**
 	 * Removes a value at the specified index
 	 * 
@@ -168,6 +171,7 @@ abstract class Xyster_Collection_List_Abstract extends Xyster_Collection_Abstrac
 		unset($this->_items[$index]);
 		$this->_items = array_values($this->_items);
 	}
+	
 	/**
 	 * Removes the specified value from the collection
 	 *
@@ -182,6 +186,7 @@ abstract class Xyster_Collection_List_Abstract extends Xyster_Collection_Abstrac
 		}
 		return $removed;
 	}
+	
 	/**
 	 * Removes all of the specified values from the collection
 	 *
@@ -196,6 +201,7 @@ abstract class Xyster_Collection_List_Abstract extends Xyster_Collection_Abstrac
 		}
 		return $removed;
 	}
+	
 	/**
 	 * Removes a value at the specified index
 	 * 
@@ -212,6 +218,7 @@ abstract class Xyster_Collection_List_Abstract extends Xyster_Collection_Abstrac
 	{
 		return $this->offsetUnset($index);
 	}
+	
 	/**
 	 * Removes all values from the collection except for the ones specified
 	 * 
@@ -228,6 +235,7 @@ abstract class Xyster_Collection_List_Abstract extends Xyster_Collection_Abstrac
 		}
 		return $removed;
 	}
+	
 	/**
 	 * Sets the value at a given index.
 	 * 
@@ -239,13 +247,13 @@ abstract class Xyster_Collection_List_Abstract extends Xyster_Collection_Abstrac
 	 *
 	 * @param int $index The index to set
 	 * @param mixed $value The value to set
-	 * @throws InvalidArgumentException if the collection cannot contain the value
 	 * @throws OutOfBoundsException if the index is invalid
 	 */
 	public function set( $index, $value )
 	{
 		$this->offsetSet($index,$value);
 	}
+	
 	/**
 	 * Removes $count elements starting at $from 
 	 *

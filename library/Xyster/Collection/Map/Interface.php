@@ -30,7 +30,7 @@ interface Xyster_Collection_Map_Interface extends Countable, IteratorAggregate, 
 	/**
 	 * Removes all items from the collection
 	 *
-	 * @throws BadMethodCallException if the collection cannot be modified
+	 * @throws Xyster_Collection_Exception if the collection cannot be modified
 	 */
 	function clear();
 	/**
@@ -104,7 +104,7 @@ interface Xyster_Collection_Map_Interface extends Countable, IteratorAggregate, 
 	 * supplied map have duplicate keys.
 	 *
 	 * @param Xyster_Map_Interface $map
-	 * @throws BadMethodCallException If the map cannot be modified
+	 * @throws Xyster_Collection_Exception If the map cannot be modified
 	 * @throws InvalidArgumentException if any of the keys or values are invalid for this map
 	 * @return boolean Whether the map changed as a result of this method
 	 */
@@ -115,7 +115,7 @@ interface Xyster_Collection_Map_Interface extends Countable, IteratorAggregate, 
 	 * This method is an alias to ArrayAccess::offsetUnset
 	 *
 	 * @param mixed $key
-	 * @throws BadMethodCallException If the map cannot be modified
+	 * @throws Xyster_Collection_Exception If the map cannot be modified
 	 */
 	function remove( $key );
 	/**
@@ -125,7 +125,7 @@ interface Xyster_Collection_Map_Interface extends Countable, IteratorAggregate, 
 	 *
 	 * @param mixed $key
 	 * @param mixed $value
-	 * @throws BadMethodCallException If the map cannot be modified
+	 * @throws Xyster_Collection_Exception If the map cannot be modified
 	 */
 	function set( $key, $value );
 	/**

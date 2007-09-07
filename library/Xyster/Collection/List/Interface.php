@@ -62,7 +62,7 @@ interface Xyster_Collection_List_Interface extends Xyster_Collection_Interface, 
 	 * @param int $index The index at which to insert
 	 * @param mixed $value The value to insert
 	 * @throws InvalidArgumentException if the collection cannot contain the value
-	 * @throws BadMethodCallException if the collection cannot be modified
+	 * @throws Xyster_Collection_Exception if the collection cannot be modified
 	 * @throws OutOfBoundsException if the index is invalid
 	 */
 	function insert( $index, $value );
@@ -76,7 +76,7 @@ interface Xyster_Collection_List_Interface extends Xyster_Collection_Interface, 
 	 * @param int $index The index at which to insert
 	 * @param Xyster_Collection_Interface $values The value to insert
 	 * @throws InvalidArgumentException if the collection cannot contain a value
-	 * @throws BadMethodCallException if the collection cannot be modified
+	 * @throws Xyster_Collection_Exception if the collection cannot be modified
 	 * @throws OutOfBoundsException if the index is invalid
 	 */
 	function insertAll( $index, Xyster_Collection_Interface $values );
@@ -91,7 +91,7 @@ interface Xyster_Collection_List_Interface extends Xyster_Collection_Interface, 
 	 *
 	 * @param int $index The index to "unset"
 	 * @return mixed The value removed
-	 * @throws BadMethodCallException if the collection cannot be modified
+	 * @throws Xyster_Collection_Exception if the collection cannot be modified
 	 * @throws OutOfBoundsException if the index is invalid
 	 */
 	function removeAt( $index );
@@ -107,7 +107,7 @@ interface Xyster_Collection_List_Interface extends Xyster_Collection_Interface, 
 	 * @param int $index The index to set
 	 * @param mixed $value The value to set
 	 * @throws InvalidArgumentException if the collection cannot contain the value
-	 * @throws BadMethodCallException if the collection cannot be modified
+	 * @throws Xyster_Collection_Exception if the collection cannot be modified
 	 * @throws OutOfBoundsException if the index is invalid
 	 */
 	function set( $index, $value );
@@ -116,7 +116,7 @@ interface Xyster_Collection_List_Interface extends Xyster_Collection_Interface, 
 	 *
 	 * @param int $from The starting index
 	 * @param int $to The index to end before reaching
-	 * @throws BadMethodCallException if the collection cannot be modified
+	 * @throws Xyster_Collection_Exception if the collection cannot be modified
 	 * @throws OutOfBoundsException if either $from or $to is invalid
 	 */
 	function slice( $from, $to );

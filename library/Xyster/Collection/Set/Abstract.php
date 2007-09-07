@@ -37,16 +37,9 @@ class Xyster_Collection_Set_Abstract extends Xyster_Collection_Abstract implemen
 {
 	/**
 	 * Adds an item to the set
-	 * 
-	 * This collection doesn't accept duplicate values, and will return false
-	 * if the provided value is already in the collection.  If this set is not
-	 * allowed to contain the supplied value, an InvalidArgumentException
-	 * should be thrown.
 	 *
 	 * @param mixed $item The item to add
 	 * @return boolean Whether the set changed as a result of this method
-	 * @throws InvalidArgumentException if the collection cannot contain the value
-	 * @throws BadMethodCallException if the collection cannot be modified
 	 */
 	public function add( $item )
 	{

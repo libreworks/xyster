@@ -50,6 +50,6 @@ class Xyster_Collection_Set_Sortable extends Xyster_Collection_Set_Abstract
 	 */
     public function sort( Xyster_Collection_Comparator_Interface $comparator )
     {
-    	usort( $this->_items, array($comparator,'compare') );
+    	usort($this->_items, array($comparator, 'compare'));
     }
 }

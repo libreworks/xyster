@@ -38,7 +38,6 @@ class Xyster_Collection_Iterator implements SeekableIterator, Countable
 	 * Creates a new iterator
 	 *
 	 * @param array $list  An array to iterate
-	 * @throws UnexpectedValueException  if $list isn't traversable
 	 */
 	public function __construct( array $list )
 	{
@@ -54,6 +53,7 @@ class Xyster_Collection_Iterator implements SeekableIterator, Countable
 	{
 		return count($this->_items);
 	}
+	
 	/**
 	 * Return the current element
 	 *
@@ -63,6 +63,7 @@ class Xyster_Collection_Iterator implements SeekableIterator, Countable
     {
         return current($this->_items);
     }
+    
 	/**
 	 * Return the key of the current element
 	 *
@@ -72,6 +73,7 @@ class Xyster_Collection_Iterator implements SeekableIterator, Countable
     {
         return key($this->_items);
     }
+    
 	/**
 	 * Move pointer forward to next element
 	 *
@@ -80,6 +82,7 @@ class Xyster_Collection_Iterator implements SeekableIterator, Countable
     {
         next($this->_items);
     }
+    
 	/**
 	 * Rewind the pointer to the first element
 	 *
@@ -88,20 +91,22 @@ class Xyster_Collection_Iterator implements SeekableIterator, Countable
     {
         reset($this->_items);
     }
+    
 	/**
 	 * Check if there is a current element after calls to rewind() or next()
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
     public function valid()
     {
         return ( $this->current() !== false );
     }
+    
 	/**
 	 * Seek to an absolute position.
 	 *
 	 * @param int $index  Position to seek
-	 * @throws CollectionException  if the seek position is not found
+	 * @throws Xyster_Collection_Exception  if the seek position is not found
 	 */
  	public function seek( $index )
  	{
@@ -112,7 +117,8 @@ class Xyster_Collection_Iterator implements SeekableIterator, Countable
 			$position++;
 		}
 		if ( !$this->valid() ) {
-			throw new OutOfBoundsException();
+		    require_once 'Xyster/Collection/Exception.php';
+			throw new Xyster_Collection_Exception('Out of bounds');
 		}
  	}
 }

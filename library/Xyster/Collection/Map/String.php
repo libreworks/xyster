@@ -42,7 +42,6 @@ class Xyster_Collection_Map_String extends Xyster_Collection_Map_Abstract
 	 * Creates a new map with object keys
 	 *
 	 * @param Xyster_Collection_Map_Interface $map The values to add to this map
-	 * @param boolean $immutable
 	 */
 	public function __construct( Xyster_Collection_Map_Interface $map = null )
 	{
@@ -53,11 +52,13 @@ class Xyster_Collection_Map_String extends Xyster_Collection_Map_Abstract
 
 	/**
 	 * Removes all items from the map
+	 * 
 	 */
 	public function clear()
 	{
 		$this->_items = array();
 	}
+	
 	/**
 	 * Tests to see whether the map contains the value supplied
 	 * 
@@ -69,8 +70,9 @@ class Xyster_Collection_Map_String extends Xyster_Collection_Map_Abstract
 	 */
 	public function containsValue( $item )
 	{
-		return in_array($item,$this->_items,true);
+		return in_array($item, $this->_items, true);
 	}
+	
 	/**
 	 * Gets the number of items in the map
 	 * 
@@ -80,6 +82,7 @@ class Xyster_Collection_Map_String extends Xyster_Collection_Map_Abstract
 	{
 		return count($this->_items);
 	}
+	
 	/**
 	 * Gets an iterator for the keys and values in this set
 	 * 
@@ -88,9 +91,9 @@ class Xyster_Collection_Map_String extends Xyster_Collection_Map_Abstract
 	public function getIterator()
 	{
 		return ( $this->count() ) ? 
-			new Xyster_Collection_Iterator( $this->_items ) :
-			new EmptyIterator();
+			new Xyster_Collection_Iterator($this->_items) : new EmptyIterator();
 	}
+	
 	/**
 	 * Gets all keys contained in this map
 	 * 
@@ -102,6 +105,7 @@ class Xyster_Collection_Map_String extends Xyster_Collection_Map_Abstract
 	        Xyster_Collection::using(array_keys($this->_items)),
 	        true );
 	}
+	
 	/**
 	 * Gets the first key found for the value supplied
 	 * 
@@ -113,8 +117,9 @@ class Xyster_Collection_Map_String extends Xyster_Collection_Map_Abstract
 	 */
 	public function keyFor( $value )
 	{
-		return array_search($value,$this->_items,true);
+		return array_search($value, $this->_items, true);
 	}
+	
 	/**
 	 * Gets all keys for the value supplied
 	 *
@@ -127,6 +132,7 @@ class Xyster_Collection_Map_String extends Xyster_Collection_Map_Abstract
 		    Xyster_Collection::using(array_keys($this->_items,$value,true)),
 		    true );
 	}
+	
 	/**
 	 * Gets whether the specified key exists in the map
 	 *
@@ -140,6 +146,7 @@ class Xyster_Collection_Map_String extends Xyster_Collection_Map_Abstract
 		}
 		return array_key_exists( $key, $this->_items );
 	}
+	
 	/**
 	 * Gets the value at a specified key
 	 *
@@ -152,6 +159,7 @@ class Xyster_Collection_Map_String extends Xyster_Collection_Map_Abstract
 			$this->_items[$key] : 
 			null;
 	}
+	
 	/**
 	 * Sets the value at a given key.
 	 *
@@ -166,6 +174,7 @@ class Xyster_Collection_Map_String extends Xyster_Collection_Map_Abstract
 		}
 		$this->_items[$key] = $value;
 	}
+	
 	/**
 	 * Removes a value at the specified key
 	 *
@@ -177,6 +186,7 @@ class Xyster_Collection_Map_String extends Xyster_Collection_Map_Abstract
 			unset($this->_items[$key]);
 		}
 	}
+	
 	/**
 	 * Puts the items in this collection into an array
 	 * 
@@ -186,6 +196,7 @@ class Xyster_Collection_Map_String extends Xyster_Collection_Map_Abstract
 	{
 		return array()+$this->_items;
 	}
+	
 	/**
 	 * Gets the values contained in this map
 	 *
@@ -193,6 +204,6 @@ class Xyster_Collection_Map_String extends Xyster_Collection_Map_Abstract
 	 */
 	public function values()
 	{
-		return Xyster_Collection::using($this->_items,true);
+		return Xyster_Collection::using($this->_items, true);
 	}
 }

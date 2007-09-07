@@ -44,21 +44,16 @@ class Xyster_Collection_Abstract implements Xyster_Collection_Interface
 
 	/**
 	 * Adds an item to the collection
-	 * 
-	 * Some collections don't accept duplicate values, and should return false
-	 * if the provided value is already in the collection.  If the collection is
-	 * not allowed to contain the supplied value, an InvalidArgumentException
-	 * should be thrown.
 	 *
 	 * @param mixed $item The item to add
 	 * @return boolean Whether the collection changed as a result of this method
-	 * @throws InvalidArgumentException if the collection cannot contain the value
 	 */
 	public function add( $item )
 	{
 		$this->_items[] = $item;
 		return true;
 	}
+	
 	/**
 	 * Removes all items from the collection
 	 */
@@ -66,6 +61,7 @@ class Xyster_Collection_Abstract implements Xyster_Collection_Interface
 	{
 		$this->_items = array();
 	}
+	
 	/**
 	 * Tests to see whether the collection contains the value supplied
 	 * 
@@ -77,8 +73,9 @@ class Xyster_Collection_Abstract implements Xyster_Collection_Interface
 	 */
 	public function contains( $item )
 	{
-		return in_array($item,$this->_items,true);
+		return in_array($item, $this->_items, true);
 	}
+	
 	/**
 	 * Tests to see whether the collection contains all of the supplied values
 	 *
@@ -94,6 +91,7 @@ class Xyster_Collection_Abstract implements Xyster_Collection_Interface
 		}
 		return true;
 	}
+	
 	/**
 	 * Tests to see whether the collection contains any of the supplied values
 	 * 
@@ -112,6 +110,7 @@ class Xyster_Collection_Abstract implements Xyster_Collection_Interface
 		}
 		return false;
 	}
+	
 	/**
 	 * Gets the number of items in the collection
 	 * 
@@ -121,6 +120,7 @@ class Xyster_Collection_Abstract implements Xyster_Collection_Interface
 	{
 		return count($this->_items);
 	}
+	
 	/**
 	 * Gets an iterator for the values in the collection
 	 *
@@ -132,6 +132,7 @@ class Xyster_Collection_Abstract implements Xyster_Collection_Interface
 			new Xyster_Collection_Iterator(array_values($this->_items)) :
 			new EmptyIterator();
 	}
+	
 	/**
 	 * Tests to see if the collection contains no elements
 	 * 
@@ -144,20 +145,12 @@ class Xyster_Collection_Abstract implements Xyster_Collection_Interface
 	{
 		return $this->count() == 0;
 	}
+	
 	/**
 	 * Merges the values from the supplied collection into this one
-	 * 
-	 * If the implementing collection is not allowed to contain the same value 
-	 * twice, it should only add ones in $values not present in $this.  If the 
-	 * implementing collection can contain duplicates, then the values can just
-	 * be appended.
-	 * 
-	 * If the collection is not allowed to contain the supplied value, an
-	 * InvalidArgumentException should be thrown.    
 	 *
 	 * @param Xyster_Collection_Interface $values
 	 * @return boolean Whether the collection changed as a result of this method
-	 * @throws InvalidArgumentException if the collection cannot contain the value
 	 */
 	public function merge( Xyster_Collection_Interface $values )
 	{
@@ -167,6 +160,7 @@ class Xyster_Collection_Abstract implements Xyster_Collection_Interface
 		}
 		return $this->count() != $before;
 	}
+	
 	/**
 	 * Removes the specified value from the collection
 	 *
@@ -183,6 +177,7 @@ class Xyster_Collection_Abstract implements Xyster_Collection_Interface
 		}
 		return $this->count() != $before;		
 	}
+	
 	/**
 	 * Removes all of the specified values from the collection
 	 *
@@ -199,6 +194,7 @@ class Xyster_Collection_Abstract implements Xyster_Collection_Interface
 		}
 		return $this->count() != $before;
 	}
+	
 	/**
 	 * Removes all values from the collection except for the ones specified
 	 * 
@@ -222,6 +218,7 @@ class Xyster_Collection_Abstract implements Xyster_Collection_Interface
 		}
 		return $this->count() != $before;
 	}
+	
 	/**
 	 * Puts the items in this collection into an array
 	 * 
@@ -231,6 +228,7 @@ class Xyster_Collection_Abstract implements Xyster_Collection_Interface
 	{
 		return array_values($this->_items);
 	}
+	
 	/**
 	 * Converts the collection into a string
 	 *
@@ -240,7 +238,7 @@ class Xyster_Collection_Abstract implements Xyster_Collection_Interface
 	public function __toString()
 	{
 	    try {
-	        return '['.implode(',',$this->_items).']';
+	        return '[' . implode(',', $this->_items) . ']';
 	    } catch ( Exception $e ) {
 	        return '[???]';
 	    }

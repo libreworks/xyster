@@ -46,6 +46,7 @@ abstract class Xyster_Collection_Map_Abstract implements Xyster_Collection_Map_I
 	{
 		return $this->offsetExists($key);
 	}
+	
 	/**
 	 * Tests to see whether the map contains the value supplied
 	 * 
@@ -64,6 +65,7 @@ abstract class Xyster_Collection_Map_Abstract implements Xyster_Collection_Map_I
 		}
 		return false;
 	}
+	
 	/**
 	 * Gets the value corresponding to the supplied key
 	 * 
@@ -77,6 +79,7 @@ abstract class Xyster_Collection_Map_Abstract implements Xyster_Collection_Map_I
 	{
 		return $this->offsetGet($key);
 	}
+	
 	/**
 	 * Tests to see if the collection contains no elements
 	 * 
@@ -89,6 +92,7 @@ abstract class Xyster_Collection_Map_Abstract implements Xyster_Collection_Map_I
 	{
 		return $this->count() == 0;
 	}
+	
 	/**
 	 * Combines this map with the supplied map
 	 * 
@@ -96,8 +100,6 @@ abstract class Xyster_Collection_Map_Abstract implements Xyster_Collection_Map_I
 	 * supplied map have duplicate keys.
 	 *
 	 * @param Xyster_Map_Interface $map
-	 * @throws BadMethodCallException If the map cannot be modified
-	 * @throws InvalidArgumentException if any of the keys or values are invalid for this map
 	 * @return boolean Whether the map changed as a result of this method
 	 */
 	public function merge( Xyster_Collection_Map_Interface $map )
@@ -108,28 +110,29 @@ abstract class Xyster_Collection_Map_Abstract implements Xyster_Collection_Map_I
 		        if ( !$changed && $this->get($value->getKey()) !== $value->getValue() ) {
 		            $changed = true;
 		        }
-		        $this->set($value->getKey(),$value->getValue());
+		        $this->set($value->getKey(), $value->getValue());
 		    } else {
     			if ( !$changed && $this->get($key) !== $value ) {
 				    $changed = true;
 			    }
-			    $this->set($key,$value);
+			    $this->set($key, $value);
 		    }
 		}
 		return $changed;
 	}
+	
 	/**
 	 * Removes the mapping for the specified key
 	 * 
 	 * This method is an alias to ArrayAccess::offsetUnset
 	 *
 	 * @param mixed $key
-	 * @throws BadMethodCallException If the map cannot be modified
 	 */
 	public function remove( $key )
 	{
 		$this->offsetUnset($key);
 	}
+	
 	/**
 	 * Sets a mapping for the key and value supplied
 	 * 
@@ -137,7 +140,6 @@ abstract class Xyster_Collection_Map_Abstract implements Xyster_Collection_Map_I
 	 *
 	 * @param mixed $key
 	 * @param mixed $value
-	 * @throws BadMethodCallException If the map cannot be modified
 	 */
 	public function set( $key, $value )
 	{

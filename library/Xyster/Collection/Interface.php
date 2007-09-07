@@ -38,13 +38,13 @@ interface Xyster_Collection_Interface extends Countable, IteratorAggregate
 	 * @param mixed $item The item to add
 	 * @return boolean Whether the collection changed as a result of this method
 	 * @throws InvalidArgumentException if the collection cannot contain the value
-	 * @throws BadMethodCallException if the collection cannot be modified
+	 * @throws Xyster_Collection_Exception if the collection cannot be modified
 	 */
 	function add( $item );
 	/**
 	 * Removes all items from the collection
 	 *
-	 * @throws BadMethodCallException if the collection cannot be modified
+	 * @throws Xyster_Collection_Exception if the collection cannot be modified
 	 */
 	function clear();
 	/**
@@ -97,7 +97,7 @@ interface Xyster_Collection_Interface extends Countable, IteratorAggregate
 	 * @param Xyster_Collection_Interface $values
 	 * @return boolean Whether the collection changed as a result of this method
 	 * @throws InvalidArgumentException if the collection cannot contain the value
-	 * @throws BadMethodCallException if the collection cannot be modified
+	 * @throws Xyster_Collection_Exception if the collection cannot be modified
 	 */
 	function merge( Xyster_Collection_Interface $values );
 	/**
@@ -105,7 +105,7 @@ interface Xyster_Collection_Interface extends Countable, IteratorAggregate
 	 *
 	 * @param mixed $item The value to remove
 	 * @return boolean If the value was in the collection
-	 * @throws BadMethodCallException if the collection cannot be modified
+	 * @throws Xyster_Collection_Exception if the collection cannot be modified
 	 */
 	function remove( $item );
 	/**
@@ -113,7 +113,7 @@ interface Xyster_Collection_Interface extends Countable, IteratorAggregate
 	 *
 	 * @param Xyster_Collection_Interface $values The values to remove
 	 * @return boolean Whether the collection changed as a result of this method
-	 * @throws BadMethodCallException if the collection cannot be modified
+	 * @throws Xyster_Collection_Exception if the collection cannot be modified
 	 */
 	function removeAll( Xyster_Collection_Interface $values );
 	/**
@@ -124,7 +124,7 @@ interface Xyster_Collection_Interface extends Countable, IteratorAggregate
 	 *
 	 * @param Xyster_Collection_Interface $values The values to keep
 	 * @return boolean Whether the collection changed as a result of this method
-	 * @throws BadMethodCallException if the collection cannot be modified
+	 * @throws Xyster_Collection_Exception if the collection cannot be modified
 	 */
 	function retainAll( Xyster_Collection_Interface $values );
 	/**
