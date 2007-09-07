@@ -54,62 +54,61 @@ class Xyster_Collection extends Xyster_Collection_Abstract
 	 * @param mixed $item The item to add
 	 * @return boolean Whether the collection changed as a result of this method
 	 * @throws InvalidArgumentException if the collection cannot contain the value
-	 * @throws BadMethodCallException if the collection cannot be modified
+	 * @throws Xyster_Collection_Exception if the collection cannot be modified
 	 */
 	public function add( $item )
 	{
-		if ( $this->_immutable )
-			throw new BadMethodCallException("This collection cannot be changed");
-		return parent::add($item);
+		$this->_failIfImmutable();
+	    return parent::add($item);
 	}
+	
 	/**
 	 * Removes all items from the collection
 	 *
-	 * @throws BadMethodCallException if the collection cannot be modified
+	 * @throws Xyster_Collection_Exception if the collection cannot be modified
 	 */
 	public function clear()
 	{
-		if ( $this->_immutable )
-			throw new BadMethodCallException("This collection cannot be changed");
-		parent::clear();
+		$this->_failIfImmutable();
+	    parent::clear();
 	}
+	
 	/**
 	 * Removes the specified value from the collection
 	 *
 	 * @param mixed $item The value to remove
 	 * @return boolean If the value was in the collection
-	 * @throws BadMethodCallException if the collection cannot be modified
+	 * @throws Xyster_Collection_Exception if the collection cannot be modified
 	 */
 	public function remove( $item )
 	{
-		if ( $this->_immutable )
-			throw new BadMethodCallException("This collection cannot be changed");
-		return parent::remove($item);
+		$this->_failIfImmutable();
+	    return parent::remove($item);
 	}
+	
 	/**
 	 * Removes all of the specified values from the collection
 	 *
 	 * @param Xyster_Collection_Interface $values The values to remove
 	 * @return boolean Whether the collection changed as a result of this method
-	 * @throws BadMethodCallException if the collection cannot be modified
+	 * @throws Xyster_Collection_Exception if the collection cannot be modified
 	 */
 	public function removeAll( Xyster_Collection_Interface $values )
 	{
-		if ( $this->_immutable )
-			throw new BadMethodCallException("This collection cannot be changed");
+		$this->_failIfImmutable();
 		return parent::removeAll($values);
 	}
+
 	/**
 	 * Removes all values from the collection except for the ones specified
 	 *
 	 * @param Xyster_Collection_Interface $values The values to keep
 	 * @return boolean Whether the collection changed as a result of this method
-	 * @throws BadMethodCallException if the collection cannot be modified
+	 * @throws Xyster_Collection_Exception if the collection cannot be modified
 	 */
 	public function retainAll( Xyster_Collection_Interface $values )
 	{
-		if ( $this->_immutable )
-			throw new BadMethodCallException("This collection cannot be changed");
+		$this->_failIfImmutable();
 		return parent::retainAll($values);
 	}
 
@@ -126,6 +125,7 @@ class Xyster_Collection extends Xyster_Collection_Abstract
 		$collection->_items = array_values($values);
 		return $collection;
 	}
+
 	/**
 	 * Returns a new unchangable collection containing all the supplied values
 	 *
@@ -136,6 +136,7 @@ class Xyster_Collection extends Xyster_Collection_Abstract
 	{
 		return new Xyster_Collection( $collection, true );
 	}
+
 	/**
 	 * Returns a new unchangable list containing all the supplied values
 	 *
@@ -146,6 +147,7 @@ class Xyster_Collection extends Xyster_Collection_Abstract
 	{
 		return new Xyster_Collection_List( $list, true );
 	}
+
 	/**
 	 * Returns a new unchangable map containing all the supplied key/value pairs
 	 *
@@ -156,6 +158,7 @@ class Xyster_Collection extends Xyster_Collection_Abstract
 	{
 		return new Xyster_Collection_Map( $map, true );
 	}
+
 	/**
 	 * Returns a new unchangable set containing all the supplied values
 	 *
@@ -165,5 +168,18 @@ class Xyster_Collection extends Xyster_Collection_Abstract
 	static public function fixedSet( Xyster_Collection_Set_Interface $set )
 	{
 		return new Xyster_Collection_Set( $set, true );
+	}
+	
+	/**
+	 * A convenience method to fail on modification of immutable collection
+	 *
+	 * @throws Xyster_Collection_Exception if the collection is immutable
+	 */
+	private function _failIfImmutable()
+	{
+	    if ( $this->_immutable ) {
+	        require_once 'Xyster/Collection/Exception';
+			throw new Xyster_Collection_Exception("This collection cannot be changed");
+		} 
 	}
 }

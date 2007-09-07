@@ -18,28 +18,13 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 /**
- * A comparison callback class
- * 
- * The results from the only method in this interface impose a total ordering on
- * some collection of objects. Comparators can be used to allow precise control
- * over the sort order of a collection.
- * 
+ * Exception for collections
+ *
  * @category  Xyster
  * @package   Xyster_Collection
  * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-interface Xyster_Collection_Comparator_Interface
+class Xyster_Collection_Exception extends Zend_Exception
 {
-   	/**
-	 * Compares two arguments for sorting
-	 * 
-	 * Returns a negative integer, zero, or a positive integer as the first
-	 * argument is less than, equal to, or greater than the second.
-	 *
-	 * @param mixed $a
-	 * @param mixed $b
-	 * @return int Either -1, 0, or 1
-	 */
-	function compare( $a, $b );
 }

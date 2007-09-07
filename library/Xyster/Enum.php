@@ -143,13 +143,13 @@ abstract class Xyster_Enum
 	 * Returns the corresponding enum object based on value
 	 *
 	 * <code>
-	 * $color = wfEnum::valueOf('Colors',0);
+	 * $color = Xyster_Enum::valueOf('Colors',0);
 	 * </code>
 	 *
-	 * @param string $className  Name of the wfEnum-derived class to instantiate
+	 * @param string $className  Name of the Xyster_Enum-derived class to instantiate
 	 * @param string $value  Value to parse
-	 * @return wfEnum  Translated object
-	 * @throws LangException  if $className isn't derived from wfEnum
+	 * @return Xyster_Enum  Translated object
+	 * @throws Exception  if $className isn't derived from Xyster_Enum
 	 */
 	static public function valueOf( $className, $value )
 	{
@@ -188,7 +188,7 @@ abstract class Xyster_Enum
 	 *
 	 * @param string $className
 	 * @param mixed $name
-	 * @return wfEnum
+	 * @return Xyster_Enum
 	 */
 	static protected function _factory( $className = null, $name = null )
 	{

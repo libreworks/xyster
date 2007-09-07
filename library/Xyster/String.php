@@ -122,7 +122,7 @@ class Xyster_String
 	 * Example:
 	 * <code>
 	 * $haystack = 'A (great (test)) of "this method"';
-	 * print_r( wfString::smartSplit(' ',$haystack) );
+	 * print_r(Xyster_String::smartSplit(' ', $haystack));
 	 * </code>
 	 *
 	 * Would print:
