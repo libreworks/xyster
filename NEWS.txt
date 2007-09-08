@@ -1,0 +1,5 @@
+Xyster Framework                                                             NEWS
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+=BUILD 1 / 08-Sep-2007 / based on revision 80 =
+- Initial public code drop

@@ -1,0 +1,35 @@
+INSTALLATION
+------------
+
+Xyster requires no special installation steps. Simply get
+a copy of the framework and ensure that the /library directory is in
+your PHP include_path.
+
+
+SYSTEM REQUIREMENTS
+-------------------
+
+Xyster is built with object-oriented PHP 5 and requires
+PHP 5.1.4 or later. 
+
+Xyster requires the availability of the Zend Framework, version 1.0.1 or later.
+
+
+USING THE XYSTER FRAMEWORK
+--------------------
+
+Once you have a copy of Xyster and the Zend Framework available, your
+application needs to be able to access the framework classes. Though
+there are several ways to achieve this, your PHP include_path needs to
+contain the path to the Xyster and Zend Framework library folders.
+
+About the PHP include_path configuration directive:
+
+http://www.php.net/manual/en/ini.core.php#ini.include-path
+
+How to change PHP configuration directives:
+
+http://www.php.net/manual/en/configuration.changes.php
+
+Since Xyster and Zend Framework components are rather loosely coupled,
+various components may be selected for independent use as needed.

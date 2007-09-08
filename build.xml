@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Xyster" default="dist" basedir=".">
+    <target name="prepare">
+        <echo msg="Making directory ./build" />
+        <mkdir dir="./build" />
+        <mkdir dir="./build/reports" />
+        <mkdir dir="./build/reports/coverage" />
+        <mkdir dir="./build/reports/tests" />
+
+        <echo msg="Exporting SVN files to build directory..." />
+		<svnexport
+		   repositoryurl="https://xyster.devweblog.org/svn/trunk/library"
+		   todir="./build/svn/library"/>
+		<svnexport
+		   repositoryurl="https://xyster.devweblog.org/svn/trunk/tests"
+		   todir="./build/svn/tests"/>
+    </target>
+
+    <target name="build" depends="prepare">
+		<echo msg="Generating API documentation..." />
+		<phpdoc title="Xyster Framework API" 
+		  destdir="./build/api"
+		  defaultpackagename="Xyster"
+		  defaultcategoryname="Xyster"
+		  output="HTML:frames:default">
+		   <fileset dir="./build/svn/library">
+		      <include name="**/*.php" />
+		   </fileset>
+		</phpdoc>
+        
+        <echo msg="Running Unit tests..." />
+        <resolvepath propertyName="absolutePathLibrary" file="./build/svn/library" />
+        <resolvepath propertyName="absolutePathTests" file="./build/svn/tests" />
+        
+        <includepath classpath="${absolutePathTests}" />
+        <includepath classpath="${absolutePathLibrary}" />
+        
+		<coverage-setup database="./build/coverage.db">
+		  <fileset dir="./build/svn/library">
+		    <include name="**/*.php"/>
+		  </fileset>
+		</coverage-setup>
+		
+		<phpunit codecoverage="true" printsummary="true">
+		  <batchtest>
+		    <fileset dir="./build/svn/tests">
+		      <include name="**/*Test.php"/>
+		    </fileset>
+		  </batchtest>
+		  <formatter todir="./build/reports" type="xml" />
+		</phpunit>
+		
+		<phpunitreport infile="./build/reports/testsuites.xml" format="frames" todir="./build/reports/tests" styledir="/usr/share/php/data/phing/etc" />
+		
+		<coverage-report outfile="./build/reports/coverage.xml">
+  			<report todir="./build/reports/coverage" styledir="/usr/share/php/data/phing/etc"/>
+		</coverage-report>
+    </target>
+
+    <target name="dist" depends="build">
+        <echo msg="Creating archive..." />
+
+		<exec command="7z a -r xyster-build.7z library tests" dir="./build/svn" />
+		
+		<move file="./build/svn/xyster-build.7z" tofile="./build/xyster-build.7z" />
+
+        <echo msg="Deleting SVN files..." />
+		<delete dir="./build/svn" includeemptydirs="true" failonerror="false" />
+    </target>
+</project>
