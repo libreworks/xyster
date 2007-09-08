@@ -60,7 +60,7 @@
     <target name="dist" depends="build">
         <echo msg="Creating archive..." />
 
-		<exec command="7z a -r xyster-build.7z library tests" dir="./build/svn" />
+		<exec command="7z a -r xyster-build.7z library tests *.txt" dir="./build/svn" />
 		
 		<move file="./build/svn/xyster-build.7z" tofile="./build/xyster-build.7z" />
 
