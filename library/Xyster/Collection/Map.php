@@ -239,7 +239,7 @@ class Xyster_Collection_Map extends Xyster_Collection_Map_Abstract
 	private function _failIfImmutable()
 	{
 	    if ( $this->_immutable ) {
-	        require_once 'Xyster/Collection/Exception';
+	        require_once 'Xyster/Collection/Exception.php';
 			throw new Xyster_Collection_Exception("This collection cannot be changed");
 		} 
 	}
