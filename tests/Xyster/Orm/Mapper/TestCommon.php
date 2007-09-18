@@ -217,6 +217,60 @@ abstract class Xyster_Orm_Mapper_TestCommon extends Xyster_Orm_Mapper_TestSetup
             $this->assertContains($product->getPrimaryKey(), $pks);
         }
     }
+
+    /**
+     * Tests successful save of joined entities if unsaved entity added
+     *
+     */
+    public function testSaveJoinedNew()
+    {
+        $mapper = $this->_factory()->get('Bug');
+        $bug = $mapper->get(2);
+        
+        $this->_setupClass('Product');
+        
+        $products = $bug->products;
+        
+        $this->assertType('ProductSet', $products);
+
+        $product = new Product();
+        $product->productName = 'New product!';
+        $products->add($product);
+        
+        $mapper->save($bug);
+        
+        $bug = $mapper->get(2);
+        $pks = $bug->products->getPrimaryKeys();
+        $this->assertNotNull($product->productId); // make sure entity saved
+        $this->assertContains($product->getPrimaryKey(), $pks);
+    }
+    
+    /**
+     * Tests successful save of joined entities if none removed
+     *
+     */
+    public function testSaveJoinedNoRemoved()
+    {
+        $mapper = $this->_factory()->get('Bug');
+        $bug = $mapper->get(2);
+        
+        $this->_setupClass('Product');
+        
+        $products = $bug->products;
+        
+        $this->assertType('ProductSet', $products);
+        
+        $pmapper = $this->_factory()->get('Product');
+        $prods1And2 = $pmapper->getAll(array(1,2));
+        $products->merge($prods1And2);
+        $mapper->save($bug);
+        
+        $bug = $mapper->get(2);
+        $pks = $bug->products->getPrimaryKeys();
+        foreach( $prods1And2 as $product ) {
+            $this->assertContains($product->getPrimaryKey(), $pks);
+        }
+    }
     
     /**
      * Tests trying to save metadata in the cache and it throws an exception

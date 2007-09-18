@@ -536,6 +536,7 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
 
         $db->insert($this->getTable(), $data);
 
+        $primaryKey = null;
         if ( $data[$pkIdentity] ) {
             /**
              * Return the primary key value or array of values(s) if the
@@ -593,6 +594,10 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
         $rightPrimary = $rightMap->getEntityMeta()->getPrimary();
         
         foreach( $set->getDiffAdded() as $added ) {
+            /* @var $added Xyster_Orm_Entity */
+            if ( !$added->getBase() ) {
+                $rightMap->save($added);
+            }
             $values = $leftValues;
             foreach( $rightPrimary as $k=>$primary ) {
                 $values[$right[$k]] = $added->$primary;
@@ -621,9 +626,13 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
         $rightMap = $this->getFactory()->get($relation->getTo());
 		$right = $relation->getRight();
 		$rightPrimary = $rightMap->getEntityMeta()->getPrimary();
-        
+
+		$diffRemoved = $set->getDiffRemoved();
+		if ( !count($diffRemoved) ) {
+		    return;
+		}
 		$secondCriteria = array();
-		foreach( $set->getDiffRemoved() as $removed ) {
+		foreach( $diffRemoved as $removed ) {
 		    $secondCond = array();
 		    foreach( $rightPrimary as $k=>$primary ) {
     		    $secondCond[] = Xyster_Data_Expression::eq($right[$k], $removed->$primary);

@@ -34,9 +34,13 @@ class ProductMapper extends Xyster_Orm_Mapper_Db
     protected $_table = 'zfproducts';
     protected $_index = array('name' => array('productName'));
     protected $_options = array('metadataCache'=>'goodRegistryKey');
+
     
     public function init()
     {
+        if ( $this->_getAdapter() instanceof Zend_Db_Adapter_Pdo_Pgsql ) {
+            $this->_options['sequence'] = 'zfproducts_seq';
+        }
         $meta = $this->getEntityMeta();
         $meta->hasJoined('bugs', array('table'=>'zfbugs_products'));
     }
