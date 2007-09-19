@@ -14,32 +14,28 @@
  *
  * @category  Xyster
  * @package   UnitTests
+ * @subpackage Xyster_Acl
  * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'Xyster_AllTests::main');
+    define('PHPUnit_MAIN_METHOD', 'Xyster_Acl_AllTests::main');
 }
-
 /**
  * Test helper
  */
-require_once dirname(dirname(__FILE__)).'/TestHelper.php';
-               
+require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
-require_once 'Xyster/AclTest.php';
-require_once 'Xyster/Acl/AllTests.php';
-require_once 'Xyster/Collection/AllTests.php';
-require_once 'Xyster/Data/AllTests.php';
-require_once 'Xyster/EnumTest.php';
-require_once 'Xyster/Orm/AllTests.php';
-require_once 'Xyster/StringTest.php';
+require_once 'Xyster/Acl/Role/ProviderTest.php';
 
-class Xyster_AllTests
+error_reporting(E_ALL | E_STRICT);
+
+class Xyster_Acl_AllTests
 {
     public static function main()
     {
@@ -48,18 +44,12 @@ class Xyster_AllTests
 
     public static function suite()
     {
-        $suite = new PHPUnit_Framework_TestSuite('Xyster Framework - Xyster');
-        $suite->addTestSuite('Xyster_AclTest');
-        $suite->addTest( Xyster_Acl_AllTests::suite() );
-        $suite->addTest( Xyster_Collection_AllTests::suite() );
-        $suite->addTestSuite('Xyster_EnumTest');
-        $suite->addTest( Xyster_Data_AllTests::suite() );
-        $suite->addTest( Xyster_Orm_AllTests::suite() );
-        $suite->addTestSuite('Xyster_StringTest');
+        $suite = new PHPUnit_Framework_TestSuite('Xyster Framework - Xyster_Acl');
+        $suite->addTestSuite('Xyster_Acl_Role_ProviderTest');
         return $suite;
     }
 }
 
-if ( PHPUnit_MAIN_METHOD == 'Xyster_AllTests::main' ) {
-    Xyster_AllTests::main();
+if (PHPUnit_MAIN_METHOD == 'Xyster_Acl_AllTests::main') {
+    Xyster_Acl_AllTests::main();
 }
