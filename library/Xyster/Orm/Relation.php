@@ -399,7 +399,8 @@ class Xyster_Orm_Relation
            		    $find = array();
         		    $id = (array) $this->_id;
         		    $i = 0;
-                    foreach( $primaryKey as $keyName => $keyValue ) {
+                    require_once 'Xyster/Data/Expression.php';
+        		    foreach( $primaryKey as $keyName => $keyValue ) {
                         $find[] = Xyster_Data_Expression::eq($id[$i], $keyValue);
                         $i++;
                     }
