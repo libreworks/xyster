@@ -69,8 +69,10 @@ class Xyster_Controller_Action_Helper_File extends Zend_Controller_Action_Helper
         if ( $this->getActionController()->getHelper('Cache')->direct($date) ) {
             return;
         }
-        
-        ini_set('zlib.output_compression', 'Off');
+
+        if ( !headers_sent() ) {
+            ini_set('zlib.output_compression', 'Off');
+        }
         
         $this->getResponse()
             ->setHeader('Accept-Ranges', 'bytes')
