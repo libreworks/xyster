@@ -67,7 +67,7 @@ class Xyster_Orm_Entity_MetaTest extends Xyster_Orm_TestSetup
     public function testGetFields()
     {
         $fields = $this->_meta->getFields();
-        $this->assertTrue(is_array($fields));
+        $this->assertType('array', $fields);
         foreach( $fields as $field ) {
             $this->assertType('Xyster_Orm_Entity_Field', $field);
         }
@@ -148,7 +148,7 @@ class Xyster_Orm_Entity_MetaTest extends Xyster_Orm_TestSetup
     public function testGetRelations()
     {
         $relations = $this->_meta->getRelations();
-        $this->assertTrue(is_array($relations));
+        $this->assertType('array', $relations);
         foreach( $relations as $rel ) {
             $this->assertType('Xyster_Orm_Relation', $rel);
         }
@@ -161,7 +161,7 @@ class Xyster_Orm_Entity_MetaTest extends Xyster_Orm_TestSetup
     public function testGetRelationNames()
     {
         $names = $this->_meta->getRelationNames();
-        $this->assertTrue(is_array($names));
+        $this->assertType('array', $names);
         $this->assertEquals($names, array_keys($this->_meta->getRelations()));
     }
     

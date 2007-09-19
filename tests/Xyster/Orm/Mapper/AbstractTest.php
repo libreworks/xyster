@@ -215,7 +215,7 @@ class Xyster_Orm_Mapper_AbstractTest extends PHPUnit_Framework_TestCase
     {
         $index = $this->_mapper->getIndex();
         
-        $this->assertTrue(is_array($index));
+        $this->assertType('array', $index);
     }
     
     /**
@@ -248,7 +248,7 @@ class Xyster_Orm_Mapper_AbstractTest extends PHPUnit_Framework_TestCase
     {
         $options = $this->_mapper->getOptions();
         
-        $this->assertTrue(is_array($options));
+        $this->assertType('array', $options);
     }
     
     /**

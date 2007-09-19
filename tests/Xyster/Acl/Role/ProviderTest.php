@@ -64,7 +64,7 @@ class Xyster_Acl_Role_ProviderTest extends PHPUnit_Framework_TestCase
     {
         $parents = $this->provider->getRoleParents(new Zend_Acl_Role('myUsername'));
         
-        $this->assertTrue(is_array($parents));
+        $this->assertType('array', $parents);
         $this->assertEquals(0, count($parents));
     }
 }
