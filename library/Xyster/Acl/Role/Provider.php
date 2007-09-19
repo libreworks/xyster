@@ -23,6 +23,10 @@
  */
 require_once 'Xyster/Acl/Role/Provider/Interface.php';
 /**
+ * Zend_Acl_Role
+ */
+require_once 'Zend/Acl/Role.php';
+/**
  * Default provider for authentication to authorization 
  *
  * @category  Xyster
@@ -40,7 +44,6 @@ class Xyster_Acl_Role_Provider implements Xyster_Acl_Role_Provider_Interface
      */
     public function getRole( $identity )
     {
-        require_once 'Zend/Acl/Role.php';
         return new Zend_Acl_Role($identity);
     }
     

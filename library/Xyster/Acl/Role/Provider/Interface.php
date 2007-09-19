@@ -19,7 +19,10 @@
  * @version   $Id$
  */
 /**
- * Interface for combining authentication and authorization 
+ * Interface for combining authentication and authorization
+ * 
+ * If desired, there shouldn't be any problem with the Role_Provider caching or
+ * persisting the Roles it creates, but this is left up to the implementor. 
  *
  * @category  Xyster
  * @package   Xyster_Acl
