@@ -1,5 +1,15 @@
 Xyster Framework                                                             NEWS
 |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
+=BUILD 2 / ??-Oct-2007 / based on revision ??? =
+- Added Xyster_Acl with support for rule creation plugins
+- Implemented Controller plugins:
+	* Acl
+	* Auth
+	* Cache Control
+- Implemented Action Helpers:
+	* Cache Control
+	* File/Content-Type Responses
+
 =BUILD 1 / 08-Sep-2007 / based on revision 80 =
 - Initial public code drop
