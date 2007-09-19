@@ -35,6 +35,7 @@ error_reporting(E_ALL | E_STRICT);
 
 require_once 'Xyster/Controller/Action/Helper/CacheTest.php';
 require_once 'Xyster/Controller/Action/Helper/FileTest.php';
+require_once 'Xyster/Controller/Plugin/AclTest.php';
 require_once 'Xyster/Controller/Plugin/AuthTest.php';
 require_once 'Xyster/Controller/Plugin/CacheTest.php';
 require_once 'Xyster/Controller/Request/ResourceTest.php';
@@ -51,6 +52,7 @@ class Xyster_Controller_AllTests
         $suite = new PHPUnit_Framework_TestSuite('Xyster Framework - Xyster_Controller');
         $suite->addTestSuite('Xyster_Controller_Action_Helper_CacheTest');
         $suite->addTestSuite('Xyster_Controller_Action_Helper_FileTest');
+        $suite->addTestSuite('Xyster_Controller_Plugin_AclTest');
         $suite->addTestSuite('Xyster_Controller_Plugin_AuthTest');
         $suite->addTestSuite('Xyster_Controller_Plugin_CacheTest');
         $suite->addTestSuite('Xyster_Controller_Request_ResourceTest');

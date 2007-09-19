@@ -103,6 +103,26 @@ class Xyster_Controller_Plugin_CacheTest extends PHPUnit_Framework_TestCase
     }
     
     /**
+     * Tests just a content-type header sends nothing
+     *
+     */
+    public function testDispatchLoopShutdownWithType()
+    {
+        $this->response->setHeader('Content-Type', 'text/plain');
+
+        $body = str_repeat('x', 345);
+        $this->response->setBody($body);
+        $this->plugin->dispatchLoopShutdown();
+        $date = gmdate('D, d M Y H:i:s', strtotime('-20 years'));
+
+        $headers = $this->response->getRawHeaders();
+        $this->assertNotContains('Cache-Control: no-store, no-cache, must-revalidate, max-age=0, pre-check=0', $headers);
+        $this->assertNotContains('Pragma: no-cache', $headers);
+        $this->assertNotContains('Expires: ' . $date . ' GMT', $headers);
+        $this->assertNotContains('Content-Length: ' . strlen($body), $headers);
+    }
+        
+    /**
      * Tests just an etag header sends the body length, nothing else
      *
      */
@@ -127,4 +147,3 @@ class Xyster_Controller_Plugin_CacheTest extends PHPUnit_Framework_TestCase
 if (PHPUnit_MAIN_METHOD == 'Xyster_Controller_Plugin_CacheTest::main') {
     Xyster_Controller_Plugin_CacheTest::main();
 }
-?>
