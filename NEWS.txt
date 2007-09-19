@@ -4,12 +4,12 @@ Xyster Framework                                                             NEW
 =BUILD 2 / ??-Oct-2007 / based on revision ??? =
 - Added Xyster_Acl with support for rule creation plugins
 - Implemented Controller plugins:
-	* Acl
-	* Auth
-	* Cache Control
+	* Xyster_Controller_Plugin_Auth: Authentication & Acl Role Registration
+	* Xyster_Controller_Plugin_Acl: Enforces permissions against actions
+	* Xyster_Controller_Plugin_Cache: Sends default Cache Control headers
 - Implemented Action Helpers:
-	* Cache Control
-	* File/Content-Type Responses
+	* Xyster_Controller_Action_Helper_Cache: Send Cache Control headers
+	* Xyster_Controller_Action_Helper_File: File/Content-Type Response headers
 
 =BUILD 1 / 08-Sep-2007 / based on revision 80 =
 - Initial public code drop
