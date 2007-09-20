@@ -75,7 +75,7 @@ class Xyster_Orm_Manager
         if ( $set instanceof Xyster_Orm_Set ) {
         	// add returned entities to the cache
         	$this->getRepository()->addAll($set);
-        	$this->_putAllInSecondaryCache($set);
+        	$this->putAllInSecondaryCache($set);
         }
         
         return $set;
@@ -100,7 +100,7 @@ class Xyster_Orm_Manager
             $entity = $map->find($criteria);
             if ( $entity ) {
                 $this->getRepository()->add($entity);
-                $this->_putInSecondaryCache($entity);
+                $this->putInSecondaryCache($entity);
             }
             return $entity;
         }
@@ -118,7 +118,7 @@ class Xyster_Orm_Manager
         $map = $this->getMapperFactory()->get($className);
         $all = $map->findAll($criteria, $sorts);
         $this->getRepository()->addAll($all);
-        $this->_putAllInSecondaryCache($all);
+        $this->putAllInSecondaryCache($all);
         return $all;
     }
     
@@ -152,7 +152,7 @@ class Xyster_Orm_Manager
         $entity = $map->get($id); 
         if ( $entity instanceof Xyster_Orm_Entity ) {
             $this->getRepository()->add($entity);
-            $this->_putInSecondaryCache($entity);
+            $this->putInSecondaryCache($entity);
             return $entity;
         }
         return null;
@@ -188,7 +188,7 @@ class Xyster_Orm_Manager
             } else {
                 $all = $map->getAll($ids);
                 $this->getRepository()->addAll($all);
-                $this->_putAllInSecondaryCache($all);
+                $this->putAllInSecondaryCache($all);
             }
             
         } else {
@@ -202,7 +202,7 @@ class Xyster_Orm_Manager
             } else {
                 $all = $map->getAll();
                 $this->getRepository()->addAll($all);
-                $this->_putAllInSecondaryCache($all);
+                $this->putAllInSecondaryCache($all);
                 $this->getRepository()->setHasAll($className);
             }
             
@@ -328,7 +328,7 @@ class Xyster_Orm_Manager
      * 
      * @param Xyster_Orm_Entity $entity
      */
-    protected function _putInSecondaryCache( Xyster_Orm_Entity $entity )
+    public function putInSecondaryCache( Xyster_Orm_Entity $entity )
     {
         $repo = $this->getSecondaryCache();
         $className = get_class($entity);
@@ -339,12 +339,12 @@ class Xyster_Orm_Manager
         // that's why we have the primary repository
         if ( $repo && $cacheLifetime > -1 ) {
             
-            $repoId = array( 'Xyster_Orm', $map->getDomain(), $className );
+            $repoId = array('Xyster_Orm', $map->getDomain(), $className);
             foreach( $entity->getPrimaryKey() as $key => $value ) {
                 $repoId[] = $key . '=' . $value;
             }
-            $repoId = md5(implode("/",$repoId));
-            $repo->save($entity, $repoId, array(), $cacheLifetime );
+            $repoId = md5(implode("/", $repoId));
+            $repo->save($entity, $repoId, array(), $cacheLifetime);
         }
     }
     
@@ -353,10 +353,10 @@ class Xyster_Orm_Manager
      *
      * @param Xyster_Orm_Set $set
      */
-    protected function _putAllInSecondaryCache( Xyster_Orm_Set $set )
+    public function putAllInSecondaryCache( Xyster_Orm_Set $set )
     {
         foreach( $set as $entity ) {
-            $this->_putInSecondaryCache($entity);
+            $this->putInSecondaryCache($entity);
         }
     }
     

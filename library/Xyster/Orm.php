@@ -112,7 +112,7 @@ class Xyster_Orm
             }
         }
 
-        $wu->commit($this->_getRepository(), $this->getMapperFactory());
+        $wu->commit($this->_manager);
     }
     
     /**

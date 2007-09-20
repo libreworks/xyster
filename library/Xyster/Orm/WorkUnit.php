@@ -72,11 +72,13 @@ class Xyster_Orm_WorkUnit
     /**
      * Execute pending transactions
      *
-     * @param Xyster_Orm_Repository $repo The repository in use by the manager
-     * @param Xyster_Orm_Mapper_Factory_Interface $mapFactory The mapper factory 
+     * @param Xyster_Orm_Manager $manager The session manager
      */
-    public function commit( Xyster_Orm_Repository $repo, Xyster_Orm_Mapper_Factory_Interface $mapFactory )
+    public function commit( Xyster_Orm_Manager $manager )
     {
+        $repo = $manager->getRepository();
+        $mapFactory = $manager->getMapperFactory();
+        
         /*
 	     * Save all new entities
 	     */
@@ -91,6 +93,7 @@ class Xyster_Orm_WorkUnit
 		 */
 		foreach( $this->_dirty as $v ) {
 			$mapFactory->get(get_class($v))->save($v);
+			$manager->putInSecondaryCache($v);
 		}
 		$this->_dirty->clear();
 		

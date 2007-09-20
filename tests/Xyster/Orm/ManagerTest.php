@@ -377,7 +377,7 @@ class Xyster_Orm_CacheMock implements Zend_Cache_Backend_Interface
     /**
      * Constructor
      *
-     * @param boolean $throwExceptionOnSave
+     * @param boolean $returnOnSave
      */
     public function __construct( $returnOnSave = true )
     {
@@ -405,7 +405,8 @@ class Xyster_Orm_CacheMock implements Zend_Cache_Backend_Interface
      */
     public function load($id, $doNotTestCacheValidity = false)
     {
-        return $this->_cache->get($id);
+        $value = $this->_cache->get($id);
+        return ( is_object($value) ) ? clone $value : $value;
     }
     
     /**
@@ -430,7 +431,7 @@ class Xyster_Orm_CacheMock implements Zend_Cache_Backend_Interface
      */
     public function save($data, $id, $tags = array(), $specificLifetime = false)
     {
-        $this->_cache->set($id, $data);
+        $this->_cache->set($id, is_object($data) ? clone $data : $data);
         return $this->_returnOnSave;
     }
     

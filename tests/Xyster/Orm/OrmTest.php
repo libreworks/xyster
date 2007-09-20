@@ -49,6 +49,12 @@ class Xyster_OrmTest extends Xyster_Orm_TestSetup
         
         $this->_orm = Xyster_Orm::getInstance();
         $this->_orm->setMapperFactory($this->_mockFactory());
+        require_once 'Zend/Cache.php';
+        require_once 'Zend/Cache/Core.php';
+        require_once 'Zend/Cache/Backend/Test.php';
+        $cache = new Zend_Cache_Core(array('automatic_serialization'=>true));
+        $cache->setBackend(new Xyster_Orm_CacheMock());
+        $this->_orm->setSecondaryCache($cache);
     }
     
     /**
@@ -88,6 +94,15 @@ class Xyster_OrmTest extends Xyster_Orm_TestSetup
         $map = $this->_mockFactory()->get('MockBug');
         $this->assertTrue($map->wasSaved($entity2));
         $this->assertTrue($map->wasSaved($newEntity));
+        
+        $repoId = array('Xyster_Orm', $map->getDomain(), 'MockBug');
+        foreach( $entity2->getPrimaryKey() as $key => $value ) {
+            $repoId[] = $key . '=' . $value;
+        }
+        $repoId = md5(implode("/", $repoId));
+        $entityFromSecondCache = $this->_orm->getSecondaryCache()->get($repoId);
+        $this->assertType('MockBug', $entityFromSecondCache);
+        $this->assertEquals($entity2->getBase(), $entityFromSecondCache->getBase());
         $this->assertTrue($map->wasDeleted($entity));
     }
     

@@ -23,7 +23,7 @@
 /**
  * PHPUnit test case
  */
-require_once 'Xyster/Orm/TestSetup.php';
+require_once dirname(__FILE__).'/TestSetup.php';
 /**
  * @see Xyster_Orm_WorkUnit
  */
@@ -160,11 +160,12 @@ class Xyster_Orm_WorkUnitTest extends Xyster_Orm_TestSetup
         $wu->registerRemoved($removed);
         $new = new MockBug();
         $wu->registerNew($new);
-        
+
+        $manager = new Xyster_Orm_Manager();
         $fact = $this->_mockFactory();
-        $repo = new Xyster_Orm_Repository($fact);
+        $manager->setMapperFactory($fact);
         
-        $wu->commit($repo, $fact);
+        $wu->commit($manager);
         
         // verify what was saved, etc.
         $map = $fact->get('MockBug');
