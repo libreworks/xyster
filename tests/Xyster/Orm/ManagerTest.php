@@ -176,6 +176,17 @@ class Xyster_Orm_ManagerTest extends Xyster_Orm_TestSetup
         $this->assertNull($entity);
     }
     
+	/**
+     * Tests the 'get' method with a null primary key
+     *
+     */
+    public function testGetWithNull()
+    {
+        $entity = $this->_manager->get('MockBug', null);
+        
+        $this->assertNull($entity);
+    }
+    
     /**
      * Tests the 'get' method for an entity already in the secondary repo
      *

@@ -133,7 +133,7 @@ class Xyster_Orm_Manager
     {
         $map = $this->getMapperFactory()->get($className);
         
-        if ( is_scalar($id) ) {
+        if ( is_scalar($id) || is_null($id) ) {
             $keyNames = $map->getEntityMeta()->getPrimary();
             $id = array( $keyNames[0] => $id );
         }
