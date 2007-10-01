@@ -47,7 +47,7 @@ class Xyster_View_Helper_Gravatar {
 		// Gravatar defaults to an image size of 80 x 80 pixels
 		$size = isset($options['size']) ? $options['size'] : 80;
 
-		return "<img src=\"{$uri}\" class=\"{$class}\" style=\"width:{$size}px;height:{$size}px;\" />"
+		return "<img src=\"{$uri}\" class=\"{$class}\" style=\"width:{$size}px;height:{$size}px;\" />";
 	}
 
 }
