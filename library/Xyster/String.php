@@ -182,7 +182,7 @@ class Xyster_String
 	static function titleCase( $title )
 	{	
 		// Split the string into separate words 
-		$words = explode(' ',$title);
+		$words = explode(' ', strtolower($title));
 		
 		foreach ( $words as $key => $word ) {
 			// If this is the first, or it's not a small word, capitalize it

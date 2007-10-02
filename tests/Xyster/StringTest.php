@@ -20,10 +20,16 @@
  * @version   $Id$
  */
 
-/**
- * PHPUnit test case
- */
-require_once 'PHPUnit/Framework/TestCase.php';
+// Call Xyster_StringTest::main() if this source file is executed directly.
+if (!defined('PHPUnit_MAIN_METHOD')) {
+    define('PHPUnit_MAIN_METHOD', 'Xyster_StringTest::main');
+}
+
+require_once "PHPUnit/Framework/TestCase.php";
+require_once "PHPUnit/Framework/TestSuite.php";
+
+require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+
 /**
  * @see Xyster_String
  */
@@ -90,6 +96,16 @@ class Xyster_StringTest extends PHPUnit_Framework_TestCase
         $expected = 'The Great Escape of Our Hero from Coding Hades';
         
         $this->assertEquals($expected, Xyster_String::titleCase($test));
+        
+        $test = 'I WANT THIS STRING TO BE IN TITLE CASE';
+        $expected = 'I Want This String to Be in Title Case';
+
+        $this->assertEquals($expected, Xyster_String::titleCase($test));
+                
+        $test = 'HOW ÄBÖUT INTERNATIONAL LETTERS';
+        $expected = 'How ÄbÖut International Letters'; // should be left alone for now
+        
+        $this->assertEquals($expected, Xyster_String::titleCase($test));
     }
     
     /**
@@ -115,4 +131,9 @@ class Xyster_StringTest extends PHPUnit_Framework_TestCase
         
         $this->assertSame($expected, Xyster_String::toUnderscores($original));
     }
+}
+
+// Call Xyster_StringTest::main() if this source file is executed directly.
+if (PHPUnit_MAIN_METHOD == 'Xyster_StringTest::main') {
+    Xyster_StringTest::main();
 }
