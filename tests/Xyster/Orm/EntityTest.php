@@ -19,11 +19,15 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
+// Call Xyster_Orm_EntityTest::main() if this source file is executed directly.
+if (!defined('PHPUnit_MAIN_METHOD')) {
+    define('PHPUnit_MAIN_METHOD', 'Xyster_Orm_EntityTest::main');
+}
 
 /**
  * PHPUnit test case
  */
-require_once 'Xyster/Orm/TestSetup.php';
+require_once dirname(__FILE__) . '/TestSetup.php';
 /**
  * @see Xyster_Orm_Entity
  */
@@ -38,6 +42,18 @@ require_once 'Xyster/Data/Expression.php';
  */
 class Xyster_Orm_EntityTest extends Xyster_Orm_TestSetup
 {
+    /**
+     * Runs the test methods of this class.
+     *
+     */
+    public static function main()
+    {
+        require_once 'PHPUnit/TextUI/TestRunner.php';
+
+        $suite  = new PHPUnit_Framework_TestSuite(__CLASS__);
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
+
     /**
      * Tests that constructing an entity will import parameter values 
      *
@@ -236,23 +252,27 @@ class Xyster_Orm_EntityTest extends Xyster_Orm_TestSetup
      */
     public function testSetRelatedAndIsLoaded()
     {
-        $reporter = new MockAccount();
+        // a new entity doesn't have relations loaded
         $entity = $this->_getMockEntityWithNoPk();
         $this->assertFalse($entity->isLoaded('reporter'));
         $this->assertFalse($entity->isLoaded('products'));
-        
+
+        // use of property syntax
+        $reporter = new MockAccount();
         $entity->reporter = $reporter;
         $this->assertSame($reporter, $entity->reporter);
         $this->assertTrue($entity->isDirty());
         $this->assertTrue($entity->isLoaded('reporter'));
         $entity->setDirty(false);
         
+        // use of method syntax
         $reporter2 = new MockAccount();
         $entity->setReporter($reporter2);
         $this->assertSame($reporter2, $entity->reporter);
         $this->assertTrue($entity->isDirty());
         $entity->setDirty(false);
         
+        // use of property syntax
         Xyster_Orm_Loader::loadSetClass('MockProduct');
         $products = new MockProductSet();
         $entity->products = $products;
@@ -261,10 +281,34 @@ class Xyster_Orm_EntityTest extends Xyster_Orm_TestSetup
         $this->assertTrue($entity->isDirty());
         $entity->setDirty(false);
         
+        // use of property syntax
         $products2 = new MockProductSet();
         $entity->setProducts($products2);
         $this->assertSame($products2, $entity->products);
         $this->assertTrue($entity->isDirty());
+    }
+    
+    /**
+     * Tests setting a related one-to-one entity with a null value
+     *
+     */
+    public function testSetRelatedWithNull()
+    {
+        $entity = $this->_getMockEntityWithNoPk();
+        $entity->reportedBy = 'doublecompile';
+        $entity->setDirty(false);
+        $this->assertFalse($entity->isLoaded('reporter'));
+        $this->assertFalse($entity->isLoaded('products'));
+        $reporter = $entity->reporter;
+        $this->assertType('MockAccount', $reporter);
+        $this->assertTrue($entity->isLoaded('reporter'));
+        $this->assertFalse($entity->isDirty());
+        
+        $entity->reporter = null;
+        $this->assertTrue($entity->isDirty());
+        $this->assertNull($entity->reporter);
+        $this->assertNull($entity->reportedBy);
+        $this->assertTrue($entity->isLoaded('reporter'));
     }
     
     /**
@@ -332,4 +376,9 @@ class Xyster_Orm_EntityTest extends Xyster_Orm_TestSetup
         
         $this->assertEquals($string, $entity->__toString());
     }
+}
+
+// Call Xyster_Orm_EntityTest::main() if this source file is executed directly.
+if (PHPUnit_MAIN_METHOD == 'Xyster_Orm_EntityTest::main') {
+    Xyster_Orm_EntityTest::main();
 }

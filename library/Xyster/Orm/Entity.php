@@ -106,19 +106,19 @@ class Xyster_Orm_Entity
      */
     public function __call( $name, array $args )
     {
-        $action = strtolower(substr($name,0,3));
-        $field = strtolower($name[3]).substr($name,4);
+        $action = strtolower(substr($name, 0, 3));
+        $field = strtolower($name[3]) . substr($name, 4);
         if ( array_key_exists($field, $this->_values) ) {
             if ( $action == 'get' ) {
                 return $this->_values[$field];
             } else if ( $action == 'set' ) {
-                $this->_setField( $field, $args[0] );
+                $this->_setField($field, $args[0]);
             }
         } else {
             if ( $action == 'get' ) {
-                return $this->_getRelated( $field );
+                return $this->_getRelated($field);
             } else if ( $action == 'set' ) {
-                $this->_setRelated( $field, $args[0] );
+                $this->_setRelated($field, $args[0]);
             }
         }
     }
@@ -342,7 +342,7 @@ class Xyster_Orm_Entity
         $class = $info->getTo();
 
         if ( !$info->isCollection() ) {
-            if (! $value instanceof $class ) {
+            if ( $value !== null && ! $value instanceof $class ) {
                 require_once 'Xyster/Orm/Exception.php';
                 throw new Xyster_Orm_Exception("'" . $name . "' must be an instance of '" . $class . "'");
             }
@@ -358,6 +358,13 @@ class Xyster_Orm_Entity
 
             $value->relateTo($info, $this);
 
+        } else if ( $value === null ) {
+            
+            $fkeyNames = $info->getId();
+            foreach( $fkeyNames as $fkeyName ) {
+                $this->{'set'.ucfirst($fkeyName)}(null);
+            }
+            
         } else if ( $value->getPrimaryKey() ) {
             
             $fkeyNames = $info->getId();
@@ -366,7 +373,7 @@ class Xyster_Orm_Entity
             for( $i=0; $i<count($key); $i++ ) {
                 $keyValue = $key[ $keyNames[$i] ];
                 $fkeyName = $fkeyNames[$i];
-                $this->{'set'.ucfirst($fkeyName)}( $keyValue );
+                $this->{'set'.ucfirst($fkeyName)}($keyValue);
             }
             
         }
@@ -382,7 +389,8 @@ class Xyster_Orm_Entity
      */
     protected function _getMeta()
     {
-        return array_key_exists(get_class($this), self::$_meta) ?
-            self::$_meta[get_class($this)] : null; 
+        $class = get_class($this);
+        return array_key_exists($class, self::$_meta) ?
+            self::$_meta[$class] : null; 
     }
 }
