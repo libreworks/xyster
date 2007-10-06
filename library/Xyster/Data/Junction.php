@@ -80,6 +80,7 @@ class Xyster_Data_Junction extends Xyster_Data_Criterion
      * Adds a Criterion to this Junction
      *
      * @param Xyster_Data_Criterion $c
+     * @return Xyster_Data_Junction
      */
     public function add( Xyster_Data_Criterion $c )
     {
@@ -90,6 +91,7 @@ class Xyster_Data_Junction extends Xyster_Data_Criterion
         } else {
             $this->_criteria[] = $c;
         }
+        return $this;
     }
 
     /**

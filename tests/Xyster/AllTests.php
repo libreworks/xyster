@@ -36,6 +36,7 @@ require_once 'Xyster/Acl/AllTests.php';
 require_once 'Xyster/Collection/AllTests.php';
 require_once 'Xyster/Controller/AllTests.php';
 require_once 'Xyster/Data/AllTests.php';
+require_once 'Xyster/Db/AllTests.php';
 require_once 'Xyster/EnumTest.php';
 require_once 'Xyster/Orm/AllTests.php';
 require_once 'Xyster/StringTest.php';
@@ -56,6 +57,7 @@ class Xyster_AllTests
         $suite->addTest( Xyster_Controller_AllTests::suite() );
         $suite->addTestSuite('Xyster_EnumTest');
         $suite->addTest( Xyster_Data_AllTests::suite() );
+        $suite->addTest( Xyster_Db_AllTests::suite() );
         $suite->addTest( Xyster_Orm_AllTests::suite() );
         $suite->addTestSuite('Xyster_StringTest');
         return $suite;

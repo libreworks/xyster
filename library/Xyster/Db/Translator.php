@@ -95,6 +95,7 @@ class Xyster_Db_Translator
 	 * Translates one of the Xyster Data objects into a SQL token
 	 *
 	 * @param mixed $object
+     * @param boolean $quote Whether to quote field names
 	 * @return Xyster_Db_Token
 	 */
 	public function translate( $object, $quote = true )
@@ -106,7 +107,7 @@ class Xyster_Db_Translator
 		} else if ( $object instanceof Xyster_Data_Criterion ) {
 			return $this->translateCriterion($object, $quote);
 		}
-		require 'Xyster/Db/Exception.php';
+		require_once 'Xyster/Db/Exception.php';
 		throw new Xyster_Db_Exception('Invalid object');
 	}
 	
@@ -114,6 +115,7 @@ class Xyster_Db_Translator
 	 * Converts a field to SQL
 	 *
 	 * @param Xyster_Data_Field $tosql  The field to translate
+     * @param boolean $quote Whether to quote field names
 	 * @return Xyster_Db_Token  The translated SQL syntax
 	 */
 	public function translateField( Xyster_Data_Field $tosql, $quote = true )
@@ -134,6 +136,7 @@ class Xyster_Db_Translator
 	 * Converts a sort to SQL
 	 *
 	 * @param Xyster_Data_Sort $tosql  The Sort to translate
+     * @param boolean $quote Whether to quote field names
 	 * @return Xyster_Db_Token  The translated SQL syntax
 	 */
 	public function translateSort( Xyster_Data_Sort $tosql, $quote = true )
@@ -147,21 +150,25 @@ class Xyster_Db_Translator
 	 * Converts a criterion to SQL
 	 *
 	 * @param Xyster_Data_Criterion $tosql  The Criterion to translate
+     * @param boolean $quote Whether to quote field names
 	 * @return Xyster_Db_Token  The translated SQL syntax
 	 */
 	public function translateCriterion( Xyster_Data_Criterion $tosql, $quote = true )
 	{
+	    $token = null;
 		if ( $tosql instanceof Xyster_Data_Expression ) {
-			return self::translateExpression($tosql, $quote);
+			$token = $this->translateExpression($tosql, $quote);
 		} else if ( $tosql instanceof Xyster_Data_Junction ) {
-			return self::translateJunction($tosql, $quote);
+			$token = $this->translateJunction($tosql, $quote);
 		}
+		return $token;
 	}
 	
 	/**
 	 * Converts a Junction to SQL
 	 *
 	 * @param Xyster_Data_Junction $tosql  The Junction to translate
+     * @param boolean $quote Whether to quote field names
 	 * @return Xyster_Db_Token  The translated SQL syntax
 	 */
 	public function translateJunction( Xyster_Data_Junction $tosql, $quote = true )
@@ -184,6 +191,7 @@ class Xyster_Db_Translator
 	 * Converts an expression to SQL
 	 *
 	 * @param Xyster_Data_Expression $tosql  The Expression to translate
+	 * @param boolean $quote Whether to quote field names
 	 * @return Xyster_Db_Token  The translated SQL syntax
 	 */
 	public function translateExpression( Xyster_Data_Expression $tosql, $quote = true )
@@ -244,7 +252,7 @@ class Xyster_Db_Translator
 	{
 	    $rename = $field->getName();
 		if ( $this->_renameCallback !== null ) {
-			$rename = call_user_func($this->_renameCallback, $field);
+			$rename = call_user_func($this->_renameCallback, $rename);
 		}
 		return $rename;
 	}
