@@ -109,6 +109,10 @@ abstract class Xyster_Orm_Mapper_TestCommon extends Xyster_Orm_Mapper_TestSetup
         $entity = $mapper->find($criteria);
         $this->assertType('Bug', $entity);
         $this->assertEquals('mmouse', $entity->reportedBy);
+        
+        $this->_factory()->getManager()->getRepository()->add($entity);
+        $entity2 = $mapper->find($criteria);
+        $this->assertSame($entity, $entity2);
     }
     
     /**
@@ -118,15 +122,18 @@ abstract class Xyster_Orm_Mapper_TestCommon extends Xyster_Orm_Mapper_TestSetup
     public function testFindAll()
     {
         $criteria = array('reportedBy'=>'mmouse');
-        
         $mapper = $this->_factory()->get('Bug');
+        
         $all = $mapper->findAll($criteria);
-        
         $this->assertType('BugSet', $all);
         
-        $all = $mapper->findAll($criteria, Xyster_Data_Sort::asc('bugId'));
+        $this->_factory()->getManager()->getRepository()->addAll($all);
         
-        $this->assertType('BugSet', $all);
+        $all2 = $mapper->findAll($criteria, Xyster_Data_Sort::asc('bugId'));
+        $this->assertType('BugSet', $all2);
+        
+        // make sure the entities are identical
+        $this->assertTrue($all2->containsAll($all));
         
         try { 
             $all = $mapper->findAll($criteria, Xyster_Data_Field::named('bugId'));
@@ -158,12 +165,13 @@ abstract class Xyster_Orm_Mapper_TestCommon extends Xyster_Orm_Mapper_TestSetup
         $mapper = $this->_factory()->get('Bug');
         
         $all = $mapper->getAll();
-        
         $this->assertType('BugSet', $all);
         
-        $some = $mapper->getAll(array(1,2,3));
+        $this->_factory()->getManager()->getRepository()->addAll($all);
         
+        $some = $mapper->getAll(array(1,2,3));
         $this->assertType('BugSet', $some);
+        $this->assertTrue($all->containsAll($some));
     }
     
     /**
@@ -391,6 +399,11 @@ abstract class Xyster_Orm_Mapper_TestCommon extends Xyster_Orm_Mapper_TestSetup
         $result = $query->execute();
         
         $this->assertType('BugSet', $result);
+        
+        $this->_factory()->getManager()->getRepository()->addAll($result);
+        
+        $all = $mapper->getAll();
+        $this->assertTrue($all->containsAll($result));
     }
     
     /**

@@ -19,7 +19,11 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
- 
+// Call Xyster_Orm_ManagerTest::main() if this source file is executed directly.
+if (!defined('PHPUnit_MAIN_METHOD')) {
+    define('PHPUnit_MAIN_METHOD', 'Xyster_Orm_ManagerTest::main');
+}
+
 /**
  * PHPUnit test case
  */
@@ -43,6 +47,18 @@ class Xyster_Orm_ManagerTest extends Xyster_Orm_TestSetup
      * @var Xyster_Orm_Manager
      */
     protected $_manager;
+    
+    /**
+     * Runs the test methods of this class.
+     *
+     */
+    public static function main()
+    {
+        require_once 'PHPUnit/TextUI/TestRunner.php';
+
+        $suite  = new PHPUnit_Framework_TestSuite(__CLASS__);
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
     
     /**
      * Sets up the test
@@ -240,6 +256,21 @@ class Xyster_Orm_ManagerTest extends Xyster_Orm_TestSetup
     }
     
     /**
+     * Tests the 'getFromCache' method
+     *
+     */
+    public function testGetFromCache()
+    {
+        $entity = $this->_manager->get('MockProduct', array('productId'=>1));
+        
+        $entity2 = $this->_manager->getFromCache('MockProduct', array('productId'=>1));
+        $this->assertSame($entity, $entity2);
+        
+        $entity3 = $this->_manager->getFromCache('MockProduct', 99);
+        $this->assertNull($entity3);
+    }
+    
+    /**
      * Tests the 'getJoined' method
      *
      */
@@ -371,4 +402,9 @@ class Xyster_Orm_ManagerTest extends Xyster_Orm_TestSetup
         }
         $this->fail('Exception not thrown');
     }
+}
+
+// Call Xyster_Orm_ManagerTest::main() if this source file is executed directly.
+if (PHPUnit_MAIN_METHOD == 'Xyster_Orm_ManagerTest::main') {
+    Xyster_Orm_ManagerTest::main();
 }

@@ -138,14 +138,8 @@ class Xyster_Orm_Manager
             $id = array( $keyNames[0] => $id );
         }
         
-        $entity = $this->getRepository()->get($className, $id);
+        $entity = $this->getFromCache($className, $id);
         if ( $entity instanceof Xyster_Orm_Entity ) {
-            return $entity;
-        }
-
-        $entity = $this->_getFromSecondaryCache($className, $id);
-        if ( $entity instanceof Xyster_Orm_Entity ) {
-            $this->getRepository()->add($entity);
             return $entity;
         }
 
@@ -209,6 +203,36 @@ class Xyster_Orm_Manager
         }
         
         return $all;
+    }
+    
+    /**
+     * Tries to load an entity from the cache
+     * 
+     * This method will return null if the entity isn't in either cache
+     *
+     * @param string $className
+     * @param mixed $id
+     * @return Xyster_Orm_Entity
+     */
+    public function getFromCache( $className, $id )
+    {
+        $map = $this->getMapperFactory()->get($className);
+        
+        if ( is_scalar($id) || is_null($id) ) {
+            $keyNames = $map->getEntityMeta()->getPrimary();
+            $id = array( $keyNames[0] => $id );
+        }
+        
+        $entity = $this->getRepository()->get($className, $id);
+        if ( $entity instanceof Xyster_Orm_Entity ) {
+            return $entity;
+        }
+
+        $entity = $this->_getFromSecondaryCache($className, $id);
+        if ( $entity instanceof Xyster_Orm_Entity ) {
+            $this->getRepository()->add($entity);
+            return $entity;
+        }
     }
     
     /**
