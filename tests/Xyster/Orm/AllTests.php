@@ -23,7 +23,6 @@
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Xyster_Orm_AllTests::main');
 }
-set_include_path('/usr/share/php:'.get_include_path());
 /**
  * Test helper
  */
@@ -85,7 +84,7 @@ class Xyster_Orm_AllTests
         $suite->addTestSuite('Xyster_OrmTest');
 
         //self::_addDbTestSuites($suite, 'Db2');
-        //self::_addDbTestSuites($suite, 'Mysqli');
+        self::_addDbTestSuites($suite, 'Mysqli');
         //self::_addDbTestSuites($suite, 'Oracle');
 
         //self::_addDbTestSuites($suite, 'Pdo_Mssql');

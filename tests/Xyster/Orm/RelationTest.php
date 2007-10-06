@@ -21,9 +21,9 @@
  */
 
 /**
- * PHPUnit test case
+ * @see Xyster_Orm_TestSetup
  */
-require_once 'Xyster/Orm/TestSetup.php';
+require_once dirname(__FILE__) . '/TestSetup.php';
 /**
  * @see Xyster_Orm_Relation
  */
