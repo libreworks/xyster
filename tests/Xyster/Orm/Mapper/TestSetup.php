@@ -20,6 +20,15 @@
  * @version   $Id$
  */
 
+require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+
+require_once "PHPUnit/Framework/TestSuite.php";
+
+/**
+ * @see Xyster_Orm_CacheMock
+ */
+require_once 'Xyster/Orm/CacheMock.php';
+
 /**
  * Zend_Db_TestSetup
  */

@@ -20,21 +20,21 @@
  * @version   $Id$
  */
 
-// Call Xyster_Orm_Mapper_Pdo_PgsqlTest::main() if this source file is executed directly.
+// Call Xyster_Orm_Mapper_MysqliTest::main() if this source file is executed directly.
 if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'Xyster_Orm_Mapper_Pdo_PgsqlTest::main');
+    define('PHPUnit_MAIN_METHOD', 'Xyster_Orm_Mapper_MysqliTest::main');
 }
 
 /**
  * @see Xyster_Orm_Mapper_TestCommon
  */
-require_once dirname(dirname(__FILE__)) . '/TestCommon.php';
+require_once dirname(__FILE__) . '/TestCommon.php';
 
 /**
- * A Pdo_Pgsql tester
+ * A Pdo_Mysqli tester
  *
  */
-class Xyster_Orm_Mapper_Pdo_PgsqlTest extends Xyster_Orm_Mapper_TestCommon
+class Xyster_Orm_Mapper_MysqliTest extends Xyster_Orm_Mapper_TestCommon
 {
     /**
      * Runs the test methods of this class.
@@ -55,11 +55,11 @@ class Xyster_Orm_Mapper_Pdo_PgsqlTest extends Xyster_Orm_Mapper_TestCommon
      */
     public function getDriver()
     {
-        return 'Pdo_Pgsql';
+        return 'Mysqli';
     }
 }
 
-// Call Xyster_Orm_Mapper_Pdo_PgsqlTest::main() if this source file is executed directly.
-if (PHPUnit_MAIN_METHOD == 'Xyster_Orm_Mapper_Pdo_PgsqlTest::main') {
-    Xyster_Orm_Mapper_Pdo_PgsqlTest::main();
+// Call Xyster_Orm_Mapper_MysqliTest::main() if this source file is executed directly.
+if (PHPUnit_MAIN_METHOD == 'Xyster_Orm_Mapper_MysqliTest::main') {
+    Xyster_Orm_Mapper_MysqliTest::main();
 }

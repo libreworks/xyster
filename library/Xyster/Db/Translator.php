@@ -236,6 +236,21 @@ class Xyster_Db_Translator
 			}
 			
 		}
+        
+        if ( $this->_adapter instanceof Zend_Db_Adapter_Mysqli ) {
+            // mysqli has no support for :name style binding, we must replace
+            // bind values with '?'
+            $matches = array();
+            
+            if ( preg_match_all('/:P[a-z0-9]+/', $sql, $matches, PREG_SET_ORDER) ) {
+                $newBinds = array();
+                foreach( $matches as $match ) {
+                    $sql = str_replace($match[0], '?', $sql);
+                    $newBinds[] = $binds[$match[0]];
+                }
+                $binds = $newBinds;
+            }
+        }
 
 		return new Xyster_Db_Token($sql, $binds);
 	}

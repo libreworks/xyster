@@ -29,6 +29,11 @@ require_once 'Xyster/Orm/TestSetup.php';
  */
 require_once 'Xyster/Orm.php';
 /**
+ * @see Xyster_Orm_CacheMock
+ */
+require_once 'Xyster/Orm/CacheMock.php';
+
+/**
  * Test for Xyster_Orm
  *
  */

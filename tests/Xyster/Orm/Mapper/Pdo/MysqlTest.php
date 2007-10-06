@@ -20,10 +20,15 @@
  * @version   $Id$
  */
 
+// Call Xyster_Orm_Mapper_Pdo_MysqlTest::main() if this source file is executed directly.
+if (!defined('PHPUnit_MAIN_METHOD')) {
+    define('PHPUnit_MAIN_METHOD', 'Xyster_Orm_Mapper_Pdo_MysqlTest::main');
+}
+
 /**
  * @see Xyster_Orm_Mapper_TestCommon
  */
-require_once 'Xyster/Orm/Mapper/TestCommon.php';
+require_once dirname(dirname(__FILE__)) . '/TestCommon.php';
 
 /**
  * A Pdo_Mysql tester
@@ -31,8 +36,30 @@ require_once 'Xyster/Orm/Mapper/TestCommon.php';
  */
 class Xyster_Orm_Mapper_Pdo_MysqlTest extends Xyster_Orm_Mapper_TestCommon
 {
+    /**
+     * Runs the test methods of this class.
+     *
+     */
+    public static function main()
+    {
+        require_once 'PHPUnit/TextUI/TestRunner.php';
+
+        $suite  = new PHPUnit_Framework_TestSuite(__CLASS__);
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
+    
+    /**
+     * Gets the name of the driver
+     *
+     * @return string
+     */
     public function getDriver()
     {
         return 'Pdo_Mysql';
     }
+}
+
+// Call Xyster_Orm_Mapper_Pdo_MysqlTest::main() if this source file is executed directly.
+if (PHPUnit_MAIN_METHOD == 'Xyster_Orm_Mapper_Pdo_MysqlTest::main') {
+    Xyster_Orm_Mapper_Pdo_MysqlTest::main();
 }

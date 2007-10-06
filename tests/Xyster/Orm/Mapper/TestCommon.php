@@ -23,12 +23,16 @@
 /**
  * Xyster_Orm_Mapper_TestSetup
  */
-require_once 'Xyster/Orm/Mapper/TestSetup.php';
+require_once dirname(__FILE__) . '/TestSetup.php';
 
 /**
  * @see Xyster_Orm_Mapper_Translator
  */
 require_once 'Xyster/Orm/Mapper/Translator.php';
+
+require_once 'Xyster/Data/Sort.php';
+require_once 'Xyster/Data/Field.php';
+
 
 /**
  * Test for Xyster_Orm_Mapper
@@ -77,7 +81,6 @@ abstract class Xyster_Orm_Mapper_TestCommon extends Xyster_Orm_Mapper_TestSetup
      */
     public function testDelete()
     {
-        try {
         $mapper = $this->_factory()->get('Bug');
         $bug = $mapper->get(1);
         
@@ -92,9 +95,6 @@ abstract class Xyster_Orm_Mapper_TestCommon extends Xyster_Orm_Mapper_TestSetup
         
         $bug = $mapper->get(1);
         $this->assertNull($bug);
-        } catch ( Exception $thrown ) {
-            echo $thrown->getFile() .':' . $thrown->getLine();
-        }
     }
     
     /**
