@@ -84,8 +84,7 @@ abstract class Xyster_Orm_Mapper_TestCommon extends Xyster_Orm_Mapper_TestSetup
         $mapper = $this->_factory()->get('Bug');
         $bug = $mapper->get(1);
         
-            $mapper->delete($bug);
-        
+        $mapper->delete($bug);
         
         $all = $mapper->getAll();
         
@@ -95,6 +94,30 @@ abstract class Xyster_Orm_Mapper_TestCommon extends Xyster_Orm_Mapper_TestSetup
         
         $bug = $mapper->get(1);
         $this->assertNull($bug);
+    }
+    
+    /**
+     * Tests the 'delete' method with a SET_NULL cascade
+     *
+     */
+    public function testDeleteSetNull()
+    {
+        $mapper = $this->_factory()->get('Account');
+        $account = $mapper->get('mmouse');
+        $reported = $account->reported;
+        $this->assertGreaterThan(0, count($reported));
+        
+        foreach( $reported as $bug ) {
+            $this->assertEquals('mmouse', $bug->reportedBy);
+            $this->assertSame($account, $bug->reporter);
+        }
+        
+        $mapper->delete($account);
+        
+        foreach( $reported as $bug ) {
+            $this->assertNull($bug->reportedBy);
+            $this->assertNull($bug->reporter);
+        }
     }
     
     /**

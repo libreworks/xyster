@@ -138,7 +138,7 @@ class Xyster_Orm_Manager
             $id = array( $keyNames[0] => $id );
         }
         
-        $entity = $this->getFromCache($className, $id);
+        $entity = $this->getFromCache($className, $id, true);
         if ( $entity instanceof Xyster_Orm_Entity ) {
             return $entity;
         }
@@ -212,9 +212,10 @@ class Xyster_Orm_Manager
      *
      * @param string $className
      * @param mixed $id
+     * @param boolean $checkSecondary Whether to also check the secondary cache
      * @return Xyster_Orm_Entity
      */
-    public function getFromCache( $className, $id )
+    public function getFromCache( $className, $id, $checkSecondary = false )
     {
         $map = $this->getMapperFactory()->get($className);
         
@@ -228,10 +229,12 @@ class Xyster_Orm_Manager
             return $entity;
         }
 
-        $entity = $this->_getFromSecondaryCache($className, $id);
-        if ( $entity instanceof Xyster_Orm_Entity ) {
-            $this->getRepository()->add($entity);
-            return $entity;
+        if ( $checkSecondary ) {
+            $entity = $this->_getFromSecondaryCache($className, $id);
+            if ( $entity instanceof Xyster_Orm_Entity ) {
+                $this->getRepository()->add($entity);
+                return $entity;
+            }
         }
     }
     

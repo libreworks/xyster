@@ -28,6 +28,11 @@
  */
 class Xyster_Orm_Relation
 {
+    const ACTION_NONE = 0x000000;
+    const ACTION_CASCADE = 0x000001;
+    const ACTION_SET_NULL = 0x000002;
+    const ACTION_REMOVE = 0x000003;
+    
     /**
      * The type of relation; one of ('one','belongs','many','joined')
      *
@@ -69,13 +74,13 @@ class Xyster_Orm_Relation
      *
      * @var string
      */
-    protected $_onDelete;
+    protected $_onDelete = self::ACTION_NONE;
     /**
      * The activity to perform when a primary key is changed
      *
      * @var string
      */
-    protected $_onUpdate;
+    protected $_onUpdate = self::ACTION_NONE;
     /**
      * In a join relationship, this is the table linking the two entities
      *
@@ -170,45 +175,45 @@ class Xyster_Orm_Relation
 		$this->_id = $id;
 		$this->_filters = $filters;
 		$this->_type = $type;
+		
+		if ( $this->isCollection() ) {
+            $this->_onUpdate = ( isset($options['onUpdate']) ) ? $options['onUpdate'] : self::ACTION_NONE;
+            $this->_onDelete = ( isset($options['onDelete']) ) ? $options['onDelete'] : self::ACTION_NONE;
+		}
 
-		if ( $type == 'many' || $type == 'joined' ) {
-		    /**
-		     * @todo put in the onDelete/onUpdate stuff
-		     */
-			if ( $type == 'joined' ) {
-				$leftMap = $this->_mapFactory->get($declaringClass);
-				$rightMap = $this->_mapFactory->get($class);
-				$leftMeta = $leftMap->getEntityMeta();
-				$rightMeta = $rightMap->getEntityMeta();
+		if ( $type == 'joined' ) {
+			$leftMap = $this->_mapFactory->get($declaringClass);
+			$rightMap = $this->_mapFactory->get($class);
+			$leftMeta = $leftMap->getEntityMeta();
+			$rightMeta = $rightMap->getEntityMeta();
 
-				$this->_joinTable = array_key_exists('table', $options) ? 
-				    $options['table'] : $leftMap->getTable().'_'.$rightMap->getTable();
-				
-				if ( isset($options['left']) ) {
-				    // make sure number of fields matches number of primary keys
-				    $leftCount = is_array($options['left']) ?
-				        count($options['left']) : 1;
-				    if ( $leftCount != count($leftMeta->getPrimary()) ) {
-				        require_once 'Xyster/Orm/Relation/Exception.php';
-				        throw new Xyster_Orm_Relation_Exception('Number of "left" keys do not match number of keys in left table');
-				    }
-				    $this->_joinLeft = (array) $options['left'];
-				} else {
-				    $this->_joinLeft = array_map(array($leftMap,'untranslateField'), $leftMeta->getPrimary());
-				}
+			$this->_joinTable = array_key_exists('table', $options) ? 
+			    $options['table'] : $leftMap->getTable().'_'.$rightMap->getTable();
+			
+			if ( isset($options['left']) ) {
+			    // make sure number of fields matches number of primary keys
+			    $leftCount = is_array($options['left']) ?
+			        count($options['left']) : 1;
+			    if ( $leftCount != count($leftMeta->getPrimary()) ) {
+			        require_once 'Xyster/Orm/Relation/Exception.php';
+			        throw new Xyster_Orm_Relation_Exception('Number of "left" keys do not match number of keys in left table');
+			    }
+			    $this->_joinLeft = (array) $options['left'];
+			} else {
+			    $this->_joinLeft = array_map(array($leftMap,'untranslateField'), $leftMeta->getPrimary());
+			}
 
-				if ( isset($options['right']) ) {
-				    // make sure number of fields matches number of primary keys
-				    $rightCount = is_array($options['right']) ?
-				        count($options['right']) : 1;
-				    if ( $rightCount != count($rightMeta->getPrimary()) ) {
-				        require_once 'Xyster/Orm/Relation/Exception.php';
-				        throw new Xyster_Orm_Relation_Exception('Number of "right" keys do not match number of keys in right table');
-				    }
-				    $this->_joinRight = (array) $options['right'];
-				} else {
-				    $this->_joinRight = array_map(array($rightMap,'untranslateField'), $rightMeta->getPrimary());
-				}
+			if ( isset($options['right']) ) {
+			    // make sure number of fields matches number of primary keys
+			    $rightCount = is_array($options['right']) ?
+			        count($options['right']) : 1;
+			    if ( $rightCount != count($rightMeta->getPrimary()) ) {
+			        require_once 'Xyster/Orm/Relation/Exception.php';
+			        throw new Xyster_Orm_Relation_Exception('Number of "right" keys do not match number of keys in right table');
+			    }
+			    $this->_joinRight = (array) $options['right'];
+			} else {
+			    $this->_joinRight = array_map(array($rightMap,'untranslateField'), $rightMeta->getPrimary());
 			}
 		}
 	}
@@ -261,6 +266,26 @@ class Xyster_Orm_Relation
     public function getName()
     {
         return $this->_name;
+    }
+    
+    /**
+     * Gets the action type to perform onDelete
+     *
+     * @return int
+     */
+    public function getOnDelete()
+    {
+        return $this->_onDelete;
+    }
+    
+    /**
+     * Gets the action type to perform onUpdate
+     *
+     * @return int
+     */
+    public function getOnUpdate()
+    {
+        return $this->_onUpdate;
     }
     
     /**

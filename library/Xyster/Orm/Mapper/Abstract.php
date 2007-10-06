@@ -146,7 +146,36 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
      */
     public function delete( Xyster_Orm_Entity $entity )
     {
-        $this->_delete( $entity->getPrimaryKeyAsCriterion() );
+        $this->_delete($entity->getPrimaryKeyAsCriterion());
+        
+        $relations = $this->getEntityMeta()->getRelations();
+        foreach( $relations as $relation ) { /* @var $relation Xyster_Orm_Relation */
+            if ( $relation->getType() == 'many' ) {
+                $onDelete = $relation->getOnDelete();
+                $map = $this->_factory->get($relation->getTo());
+                $name = $relation->getName();
+                $reverseName = $relation->hasBelongsTo() ?
+                    $relation->getReverse()->getName() : null;
+                $related = $entity->$name; /* @var $related Xyster_Orm_Set */
+                
+                // just remove the association
+                if ( $onDelete == Xyster_Orm_Relation::ACTION_SET_NULL && $reverseName ) {
+                    foreach( $related as $relatedEntity ) {
+                        $relatedEntity->$reverseName = null;
+                        $map->save($relatedEntity);
+                    }
+                // rely on the database to cascade the delete
+                } else if ( $onDelete == Xyster_Orm_Relation::ACTION_CASCADE ) {
+                    $this->_factory->getManager()->getRepository()->removeAll($related);
+                // we have to delete every last one ourselves
+                } else if ( $onDelete == Xyster_Orm_Relation::ACTION_REMOVE ) {
+                    $this->_factory->getManager()->getRepository()->removeAll($related);
+                    foreach( $related as $relatedEntity ) {
+                        $map->delete($relatedEntity);
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -309,7 +338,7 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
 		 * Step 1: Sets ids for any single-entity relationships 
 		 */
 		foreach( $this->getEntityMeta()->getRelations() as $k=>$v ) {
-			if ( !$v->isCollection() && $entity->isLoaded($k) ) {
+			if ( !$v->isCollection() && $entity->isLoaded($k) && $entity->$k !== null ) {
 				$linked = $entity->$k;
 				// get the original primary key, in case it's not auto-generated
 				$key = $linked->getPrimaryKey(true);

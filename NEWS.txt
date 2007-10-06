@@ -10,6 +10,15 @@ Xyster Framework                                                             NEW
 - Implemented Action Helpers:
 	* Xyster_Controller_Action_Helper_Cache: Send Cache Control headers
 	* Xyster_Controller_Action_Helper_File: File/Content-Type Response headers
+- Xyster_Orm bugfixes and new features
+    * 0000011: Mapper problem with inserting many-to-many
+    * 0000012: Mapper exception if nothing was removed from many-to-many
+    * 0000013: Xyster_Orm_Relation Using classes not included
+    * 0000014: Anything updated is now put in the secondary cache
+    * 0000015: Xyster_Orm_Manager now accepts null keys correctly
+    * 0000016: Relations can be set to null
+    * 0000018: All rows mapped from the db are checked against cached
+    * Cascading deletes
 
 =BUILD 1 / 08-Sep-2007 / based on revision 80 =
 - Initial public code drop
