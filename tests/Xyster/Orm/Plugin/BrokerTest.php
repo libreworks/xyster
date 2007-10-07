@@ -28,6 +28,7 @@ require_once 'PHPUnit/Framework.php';
 
 require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
+require_once 'Xyster/Orm/Plugin/_files/TestEntity.php';
 require_once 'Xyster/Orm/Plugin/Broker.php';
 require_once 'Xyster/Orm/Entity.php';
 require_once 'Xyster/Orm/Plugin/Abstract.php';
@@ -264,14 +265,6 @@ class Xyster_Orm_Plugin_BrokerTest extends PHPUnit_Framework_TestCase
         } catch ( Xyster_Orm_Exception $thrown ) {
             
         }
-    }
-}
-
-class Xyster_Orm_Plugin_TestEntity extends Xyster_Orm_Entity
-{
-    public function __construct( array $values = null )
-    {
-        $this->_values = array('test'=>1);
     }
 }
 

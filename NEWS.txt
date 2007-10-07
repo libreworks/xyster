@@ -17,6 +17,7 @@ Xyster Framework                                                             NEW
     * 0000014: Anything updated is now put in the secondary cache
     * 0000015: Xyster_Orm_Manager now accepts null keys correctly
     * 0000016: Relations can be set to null
+    * 0000017: Plugin for loading entities into a Zend_Acl
     * 0000018: All rows mapped from the db are checked against cached
     * Cascading deletes
 

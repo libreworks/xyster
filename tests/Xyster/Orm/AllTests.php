@@ -46,6 +46,8 @@ require_once 'Xyster/Orm/QueryTest.php';
 require_once 'Xyster/Orm/QueryReportTest.php';
 require_once 'Xyster/Orm/QueryParserTest.php';
 require_once 'Xyster/Orm/OrmTest.php';
+require_once 'Xyster/Orm/Plugin/BrokerTest.php';
+require_once 'Xyster/Orm/Plugin/AclTest.php';
 
 /**
  * @see Zend_Db_SkipTests
@@ -82,7 +84,9 @@ class Xyster_Orm_AllTests
         $suite->addTestSuite('Xyster_Orm_QueryTest');
         $suite->addTestSuite('Xyster_Orm_Query_ReportTest');
         $suite->addTestSuite('Xyster_OrmTest');
-
+        $suite->addTestSuite('Xyster_Orm_Plugin_BrokerTest');
+        $suite->addTestSuite('Xyster_Orm_Plugin_AclTest');
+        
         //self::_addDbTestSuites($suite, 'Db2');
         self::_addDbTestSuites($suite, 'Mysqli');
         //self::_addDbTestSuites($suite, 'Oracle');
