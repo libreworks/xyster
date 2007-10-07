@@ -23,6 +23,10 @@
  */
 require_once 'Xyster/Orm/Repository.php';
 /**
+ * @see Xyster_Orm_Plugin_Broker
+ */
+require_once 'Xyster/Orm/Plugin/Broker.php';
+/**
  * The main backend of the orm package
  *
  * @category  Xyster
@@ -52,6 +56,22 @@ class Xyster_Orm_Manager
      * @var Zend_Cache_Core
      */
     protected $_secondaryCache;
+    
+    /**
+     * The plugin broker
+     *
+     * @var Xyster_Orm_Plugin_Broker
+     */
+    protected $_plugins;
+    
+    /**
+     * Creates a new Orm_Manager 
+     *
+     */
+    public function __construct()
+    {
+        $this->_plugins = new Xyster_Orm_Plugin_Broker();
+    }
     
     /**
      * Clears out the repository
@@ -266,6 +286,16 @@ class Xyster_Orm_Manager
             $this->setMapperFactory(new Xyster_Orm_Mapper_Factory());
         }
         return $this->_mapFactory;
+    }
+    
+    /**
+     * Gets the plugin broker
+     *
+     * @return Xyster_Orm_Plugin_Broker
+     */
+    public function getPluginBroker()
+    {
+        return $this->_plugins;
     }
     
     /**

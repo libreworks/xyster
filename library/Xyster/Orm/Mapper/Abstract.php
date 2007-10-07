@@ -146,7 +146,10 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
      */
     public function delete( Xyster_Orm_Entity $entity )
     {
+        $broker = $this->_factory->getManager()->getPluginBroker();
+        $broker->preDelete($entity);
         $this->_delete($entity->getPrimaryKeyAsCriterion());
+        $broker->postDelete($entity);
         
         $relations = $this->getEntityMeta()->getRelations();
         foreach( $relations as $relation ) { /* @var $relation Xyster_Orm_Relation */
@@ -356,13 +359,19 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
 			}
 		}
         
+		$broker = $this->_factory->getManager()->getPluginBroker();
 		/*
 		 * Step 2: Save actual entity
 		 */
         if ( !$entity->getBase() ) {
+            $broker->preInsert($entity);
             $this->_insert($entity);
+            $broker->postInsert($entity);
+        
         } else {
+            $broker->preUpdate($entity);
             $this->_update($entity);
+            $broker->postUpdate($entity);
         }
         
     	// this is in case any triggers in the db, etc. have changed the record
@@ -546,7 +555,11 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
     }
 
     /**
-     * Creates an entity from the row supplied and store it in the map
+     * Creates an entity from the row supplied
+     * 
+     * If the row has already been loaded and the entity that represents the row
+     * is in the repository, this method will return that exact instance instead
+     * of creating a new one.
      *
      * @param array $row
      * @return Xyster_Orm_Entity  The entity created
@@ -555,6 +568,17 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
     {
         $entityName = $this->getEntityName();
         // this class should already be loaded by the class' mapper
-        return new $entityName($row);
+        
+        $manager = $this->_factory->getManager();
+        $primary = array_intersect_key($row,
+            array_flip($this->getEntityMeta()->getPrimary()));
+        $loaded = $manager->getFromCache($entityName, $primary);
+        if ( $loaded instanceof Xyster_Orm_Entity ) {
+            return $loaded;
+        }
+        
+        $entity = new $entityName($row);
+        $manager->getPluginBroker()->postLoad($entity);
+        return $entity;
     }
 }

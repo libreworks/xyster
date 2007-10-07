@@ -93,11 +93,20 @@ class Xyster_Orm_Mapper_AbstractTest extends PHPUnit_Framework_TestCase
     public function testDelete()
     {
         $entity = $this->_mapper->get(array('bugId'=>1,'productId'=>1,'versionId'=>2));
-        try {
-            $this->_mapper->delete($entity);
-        } catch ( Exception $thrown ) {
-            $this->fail('Deleting a normal ');
-        }
+        
+        $broker = $this->_mockFactory()->getManager()->getPluginBroker();
+        require_once 'Xyster/Orm/Plugin/Abstract.php';
+        $plugin = $this->getMock('Xyster_Orm_Plugin_Abstract', array('preDelete', 'postDelete'));
+        $plugin->expects($this->once())
+            ->method('preDelete')
+            ->with($this->equalTo($entity));
+        $plugin->expects($this->once())
+            ->method('postDelete')
+            ->with($this->equalTo($entity));
+        $broker->registerPlugin($plugin);
+        
+        $this->_mapper->delete($entity);
+        
     }
     
     /**
@@ -271,6 +280,39 @@ class Xyster_Orm_Mapper_AbstractTest extends PHPUnit_Framework_TestCase
         $pk = array('bugId'=>1,'productId'=>1,'versionId'=>2);
         $entity = $this->_mapper->get($pk);
         $entity->versionId = 3;
+        
+        $broker = $this->_mockFactory()->getManager()->getPluginBroker();
+        require_once 'Xyster/Orm/Plugin/Abstract.php';
+        $plugin = $this->getMock('Xyster_Orm_Plugin_Abstract', array('preUpdate', 'postUpdate'));
+        $plugin->expects($this->once())
+            ->method('preUpdate');
+        $plugin->expects($this->once())
+            ->method('postUpdate');
+        $broker->registerPlugin($plugin);
+        
+        $this->_mapper->save($entity);
+        $this->assertTrue($this->_mapper->wasSaved($entity));
+    }
+    
+    /**
+     * Tests the 'save' method with a new entity
+     *
+     */
+    public function testSaveInsert()
+    {
+        $entity = new MockBugProduct();
+        $entity->bugId = 1;
+        $entity->productId = 1;
+        $entity->versionId = 4;
+        
+        $broker = $this->_mockFactory()->getManager()->getPluginBroker();
+        require_once 'Xyster/Orm/Plugin/Abstract.php';
+        $plugin = $this->getMock('Xyster_Orm_Plugin_Abstract', array('preInsert', 'postInsert'));
+        $plugin->expects($this->once())
+            ->method('preInsert');
+        $plugin->expects($this->once())
+            ->method('postInsert');
+        $broker->registerPlugin($plugin);
         
         $this->_mapper->save($entity);
         $this->assertTrue($this->_mapper->wasSaved($entity));

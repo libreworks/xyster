@@ -669,14 +669,7 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
 			if ( $entity instanceof Xyster_Orm_Entity ) {
 			    $return = $entity->import($row);
 			} else {
-                $primary = array_intersect_key($row,
-                    array_flip($this->getEntityMeta()->getPrimary()));
-			    $loaded = $this->_factory->getManager()->getFromCache($this->getEntityName(), $primary);
-			    if ( $loaded instanceof Xyster_Orm_Entity ) {
-			        $return = $loaded;
-			    } else {
-			        $return = $this->_create($row);
-			    }
+			    $return = $this->_create($row);
 			}
 		}
 		
@@ -693,16 +686,11 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
 	{
 		$entities = array();
 		$stmt->setFetchMode(Zend_Db::FETCH_ASSOC);
-		$manager = $this->_factory->getManager();
-		$keyNames = $this->getEntityMeta()->getPrimary();
 		foreach( $stmt->fetchAll() as $k => $row ) {
 			if ( $k<1 ) {
 				$this->_checkPropertyNames($row);
 			}
-			$primary = array_intersect_key($row, array_flip($keyNames));
-			$loaded = $manager->getFromCache($this->getEntityName(), $primary);
-			$entities[] = ($loaded instanceof Xyster_Orm_Entity) ?
-                $loaded : $this->_create($row);
+			$entities[] = $this->_create($row);
 		}
 		$stmt->closeCursor();
 
