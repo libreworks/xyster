@@ -174,6 +174,31 @@ class Xyster_Orm
     }
     
     /**
+     * Gets an entity by class and primary key, throws exception if not found
+     *
+     * @param string $className
+     * @param mixed $id
+     * @return Xyster_Orm_Entity
+     * @throws Xyster_Orm_Exception
+     */
+    public function getOrFail( $className, $id )
+    {
+        $entity = $this->get($className, $id);
+        if ( $entity instanceof Xyster_Orm_Entity ) {
+            return $entity;
+        }
+        
+        $printId = $id;
+        if ( is_array($id) ) {
+            require_once 'Xyster/String.php';
+            $printId = Xyster_String::arrayToString($id);
+        }
+        require_once 'Xyster/Orm/Exception.php';
+        throw new Xyster_Orm_Exception("The '" . $className . "' with ID ''"
+            . $printId . "' was not found");
+    }
+    
+    /**
      * Gets the secondary repository for storing entities
      *
      * @return Zend_Cache_Core

@@ -45,7 +45,6 @@ require_once 'Xyster/Orm/Mapper/AbstractTest.php';
 require_once 'Xyster/Orm/QueryTest.php';
 require_once 'Xyster/Orm/QueryReportTest.php';
 require_once 'Xyster/Orm/QueryParserTest.php';
-require_once 'Xyster/Orm/OrmTest.php';
 require_once 'Xyster/Orm/Plugin/BrokerTest.php';
 require_once 'Xyster/Orm/Plugin/AclTest.php';
 
@@ -83,7 +82,6 @@ class Xyster_Orm_AllTests
         $suite->addTestSuite('Xyster_Orm_Query_ParserTest');
         $suite->addTestSuite('Xyster_Orm_QueryTest');
         $suite->addTestSuite('Xyster_Orm_Query_ReportTest');
-        $suite->addTestSuite('Xyster_OrmTest');
         $suite->addTestSuite('Xyster_Orm_Plugin_BrokerTest');
         $suite->addTestSuite('Xyster_Orm_Plugin_AclTest');
         
