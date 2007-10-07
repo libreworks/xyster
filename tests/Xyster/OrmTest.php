@@ -19,13 +19,22 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
+// Call Xyster_OrmTest::main() if this source file is executed directly.
+if (!defined('PHPUnit_MAIN_METHOD')) {
+    define('PHPUnit_MAIN_METHOD', 'Xyster_OrmTest::main');
+}
+
+require_once "PHPUnit/Framework/TestCase.php";
+require_once "PHPUnit/Framework/TestSuite.php";
+
+require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
 /**
  * PHPUnit test case
  */
 require_once 'Xyster/Orm/TestSetup.php';
 /**
- * @see Xyster_Orm_Set
+ * @see Xyster_Orm
  */
 require_once 'Xyster/Orm.php';
 /**
@@ -43,6 +52,18 @@ class Xyster_OrmTest extends Xyster_Orm_TestSetup
      * @var Xyster_Orm
      */
     protected $_orm;
+
+    /**
+     * Runs the test methods of this class.
+     *
+     */
+    public static function main()
+    {
+        require_once 'PHPUnit/TextUI/TestRunner.php';
+
+        $suite  = new PHPUnit_Framework_TestSuite(__CLASS__);
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
     
     /**
      * Sets up the tests
@@ -154,6 +175,27 @@ class Xyster_OrmTest extends Xyster_Orm_TestSetup
     }
     
     /**
+     * Tests the 'getOrFail' method
+     *
+     */
+    public function testGetOrFail()
+    {
+        $criteria = array('bugId'=>1);
+        $entity = $this->_orm->getOrFail('MockBug', $criteria['bugId']);
+        
+        $this->assertType('MockBug', $entity);
+        $this->assertEquals($criteria, $entity->getPrimaryKey());
+        
+        $criteria = array('bugId'=>100);
+        try {
+            $this->_orm->getOrFail('MockBug', $criteria);
+            $this->fail('Exception not thrown');
+        } catch ( Xyster_Orm_Exception $thrown ) {
+            // do nothing
+        }
+    }
+    
+    /**
      * Tests the getAll method
      *
      */
@@ -243,4 +285,9 @@ class Xyster_OrmTest extends Xyster_Orm_TestSetup
         $this->assertEquals(1, count($report->getFields()));
         $this->assertEquals(1, count($report->getWhere()));
     }
+}
+
+// Call Xyster_OrmTest::main() if this source file is executed directly.
+if (PHPUnit_MAIN_METHOD == 'Xyster_OrmTest::main') {
+    Xyster_OrmTest::main();
 }

@@ -11,6 +11,7 @@ Xyster Framework                                                             NEW
 	* Xyster_Controller_Action_Helper_Cache: Send Cache Control headers
 	* Xyster_Controller_Action_Helper_File: File/Content-Type Response headers
 - Xyster_Orm bugfixes and new features
+    * 0000007: Added getOrFail method: throws exception if entity not found
     * 0000011: Mapper problem with inserting many-to-many
     * 0000012: Mapper exception if nothing was removed from many-to-many
     * 0000013: Xyster_Orm_Relation Using classes not included
