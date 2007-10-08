@@ -80,6 +80,36 @@ class Xyster_Orm_RelationTest extends Xyster_Orm_TestSetup
         $this->assertEquals(array($options['right']), $relation->getRight());
         $this->assertEquals($options['table'], $relation->getTable());
     }
+    
+    /**
+     * Tests the methods on a many relation work as expected
+     *
+     */
+    public function testGetMethodsOnMany()
+    {
+        $name = 'goodBugs';
+        $type = 'many';
+        
+        $options = array(
+            'class' => 'MockBug',
+            'id' => 'reportedBy',
+            'filters' => 'assignedTo like "awesome%"',
+            'onDelete' => Xyster_Orm_Relation::ACTION_CASCADE,
+            'onUpdate' => Xyster_Orm_Relation::ACTION_NONE    
+        );
+
+        $meta = $this->_mockFactory()->getEntityMeta('MockAccount');
+        $relation = new Xyster_Orm_Relation($meta, $type, $name, $options);
+
+        $this->assertEquals($name, $relation->getName());
+        $this->assertEquals('MockAccount', $relation->getFrom());
+        $this->assertEquals($options['class'], $relation->getTo());
+        $this->assertEquals($type, $relation->getType());
+        $this->assertEquals(array($options['id']), $relation->getId());
+        $this->assertType('Xyster_Data_Expression', $relation->getFilters());
+        $this->assertEquals($options['onDelete'], $relation->getOnDelete());
+        $this->assertEquals($options['onUpdate'], $relation->getOnUpdate());
+    }
 
     /**
      * Tests the auto-generated class name when doing a one-to-one

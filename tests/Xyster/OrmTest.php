@@ -75,6 +75,7 @@ class Xyster_OrmTest extends Xyster_Orm_TestSetup
         
         $this->_orm = Xyster_Orm::getInstance();
         $this->_orm->setMapperFactory($this->_mockFactory());
+        $this->_orm->setup('MockBug');
         require_once 'Zend/Cache.php';
         require_once 'Zend/Cache/Core.php';
         require_once 'Zend/Cache/Backend/Test.php';

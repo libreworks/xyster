@@ -18,7 +18,7 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 /**
- * Xyster_Enum
+ * @see Xyster_Enum
  */
 require_once 'Xyster/Enum.php';
 /**
@@ -42,29 +42,48 @@ class Xyster_Data_Aggregate extends Xyster_Enum
 	 *
 	 * @return Xyster_Data_Aggregate
 	 */
-	static public function Average() { return Xyster_Enum::_factory(); }
+	static public function Average()
+	{
+	   return Xyster_Enum::_factory();
+	}
+	
 	/**
 	 * Uses the Count function
 	 *
 	 * @return Xyster_Data_Aggregate
 	 */
-	static public function Count() { return Xyster_Enum::_factory(); }
+	static public function Count()
+    {
+        return Xyster_Enum::_factory();
+    }
+    
 	/**
 	 * Uses the Maximum function
 	 *
 	 * @return Xyster_Data_Aggregate
 	 */
-	static public function Maximum() { return Xyster_Enum::_factory(); }
-	/**
+	static public function Maximum()
+	{
+	   return Xyster_Enum::_factory();
+	}
+	
+    /**
 	 * Uses the Minimum function
 	 *
 	 * @return Xyster_Data_Aggregate
 	 */
-	static public function Minimum() { return Xyster_Enum::_factory(); }
+	static public function Minimum()
+	{
+	   return Xyster_Enum::_factory();
+	}
+	
 	/**
 	 * Uses the Sum function
 	 *
 	 * @return Xyster_Data_Aggregate
 	 */
-	static public function Sum() { return Xyster_Enum::_factory(); }    
+	static public function Sum()
+	{
+	   return Xyster_Enum::_factory();
+	}
 }

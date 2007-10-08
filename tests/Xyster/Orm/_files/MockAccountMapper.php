@@ -36,6 +36,8 @@ class MockAccountMapper extends Xyster_Orm_Mapper_Mock
     
     public function init()
     {
+        parent::init();
+        
         $meta = $this->getEntityMeta();
         $meta->hasMany('reported', array('class'=>'MockBug','id'=>'reportedBy'));
         $meta->hasMany('assigned', array('class'=>'MockBug','id'=>'assignedTo','filters'=>'( assignedTo <> null )'));
