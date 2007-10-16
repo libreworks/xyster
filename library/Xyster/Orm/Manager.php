@@ -252,6 +252,7 @@ class Xyster_Orm_Manager
         if ( $checkSecondary ) {
             $entity = $this->_getFromSecondaryCache($className, $id);
             if ( $entity instanceof Xyster_Orm_Entity ) {
+                $this->_plugins->postLoad($entity);
                 $this->getRepository()->add($entity);
                 return $entity;
             }

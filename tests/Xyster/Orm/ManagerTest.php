@@ -213,6 +213,13 @@ class Xyster_Orm_ManagerTest extends Xyster_Orm_TestSetup
         $entity = $this->_getMockEntity();
         $this->_manager->getSecondaryCache()->save($entity, md5('Xyster_Orm/mock/MockBug/bugId=' . $entity->bugId));
         
+        require_once 'Xyster/Orm/Plugin/Abstract.php';
+        $plugin = $this->getMock('Xyster_Orm_Plugin_Abstract', array('postLoad'));
+        $plugin->expects($this->once())
+            ->method('postLoad')
+            ->with($this->equalTo($entity));
+        $this->_manager->getPluginBroker()->registerPlugin($plugin);
+        
         $entity2 = $this->_manager->get('MockBug', $entity->bugId);
         
         $this->assertType('MockBug', $entity2);
