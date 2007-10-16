@@ -158,6 +158,9 @@ abstract class Xyster_Orm_Mapper_TestCommon extends Xyster_Orm_Mapper_TestSetup
         // make sure the entities are identical
         $this->assertTrue($all2->containsAll($all));
         
+        $all3 = $mapper->findAll($criteria, array(Xyster_Data_Sort::asc('bugId')));
+        $this->assertType('BugSet', $all3);
+        
         try { 
             $all = $mapper->findAll($criteria, Xyster_Data_Field::named('bugId'));
             $this->fail('Exception not thrown');

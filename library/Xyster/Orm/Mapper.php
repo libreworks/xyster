@@ -126,7 +126,9 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
 		$binds = $token->getBindValues();
 	    
 	    if ( $sort !== null ) {
-		    $sort = array($sort);
+	        if ( !is_array($sort) ) {
+	            $sort = array($sort);
+	        }
 		    foreach( $sort as $s ) {
 		        if (! $s instanceof Xyster_Data_Sort ) {
 		            require_once 'Xyster/Orm/Mapper/Exception.php';
