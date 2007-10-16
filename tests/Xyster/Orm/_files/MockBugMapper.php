@@ -33,6 +33,8 @@ class MockBugMapper extends Xyster_Orm_Mapper_Mock
 {
     protected $_table = 'zfbugs';
     
+    protected $_options = array('doNotRefreshAfterSave' => true);
+    
     public function init()
     {
         $meta = $this->getEntityMeta();

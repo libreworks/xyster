@@ -120,7 +120,7 @@ abstract class Xyster_Orm_Mapper_Mock extends Xyster_Orm_Mapper_Abstract
             $entity->import($entity->toArray());
             return;
         }
-        $criteria = $entity->getPrimaryKeyAsCriterion(true);
+        $criteria = $entity->getPrimaryKeyAsCriterion();
         foreach( $this->getAll() as $currentEntity ) {
             if ( $criteria->evaluate($currentEntity) ) {
                 $entity->import($currentEntity->getBase());

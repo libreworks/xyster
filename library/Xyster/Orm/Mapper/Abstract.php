@@ -100,6 +100,8 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
      * <dt>metadataCache</dt><dd>The name of the Zend_Registry key to find a
      * Zend_Cache_Core object for caching metadata information.  If not
      * specified, the mapper will use the defaultMetadataCache.</dd>
+     * <dt>doNotRefreshAfterSave</dt><dd>This will cause the mapper not to
+     * refresh the entity after it's inserted or updated.</dd>
      * </dl>
      *
      * @var array
@@ -146,7 +148,10 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
      */
     public function delete( Xyster_Orm_Entity $entity )
     {
-        $broker = $this->_factory->getManager()->getPluginBroker();
+        $this->_assertThisEntityName($entity);
+        
+        $manager = $this->_factory->getManager();
+        $broker = $manager->getPluginBroker();
         $broker->preDelete($entity);
         $this->_delete($entity->getPrimaryKeyAsCriterion());
         $broker->postDelete($entity);
@@ -169,10 +174,10 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
                     }
                 // rely on the database to cascade the delete
                 } else if ( $onDelete == Xyster_Orm_Relation::ACTION_CASCADE ) {
-                    $this->_factory->getManager()->getRepository()->removeAll($related);
+                    $manager->getRepository()->removeAll($related);
                 // we have to delete every last one ourselves
                 } else if ( $onDelete == Xyster_Orm_Relation::ACTION_REMOVE ) {
-                    $this->_factory->getManager()->getRepository()->removeAll($related);
+                    $manager->getRepository()->removeAll($related);
                     foreach( $related as $relatedEntity ) {
                         $map->delete($relatedEntity);
                     }
@@ -337,17 +342,22 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
      */
     public function save( Xyster_Orm_Entity $entity )
     {
+        $this->_assertThisEntityName($entity);
+        
         /*
 		 * Step 1: Sets ids for any single-entity relationships 
 		 */
 		foreach( $this->getEntityMeta()->getRelations() as $k=>$v ) {
+		    /* @var $v Xyster_Orm_Relation */
 			if ( !$v->isCollection() && $entity->isLoaded($k) && $entity->$k !== null ) {
-				$linked = $entity->$k;
+				$linked = $entity->$k; /* @var $linked Xyster_Orm_Entity */
 				// get the original primary key, in case it's not auto-generated
 				$key = $linked->getPrimaryKey(true);
-				if ( !count($key) || !current($key) ) {
+				if ( !$linked->getBase() ) {
 					$this->_factory->get($v->getTo())->save($linked);
 					$key = $linked->getPrimaryKey();
+				} else if ( $key != $linked->getPrimaryKey() ) {
+				    $key = $linked->getPrimaryKey();
 				}
 				$keyNames = array_keys($key);
 				$foreignKey = $v->getId();
@@ -358,8 +368,9 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
 				}
 			}
 		}
-        
+		
 		$broker = $this->_factory->getManager()->getPluginBroker();
+		$updatedKey = false;
 		/*
 		 * Step 2: Save actual entity
 		 */
@@ -369,25 +380,32 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
             $broker->postInsert($entity);
         
         } else {
+            $updatedKey = $entity->getPrimaryKey() != $entity->getPrimaryKey(true);
             $broker->preUpdate($entity);
             $this->_update($entity);
             $broker->postUpdate($entity);
         }
         
-    	// this is in case any triggers in the db, etc. have changed the record
-    	$this->refresh($entity);
-        
+        // this is in case any triggers in the db, etc. have changed the record
+        if ( !$this->getOption('doNotRefreshAfterSave') ) {
+    	   $this->refresh($entity);
+        }
+    	
         /*
 		 * Step 3: work with many and joined relationships
 		 */
 		foreach( $this->getEntityMeta()->getRelations() as $k=>$relation ) {
 		    /* @var $relation Xyster_Orm_Relation */
-			if ( $relation->isCollection() && $entity->isLoaded($k) ) {
+            if ( $relation->isCollection() && ( $updatedKey
+			    || $entity->isLoaded($k) ) ) {
+			        
 				$set = $entity->$k;
+				$cascadeUpdate = $updatedKey &&
+				    $relation->getOnUpdate() == Xyster_Orm_Relation::ACTION_CASCADE;
 
 				$added = $set->getDiffAdded();
 				$removed = $set->getDiffRemoved();
-				if ( !$added && !$removed ) {
+				if ( !$added && !$removed && !$cascadeUpdate ) {
 					continue;
 				}
 
@@ -397,9 +415,17 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
 				    $this->_joinedDelete($set);
 				    
 				} else if ( $relation->getType() == 'many' ) {
-				    
+
     				$map = $this->_factory->get($relation->getTo());
-    				array_walk($added, array($map, 'save'));
+    				if ( $cascadeUpdate ) {
+    				    // if we should cascade changed primary keys
+    				    foreach( $set as $setEntity ) {
+    				        $map->save($setEntity);
+    				    }
+       				} else {
+    				    // no cascade, just save newly added to set
+    				    array_walk($added, array($map, 'save'));
+    				}
     				array_walk($removed, array($map, 'delete'));
     				
 				}
@@ -466,7 +492,22 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
      * @param Xyster_Orm_Entity $entity  The entity to update
      */
     abstract protected function _update( Xyster_Orm_Entity $entity );
-        
+    
+    /**
+     * A convenience method to assert entity type
+     *
+     * @param Xyster_Orm_Entity $entity
+     * @throws Xyster_Orm_Mapper_Exception if the entity supplied is of the wrong type
+     */
+    final protected function _assertThisEntityName( Xyster_Orm_Entity $entity )
+    {
+        $name = $this->getEntityName();
+        if ( ! $entity instanceof $name ) {
+            require_once 'Xyster/Orm/Mapper/Exception.php';
+            throw new Xyster_Orm_Mapper_Exception('This mapper only accepts entities of type ' . $name);
+        }
+    }
+    
     /**
      * Ensures the parameter passed is a Criterion
      *
@@ -479,7 +520,7 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
             ! $criteria instanceof Xyster_Data_Criterion &&
             $criteria !== null ) {
             require_once 'Xyster/Orm/Mapper/Exception.php';
-            throw new Xyster_Orm_Mapper_Exception('Invalid criteria: ' . gettype($criteria) );
+            throw new Xyster_Orm_Mapper_Exception('Invalid criteria: ' . gettype($criteria));
         }
         
         $_criteria = null;

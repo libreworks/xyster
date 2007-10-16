@@ -39,9 +39,10 @@ class MockAccountMapper extends Xyster_Orm_Mapper_Mock
         parent::init();
         
         $meta = $this->getEntityMeta();
-        $meta->hasMany('reported', array('class'=>'MockBug','id'=>'reportedBy'));
-        $meta->hasMany('assigned', array('class'=>'MockBug','id'=>'assignedTo','filters'=>'( assignedTo <> null )'));
-        $meta->hasMany('verified', array('class'=>'MockBug','id'=>'verifiedBy'));
+        require_once 'Xyster/Orm/Relation.php';
+        $meta->hasMany('reported', array('class'=>'MockBug','id'=>'reportedBy','onUpdate'=>Xyster_Orm_Relation::ACTION_CASCADE,'onDelete'=>Xyster_Orm_Relation::ACTION_REMOVE));
+        $meta->hasMany('assigned', array('class'=>'MockBug','id'=>'assignedTo','filters'=>'( assignedTo <> null )','onUpdate'=>Xyster_Orm_Relation::ACTION_CASCADE,'onDelete'=>Xyster_Orm_Relation::ACTION_CASCADE));
+        $meta->hasMany('verified', array('class'=>'MockBug','id'=>'verifiedBy','onUpdate'=>Xyster_Orm_Relation::ACTION_CASCADE));
     }
     
     /**

@@ -110,6 +110,23 @@ class Xyster_Orm_Mapper_AbstractTest extends PHPUnit_Framework_TestCase
     }
     
     /**
+     * Tests the delete method will cascade its effects
+     *
+     */
+    public function testDeleteCascade()
+    {
+        $map = $this->_mockFactory()->get('MockAccount');
+        $bmap = $this->_mockFactory()->get('MockBug');
+        
+        $account = $map->get('doublecompile');
+        $bug = $bmap->get(10);
+        
+        $map->delete($account);
+        $this->assertTrue($map->wasDeleted($account));
+        $this->assertTrue($bmap->wasDeleted($bug));
+    }
+    
+    /**
      * Tests the 'find' method
      *
      */
@@ -338,7 +355,6 @@ class Xyster_Orm_Mapper_AbstractTest extends PHPUnit_Framework_TestCase
         $bug->verifier = $newAccount;
         $set->add($bug);
         
-        $entity->assigned; // just loading a set
         $reported = $entity->reported;
         $reported->merge($set);
         $reported->retainAll($set);
@@ -350,6 +366,29 @@ class Xyster_Orm_Mapper_AbstractTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($map->wasSaved($newAccount));
         foreach( $removed as $removedEntity ) {
             $this->assertTrue($bmap->wasDeleted($removedEntity));
+        }
+    }
+    
+    /**
+     * Tests the 'save' method when a primary key is updated
+     *
+     */
+    public function testSaveUpdateKey()
+    {
+        $map = $this->_mockFactory()->get('MockAccount');
+        $bmap = $this->_mockFactory()->get('MockBug');
+        $entity = $map->get('mmouse');
+        
+        foreach( $entity->assigned as $bug ) {
+            $this->assertEquals('mmouse', $bug->assignedTo);
+        }
+        
+        $entity->accountName = 'mickey';
+        $map->save($entity);
+        
+        foreach( $entity->assigned as $bug ) {
+            $this->assertTrue($bmap->wasSaved($bug));
+            $this->assertEquals('mickey', $bug->assignedTo);
         }
     }
     
