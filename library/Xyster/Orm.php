@@ -199,7 +199,28 @@ class Xyster_Orm
     }
     
     /**
-     * Gets the secondary repository for storing entities
+     * Retrieve a plugin or plugins by class
+     *
+     * @param  string $class Class name of plugin(s) desired
+     * @return Xyster_Orm_Plugin_Abstract|array|false False if none, the plugin if only one, and array of plugins if multiple of same class
+     */
+    public function getPlugin( $class )
+    {
+        return $this->_manager->getPluginBroker()->getPlugin($class);
+    }
+
+    /**
+     * Retrieve all plugins
+     *
+     * @return array
+     */
+    public function getPlugins()
+    {
+        return $this->_manager->getPluginBroker()->getPlugins();
+    }
+    
+    /**
+     * Gets the secondary cache for storing entities
      *
      * @return Zend_Cache_Core
      */
@@ -208,6 +229,17 @@ class Xyster_Orm
         return $this->_manager->getSecondaryCache();
     }
     
+    /**
+     * Checks whether a plugin of a particular class is registered
+     *
+     * @param string $class
+     * @return boolean
+     */
+    public function hasPlugin( $class )
+    {
+        return $this->_manager->getPluginBroker()->hasPlugin($class);
+    }
+        
     /**
      * Sets an entity to be added to the data store
      *
@@ -255,6 +287,19 @@ class Xyster_Orm
     }
 
     /**
+     * Register a plugin
+     *
+     * @param Xyster_Orm_Plugin_Abstract $plugin
+     * @param int $stackIndex
+     * @return Xyster_Orm provides a fluent interface
+     */
+    public function registerPlugin( Xyster_Orm_Plugin_Abstract $plugin, $stackIndex = null )
+    {
+        $this->_manager->getPluginBroker()->registerPlugin($plugin, $stackIndex);
+        return $this;
+    }
+    
+    /**
      * Sets an entity to be removed
      *
      * @param Xyster_Orm_Entity $entity
@@ -299,16 +344,16 @@ class Xyster_Orm
     }
 
     /**
-     * Sets the secondary repository for storing entities
+     * Sets the secondary cache for storing entities
      *
-     * If $repository is null, then no secondary repository is used.
+     * If $cache is null, then no secondary cache is used.
      *
-     * @param mixed $repository Either a Cache object, or a string naming a Registry key
+     * @param mixed $cache Either a Cache object, or a string naming a Registry key
      * @return Xyster_Orm provides a fluent interface
      */
-    public function setSecondaryCache($repository = null)
+    public function setSecondaryCache($cache = null)
     {
-        $this->_manager->setSecondaryCache($repository);
+        $this->_manager->setSecondaryCache($cache);
         return $this;
     }
     
@@ -333,7 +378,19 @@ class Xyster_Orm
         // this will load the 'set' class
         $map->getSet();
     }
-    
+
+    /**
+     * Unregister a plugin.
+     *
+     * @param string|Xyster_Orm_Plugin_Abstract $plugin Plugin object or class name
+     * @return Xyster_Orm provides a fluent interface
+     */
+    public function unregisterPlugin( $plugin )
+    {
+        $this->_manager->getPluginBroker()->unregisterPlugin($plugin);
+        return $this;
+    }
+        
     /**
      * Gets the entity repository
      *

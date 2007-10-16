@@ -344,19 +344,19 @@ class Xyster_Orm_Manager
     }
     
     /**
-     * Sets the secondary repository for storing entities
+     * Sets the secondary cache for storing entities
      *
-     * If $repository is null, then no secondary repository is used.
+     * If $cache is null, then no secondary cache is used.
      *
-     * @param mixed $repository Either a Cache object, or a string naming a Registry key
+     * @param mixed $cache Either a Cache object, or a string naming a Registry key
      */
-    public function setSecondaryCache($repository = null)
+    public function setSecondaryCache($cache = null)
     {
-        $this->_secondaryCache = $this->_setupSecondaryCache($repository);
+        $this->_secondaryCache = $this->_setupSecondaryCache($cache);
     }
     
     /**
-     * Gets an entity from the secondary repository
+     * Gets an entity from the secondary cache
      *
      * @param string $className
      * @param array $id
@@ -381,7 +381,7 @@ class Xyster_Orm_Manager
     }
    
     /**
-     * Puts the entity in the secondary repository
+     * Puts the entity in the secondary cache
      * 
      * @param Xyster_Orm_Entity $entity
      */
@@ -418,23 +418,23 @@ class Xyster_Orm_Manager
     }
     
     /**
-     * @param mixed $repository Either a Cache object, or a string naming a Registry key
+     * @param mixed $cache Either a Cache object, or a string naming a Registry key
      * @return Zend_Cache_Core
      * @throws Xyster_Orm_Exception
      */
-    final protected function _setupSecondaryCache($repository)
+    final protected function _setupSecondaryCache($cache)
     {
-        if ($repository === null) {
+        if ($cache === null) {
             return null;
         }
-        if (is_string($repository)) {
+        if (is_string($cache)) {
             require_once 'Zend/Registry.php';
-            $repository = Zend_Registry::get($repository);
+            $cache = Zend_Registry::get($cache);
         }
-        if (!$repository instanceof Zend_Cache_Core) {
+        if (!$cache instanceof Zend_Cache_Core) {
             require_once 'Xyster/Orm/Exception.php';
             throw new Xyster_Orm_Exception('Argument must be of type Zend_Cache_Core, or a Registry key where a Zend_Cache_Core object is stored');
         }
-        return $repository;
+        return $cache;
     }   
 }
