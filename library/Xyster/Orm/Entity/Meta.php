@@ -126,7 +126,8 @@ class Xyster_Orm_Entity_Meta
      */
     public function getPrimary()
     {
-        return $this->_primary;
+        return array_values($this->_primary);
+        // so current() can be called without reset()ing the array
     }
     
     /**
