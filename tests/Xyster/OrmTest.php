@@ -41,6 +41,11 @@ require_once 'Xyster/Orm.php';
  * @see Xyster_Orm_CacheMock
  */
 require_once 'Xyster/Orm/CacheMock.php';
+/**
+ * @see Xyster_Orm_Plugin_Abstract
+ */
+require_once 'Xyster/Orm/Plugin/Abstract.php';
+
 
 /**
  * Test for Xyster_Orm
@@ -242,6 +247,33 @@ class Xyster_OrmTest extends Xyster_Orm_TestSetup
     }
     
     /**
+     * Tests the 'getPlugin' method
+     */
+    public function testGetPlugin()
+    {
+        $plugin = $this->getMock('Xyster_Orm_Plugin_Abstract');
+        $this->_orm->registerPlugin($plugin);
+        $class = get_class($plugin);
+        
+        $return = $this->_orm->getPlugin(get_class($plugin));
+        $this->assertSame($plugin, $return);
+    }
+    
+    /**
+     * Tests the 'getPlugins' method
+     */
+    public function testGetPlugins()
+    {
+        $plugin = $this->getMock('Xyster_Orm_Plugin_Abstract');
+        $this->_orm->registerPlugin($plugin);
+        $class = get_class($plugin);
+        
+        $return = $this->_orm->getPlugins();
+        $this->assertType('array', $return);
+        $this->assertContains($plugin, $return);
+    }
+    
+    /**
      * Tests that persisting an existing entity errors
      *
      */
@@ -285,6 +317,21 @@ class Xyster_OrmTest extends Xyster_Orm_TestSetup
         $this->assertType('Xyster_Orm_Query_Report', $report);
         $this->assertEquals(1, count($report->getFields()));
         $this->assertEquals(1, count($report->getWhere()));
+    }
+    
+    /**
+     * Tests the 'unregisterPlugin' method
+     */
+    public function testUnregisterPlugin()
+    {
+        $plugin = $this->getMock('Xyster_Orm_Plugin_Abstract');
+        $this->_orm->registerPlugin($plugin);
+        $class = get_class($plugin);
+        
+        $this->assertTrue($this->_orm->hasPlugin($class));
+        $return = $this->_orm->unregisterPlugin($plugin);
+        $this->assertSame($this->_orm, $return);
+        $this->assertFalse($this->_orm->hasPlugin($class));
     }
 }
 
