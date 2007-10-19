@@ -85,17 +85,27 @@ class Xyster_Controller_Plugin_Auth extends Zend_Controller_Plugin_Abstract
      */
     public function routeStartup(Zend_Controller_Request_Abstract $request)
     {
-        $auth = Zend_Auth::getInstance(); 
+        $auth = Zend_Auth::getInstance();
         if ( !$auth->hasIdentity() && $this->_adapter ) {
             $auth->authenticate($this->_adapter);
         }
-        
+
         $role = $this->getRole();
-        
+            
         if ( $role instanceof Zend_Acl_Role_Interface && $this->_acl && 
             !$this->_acl->hasRole($role) ) {
             $this->_acl->addRole($role, $this->getRoleProvider()->getRoleParents($role));
         }
+    }
+    
+    /**
+     * Gets the ACL assigned to the plugin
+     *
+     * @return Zend_Acl
+     */
+    public function getAcl()
+    {
+        return $this->_acl;
     }
     
     /**
@@ -105,8 +115,9 @@ class Xyster_Controller_Plugin_Auth extends Zend_Controller_Plugin_Abstract
      */
     public function getRole()
     {
-        if ( !$this->_role ) {
-            $identity = Zend_Auth::getInstance()->getIdentity();
+        $auth = Zend_Auth::getInstance();
+        if ( !$this->_role && $auth->hasIdentity() ) {
+            $identity = $auth->getIdentity();
             $this->_role = $this->getRoleProvider()->getRole($identity);
         }
         
@@ -125,6 +136,18 @@ class Xyster_Controller_Plugin_Auth extends Zend_Controller_Plugin_Abstract
             $this->_provider = new Xyster_Acl_Role_Provider();
         }
         return $this->_provider;
+    }
+    
+    /**
+     * Sets the ACL to which the authenticated role will be added
+     *
+     * @param Zend_Acl $acl
+     * @return Xyster_Controller_Plugin_Auth
+     */
+    public function setAcl( Zend_Acl $acl )
+    {
+        $this->_acl = $acl;
+        return $this;
     }
     
     /**
