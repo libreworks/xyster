@@ -117,7 +117,7 @@ class Xyster_Controller_Plugin_AclTest extends PHPUnit_Framework_TestCase
      */
     public function testPostDispatchWithoutException()
     {
-        $this->plugin->allow('doublecompile', null); // allow all
+        $this->plugin->allow('doublecompile'); // allow all
         
         $this->request->setModuleName('foo')
                       ->setControllerName('bar')
@@ -129,6 +129,24 @@ class Xyster_Controller_Plugin_AclTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('foo', $this->request->getModuleName());
     }
 
+    /**
+     * Tests the plugin forwards to the login action if no identity is available
+     *
+     */
+    public function testPostDispatchNotAuthenticated()
+    {
+        Zend_Auth::getInstance()->clearIdentity();
+        
+        $this->request->setModuleName('foo')
+                      ->setControllerName('bar')
+                      ->setActionName('baz');
+        $this->plugin->preDispatch($this->request);
+        
+        $this->assertEquals('index', $this->request->getActionName());
+        $this->assertEquals('login', $this->request->getControllerName());
+        $this->assertEquals('default', $this->request->getModuleName());
+    }
+    
     /**
      * Tests the error handler information is correct
      *
@@ -152,48 +170,25 @@ class Xyster_Controller_Plugin_AclTest extends PHPUnit_Framework_TestCase
      */
     public function testSetAccessDenied() 
     {
-        $return = $this->plugin->setAccessDenied(array(
-            'module'     => 'myfoo',
-            'controller' => 'bar',
-            'action'     => 'boobaz',
-        ));
+        $return = $this->plugin->setAccessDenied('myfoo', 'bar', 'boobaz');
 
         $this->assertEquals('myfoo', $this->plugin->getAccessDeniedModule());
         $this->assertEquals('bar', $this->plugin->getAccessDeniedController());
         $this->assertEquals('boobaz', $this->plugin->getAccessDeniedAction());
         $this->assertSame($this->plugin, $return);
     }
-
+    
     /**
-     * Tests the 'setAccessDeniedModule' method
+     * Tests the 'setLogin' method
      *
      */
-    public function testSetAccessDeniedModule() 
+    public function testSetLogin() 
     {
-        $return = $this->plugin->setAccessDeniedModule('boobah');
-        $this->assertEquals('boobah', $this->plugin->getAccessDeniedModule());
-        $this->assertSame($this->plugin, $return);
-    }
+        $return = $this->plugin->setLogin('myfoo', 'bar', 'boobaz');
 
-    /**
-     * Tests the 'setAccessDeniedController' method
-     *
-     */
-    public function testSetAccessDeniedController() 
-    {
-        $return = $this->plugin->setAccessDeniedController('boobah');
-        $this->assertEquals('boobah', $this->plugin->getAccessDeniedController());
-        $this->assertSame($this->plugin, $return);
-    }
-
-    /**
-     * Tests the 'setAccessDeniedAction' method
-     *
-     */
-    public function testSetAccessDeniedAction() 
-    {
-        $return = $this->plugin->setAccessDeniedAction('boobah');
-        $this->assertEquals('boobah', $this->plugin->getAccessDeniedAction());
+        $this->assertEquals('myfoo', $this->plugin->getLoginModule());
+        $this->assertEquals('bar', $this->plugin->getLoginController());
+        $this->assertEquals('boobaz', $this->plugin->getLoginAction());
         $this->assertSame($this->plugin, $return);
     }
 }

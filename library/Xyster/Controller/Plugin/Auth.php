@@ -53,6 +53,27 @@ class Xyster_Controller_Plugin_Auth extends Zend_Controller_Plugin_Abstract
     protected $_adapter;
     
     /**
+     * The dispatch action for authentication failure 
+     *
+     * @var string
+     */
+    protected $_failAction = 'index';
+    
+    /**
+     * The dispatch controller for authentication failure 
+     *
+     * @var string
+     */
+    protected $_failController = 'login';
+    
+    /**
+     * The dispatch module for authentication failure 
+     *
+     * @var string
+     */
+    protected $_failModule;
+    
+    /**
      * The role provider
      *
      * @var Xyster_Acl_Role_Provider_Interface
@@ -65,18 +86,34 @@ class Xyster_Controller_Plugin_Auth extends Zend_Controller_Plugin_Abstract
      * @var Zend_Acl_Role_Interface
      */
     protected $_role;
+
+    /**
+     * Whether the 'routeStartup' method has already been called
+     *
+     * @var boolean
+     */
+    protected $_started = false;
     
     /**
-     * Creates a new auth plugin
+     * The dispatch action for authentication success
      *
-     * @param Zend_Auth_Adapter_Interface $adapter
-     * @param Zend_Acl $acl
+     * @var string
      */
-    public function __construct( Zend_Auth_Adapter_Interface $adapter = null, Zend_Acl $acl = null )
-    {
-        $this->_adapter = $adapter;
-        $this->_acl = $acl;
-    }
+    protected $_successAction = 'success';
+
+    /**
+     * The dispatch controller for authentication success
+     *
+     * @var string
+     */
+    protected $_successController = 'login';
+
+    /**
+     * The dispatch module for authentication success
+     *
+     * @var string
+     */
+    protected $_successModule;
     
     /**
      * Called before Zend_Controller_Front determines the dispatch route
@@ -85,17 +122,9 @@ class Xyster_Controller_Plugin_Auth extends Zend_Controller_Plugin_Abstract
      */
     public function routeStartup(Zend_Controller_Request_Abstract $request)
     {
-        $auth = Zend_Auth::getInstance();
-        if ( !$auth->hasIdentity() && $this->_adapter ) {
-            $auth->authenticate($this->_adapter);
-        }
-
-        $role = $this->getRole();
-            
-        if ( $role instanceof Zend_Acl_Role_Interface && $this->_acl && 
-            !$this->_acl->hasRole($role) ) {
-            $this->_acl->addRole($role, $this->getRoleProvider()->getRoleParents($role));
-        }
+        $this->_started = true;
+        
+        $this->_authenticate();
     }
     
     /**
@@ -106,6 +135,40 @@ class Xyster_Controller_Plugin_Auth extends Zend_Controller_Plugin_Abstract
     public function getAcl()
     {
         return $this->_acl;
+    }
+    
+    /**
+     * Gets the dispatch action for authentication failure
+     *
+     * @return string
+     */
+    public function getFailAction()
+    {
+        return $this->_failAction;
+    }
+    
+    /**
+     * Gets the dispatch controller for authentication failure
+     *
+     * @return string
+     */
+    public function getFailController()
+    {
+        return $this->_failController;
+    }
+    
+    /**
+     * Gets the dispatch module for authentication failure
+     *
+     * @return string
+     */
+    public function getFailModule()
+    {
+        if ($this->_failModule === null) {
+            require_once 'Zend/Controller/Front.php';
+            $this->_failModule = Zend_Controller_Front::getInstance()->getDispatcher()->getDefaultModule();
+        }
+        return $this->_failModule;
     }
     
     /**
@@ -139,10 +202,44 @@ class Xyster_Controller_Plugin_Auth extends Zend_Controller_Plugin_Abstract
     }
     
     /**
+     * Gets the dispatch action for authentication success
+     *
+     * @return string
+     */
+    public function getSuccessAction()
+    {
+        return $this->_successAction;
+    }
+    
+    /**
+     * Gets the dispatch controller for authentication success
+     *
+     * @return string
+     */
+    public function getSuccessController()
+    {
+        return $this->_successController;
+    }
+    
+    /**
+     * Gets the dispatch module for authentication success
+     *
+     * @return string
+     */
+    public function getSuccessModule()
+    {
+        if ($this->_successModule === null) {
+            require_once 'Zend/Controller/Front.php';
+            $this->_successModule = Zend_Controller_Front::getInstance()->getDispatcher()->getDefaultModule();
+        }
+        return $this->_successModule;
+    }
+    
+    /**
      * Sets the ACL to which the authenticated role will be added
      *
      * @param Zend_Acl $acl
-     * @return Xyster_Controller_Plugin_Auth
+     * @return Xyster_Controller_Plugin_Auth provides a fluent interface
      */
     public function setAcl( Zend_Acl $acl )
     {
@@ -150,6 +247,39 @@ class Xyster_Controller_Plugin_Auth extends Zend_Controller_Plugin_Abstract
         return $this;
     }
     
+    /**
+     * Sets the authentication adapter 
+     *
+     * @param Zend_Auth_Adapter_Interface $adapter
+     * @return Xyster_Controller_Plugin_Auth provides a fluent interface
+     */
+    public function setAuthAdapter( Zend_Auth_Adapter_Interface $adapter )
+    {
+        $this->_adapter = $adapter;
+        if ( $this->_started ) {
+            // if the plugin already tried to authenticate, use this new adapter
+            $this->_authenticate();
+        }
+        return $this;
+    }
+    
+    /**
+     * Sets the dispatch location for a failed authentication
+     *
+     * @param string $module The dispatch module
+     * @param string $controller The dispatch controller
+     * @param string $action The dispatch action
+     * @return Xyster_Controller_Plugin_Auth provides a fluent interface
+     */
+    public function setFailure( $module, $controller, $action )
+    {
+        $this->_failModule = $module;
+        $this->_failController = $controller;
+        $this->_failAction = $action;
+        
+        return $this;
+    }
+        
     /**
      * Sets the role provider used to translate the identity into a role
      *
@@ -160,5 +290,59 @@ class Xyster_Controller_Plugin_Auth extends Zend_Controller_Plugin_Abstract
     {
         $this->_provider = $provider;
         return $this;
+    }
+    
+    /**
+     * Sets the dispatch location for a successful authentication
+     *
+     * @param string $module The dispatch module
+     * @param string $controller The dispatch controller
+     * @param string $action The dispatch action
+     * @return Xyster_Controller_Plugin_Auth provides a fluent interface
+     */
+    public function setSuccess( $module, $controller, $action )
+    {
+        $this->_successModule = $module;
+        $this->_successController = $controller;
+        $this->_successAction = $action;
+        
+        return $this;
+    }
+    
+    /**
+     * Does the actual auth work
+     *
+     */
+    protected function _authenticate()
+    {
+        $auth = Zend_Auth::getInstance();
+        if ( !$auth->hasIdentity() ) {
+            if ( !$this->_adapter ) {
+                return;
+            } else {
+                $result = $auth->authenticate($this->_adapter);
+                $request = $this->getRequest();
+                if ( $result->isValid() ) {
+                    $request->setModuleName($this->getSuccessModule())
+                        ->setControllerName($this->getSuccessController())
+                        ->setActionName($this->getSuccessAction())
+                        ->setDispatched(false);
+                } else {
+                    $request->setModuleName($this->getFailModule())
+                        ->setControllerName($this->getFailController())
+                        ->setActionName($this->getFailAction())
+                        ->setParam('result', $result)
+                        ->setDispatched(false);
+                    return;
+                }
+            }
+        }
+
+        $role = $this->getRole();
+            
+        if ( $role instanceof Zend_Acl_Role_Interface && $this->_acl && 
+            !$this->_acl->hasRole($role) ) {
+            $this->_acl->addRole($role, $this->getRoleProvider()->getRoleParents($role));
+        }
     }
 }

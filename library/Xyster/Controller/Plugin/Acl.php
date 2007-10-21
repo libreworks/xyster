@@ -28,6 +28,10 @@ require_once 'Zend/Controller/Plugin/Abstract.php';
  */
 require_once 'Xyster/Controller/Request/Resource.php';
 /**
+ * Zend_Auth
+ */
+require_once 'Zend/Auth.php';
+/**
  * Authorization plugin
  *
  * @category  Xyster
@@ -49,35 +53,46 @@ class Xyster_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
      * Module to use for errors; defaults to default module in dispatcher
      * @var string
      */
-    protected $_errorModule;
+    protected $_deniedModule;
 
     /**
      * Controller to use for errors; defaults to 'error'
      * @var string
      */
-    protected $_errorController = 'error';
+    protected $_deniedController = 'error';
 
     /**
      * Action to use for errors; defaults to 'error'
      * @var string
      */
-    protected $_errorAction = 'error';
+    protected $_deniedAction = 'error';
+    
+    /**
+     * Action to use for login; defaults to 'index'
+     * @var string
+     */
+    protected $_loginAction = 'index';
+    
+    /**
+     * Controller to use for login; defaults to 'login'
+     * @var string
+     */
+    protected $_loginController = 'login';
+    
+    /**
+     * Module to use for login; defaults to default module in dispatcher
+     * @var string
+     */
+    protected $_loginModule;
     
     /**
      * Creates a new acl plugin
-     *
-     * Options may include:
-     * - module
-     * - controller
-     * - action
      * 
      * @param Zend_Acl $acl
-     * @param array $options
      */
-    public function __construct( Zend_Acl $acl, array $options = array())
+    public function __construct( Zend_Acl $acl )
     {
         $this->_acl = $acl;
-        $this->setAccessDenied($options);
     }
     
     /**
@@ -96,7 +111,7 @@ class Xyster_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
      * @param Zend_Acl_Role_Interface|string $role
      * @return Xyster_Controller_Action_Helper_Acl provides a fluent interface
      */
-    public function allow( $role, $module, $controller = null, $action = null )
+    public function allow( $role, $module = null, $controller = null, $action = null )
     {
         $resource = $this->_getResource($module, $controller, $action);
         $this->_acl->allow($role, $resource);
@@ -110,7 +125,7 @@ class Xyster_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
      */
     public function getAccessDeniedAction()
     {
-        return $this->_errorAction;
+        return $this->_deniedAction;
     }
     
     /**
@@ -120,7 +135,7 @@ class Xyster_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
      */
     public function getAccessDeniedController()
     {
-        return $this->_errorController;
+        return $this->_deniedController;
     }
 
     /**
@@ -130,33 +145,79 @@ class Xyster_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
      */
     public function getAccessDeniedModule()
     {
-        if (null === $this->_errorModule) {
+        if (null === $this->_deniedModule) {
             require_once 'Zend/Controller/Front.php';
-            $this->_errorModule = Zend_Controller_Front::getInstance()->getDispatcher()->getDefaultModule();
+            $this->_deniedModule = Zend_Controller_Front::getInstance()->getDispatcher()->getDefaultModule();
         }
-        return $this->_errorModule;
+        return $this->_deniedModule;
+    }
+
+    /**
+     * Retrieve the current acl plugin action
+     *
+     * @return string
+     */
+    public function getLoginAction()
+    {
+        return $this->_loginAction;
     }
     
+    /**
+     * Retrieve the current acl plugin controller
+     *
+     * @return string
+     */
+    public function getLoginController()
+    {
+        return $this->_loginController;
+    }
+
+    /**
+     * Retrieve the current acl plugin module
+     *
+     * @return string
+     */
+    public function getLoginModule()
+    {
+        if (null === $this->_loginModule) {
+            require_once 'Zend/Controller/Front.php';
+            $this->_loginModule = Zend_Controller_Front::getInstance()->getDispatcher()->getDefaultModule();
+        }
+        return $this->_loginModule;
+    }
+        
     /**
      * Called before an action is dispatched by Zend_Controller_Dispatcher.
      *
      * @param  Zend_Controller_Request_Abstract $request
      */
     public function preDispatch(Zend_Controller_Request_Abstract $request)
-    {
-        // they should be allowed access to the error display screen, duh
-        $this->_acl->allow(null,
-            $this->_getResource($this->getAccessDeniedModule(),
-            $this->getAccessDeniedController(),
-            $this->getAccessDeniedAction()));
-            
+    {        
         $request = $this->getRequest();
-        $role = Zend_Auth::getInstance()->getIdentity();
+        $auth = Zend_Auth::getInstance();
+        $role = $auth->getIdentity();
         $resource = $this->_getResource($request->getModuleName(),
             $request->getControllerName(), $request->getActionName());
+
+        $isAllowed = $this->_acl->isAllowed($role, $resource);
         
+        if ( !$isAllowed && !$auth->hasIdentity() ) {
+            // they should be allowed access to the login form
+            $this->_acl->allow(null,
+                $this->_getResource($this->getLoginModule(),
+                $this->getLoginController(),
+                $this->getLoginAction()));
+                
+            // Forward to the login form
+            $request->setModuleName($this->getLoginModule())
+                ->setControllerName($this->getLoginController())
+                ->setActionName($this->getLoginAction())
+                ->setDispatched(false);
+            return;
+        }
+            
         try {
-            if ( !$this->_acl->isAllowed($role, $resource) ) {
+            if ( !$isAllowed ) {
                 $msg = 'Insufficient permissions: ';
         		$msg .= $role . ' -> ' . $resource->getResourceId();
         		require_once 'Zend/Acl/Exception.php';
@@ -169,7 +230,13 @@ class Xyster_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
     
             // Keep a copy of the original request
             $error->request = clone $request;
-    
+            
+            // they should be allowed access to the error display screen, duh
+            $this->_acl->allow(null,
+                $this->_getResource($this->getAccessDeniedModule(),
+                $this->getAccessDeniedController(),
+                $this->getAccessDeniedAction()));
+            
             // Forward to the error handler
             $request->setParam('error_handler', $error)
                 ->setModuleName($this->getAccessDeniedModule())
@@ -180,61 +247,39 @@ class Xyster_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
     }
 
     /**
-     * Setup the error handling options
+     * Setup the dispatch location for access denied errors
      *
-     * @param  array $options
-     * @return Xyster_Controller_Plugin_Acl
+     * @param string $module
+     * @param string $controller
+     * @param string $action
+     * @return Xyster_Controller_Plugin_Acl provides a fluent interface
      */
-    public function setAccessDenied(array $options = array())
+    public function setAccessDenied( $module, $controller, $action )
     {
-        if (isset($options['module'])) {
-            $this->setAccessDeniedModule($options['module']);
-        }
-        if (isset($options['controller'])) {
-            $this->setAccessDeniedController($options['controller']);
-        }
-        if (isset($options['action'])) {
-            $this->setAccessDeniedAction($options['action']);
-        }
+        $this->_deniedModule = (string) $module;
+        $this->_deniedController = (string) $controller;
+        $this->_deniedAction = (string) $action;
+        
         return $this;
     }
     
     /**
-     * Set the action name for the acl plugin
+     * Setup the dispatch location for unauthenticated users
      *
-     * @param  string $action
-     * @return Xyster_Controller_Plugin_Acl
+     * @param string $module
+     * @param string $controller
+     * @param string $action
+     * @return Xyster_Controller_Plugin_Acl provides a fluent interface
      */
-    public function setAccessDeniedAction($action)
+    public function setLogin( $module, $controller, $action )
     {
-        $this->_errorAction = (string) $action;
+        $this->_loginModule = (string) $module;
+        $this->_loginController = (string) $controller;
+        $this->_loginAction = (string) $action;
+                
         return $this;
-    }
+    }    
 
-    /**
-     * Set the controller name for the acl plugin
-     *
-     * @param  string $controller
-     * @return Xyster_Controller_Plugin_Acl
-     */
-    public function setAccessDeniedController($controller)
-    {
-        $this->_errorController = (string) $controller;
-        return $this;
-    }
-    
-    /**
-     * Set the module name for the acl plugin
-     *
-     * @param  string $module
-     * @return Xyster_Controller_Plugin_Acl
-     */
-    public function setAccessDeniedModule($module)
-    {
-        $this->_errorModule = (string) $module;
-        return $this;
-    }
-    
     /**
      * Gets the resource object
      *

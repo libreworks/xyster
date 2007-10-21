@@ -92,7 +92,8 @@ class Xyster_Controller_Plugin_AuthTest extends PHPUnit_Framework_TestCase
         Zend_Controller_Front::getInstance()->resetInstance();
         $this->request  = new Zend_Controller_Request_Http();
         $this->response = new Zend_Controller_Response_Cli();
-        $this->plugin   = new Xyster_Controller_Plugin_Auth(new Xyster_AuthTest_Success_Adapter(), $this->acl);
+        $this->plugin   = new Xyster_Controller_Plugin_Auth;
+        $this->plugin->setAcl($this->acl);
 
         $this->plugin->setRequest($this->request);
         $this->plugin->setResponse($this->response);
@@ -105,6 +106,63 @@ class Xyster_Controller_Plugin_AuthTest extends PHPUnit_Framework_TestCase
     protected function tearDown()
     {
         Zend_Auth::getInstance()->clearIdentity();
+    }
+    
+    /**
+     * Tests the get and set ACL methods
+     *
+     */
+    public function testSetAcl()
+    {
+        $acl = new Zend_Acl;
+        $return = $this->plugin->setAcl($acl);
+        
+        $this->assertSame($this->plugin, $return);
+        
+        $return = $this->plugin->getAcl();
+        
+        $this->assertSame($acl, $return);
+    }
+    
+    /**
+     * Tests the adapter when no identity is present
+     *
+     */
+    public function testNoIdentity()
+    {
+        Zend_Auth::getInstance()->clearIdentity();
+        $this->plugin->routeStartup($this->request);
+        $this->assertFalse($this->acl->hasRole('doublecompile'));
+        $this->assertFalse(Zend_Auth::getInstance()->hasIdentity());
+    }
+    
+    /**
+     * Tests the plugin works if already called then adapter is later specified
+     *
+     */
+    public function testStarted()
+    {
+        $this->plugin->routeStartup($this->request);
+        $this->assertAttributeEquals(true, '_started', $this->plugin);
+        $this->assertFalse($this->acl->hasRole('doublecompile'));
+        $this->plugin->setAuthAdapter(new Xyster_AuthTest_Success_Adapter());
+        $this->assertTrue($this->acl->hasRole('doublecompile'));
+    }
+    
+    /**
+     * Tests if the auth adapter returns failure
+     *
+     */
+    public function testFailure()
+    {
+        $this->plugin->setAuthAdapter(new Xyster_AuthTest_Failure_Adapter());
+        $this->plugin->routeStartup($this->request);
+        $this->assertFalse($this->acl->hasRole('doublecompile'));
+        $this->assertFalse(Zend_Auth::getInstance()->hasIdentity());
+        
+        $this->assertEquals('index', $this->request->getActionName());
+        $this->assertEquals('login', $this->request->getControllerName());
+        $this->assertEquals('default', $this->request->getModuleName());
     }
     
     /**
@@ -138,11 +196,30 @@ class Xyster_Controller_Plugin_AuthTest extends PHPUnit_Framework_TestCase
      */
     public function testRouteStartup()
     {
+        $this->plugin->setAuthAdapter(new Xyster_AuthTest_Success_Adapter());
         $this->assertFalse($this->acl->hasRole('doublecompile'));
         $this->plugin->routeStartup($this->request);
         $this->assertTrue($this->acl->hasRole('doublecompile'));
-    }
         
+        $this->assertEquals('success', $this->request->getActionName());
+        $this->assertEquals('login', $this->request->getControllerName());
+        $this->assertEquals('default', $this->request->getModuleName());
+    }
+    
+    /**
+     * Tests the 'setFailure' method
+     *
+     */
+    public function testSetFailure() 
+    {
+        $return = $this->plugin->setFailure('myfoo', 'bar', 'boobaz');
+
+        $this->assertEquals('myfoo', $this->plugin->getFailModule());
+        $this->assertEquals('bar', $this->plugin->getFailController());
+        $this->assertEquals('boobaz', $this->plugin->getFailAction());
+        $this->assertSame($this->plugin, $return);
+    }
+    
     /**
      * Tests the 'setRoleProvider' method
      *
@@ -155,6 +232,20 @@ class Xyster_Controller_Plugin_AuthTest extends PHPUnit_Framework_TestCase
         
         $this->assertSame($this->plugin, $return);
         $this->assertSame($provider, $this->plugin->getRoleProvider());
+    }
+    
+    /**
+     * Tests the 'setSuccess' method
+     *
+     */
+    public function testSetSuccess() 
+    {
+        $return = $this->plugin->setSuccess('myfoo', 'bar', 'boobaz');
+
+        $this->assertEquals('myfoo', $this->plugin->getSuccessModule());
+        $this->assertEquals('bar', $this->plugin->getSuccessController());
+        $this->assertEquals('boobaz', $this->plugin->getSuccessAction());
+        $this->assertSame($this->plugin, $return);
     }
 }
 
@@ -175,6 +266,18 @@ class Xyster_AuthTest_Success_Adapter implements Zend_Auth_Adapter_Interface
     public function authenticate()
     {
         return new Zend_Auth_Result(1, 'doublecompile');
+    }
+}
+/**
+ * Just a simple stub object
+ *
+ */
+class Xyster_AuthTest_Failure_Adapter implements Zend_Auth_Adapter_Interface
+{
+    public function authenticate()
+    {
+        return new Zend_Auth_Result(Zend_Auth_Result::FAILURE_IDENTITY_NOT_FOUND,
+            null, array('Could not find identity'));
     }
 }
 
