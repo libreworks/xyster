@@ -535,16 +535,25 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
         if ( $sequence && !$data[$pkIdentity]) {
             $data[$pkIdentity] = $db->nextSequenceId($sequence);
         }
+        
+	    /**
+         * If the primary key can be generated automatically, and no value was
+         * specified in the user-supplied data, then omit it from the tuple
+         */
+        if ( array_key_exists($pkIdentity, $data) && $data[$pkIdentity] === null ) {
+            unset($data[$pkIdentity]);
+        }
 
         $db->insert($this->getTable(), $data);
 
         $primaryKey = null;
-        if ( $data[$pkIdentity] ) {
+        if ( isset($data[$pkIdentity]) ) {
             /**
-             * Return the primary key value or array of values(s) if the
-             * primary key is compound.  This handles the case of natural keys
-             * and sequence-driven keys.  This also covers the case of
-             * auto-increment keys when the user specifies a value
+             * Return the primary key value or array of values if the
+             * primary key is compound.  This handles:
+             * - natural keys
+             * - sequence-driven keys
+             * - auto-increment keys when the user specifies a value
              */
             $pkData = array_intersect_key($data, array_flip($primary));
             if (count($primary) == 1) {

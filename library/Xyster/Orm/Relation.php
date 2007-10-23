@@ -491,17 +491,7 @@ class Xyster_Orm_Relation
             $relation = $this->getReverse();
             $name = $relation->getName();
             $to->$name = $from;
-
-            $primary = $from->getPrimaryKey(true);
-            if ( $primary ) {
-                $keyNames = array_keys($primary);
-                $foreignNames = $relation->getId();
-                for( $i=0; $i<count($keyNames); $i++ ) {
-                    $keyName = $keyNames[$i];
-                    $foreignName = $foreignNames[$i];
-                    $to->$foreignName = $from->$keyName;
-                }
-            }
+            // no need to set $to's foreign key - it will do that itself
         }
     }
 }

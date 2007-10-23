@@ -217,6 +217,7 @@ class Xyster_Orm_EntityTest extends Xyster_Orm_TestSetup
     public function testSetField()
     {
         $entity = $this->_getMockEntityWithNoPk();
+        $this->assertFalse($entity->isDirty());
         
         $entity->reportedBy = 'doublecompile';
         $this->assertEquals('doublecompile', $entity->reportedBy);
@@ -244,6 +245,21 @@ class Xyster_Orm_EntityTest extends Xyster_Orm_TestSetup
         $set = $entity->products;
         $this->assertType('MockProductSet', $set);        
         $this->assertSame($set, $entity->getProducts());
+    }
+    
+    /**
+     * Tests that loading a relation will not set an entity dirty
+     *
+     */
+    public function testGetRelatedNotDirty()
+    {
+        $reporter = new MockAccount(array('accountName'=>'doublecompile'));
+        $this->assertFalse($reporter->isDirty(), 'Entity should not be dirty right after load');
+        $reporter->assigned;
+        $reporter->verified;
+        $bugs = $reporter->reported;
+        $this->assertType('MockBugSet', $bugs);
+        $this->assertFalse($reporter->isDirty(), 'Entity should not be dirty after loading a relation');
     }
     
     /**

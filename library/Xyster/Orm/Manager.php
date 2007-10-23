@@ -365,18 +365,20 @@ class Xyster_Orm_Manager
      */
     protected function _getFromSecondaryCache( $className, $id )
     {
-        $repo = $this->getSecondaryCache();
+        $cache = $this->getSecondaryCache();
         $entity = null;
-        if ( $repo ) {
-            $repoId = array( 'Xyster_Orm',
-                $this->getMapperFactory()->get($className)->getDomain(),
-                $className );
+        if ( $cache ) {
+            $map = $this->getMapperFactory()->get($className);
+            $cacheId = array('Xyster_Orm', $map->getDomain(), $className);
             foreach( $id as $key => $value ) {
-                $repoId[] = $key . '=' . $value;
+                $cacheId[] = $key . '=' . $value;
             }
-            $repoId = md5(implode("/",$repoId));
+            $cacheId = md5(implode("/",$cacheId));
             
-            $entity = $repo->load($repoId);
+            $loaded = $cache->load($cacheId);
+            if ( is_array($loaded) ) {
+                $entity = $this->_shellToEntity($loaded, $map->getEntityMeta());
+            }
         }
         return $entity;
     }
@@ -388,21 +390,22 @@ class Xyster_Orm_Manager
      */
     public function putInSecondaryCache( Xyster_Orm_Entity $entity )
     {
-        $repo = $this->getSecondaryCache();
+        $cache = $this->getSecondaryCache();
         $className = get_class($entity);
         $map = $this->getMapperFactory()->get($className);
         $cacheLifetime = $map->getLifetime();
 
         // only store the entity if it should be cached longer than the request
         // that's why we have the primary repository
-        if ( $repo && $cacheLifetime > -1 ) {
+        if ( $cache && $cacheLifetime > -1 ) {
             
-            $repoId = array('Xyster_Orm', $map->getDomain(), $className);
+            $cacheId = array('Xyster_Orm', $map->getDomain(), $className);
             foreach( $entity->getPrimaryKey() as $key => $value ) {
-                $repoId[] = $key . '=' . $value;
+                $cacheId[] = $key . '=' . $value;
             }
-            $repoId = md5(implode("/", $repoId));
-            $repo->save($entity, $repoId, array(), $cacheLifetime);
+            $cacheId = md5(implode("/", $cacheId));
+            $shell = $this->_entityToShell($entity, $map->getEntityMeta());
+            $cache->save($shell, $cacheId, array(), $cacheLifetime);
         }
     }
     
@@ -416,6 +419,62 @@ class Xyster_Orm_Manager
         foreach( $set as $entity ) {
             $this->putInSecondaryCache($entity);
         }
+    }
+    
+    /**
+     * Turns an entity into a shell for storage
+     *
+     * @param Xyster_Orm_Entity $entity
+     * @param Xyster_Orm_Entity_Meta $meta
+     * @return array
+     */
+    final protected function _entityToShell( Xyster_Orm_Entity $entity, Xyster_Orm_Entity_Meta $meta )
+    {
+        $related = array();
+        foreach( $meta->getRelations() as $relation ) {
+            /* @var $relation Xyster_Orm_Relation */
+            $name = $relation->getName();
+            if ( $entity->isLoaded($name) ) {
+                $linked = $entity->$name;
+                if ( $relation->isCollection() ) {
+                    /* @var $linked Xyster_Orm_Set */
+                    $related[$name] = $linked->getPrimaryKeys();
+                } else {
+                    /* @var $linked Xyster_Orm_Entity */
+                    $related[$name] = $linked->getPrimaryKey();
+                }
+            }
+        }
+        return array('values' => $entity->toArray(), 'related' => $related);
+    }
+    
+    /**
+     * Take the serialized array and turn it back into an entity
+     *
+     * @param array $shell
+     * @return Xyster_Orm_Entity
+     */
+    final protected function _shellToEntity( array $shell, Xyster_Orm_Entity_Meta $meta )
+    {
+        if ( !isset($shell['values']) ) {
+            return;
+        }
+        
+        $className = $meta->getEntityName();
+        $entity = new $className($shell['values']);
+        if ( isset($shell['related']) && is_array($shell['related']) ) {
+            foreach( $shell['related'] as $name => $related ) {
+                $relation = $meta->getRelation($name);
+                if ( !$relation->isCollection() ) {
+                    $entity->$name = $this->get($relation->getTo(), $related); 
+                } else {
+                    $entity->$name = $this->getAll($relation->getTo(), $related);
+                }
+            }
+        }
+        $entity->setDirty(false);
+        
+        return $entity;
     }
     
     /**

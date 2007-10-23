@@ -503,6 +503,47 @@ abstract class Xyster_Orm_Mapper_TestCommon extends Xyster_Orm_Mapper_TestSetup
         $this->assertType('Xyster_Data_Set', $result);
     }
 
+    /**
+     * Tests the secondary cache can persist the entity and its relationships
+     *
+     */
+    public function testSecondaryCache()
+    {
+        $manager = new Xyster_Orm_Manager;
+        $manager->setMapperFactory($this->_factory());
+        require_once 'Xyster/Orm/CacheMock.php';
+        require_once 'Zend/Cache/Core.php';
+        $cache = new Zend_Cache_Core(array('automatic_serialization'=>true));
+        $cache->setBackend(new Xyster_Orm_CacheMock);
+        $manager->setSecondaryCache($cache);
+        
+        $pk = array('bugId'=>1);
+        
+        $bug = $manager->get('Bug', $pk);
+        
+        $bug->products;
+        $bug->reporter;
+        $bug->assignee;
+        $bug->verifier;
+        $bug->updatedOn = date('Y-m-d H:i:s');
+        $manager->putInSecondaryCache($bug);
+        
+        $account = $manager->get('Account', 'mmouse');
+        $account->reported;
+        $account->assigned;
+        $account->verified;
+        $manager->putInSecondaryCache($account);
+        
+        require_once 'Xyster/Orm/WorkUnit.php';
+        $wu = new Xyster_Orm_WorkUnit;
+        $wu->registerDirty($bug);
+        $wu->registerDirty($account);
+        $wu->commit($manager);
+        
+        $manager->clear();
+        $entity = $manager->getFromCache('Account', 'mmouse', true);
+        $this->assertEquals($account->getPrimaryKey(), $entity->getPrimaryKey());
+    }
     
     /**
      * Tests that 'aliasField' will throw an exception for a runtime field

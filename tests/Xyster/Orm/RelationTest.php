@@ -243,14 +243,17 @@ class Xyster_Orm_RelationTest extends Xyster_Orm_TestSetup
     {
         $manager = $this->_mockFactory()->getManager();
         $account = $manager->get('MockAccount', 'doublecompile');
-        
+        $meta = $this->_mockFactory()->getEntityMeta('MockAccount');
+        $reported = $meta->getRelation('verified');
         $bug = $this->_getMockEntity();
         
-        $meta = $this->_mockFactory()->getEntityMeta('MockAccount');
-        $reported = $meta->getRelation('reported');
+        $this->assertFalse($bug->isDirty());
+        $this->assertNotEquals($account->accountName, $bug->verifiedBy);
         
         $reported->relate($account, $bug);
-        $this->assertSame($bug->reporter, $account);
+        $this->assertSame($bug->verifier, $account);
+        $this->assertEquals($account->accountName, $bug->verifiedBy);
+        $this->assertTrue($bug->isDirty());
     }
     
     /**

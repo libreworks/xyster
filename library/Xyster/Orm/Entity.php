@@ -373,7 +373,10 @@ class Xyster_Orm_Entity
             for( $i=0; $i<count($key); $i++ ) {
                 $keyValue = $key[ $keyNames[$i] ];
                 $fkeyName = $fkeyNames[$i];
-                $this->{'set'.ucfirst($fkeyName)}($keyValue);
+                // compare values so the entity isn't marked dirty unnecessarily
+                if ( $this->$fkeyName != $keyValue ) {
+                    $this->{'set'.ucfirst($fkeyName)}($keyValue);
+                }
             }
             
         }
