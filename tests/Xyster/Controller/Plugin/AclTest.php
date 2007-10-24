@@ -230,6 +230,8 @@ class Xyster_Controller_Plugin_AclTest extends PHPUnit_Framework_TestCase
         $return = $this->plugin->setRules($rules);
         
         $this->assertSame($this->plugin, $return);
+        
+        $this->plugin->dispatchLoopStartup($this->request);
 
         $this->request->setModuleName('foo')
                       ->setControllerName('bar')

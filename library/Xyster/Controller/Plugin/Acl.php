@@ -32,6 +32,10 @@ require_once 'Xyster/Controller/Request/Resource.php';
  */
 require_once 'Zend/Auth.php';
 /**
+ * Zend_Acl
+ */
+require_once 'Zend/Acl.php';
+/**
  * Authorization plugin
  *
  * @category  Xyster
@@ -84,6 +88,13 @@ class Xyster_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
      * @var string
      */
     protected $_loginModule;
+    
+    /**
+     * Holds the rules passed to 'setRules' until dispatchLoopStartup 
+     *
+     * @var array
+     */
+    protected $_rules = array();
     
     /**
      * Creates a new acl plugin
@@ -142,6 +153,27 @@ class Xyster_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
         $resource = $this->_getResource($module, $controller, $action);
         $this->_acl->deny($role, $resource);
         return $this;
+    }
+    
+    /**
+     * Called before Zend_Controller_Front enters its dispatch loop
+     *
+     * @param  Zend_Controller_Request_Abstract $request
+     */
+    public function dispatchLoopStartup(Zend_Controller_Request_Abstract $request)
+    {
+        foreach( $this->_rules as $rule ) {
+            $role = isset($rule['role']) ? $rule['role'] : null;
+            $module = isset($rule['module']) ? $rule['module'] : null;
+            $controller = isset($rule['controller']) ? $rule['controller'] : null;
+            $action = isset($rule['action']) ? $rule['action'] : null;
+            
+            if ( isset($rule['type']) && $rule['type'] == Zend_Acl::TYPE_DENY ) {
+                $this->deny($role, $module, $controller, $action);
+            } else {
+                $this->allow($role, $module, $controller, $action);
+            }
+        }
     }
     
     /**
@@ -326,22 +358,7 @@ class Xyster_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
      */
     public function setRules( array $rules )
     {
-        require_once 'Zend/Acl.php';
-        $types = array(Zend_Acl::TYPE_ALLOW, Zend_Acl::TYPE_DENY);
-        
-        foreach( $rules as $rule ) {
-            $role = isset($rule['role']) ? $rule['role'] : null;
-            $module = isset($rule['module']) ? $rule['module'] : null;
-            $controller = isset($rule['controller']) ? $rule['controller'] : null;
-            $action = isset($rule['action']) ? $rule['action'] : null;
-            
-            if ( isset($rule['type']) && $rule['type'] == Zend_Acl::TYPE_DENY ) {
-                $this->deny($role, $module, $controller, $action);
-            } else {
-                $this->allow($role, $module, $controller, $action);
-            }
-        }
-        
+        $this->_rules = $rules;
         return $this;
     }
 
