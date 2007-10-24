@@ -49,23 +49,23 @@ class Xyster_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
      */
     protected $_acl;
     
-	/**
-     * Module to use for errors; defaults to default module in dispatcher
-     * @var string
-     */
-    protected $_deniedModule;
-
-    /**
-     * Controller to use for errors; defaults to 'error'
-     * @var string
-     */
-    protected $_deniedController = 'error';
-
     /**
      * Action to use for errors; defaults to 'error'
      * @var string
      */
     protected $_deniedAction = 'error';
+    
+    /**
+     * Controller to use for errors; defaults to 'error'
+     * @var string
+     */
+    protected $_deniedController = 'error';
+    
+    /**
+     * Module to use for errors; defaults to default module in dispatcher
+     * @var string
+     */
+    protected $_deniedModule;
     
     /**
      * Action to use for login; defaults to 'index'
@@ -107,8 +107,10 @@ class Xyster_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
      * controller but leaving action null will allow access to all actions in
      * the specified controller.
      *
-     * @param string $name The controller action name
      * @param Zend_Acl_Role_Interface|string $role
+     * @param string $module The module name
+     * @param string $controller The controller name
+     * @param string $action The action name
      * @return Xyster_Controller_Action_Helper_Acl provides a fluent interface
      */
     public function allow( $role, $module = null, $controller = null, $action = null )
@@ -118,6 +120,30 @@ class Xyster_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
         return $this;
     }
 
+    /**
+     * Denies access to an action by a role
+     * 
+     * Passing null for the role will deny all users access to the action.
+     * 
+     * Passing null for the module will deny everything to the role supplied. 
+     * Specifying a module but leaving controller and action null will deny
+     * access to all controllers in the specified module.  Specifying a module
+     * and a controller but leaving action null will deny access to all actions
+     * in the specified controller.
+     *
+     * @param Zend_Acl_Role_Interface|string $role
+     * @param string $module The module name
+     * @param string $controller The controller name
+     * @param string $action The action name
+     * @return Xyster_Controller_Action_Helper_Acl provides a fluent interface
+     */
+    public function deny( $role, $module = null, $controller = null, $action = null )
+    {
+        $resource = $this->_getResource($module, $controller, $action);
+        $this->_acl->deny($role, $resource);
+        return $this;
+    }
+    
     /**
      * Retrieve the current acl plugin action
      *
@@ -153,7 +179,7 @@ class Xyster_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
     }
 
     /**
-     * Retrieve the current acl plugin action
+     * Retrieve the current not-authenticated action
      *
      * @return string
      */
@@ -163,7 +189,7 @@ class Xyster_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
     }
     
     /**
-     * Retrieve the current acl plugin controller
+     * Retrieve the current not-authenticated controller
      *
      * @return string
      */
@@ -173,7 +199,7 @@ class Xyster_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
     }
 
     /**
-     * Retrieve the current acl plugin module
+     * Retrieve the current not-authenticated module
      *
      * @return string
      */
@@ -278,7 +304,46 @@ class Xyster_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
         $this->_loginAction = (string) $action;
                 
         return $this;
-    }    
+    }
+    
+    /**
+     * Sets multiple rules simultaneously
+     * 
+     * Each element in the $rules array should be itself an associative array
+     * containing the following keys:
+     *  - type : either Zend_Acl::TYPE_ALLOW or Zend_Acl::TYPE_DENY 
+     *  - role : the string role ID
+     *  - module : the module name
+     *  - controller : the controller name
+     *  - action : the action name
+     * 
+     * If 'type' is omitted or is null, Zend_Acl::TYPE_ALLOW is assumed.  If any
+     * of the other keys are omitted, null is assumed.  See {@link allow} and
+     * {@link deny} for the behavior when null is specified for these values. 
+     *
+     * @param array $rules
+     * @return Xyster_Controller_Plugin_Acl provides a fluent interface
+     */
+    public function setRules( array $rules )
+    {
+        require_once 'Zend/Acl.php';
+        $types = array(Zend_Acl::TYPE_ALLOW, Zend_Acl::TYPE_DENY);
+        
+        foreach( $rules as $rule ) {
+            $role = isset($rule['role']) ? $rule['role'] : null;
+            $module = isset($rule['module']) ? $rule['module'] : null;
+            $controller = isset($rule['controller']) ? $rule['controller'] : null;
+            $action = isset($rule['action']) ? $rule['action'] : null;
+            
+            if ( isset($rule['type']) && $rule['type'] == Zend_Acl::TYPE_DENY ) {
+                $this->deny($role, $module, $controller, $action);
+            } else {
+                $this->allow($role, $module, $controller, $action);
+            }
+        }
+        
+        return $this;
+    }
 
     /**
      * Gets the resource object

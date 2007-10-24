@@ -130,6 +130,22 @@ class Xyster_Controller_Plugin_AclTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Tests the 'deny' method
+     *
+     */
+    public function testDeny()
+    {
+        $this->plugin->deny('doublecompile'); // deny all
+        
+        $this->request->setModuleName('foo')
+                      ->setControllerName('bar')
+                      ->setActionName('baz');
+        $this->plugin->preDispatch($this->request);
+        
+        $this->assertFalse($this->request->isDispatched());
+    }
+    
+    /**
      * Tests the plugin forwards to the login action if no identity is available
      *
      */
@@ -190,6 +206,47 @@ class Xyster_Controller_Plugin_AclTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('bar', $this->plugin->getLoginController());
         $this->assertEquals('boobaz', $this->plugin->getLoginAction());
         $this->assertSame($this->plugin, $return);
+    }
+    
+    /**
+     * Tests the 'setRules' method
+     *
+     */
+    public function testSetRules()
+    {
+        require_once 'Zend/Acl.php';
+        $rules = array(
+                array(
+                    'role' => 'doublecompile',
+                    'module' => 'foo'
+                ),
+                array(
+                    'type' => Zend_Acl::TYPE_DENY,
+                    'module' => 'foo',
+                    'controller' => 'bar',
+                    'action' => 'baz'
+                )
+            );
+        $return = $this->plugin->setRules($rules);
+        
+        $this->assertSame($this->plugin, $return);
+
+        $this->request->setModuleName('foo')
+                      ->setControllerName('bar')
+                      ->setActionName('index');
+        $this->plugin->preDispatch($this->request);
+        
+        $this->assertEquals('index', $this->request->getActionName());
+        $this->assertEquals('bar', $this->request->getControllerName());
+        $this->assertEquals('foo', $this->request->getModuleName());
+        
+        $this->request->setModuleName('foo')
+                      ->setControllerName('bar')
+                      ->setActionName('baz');
+        $this->plugin->preDispatch($this->request);
+        
+        $errorHandler = $this->request->getParam('error_handler');
+        $this->assertType('ArrayObject', $errorHandler);
     }
 }
 

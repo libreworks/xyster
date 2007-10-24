@@ -188,7 +188,7 @@ class Xyster_Controller_Plugin_Auth extends Zend_Controller_Plugin_Abstract
     }
     
     /**
-     * Gets the role provider used to translato the identity into a role
+     * Gets the role provider used to translate the identity into a role
      *
      * @return Xyster_Acl_Role_Provider_Interface
      */
@@ -284,7 +284,7 @@ class Xyster_Controller_Plugin_Auth extends Zend_Controller_Plugin_Abstract
      * Sets the role provider used to translate the identity into a role
      *
      * @param Xyster_Acl_Role_Provider_Interface $provider
-     * @return Xyster_Controller_Plugin_Auth
+     * @return Xyster_Controller_Plugin_Auth provides a fluent interface
      */
     public function setRoleProvider( Xyster_Acl_Role_Provider_Interface $provider )
     {
@@ -317,17 +317,21 @@ class Xyster_Controller_Plugin_Auth extends Zend_Controller_Plugin_Abstract
     {
         $auth = Zend_Auth::getInstance();
         if ( !$auth->hasIdentity() ) {
+        // no need to call the adapter if the user is authenticated
             if ( !$this->_adapter ) {
+                // if we don't have an adapter, there's nothing to do
                 return;
             } else {
                 $result = $auth->authenticate($this->_adapter);
                 $request = $this->getRequest();
                 if ( $result->isValid() ) {
+                    // if the authentication is valid send to the success action
                     $request->setModuleName($this->getSuccessModule())
                         ->setControllerName($this->getSuccessController())
                         ->setActionName($this->getSuccessAction())
                         ->setDispatched(false);
                 } else {
+                    // if the authentication fails send to the failure action
                     $request->setModuleName($this->getFailModule())
                         ->setControllerName($this->getFailController())
                         ->setActionName($this->getFailAction())
