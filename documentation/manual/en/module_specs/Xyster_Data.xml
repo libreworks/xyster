@@ -1,0 +1,9 @@
+	<sect1 id="xyster.data.overview">
+            <title>Overview</title>
+ 
+            <para>The data package provides a standard way to manipulate and access different kinds of data.
+                These classes are provided to refer to columns in sets of data, and also allow a developer to
+                filter, sort, and aggregate it. Developers can construct a query or refer to sets of data without
+                knowing anything about the source of the data. You should be able to sort and filter records from
+                a database with the same syntax as tabular data from an XML document.</para>
+        </sect1>

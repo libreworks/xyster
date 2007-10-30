@@ -1,0 +1,73 @@
+	<sect1 id="xyster.orm.queries">
+            <title>Queries and Reporting</title>
+
+            <para>You can query your data store to retrieve a specific set of entities or sets of aggregated data without knowing anything about SQL, LDAP filters, XQuery, or whatever else your data store uses to filter things stored within it. When creating these query objects, you can use either a simple but robust API or a SQL-like syntax.</para>
+
+            <sect2 id="xyster.orm.query">
+                <title>Xyster_Orm_Query</title>
+
+                <para>The query object provides a way to precisely return search results for entities. You can specify Criteria, Sorts, a maximum number of entities to return (limit), and a number to skip (offset). When executed, a <classname>Xyster_Orm_Query</classname> will return a <classname>Xyster_Orm_Set</classname> of the appropriate type.</para>
+
+                <para>First is an example of using the query API.</para>
+
+                <programlisting role="php"><![CDATA[<?php
+$query = $orm->query('Person');
+$query->where(Xyster_Data_Expression::eq('affiliation','Rebel'))    // it's the rebels, sir.
+        ->order(Xyster_Data_Sort::asc('name'))                      // sort by name
+        ->limit(3);                           // only 3 of them
+$people = $query->execute();]]></programlisting>
+
+                <para>Pretty easy. Here's the &quot;XSQL&quot; (Xyster SQL) syntax.</para>
+
+                <programlisting role="php"><![CDATA[<?php
+$query = $orm->query('Person', 'where affiliation = "Rebel" order by name asc limit 3');
+$people = $query->execute();]]></programlisting>
+
+                <para>The XSQL syntax for a normal query follows the following format.</para>
+
+                <para><code>WHERE criteria[ ORDER BY sort[, sort...][ LIMIT number[ OFFSET number]]]</code></para>
+
+                <para>Criteria look much like SQL criteria except using double-quotes instead of single quotes for string literals. All column names should be using the entity&apos;s camel case-style properties, not the data store field names. Aggregate functions cannot be used in Criteria or Sorts for a normal query.</para>
+
+                <para>One interesting feature is that you can use field names that deal with linked entities, as detailed in the following example.</para>
+
+                <programlisting role="php"><![CDATA[<?php
+// only return people with a nemesis
+$query = $orm->query('Person',
+        'where nemesis->name is not null order by name asc limit 3');
+$people = $query->execute;]]></programlisting>
+
+                <para>Columns can even be method calls with parameters. (Example: <code>nemesis->callMethod()->anotherMethod("string", 1.999, anotherEntityField) )</code>.</para>
+                
+            </sect2>
+
+            <sect2 id="xyster.orm.query.report">
+                <title>Xyster_Orm_Query_Report</title>
+
+                <para>The report query is like the query, but you can specify which columns to return and what their names should be, how to group them, apply any group criteria, and specify distinct values: it&apos;s just like a full-blown SQL query.</para>
+
+                <para>When a report query is executed, it returns a Xyster_Data_Set of the results. Let&apos;s try a query for affiliations and the number each one has.</para>
+
+                <programlisting role="php"><![CDATA[<?php
+$report = $orm->reportQuery('Person');
+$count = Xyster_Data_Field::count('personId', 'people'); // aliased field
+$report->group(Xyster_Data_Field::group('affiliation'))
+        ->field($count)
+        ->where($count->lte(5))         // any affiliation with < 5 people
+        ->order($count->desc());
+$affiliationCounts = $report->execute();]]></programlisting>
+
+                <para>Here's the same query in XSQL syntax.</para>
+
+                <programlisting role="php"><![CDATA[<?php
+$report = $orm->reportQuery('Person', 'SELECT affiliation, count(personId) as people'.
+        'GrouP By affiliation HAViNG count(personId) < 5 '.
+        'ORDER BY count(personId) desc');
+$affiliationCounts = $report->execute();]]></programlisting>
+
+                <para>The XSQL syntax for a report query follows the following format.</para>
+
+                <para><code>SELECT field[, field...][ WHERE criteria][ GROUP BY field[, field...][ HAVING criteria]][ ORDER BY sort[, sort...]][ LIMIT number[ OFFSET number]]</code></para>
+                
+            </sect2>
+        </sect1>

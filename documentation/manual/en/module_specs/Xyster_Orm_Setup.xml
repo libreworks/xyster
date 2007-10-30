@@ -1,0 +1,36 @@
+	<sect1 id="xyster.orm.setup">
+            <title>Setting Up</title>
+
+            <para>The system requires little set-up. Let’s declare three classes.</para>
+
+            <programlisting role="php"><![CDATA[<?php
+class Person extends Xyster_Orm_Entity
+{
+}
+class PersonSet extends Xyster_Orm_Set
+{
+}]]></programlisting>
+
+            <para>Those are the entity and the entity set. Below is the mapper class. Since the mapper will connect to a SQL database, we can just extend from <classname>Xyster_Orm_Mapper</classname>. To see how to set up your database connection, see the Xyster_Orm_Mapper section below.</para>
+
+            <programlisting role="php"><![CDATA[<?php
+class PersonMapper extends Xyster_Orm_Mapper
+{
+    protected $_domain = 'myDb'; // the 'domain' associated with the back-end
+}]]></programlisting>
+
+            <para>And that's it. Everything else about this entity is determined automagically: table, primary key, and columns. Let’s also specify a cache lifetime and an index.</para>
+
+            <programlisting role="php"><![CDATA[<?php
+class PersonMapper extends Xyster_Orm_Mapper
+{
+    protected $_domain = 'myDb';
+    protected $_table = 'person';
+    protected $_lifetime = 90;
+    protected $_index = array('name_index' => array('name'));
+}]]></programlisting>
+
+            <para>The table is by default the &quot;underscore case&quot; of the entity class name, so &quot;ExampleTable&quot; would be &quot;example_table&quot;. The primary key is looked up from the table metadata in the data store. The column names are the camel case of the fields in the data store. They are looked up for the table and cached. For example, if &quot;example_table&quot; had &quot;column_one&quot;, &quot;column_two&quot;, &quot;and_column_three&quot;, the columns array should contain &quot;columnOne&quot;, &quot;columnTwo&quot;, &quot;andColumnThree&quot;. The lifetime property should be a number in seconds to cache entities in the secondary cache (see the Secondary Cache heading under Xyster_Orm). The index is used to cache entities by a key/value pair. In our example, we expect the &quot;name&quot; to be unique.</para>
+
+            <para>If for some reason you need to change how a mapper translates column names, or gets an entity set, these and other methods can be overwritten. See the Xyster_Orm_Mapper API for more information.</para>
+        </sect1>

@@ -1,0 +1,46 @@
+        <sect1 id="xyster.orm.mapper">
+            <title>Xyster_Orm_Mapper</title>
+
+            <para>The <classname>Xyster_Orm_Mapper</classname> class is intended to connect to SQL databases. You can extend <classname>Xyster_Orm_Mapper_Abstract</classname> to create a mapper that connects to an LDAP server, parses an XML document, calls web services, and so on.</para>
+
+            <para>You need to set up the database connection to <classname>Xyster_Orm_Mapper</classname> before any operations are performed with <classname>Xyster_Orm</classname>. Simply pass the connection settings to the <methodname>dsn</methodname> method of <classname>Xyster_Orm_Mapper</classname>.</para>
+
+            <programlisting role="php"><![CDATA[<?php
+Xyster_Orm_Mapper::dsn('myDb', 'Pdo_Mysql', array('host' => '127.0.0.1',
+    'username' => 'webuser',
+    'password' => 'xxxxxxxx',
+    'dbname' => 'test'));]]></programlisting>
+
+            <para>You can also pass a <classname>Zend_Db_Adapter_Abstract</classname> object instead of the driver type and options.</para>
+
+            <programlisting role="php"><![CDATA[<?php
+$db = new Zend_Db_Adapter_Pdo_Mysql(array('host' => '127.0.0.1',
+    'username' => 'webuser',
+    'password' => 'xxxxxxxx',
+    'dbname' => 'test'
+));
+Xyster_Orm_Mapper::dsn('myDb', $db);]]></programlisting>
+
+            <para>The <classname>Xyster_Orm_Mapper</classname> class has the ability to cache the metadata it retrieves for tables, avoiding repeat trips to the data store. A <classname>Zend_Cache_Core</classname> object can be passed to the <classname>Xyster_Orm_Mapper_Factory</classname> instance that creates the mappers.</para>
+
+            <programlisting role="php"><![CDATA[<?php
+$frontendOptions = array('automatic_serialization' => true);
+$backendOptions = array('cacheDir' => 'cacheDir');
+$cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
+
+$orm = Xyster_Orm::getInstance();
+$mf = $orm->getMapperFactory();
+$mf->setMetadataCache($cache);]]></programlisting>
+
+            <para>Alternatively, you can specify a <classname>Zend_Registry</classname> key in the options array of the mapper itself.</para>
+
+            <programlisting role="php"><![CDATA[<?php
+// let's pretent $cache is the Zend_Cache object we factoried a minute ago
+Zend_Registry::set('myCache', $cache);
+
+class SomethingMapper extends Xyster_Orm_Mapper
+{
+	// protected properties like $_domain, etc.
+	protected $_options = array('metadataCache' => 'myCache');
+}]]></programlisting>
+        </sect1>

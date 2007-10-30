@@ -1,0 +1,133 @@
+	<sect1 id="xyster.data.generics">
+            <title>Generic Structures</title>
+
+            <para>Here are some of the generic objects available in this package.</para>
+
+            <sect2 id="xyster.data.aggregate">
+                <title>Xyster_Data_Aggregate</title>
+
+                <para>This class is an extension of <classname>Xyster_Enum</classname> and provides the different ways
+                    to aggregate a group of data. SQL developers will recognize these function names.</para>
+
+                <orderedlist>
+                    <listitem><para><code>Xyster_Data_Aggregate::Average()</code> – A mathematical mean of a group of numbers</para></listitem>
+                    <listitem><para><code>Xyster_Data_Aggregate::Count()</code> – A simple count of rows</para></listitem>
+                    <listitem><para><code>Xyster_Data_Aggregate::Maximum()</code> – Finds the greatest value in a set of data</para></listitem>
+                    <listitem><para><code>Xyster_Data_Aggregate::Minimum()</code> – Finds the smallest value in a set of data</para></listitem>
+                    <listitem><para><code>Xyster_Data_Aggregate::Sum()</code> – The addition of a group of numbers</para></listitem>
+                </orderedlist>
+            </sect2>
+
+            <sect2 id="xyster.data.field">
+                <title>Xyster_Data_Field</title>
+
+                <para>This object is used to refer to a column in a database table, an attribute in an XML tag,
+                    a property on an object, a method call on an object, an attribute in an LDAP record, etc.
+                    It can be aliased (given a nickname), it can be associated with an Aggregate, and it can be
+                    used to represent data grouped by a certain field.</para>
+
+                <programlisting role="php"><![CDATA[<?php
+Xyster_Data_Field::named("myColumn", "nickName");
+Xyster_Data_Field::group("myColumn");
+Xyster_Data_Field::count("myId");
+Xyster_Data_Field::aggregate(Xyster_Data_Aggregate::Average(), "myColumn");
+]]>
+                </programlisting>
+            </sect2>
+
+            <sect2 id="xyster.data.sort">
+                <title>Xyster_Data_Sort</title>
+
+                <para>A sort consists of a <classname>Xyster_Data_Field</classname> and a direction (either ascending or descending).</para>
+
+                <programlisting role="php"><![CDATA[<?php
+$column = Xyster_Data_Field::named("email");
+Xyster_Data_Sort::asc( $column );
+Xyster_Data_Sort::desc( $column );
+]]>
+                </programlisting>
+
+                <para><classname>Xyster_Data_Comparator</classname> is an instance of Xyster_Collection's
+                    <interface>Xyster_Collection_Comparator</interface> interface. It can be used to sort a
+                    <classname>Xyster_Collection_Set_Sortable</classname> containing arrays or objects
+                    using one or more <classname>Xyster_Data_Sort</classname> objects.</para>
+
+                <programlisting role="php"><![CDATA[<?php
+// example will sort a set by last name and salary 
+$sorts = array(Xyster_Data_Sort::asc("lastName"),
+    Xyster_Data_Sort::desc("salary"));
+$comparator = new Xyster_Data_Comparator($sorts);
+// assuming $sortableSet is a Xyster_Collection_Set_Sortable containing objects or associative arrays
+$sortableSet->sort($comparator);
+]]>
+                </programlisting>
+            </sect2>
+
+            <sect2 id="xyster.data.criterion">
+                <title>Xyster_Data_Criterion</title>
+
+                <para>This is an abstract class that overshadows two other classes: the Expression
+                    and the Junction. A Criterion is a boolean expression, such as a SQL where clause,
+                    a PHP if statement, or an LDAP query filter. An Expression is just one statement,
+                    with two terms and an operator between (this is commonly called an infix operator).
+                    A Junction is a joining of two or more Criterion objects with either an AND or an
+                    OR operator between.</para>
+
+                <para>Equality: A Field must be equal to a value (==) or not equal to a value (!=, &lt;&gt;)</para>
+
+                <programlisting role="php"><![CDATA[<?php
+Xyster_Data_Expression::eq("myColumn","some value");
+Xyster_Data_Expression::neq("myColumn","some other value");
+]]>
+                </programlisting>
+
+                <para>Value comparisons: A Field must be greater than (&gt;), less than (&lt;), greater than or equal to (&gt;=), or less than or equal to (&lt;=) a value.</para>
+
+                <programlisting role="php"><![CDATA[<?php
+Xyster_Data_Expression::gt("myColumn",10);
+Xyster_Data_Expression::gte("myColumn",11);
+Xyster_Data_Expression::lt("myColumn",30);
+Xyster_Data_Expression::lte("myColumn",29);
+]]>
+                </programlisting>
+
+                <para>(Not) Between: A Field must be between or not be between two values</para>
+
+                <programlisting role="php"><![CDATA[<?php
+Xyster_Data_Expression::between("myColumn",10,20);
+Xyster_Data_Expression::notBetween("myColumn",1,9);
+]]>
+                </programlisting>
+
+                <para>Like: A Field must start with, end with, or contain a value (or not)</para>
+
+                <programlisting role="php"><![CDATA[<?php
+Xyster_Data_Expression::like("myColumn","peanut%");
+Xyster_Data_Expression::notLike("myColumn","%butter");
+]]>
+                </programlisting>
+
+                <para>In: A Field must be one of or not be one of a set of values</para>
+
+                <programlisting role="php"><![CDATA[<?php
+Xyster_Data_Expression::in("myColumn",array(1,2,3,4,5));
+Xyster_Data_Expression::notIn("myColumn",array(1,2,3,4,5));
+]]>
+                </programlisting>
+
+                <para>A Junction is a group of two or more Expression objects, and must either be
+                    &quot;and&quot; statements (conjunctions), or &quot;or&quot; statements (disjunctions). For instance:</para>
+
+                <programlisting role="php"><![CDATA[<?php
+$junction1 = Xyster_Data_Junction::any(Xyster_Data_Expression::eq("myColumn", 100), Xyster_Data_Expression::eq("otherColumn", "text"));
+$junction2 = Xyster_Data_Junction::any(Xyster_Data_Expression::eq("name", "Smith"), Xyster_Data_Expression::like("city", "D%"));
+Xyster_Data_Junction::all($junction1, $junction2);
+]]>
+                </programlisting>
+
+                <para>These objects can be used to abstractly represent a query for data, or manipulate
+                    data returned from such a query. The Xyster framework wanted to provide a universal
+                    way to work with this kind of data that can easily be reused.</para>
+
+            </sect2>
+        </sect1>

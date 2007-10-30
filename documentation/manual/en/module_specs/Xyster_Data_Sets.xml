@@ -1,0 +1,95 @@
+	<sect1 id="xyster.data.sets">
+            <title>Sets and Collections</title>
+
+            <para>The Xyster_Data package comes supplied with some objects for working with sets of data.</para>
+
+            <sect2 id="xyster.data.set">
+                <title>Xyster_Data_Set</title>
+
+                <para>The data set is an editable record set. More specifically, It&apos;s a sortable
+                    set that can contain only objects and arrays. It can have values fetched from it or items
+                    filtered out. For the following examples, let's declare the following class and objects:</para>
+
+                <programlisting role="php"><![CDATA[<?php
+
+class hero
+{
+      public $name;
+      public $gender;
+      public $universe; 
+
+      public function __construct( $name, $gender, $universe )
+      {
+
+            $this->name = $name;
+            $this->gender = $gender;
+            $this->universe = $universe;
+      }
+}
+
+$punisher = new hero( 'Frank Castle', 'M', 'Marvel' );
+$supes = new hero('Clark Kent', 'M', 'DC');
+$blackcat = new hero('Felicia Hardy', 'F', 'Marvel');
+$catwoman = new hero('Selina Kyle', 'F', 'DC' );
+]]></programlisting>
+
+                <para>A data set can be constructed from a traversable value containing arrays or objects:</para>
+
+                <programlisting role="php"><![CDATA[<?php
+$heroes = new Xyster_Data_Set();
+foreach( array( $punisher, $supes, $blackcat, $catwoman ) as $hero ) {
+        $heroes->add($hero);
+}
+]]></programlisting>
+
+                <para>The <code>$set</code> data set would contain the Fields &quot;name&quot;, &quot;gender&quot;, and
+                    &quot;universe&quot;. You can also construct a blank set and add Fields to it.</para>
+
+                <programlisting role="php"><![CDATA[<?php
+$heroes = new Xyster_Data_Set();
+
+$heroes->addColumn("name");
+$heroes->addColumn("gender");
+$heroes->addColumn("universe");
+]]></programlisting>
+
+                <para>The values in the set can be sorted with the <methodname>sortBy</methodname> method which takes
+                    one or more <classname>Xyster_Data_Sort</classname> objects as a parameter.</para>
+
+                <para>Note that you can mix arrays and objects in the same sortable set, and for that matter,
+                    they can have different columns. However, trying to sort on a column that not every item
+                    has will throw an exception.</para>
+
+                <para>Data sets can have values fetched or aggregated from them:</para>
+
+                <programlisting role="php"><![CDATA[<?php
+$multiverse = $heroes->fetchColumn('universe');
+// $multiverse contains 'Marvel', 'DC', 'Marvel', 'DC'
+$name = $heroes->fetchScalar();
+// $name contains the first column of the first item
+$nameAndGender = $heroes->fetchPairs('name', 'gender');
+// $name contains array("Clark Kent"=>"M","Felicia Hardy"=>"F", ..etc.)
+$max = $heroes->aggregate(Xyster_Data_Aggregate::Maximum(), 'name');
+// $max contains 'Selina Kyle'
+]]></programlisting>
+
+                <para>They can also be filtered with the filter method.</para>
+
+                <programlisting role="php"><![CDATA[<?php
+$criteria = Xyster_Data_Expression::neq('universe','DC');
+$heroes->filter($criteria);
+// $heroes would contain 'Felicia Hardy' and 'Frank Castle'
+]]></programlisting>
+            </sect2>
+
+            <sect2 id="xyster.data.tuple">
+                <title>Xyster_Data_Tuple</title>
+
+                <para>A tuple is a grouping of records by some common feature. Usually, records are
+                    grouped by the same value in one or more columns. For instance, using the objects
+                    above, one could create a tuple containing &apos;Clark Kent&apos; and &apos;Selina Kyle&apos;
+                    because they both have &apos;DC&apos; in the universe column. <classname>Xyster_Data_Tuple</classname>
+                    has a static method that accepts a number of arguments to make tuples out of a traversable group
+                    of values (<methodname>makeTuples</methodname>). See the Tuple API documentation for more information.</para>
+            </sect2>
+        </sect1>

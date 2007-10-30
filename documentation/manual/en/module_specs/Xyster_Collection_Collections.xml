@@ -1,0 +1,51 @@
+	<sect1 id="xyster.collection.collections">
+            <title>Collections</title>
+
+            <para>All <interface>Xyster_Collection_Interface</interface>-based objects are traversable – they can be iterated through.</para>
+
+	    <programlisting role="php"><![CDATA[<?php
+// if $stuff implements Xyster_Collection_Interface
+foreach( $stuff as $k=>$v ) {
+        printf( 'key: %s, value: %s', $k, $v );
+}
+]]></programlisting>
+
+		<para>Here are some other useful methods on <interface>Xyster_Collection_Interface</interface>:</para>
+
+		<programlisting role="php"><![CDATA[<?php
+// if $stuff implements Xyster_Collection_Interface
+echo count($stuff);
+if ( $stuff->isEmpty() ) {
+        echo 'Empty collection';
+}
+if ( $stuff->contains('some value') ) {
+        echo 'Yes, it's in there\n';
+}
+if ( $stuff->containsAll( array('value1', 'value2', 'value3') ) ) {
+        echo 'They're all there';
+}
+]]></programlisting>
+
+		<para>This collection can be added to, changed, or have items removed.</para>
+
+		<programlisting role="php"><![CDATA[<?php
+// if $items is an Xyster_Collection_Interface
+// let's say $items contains the values 'earth', 'mars', and 'jupiter'
+
+$innerPlanets = Xyster_Collection::using(array('mercury', 'venus', 'earth', 'mars'));
+
+$items->merge($innerPlanets); // $items now contains 'mercury', 'venus', 'earth', 'mars', 'jupiter'
+
+$items->remove('mars'); // $items now contains 'mercury', 'venus', 'earth', 'jupiter'
+$items->remove('saturn'); // throws an exception – 'saturn' isn't in the collection
+
+$items->removeAll(Xyster_Collection::using(array('mercury', 'venus'))); // $items now contains 'earth', 'jupiter'
+// the items supplied to removeAll must all be in the collection
+
+$items->retainAll(Xyster_Collection::using(array('earth'))); // $items now contains 'earth'
+// the items supplied to retainAll must all be in the collection
+
+$items->clear(); // $items now contains nothing
+]]></programlisting>
+
+        </sect1>

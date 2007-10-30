@@ -1,0 +1,65 @@
+		<sect1 id="xyster.acl.introduction">
+			<title>Introduction</title>
+
+			<para><classname>Xyster_Acl</classname> is an extension of <classname>Zend_Acl</classname>. It is an access
+				control list used to define rules where roles
+				are granted or denied access to resources. If any of this sounds unfamiliar to you, check out the
+				documentation for <ulink url="http://framework.zend.com/manual/en/zend.acl.html">Zend_Acl</ulink>.</para>
+
+			<para>To put it simply, we found that the <classname>Zend_Acl</classname> object was lacking something important.
+				As is, each rule in the ACL must be defined explicitly. While this is fine for broad permissions setups,
+				anything fine-grained will quickly result in an obscene amount of rules loaded unnecessarily, especially
+				when access to a resource is dependent on things about the role accessing it. Ultimately, the access control
+				list needs the ability to determine its rules on the fly.</para>
+
+			<para>What about <classname>Zend_Acl_Assert</classname> classes, you say? These are objects that determine if a
+				rule is valid when queried. This idea would be perfect if these objects were passed the role, resource,
+				and privilege currently being queried—not the ones with which the rule was defined.</para>
+
+			<para>Seeing no readily available solution to this problem, we came up with the idea of authorizers.</para>
+ 
+			<sect2 id="xyster.acl.introduction.authorizers">
+				<title>Authorizers</title>
+
+				<para>An ACL Authorizer is just a class that implements <interface>Xyster_Acl_Authorizer_Interface</interface>.
+					It has two methods:</para>
+
+				<orderedlist>
+					<listitem><para><methodname>applies</methodname> – Does the authorizer apply to the supplied resource?</para></listitem>
+					<listitem><para><methodname>isAllowed</methodname> – Passed the role, resource, and privilege currently being queried and
+						returns a boolean if the role should be given access to the resource with the given privilege.</para></listitem>
+				</orderedlist>
+
+				<para>A <classname>Xyster_Acl</classname> object can be loaded with one or more authorizer. Each authorizer
+					can apply to a different type of resource. As an example, let's say you have two objects that implement
+					<interface>Zend_Acl_Resource_Interface</interface>: <classname>Document</classname> and <classname>Article</classname>.
+					You can have a <classname>Document_Authorizer</classname> and an <classname>Article_Authorizer</classname> to determine
+					if users can perform certain actions on <classname>Document</classname>s and <classname>Article</classname>s.</para>
+
+				<programlisting role="php"><![CDATA[<?php
+class Document_Authorizer implements Xyster_Acl_Authorizer_Interface
+{
+	public function applies( Zend_Acl_Resource_Interface $resource )
+	{
+		return $resource instanceof Document;
+	}
+	public function isAllowed( Zend_Acl_Role_Interface $role = null, Zend_Acl_Resource_Interface $resource = null, $privilege = null )
+	{
+		if ( $resource !== null && $role !== null ) {
+			return $role->getRoleId() == $resource->userId;
+		}
+		return false;
+	}	
+}
+$acl = new Xyster_Acl;
+$acl->addAuthorizer(new Document_Authorizer);]]></programlisting>
+
+				<para>So according to this object, if a role's id is the same as the userId property of the <classname>Document</classname>,
+					the role should be allowed access. Once the <classname>Xyster_Acl</classname> receives a response, it creates the
+					rule and never has to re-query the authorizer.</para>
+
+				<para>If the <classname>Xyster_Acl</classname> goes through all of its authorizers and can't find one that applies to the
+					resource, it assumes the default rule in the ACL, which is usually to deny access.</para>
+
+			</sect2>
+		</sect1>

@@ -1,0 +1,100 @@
+	<sect1 id="xyster.string.overview">
+            <title>Overview</title>
+
+            <para>This static class was a place to gather all the useful string manipulation methods that piled up as the
+                framework grew. As a note for future development, similar string methods should be put here.</para>
+
+	<sect2 id="xyster.string.array">
+            <title>Stringify an Array</title>
+
+            <para>The <code>arrayToString</code> method converts an associative array into a string, joining keys and values
+                with an equals sign and separating key/value pairs with commas.</para>
+
+            <programlisting role="php"><![CDATA[<?php
+$months = array(1=>'January', 2=>'February', 3=>'March');
+echo Xyster_String::arrayToString($months);
+// prints 1=January,2=February,3=March
+}
+]]>
+            </programlisting>
+        </sect2>
+        <sect2 id="xyster.string.titlecase">
+            <title>Converting a String To Title Case</title>
+
+            <para>PHP lacks the function to convert a string to title case because often times doing so is subjective.
+                It also usually follows English-specific language rules.</para>
+
+            <para>Title case is making the first letter of important words uppercase, and keeping the rest lowercase.
+                Lowercase words include prepositions and conjunctions.</para>
+
+            <programlisting role="php"><![CDATA[<?php
+$myString = "the dogs came out of the rain";
+echo Xyster_String::titleCase($myString);
+// prints The Dogs Came out of the Rain
+]]>
+            </programlisting>
+        </sect2>
+
+        <sect2 id="xyster.string.camel">
+            <title>Camel and Underscore Case</title>
+
+            <para>There are two convenience methods for converting strings back and forth between camel case and
+                underscore case.</para>
+
+            <programlisting role="php"><![CDATA[<?php
+$myString = "some_method_name";
+$camel = Xyster_String::toCamel($myString);
+// $camel == someMethodName
+$under = Xyster_String::toUnderscores($camel);
+// $under == $myString
+]]>
+            </programlisting>
+        </sect2>
+
+        <sect2 id="xyster.string.split">
+            <title>Smart Splitting a String</title>
+
+            <para>This method splits a string much like PHP's explode function with one important exception.
+                The <code>smartSplit</code> method will not break a string if the needle falls within a set of balanced
+                quotation marks or parentheses.</para>
+
+            <programlisting role="php"><![CDATA[<?php
+$haystack = 'A (great (test)) of "this method"';
+print_r(Xyster_String::smartSplit(' ', $haystack));
+]]>
+            </programlisting>
+            
+            <para>Would print:</para>
+
+            <screen><![CDATA[array (
+    [0]=>A
+    [1]=>(great (test))
+    [2]=>of
+    [3]=>"this method"
+)]]>
+            </screen>
+        </sect2>
+        <sect2 id="xyster.string.groups">
+            <title>Matching Groups of Parentheses Respecting Matched Quotes</title>
+
+            <para>The matchGroups method will match any balanced parentheses that aren't within balanced
+                quotation marks. For example, if you ran this method on a string containing JavaScript code:</para>
+
+            <programlisting role="php"><![CDATA[<?php
+ $string = <<<HEREDOC 
+ var n = navigator; 
+ return ( n.appName == "Netscape" ) || n.appVersion != "5.0 (Windows; en-US)"; 
+ HEREDOC;
+]]>
+            </programlisting>
+            <para>Would give you:</para>
+            <screen><![CDATA[array (
+     [0]=>( n.appName == "Netscape" )
+ );
+]]>
+            </screen>
+            <para>The second matched parentheses are inside of quotation marks and thus should be treated
+                as part of that string literal.</para>
+        </sect2>
+
+        </sect1>

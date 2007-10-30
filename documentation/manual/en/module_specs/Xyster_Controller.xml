@@ -1,0 +1,8 @@
+		<sect1 id="xyster.controller.introduction">
+			<title>Introduction</title>
+
+			<para>The Zend_Controller package is a sophisticated Model View Controller. At this time,
+				Xyster doesn't include any extensions to this package, but we did implement several
+				useful Action Helpers and Plugins.</para>
+
+		</sect1>

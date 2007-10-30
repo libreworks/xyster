@@ -1,0 +1,28 @@
+	<sect1 id="xyster.orm.entity">
+            <title>Xyster_Orm_Entity</title>
+
+            <para>Before we go into how to load entities, let&apos;s go over how to use an entity that&apos;s loaded. For example&apos;s sake, let&apos;s say that we&apos;ve loaded this database record as an entity from the person table:</para>
+
+            <screen>person_id= 1
+name= Luke Skywalker
+affiliation= Rebel
+alignment= good
+gender= M
+race= Human</screen>
+
+            <para>Let&apos;s say this record&apos;s information is now in a person entity (<varname>$luke</varname>).</para>
+
+            <programlisting role="php"><![CDATA[<?php
+echo $luke->personId;// prints 1
+print_r($luke->getPrimaryKey()); // gives us array(‘personId’ => 1)
+echo $luke->name;// prints 'Luke Skywalker'
+echo $luke->getPersonId();// prints 1
+echo $luke->getName();// prints 'Luke Skywalker'
+$luke->affiliation = 'Jedi';
+$luke->setAffiliation('Jedi');
+$array = $luke->toArray();// returns array('personId'=>1, 'name'=>'Luke Skywalker', etc.]]>
+            </programlisting>
+
+            <para>You can retrieve the primary key for an entity with the <methodname>getPrimaryKey</methodname> method. It returns an associative array with field names and values. Alternatively, <methodname>getPrimaryKeyAsCriterion</methodname> returns a <classname>Xyster_Data_Criterion</classname> object for the primary key. Fields on the entity can be accessed like properties or by method calls. Fields can also be set with either syntax.</para>
+            
+        </sect1>

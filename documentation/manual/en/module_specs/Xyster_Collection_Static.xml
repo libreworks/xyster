@@ -1,0 +1,12 @@
+	<sect1 id="xyster.collection.static">
+            <title>Xyster_Collection Static Methods</title>
+
+            <para>There are a few useful static methods available on the <classname>Xyster_Collection</classname> class.
+                The first is the <methodname>using</methodname> method, which creates a <classname>Xyster_Collection</classname>
+                and fills it with the elements of an array.</para>
+
+            <para>The other methods are <code>fixedInterface</code>, with <emphasis>Interface</emphasis> being one of Collection,
+                List, Map, or Set. A fixed collection is one that cannot be modified. This is useful when passing around a collection
+                that needs to maintain its state.</para>
+
+        </sect1>

@@ -1,0 +1,9 @@
+	<sect1 id="xyster.collection.lists">
+            <title>Lists</title>
+
+		<para>Objects which implement <interface>Xyster_Collection_List_Interface</interface> have numeric zero-based indexes
+			that contain elements, just like an array. They inherit <interface>Xyster_Collection_Interface</interface> as
+			well as the <interface>ArrayAccess</interface> interface in the PHP SPL.</para>
+
+		<para>You can extract slices of the list and insert elements at an index.</para>
+        </sect1>

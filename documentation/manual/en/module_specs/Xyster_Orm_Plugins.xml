@@ -1,0 +1,49 @@
+	<sect1 id="xyster.orm.plugins">
+		<title>Plugins</title>
+
+		<para>Plugins can be added to the ORM layer through the <classname>Xyster_Orm</classname> instance which holds a plugin broker.</para>
+
+		<programlisting role="php"><![CDATA[<?php
+$plugin = new MyOrmPlugin;
+Xyster_Orm::getInstance()->registerPlugin($plugin);]]></programlisting>
+		
+		<para>There are other plugin-related methods available on <classname>Xyster_Orm</classname>.</para>
+
+		<itemizedlist>
+			<listitem><para><methodname>getPlugin</methodname> : Gets the plugin of the specified type found or an array if more than one are registered</para></listitem>
+			<listitem><para><methodname>getPlugins</methodname> : Gets all registered plugins</para></listitem>
+			<listitem><para><methodname>hasPlugin</methodname> : Checks if a plugin of a certain class type has been registered</para></listitem>
+			<listitem><para><methodname>unregisterPlugin</methodname> : Removes the plugin specified or all plugins of the type specified</para></listitem>
+		</itemizedlist>
+
+		<para>The methods of these plugins are called before and after certain events that occur to entities.</para>
+
+		<itemizedlist>
+			<listitem><para><methodname>preDelete</methodname>: Before an entity is deleted</para></listitem>
+			<listitem><para><methodname>preInsert</methodname>: Before an entity is newly inserted into the data store</para></listitem>
+			<listitem><para><methodname>preUpdate</methodname>: Before an entity's changes are saved back to the data store</para></listitem>
+			<listitem><para><methodname>postDelete</methodname>: After an entity was deleted from the data store</para></listitem>
+			<listitem><para><methodname>postInsert</methodname>: After an entity is newly inserted into the data store</para></listitem>
+			<listitem><para><methodname>postLoad</methodname>: When an entity is created from a row in the data store (or retrieved from the secondary cache)</para></listitem>
+			<listitem><para><methodname>postUpdate</methodname>: After an entity's values were updated in the data store</para></listitem>
+		</itemizedlist>
+
+		<sect2 id="xyster.orm.plugins.included">
+			<title>Plugins Included in the Release</title>
+
+			<para>Xyster includes a plugin for ACL registration in its default distribution.</para>
+
+			<sect3 id="xyster.orm.plugins.acl">
+				<title>Xyster_Orm_Plugin_Acl</title>
+
+				<para>The only plugin included in the framework release is the <classname>Xyster_Orm_Plugin_Acl</classname>; responsible for registering entities that implement <interface>Zend_Acl_Resource_Interface</interface> in a <classname>Zend_Acl</classname>.</para>
+
+				<programlisting role="php"><![CDATA[<?php
+$acl = new Xyster_Acl;
+$plugin = new Xyster_Orm_Plugin_Acl($acl);
+Xyster_Orm::getInstance()->registerPlugin($plugin);]]></programlisting>
+
+				<para>When an entity is loaded from the data store or pulled from the secondary cache, the ACL plugin adds it to the <classname>Zend_Acl</classname> provided to it if the entity has not already been added.  Using this plugin lets the developer omit checking the ACL for the presence of an entity and adding it if absent.</para>
+			</sect3>
+		</sect2>
+	</sect1>

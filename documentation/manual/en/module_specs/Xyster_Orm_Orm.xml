@@ -1,0 +1,102 @@
+        <sect1 id="xyster.orm.orm">
+            <title>Xyster_Orm</title>
+
+            <para>The session manager, <classname>Xyster_Orm</classname>, is the starting point for anything you do in the ORM system. You use it to retrieve entities from the data store, delete existing ones, create new ones, refresh persistent ones, and perform queries.</para>
+
+            <sect2 id="xyster.orm.orm.getting">
+		<title>Getting entities</title>
+
+		<para>Any entities the session manager retrieves from the data store are persisted in an identity map. When an entity is requested, the manager checks its identity map (a <classname>Xyster_Orm_Repository</classname> object) for the presence of the requested entity. If it&apos;s found, it&apos;s returned, otherwise the manager uses a data mapper to connect to the data store. Persisting entities in the identity map prevents unnecessary visits to the data store if the same entity is requested more than once.</para>
+
+		<programlisting role="php"><![CDATA[<?php
+$orm = Xyster_Orm::getInstance();
+$entityClassName = 'Person';
+$primaryKey = 1;
+$entity = $orm->get($entityClassName, $primaryKey);   // retrieves from store
+$entity = $orm->get($entityClassName, $primaryKey);   // retrieves from id map
+$entity = $orm->get($entityClassName, 1234567);       // if not found, null]]></programlisting>
+
+		<para>In addition to the get method, you can use the find method to search for entities based on value. The find method will always query the data store. (Tip: In the world of SQL databases, find queries work quickest on indexed columns.)</para>
+
+		<programlisting role="php"><![CDATA[<?php
+// the criteria array has keys as columns
+$criteria = array('name' => 'Darth Vader');
+// it can also be an actual Criterion object
+$criteria = Xyster_Data_Expression::eq('name', 'Darth Vader');
+$vader = $orm->find('Person', $criteria);]]></programlisting>
+
+		<para>You can also get a collection of entities.</para>
+
+		<programlisting role="php"><![CDATA[<?php
+// gets all entities of a certain type; be careful w/ large numbers!
+$people = $orm->getAll('Person');
+// you can supply an array of primary keys
+$people = $orm->getAll('Person', array(1, 2, 3, 4));]]></programlisting>
+
+		<para>And you can find them.</para>
+
+		<programlisting role="php"><![CDATA[<?php
+// multiple values for a field will be used like Expression::in()
+$criteria = array('name' => array('Luke Skywalker', 'Darth Vader'));
+// and you can still use Criterion objects
+$criteria = Xyster_Data_Expression::in('name', array('Luke Skywalker', 'Darth Vader'));
+// you can specify a sort order just like Xyster_Data_Set::sortBy
+$sorts = Xyster_Data_Sort::desc("name");
+$people = $orm->findAll('Person', $criteria, $sorts);]]></programlisting>
+
+		<para>At any time, you can refresh an existing entity with current data from the store.</para>
+
+		<programlisting role="php"><![CDATA[<?php
+$luke = $orm->get('Person',1);
+$orm->refresh($luke);]]>
+		</programlisting>
+	    </sect2>
+
+	    <sect2 id="xyster.orm.orm.storing">
+		<title>Storing Changes</title>
+
+		<para>Changes can be made to entities and committed back to the data store. Let&apos;s face it, that's really the whole reason to do this. A work unit session can be committed or destroyed.</para>
+
+		<programlisting role="php"><![CDATA[<?php
+$luke = $orm->get('Person', 1);
+$luke->affiliation = 'Jedi Knights';
+$orm->commit(); // the change to the entity will be flushed back to the data store
+$luke->affiliation = 'Jedi';
+$orm->destroy(); // abandons all changes, unloads all entities, clears any cache]]></programlisting>
+
+		<para>You can store new entities very easily.</para>
+
+		<programlisting role="php"><![CDATA[<?php
+$leia = new Person();
+$leia->name = 'Princess Leia Organa';
+$leia->affiliation = 'Rebel';
+$leia->alignment = 'good';
+$leia->gender = 'F';
+$leia->race = 'Human';
+$orm->save($leia);
+echo $leia->personId; // prints null
+$orm->commit();
+echo $leia->personId; // prints new primary key]]></programlisting>
+
+		<para>You can also delete entities very easily.</para>
+
+		<programlisting role="php"><![CDATA[<?php
+$vader = $orm->get('person',2);
+$orm->delete($vader);
+$orm->commit();]]></programlisting>
+	    </sect2>
+
+	    <sect2 id="xyster.orm.orm.cache">
+		<title>Secondary Cache</title>
+
+		<para>It&apos;s incredibly wise from a performance standpoint to take advantage of the secondary cache mechanism. Entities in the identity map the manager uses are only persisted for the lifetime of the object instance; just one request. If the secondary cache is defined, entities will be placed there and are persisted across many requests. This also allows sharing of the entities between user sessions.</para>
+
+		<note><para>We recommend using APC, Memecached, or Zend Platform for the secondary cache.</para></note>
+
+		<programlisting role="php"><![CDATA[<?php
+$cache = Zend_Cache::factory('Core', 'Zend Platform');
+$orm->setSecondaryCache($cache);]]></programlisting>
+
+		<para>Entities are first tried to be located in the <classname>Xyster_Orm_Repository</classname>, then if not found, the <classname>Zend_Cache_Core</classname> object supplied to the <methodname>setSecondaryCache</methodname> method. Finally, if still not found, the entity is pulled out of the data store through the data mapper.</para>
+	    </sect2>
+        </sect1>

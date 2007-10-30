@@ -1,0 +1,233 @@
+		<sect1 id="xyster.controller.plugins">
+			<title>Plugins</title>
+
+			<para>These are the Controller Plugins included in the Xyster distribution. For information about
+				Controller Plugins themselves, see the documentation for
+			<ulink url="http://framework.zend.com/manual/en/zend.controller.plugins.html">Controller Plugins</ulink>.</para>
+
+			<sect2 id="xyster.controller.plugins.acl">
+				<title>Xyster_Controller_Plugin_Acl</title>
+
+				<para>The ACL plugin is used to grant roles access to MVC dispatch locations. Given a
+					<classname>Zend_Acl</classname> or <classname>Xyster_Acl</classname>, you can use
+					this plugin to allow or deny a role access to an entire module, just a controller, or a
+					single action. If the authenticated user tries to access a location that is forbidden,
+					the plugin forwards them to an error action.</para>
+
+				<sect3 id="xyster.controller.plugins.acl.error">
+					<title>Setting the Error and Unauthenticated Locations</title>
+
+					<para>Like Zend's ErrorHandler plugin, the default is <code>ErrorController::errorAction()</code>
+					in the default module. We made the request variables the plugin makes available to that action identical
+					to those set up by ErrorHandler to provide reuse. You can change the forward location if you desire.</para>
+
+					<programlisting><![CDATA[<?php
+$module = 'default';
+$controller = 'index';
+$action = 'error';
+/* @var $plugin Xyster_Controller_Plugin_Acl */
+$plugin->setAccessDenied($module, $controller, $action);]]></programlisting>
+
+					<para>The plugin registers a preDispatch hook to verify access. If the authenticated user
+						isn't allowed to access the action about to be dispatched, the plugin forwards them to the
+						error location specified.</para>
+
+					<tip>
+					<para>This plugin assumes that the currently authenticated <classname>Zend_Auth</classname> identity has been added
+						as a role to the ACL. <classname>Xyster_Controller_Plugin_Auth</classname> when used will add the current
+						authenticated role to the ACL during the routeStartup event.</para>
+					</tip>
+
+					<para>If an action is denied but the user isn't authenticated (meaning <classname>Zend_Auth</classname>
+						doesn't have an identity), the plugin will forward them to a location where they should be
+						prompted for credentials. By default, this is the 'index' action of the 'login' controller in the
+						default module. This can be changed by using the <methodname>setLogin</methodname> method.</para>
+
+					<programlisting role="php"><![CDATA[<?php
+$module = 'default';
+$controller = 'index';
+$action = 'login';
+/* @var $plugin Xyster_Controller_Plugin_Acl */
+$plugin->setLogin($module, $controller, $action);]]></programlisting>
+
+					<para>The login action should process the the user-supplied credentials and authenticate the user.</para>
+
+					<tip>
+						<para>If you use <classname>Xyster_Controller_Plugin_Auth</classname>, you can set the adapter
+							it uses within your login action. Doing so will automatically authenticate the user and
+							assign the role to the ACL.</para>
+					</tip>
+
+				</sect3>
+
+				<sect3 id="xyster.controller.plugins.acl.rules">
+					<title>Adding Rules</title>
+
+					<para>You can set up the access control rules using the <methodname>allow</methodname>,
+						<methodname>deny</methodname>, and <methodname>setRules</methodname> methods on the plugin.
+						The rules must be defined before the Front Controller dispatches the request.
+						Remember that the role used in the rule must be defined in the ACL before you can add the rule.
+						The following example allows the authenticated user access to all actions in the
+						'foo' controller of the 'default' module.</para>
+
+					<programlisting role="php"><![CDATA[<?php
+$acl = new Zend_Acl;
+$identity = Zend_Auth::getInstance()->getIdentity();
+$acl->addRole(new Zend_Acl_Role($identity);
+$plugin = new Xyster_Controller_Plugin_Acl($acl);
+$plugin->allow($identity, 'default', 'foo');
+$front = Zend_Controller_Front::getInstance();
+$front->registerPlugin($plugin);]]></programlisting>
+
+					<note>
+						<para>The ACL Plugin stores the dispatch locations as
+							<classname>Xyster_Controller_Request_Resource</classname> objects.
+							Each one represents a module, controller, or action. They are added hierarchically
+							to the ACL. Therefore, adding a rule for access to the "bar" action in the "foo" controller
+							in the "default" module will add three resources to the ACL: /default, /default/foo,
+							and /default/foo/bar.</para>
+					</note>
+
+					<para>You can add as many rules as you want using the fluent interface of the allow method. </para>
+
+					<programlisting role="php"><![CDATA[<?php
+$plugin->allow('admin', null) // admin can access everything
+	->allow('moderators', 'forum', 'mod') // moderators can access the 'mod' controller
+	->allow(null, 'forum', 'view') // all users can access the 'view' controller
+	->deny('trolls'); // all forum trolls should be forbidden]]></programlisting>
+
+					<para>You can also add multiple rules at once by passing an array to the <methodname>setRules</methodname>
+						method. Each element in the array must be an array with several keys.</para>
+
+					<orderedlist>
+						<listitem><para>"<structfield>type</structfield>" : either <constant>Zend_Acl::TYPE_ALLOW</constant> or <constant>Zend_Acl::TYPE_DENY</constant></para></listitem>
+						<listitem><para>"<structfield>role</structfield>" : the string role ID</para></listitem>
+						<listitem><para>"<structfield>module</structfield>" : the module name</para></listitem>
+						<listitem><para>"<structfield>controller</structfield>" : the controller name</para></listitem>
+						<listitem><para>"<structfield>action</structfield>" : the action name</para></listitem>
+					</orderedlist>
+
+					<para>If 'type' is omitted or is null, <code>Zend_Acl::TYPE_ALLOW</code> is assumed. If any of the
+						other keys are omitted, null is assumed.</para>
+
+					<programlisting role="php"><![CDATA[<?php
+$rules = array(
+    array('role'=>'admin'),
+    array('role'=>'moderators', 'module'=>'forum', 'controller'=>'mod'), 
+    array('module'=>'forum', 'controller'=>'view'),
+    array('type'=>Zend_Acl::TYPE_DENY, 'role'=>'trolls')
+);
+/* @var $plugin Xyster_Controller_Plugin_Acl */
+$plugin->setRules($rules);]]></programlisting>
+
+				</sect3>
+			</sect2>
+			<sect2 id="xyster.controller.plugins.auth">
+				<title>Xyster_Controller_Plugin_Auth</title>
+
+				<para>The main purpose of the authentication plugin is to authenticate the current user and register
+					it with a supplied ACL. The plugin registers a routeStartup hook so authentication can take place
+					before the MVC system does any real work.</para>
+
+				<para>The plugin can be given an
+					<ulink url="http://framework.zend.com/manual/en/zend.auth.html#zend.auth.introduction.adapters">auth adapter</ulink>
+					with the <methodname>setAuthAdapter</methodname> method that can be used to authenticate the user.
+					The adapter will only be used if <classname>Zend_Auth</classname> doesn't have the identity of
+					the user. If your adapter doesn't take any arguments or credentials from the user, it is acceptable
+					to supply the adapter immediately after the plugin is constructed.</para>
+
+				<programlisting role="php"><![CDATA[<?php
+$adapter = new MyAuthAdapter;
+$plugin = new Xyster_Controller_Plugin_Auth;
+$plugin->setAuthAdapter($adapter);]]></programlisting>
+
+				<para>If the user must supply credentials for authentication, the adapter can and should be created
+					and supplied within a controller action that processes the user's credentials.</para>
+
+				<programlisting role="php"><![CDATA[<?php
+public function loginAction()
+{
+	if ( $this->getRequest()->isPost() ) {
+		$username = $this->_getParam('username');
+		$password = $this->_getParam('password');
+		$adapter = new MyAuthAdapter($username, $password);
+		$plugin = $this->getFrontController()->getPlugin('Xyster_Controller_Plugin_Auth');
+		$plugin->setAuthAdapter($adapter);
+		return;
+	} else {
+		// show login form
+	}
+}]]></programlisting>
+
+				
+				<sect3 id="xyster.controller.plugins.auth.actions">
+					<title>The Success and Failure Actions</title>
+
+					<para>At the routeStartup event or when given an adapter, the plugin will try to authenticate
+						the user if an identity has not been stored. If the authentication fails, the user will
+						be forwarded to a login failure action. By default, this is the 'index' action of the
+						'login' controller in the default module. You can change this using the <methodname>setFailure</methodname> method.</para>
+
+					<programlisting role="php"><![CDATA[<?php
+$module = 'default';
+$controller = 'index';
+$action = 'login';
+/* @var $plugin Xyster_Controller_Plugin_Auth */
+$plugin->setFailure($module, $controller, $action);]]></programlisting>
+
+					<para>A <classname>Zend_Auth_Result</classname> object will be passed to this action as the result parameter.</para>
+
+					<para>If the authentication succeeds, the user will be forwarded to a login success action. By default, this is the
+						'success' action of the 'login' controller in the default module. You can change this using the
+						<methodname>setSuccess</methodname> method.</para>
+
+					<programlisting role="php"><![CDATA[<?php
+$module = 'default';
+$controller = 'index';
+$action = 'myAccount';
+/* @var $plugin Xyster_Controller_Plugin_Auth */
+$plugin->setSuccess($module, $controller, $action);]]></programlisting>
+
+
+				</sect3>
+				<sect3 id="xyster.controller.plugins.auth.role">
+					<title>Getting the Identity's Role</title>
+
+					<para>Once the user is authenticated, the plugin will then retrieve and store a role that represents
+						the authenticated user. By default, <classname>Xyster_Acl_Role_Provider</classname> will be used,
+						but you can define your own provider using the <methodname>setRoleProvider</methodname> method.
+						If an ACL object is supplied, the plugin will take the role it got from the provider and add it
+						to the ACL.</para>
+
+					<programlisting role="php"><![CDATA[<?php
+$acl = new Zend_Acl;
+$authAdapter = new MyAuthAdapter();
+$plugin = new Xyster_Controller_Plugin_Auth($authAdapter, $acl);
+$front = Zend_Controller_Front::getInstance();
+$front->registerPlugin($plugin);]]></programlisting>
+
+					<para>Once authentication takes place, the role generated for the current user is available from the getRole method.</para>
+				</sect3>
+			</sect2>
+			<sect2 id="xyster.controller.plugins.cache">
+				<title>Xyster_Controller_Plugin_Cache</title>
+
+				<para>The Cache plugin is responsible for one thing: providing the correct cache control headers. </para>
+
+				<para>Common problem: During a started session, PHP will by default send several anti-caching headers
+					along with the response. Simply including this plugin class turns off the configuration setting
+					that enables this. This plugin should be included before the session is started or any output is
+					sent to the browser.</para>
+
+				<para>The Cache plugin registers a dispatchLoopShutdown hook so that the correct cache headers can be sent.
+					There are four scenarios:</para>
+
+				<orderedlist>
+					<listitem><para>You haven't sent any cache-control headers; default anti-caching headers will be sent as
+						well as the content-length of the response body.</para></listitem>
+					<listitem><para>You've sent cache-control headers; only the content-length of the response body will be sent.</para></listitem>
+					<listitem><para>You've sent a content-type header signifying a file transfer; no headers will be sent.</para></listitem>
+					<listitem><para>The response is a redirect; no headers will be sent.</para></listitem>
+				</orderedlist>
+			</sect2>
+		</sect1>

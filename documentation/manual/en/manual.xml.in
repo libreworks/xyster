@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+    "@DOCBOOK_DTD@"
+[
+    <!ENTITY % xinclude SYSTEM "xinclude.mod">
+    %xinclude;
+]>
+<book id="manual" lang="en">
+    <bookinfo>
+        <title>Programmer's Reference Guide</title>
+        <subtitle>Xyster Framework</subtitle>
+        <edition>Build 3</edition>
+        <pubdate><?dbtimestamp format="Y-m-d"?></pubdate>
+        <copyright>
+            <year>2005-<?dbtimestamp format="Y"?></year>
+            <holder>Irrational Logic</holder>
+        </copyright>
+        <legalnotice>
+            <para>The contents of this guide are available under the terms of the
+    		<ulink url="http://www.freebsd.org/copyright/freebsd-doc-license.html">FreeBSD Documentation License</ulink></para>
+
+            <para>Redistribution and use in source (SGML DocBook) and &apos;compiled&apos; forms (SGML, HTML, PDF, PostScript, RTF and so forth) with or without modification, are permitted provided that the following conditions are met:</para>
+
+            <orderedlist><listitem><para>Redistributions of source code (SGML DocBook) must retain the above copyright notice, this list of conditions and the following disclaimer as the first lines of this file unmodified.</para></listitem>
+            <listitem><para>Redistributions in compiled form (transformed to other DTDs, converted to PDF, PostScript, RTF and other formats) must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.</para></listitem>
+            </orderedlist>
+
+            <para>THIS DOCUMENTATION IS PROVIDED BY THE XYSTER FRAMEWORK PROJECT &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE FREEBSD DOCUMENTATION PROJECT BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS DOCUMENTATION, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</para>
+        </legalnotice>
+    </bookinfo>
+    <chapter id="introduction">
+        <title>Introduction to Xyster Framework</title>
+        <xi:include href="ref/introduction.xml" />
+        <xi:include href="ref/installation.xml" />
+    </chapter>
+
+    <chapter id="xyster.acl">
+        <title>Xyster_Acl</title>
+        <xi:include href="module_specs/Xyster_Acl.xml" />
+        <xi:include href="module_specs/Xyster_Acl_RoleProvider.xml" />
+    </chapter>
+
+    <chapter id="xyster.collection">
+        <title>Xyster_Collection</title>
+    	<xi:include href="module_specs/Xyster_Collection.xml" />
+    	<xi:include href="module_specs/Xyster_Collection_Collections.xml" />
+    	<xi:include href="module_specs/Xyster_Collection_Lists.xml" />
+	    <xi:include href="module_specs/Xyster_Collection_Sets.xml" />
+    	<xi:include href="module_specs/Xyster_Collection_Maps.xml" />
+        <xi:include href="module_specs/Xyster_Collection_Static.xml" />        
+    </chapter>
+
+    <chapter id="xyster.controller">
+        <title>Xyster_Controller</title>
+        <xi:include href="module_specs/Xyster_Controller.xml" />
+        <xi:include href="module_specs/Xyster_Controller_ActionHelpers.xml" />
+        <xi:include href="module_specs/Xyster_Controller_Plugins.xml" />
+    </chapter>
+
+    <chapter id="xyster.data">
+	<title>Xyster_Data</title>
+    	<xi:include href="module_specs/Xyster_Data.xml" />
+        <xi:include href="module_specs/Xyster_Data_Generic.xml" />
+    	<xi:include href="module_specs/Xyster_Data_Sets.xml" />
+    </chapter>
+
+    <chapter id="xyster.enum">
+        <title>Xyster_Enum</title>
+    	<xi:include href="module_specs/Xyster_Enum.xml" />
+    </chapter>
+
+    <chapter id="xyster.orm">
+        <title>Xyster_Orm</title>
+    	<xi:include href="module_specs/Xyster_Orm.xml" />
+    	<xi:include href="module_specs/Xyster_Orm_Setup.xml" />
+    	<xi:include href="module_specs/Xyster_Orm_Mapper.xml" />
+    	<xi:include href="module_specs/Xyster_Orm_Entity.xml" />
+    	<xi:include href="module_specs/Xyster_Orm_Orm.xml" />        
+    	<xi:include href="module_specs/Xyster_Orm_Relations.xml" />
+    	<xi:include href="module_specs/Xyster_Orm_Queries.xml" />
+    	<xi:include href="module_specs/Xyster_Orm_Plugins.xml" />
+    </chapter>
+
+    <chapter id="xyster.string">
+        <title>Xyster_String</title>
+    	<xi:include href="module_specs/Xyster_String.xml" />
+    </chapter>
+</book>
+<!--
+vim:se ts=4 sw=4 et:
+-->
+
