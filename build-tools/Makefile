@@ -44,8 +44,8 @@ PHPDOC=phpdoc
 # the release files. ZF_SVN_DIR is the path to the directory in SVN
 # from which the release should be created, relative to the repository
 # location (e.g., trunk, branch/release-1.0).
-ZF_SVN_REVISION=6503
-ZF_SVN_DIR=tags/build-3
+ZF_SVN_REVISION=136
+ZF_SVN_DIR=trunk
 
 # ZF_VERSION is the release version string to build.  This is added
 # to the VERSION.txt file, and is also used for the name of the
@@ -56,7 +56,7 @@ ZF_VERSION=build3
 # If you want to build one language, use one of the names of language
 # directories (e.g., 'en', 'de').  You also can use any file-globbing
 # pattern.
-ZF_LANG=xx
+ZF_LANG=*
 
 # Locations of the DocBook DTD and XSL stylesheets
 DTD_HOST=framework.zend.com
@@ -162,7 +162,7 @@ stage-version:
 
 7z:
 	@echo "== CREATING 7Z ARCHIVES =="
-	@( cd $(STAGE_HOME) && $(7Z) a -r $(ZF_7ZBALL) $(ZF_PRODUCT) -x $(ZF_PRODUCT)/documentation/\* )
+	@( cd $(STAGE_HOME) && $(7Z) a -r -x!"$(ZF_PRODUCT)/documentation*" "$(ZF_7ZBALL)" "$(ZF_PRODUCT)" )
 	@echo "Code archive done..."
 	@( cd $(STAGE_HOME) && $(7Z) a -r $(ZF_PRODUCT)-apidoc.7z \
 		$(ZF_PRODUCT)/documentation/api )
