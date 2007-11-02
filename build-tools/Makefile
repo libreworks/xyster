@@ -12,8 +12,8 @@
 # to license@zend.com so we can send you a copy immediately.
 #
 # @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
-# @license    http://framework.zend.com/license/new-bsd     New BSD License
-# @version    $Id$
+# @license	http://framework.zend.com/license/new-bsd	 New BSD License
+# @version	$Id$
 
 #
 # Makefile - build Xyster Framework product and documentation
@@ -90,102 +90,102 @@ API_DOC_OUTPUT_STYLE=HTML:frames:default
 dist: export stage 7z
 
 export:
-    @echo "== EXPORTING SVN FILES =="
-    @if [ -f "$(ZF_EXPORT_DIR)/VERSION.txt" ] ; then \
-        echo "Found files in '$(ZF_EXPORT_DIR)'" ; \
-    else \
-        $(SVN) export -r $(ZF_SVN_REVISION) --force --config-dir ~/.subversion $(ZF_SVN_URL) $(ZF_EXPORT_DIR) ; \
-    fi
+	@echo "== EXPORTING SVN FILES =="
+	@if [ -f "$(ZF_EXPORT_DIR)/VERSION.txt" ] ; then \
+		echo "Found files in '$(ZF_EXPORT_DIR)'" ; \
+	else \
+		$(SVN) export -r $(ZF_SVN_REVISION) --force --config-dir ~/.subversion $(ZF_SVN_URL) $(ZF_EXPORT_DIR) ; \
+	fi
 
 stage: stage-files stage-docs stage-version
 
 stage-files:
-    @echo "== STAGING FILES =="
-    -@mkdir -p $(ZF_STAGE_DIR)
-    @(pwd=`pwd` ; cd $(ZF_EXPORT_DIR) && rsync --archive --delete --exclude-from="../exclude-files" ./ ../$(ZF_STAGE_DIR))
+	@echo "== STAGING FILES =="
+	-@mkdir -p $(ZF_STAGE_DIR)
+	@(pwd=`pwd` ; cd $(ZF_EXPORT_DIR) && rsync --archive --delete --exclude-from="../exclude-files" ./ ../$(ZF_STAGE_DIR))
 
 stage-docs: docbook phpdoc
 
 docbook: docbook-core docbook-incubator
 
 docbook-core:
-    -@mkdir -p $(ZF_STAGE_DIR)/documentation/manual/core
-    @for language in $(ZF_EXPORT_DIR)/documentation/manual/$(ZF_LANG)/ ; do \
-        [ -d $$language ] || continue ; \
-        lang=`basename $$language` ; \
-        echo "== BUILDING AND STAGING END-USER DOCUMENTATION [CORE] (language: $$lang) ==" ; \
-        ( cd $$language && autoconf && sh ./configure && $(MAKE) -e 2>&1 | tee err.txt ) ; \
-        rsync --archive --delete --exclude=.svn $$language/html/ $(ZF_STAGE_DIR)/documentation/manual/core/$$lang ; \
-    done
+	-@mkdir -p $(ZF_STAGE_DIR)/documentation/manual/core
+	@for language in $(ZF_EXPORT_DIR)/documentation/manual/$(ZF_LANG)/ ; do \
+		[ -d $$language ] || continue ; \
+		lang=`basename $$language` ; \
+		echo "== BUILDING AND STAGING END-USER DOCUMENTATION [CORE] (language: $$lang) ==" ; \
+		( cd $$language && autoconf && sh ./configure && $(MAKE) -e 2>&1 | tee err.txt ) ; \
+		rsync --archive --delete --exclude=.svn $$language/html/ $(ZF_STAGE_DIR)/documentation/manual/core/$$lang ; \
+	done
 
 docbook-incubator:
-    -@mkdir -p $(ZF_STAGE_DIR)/documentation/manual/incubator
-    @for language in $(ZF_EXPORT_DIR)/incubator/documentation/manual/$(ZF_LANG)/ ; do \
-        [ -d $$language ] || continue ; \
-        lang=`basename $$language` ; \
-        echo "== BUILDING AND STAGING END-USER DOCUMENTATION [INCUBATOR] (language: $$lang) ==" ; \
-        ( cd $$language ; autoconf ; sh ./configure ; $(MAKE) -e 2>&1 | tee err.txt ) ; \
-        rsync --archive --delete --exclude=.svn $$language/html/ $(ZF_STAGE_DIR)/documentation/manual/incubator/$$lang ; \
-    done
+	-@mkdir -p $(ZF_STAGE_DIR)/documentation/manual/incubator
+	@for language in $(ZF_EXPORT_DIR)/incubator/documentation/manual/$(ZF_LANG)/ ; do \
+		[ -d $$language ] || continue ; \
+		lang=`basename $$language` ; \
+		echo "== BUILDING AND STAGING END-USER DOCUMENTATION [INCUBATOR] (language: $$lang) ==" ; \
+		( cd $$language ; autoconf ; sh ./configure ; $(MAKE) -e 2>&1 | tee err.txt ) ; \
+		rsync --archive --delete --exclude=.svn $$language/html/ $(ZF_STAGE_DIR)/documentation/manual/incubator/$$lang ; \
+	done
 
 phpdoc: phpdoc-core phpdoc-incubator
 
 phpdoc-core:
-    @echo "== BUILDING AND STAGING API DOCUMENTATION (CORE) =="
-    -@mkdir -p $(ZF_STAGE_DIR)/documentation/api/core
-    if [ ! -f $(ZF_STAGE_DIR)/documentation/api/core/index.html -o `find $(ZF_STAGE_DIR)/library -newer $(ZF_STAGE_DIR)/documentation/api/core/index.html 2>/dev/null | wc -l` -gt 0 ] ; then \
-        $(PHPDOC) --quiet off \
-          --target $(ZF_STAGE_DIR)/documentation/api/core \
-          --directory $(ZF_STAGE_DIR)/library \
-          --title "$(API_DOC_TITLE_CORE)" \
-          --output $(API_DOC_OUTPUT_STYLE) ; \
-    else \
-        echo "...core API documentation is up to date." ; \
-    fi
+	@echo "== BUILDING AND STAGING API DOCUMENTATION (CORE) =="
+	-@mkdir -p $(ZF_STAGE_DIR)/documentation/api/core
+	if [ ! -f $(ZF_STAGE_DIR)/documentation/api/core/index.html -o `find $(ZF_STAGE_DIR)/library -newer $(ZF_STAGE_DIR)/documentation/api/core/index.html 2>/dev/null | wc -l` -gt 0 ] ; then \
+		$(PHPDOC) --quiet off \
+		  --target $(ZF_STAGE_DIR)/documentation/api/core \
+		  --directory $(ZF_STAGE_DIR)/library \
+		  --title "$(API_DOC_TITLE_CORE)" \
+		  --output $(API_DOC_OUTPUT_STYLE) ; \
+	else \
+		echo "...core API documentation is up to date." ; \
+	fi
 
 phpdoc-incubator:
-    @echo "== BUILDING AND STAGING API DOCUMENTATION (INCUBATOR) =="
-    -@mkdir -p $(ZF_STAGE_DIR)/documentation/api/incubator
-    if [ ! -f $(ZF_STAGE_DIR)/documentation/api/incubator/index.html -o `find $(ZF_STAGE_DIR)/incubator/library -newer $(ZF_STAGE_DIR)/documentation/api/incubator/index.html 2>/dev/null | wc -l` -gt 0 ] ; then \
-        $(PHPDOC) --quiet off \
-          --target $(ZF_STAGE_DIR)/documentation/api/incubator \
-          --directory $(ZF_STAGE_DIR)/incubator/library \
-          --title "$(API_DOC_TITLE_INCUBATOR)" \
-          --output $(API_DOC_OUTPUT_STYLE) ; \
-    else \
-        echo "...incubator API documentation is up to date." ; \
-    fi
+	@echo "== BUILDING AND STAGING API DOCUMENTATION (INCUBATOR) =="
+	-@mkdir -p $(ZF_STAGE_DIR)/documentation/api/incubator
+	if [ ! -f $(ZF_STAGE_DIR)/documentation/api/incubator/index.html -o `find $(ZF_STAGE_DIR)/incubator/library -newer $(ZF_STAGE_DIR)/documentation/api/incubator/index.html 2>/dev/null | wc -l` -gt 0 ] ; then \
+		$(PHPDOC) --quiet off \
+		  --target $(ZF_STAGE_DIR)/documentation/api/incubator \
+		  --directory $(ZF_STAGE_DIR)/incubator/library \
+		  --title "$(API_DOC_TITLE_INCUBATOR)" \
+		  --output $(API_DOC_OUTPUT_STYLE) ; \
+	else \
+		echo "...incubator API documentation is up to date." ; \
+	fi
 
 stage-version:
-    @echo "== OVERWRITING VERSION.txt =="
-    @echo "$(ZF_PRODUCT_NAME) Release $(ZF_VERSION) (revision $(ZF_SVN_REVISION))" > $(ZF_STAGE_DIR)/VERSION.txt
+	@echo "== OVERWRITING VERSION.txt =="
+	@echo "$(ZF_PRODUCT_NAME) Release $(ZF_VERSION) (revision $(ZF_SVN_REVISION))" > $(ZF_STAGE_DIR)/VERSION.txt
 
 7z:
-    @echo "== CREATING 7Z ARCHIVES =="
-    @( cd $(STAGE_HOME) && $(7Z) a -r $(ZF_7ZBALL) $(ZF_PRODUCT) -x $(ZF_PRODUCT)/documentation/\* )
-    @echo "Code archive done..."
-    @( cd $(STAGE_HOME) && $(7Z) a -r $(ZF_PRODUCT)-apidoc.7z \
-        $(ZF_PRODUCT)/documentation/api )
-    @echo "Documentation archive for API doc done..."
-    @( cd $(STAGE_HOME) && $(7Z) a -r $(ZF_PRODUCT)-manual-en.7z \
-        $(ZF_PRODUCT)/documentation/manual/core/en )
-    @echo "Documentation archive for manual language 'en' done..."
-    @for language in `ls -1d $(STAGE_HOME)/$(ZF_PRODUCT)/documentation/manual/core/* | grep -v '/en$$'` ; do \
-        lang=`basename $$language` ; \
-        ( cd $(STAGE_HOME) && $(7Z) a -r $(ZF_PRODUCT)-manual-$$lang.7z \
-        $(ZF_PRODUCT)/documentation/manual/core/$$lang ) ; \
-        echo "Documentation archive for manual language '$$lang' done..." ; \
-    done
-    @echo "Done."
+	@echo "== CREATING 7Z ARCHIVES =="
+	@( cd $(STAGE_HOME) && $(7Z) a -r $(ZF_7ZBALL) $(ZF_PRODUCT) -x $(ZF_PRODUCT)/documentation/\* )
+	@echo "Code archive done..."
+	@( cd $(STAGE_HOME) && $(7Z) a -r $(ZF_PRODUCT)-apidoc.7z \
+		$(ZF_PRODUCT)/documentation/api )
+	@echo "Documentation archive for API doc done..."
+	@( cd $(STAGE_HOME) && $(7Z) a -r $(ZF_PRODUCT)-manual-en.7z \
+		$(ZF_PRODUCT)/documentation/manual/core/en )
+	@echo "Documentation archive for manual language 'en' done..."
+	@for language in `ls -1d $(STAGE_HOME)/$(ZF_PRODUCT)/documentation/manual/core/* | grep -v '/en$$'` ; do \
+		lang=`basename $$language` ; \
+		( cd $(STAGE_HOME) && $(7Z) a -r $(ZF_PRODUCT)-manual-$$lang.7z \
+		$(ZF_PRODUCT)/documentation/manual/core/$$lang ) ; \
+		echo "Documentation archive for manual language '$$lang' done..." ; \
+	done
+	@echo "Done."
 
 clean:
-    -rm -rf $(ZF_STAGE_DIR)
-    -rm -f $(STAGE_HOME)/$(ZF_PRODUCT)*.7z
+	-rm -rf $(ZF_STAGE_DIR)
+	-rm -f $(STAGE_HOME)/$(ZF_PRODUCT)*.7z
 
 clean-docbook:
-    for language in $(ZF_EXPORT_DIR)/documentation/manual/$(ZF_LANG) $(ZF_EXPORT_DIR)/incubator/documentation/manual/$(ZF_LANG) ; do \
-        rm -rf $$language/autom4te.cache $$language/build/docbook-xsl $$language/html/*.html $$language/html/HTML.manifest $$language/config.* $$language/configure $$language/entities.ent $$language/Makefile ; \
-    done
+	for language in $(ZF_EXPORT_DIR)/documentation/manual/$(ZF_LANG) $(ZF_EXPORT_DIR)/incubator/documentation/manual/$(ZF_LANG) ; do \
+		rm -rf $$language/autom4te.cache $$language/build/docbook-xsl $$language/html/*.html $$language/html/HTML.manifest $$language/config.* $$language/configure $$language/entities.ent $$language/Makefile ; \
+	done
 
 clean-export:
-    -rm -rf $(ZF_EXPORT_DIR)
+	-rm -rf $(ZF_EXPORT_DIR)

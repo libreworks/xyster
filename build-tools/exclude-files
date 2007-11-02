@@ -1,0 +1,6 @@
+build-tools/
+documentation/
+incubator/documentation/
+incubator/tests/TestConfiguration.php
+tests/TestConfiguration.php
+.svn
