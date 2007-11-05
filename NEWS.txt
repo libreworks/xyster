@@ -1,6 +1,17 @@
 Xyster Framework                                                             NEWS
 |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
+=BUILD 3 / 05-Nov-2007 / based on revision 137 =
+- Better build tools
+- Docbook documentation
+- Xyster_Controller Auth and ACL plugins are now actually useful
+- Xyster_Orm bugfixes and new features:
+    * 0000005: Relations support onDelete/onUpdate cascades
+    * 0000019: Post-load event doesn't fire on entity from secondary cache
+    * 0000020: Relating a set to an entity sometimes makes it dirty
+    * 0000021: Mapper insert error with primary key
+    * 0000022: Entities should be converted to arrays before serialization
+
 =BUILD 2 / 08-Oct-2007 / based on revision 122 =
 - Added Xyster_Acl with support for rule creation plugins
 - Implemented Controller plugins:

@@ -77,8 +77,8 @@ This build file is customized for the Xyster Framework
   <property name="zf.productname" value="xyster" />
   <property name="zf.version" value="build3" />
   <property name="svn.url" value="https://xyster.devweblog.org/svn" />
-  <property name="zf.svn.url" value="${svn.url}/trunk" />
-  <property name="zf.svn.tag" value="HEAD" />
+  <property name="zf.svn.url" value="${svn.url}/tags/build-3" />
+  <property name="zf.svn.tag" value="build3" />
   <property name="zf.svn.revision" value="zf.svn.revision" />
   <property name="zf.export.dir" value="./${zf.productname}-export-${zf.svn.tag}" />
   <property name="stage.home" value="${project.basedir}/stage" />
