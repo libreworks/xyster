@@ -60,17 +60,27 @@ class Xyster_Validate_ErrorsTest extends PHPUnit_Framework_TestCase
     }
     
     /**
+     * Tests the addError method
+     *
+     */
+    public function testAddError()
+    {
+        $this->assertFalse($this->errors->hasErrors());
+        
+        $this->errors->addError('My message', 'fieldName');
+        
+        $this->assertTrue($this->errors->hasErrors());
+        $this->assertType('Xyster_Validate_Error', $this->errors->getError('fieldName'));
+    }
+    
+    /**
      * Tests the add method fails with wrong type
      *
      */
     public function testAddInvalid()
     {
-        try { 
-            $this->errors->add('Incorrect type');
-            $this->fail('Exception not thrown');
-        } catch ( Zend_Validate_Exception $thrown ) {
-            // do nothing
-        }
+        $this->setExpectedException('Zend_Validate_Exception');
+        $this->errors->add('Incorrect type');
     }
     
     /**
