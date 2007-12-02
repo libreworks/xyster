@@ -40,12 +40,8 @@ class Xyster_Orm_RelationTest extends Xyster_Orm_TestSetup
      */
     public function testInvalidType()
     {
-        try {
-            $rel = new Xyster_Orm_Relation($this->_mockFactory()->getEntityMeta('MockBug'), 'Foobar', 'relationship');
-        } catch ( Xyster_Orm_Relation_Exception $thrown ) {
-            return;
-        }
-        $this->fail("Exception not thrown");
+        $this->setExpectedException('Xyster_Orm_Relation_Exception');
+        $rel = new Xyster_Orm_Relation($this->_mockFactory()->getEntityMeta('MockBug'), 'Foobar', 'relationship');
     }
     
     /**
@@ -141,14 +137,11 @@ class Xyster_Orm_RelationTest extends Xyster_Orm_TestSetup
      */
     public function testWrongCountForLeftJoinedKeys()
     {
-        try {
-            $meta = $this->_mockFactory()->getEntityMeta('MockBug');
-            $relation = new Xyster_Orm_Relation($meta, 'joined', 'listOfProducts',
+        $meta = $this->_mockFactory()->getEntityMeta('MockBug');
+        
+        $this->setExpectedException('Xyster_Orm_Relation_Exception');
+        $relation = new Xyster_Orm_Relation($meta, 'joined', 'listOfProducts',
                 array('class'=>'MockProduct', 'left'=>array()));
-        } catch ( Xyster_Orm_Relation_Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
     }
     
     /**
@@ -157,14 +150,11 @@ class Xyster_Orm_RelationTest extends Xyster_Orm_TestSetup
      */
     public function testWrongCountForRightJoinedKeys()
     {
-        try {
-            $meta = $this->_mockFactory()->getEntityMeta('MockBug');
-            $relation = new Xyster_Orm_Relation($meta, 'joined', 'listOfProducts',
-                array('class'=>'MockProduct', 'right'=>array()));
-        } catch ( Xyster_Orm_Relation_Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
+        $meta = $this->_mockFactory()->getEntityMeta('MockBug');
+        
+        $this->setExpectedException('Xyster_Orm_Relation_Exception');
+        $relation = new Xyster_Orm_Relation($meta, 'joined', 'listOfProducts',
+            array('class'=>'MockProduct', 'right'=>array()));
     }
     
     
@@ -212,12 +202,8 @@ class Xyster_Orm_RelationTest extends Xyster_Orm_TestSetup
         $bugMeta = $this->_mockFactory()->getEntityMeta('MockBug');
         $one = new Xyster_Orm_Relation($bugMeta, 'one', 'reporter', array('class'=>'MockAccount'));
         
-        try {
-            $one->getReverse();
-        } catch ( Xyster_Orm_Relation_Exception $thrown ) {
-            return;
-        }
-        $this->fail("Exception not thrown");
+        $this->setExpectedException('Xyster_Orm_Relation_Exception');
+        $one->getReverse();
     }
     
     /**
@@ -270,12 +256,8 @@ class Xyster_Orm_RelationTest extends Xyster_Orm_TestSetup
         $meta = $this->_mockFactory()->getEntityMeta('MockBug');
         $reported = $meta->getRelation('reporter');
         
-        try {
-            $reported->relate($account, $bug);
-        } catch ( Xyster_Orm_Relation_Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
+        $this->setExpectedException('Xyster_Orm_Relation_Exception');
+        $reported->relate($account, $bug);
     }
     
     /**
@@ -289,12 +271,8 @@ class Xyster_Orm_RelationTest extends Xyster_Orm_TestSetup
         $meta = $this->_mockFactory()->getEntityMeta('MockAccount');
         $reported = $meta->getRelation('reported');
         
-        try {
-            $reported->relate($bug, $bug);
-        } catch ( Xyster_Orm_Relation_Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
+        $this->setExpectedException('Xyster_Orm_Relation_Exception');
+        $reported->relate($bug, $bug);
     }
     
     /**
@@ -309,12 +287,8 @@ class Xyster_Orm_RelationTest extends Xyster_Orm_TestSetup
         $meta = $this->_mockFactory()->getEntityMeta('MockAccount');
         $reported = $meta->getRelation('reported');
         
-        try {
-            $reported->relate($account, $account);
-        } catch ( Xyster_Orm_Relation_Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
+        $this->setExpectedException('Xyster_Orm_Relation_Exception');
+        $reported->relate($account, $account);
         
     }
 

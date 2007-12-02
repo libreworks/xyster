@@ -38,38 +38,60 @@ require_once 'Xyster/Data/Expression.php';
  */
 class Xyster_Data_CriterionTest extends PHPUnit_Framework_TestCase
 {
+    /**
+     * Tests 'fromArray' method with no items
+     *
+     */
     public function testFromArrayEmpty()
     {
         $crit = Xyster_Data_Criterion::fromArray('AND', array());
+        
         $this->assertNull($crit);
     }
+    
+    /**
+     * Tests 'fromArray' with one item
+     *
+     */
     public function testFromArrayOne()
     {
         $exp = Xyster_Data_Expression::eq('username', 'doublecompile');
         $crit = Xyster_Data_Criterion::fromArray('AND', array($exp));
+        
         $this->assertNotNull($crit);
         $this->assertSame($exp, $crit);
     }
+    
+    /**
+     * Tests 'fromArray' with several items
+     *
+     */
     public function testFromArrayMulti()
     {
         $crit = Xyster_Data_Criterion::fromArray('OR',
                 array(Xyster_Data_Expression::eq('sn', 'Smith'),
                     Xyster_Data_Expression::eq('gn', 'Bob')));
+                    
         $this->assertNotNull($crit);
         $this->assertType('Xyster_Data_Junction', $crit);
     }
+    
+    /**
+     * Tests 'fromArray' with a bad operator
+     *
+     */
     public function testFromArrayMultiBadOperator()
     {
-        try { 
-            Xyster_Data_Criterion::fromArray('BAD',
-                array(Xyster_Data_Expression::eq('sn', 'Smith'),
-                    Xyster_Data_Expression::eq('gn', 'Bob')));
-        } catch ( Exception $thrown ) {
-            // okay
-	        return;
-        }
-        $this->fail('Exception not thrown');
+        $this->setExpectedException('Xyster_Data_Exception');
+        Xyster_Data_Criterion::fromArray('BAD',
+            array(Xyster_Data_Expression::eq('sn', 'Smith'),
+                Xyster_Data_Expression::eq('gn', 'Bob')));
     }
+    
+    /**
+     * Tests the 'getFields' method
+     *
+     */
     public function testGetFields()
     {
         $field = Xyster_Data_Field::named('sn');

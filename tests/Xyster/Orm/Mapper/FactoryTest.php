@@ -122,12 +122,8 @@ class Xyster_Orm_Mapper_FactoryTest extends PHPUnit_Framework_TestCase
      */
     public function testSetDefaultMetadataCacheBadRegistryKey()
     {
-        try {
-            $this->_factory->setDefaultMetadataCache('shouldntExist');
-        } catch ( Zend_Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
+        $this->setExpectedException('Zend_Exception');
+        $this->_factory->setDefaultMetadataCache('shouldntExist');
     }
     
     /**
@@ -136,11 +132,7 @@ class Xyster_Orm_Mapper_FactoryTest extends PHPUnit_Framework_TestCase
      */
     public function testSetDefaultMetadataCacheBadType()
     {
-        try {
-            $this->_factory->setDefaultMetadataCache(array());
-        } catch ( Xyster_Orm_Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
+        $this->setExpectedException('Xyster_Orm_Exception');
+        $this->_factory->setDefaultMetadataCache(array());
     }    
 }

@@ -95,11 +95,8 @@ class Xyster_AclTest extends PHPUnit_Framework_TestCase
             ->add($resource)
             ->allow($role, $resource);
         
-        try {
-            $this->_acl->assertAllowed($role, $resource, 'anything');
-        } catch ( Zend_Acl_Exception $thrown ) {
-            $this->fail('Exception thrown when unexpected');
-        }
+        $this->setExpectedException('Zend_Acl_Exception');
+        $this->_acl->assertAllowed($role, $resource, 'anything');
     }
     
     /**
@@ -117,11 +114,10 @@ class Xyster_AclTest extends PHPUnit_Framework_TestCase
         
         try {
             $this->_acl->assertAllowed($role, $resource, 'anything');
+            $this->fail('Exception not thrown');
         } catch ( Zend_Acl_Exception $thrown ) {
             $this->assertEquals('Insufficient permissions: doublecompile -> free time (anything)', $thrown->getMessage());
-            return;
         }
-        $this->fail('Exception not thrown');
     }
     
     /**

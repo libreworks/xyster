@@ -144,12 +144,8 @@ class Xyster_Orm_Mapper_AbstractTest extends PHPUnit_Framework_TestCase
      */
     public function testFindBadNames()
     {
-        try {
-            $entity = $this->_mapper->find(array('badId'=>1));
-        } catch ( Xyster_Orm_Mapper_Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
+        $this->setExpectedException('Xyster_Orm_Mapper_Exception');
+        $entity = $this->_mapper->find(array('badId'=>1));
     }
     
     /**
@@ -172,12 +168,8 @@ class Xyster_Orm_Mapper_AbstractTest extends PHPUnit_Framework_TestCase
      */
     public function testFindAllBadCriteria()
     {
-        try {
-            $this->_mapper->findAll(new MockBugProduct());
-        } catch ( Xyster_Orm_Mapper_Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
+        $this->setExpectedException('Xyster_Orm_Mapper_Exception');
+        $this->_mapper->findAll(new MockBugProduct());
     }
     
     /**
@@ -199,12 +191,9 @@ class Xyster_Orm_Mapper_AbstractTest extends PHPUnit_Framework_TestCase
     public function testGetWrongKeyCount()
     {
         $pk = array('bugId'=>1,'productId'=>1);
-        try {
-            $entity = $this->_mapper->get($pk);
-        } catch ( Xyster_Orm_Mapper_Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
+        
+        $this->setExpectedException('Xyster_Orm_Mapper_Exception');
+        $entity = $this->_mapper->get($pk);
     }
     
     /**
@@ -214,12 +203,9 @@ class Xyster_Orm_Mapper_AbstractTest extends PHPUnit_Framework_TestCase
     public function testGetWrongKeyNames()
     {
         $pk = array('bugId'=>1,'productId'=>1, 'wrongId'=>2);
-        try {
-            $entity = $this->_mapper->get($pk);
-        } catch ( Xyster_Orm_Mapper_Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
+
+        $this->setExpectedException('Xyster_Orm_Mapper_Exception');
+        $entity = $this->_mapper->get($pk);
     }
     
     /**

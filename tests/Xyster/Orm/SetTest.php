@@ -46,6 +46,7 @@ class Xyster_Orm_SetTest extends Xyster_Orm_TestSetup
         $this->assertTrue($set->containsAll($entities));
         $this->assertTrue($entities->containsAll($set));
     }
+    
     /**
      * Tests adding an entity to a set works as expected
      *
@@ -59,6 +60,7 @@ class Xyster_Orm_SetTest extends Xyster_Orm_TestSetup
         $this->assertEquals(1,$set->count());
         $this->assertTrue($set->contains($entity));
     }
+    
     /**
      * Tests that adding a non-entity will throw an exception
      *
@@ -66,14 +68,11 @@ class Xyster_Orm_SetTest extends Xyster_Orm_TestSetup
     public function testAddBadItem()
     {
         $set = $this->_getMockSet();
-        try {
-            $set->add(1234); 
-        } catch ( Exception $thrown ) {
-            // okay
-	        return;
-        }
-        $this->fail("Exception not thrown");
+
+        $this->setExpectedException('Xyster_Data_Set_Exception');
+        $set->add(1234); 
     }
+    
     /**
      * Tests adding an entity will have its relation set
      *
@@ -89,6 +88,7 @@ class Xyster_Orm_SetTest extends Xyster_Orm_TestSetup
         $this->assertSame($account, $entity->reporter);
         $this->assertTrue($account->isDirty());
     }
+    
     /**
      * Tests baselining a set
      *
@@ -107,6 +107,7 @@ class Xyster_Orm_SetTest extends Xyster_Orm_TestSetup
         
         $this->assertEquals($bugs, $set->getBase());
     }
+    
     /**
      * Tests that a related set will set the entity dirty when cleared
      *
@@ -125,6 +126,7 @@ class Xyster_Orm_SetTest extends Xyster_Orm_TestSetup
         
         $this->assertTrue($account->isDirty());
     }
+    
     /**
      * Tests that items added to a set will be returned in the 'DiffAdded'
      *
@@ -142,6 +144,7 @@ class Xyster_Orm_SetTest extends Xyster_Orm_TestSetup
         
         $this->assertEquals($bugs, $set->getDiffAdded());
     }
+    
     /**
      * Tests that items removed from a set will be returned in the 'DiffRemoved'
      *
@@ -162,6 +165,7 @@ class Xyster_Orm_SetTest extends Xyster_Orm_TestSetup
 
         $this->assertEquals(array($entity), $set->getDiffRemoved());
     }
+    
     /**
      * Tests the default get entity name method
      *
@@ -171,6 +175,7 @@ class Xyster_Orm_SetTest extends Xyster_Orm_TestSetup
         $set = $this->_getMockSet();
         $this->assertEquals(substr(get_class($set), 0, -3), $set->getEntityName());
     }
+    
     /**
      * Tests the relateTo method will assign the entity and relation
      *
@@ -189,14 +194,25 @@ class Xyster_Orm_SetTest extends Xyster_Orm_TestSetup
         
         $this->assertSame($relation, $set->getRelation());
         $this->assertSame($entity, $set->getRelatedEntity());
-        
-        try {
-            $set->relateTo($relation, new MockBug());
-        } catch ( Xyster_Orm_Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
     }
+    
+    /**
+     * Tests the relateTo method with a bad argument
+     *
+     */
+    public function testRelateToBad()
+    {
+        $set = $this->_getMockSet();
+        
+        $mf = $this->_mockFactory();
+        $map = $mf->get('MockAccount');
+        $meta = $map->getEntityMeta();
+        $relation = $meta->getRelation('reported');
+        
+        $this->setExpectedException('Xyster_Orm_Exception');
+        $set->relateTo($relation, new MockBug());
+    }
+    
     /**
      * Tests that removing an entity will set the related entity dirty
      *
@@ -216,6 +232,7 @@ class Xyster_Orm_SetTest extends Xyster_Orm_TestSetup
         $this->assertTrue($account->isDirty());
         $this->assertFalse($set->contains($entity));
     }
+    
     /**
      * Tests that removing multiple entities will set the related entity dirty
      *
@@ -239,6 +256,7 @@ class Xyster_Orm_SetTest extends Xyster_Orm_TestSetup
         $this->assertTrue($account->isDirty());
         $this->assertFalse($set->containsAny($remove));
     }
+    
     /**
      * Tests that retaining entities will set the related entity dirty
      *

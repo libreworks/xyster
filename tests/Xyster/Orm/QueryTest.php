@@ -229,11 +229,7 @@ class Xyster_Orm_QueryTest extends Xyster_Orm_TestSetup
      */
     public function testWhereAggregate()
     {
-        try {
-            $this->_query->where(Xyster_Data_Expression::eq('MAX(assignedTo)','zzz'));
-        } catch ( Xyster_Orm_Query_Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
+        $this->setExpectedException('Xyster_Orm_Query_Exception');
+        $this->_query->where(Xyster_Data_Expression::eq('MAX(assignedTo)','zzz'));
     }
 }

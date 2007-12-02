@@ -193,12 +193,9 @@ class Xyster_OrmTest extends Xyster_Orm_TestSetup
         $this->assertEquals($criteria, $entity->getPrimaryKey());
         
         $criteria = array('bugId'=>100);
-        try {
-            $this->_orm->getOrFail('MockBug', $criteria);
-            $this->fail('Exception not thrown');
-        } catch ( Xyster_Orm_Exception $thrown ) {
-            // do nothing
-        }
+        
+        $this->setExpectedException('Xyster_Orm_Exception');
+        $this->_orm->getOrFail('MockBug', $criteria);
     }
     
     /**
@@ -280,11 +277,8 @@ class Xyster_OrmTest extends Xyster_Orm_TestSetup
     public function testPersistExisting()
     {
         $entity = $this->_orm->get('MockBug', 1);
-        try {
-            $this->_orm->persist($entity);
-            $this->fail('Exception not thrown');
-        } catch ( Xyster_Orm_Exception $thrown ) {
-        }
+        $this->setExpectedException('Xyster_Orm_Exception');
+        $this->_orm->persist($entity);
     }
     
     /**

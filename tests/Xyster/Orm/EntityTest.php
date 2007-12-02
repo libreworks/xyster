@@ -77,13 +77,9 @@ class Xyster_Orm_EntityTest extends Xyster_Orm_TestSetup
      */
     public function testConstructBeforeMetadata()
     {
-        try {
-            Xyster_Orm_Loader::loadEntityClass('MockBugProduct');
-            $product = new MockBugProduct();
-        } catch ( Xyster_Orm_Entity_Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
+        $this->setExpectedException('Xyster_Orm_Entity_Exception');
+        Xyster_Orm_Loader::loadEntityClass('MockBugProduct');
+        $product = new MockBugProduct();
     }
     
     /**
@@ -202,12 +198,8 @@ class Xyster_Orm_EntityTest extends Xyster_Orm_TestSetup
     public function testGetBadField()
     {
         $entity = $this->_getMockEntity();
-        try {
-            $var = $entity->foobar;
-        } catch ( Xyster_Orm_Entity_Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
+        $this->setExpectedException('Xyster_Orm_Entity_Exception');
+        $var = $entity->foobar;
     }
     
     /**
@@ -334,12 +326,8 @@ class Xyster_Orm_EntityTest extends Xyster_Orm_TestSetup
     public function testSetRelatedOneWithWrongType()
     {
         $entity = $this->_getMockEntityWithNoPk();
-        try { 
-            $entity->reporter = $this->_getMockEntityWithNoPk();
-        } catch ( Xyster_Orm_Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
+        $this->setExpectedException('Xyster_Orm_Exception');
+        $entity->reporter = $this->_getMockEntityWithNoPk();
     }
 
     /**
@@ -349,12 +337,8 @@ class Xyster_Orm_EntityTest extends Xyster_Orm_TestSetup
     public function testSetRelatedManyWithWrongType()
     {
         $entity = $this->_getMockEntityWithNoPk();
-        try { 
-            $entity->products = new MockAccountSet();
-        } catch ( Xyster_Orm_Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
+        $this->setExpectedException('Xyster_Orm_Exception');
+        $entity->products = new MockAccountSet();
     }
     
     /**

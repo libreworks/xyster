@@ -56,37 +56,22 @@ class Xyster_Orm_Query_ParserTest extends Xyster_Orm_TestSetup
      */
     public function testValidField()
     {
-        try { 
-            $this->_parser->assertValidFieldForClass('bugDescription', 'MockBug');
-        } catch ( Exception $thrown ) {
-            $this->fail('Should not throw exception' . $thrown->getMessage());
-        }
+        $this->_parser->assertValidFieldForClass('bugDescription', 'MockBug');
+        // should not throw exception
         
-        try {
-            $this->assertFalse($this->_parser->assertValidFieldForClass('doesntExist', 'MockBug'));
-        } catch ( Xyster_Orm_Query_Parser_Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
+        $this->setExpectedException('Xyster_Orm_Query_Parser_Exception');
+        $this->assertFalse($this->_parser->assertValidFieldForClass('doesntExist', 'MockBug'));
     }
     
     /**
      * Tests the 'assertValidFieldForClass' method with a relation
      *
+     * No operations in this method should throw exceptions
      */
     public function testValidFieldRelation()
     {
-        try { 
-            $this->_parser->assertValidFieldForClass('max(reporter->accountName)', 'MockBug');
-        } catch ( Exception $thrown ) {
-            $this->fail('Should not throw exception: ' . $thrown->getMessage());
-        }
-
-        try { 
-            $this->_parser->assertValidFieldForClass('products->count()', 'MockBug');
-        } catch ( Exception $thrown ) {
-            $this->fail('Should not throw exception: ' . $thrown->getMessage());
-        }
+        $this->_parser->assertValidFieldForClass('max(reporter->accountName)', 'MockBug');
+        $this->_parser->assertValidFieldForClass('products->count()', 'MockBug');
     }
     
     /**
@@ -95,18 +80,11 @@ class Xyster_Orm_Query_ParserTest extends Xyster_Orm_TestSetup
      */
     public function testValidFieldMethod()
     {
-        try {
-            $this->_parser->assertValidFieldForClass('getCapitalOfNebraska(1,"test",createdOn)', 'MockBug');
-        } catch ( Exception $thrown ) {
-            $this->fail('Should not throw exception: ' . $thrown->getMessage());
-        }
+        $this->_parser->assertValidFieldForClass('getCapitalOfNebraska(1,"test",createdOn)', 'MockBug');
+        // should not throw exception
         
-        try {
-            $this->_parser->assertValidFieldForClass('nonExistantMethod()', 'MockBug');
-        } catch ( Xyster_Orm_Query_Parser_Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
+        $this->setExpectedException('Xyster_Orm_Query_Parser_Exception');
+        $this->_parser->assertValidFieldForClass('nonExistantMethod()', 'MockBug');
     }
     
     /**
@@ -172,12 +150,8 @@ class Xyster_Orm_Query_ParserTest extends Xyster_Orm_TestSetup
      */
     public function testIsRuntimeBadType()
     {
-        try {
-            $this->_parser->isRuntime(array(), 'MockBug');
-        } catch ( Xyster_Orm_Query_Parser_Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
+        $this->setExpectedException('Xyster_Orm_Query_Parser_Exception');
+        $this->_parser->isRuntime(array(), 'MockBug');
     }
     
     /**
@@ -245,12 +219,8 @@ class Xyster_Orm_Query_ParserTest extends Xyster_Orm_TestSetup
      */
     public function testParseExpressionBadLiteral()
     {
-        try {
-            $this->_parser->parseExpression('username > %aoeu!');
-        } catch ( Xyster_Orm_Query_Parser_Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
+        $this->setExpectedException('Xyster_Orm_Query_Parser_Exception');
+        $this->_parser->parseExpression('username > %aoeu!');
     }
 
     /**
@@ -259,12 +229,8 @@ class Xyster_Orm_Query_ParserTest extends Xyster_Orm_TestSetup
      */
     public function testParseExpressionBadOperator()
     {
-        try {
-            $this->_parser->parseExpression('username %%% "value"');
-        } catch ( Xyster_Orm_Query_Parser_Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
+        $this->setExpectedException('Xyster_Orm_Query_Parser_Exception');
+        $this->_parser->parseExpression('username %%% "value"');
     }
     
     /**
@@ -273,12 +239,8 @@ class Xyster_Orm_Query_ParserTest extends Xyster_Orm_TestSetup
      */
     public function testParseExpressionBetween()
     {
-        try {
-            $this->_parser->parseExpression('username BETWEEN "value"');
-        } catch ( Xyster_Orm_Query_Parser_Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
+        $this->setExpectedException('Xyster_Orm_Query_Parser_Exception');
+        $this->_parser->parseExpression('username BETWEEN "value"');
     }
     
     /**
@@ -299,12 +261,8 @@ class Xyster_Orm_Query_ParserTest extends Xyster_Orm_TestSetup
      */
     public function testParseExpressionInBadValue()
     {
-        try {
-            $this->_parser->parseExpression('username in "value"');
-        } catch ( Xyster_Orm_Query_Parser_Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
+        $this->setExpectedException('Xyster_Orm_Query_Parser_Exception');
+        $this->_parser->parseExpression('username in "value"');
     }
     
     /**
@@ -380,13 +338,16 @@ class Xyster_Orm_Query_ParserTest extends Xyster_Orm_TestSetup
         $this->assertEquals(1, count($query->getOrder()));
         $this->assertEquals(1, count($query->getHaving()));
         $this->assertEquals(Xyster_Data_Expression::gt('count(bugId)', '0'), current($query->getHaving()));
-        
-        try {
-            $this->_parser->parseReportQuery($query, 'doesnT start with "select"');
-        } catch ( Xyster_Orm_Query_Parser_Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
+    }
+
+    /**
+     * Tests the 'parseReportQuery' method with bad data
+     *
+     */
+    public function testParseReportQueryBad()
+    {
+        $this->setExpectedException('Xyster_Orm_Query_Parser_Exception');
+        $this->_parser->parseReportQuery($query, 'doesnT start with "select"');
     }
     
     /**

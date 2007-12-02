@@ -64,14 +64,14 @@ class Xyster_Data_SetTest extends Xyster_Collection_SortableSetTest
     public function testConstructBadItem()
     {
         $badItems = Xyster_Collection::using(array(1,2,3,4));
-        try {
-            $set = $this->_getNewCollection($badItems);
-        } catch ( Xyster_Data_Set_Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
+        $this->setExpectedException('Xyster_Data_Set_Exception');
+        $set = $this->_getNewCollection($badItems);
     }
-        
+    
+    /**
+     * Tests the 'add' method
+     *
+     */
     public function testAdd()
     {
         $set = $this->_getNewCollection();
@@ -81,19 +81,23 @@ class Xyster_Data_SetTest extends Xyster_Collection_SortableSetTest
         $this->assertEquals(2, $set->getColumns()->count());
         $this->assertEquals('[foo,answer]', (string)$set->getColumns());
     }
+    
+    /**
+     * Tests the 'add' method with a bad argument
+     *
+     */
     public function testAddBadItem()
     {
         $set = $this->_getNewCollection();
         /* @var $set Xyster_Data_Set */
-        try {
-            $set->add(1234); 
-        } catch ( Exception $thrown ) {
-            // okay
-	        return;
-        }
-        $this->fail("Exception not thrown");
+        $this->setExpectedException('Xyster_Data_Set_Exception');
+        $set->add(1234); 
     }
     
+    /**
+     * Tests the 'addColumn' method
+     *
+     */
     public function testAddColumn()
     {
         $set = $this->_getNewCollection();
@@ -103,25 +107,35 @@ class Xyster_Data_SetTest extends Xyster_Collection_SortableSetTest
         $this->assertEquals(1, $set->getColumns()->count());
         $this->assertEquals('[foo]', (string)$set->getColumns());
     }
+    
+    /**
+     * Tests the 'addColumn' method 
+     *
+     */
     public function testAddColumnIfItems()
     {
         $set = $this->_getNewCollection();
         /* @var $set Xyster_Data_Set */
         $set->add(array('foo'=>'bar', 'answer'=>42));
-        try {
-            $set->addColumn('city');
-        } catch ( Exception $thrown ) {
-            // okay
-	        return;
-        }
-        $this->fail("Exception not thrown");
+        $this->setExpectedException('Xyster_Data_Set_Exception');
+        $set->addColumn('city');
     }
+    
+    /**
+     * Tests the 'aggregate' method with count
+     *
+     */
     public function testAggregateCount()
     {
         $set = $this->_getNewCollectionWithRandomValues();
         /* @var $set Xyster_Data_Set */
         $this->assertEquals($set->count(), $set->aggregate(Xyster_Data_Field::count('foo')));
     }
+    
+    /**
+     * Tests the 'aggregate' method with avg
+     *
+     */
     public function testAggregateAvg()
     {
         $set = $this->_getNewCollection();
@@ -134,6 +148,11 @@ class Xyster_Data_SetTest extends Xyster_Collection_SortableSetTest
         $avg = $total / count($this->_items);
         $this->assertEquals($avg, $set->aggregate(Xyster_Data_Field::avg('foo')));
     }
+    
+    /**
+     * Tests the 'aggregate' method with max
+     *
+     */
     public function testAggregateMax()
     {
         $set = $this->_getNewCollection();
@@ -147,6 +166,11 @@ class Xyster_Data_SetTest extends Xyster_Collection_SortableSetTest
         }
         $this->assertEquals($max, $set->aggregate(Xyster_Data_Field::max('foo')));
     }
+    
+    /**
+     * Tests the 'aggregate' method with min
+     *
+     */
     public function testAggregateMin()
     {
         $set = $this->_getNewCollection();
@@ -160,6 +184,11 @@ class Xyster_Data_SetTest extends Xyster_Collection_SortableSetTest
         }
         $this->assertEquals($min, $set->aggregate(Xyster_Data_Field::min('foo')));
     }
+    
+    /**
+     * Tests the 'aggregate' method with sum
+     *
+     */
     public function testAggregateSum()
     {
         $set = $this->_getNewCollection();
@@ -171,6 +200,11 @@ class Xyster_Data_SetTest extends Xyster_Collection_SortableSetTest
         }
         $this->assertEquals($total, $set->aggregate(Xyster_Data_Field::sum('foo')));
     }
+    
+    /**
+     * Tests the 'fetchColumn' method
+     *
+     */
     public function testFetchColumn()
     {
         $set = $this->_getNewCollectionWithRandomValues();
@@ -183,6 +217,11 @@ class Xyster_Data_SetTest extends Xyster_Collection_SortableSetTest
         }
         $this->assertEquals($expected, $fetched);
     }
+    
+    /**
+     * Tests the 'fetchColumn' method with a field
+     *
+     */
     public function testFetchColumnWithField()
     {
         $set = $this->_getNewCollectionWithRandomValues();
@@ -195,6 +234,11 @@ class Xyster_Data_SetTest extends Xyster_Collection_SortableSetTest
         }
         $this->assertEquals($expected, $fetched);
     }
+    
+    /**
+     * Tests the 'fetchOne' method
+     *
+     */
     public function testFetchOne()
     {
         $set = $this->_getNewCollectionWithRandomValues();
@@ -209,6 +253,11 @@ class Xyster_Data_SetTest extends Xyster_Collection_SortableSetTest
         }
         $this->assertEquals($expected, $set->fetchOne());
     }
+    
+    /**
+     * Tests the 'fetchPairs' method
+     *
+     */
     public function testFetchPairs()
     {
         $set = $this->_getNewCollection();
@@ -222,6 +271,11 @@ class Xyster_Data_SetTest extends Xyster_Collection_SortableSetTest
         
         $this->assertEquals($expected, $set->fetchPairs('last', 'first'));
     }
+    
+    /**
+     * Tests the 'fetchPairs' method with fields
+     *
+     */
     public function testFetchPairsWithFields()
     {
         $set = $this->_getNewCollection();
@@ -304,12 +358,8 @@ class Xyster_Data_SetTest extends Xyster_Collection_SortableSetTest
     {
         $set = $this->_getNewCollectionWithRandomValues();
         /* @var $set Xyster_Data_Set */
-        try {
-            $set->sortBy(Xyster_Data_Field::named('foo'));
-        } catch ( Xyster_Data_Set_Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
+        $this->setExpectedException('Xyster_Data_Set_Exception');
+        $set->sortBy(Xyster_Data_Field::named('foo'));
     }
     
     /**
@@ -318,11 +368,7 @@ class Xyster_Data_SetTest extends Xyster_Collection_SortableSetTest
      */
     public function testCreateComparator()
     {
-        try {
-            $comparator = new Xyster_Data_Comparator(array(Xyster_Data_Field::named('foo')));
-        } catch ( Xyster_Data_Exception $thrown ) {
-            return; 
-        }
-        $this->fail('Exception not thrown');
+        $this->setExpectedException('Xyster_Data_Exception');
+        $comparator = new Xyster_Data_Comparator(array(Xyster_Data_Field::named('foo')));
     }
 }

@@ -57,6 +57,7 @@ class Xyster_Orm_WorkUnitTest extends Xyster_Orm_TestSetup
         $this->assertFalse($wu->getNew()->contains($entity));
         $this->assertFalse($wu->getRemoved()->contains($entity));
     }
+    
     /**
      * Tests registering a new entity
      *
@@ -71,13 +72,10 @@ class Xyster_Orm_WorkUnitTest extends Xyster_Orm_TestSetup
         $wu->rollback();
         $wu->registerDirty($entity);
         
-        try {
-            $wu->registerNew($entity);
-        } catch ( Xyster_Orm_Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
+        $this->setExpectedException('Xyster_Orm_Exception');
+        $wu->registerNew($entity);
     }
+    
     /**
      * Tests registering a dirty entity
      *
@@ -91,6 +89,7 @@ class Xyster_Orm_WorkUnitTest extends Xyster_Orm_TestSetup
         
         $this->assertTrue($wu->getDirty()->contains($entity));
     }
+    
     /**
      * Tests registering an entity with no PK as dirty
      *
@@ -99,13 +98,10 @@ class Xyster_Orm_WorkUnitTest extends Xyster_Orm_TestSetup
     {
         $wu = new Xyster_Orm_WorkUnitMock;
         
-        try {
-            $wu->registerDirty($this->_getMockEntityWithNoPk());
-        } catch ( Xyster_Orm_Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
+        $this->setExpectedException('Xyster_Orm_Exception');
+        $wu->registerDirty($this->_getMockEntityWithNoPk());
     }
+    
     /**
      * Tests registering a removed entity as dirty
      *
@@ -116,13 +112,10 @@ class Xyster_Orm_WorkUnitTest extends Xyster_Orm_TestSetup
         $wu = new Xyster_Orm_WorkUnitMock;
         $wu->registerRemoved($entity);
         
-        try {
-            $wu->registerDirty($entity);
-        } catch ( Xyster_Orm_Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
+        $this->setExpectedException('Xyster_Orm_Exception');
+        $wu->registerDirty($entity);
     }
+    
     /**
      * Tests the rollback method
      *
@@ -142,6 +135,7 @@ class Xyster_Orm_WorkUnitTest extends Xyster_Orm_TestSetup
         $this->assertTrue($wu->getRemoved()->isEmpty());
         $this->assertTrue($wu->getNew()->isEmpty());
     }
+    
     /**
      * Tests committing the work
      *

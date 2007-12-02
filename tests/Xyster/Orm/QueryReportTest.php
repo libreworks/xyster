@@ -127,16 +127,12 @@ class Xyster_Orm_Query_ReportTest extends Xyster_Orm_QueryTest
      */
     public function testExecuteFieldNotGrouped()
     {
-        try {
-            $this->_query->field(Xyster_Data_Field::named('bugDescription'))
-                ->group(Xyster_Data_Field::group('getCapitalOfNebraska()'))
-                ->having(Xyster_Data_Expression::eq('max(getCapitalOfNebraska())', 'Lincoln'));
+        $this->_query->field(Xyster_Data_Field::named('bugDescription'))
+            ->group(Xyster_Data_Field::group('getCapitalOfNebraska()'))
+            ->having(Xyster_Data_Expression::eq('max(getCapitalOfNebraska())', 'Lincoln'));
             
-            $return = $this->_query->execute();
-        } catch ( Xyster_Orm_Query_Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
+        $this->setExpectedException('Xyster_Orm_Query_Exception');
+        $return = $this->_query->execute();
     }
     
     /**
@@ -299,12 +295,8 @@ class Xyster_Orm_Query_ReportTest extends Xyster_Orm_QueryTest
      */
     public function testHavingNotAggregate()
     {
-        try {
-            $this->_query->having(Xyster_Data_Expression::eq('bugDescription','12345'));
-        } catch ( Xyster_Orm_Query_Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
+        $this->setExpectedException('Xyster_Orm_Query_Exception');
+        $this->_query->having(Xyster_Data_Expression::eq('bugDescription','12345'));
     }
     
     /**

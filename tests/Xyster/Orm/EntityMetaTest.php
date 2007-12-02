@@ -133,12 +133,8 @@ class Xyster_Orm_Entity_MetaTest extends Xyster_Orm_TestSetup
      */
     public function testGetRelationWithBadName()
     {
-        try {
-            $this->_meta->getRelation('foobar');
-        } catch ( Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
+        $this->setExpectedException('Xyster_Orm_Relation_Exception');
+        $this->_meta->getRelation('foobar');
     }
     
     /**
@@ -194,14 +190,14 @@ class Xyster_Orm_Entity_MetaTest extends Xyster_Orm_TestSetup
     {
         $this->_meta->hasOne('reportingAccount', array('class'=>'MockAccount','id'=>'reportedBy'));
     }
-    
+
+    /**
+     * Tests the creating an existing relation throws an exception
+     *
+     */
     public function testCreateExistingRelation()
     {
-        try {
-            $this->_meta->belongsTo('reporter', array('class'=>'MockAccount','id'=>'reportedBy'));
-        } catch ( Xyster_Orm_Relation_Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
+        $this->setExpectedException('Xyster_Orm_Relation_Exception');
+        $this->_meta->belongsTo('reporter', array('class'=>'MockAccount','id'=>'reportedBy'));
     }
 }

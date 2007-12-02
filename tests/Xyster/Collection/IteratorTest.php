@@ -34,6 +34,10 @@ require_once 'Xyster/Collection.php';
  */
 class Xyster_Collection_IteratorTest extends PHPUnit_Framework_TestCase
 {
+    /**
+     * Tests using foreach
+     *
+     */
     public function testForeach()
     {
         $c = $this->_getNewCollectionWithRandomValues();
@@ -41,31 +45,38 @@ class Xyster_Collection_IteratorTest extends PHPUnit_Framework_TestCase
             // nothing to do
         }
     }
+    
+    /**
+     * Tests the 'count' method
+     *
+     */
     public function testCount()
     {
         $c = $this->_getNewCollectionWithRandomValues();
-        $this->assertEquals($c->count(),$c->getIterator()->count());
+        $this->assertEquals($c->count(), $c->getIterator()->count());
     }
+    
+    /**
+     * Tests the 'seek' method
+     *
+     */
     public function testSeek()
     {
+        $this->setExpectedException('Xyster_Collection_Exception');
         $c = $this->_getNewCollectionWithRandomValues();
         $it = $c->getIterator();
-        $it->seek(2);
-        try {
-            $it->seek(20);
-        } catch ( Exception $thrown ) {
-            return;
-        }
-        $this->fail("Unthrown exception when seeking past max index");
+        $it->seek(2); // should be valid
+        $it->seek(20);
     }
+    
     /**
      * @return Xyster_Collection
      */
     protected function _getNewCollectionWithRandomValues()
     {
         $c = new Xyster_Collection();
-        for( $i=0; $i<rand(3,10); $i++ ) {
-            $c->add( new Xyster_Collection_Test_Value(md5(rand(0,100))) );
+        for( $i=0; $i<rand(3, 10); $i++ ) {
+            $c->add(new Xyster_Collection_Test_Value(md5(rand(0, 100))));
         }
         return $c;
     }

@@ -46,50 +46,58 @@ require_once 'Xyster/Collection/Set.php';
  */
 class Xyster_Collection_CollectionTest extends Xyster_Collection_BaseCollectionTest
 {
+    /**
+     * Tests the 'using' method
+     *
+     */
     public function testUsing()
     {
         $c = Xyster_Collection::using( array(1,2,3,4,5) );
         $this->assertType('Xyster_Collection_Interface',$c);
         $this->assertEquals($c->count(),5);
     }
+    
+    /**
+     * Tests the fixed collection method
+     *
+     */
     public function testFixedCollection()
     {
+        $this->setExpectedException('Xyster_Collection_Exception');
         $c = Xyster_Collection::fixedCollection( new Xyster_Collection() );
-        try {
-            $c->clear();
-        } catch ( Exception $thrown ) {
-            return;
-        }
-        $this->fail("Exception not thrown when clearing fixed collection");
+        $c->clear();
     }
+    
+    /**
+     * Tests the fixed set method
+     *
+     */
     public function testFixedSet()
     {
+        $this->setExpectedException('Xyster_Collection_Exception');
         $c = Xyster_Collection::fixedSet( new Xyster_Collection_Set() );
-        try {
-            $c->clear();
-        } catch ( Exception $thrown ) {
-            return;
-        }
-        $this->fail("Exception not thrown when clearing fixed set");
+        $c->clear();
     }
+    
+    /**
+     * Tests the fixed list method
+     *
+     */
     public function testFixedList()
     {
+        $this->setExpectedException('Xyster_Collection_Exception');
         $c = Xyster_Collection::fixedList( new Xyster_Collection_List() );
-        try {
-            $c->clear();
-        } catch ( Exception $thrown ) {
-            return;
-        }
-        $this->fail("Exception not thrown when clearing fixed list");
+        $c->clear();
     }
+    
+    /**
+     * Tests the fixed map method
+     *
+     */
     public function testFixedMap()
     {
+        $this->setExpectedException('Xyster_Collection_Exception');
         $c = Xyster_Collection::fixedMap( new Xyster_Collection_Map() );
-        try {
-            $c->clear();
-        } catch ( Exception $thrown ) {
-            return;
-        }
-        $this->fail("Exception not thrown when clearing fixed map");
+        $c->clear();
     }
 }

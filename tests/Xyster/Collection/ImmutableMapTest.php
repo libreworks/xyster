@@ -38,63 +38,78 @@ class Xyster_Collection_ImmutableMapTest extends PHPUnit_Framework_TestCase
      */
     protected $_c;
     
+    /**
+     * Sets up the test
+     *
+     */
     public function setUp()
     {
         $this->_c = Xyster_Collection::fixedMap($this->_getNewMapWithRandomValues());
     }
+    
+    /**
+     * Tests the 'clear' method
+     *
+     */
     public function testClear()
     {
-        try {
-            $this->_c->clear();
-        } catch ( Exception $thrown ) {
-            return;
-        }
-        $this->fail('No exception thrown for clear of immutable');
+        $this->setExpectedException('Xyster_Collection_Exception');
+        $this->_c->clear();
     }
+    
+    /**
+     * Tests the 'merge' method
+     *
+     */
     public function testMerge()
     {
-        try {
-            $this->_c->merge( $this->_getNewMapWithRandomValues() );
-        } catch ( Exception $thrown ) {
-            return;
-        }
-        $this->fail('No exception thrown for merge with immutable');
+        $this->setExpectedException('Xyster_Collection_Exception');
+        $this->_c->merge($this->_getNewMapWithRandomValues());
     }
+    
+    /**
+     * Tests the 'remove' method
+     *
+     */
     public function testRemove()
     {
+        $pre = $this->_c->count();
+            
         try {
-            $pre = $this->_c->count();
-            $this->_c->remove( $this->_getNewKey() );
+            $this->_c->remove($this->_getNewKey());
+            $this->fail('No exception thrown for remove from immutable');
         } catch ( Exception $thrown ) {
-            $this->assertEquals($pre,$this->_c->count());
-            return;
+            $this->assertEquals($pre, $this->_c->count());
         }
-        $this->fail('No exception thrown for remove from immutable');
     }
+    
+    /**
+     * Tests the 'set' method
+     *
+     */
     public function testSet()
     {
-        try {
-            $this->_c->set( $this->_getNewKey(), $this->_getNewValue() );
-        } catch ( Exception $thrown ) {
-            return;
-        }
-        $this->fail('No exception thrown for add to immutable');
+        $this->setExpectedException('Xyster_Collection_Exception');
+        $this->_c->set($this->_getNewKey(), $this->_getNewValue());
     }
     
     protected function _addRandomValues( Xyster_Collection_Map $c )
     {
-        for( $i=0; $i<rand(2,10); $i++ ) {
-            $c->set( $this->_getNewKey(), $this->_getNewValue() );
+        for( $i=0; $i<rand(2, 10); $i++ ) {
+            $c->set($this->_getNewKey(), $this->_getNewValue());
         }
     }
+    
     protected function _getNewKey()
     {
-        return new Xyster_Collection_Test_Key(md5(rand(101,200)));
+        return new Xyster_Collection_Test_Key(md5(rand(101, 200)));
     }
+    
     protected function _getNewValue()
     {
-        return new Xyster_Collection_Test_Value(md5(rand(0,100)));
+        return new Xyster_Collection_Test_Value(md5(rand(0, 100)));
     }
+    
     /**
      * @return Xyster_Collection_Map
      */
@@ -103,6 +118,7 @@ class Xyster_Collection_ImmutableMapTest extends PHPUnit_Framework_TestCase
         $class = 'Xyster_Collection_Map';
         return new $class( $arg );
     }
+    
     /**
      * @return Xyster_Collection_Map
      */

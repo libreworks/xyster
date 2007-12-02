@@ -99,12 +99,8 @@ class Xyster_Db_TranslatorTest extends PHPUnit_Framework_TestCase
      */
     public function testSetRenameCallbackInvalid()
     {
-        try {
-            $this->translator->setRenameCallback('123doesntExist');
-            $this->fail('Exception not thrown');
-        } catch ( Xyster_Db_Exception $thrown ) {
-            // do nothing
-        }
+        $this->setExpectedException('Xyster_Db_Exception');
+        $this->translator->setRenameCallback('123doesntExist');
     }
     
     /**
@@ -124,13 +120,14 @@ class Xyster_Db_TranslatorTest extends PHPUnit_Framework_TestCase
      */
     public function testTranslateInvalid()
     {
-        try {
-            $this->translator->translate('invalid object');
-        } catch ( Xyster_Db_Exception $thrown ) {
-            // do nothing
-        }
+        $this->setExpectedException('Xyster_Db_Exception');
+        $this->translator->translate('invalid object');
     }
-    
+
+    /**
+     * Tests the 'translate' method with a field
+     *
+     */
     public function testTranslateField()
     {
         $field = Xyster_Data_Field::named('testing');
@@ -145,6 +142,10 @@ class Xyster_Db_TranslatorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('testing', $token->getSql());
     }
     
+    /**
+     * Tests the 'translate' method with a field and a rename callback
+     *
+     */
     public function testTranslateFieldRename()
     {
         $this->translator->setRenameCallback(array($this, 'renameCallback'));
@@ -162,6 +163,10 @@ class Xyster_Db_TranslatorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('my_table.TESTING', $token->getSql());
     }
     
+    /**
+     * Tests the 'translate' method with an aggregate field
+     *
+     */
     public function testTranslateFieldAggregate()
     {
         $this->translator->setRenameCallback(array($this, 'renameCallback'));
@@ -179,6 +184,10 @@ class Xyster_Db_TranslatorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('MAX(my_table.TESTING)', $token->getSql());
     }
     
+    /**
+     * Tests the 'translate' method with a sort
+     *
+     */
     public function testTranslateSort()
     {
         $field = Xyster_Data_Field::named('testing');
@@ -195,6 +204,10 @@ class Xyster_Db_TranslatorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('testing DESC', $token->getSql());
     }
     
+    /**
+     * Tests the 'translate' method with a junction
+     *
+     */
     public function testTranslateJunction()
     {
         $field = Xyster_Data_Field::named('testing');
@@ -213,6 +226,10 @@ class Xyster_Db_TranslatorTest extends PHPUnit_Framework_TestCase
         $this->assertRegExp('/\( testing <> :P[\S]+ OR testing IS NOT NULL OR testing <> unitTesting \)/', $token->getSql());
     }
     
+    /**
+     * Tests the 'translate' method with an Expression
+     *
+     */
     public function testTranslateExpression()
     {
         $field = Xyster_Data_Field::named('testing');

@@ -188,12 +188,8 @@ class Xyster_Orm_Plugin_BrokerTest extends PHPUnit_Framework_TestCase
         $plugin2  = $this->getMock('Xyster_Orm_Plugin_Abstract');
         $this->broker->registerPlugin($plugin, 1);
         
-        try {
-            $this->broker->registerPlugin($plugin2, 1);
-            $this->fail('Exception not thrown');
-        } catch ( Xyster_Orm_Exception $thrown ) {
-            // do nothing
-        }
+        $this->setExpectedException('Xyster_Orm_Exception');
+        $this->broker->registerPlugin($plugin2, 1);
     }
     
     /**
@@ -202,12 +198,8 @@ class Xyster_Orm_Plugin_BrokerTest extends PHPUnit_Framework_TestCase
      */
     public function testRegisterPluginDuplicate()
     {
-        try {
-            $this->broker->registerPlugin($this->plugin);
-            $this->fail('Exception not thrown');
-        } catch ( Xyster_Orm_Exception $thrown ) {
-            $this->assertContains('already', $thrown->getMessage());
-        }
+        $this->setExpectedException('Xyster_Orm_Exception');
+        $this->broker->registerPlugin($this->plugin);
     }
     
     /**
@@ -259,12 +251,8 @@ class Xyster_Orm_Plugin_BrokerTest extends PHPUnit_Framework_TestCase
     public function testUnregisterNonexistant()
     {
         $plugin = $this->getMock('Xyster_Orm_Plugin_Abstract');
-        try {
-            $this->broker->unregisterPlugin($plugin);
-            $this->fail('Exception not thrown');
-        } catch ( Xyster_Orm_Exception $thrown ) {
-            
-        }
+        $this->setExpectedException('Xyster_Orm_Exception');
+        $this->broker->unregisterPlugin($plugin);
     }
 }
 

@@ -161,12 +161,8 @@ class Xyster_Orm_ManagerTest extends Xyster_Orm_TestSetup
      */
     public function testFindAllBadCriteria()
     {
-        try {
-            $set = $this->_manager->findAll('MockBug', new MockBug());
-        } catch ( Xyster_Orm_Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
+        $this->setExpectedException('Xyster_Orm_Exception');
+        $set = $this->_manager->findAll('MockBug', new MockBug());
     }
     
     /**
@@ -392,12 +388,8 @@ class Xyster_Orm_ManagerTest extends Xyster_Orm_TestSetup
      */
     public function testSetSecondaryCacheBadRegistryKey()
     {
-        try {
-            $this->_manager->setSecondaryCache('shouldntExist');
-        } catch ( Zend_Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
+        $this->setExpectedException('Zend_Exception');
+        $this->_manager->setSecondaryCache('shouldntExist');
     }
     
     /**
@@ -406,12 +398,8 @@ class Xyster_Orm_ManagerTest extends Xyster_Orm_TestSetup
      */
     public function testSetSecondaryCacheBadType()
     {
-        try {
-            $this->_manager->setSecondaryCache(new MockBug());
-        } catch ( Xyster_Orm_Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
+        $this->setExpectedException('Xyster_Orm_Exception');
+        $this->_manager->setSecondaryCache(new MockBug());
     }
 }
 

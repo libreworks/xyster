@@ -112,12 +112,8 @@ class Xyster_Data_TupleTest extends Xyster_Data_SetTest
             array('city'=>'Frederick', 'state'=>'Maryland', 'foo'=>'lol')
             );
         
-        try { 
-            $tuples = Xyster_Data_Tuple::makeTuples($set, $collection, $fields);
-        } catch ( Xyster_Data_Set_Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
+        $this->setExpectedException('Xyster_Data_Set_Exception');
+        $tuples = Xyster_Data_Tuple::makeTuples($set, $collection, $fields);
     }
     
     /**
@@ -137,11 +133,7 @@ class Xyster_Data_TupleTest extends Xyster_Data_SetTest
             array('city'=>'Frederick', 'state'=>'Maryland', 'foo'=>'lol')
             );
         
-        try { 
-            $tuples = Xyster_Data_Tuple::makeTuples($set, $collection, $fields);
-        } catch ( Xyster_Data_Set_Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
+        $this->setExpectedException('Xyster_Data_Set_Exception');
+        $tuples = Xyster_Data_Tuple::makeTuples($set, $collection, $fields);
     }
 }

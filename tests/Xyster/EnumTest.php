@@ -34,59 +34,74 @@ require_once 'Xyster/Enum.php';
  */
 class Xyster_EnumTest extends PHPUnit_Framework_TestCase
 {
+    /**
+     * Tests basic operation
+     *
+     */
     public function testEnums()
     {
         $names = array('Posix','Windows','Mac');
-        $this->assertEquals( $names, Xyster_Enum::values('TestEnum') );
+        $this->assertEquals($names, Xyster_Enum::values('TestEnum'));
         foreach( $names as $value => $name ) {
-            $this->_runTests( TestEnum::$name(), $name, $value );
+            $this->_runTests(TestEnum::$name(), $name, $value);
         }
     }
+    
+    /**
+     * Tests no cloning
+     *
+     */
     public function testClone()
     {
+        $this->setExpectedException('Exception');
         $posix = TestEnum::Posix();
-        try { 
-            $linux = clone $posix;
-        } catch ( Exception $thrown ) {
-            return;
-        }
-        $this->fail("Unthrown exception when cloning enum");
+        $linux = clone $posix;
     }
+    
+    /**
+     * Tests the values method
+     *
+     */
     public function testValues()
     {
-        try {
-            $values = Xyster_Enum::values('NotTestEnum');
-        } catch ( Exception $thrown ) {
-            return;
-        }
-        $this->fail("Unthrown exception when getting values for unknown class");
+        $this->setExpectedException('Exception');
+        $values = Xyster_Enum::values('NotTestEnum');
     }
+    
+    /**
+     * Tests a bad parse
+     *
+     */
     public function testBadParse()
     {
-        try {
-            $enum = Xyster_Enum::parse('TestEnum','Invalid');
-        } catch ( Exception $thrown ) {
-            return; 
-        }
-        $this->fail("Unthrown exception when parsing invalid name");
+        $this->setExpectedException('Exception');
+        $enum = Xyster_Enum::parse('TestEnum', 'Invalid');
     }
+    
+    /**
+     * Tests a bad valueOf
+     *
+     */
     public function testBadValueOf()
     {
-        try {
-            $enum = Xyster_Enum::valueOf('TestEnum',4);
-        } catch ( Exception $thrown ) {
-            return; 
-        }
-        $this->fail("Unthrown exception when parsing invalid value");        
+        $this->setExpectedException('Exception');
+        $enum = Xyster_Enum::valueOf('TestEnum', 4);
     }
 
+    /**
+     * Runs basic tests
+     *
+     * @param Xyster_Enum $actual
+     * @param string $name
+     * @param mixed $value
+     */
     protected function _runTests( $actual, $name, $value )
     {
-        $this->assertEquals($name,$actual->getName());
-        $this->assertEquals($value,$actual->getValue());
-        $this->assertEquals('TestEnum ['.$value.','.$name.']',(string)$actual);
-        $this->assertEquals($actual,Xyster_Enum::parse('TestEnum',$name));
-        $this->assertEquals($actual,Xyster_Enum::valueOf('TestEnum',$value));
+        $this->assertEquals($name, $actual->getName());
+        $this->assertEquals($value, $actual->getValue());
+        $this->assertEquals('TestEnum [' . $value . ',' . $name . ']', (string)$actual);
+        $this->assertSame($actual, Xyster_Enum::parse('TestEnum', $name));
+        $this->assertSame($actual, Xyster_Enum::valueOf('TestEnum', $value));
     }
 }
 

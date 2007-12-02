@@ -38,89 +38,114 @@ class Xyster_Collection_ImmutableCollectionTest extends PHPUnit_Framework_TestCa
      */
     protected $_c;
     
+    /**
+     * Sets up the tests
+     *
+     */
     public function setUp()
     {
         $this->_c = Xyster_Collection::fixedCollection($this->_getNewCollectionWithRandomValues());
     }
+    
+    /**
+     * Tests the 'add' method
+     *
+     */
     public function testAdd()
     {
-        try {
-            $this->_c->add( null );
-        } catch ( Exception $thrown ) {
-            return;
-        }
-        $this->fail('No exception thrown for add to immutable');
+        $this->setExpectedException('Xyster_Collection_Exception');
+        $this->_c->add(null);
     }
+    
+    /**
+     * Tests the 'clear' method
+     *
+     */
     public function testClear()
     {
-        try {
-            $this->_c->clear();
-        } catch ( Exception $thrown ) {
-            return;
-        }
-        $this->fail('No exception thrown for clear of immutable');
+        $this->setExpectedException('Xyster_Collection_Exception');        
+        $this->_c->clear();
     }
+    
+    /**
+     * Tests the 'merge' method
+     *
+     */
     public function testMerge()
     {
-        try {
-            $this->_c->merge( $this->_getNewCollectionWithRandomValues() );
-        } catch ( Exception $thrown ) {
-            return;
-        }
-        $this->fail('No exception thrown for merge with immutable');
+        $this->setExpectedException('Xyster_Collection_Exception');
+        $this->_c->merge($this->_getNewCollectionWithRandomValues());
     }
+    
+    /**
+     * Tests the 'remove' method
+     *
+     */
     public function testRemove()
     {
+        $pre = $this->_c->count();
+        
         try {
-            $pre = $this->_c->count();
-            $this->_c->remove( null );
-        } catch ( Exception $thrown ) {
-            $this->assertEquals($pre,$this->_c->count());
-            return;
+            $this->_c->remove(null);
+            $this->fail('No exception thrown for remove from immutable');
+        } catch ( Xyster_Collection_Exception $thrown ) {
+            $this->assertEquals($pre, $this->_c->count());
         }
-        $this->fail('No exception thrown for remove from immutable');
     }
+    
+    /**
+     * Tests the 'removeAll' method
+     *
+     */
     public function testRemoveAll()
     {
+        $pre = $this->_c->count();
+        
         try {
-            $pre = $this->_c->count();
-            $this->_c->removeAll( $this->_getNewCollectionWithRandomValues() );
-        } catch ( Exception $thrown ) {
+            $this->_c->removeAll($this->_getNewCollectionWithRandomValues());
+            $this->fail('No exception thrown for remove all from immutable');
+        } catch ( Xyster_Collection_Exception $thrown ) {
             $this->assertEquals($pre,$this->_c->count());
-            return;
         }
-        $this->fail('No exception thrown for remove all from immutable');
     }
+    
+    /**
+     * Tests the 'retainAll' method
+     *
+     */
     public function testRetainAll()
     {
+        $pre = $this->_c->count();
+
         try {
-            $pre = $this->_c->count();
-            $this->_c->retainAll( $this->_getNewCollectionWithRandomValues() );
-        } catch ( Exception $thrown ) {
-            $this->assertEquals($pre,$this->_c->count());
-            return;
+            $this->_c->retainAll($this->_getNewCollectionWithRandomValues());
+            $this->fail('No exception thrown for retain all in immutable');
+        } catch ( Xyster_Collection_Exception $thrown ) {
+            $this->assertEquals($pre, $this->_c->count());
         }
-        $this->fail('No exception thrown for retain all in immutable');
     }
     
     protected function _addRandomValues( Xyster_Collection $c )
     {
         for( $i=0; $i<rand(2,10); $i++ ) {
-            $c->add( $this->_getNewValue() );
+            $c->add($this->_getNewValue());
         }
     }
+    
     protected function _getNewValue()
     {
         return new Xyster_Collection_Test_Value(md5(rand(0,100)));
     }
+    
     /**
      * @return Xyster_Collection
      */
     protected function _getNewCollection( $arg = null )
     {
         $class = 'Xyster_Collection';
-        return new $class( $arg );    
+        return new $class($arg);    
     }
+    
     /**
      * @return Xyster_Collection
      */

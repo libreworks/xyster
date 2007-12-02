@@ -53,12 +53,8 @@ class Xyster_Orm_LoaderTest extends PHPUnit_Framework_TestCase
     {
         Xyster_Orm_Loader::addPath(dirname(__FILE__) . '/_files');
         
-        try {
-            Xyster_Orm_Loader::addPath(dirname(__FILE__) . '/_doesntExist');
-        } catch ( Xyster_Orm_Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
+        $this->setExpectedException('Xyster_Orm_Exception');
+        Xyster_Orm_Loader::addPath(dirname(__FILE__) . '/_doesntExist');
     }
     
     /**
@@ -67,18 +63,11 @@ class Xyster_Orm_LoaderTest extends PHPUnit_Framework_TestCase
      */
     public function testLoadClass()
     {
-        try {
-            Xyster_Orm_Loader::loadClass('MockProduct');
-        } catch ( Exception $thrown ) {
-            $this->fail('Loading a valid class should not error');
-        }
+        // loading a valid class shouldn't error
+        Xyster_Orm_Loader::loadClass('MockProduct');
         
-        try {
-            Xyster_Orm_Loader::loadClass('NoClassInside');
-        } catch ( Xyster_Orm_Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
+        $this->setExpectedException('Xyster_Orm_Exception');
+        Xyster_Orm_Loader::loadClass('NoClassInside');
     }
     
     /**
@@ -87,11 +76,8 @@ class Xyster_Orm_LoaderTest extends PHPUnit_Framework_TestCase
      */
     public function testLoadEntityClass()
     {
-        try {
-            Xyster_Orm_Loader::loadEntityClass('MockBug');
-        } catch ( Exception $thrown ) {
-            $this->fail('Loading a valid entity class should not error');
-        }
+        // loading a valid entity class shouldn't error
+        Xyster_Orm_Loader::loadEntityClass('MockBug');
     }
     
     /**
@@ -100,12 +86,8 @@ class Xyster_Orm_LoaderTest extends PHPUnit_Framework_TestCase
      */
     public function testLoadEntityClassNotSub()
     {
-        try {
-            Xyster_Orm_Loader::loadEntityClass('MockBugSet');
-        } catch ( Xyster_Orm_Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
+        $this->setExpectedException('Xyster_Orm_Exception');
+        Xyster_Orm_Loader::loadEntityClass('MockBugSet');
     }
     
     /**
@@ -114,11 +96,8 @@ class Xyster_Orm_LoaderTest extends PHPUnit_Framework_TestCase
      */
     public function testLoadSetClass()
     {
-        try {
-            Xyster_Orm_Loader::loadSetClass('MockBug');
-        } catch ( Exception $thrown ) {
-            $this->fail('Loading a valid set class should not error');
-        }
+        // loading a valid set class shouldn't error
+        Xyster_Orm_Loader::loadSetClass('MockBug');
     }
     
     /**
@@ -127,12 +106,8 @@ class Xyster_Orm_LoaderTest extends PHPUnit_Framework_TestCase
      */
     public function testLoadSetClassNotSub()
     {
-        try {
-            Xyster_Orm_Loader::loadSetClass('BadBug');
-        } catch ( Xyster_Orm_Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
+        $this->setExpectedException('Xyster_Orm_Exception');
+        Xyster_Orm_Loader::loadSetClass('BadBug');
     }
     
     /**
@@ -141,11 +116,8 @@ class Xyster_Orm_LoaderTest extends PHPUnit_Framework_TestCase
      */
     public function testLoadMapperClass()
     {
-        try {
-            Xyster_Orm_Loader::loadMapperClass('MockBug');
-        } catch ( Exception $thrown ) {
-            $this->fail('Loading a valid mapper class should not error');
-        }
+        Xyster_Orm_Loader::loadMapperClass('MockBug');
+        // Loading a valid mapper class should not error
     }
     
     /**
@@ -154,11 +126,7 @@ class Xyster_Orm_LoaderTest extends PHPUnit_Framework_TestCase
      */
     public function testLoadMapperClassNotSub()
     {
-        try {
-            Xyster_Orm_Loader::loadMapperClass('BadBug');
-        } catch ( Xyster_Orm_Exception $thrown ) {
-            return;
-        }
-        $this->fail('Exception not thrown');
+        $this->setExpectedException('Xyster_Orm_Exception');
+        Xyster_Orm_Loader::loadMapperClass('BadBug');
     }
 }

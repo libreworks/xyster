@@ -52,27 +52,16 @@ abstract class Xyster_Orm_Mapper_TestCommon extends Xyster_Orm_Mapper_TestSetup
         $this->_factory()->setDefaultMetadataCache(null);
     
         // try with a registry key that is fine
-        try {
-            $this->_setupClass('Product'); 
-        } catch ( Xyster_Orm_Mapper_Exception $thrown ) {
-            $this->fail('Exception should not be thrown');
-        }
-        
-        // try with a registry key that isn't a Zend_Cache_Core
-        try {
-            $this->_setupClass('BugProduct');
-            $this->fail('Exception not thrown');
-        } catch ( Xyster_Orm_Mapper_Exception $thrown ) {
-        }
+        $this->_setupClass('Product'); 
 
         // try with a null key
-        try { 
-            $this->_setupClass('Account');
-            $map = $this->_factory()->get('Account');
-        } catch ( Xyster_Orm_Mapper_Exception $thrown ) {
-            $this->fail('Exception should not be thrown');
-        }
+        $this->_setupClass('Account');
+        $map = $this->_factory()->get('Account');
         $this->assertNull($map->getMetadataCache());
+        
+        // try with a registry key that isn't a Zend_Cache_Core
+        $this->setExpectedException('Xyster_Orm_Mapper_Exception');
+        $this->_setupClass('BugProduct');
     }
     
     /**
@@ -161,12 +150,8 @@ abstract class Xyster_Orm_Mapper_TestCommon extends Xyster_Orm_Mapper_TestSetup
         $all3 = $mapper->findAll($criteria, array(Xyster_Data_Sort::asc('bugId')));
         $this->assertType('BugSet', $all3);
         
-        try { 
-            $all = $mapper->findAll($criteria, Xyster_Data_Field::named('bugId'));
-            $this->fail('Exception not thrown');
-        } catch ( Xyster_Orm_Exception $thrown ) {
-            return;
-        }
+        $this->setExpectedException('Xyster_Orm_Exception');
+        $all = $mapper->findAll($criteria, Xyster_Data_Field::named('bugId'));
     }
     
     /**
@@ -208,11 +193,8 @@ abstract class Xyster_Orm_Mapper_TestCommon extends Xyster_Orm_Mapper_TestSetup
     {
         require_once dirname(__FILE__).'/../_files/CustomMapper.php';
         
-        try {
-            $mapper = new CustomMapper($this->_factory());
-            $this->fail('Exception not thrown');
-        } catch ( Xyster_Orm_Mapper_Exception $thrown ) {
-        }
+        $this->setExpectedException('Xyster_Orm_Mapper_Exception');
+        $mapper = new CustomMapper($this->_factory());
     }
     
     /**
@@ -316,11 +298,8 @@ abstract class Xyster_Orm_Mapper_TestCommon extends Xyster_Orm_Mapper_TestSetup
         $cache->setBackend(new Xyster_Orm_CacheMock(false));
         $this->_factory()->setDefaultMetadataCache($cache);
         
-        try {
-            $this->_setupClass('BugProduct');
-            $this->fail('Exception not thrown');
-        } catch ( Xyster_Orm_Mapper_Exception $thrown ) {
-        }
+        $this->setExpectedException('Xyster_Orm_Mapper_Exception');
+        $this->_setupClass('BugProduct');
     }
     
     /**
@@ -555,10 +534,7 @@ abstract class Xyster_Orm_Mapper_TestCommon extends Xyster_Orm_Mapper_TestSetup
             'Bug', $this->_factory());
             
         $field = Xyster_Data_Field::named('getCapitalOfNebraska()');
-        try {
-            $translator->aliasField($field);
-            $this->fail('Exception not thrown');
-        } catch ( Xyster_Orm_Mapper_Exception $thrown ) {
-        }
+        $this->setExpectedException('Xyster_Orm_Mapper_Exception');
+        $translator->aliasField($field);
     }
 }

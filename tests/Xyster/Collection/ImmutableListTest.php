@@ -38,53 +38,62 @@ class Xyster_Collection_ImmutableListTest extends Xyster_Collection_ImmutableCol
      */
     protected $_c;
     
+    /**
+     * Sets up the test
+     *
+     */
     public function setUp()
     {
-        $this->_c = new Xyster_Collection_List( $this->_getNewCollectionWithRandomValues(), true );
+        $this->_c = new Xyster_Collection_List($this->_getNewCollectionWithRandomValues(), true);
     }
+    
+    /**
+     * Tests the 'insert' method
+     *
+     */
     public function testInsert()
     {
-        try {
-            $this->_c->insert( 0, null );
-        } catch ( Exception $thrown ) {
-            return;
-        }
-        $this->fail('No exception thrown for insert into immutable');
+        $this->setExpectedException('Xyster_Collection_Exception');
+        $this->_c->insert(0, null);
     }
+    
+    /**
+     * Tests the 'insertAll' method
+     *
+     */
     public function testinsertAll()
     {
-        try {
-            $this->_c->insertAll( 0, $this->_getNewCollectionWithRandomValues() );
-        } catch ( Exception $thrown ) {
-            return;
-        }
-        $this->fail('No exception thrown for insert all into immutable');
+        $this->setExpectedException('Xyster_Collection_Exception');
+        $this->_c->insertAll(0, $this->_getNewCollectionWithRandomValues());
     }
+    
+    /**
+     * Tests the 'removeAt' method
+     *
+     */
     public function testRemoveAt()
     {
-        try {
-            $this->_c->removeAt( 0 );
-        } catch ( Exception $thrown ) {
-            return;
-        }
-        $this->fail('No exception thrown for remove from immutable');
+        $this->setExpectedException('Xyster_Collection_Exception');
+        $this->_c->removeAt(0);
     }
+    
+    /**
+     * Tests the 'set' method
+     *
+     */
     public function testSet()
     {
-        try {
-            $this->_c->set( 0, null );
-        } catch ( Exception $thrown ) {
-            return;
-        }
-        $this->fail('No exception thrown for set immutable');
+        $this->setExpectedException('Xyster_Collection_Exception');
+        $this->_c->set(0, null);
     }
+    
+    /**
+     * Tests the 'slice' method
+     *
+     */
     public function testSlice()
     {
-        try {
-            $this->_c->slice( 0, 1 );
-        } catch ( Exception $thrown ) {
-            return;
-        }
-        $this->fail('No exception thrown for slice from immutable'); 
+        $this->setExpectedException('Xyster_Collection_Exception');
+        $this->_c->slice(0, 1);
     }
 }
