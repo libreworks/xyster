@@ -20,7 +20,7 @@
  * @version   $Id$
  */
 /**
- * View helper for generating Gravatar images 
+ * View helper for generating XHTML elements
  *
  * @category  Xyster
  * @package   Xyster_View

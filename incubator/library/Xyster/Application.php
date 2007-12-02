@@ -37,7 +37,7 @@ require_once 'Zend/Config.php';
 class Xyster_Application
 {
     /**
-     * @var Xyster_Application_ServiceBroker
+     * @var Xyster_Application_Service_Broker
      */
     protected $_broker;
     

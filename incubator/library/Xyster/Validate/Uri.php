@@ -51,7 +51,7 @@ class Xyster_Validate_Uri extends Zend_Validate_Abstract
         self::NOT_URI => "'%value%' does not appear to be a correct URI",
     );
     
-	/**
+    /**
      * Defined by Zend_Validate_Interface
      *
      * Returns true if dimensions of file specified by $value are between width

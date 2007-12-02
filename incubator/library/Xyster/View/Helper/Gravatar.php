@@ -36,23 +36,23 @@ require_once 'Xyster/View/Helper/XhtmlElement.php';
  */
 class Xyster_View_Helper_Gravatar extends Xyster_View_Helper_XhtmlElement 
 {
-	/**
-	 * Creates a gravatar XHTML image tag
-	 *
-	 * @param string $email Email address of the gravatar account
-	 * @param array $options See: http://site.gravatar.com/site/implement#section_1_1
-	 * @param array $attribs An array of attributes for the image tag
-	 * @return string Image tag
-	 */
-	public function gravatar( $email, array $options = array(), array $attribs = array() )
+    /**
+     * Creates a gravatar XHTML image tag
+     *
+     * @param string $email Email address of the gravatar account
+     * @param array $options See: http://site.gravatar.com/site/implement#section_1_1
+     * @param array $attribs An array of attributes for the image tag
+     * @return string Image tag
+     */
+    public function gravatar( $email, array $options = array(), array $attribs = array() )
     {
-		$gravatar = new Zend_Service_Gravatar($email, $options);
-		$uri = $gravatar->getUri();
+        $gravatar = new Zend_Service_Gravatar($email, $options);
+        $uri = $gravatar->getUri();
 
-		// Gravatar defaults to an image size of 80 x 80 pixels
-		$size = isset($options['size']) ? $options['size'] : 80;
+        // Gravatar defaults to an image size of 80 x 80 pixels
+        $size = isset($options['size']) ? $options['size'] : 80;
 
-		return '<img src="' . $uri . '" width="' . $size . '" height="'
-		    . $size . '"' . $this->_htmlAttribs($attribs) . ' />';
-	}
+        return '<img src="' . $uri . '" width="' . $size . '" height="'
+            . $size . '"' . $this->_htmlAttribs($attribs) . ' />';
+    }
 }

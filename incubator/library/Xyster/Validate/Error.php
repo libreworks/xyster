@@ -27,13 +27,13 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 class Xyster_Validate_Error
-{	
-	/**
-	 * @var string
-	 */
-	protected $_message;
-	
-	/**
+{
+    /**
+     * @var string
+     */
+    protected $_message;
+    
+    /**
      * @var string
      */
     protected $_field;
@@ -77,6 +77,7 @@ class Xyster_Validate_Error
      */
     public function __toString()
     {
-        return $this->_message;
+        return ( $this->_field ) ?
+            $this->_field . ': ' . $this->_message : $this->_message;
     }
 }
