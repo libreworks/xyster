@@ -95,7 +95,6 @@ class Xyster_AclTest extends PHPUnit_Framework_TestCase
             ->add($resource)
             ->allow($role, $resource);
         
-        $this->setExpectedException('Zend_Acl_Exception');
         $this->_acl->assertAllowed($role, $resource, 'anything');
     }
     

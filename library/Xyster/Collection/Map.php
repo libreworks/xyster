@@ -150,11 +150,13 @@ class Xyster_Collection_Map extends Xyster_Collection_Map_Abstract
 	 *
 	 * @param object $key The key to test
 	 * @return boolean Whether the key is in the map
+	 * @throws Xyster_Collection_Exception if the key type is incorrect
 	 */
 	public function offsetExists( $key )
 	{
 		if ( !is_object($key) ) {
-			throw new InvalidArgumentException("Only objects can be keys in this map");
+		    require_once 'Xyster/Collection/Exception.php';
+			throw new Xyster_Collection_Exception("Only objects can be keys in this map");
 		}
 		return array_key_exists(spl_object_hash($key), $this->_items);
 	}

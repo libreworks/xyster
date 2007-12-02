@@ -42,7 +42,7 @@ class Xyster_Collection_ListTest extends Xyster_Collection_BaseCollectionTest
      */
     public function testGet()
     {
-        $this->setExpectedException('Xyster_Collection_Exception');
+        $this->setExpectedException('OutOfBoundsException');
         $list = $this->_getNewCollection();
         $value = $this->_getNewValue();
         $list->add($value);
@@ -68,7 +68,7 @@ class Xyster_Collection_ListTest extends Xyster_Collection_BaseCollectionTest
      */
     public function testInsert()
     {
-        $this->setExpectedException('Xyster_Collection_Exception');
+        $this->setExpectedException('OutOfBoundsException');
         $list = $this->_getNewCollection();
         $pre = $list->count();
         $list->insert(0, $this->_getNewValue());
@@ -83,7 +83,7 @@ class Xyster_Collection_ListTest extends Xyster_Collection_BaseCollectionTest
      */
     public function testInsertAll()
     {
-        $this->setExpectedException('Xyster_Collection_Exception');
+        $this->setExpectedException('OutOfBoundsException');
         $list = $this->_getNewCollection();
         $new = $this->_getNewCollectionWithRandomValues();
         $pre = $list->count();
@@ -110,7 +110,7 @@ class Xyster_Collection_ListTest extends Xyster_Collection_BaseCollectionTest
      */
     public function testRemoveAt()
     {
-        $this->setExpectedException('Xyster_Collection_Exception');
+        $this->setExpectedException('OutOfBoundsException');
         $list = $this->_getNewCollectionWithRandomValues();
         $pre = $list->count();
         $list->removeAt(2);
@@ -125,7 +125,7 @@ class Xyster_Collection_ListTest extends Xyster_Collection_BaseCollectionTest
      */
     public function testSet()
     {
-        $this->setExpectedException('Xyster_Collection_Exception');
+        $this->setExpectedException('OutOfBoundsException');
         $list = $this->_getNewCollectionWithRandomValues();
         $pre = $list->count();
         $value = $this->_getNewValue();
@@ -142,7 +142,7 @@ class Xyster_Collection_ListTest extends Xyster_Collection_BaseCollectionTest
      */
     public function testSlice()
     {
-        $this->setExpectedException('Xyster_Collection_Exception');
+        $this->setExpectedException('OutOfBoundsException');
         $list = $this->_getNewCollectionWithRandomValues();
         $pre = $list->count();
         $list->slice(0, 2);

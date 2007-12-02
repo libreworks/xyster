@@ -90,7 +90,6 @@ class Xyster_Collection_MapTest extends Xyster_Collection_BaseMapTest
      */
     public function testSet()
     {
-        $this->setExpectedException('Xyster_Collection_Exception');
         $c = $this->_getNewMap();
         $key = $this->_getNewKey();
         $value = $this->_getNewValue();
@@ -101,6 +100,8 @@ class Xyster_Collection_MapTest extends Xyster_Collection_BaseMapTest
         $this->assertTrue($c->containsKey($key));
         $this->assertTrue($c->containsValue($value));
         $c->set($key, $this->_getNewValue()); // setting a pre-existing key
+        
+        $this->setExpectedException('Xyster_Collection_Exception');
         $c->set(123, $value); // invalid key
     }
 }

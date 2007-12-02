@@ -126,6 +126,8 @@ class Xyster_OrmTest extends Xyster_Orm_TestSetup
         $map = $this->_mockFactory()->get('MockBug');
         $this->assertTrue($map->wasSaved($entity2));
         $this->assertTrue($map->wasSaved($newEntity));
+        $this->assertFalse($newEntity->isDirty());
+        $this->assertFalse($entity2->isDirty());
         
         $repoId = array('Xyster_Orm', $map->getDomain(), 'MockBug');
         foreach( $entity2->getPrimaryKey() as $key => $value ) {
@@ -133,8 +135,8 @@ class Xyster_OrmTest extends Xyster_Orm_TestSetup
         }
         $repoId = md5(implode("/", $repoId));
         $entityFromSecondCache = $this->_orm->getSecondaryCache()->get($repoId);
-        $this->assertType('MockBug', $entityFromSecondCache);
-        $this->assertEquals($entity2->getBase(), $entityFromSecondCache->getBase());
+        $this->assertType('array', $entityFromSecondCache);
+        $this->assertEquals($entity2->toArray(), $entityFromSecondCache['values']);
         $this->assertTrue($map->wasDeleted($entity));
     }
     

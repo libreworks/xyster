@@ -138,11 +138,13 @@ class Xyster_Collection_Map_String extends Xyster_Collection_Map_Abstract
 	 *
 	 * @param object $key The key to test
 	 * @return boolean Whether the key is in the map
+	 * @throws Xyster_Collection_Exception if the key type is incorrect
 	 */
 	public function offsetExists( $key )
 	{
 		if ( !is_scalar($key) ) {
-			throw new InvalidArgumentException("Only strings can be keys in this map");
+		    require_once 'Xyster/Collection/Exception.php';
+			throw new Xyster_Collection_Exception("Only strings can be keys in this map");
 		}
 		return array_key_exists( $key, $this->_items );
 	}
@@ -165,12 +167,13 @@ class Xyster_Collection_Map_String extends Xyster_Collection_Map_Abstract
 	 *
 	 * @param object $key The key to set
 	 * @param mixed $value The value to set
-	 * @throws InvalidArgumentException if the collection cannot contain the value
+	 * @throws Xyster_Collection_Exception if the collection cannot contain the value
 	 */
 	public function offsetSet( $key, $value )
 	{
 		if ( !is_scalar($key) ) {
-			throw new InvalidArgumentException("Only strings can be keys in this map");
+			require_once 'Xyster/Collection/Exception.php';
+            throw new Xyster_Collection_Exception("Only strings can be keys in this map");
 		}
 		$this->_items[$key] = $value;
 	}

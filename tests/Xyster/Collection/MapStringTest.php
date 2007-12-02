@@ -52,13 +52,14 @@ class Xyster_Collection_MapStringTest extends Xyster_Collection_BaseMapTest
      */
     public function testContainsKey()
     {
-        $this->setExpectedException('Xyster_Collection_Exception');
         $c = $this->_getNewMap();
         $key = $this->_getNewKey();
         $c->set($key, $this->_getNewValue());
         $this->assertTrue($c->containsKey($key));
         $this->assertFalse($c->containsKey(-1)); // non-existant key
-	    $c->containsKey( $this->_getNewValue() );
+        
+        $this->setExpectedException('Xyster_Collection_Exception');
+        $c->containsKey($this->_getNewValue());
     }
     
     /**
@@ -96,7 +97,6 @@ class Xyster_Collection_MapStringTest extends Xyster_Collection_BaseMapTest
      */
     public function testSet()
     {
-        $this->setExpectedException('Xyster_Collection_Exception');
         $c = $this->_getNewMap();
         $key = $this->_getNewKey();
         $value = $this->_getNewValue();
@@ -107,6 +107,8 @@ class Xyster_Collection_MapStringTest extends Xyster_Collection_BaseMapTest
         $this->assertTrue($c->containsKey($key));
         $this->assertTrue($c->containsValue($value));
         $c->set($key, $this->_getNewValue()); // setting a pre-existing key
+        
+        $this->setExpectedException('Xyster_Collection_Exception');
         $c->set($this->_getNewValue(), $this->_getNewValue());
     }
     

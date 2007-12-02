@@ -390,6 +390,7 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
         if ( !$this->getOption('doNotRefreshAfterSave') ) {
     	   $this->refresh($entity);
         }
+    	$entity->setDirty(false);
     	
         /*
 		 * Step 3: work with many and joined relationships

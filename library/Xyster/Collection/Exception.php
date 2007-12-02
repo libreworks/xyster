@@ -18,6 +18,10 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 /**
+ * Zend_Exception
+ */
+require_once 'Zend/Exception.php';
+/**
  * Exception for collections
  *
  * @category  Xyster

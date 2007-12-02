@@ -194,21 +194,8 @@ class Xyster_Orm_SetTest extends Xyster_Orm_TestSetup
         
         $this->assertSame($relation, $set->getRelation());
         $this->assertSame($entity, $set->getRelatedEntity());
-    }
-    
-    /**
-     * Tests the relateTo method with a bad argument
-     *
-     */
-    public function testRelateToBad()
-    {
-        $set = $this->_getMockSet();
         
-        $mf = $this->_mockFactory();
-        $map = $mf->get('MockAccount');
-        $meta = $map->getEntityMeta();
-        $relation = $meta->getRelation('reported');
-        
+        // try and relate already related
         $this->setExpectedException('Xyster_Orm_Exception');
         $set->relateTo($relation, new MockBug());
     }

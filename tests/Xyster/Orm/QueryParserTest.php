@@ -346,6 +346,9 @@ class Xyster_Orm_Query_ParserTest extends Xyster_Orm_TestSetup
      */
     public function testParseReportQueryBad()
     {
+        require_once 'Xyster/Orm/Query/Report.php';
+        $query = new Xyster_Orm_Query_Report('MockBug', $this->_mockFactory()->getManager());
+
         $this->setExpectedException('Xyster_Orm_Query_Parser_Exception');
         $this->_parser->parseReportQuery($query, 'doesnT start with "select"');
     }
