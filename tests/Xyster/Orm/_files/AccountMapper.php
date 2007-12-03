@@ -36,9 +36,8 @@ class AccountMapper extends Xyster_Orm_Mapper_Db
     
     public function init()
     {
-        $meta = $this->getEntityMeta();
-        $meta->hasMany('reported', array('class'=>'Bug','id'=>'reportedBy', 'onDelete'=>Xyster_Orm_Relation::ACTION_SET_NULL));
-        $meta->hasMany('assigned', array('class'=>'Bug','id'=>'assignedTo','filters'=>'( assignedTo <> null )'));
-        $meta->hasMany('verified', array('class'=>'Bug','id'=>'verifiedBy'));
+        $this->_hasMany('reported', array('class'=>'Bug','id'=>'reportedBy', 'onDelete'=>Xyster_Orm_Relation::ACTION_SET_NULL))
+            ->_hasMany('assigned', array('class'=>'Bug','id'=>'assignedTo','filters'=>'( assignedTo <> null )'))
+            ->_hasMany('verified', array('class'=>'Bug','id'=>'verifiedBy'));
     }
 }

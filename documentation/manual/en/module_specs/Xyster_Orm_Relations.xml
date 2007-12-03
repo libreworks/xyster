@@ -22,8 +22,7 @@ class PersonMapper extends Xyster_Orm_Mapper
 
         public function init()
         {
-            $meta = $this->getMeta();
-            $meta->one('nemesis', array('class'=>'Person', 'id'=>'nemesisId'));
+            $this->_hasOne('nemesis', array('class'=>'Person', 'id'=>'nemesisId'));
         }
 }]]></programlisting>
 
@@ -89,9 +88,8 @@ class personMapper extends Xyster_Orm_Mapper
 
         public function init()
         {
-            $meta = $this->getMeta();
-            $meta->one('nemesis', array('class'=>'Person', 'id'=>'nemesisId'));
-            $meta->many('quotes');
+            $this->_hasOne('nemesis', array('class'=>'Person', 'id'=>'nemesisId'))
+                ->_hasMany('quotes');
         }
 }]]></programlisting>
 
@@ -104,8 +102,7 @@ class QuoteMapper extends Xyster_Orm_Mapper
 
         public function init()
         {
-            $meta = $this->getMeta();
-            $meta->belongs('person');
+            $this->_belongsTo('person');
         }
 }]]></programlisting>
 
@@ -210,8 +207,7 @@ class SkillMapper extends Xyster_Orm_Mapper
         public function init()
         {
                 $details = array("table"=>'person_skill', "class"=>'Person');
-                $meta = $this->getEntityMeta();
-                $meta->joined('people', $details);
+                $this->_hasJoined('people', $details);
         }
 }]]></programlisting>
 
@@ -224,10 +220,9 @@ class PersonMapper extends Xyster_Orm_Mapper
 
         public function init()
         {
-            $meta = $this->getMeta();
-            $meta->one('nemesis', array('class'=>'Person', 'id'=>'nemesisId'));
-            $meta->many('quotes');
-            $meta->joined('skills');
+            $this->_hasOne('nemesis', array('class'=>'Person', 'id'=>'nemesisId'))
+                ->_hasMany('quotes')
+                ->_hasJoined('skills');
         }
 }]]></programlisting>
 

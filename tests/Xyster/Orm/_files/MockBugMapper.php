@@ -37,11 +37,10 @@ class MockBugMapper extends Xyster_Orm_Mapper_Mock
     
     public function init()
     {
-        $meta = $this->getEntityMeta();
-        $meta->belongsTo('reporter', array('class'=>'MockAccount','id'=>'reportedBy'));
-        $meta->belongsTo('assignee', array('class'=>'MockAccount','id'=>'assignedTo'));
-        $meta->belongsTo('verifier', array('class'=>'MockAccount','id'=>'verifiedBy'));
-        $meta->hasJoined('products', array('class'=>'MockProduct',
+        $this->_belongsTo('reporter', array('class'=>'MockAccount','id'=>'reportedBy'))
+            ->_belongsTo('assignee', array('class'=>'MockAccount','id'=>'assignedTo'))
+            ->_belongsTo('verifier', array('class'=>'MockAccount','id'=>'verifiedBy'))
+            ->_hasJoined('products', array('class'=>'MockProduct',
             'table'=>'zfbugs_products', 'left'=>'bug_id', 'right'=>'product_id'));
     }
     

@@ -38,11 +38,10 @@ class MockAccountMapper extends Xyster_Orm_Mapper_Mock
     {
         parent::init();
         
-        $meta = $this->getEntityMeta();
         require_once 'Xyster/Orm/Relation.php';
-        $meta->hasMany('reported', array('class'=>'MockBug','id'=>'reportedBy','onUpdate'=>Xyster_Orm_Relation::ACTION_CASCADE,'onDelete'=>Xyster_Orm_Relation::ACTION_REMOVE));
-        $meta->hasMany('assigned', array('class'=>'MockBug','id'=>'assignedTo','filters'=>'( assignedTo <> null )','onUpdate'=>Xyster_Orm_Relation::ACTION_CASCADE,'onDelete'=>Xyster_Orm_Relation::ACTION_CASCADE));
-        $meta->hasMany('verified', array('class'=>'MockBug','id'=>'verifiedBy','onUpdate'=>Xyster_Orm_Relation::ACTION_CASCADE));
+        $this->_hasMany('reported', array('class'=>'MockBug','id'=>'reportedBy','onUpdate'=>Xyster_Orm_Relation::ACTION_CASCADE,'onDelete'=>Xyster_Orm_Relation::ACTION_REMOVE))
+            ->_hasMany('assigned', array('class'=>'MockBug','id'=>'assignedTo','filters'=>'( assignedTo <> null )','onUpdate'=>Xyster_Orm_Relation::ACTION_CASCADE,'onDelete'=>Xyster_Orm_Relation::ACTION_CASCADE))
+            ->_hasMany('verified', array('class'=>'MockBug','id'=>'verifiedBy','onUpdate'=>Xyster_Orm_Relation::ACTION_CASCADE));
     }
     
     /**

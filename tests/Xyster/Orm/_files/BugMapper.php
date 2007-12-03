@@ -35,10 +35,9 @@ class BugMapper extends Xyster_Orm_Mapper_Db
     
     public function init()
     {
-        $meta = $this->getEntityMeta();
-        $meta->belongsTo('reporter', array('class'=>'Account','id'=>'reportedBy','filters'=>'accountName <> null'));
-        $meta->belongsTo('assignee', array('class'=>'Account','id'=>'assignedTo'));
-        $meta->belongsTo('verifier', array('class'=>'Account','id'=>'verifiedBy'));
-        $meta->hasJoined('products', array('table'=>'zfbugs_products'));
+        $this->_belongsTo('reporter', array('class'=>'Account','id'=>'reportedBy','filters'=>'accountName <> null'))
+            ->_belongsTo('assignee', array('class'=>'Account','id'=>'assignedTo'))
+            ->_belongsTo('verifier', array('class'=>'Account','id'=>'verifiedBy'))
+            ->_hasJoined('products', array('table'=>'zfbugs_products'));
     }
 }

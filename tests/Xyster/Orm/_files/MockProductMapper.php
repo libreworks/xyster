@@ -36,8 +36,7 @@ class MockProductMapper extends Xyster_Orm_Mapper_Mock
     
     public function init()
     {
-        $meta = $this->getEntityMeta();
-        $meta->hasJoined('bugs', array('class'=>'MockBug',
+        $this->_hasJoined('bugs', array('class'=>'MockBug',
             'table'=>'zfbugs_products'));
     }
     

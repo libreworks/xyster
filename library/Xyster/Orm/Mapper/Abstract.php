@@ -508,6 +508,20 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
             throw new Xyster_Orm_Mapper_Exception('This mapper only accepts entities of type ' . $name);
         }
     }
+
+    /**
+     * Convenience method to create a 'belongs' relationship
+     * 
+     * @see Xyster_Orm_Entity_Meta::belongsTo
+     * @param string $name The name of the relationship
+     * @param array $options An array of options
+     * @return Xyster_Orm_Mapper_Abstract provides a fluent interface
+     */
+    final protected function _belongsTo( $name, array $options = array() )
+    {
+        $this->getEntityMeta()->belongsTo($name, $options);
+        return $this;
+    }
     
     /**
      * Ensures the parameter passed is a Criterion
@@ -622,5 +636,47 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
         $entity = new $entityName($row);
         $manager->getPluginBroker()->postLoad($entity);
         return $entity;
+    }
+    
+    /**
+     * Convenience method to create a 'many to many' relationship
+     * 
+     * @see Xyster_Orm_Entity_Meta::hasJoined
+     * @param string $name The name of the relationship
+     * @param array $options An array of options
+     * @return Xyster_Orm_Mapper_Abstract provides a fluent interface
+     */
+    final protected function _hasJoined( $name, array $options = array() )
+    {
+        $this->getEntityMeta()->hasJoined($name, $options);
+        return $this;
+    }
+    
+    /**
+     * Convenience method to create a 'one to many' relationship 
+     * 
+     * @see Xyster_Orm_Entity_Meta::hasMany
+     * @param string $name The name of the relationship
+     * @param array $options An array of options
+     * @return Xyster_Orm_Mapper_Abstract provides a fluent interface 
+     */ 
+    final protected function _hasMany( $name, array $options = array() )
+    {
+        $this->getEntityMeta()->hasMany($name, $options);
+        return $this;
+    }
+        
+    /**
+     * Convenience method to create a 'one to one' relationship
+     * 
+     * @see Xyster_Orm_Entity_Meta::hasOne
+     * @param string $name The name of the relationship
+     * @param array $options An array of options
+     * @return Xyster_Orm_Mapper_Abstract provides a fluent interface
+     */
+    final protected function _hasOne( $name, array $options = array() )
+    {
+        $this->getEntityMeta()->hasOne($name, $options);
+        return $this;
     }
 }
