@@ -22,7 +22,7 @@
 /**
  * Turns off the PHP anti-caching headers sent when a session is active
  */
-ini_set('session.cache_limiter', 'none');
+ini_set('session.cache_limiter', '');
 /**
  * Zend_Controller_Plugin_Abstract
  */

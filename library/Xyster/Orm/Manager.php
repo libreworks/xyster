@@ -436,10 +436,10 @@ class Xyster_Orm_Manager
             $name = $relation->getName();
             if ( $entity->isLoaded($name) ) {
                 $linked = $entity->$name;
-                if ( $relation->isCollection() ) {
+                if ( $linked instanceof Xyster_Orm_Set ) {
                     /* @var $linked Xyster_Orm_Set */
                     $related[$name] = $linked->getPrimaryKeys();
-                } else {
+                } else if ( $linked instanceof Xyster_Orm_Entity ) {
                     /* @var $linked Xyster_Orm_Entity */
                     $related[$name] = $linked->getPrimaryKey();
                 }

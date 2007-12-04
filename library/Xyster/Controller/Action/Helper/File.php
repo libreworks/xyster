@@ -77,6 +77,6 @@ class Xyster_Controller_Action_Helper_File extends Zend_Controller_Action_Helper
         $this->getResponse()
             ->setHeader('Accept-Ranges', 'bytes')
             ->setHeader('Content-Type', $mime)
-            ->setHeader('Content-Disposition', 'attachment; filename=' . $name);
+            ->setHeader('Content-Disposition', 'attachment; filename="' . $name . '"');
     }
 }
