@@ -65,7 +65,7 @@ interface Xyster_Container_Interface
      * If the type is supplied, this method returns the adapters associated with
      * the specified type.
      *
-     * @return Xyster_Collection a fixed collection containing all the adapters inside this container
+     * @return Xyster_Collection_List a fixed collection containing all the adapters inside this container
      */
     function getComponentAdapters( ReflectionClass $componentType = null );
 

@@ -69,11 +69,9 @@ class Xyster_Container_Injection_Constructor extends Xyster_Container_Injection_
         }
         $currentParameters = $this->_parameters !== null ? $this->_parameters :
             $this->_createDefaultParameters($parameterTypes);
+        $reflectionParams = $constructor->getParameters();
         foreach( $currentParameters as $k => $param ) {
-            /* @var $param Xyster_Container_Parameter */
-            require_once 'Xyster/Container/Parameter/Name.php';
-            $param->verify($container, $this, $parameterTypes[$k],
-                new Xyster_Container_Parameter_Name($constructor, $k));
+            $param->verify($container, $this, $reflectionParams[$k]);
         }
     }
     

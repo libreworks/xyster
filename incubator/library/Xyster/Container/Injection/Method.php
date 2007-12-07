@@ -78,7 +78,7 @@ class Xyster_Container_Injection_Method extends Xyster_Container_Injection_Singl
      */
     public function verify( Xyster_Container_Interface $container )
     {
-        $method = $this->getInjectorMethod();
+        $method = $this->_getInjectorMethod();
         $parameterTypes = array();
         foreach( $method->getParameters() as $param ) {
             /* @var $param ReflectionParameter */
@@ -86,11 +86,9 @@ class Xyster_Container_Injection_Method extends Xyster_Container_Injection_Singl
         }
         $currentParameters = $this->_parameters !== null ? $this->_parameters :
             $this->_createDefaultParameters($parameterTypes);
+        $reflectionParams = $method->getParameters();
         foreach( $currentParameters as $k => $param ) {
-            /* @var $param Xyster_Container_Parameter */
-            require_once 'Xyster/Container/Parameter/Name.php';
-            $param->verify($container, $this, $parameterTypes[$k],
-                new Xyster_Container_Parameter_Name($method, $k));
+            $param->verify($container, $this, $reflectionParams[$k]);
         }
     }
     

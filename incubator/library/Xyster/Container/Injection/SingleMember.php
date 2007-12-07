@@ -36,9 +36,11 @@ abstract class Xyster_Container_Injection_SingleMember extends Xyster_Container_
      */
     protected function _getMemberArguments( Xyster_Container_Interface $container, ReflectionMethod $member, array $parameterTypes = null )
     {
+        $reflectionParams = $member->getParameters();
+        
         if ( $parameterTypes === null ) {
             $parameterTypes = array();
-            foreach( $member->getParameters() as $param ) {
+            foreach( $reflectionParams as $param ) {
                 $parameterTypes[] = $param->getClass();
             }
         }
@@ -50,8 +52,7 @@ abstract class Xyster_Container_Injection_SingleMember extends Xyster_Container_
         foreach( $currentParameters as $k => $parameter ) {
             /* @var $parameter Xyster_Container_Parameter */
             $result[] = $parameter->resolveInstance($container, $this,
-                $parameterTypes[$k],
-                new Xyster_Container_Parameter_Name($member, $k));
+                $reflectionParams[$k]);
         }
         
         return $result;
