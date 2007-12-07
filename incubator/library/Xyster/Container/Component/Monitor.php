@@ -31,7 +31,7 @@ interface Xyster_Container_Component_Monitor
      * @param constructor the Constructor used to instantiate the addComponent
      * @return ReflectionMethod the constructor to use in instantiation (nearly always the same one as passed in)
      */
-    function instantiating(Xyster_Container_Interface $container, Xyster_Container_Component_Adapter $componentAdapter, ReflectionMethod $constructor);
+    function instantiating(Xyster_Container_Interface $container, Xyster_Container_Component_Adapter $componentAdapter, ReflectionMethod $constructor = null);
 
     /**
      * Event thrown after the component has been instantiated using the given constructor.
@@ -45,7 +45,7 @@ interface Xyster_Container_Component_Monitor
      * @param float $duration the duration in millis of the instantiation
      */
     function instantiated(Xyster_Container_Interface $container, Xyster_Container_Component_Adapter $componentAdapter,
-                      ReflectionMethod $constructor,
+                      ReflectionMethod $constructor = null,
                       $instantiated,
                       array $injected,
                       $duration);
