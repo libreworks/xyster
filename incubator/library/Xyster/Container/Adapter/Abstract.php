@@ -14,6 +14,10 @@
  * @version   $Id$
  */
 /**
+ * @see Xyster_Container_Adapter
+ */
+require_once 'Xyster/Container/Adapter.php';
+/**
  * Responsible for providing an instance of a specific type
  * 
  * An instance of this interface will be used inside a container for every
@@ -24,7 +28,7 @@
  * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-abstract class Xyster_Container_Component_Adapter_Abstract implements Xyster_Container_Component_Adapter, Xyster_Container_Component_Monitor_Strategy
+abstract class Xyster_Container_Adapter_Abstract implements Xyster_Container_Adapter, Xyster_Container_Monitor_Strategy
 {
     private $_componentKey;
     /**
@@ -32,7 +36,7 @@ abstract class Xyster_Container_Component_Adapter_Abstract implements Xyster_Con
      */
     private $_componentImplementation;
     /**
-     * @var Xyster_Container_Component_Monitor
+     * @var Xyster_Container_Monitor
      */
     private $_componentMonitor;
     
@@ -41,9 +45,9 @@ abstract class Xyster_Container_Component_Adapter_Abstract implements Xyster_Con
      *
      * @param mixed $componentKey
      * @param mixed $componentImplementation string class name or ReflectionClass
-     * @param Xyster_Container_Component_Monitor $monitor
+     * @param Xyster_Container_Monitor $monitor
      */
-    public function __construct( $componentKey, $componentImplementation, Xyster_Container_Component_Monitor $monitor = null )
+    public function __construct( $componentKey, $componentImplementation, Xyster_Container_Monitor $monitor = null )
     {
         if ( $componentKey === null ) {
             require_once 'Xyster/Container/Exception.php';
@@ -73,9 +77,9 @@ abstract class Xyster_Container_Component_Adapter_Abstract implements Xyster_Con
     /**
      * Changes the component monitor used
      * 
-     * @param Xyster_Container_Component_Monitor $monitor the new monitor to use
+     * @param Xyster_Container_Monitor $monitor the new monitor to use
      */
-    public function changeMonitor( Xyster_Container_Component_Monitor $monitor )
+    public function changeMonitor( Xyster_Container_Monitor $monitor )
     {
         $this->_componentMonitor = $monitor;
     }
@@ -83,7 +87,7 @@ abstract class Xyster_Container_Component_Adapter_Abstract implements Xyster_Con
     /**
      * Gets the monitor currently used
      * 
-     * @return Xyster_Container_Component_Monitor The monitor currently used
+     * @return Xyster_Container_Monitor The monitor currently used
      */
     public function currentMonitor()
     {
@@ -91,7 +95,7 @@ abstract class Xyster_Container_Component_Adapter_Abstract implements Xyster_Con
     }
     
     /**
-     * @return Xyster_Container_Component_Adapter
+     * @return Xyster_Container_Adapter
      */
     public function getDelegate()
     {

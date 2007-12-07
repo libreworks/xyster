@@ -14,9 +14,9 @@
  * @version   $Id$
  */
 /**
- * @see Xyster_Container_Component_Adapter
+ * @see Xyster_Container_Adapter
  */
-require_once 'Xyster/Container/Component/Adapter.php';
+require_once 'Xyster/Container/Adapter.php';
 /**
  * Tagging interface; Behaviors modify the components created by an Injector
  *
@@ -25,6 +25,6 @@ require_once 'Xyster/Container/Component/Adapter.php';
  * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-interface Xyster_Container_Behavior extends Xyster_Container_Component_Adapter
+interface Xyster_Container_Behavior extends Xyster_Container_Adapter
 {   
 }

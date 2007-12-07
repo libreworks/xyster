@@ -14,11 +14,11 @@
  * @version   $Id$
  */
 /**
- * @see Xyster_Container_Component_Factory
+ * @see Xyster_Container_Adapter_Factory
  */
-require_once 'Xyster/Container/Component/Factory.php';
+require_once 'Xyster/Container/Adapter/Factory.php';
 /**
- * Extends Xyster_Container_Component_Factory to provide methods for Behaviors
+ * Extends Xyster_Container_Adapter_Factory to provide methods for Behaviors
  * 
  * The main use of the factory is to customize the default component adapter 
  * used when none is specified explicitly.
@@ -28,25 +28,25 @@ require_once 'Xyster/Container/Component/Factory.php';
  * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-interface Xyster_Container_Behavior_Factory extends Xyster_Container_Component_Factory
+interface Xyster_Container_Behavior_Factory extends Xyster_Container_Adapter_Factory
 {
     /**
      * Adds a component adapter
      *
-     * @param Xyster_Container_Component_Monitor $componentMonitor
+     * @param Xyster_Container_Monitor $componentMonitor
      * @param Zend_Config $componentProperties
-     * @param Xyster_Container_Component_Adapter $adapter
-     * @return Xyster_Container_Component_Adapter
+     * @param Xyster_Container_Adapter $adapter
+     * @return Xyster_Container_Adapter
      */
-    function addComponentAdapter(Xyster_Container_Component_Monitor $componentMonitor,
+    function addComponentAdapter(Xyster_Container_Monitor $componentMonitor,
                         Zend_Config $componentProperties,
-                        Xyster_Container_Component_Adapter $adapter);
+                        Xyster_Container_Adapter $adapter);
 
     /**
      * Wraps a component factory
      *
-     * @param Xyster_Container_Component_Factory $delegate
-     * @return Xyster_Container_Component_Factory
+     * @param Xyster_Container_Adapter_Factory $delegate
+     * @return Xyster_Container_Adapter_Factory
      */
-    function wrap(Xyster_Container_Component_Factory $delegate);
+    function wrap(Xyster_Container_Adapter_Factory $delegate);
 }

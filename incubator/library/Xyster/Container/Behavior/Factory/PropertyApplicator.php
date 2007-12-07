@@ -30,12 +30,12 @@ class Xyster_Container_Behavior_Factory_PropertyApplicator extends Xyster_Contai
     /**
      * Adds a component adapter
      *
-     * @param Xyster_Container_Component_Monitor $componentMonitor
+     * @param Xyster_Container_Monitor $componentMonitor
      * @param Zend_Config $componentProperties
-     * @param Xyster_Container_Component_Adapter $adapter
-     * @return Xyster_Container_Component_Adapter
+     * @param Xyster_Container_Adapter $adapter
+     * @return Xyster_Container_Adapter
      */
-    public function addComponentAdapter(Xyster_Container_Component_Monitor $componentMonitor, Zend_Config $componentProperties, Xyster_Container_Component_Adapter $adapter)
+    public function addComponentAdapter(Xyster_Container_Monitor $componentMonitor, Zend_Config $componentProperties, Xyster_Container_Adapter $adapter)
     {
         Xyster_Container_Behavior_Factory_Abstract::removePropertiesIfPresent($componentProperties, Xyster_Container_Features::PROPERTY_APPLYING());
         return new Xyster_Container_Behavior_PropertyApplicator(parent::addComponentAdapter(
@@ -47,13 +47,13 @@ class Xyster_Container_Behavior_Factory_PropertyApplicator extends Xyster_Contai
      *
      * {@inherit}
      *
-     * @param Xyster_Container_Component_Monitor $componentMonitor
+     * @param Xyster_Container_Monitor $componentMonitor
      * @param Zend_Config $componentProperties
      * @param mixed $componentKey
      * @param mixed $componentImplementation
      * @param mixed $parameters
      */
-    public function createComponentAdapter(Xyster_Container_Component_Monitor $componentMonitor, Zend_Config $componentProperties, $componentKey, $componentImplementation, $parameters)
+    public function createComponentAdapter(Xyster_Container_Monitor $componentMonitor, Zend_Config $componentProperties, $componentKey, $componentImplementation, $parameters)
     {
         Xyster_Container_Behavior_Factory_Abstract::removePropertiesIfPresent($componentProperties, Xyster_Container_Features::PROPERTY_APPLYING());
         return new Xyster_Container_Behavior_PropertyApplicator(parent::createComponentAdapter(

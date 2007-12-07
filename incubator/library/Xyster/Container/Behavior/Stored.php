@@ -35,8 +35,10 @@ class Xyster_Container_Behavior_Stored extends Xyster_Container_Behavior_Abstrac
     /**
      * Creates a new stored behavior
      * 
+     * @param Xyster_Container_Adapter $delegate
+     * @param Xyster_Container_Reference $reference
      */
-    public function __construct( Xyster_Container_Component_Adapter $delegate, Xyster_Container_Reference $reference )
+    public function __construct( Xyster_Container_Adapter $delegate, Xyster_Container_Reference $reference )
     {
         parent::__construct($delegate);
         $this->_instanceReference = $reference;

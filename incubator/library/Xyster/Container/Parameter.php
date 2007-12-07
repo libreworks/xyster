@@ -37,30 +37,30 @@ interface Xyster_Container_Parameter
      * Check if the Parameter can statisfy the expected type using the container.
      *
      * @param Xyster_Container_Interface $container       the container from which dependencies are resolved.
-     * @param Xyster_Container_Component_Adapter $adapter the Component Adapter that is asking for the instance
+     * @param Xyster_Container_Adapter $adapter the Component Adapter that is asking for the instance
      * @param ReflectionParameter $expectedParameter      the expected parameter
      * @return boolean <code>true</code> if the component parameter can be resolved.
      */
-    function isResolvable(Xyster_Container_Interface $container, Xyster_Container_Component_Adapter $adapter, ReflectionParameter $expectedParameter);
+    function isResolvable(Xyster_Container_Interface $container, Xyster_Container_Adapter $adapter, ReflectionParameter $expectedParameter);
     
     /**
      * Retrieve the object from the Parameter that statisfies the expected type.
      *
      * @param Xyster_Container_Interface $container       the container from which dependencies are resolved.
-     * @param Xyster_Container_Component_Adapter $adapter the Component Adapter that is asking for the instance
+     * @param Xyster_Container_Adapter $adapter the Component Adapter that is asking for the instance
      * @param ReflectionParameter $expectedParameter      the expected parameter
      * @return mixed the instance or <code>null</code> if no suitable instance can be found.
      * @throws Xyster_Container_Exception if a referenced component could not be instantiated.
      */
-    function resolveInstance(Xyster_Container_Interface $container, Xyster_Container_Component_Adapter $adapter, ReflectionParameter $expectedParameter);
+    function resolveInstance(Xyster_Container_Interface $container, Xyster_Container_Adapter $adapter, ReflectionParameter $expectedParameter);
     
     /**
      * Verify that the Parameter can statisfied the expected type using the container
      *
      * @param Xyster_Container_Interface $container       the container from which dependencies are resolved.
-     * @param Xyster_Container_Component_Adapter $adapter the Component Adapter that is asking for the verification
+     * @param Xyster_Container_Adapter $adapter the Component Adapter that is asking for the verification
      * @param ReflectionParameter $expectedParameter      the expected parameter
      * @throws Xyster_Container_Exception if parameter and its dependencies cannot be resolved
      */
-    function verify(Xyster_Container_Interface $container, Xyster_Container_Component_Adapter $adapter, ReflectionParameter $expectedParameter);
+    function verify(Xyster_Container_Interface $container, Xyster_Container_Adapter $adapter, ReflectionParameter $expectedParameter);
 }

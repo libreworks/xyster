@@ -49,9 +49,9 @@ interface Xyster_Container_Visitor
     /**
      * Visit a component adapter that has to accept the visitor.
      * 
-     * @param Xyster_Container_Component_Adapter $componentAdapter the visited ComponentAdapter.
+     * @param Xyster_Container_Adapter $componentAdapter the visited ComponentAdapter.
      */
-    function visitComponentAdapter(Xyster_Container_Component_Adapter $componentAdapter);
+    function visitComponentAdapter(Xyster_Container_Adapter $componentAdapter);
     
     /**
      * Visit a that has to accept the visitor.

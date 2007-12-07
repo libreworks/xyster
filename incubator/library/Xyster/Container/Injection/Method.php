@@ -35,10 +35,10 @@ class Xyster_Container_Injection_Method extends Xyster_Container_Injection_Singl
      * @param mixed $componentKey
      * @param mixed $componentImplementation
      * @param array $parameters
-     * @param Xyster_Container_Component_Monitor $monitor
+     * @param Xyster_Container_Monitor $monitor
      * @param string $methodName
      */
-    public function __construct( $componentKey, $componentImplementation, array $parameters = null, Xyster_Container_Component_Monitor $monitor, $methodName )
+    public function __construct( $componentKey, $componentImplementation, array $parameters = null, Xyster_Container_Monitor $monitor, $methodName )
     {
         parent::__construct($componentKey, $componentImplementation, $parameters, $monitor);
         $this->_methodName = $methodName;

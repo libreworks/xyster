@@ -60,11 +60,11 @@ class Xyster_Container_Parameter_Basic implements Xyster_Container_Parameter
      * Check if the Parameter can statisfy the expected type using the container.
      *
      * @param Xyster_Container_Interface $container       the container from which dependencies are resolved.
-     * @param Xyster_Container_Component_Adapter $adapter the Component Adapter that is asking for the instance
+     * @param Xyster_Container_Adapter $adapter the Component Adapter that is asking for the instance
      * @param ReflectionParameter $expectedParameter      the expected parameter
      * @return boolean <code>true</code> if the component parameter can be resolved.
      */
-    public function isResolvable(Xyster_Container_Interface $container, Xyster_Container_Component_Adapter $adapter, ReflectionParameter $expectedParameter)
+    public function isResolvable(Xyster_Container_Interface $container, Xyster_Container_Adapter $adapter, ReflectionParameter $expectedParameter)
     {
         return $this->_resolveAdapter($container, $adapter, $expectedParameter) != null;
     }
@@ -73,12 +73,12 @@ class Xyster_Container_Parameter_Basic implements Xyster_Container_Parameter
      * Retrieve the object from the Parameter that statisfies the expected type.
      *
      * @param Xyster_Container_Interface $container       the container from which dependencies are resolved.
-     * @param Xyster_Container_Component_Adapter $adapter the Component Adapter that is asking for the instance
+     * @param Xyster_Container_Adapter $adapter the Component Adapter that is asking for the instance
      * @param ReflectionParameter $expectedParameter      the expected parameter
      * @return mixed the instance or <code>null</code> if no suitable instance can be found.
      * @throws Xyster_Container_Exception if a referenced component could not be instantiated.
      */
-    public function resolveInstance(Xyster_Container_Interface $container, Xyster_Container_Component_Adapter $adapter, ReflectionParameter $expectedParameter)
+    public function resolveInstance(Xyster_Container_Interface $container, Xyster_Container_Adapter $adapter, ReflectionParameter $expectedParameter)
     {
         $adapter = $this->_resolveAdapter($container, $adapter, $expectedParameter);
         if ( $adapter !== null ) {
@@ -91,11 +91,11 @@ class Xyster_Container_Parameter_Basic implements Xyster_Container_Parameter
      * Verify that the Parameter can statisfied the expected type using the container
      *
      * @param Xyster_Container_Interface $container       the container from which dependencies are resolved.
-     * @param Xyster_Container_Component_Adapter $adapter the Component Adapter that is asking for the verification
+     * @param Xyster_Container_Adapter $adapter the Component Adapter that is asking for the verification
      * @param ReflectionParameter $expectedParameter      the expected parameter
      * @throws Xyster_Container_Exception if parameter and its dependencies cannot be resolved
      */
-    public function verify(Xyster_Container_Interface $container, Xyster_Container_Component_Adapter $adapter, ReflectionParameter $expectedParameter)
+    public function verify(Xyster_Container_Interface $container, Xyster_Container_Adapter $adapter, ReflectionParameter $expectedParameter)
     {
         $adapter = $this->_resolveAdapter($container, $adapter, $expectedParameter);
         if ( $componentAdapter == null ) {
@@ -110,10 +110,10 @@ class Xyster_Container_Parameter_Basic implements Xyster_Container_Parameter
      *
      * @param Xyster_Container_Interface $container
      * @param ReflectionParameter $expectedParameter
-     * @param Xyster_Container_Component_Adapter $excludeAdapter
-     * @return Xyster_Container_Component_Adapter
+     * @param Xyster_Container_Adapter $excludeAdapter
+     * @return Xyster_Container_Adapter
      */
-    protected function _getTargetAdapter( Xyster_Container_Interface $container, ReflectionParameter $expectedParameter, Xyster_Container_Component_Adapter $excludeAdapter = null )
+    protected function _getTargetAdapter( Xyster_Container_Interface $container, ReflectionParameter $expectedParameter, Xyster_Container_Adapter $excludeAdapter = null )
     {
         $expectedType = $expectedParameter->getClass();
         if ( $this->_componentKey !== null ) {
@@ -156,11 +156,11 @@ class Xyster_Container_Parameter_Basic implements Xyster_Container_Parameter
      * Tries to resolve the adapter used for the type 
      *
      * @param Xyster_Container_Interface $container
-     * @param Xyster_Container_Component_Adapter $adapter
+     * @param Xyster_Container_Adapter $adapter
      * @param ReflectionParameter $expectedParameter
-     * @return Xyster_Container_Component_Adapter
+     * @return Xyster_Container_Adapter
      */
-    protected function _resolveAdapter( Xyster_Container_Interface $container, Xyster_Container_Component_Adapter $adapter, ReflectionParameter $expectedParameter )
+    protected function _resolveAdapter( Xyster_Container_Interface $container, Xyster_Container_Adapter $adapter, ReflectionParameter $expectedParameter )
     {
         $result = $this->_getTargetAdapter($container, $expectedParameter, $adapter);
         if ( $result === null ) {

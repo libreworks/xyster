@@ -55,7 +55,7 @@ interface Xyster_Container_Interface
      * Find a component adapter associated with the specified key
      * 
      * @param mixed $componentKey the key that the component was registered with
-     * @return Xyster_Container_Component_Adapter the component adapter associated with this key, or null
+     * @return Xyster_Container_Adapter the component adapter associated with this key, or null
      */
     function getComponentAdapter( $componentKeyOrType, $componentParameterName );
 

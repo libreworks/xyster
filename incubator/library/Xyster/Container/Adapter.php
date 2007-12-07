@@ -24,7 +24,7 @@
  * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-interface Xyster_Container_Component_Adapter
+interface Xyster_Container_Adapter
 {
     /**
      * Accepts a visitor for this Adapter
@@ -38,7 +38,7 @@ interface Xyster_Container_Component_Adapter
     function accept(Xyster_Container_Visitor $visitor);
     
     /**
-     * @return Xyster_Container_Component_Adapter
+     * @return Xyster_Container_Adapter
      */
     function getDelegate();
 

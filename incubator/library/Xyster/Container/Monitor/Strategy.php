@@ -25,19 +25,19 @@
  * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-interface Xyster_Container_Component_Monitor_Strategy
+interface Xyster_Container_Monitor_Strategy
 {
     /**
      * Changes the component monitor used
      * 
-     * @param Xyster_Container_Component_Monitor $monitor the new monitor to use
+     * @param Xyster_Container_Monitor $monitor the new monitor to use
      */
-    function changeMonitor( Xyster_Container_Component_Monitor $monitor );
+    function changeMonitor( Xyster_Container_Monitor $monitor );
 
     /**
      * Gets the monitor currently used
      * 
-     * @return Xyster_Container_Component_Monitor The monitor currently used
+     * @return Xyster_Container_Monitor The monitor currently used
      */
     function currentMonitor();
 }

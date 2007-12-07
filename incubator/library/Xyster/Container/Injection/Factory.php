@@ -14,9 +14,9 @@
  * @version   $Id$
  */
 /**
- * @see Xyster_Container_Component_Factory
+ * @see Xyster_Container_Adapter_Factory
  */
-require_once 'Xyster/Container/Component/Factory.php';
+require_once 'Xyster/Container/Adapter/Factory.php';
 /**
  * An tagging interface for Injection factories 
  *
@@ -25,6 +25,6 @@ require_once 'Xyster/Container/Component/Factory.php';
  * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-interface Xyster_Container_Injection_Factory extends Xyster_Container_Component_Factory
+interface Xyster_Container_Injection_Factory extends Xyster_Container_Adapter_Factory
 {
 }

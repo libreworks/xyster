@@ -14,9 +14,9 @@
  * @version   $Id$
  */
 /**
- * @see Xyster_Container_Component_Adapter_Abstract
+ * @see Xyster_Container_Adapter_Abstract
  */
-require_once 'Xyster/Container/Component/Adapter/Abstract.php';
+require_once 'Xyster/Container/Adapter/Abstract.php';
 /**
  * This adapter will instantiate a new object for each call to getInstance 
  *
@@ -25,7 +25,7 @@ require_once 'Xyster/Container/Component/Adapter/Abstract.php';
  * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-abstract class Xyster_Container_Injection_Abstract extends Xyster_Container_Component_Adapter_Abstract
+abstract class Xyster_Container_Injection_Abstract extends Xyster_Container_Adapter_Abstract
 {
     protected $_parameters = array();
 
@@ -35,9 +35,9 @@ abstract class Xyster_Container_Injection_Abstract extends Xyster_Container_Comp
      * @param mixed $componentKey
      * @param ReflectionClass $componentImplementation
      * @param array $parameters
-     * @param Xyster_Container_Component_Monitor $monitor
+     * @param Xyster_Container_Monitor $monitor
      */
-    public function __construct( $componentKey, $componentImplementation, array $parameters = null, Xyster_Container_Component_Monitor $monitor )
+    public function __construct( $componentKey, $componentImplementation, array $parameters = null, Xyster_Container_Monitor $monitor )
     {
         parent::__construct($componentKey, $componentImplementation, $monitor);
         $this->_checkConcrete();
@@ -111,34 +111,34 @@ abstract class Xyster_Container_Injection_Abstract extends Xyster_Container_Comp
         return $class->newInstanceArgs($parameters);
     }
 
-    protected function _caughtInstantiationException(Xyster_Container_Component_Monitor $componentMonitor,
+    protected function _caughtInstantiationException(Xyster_Container_Monitor $componentMonitor,
                                                 ReflectionClass $class,
                                                 Exception $e, Xyster_Container_Interface $container) {
-        $this->_componentMonitor->instantiationFailed($container, $this, $class, $e);
+        $componentMonitor->instantiationFailed($container, $this, $class, $e);
         require_once 'Xyster/Container/Exception.php';
         throw new Xyster_Container_Exception("Should never get here");
     }
 
-    protected function _caughtIllegalAccessException(Xyster_Container_Component_Monitor $componentMonitor,
+    protected function _caughtIllegalAccessException(Xyster_Container_Monitor $componentMonitor,
                                                 ReflectionClass $class,
                                                 Exception $e, Xyster_Container_Interface $container) {
-        $this->_componentMonitor->instantiationFailed($container, $this, $class, $e);
+        $componentMonitor->instantiationFailed($container, $this, $class, $e);
         require_once 'Xyster/Container/Exception.php';
         throw new Xyster_Container_Exception($e->getMessage());
     }
 
-    protected function _caughtInvocationTargetException(Xyster_Container_Component_Monitor $componentMonitor,
+    protected function _caughtInvocationTargetException(Xyster_Container_Monitor $componentMonitor,
                                                    ReflectionMethod $member,
                                                    $componentInstance, Exception $e) {
-        $this->_componentMonitor->invocationFailed($member, $componentInstance, $e);
+        $componentMonitor->invocationFailed($member, $componentInstance, $e);
         require_once 'Xyster/Container/Exception.php';
         throw new Xyster_Container_Exception($e->getMessage());
     }
 
-    protected function _caughtIllegalAccessException(Xyster_Container_Component_Monitor $componentMonitor,
+    protected function _caughtIllegalAccessException(Xyster_Container_Monitor $componentMonitor,
                                                 ReflectionMethod $member,
                                                 $componentInstance, Exception $e) {
-        $this->_componentMonitor->invocationFailed($member, $componentInstance, $e);
+        $componentMonitor->invocationFailed($member, $componentInstance, $e);
         require_once 'Xyster/Container/Exception.php';
         throw new Xyster_Container_Exception($e->getMessage());
     }

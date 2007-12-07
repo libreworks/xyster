@@ -35,8 +35,10 @@ class Xyster_Container_Behavior_Cached extends Xyster_Container_Behavior_Stored 
     /**
      * Creates a new stored behavior
      * 
+     * @param Xyster_Container_Adapter $delegate
+     * @param Xyster_Container_Reference $reference
      */
-    public function __construct( Xyster_Container_Component_Adapter $delegate, Xyster_Container_Reference $reference = null )
+    public function __construct( Xyster_Container_Adapter $delegate, Xyster_Container_Reference $reference = null )
     {
         if ( $reference == null ) {
             $reference = $this; 

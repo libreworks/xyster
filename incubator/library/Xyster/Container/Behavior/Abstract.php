@@ -31,16 +31,16 @@ require_once 'Xyster/Container/Behavior.php';
 abstract class Xyster_Container_Behavior_Abstract implements Xyster_Container_Behavior
 {
     /**
-     * @var Xyster_Container_Component_Adapter
+     * @var Xyster_Container_Adapter
      */
     protected $_delegate;
     
     /**
      * Creates a new behavior.
      *
-     * @param Xyster_Container_Component_Adapter $delegate
+     * @param Xyster_Container_Adapter $delegate
      */
-    public function __construct( Xyster_Container_Component_Adapter $delegate )
+    public function __construct( Xyster_Container_Adapter $delegate )
     {
         $this->_delegate = $delegate;
     }
@@ -62,9 +62,9 @@ abstract class Xyster_Container_Behavior_Abstract implements Xyster_Container_Be
      * Delegates change of monitor if the delegate supports a component monitor strategy
      * {@inherit}
      */
-    public function changeMonitor( Xyster_Container_Component_Monitor $monitor )
+    public function changeMonitor( Xyster_Container_Monitor $monitor )
     {
-        if ( $this->_delegate instanceof Xyster_Container_Component_Monitor_Strategy ) {
+        if ( $this->_delegate instanceof Xyster_Container_Monitor_Strategy ) {
             $this->_delegate->changeMonitor($monitor);
         }
     }
@@ -73,12 +73,12 @@ abstract class Xyster_Container_Behavior_Abstract implements Xyster_Container_Be
      * Returns delegate's current monitor if the delegate supports 
      * a component monitor strategy.
      * {@inheritDoc}
-     * @return Xyster_Container_Component_Monitor
+     * @return Xyster_Container_Monitor
      * @throws Exception if no component monitor is found in delegate
      */
     public function currentMonitor()
     {
-        if ( $this->_delegate instanceof Xyster_Container_Component_Monitor_Strategy ) {
+        if ( $this->_delegate instanceof Xyster_Container_Monitor_Strategy ) {
             return $this->_delegate->currentMonitor();
         }
         require_once 'Xyster/Container/Exception.php';
@@ -86,7 +86,7 @@ abstract class Xyster_Container_Behavior_Abstract implements Xyster_Container_Be
     }
     
     /**
-     * @return Xyster_Container_Component_Adapter
+     * @return Xyster_Container_Adapter
      */
     public function getDelegate()
     {

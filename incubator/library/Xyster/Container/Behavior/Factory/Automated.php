@@ -18,7 +18,7 @@
  */
 require_once 'Xyster/Container/Behavior/Factory/Abstract.php';
 /**
- * Extends Xyster_Container_Component_Factory to provide methods for Behaviors
+ * Extends Xyster_Container_Adapter_Factory to provide methods for Behaviors
  * 
  * The main use of the factory is to customize the default component adapter 
  * used when none is specified explicitly.
@@ -33,12 +33,12 @@ class Xyster_Container_Behavior_Factory_Automated extends Xyster_Container_Behav
     /**
      * Adds a component adapter
      *
-     * @param Xyster_Container_Component_Monitor $componentMonitor
+     * @param Xyster_Container_Monitor $componentMonitor
      * @param Zend_Config $componentProperties
-     * @param Xyster_Container_Component_Adapter $adapter
-     * @return Xyster_Container_Component_Adapter
+     * @param Xyster_Container_Adapter $adapter
+     * @return Xyster_Container_Adapter
      */
-    public function addComponentAdapter(Xyster_Container_Component_Monitor $componentMonitor, Zend_Config $componentProperties, Xyster_Container_Component_Adapter $adapter)
+    public function addComponentAdapter(Xyster_Container_Monitor $componentMonitor, Zend_Config $componentProperties, Xyster_Container_Adapter $adapter)
     {
         Xyster_Container_Behavior_Factory_Abstract::removePropertiesIfPresent($componentProperties, Xyster_Container_Features::AUTOMATIC());
         return new Xyster_Container_Behavior_Automated(parent::addComponentAdapter(
@@ -50,13 +50,13 @@ class Xyster_Container_Behavior_Factory_Automated extends Xyster_Container_Behav
      *
      * {@inherit}
      *
-     * @param Xyster_Container_Component_Monitor $componentMonitor
+     * @param Xyster_Container_Monitor $componentMonitor
      * @param Zend_Config $componentProperties
      * @param mixed $componentKey
      * @param mixed $componentImplementation
      * @param mixed $parameters
      */
-    public function createComponentAdapter(Xyster_Container_Component_Monitor $componentMonitor, Zend_Config $componentProperties, $componentKey, $componentImplementation, $parameters)
+    public function createComponentAdapter(Xyster_Container_Monitor $componentMonitor, Zend_Config $componentProperties, $componentKey, $componentImplementation, $parameters)
     {
         Xyster_Container_Behavior_Factory_Abstract::removePropertiesIfPresent($componentProperties, Xyster_Container_Features::AUTOMATIC());
         return new Xyster_Container_Behavior_Automated(parent::createComponentAdapter(

@@ -14,9 +14,9 @@
  * @version   $Id$
  */
 /**
- * @see Xyster_Container_Component_Adapter_Abstract
+ * @see Xyster_Container_Adapter_Abstract
  */
-require_once 'Xyster/Container/Component/Adapter/Abstract.php';
+require_once 'Xyster/Container/Adapter/Abstract.php';
 /**
  * @see Xyster_Container_Behavior
  */
@@ -29,7 +29,7 @@ require_once 'Xyster/Container/Behavior.php';
  * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-final class Xyster_Container_Component_Adapter_Instance extends Xyster_Container_Component_Adapter_Abstract implements Xyster_Container_Behavior
+final class Xyster_Container_Adapter_Instance extends Xyster_Container_Adapter_Abstract implements Xyster_Container_Behavior
 {
     /**
      * @var object
@@ -41,9 +41,9 @@ final class Xyster_Container_Component_Adapter_Instance extends Xyster_Container
      *
      * @param mixed $componentKey
      * @param mixed $componentImplementation string class name or ReflectionClass
-     * @param Xyster_Container_Component_Monitor $monitor
+     * @param Xyster_Container_Monitor $monitor
      */
-    public function __construct( $componentKey, $componentInstance, Xyster_Container_Component_Monitor $monitor = null )
+    public function __construct( $componentKey, $componentInstance, Xyster_Container_Monitor $monitor = null )
     {
         parent::__construct($componentKey, $this->_getInstanceClass($componentInstance), $monitor);
         $this->_componentInstance = $componentInstance;

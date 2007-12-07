@@ -18,6 +18,10 @@
  */
 require_once 'Xyster/Container/Behavior/Factory.php';
 /**
+ * @see Xyster_Collection_List
+ */
+require_once 'Xyster/Collection/List.php';
+/**
  * A component factory that creates property applicator instances
  *
  * @category  Xyster
@@ -32,15 +36,15 @@ class Xyster_Container_Behavior_Factory_Adaptive implements Xyster_Container_Beh
      * 
      * {@inherit}
      * 
-     * @param Xyster_Container_Component_Monitor $componentMonitor the component monitor
+     * @param Xyster_Container_Monitor $componentMonitor the component monitor
      * @param Zend_Config $componentProperties the component properties
      * @param mixed $componentKey the key to be associated with this adapter.
      * @param string $componentImplementation 
      * @param mixed $parameters 
      * @throws Exception if the creation of the component adapter fails
-     * @return Xyster_Container_Component_Adapter The component adapter
+     * @return Xyster_Container_Adapter The component adapter
      */
-    public function createComponentAdapter(Xyster_Container_Component_Monitor $componentMonitor, Zend_Config $componentProperties, $componentKey, $componentImplementation, $parameters)
+    public function createComponentAdapter(Xyster_Container_Monitor $componentMonitor, Zend_Config $componentProperties, $componentKey, $componentImplementation, $parameters)
     {
         $factories = new Xyster_Collection_List;
         $lastFactory = $this->_makeInjectionFactory();
@@ -63,16 +67,14 @@ class Xyster_Container_Behavior_Factory_Adaptive implements Xyster_Container_Beh
     /**
      * Adds a component adapter
      *
-     * @param Xyster_Container_Component_Monitor $componentMonitor
+     * @param Xyster_Container_Monitor $componentMonitor
      * @param Zend_Config $componentProperties
-     * @param Xyster_Container_Component_Adapter $adapter
-     * @return Xyster_Container_Component_Adapter
+     * @param Xyster_Container_Adapter $adapter
+     * @return Xyster_Container_Adapter
      */
-    public function addComponentAdapter(Xyster_Container_Component_Monitor $componentMonitor, Zend_Config $componentProperties, Xyster_Container_Component_Adapter $adapter)
+    public function addComponentAdapter(Xyster_Container_Monitor $componentMonitor, Zend_Config $componentProperties, Xyster_Container_Adapter $adapter)
     {
         $factories = new Xyster_Collection_List;
-        $this->_processSynchronizing($componentProperties, $factories);
-        $this->_processImplementationHiding($componentProperties, $factories);
         $this->_processCaching($componentProperties, $adapter->getImplementation(), $factories);
 
         $lastFactory = null;
@@ -89,6 +91,16 @@ class Xyster_Container_Behavior_Factory_Adaptive implements Xyster_Container_Beh
         }
 
         return $lastFactory->addComponentAdapter($componentMonitor, $componentProperties, $adapter);
+    }
+
+    /**
+     * Wraps another factory -- not implemented
+     *
+     * @param Xyster_Container_Adapter_Factory $delegate
+     */
+    public function wrap( Xyster_Container_Adapter_Factory $delegate )
+    {
+        throw new Exception();
     }
 
     /**
@@ -121,11 +133,5 @@ class Xyster_Container_Behavior_Factory_Adaptive implements Xyster_Container_Beh
         if (Xyster_Container_Behavior_Factory_Abstract::removePropertiesIfPresent($componentProperties, Xyster_Container_Features::AUTOMATIC())) {
             $factories->add(new Xyster_Container_Behavior_Factory_Automated);
         }
-    }
-
-
-    public function wrap( Xyster_Container_Component_Factory $delegate )
-    {
-        throw new Exception();
     }
 }
