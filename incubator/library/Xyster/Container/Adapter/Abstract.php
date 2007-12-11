@@ -18,10 +18,11 @@
  */
 require_once 'Xyster/Container/Adapter.php';
 /**
+ * @see Xyster_Container_Monitor_Strategy
+ */
+require_once 'Xyster/Container/Monitor/Strategy.php';
+/**
  * Responsible for providing an instance of a specific type
- * 
- * An instance of this interface will be used inside a container for every
- * component that is registered.
  * 
  * @category  Xyster
  * @package   Xyster_Container
@@ -30,34 +31,36 @@ require_once 'Xyster/Container/Adapter.php';
  */
 abstract class Xyster_Container_Adapter_Abstract implements Xyster_Container_Adapter, Xyster_Container_Monitor_Strategy
 {
-    private $_componentKey;
+    private $_key;
+    
     /**
      * @var ReflectionClass
      */
-    private $_componentImplementation;
+    private $_implementation;
+    
     /**
      * @var Xyster_Container_Monitor
      */
-    private $_componentMonitor;
+    private $_monitor;
     
     /**
      * Creates a new adapter for a key and implementation
      *
-     * @param mixed $componentKey
-     * @param mixed $componentImplementation string class name or ReflectionClass
+     * @param mixed $key
+     * @param mixed $implementation string class name or ReflectionClass
      * @param Xyster_Container_Monitor $monitor
      */
-    public function __construct( $componentKey, $componentImplementation, Xyster_Container_Monitor $monitor = null )
+    public function __construct( $key, $implementation, Xyster_Container_Monitor $monitor = null )
     {
-        if ( $componentKey === null ) {
+        if ( $key === null ) {
             require_once 'Xyster/Container/Exception.php';
             throw new Xyster_Container_Exception('Key cannot be null'); 
         }
-        $this->_componentKey = $componentKey;
-        $this->_componentImplementation = $componentImplementation instanceof ReflectionClass ?
-            $componentImplementation : new ReflectionClass($componentImplementation);
+        $this->_key = $key;
+        $this->_implementation = $implementation instanceof ReflectionClass ?
+            $implementation : new ReflectionClass($implementation);
         if ( $monitor != null ) {
-            $this->_componentMonitor = $monitor; 
+            $this->_monitor = $monitor; 
         }
         $this->_checkTypeCompatibility();
     }
@@ -81,7 +84,7 @@ abstract class Xyster_Container_Adapter_Abstract implements Xyster_Container_Ada
      */
     public function changeMonitor( Xyster_Container_Monitor $monitor )
     {
-        $this->_componentMonitor = $monitor;
+        $this->_monitor = $monitor;
     }
 
     /**
@@ -91,7 +94,7 @@ abstract class Xyster_Container_Adapter_Abstract implements Xyster_Container_Ada
      */
     public function currentMonitor()
     {
-        return $this->_componentMonitor;
+        return $this->_monitor;
     }
     
     /**
@@ -109,7 +112,7 @@ abstract class Xyster_Container_Adapter_Abstract implements Xyster_Container_Ada
      */
     public function getImplementation()
     {
-        return $this->_componentImplementation;
+        return $this->_implementation;
     }
 
     /**
@@ -120,9 +123,9 @@ abstract class Xyster_Container_Adapter_Abstract implements Xyster_Container_Ada
      * 
      * @return mixed the component's key
      */
-    function getKey()
+    public function getKey()
     {
-        return $this->_componentKey;
+        return $this->_key;
     }
     
     /**
@@ -141,12 +144,13 @@ abstract class Xyster_Container_Adapter_Abstract implements Xyster_Container_Ada
      */
     protected function _checkTypeCompatibility()
     {
-        if ( $this->_componentKey instanceof ReflectionClass ) {
-            $componentType = $this->_componentKey; /* @var $componentType ReflectionClass */
-            if ( $componentType->getName() != $this->_componentImplementation->getName() &&
-                $componentType->isSubclassOf($this->_componentImplementation->getName()) ) {
+        if ( $this->_key instanceof ReflectionClass ) {
+            $componentType = $this->_key; /* @var $componentType ReflectionClass */
+            $className = $this->_implementation->getName();
+            if ( $componentType->getName() != $className &&
+                $componentType->isSubclassOf($className) ) {
                 require_once 'Xyster/Container/Exception.php';
-                throw new Xyster_Container_Exception($this->_componentImplementation->getName() . ' is not a ' . 
+                throw new Xyster_Container_Exception($className . ' is not a ' . 
                     $componentType->getName());
             }
         }

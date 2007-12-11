@@ -34,16 +34,16 @@ require_once 'Xyster/Container/Parameter.php';
  */
 class Xyster_Container_Parameter_Basic implements Xyster_Container_Parameter
 {   
-    private $_componentKey;
+    private $_key;
     
     /**
      * Creates a new basic parameter
      *
-     * @param mixed $componentKey
+     * @param mixed $key
      */
-    public function __construct( $componentKey = null )
+    public function __construct( $key = null )
     {
-        $this->_componentKey = $componentKey;
+        $this->_key = $key;
     }
     
     /**
@@ -116,8 +116,8 @@ class Xyster_Container_Parameter_Basic implements Xyster_Container_Parameter
     protected function _getTargetAdapter( Xyster_Container_Interface $container, ReflectionParameter $expectedParameter, Xyster_Container_Adapter $excludeAdapter = null )
     {
         $expectedType = $expectedParameter->getClass();
-        if ( $this->_componentKey !== null ) {
-            return $container->getComponentAdapter($this->_componentKey);
+        if ( $this->_key !== null ) {
+            return $container->getComponentAdapter($this->_key);
         } else if ( $excludeAdapter == null ) {
             return $container->getComponentAdapter($expectedType, null);
         } else {

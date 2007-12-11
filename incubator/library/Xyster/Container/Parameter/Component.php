@@ -42,23 +42,23 @@ class Xyster_Container_Parameter_Component implements Xyster_Container_Parameter
     /**
      * Creates a new component parameter
      *
-     * @param mixed $componentKey
+     * @param mixed $key
      * @param boolean $emptyCollection
-     * @param mixed $componentValueType
-     * @param mixed $componentKeyType
+     * @param mixed $valueType
+     * @param mixed $keyType
      */
-    public function __construct( $componentKey = null, $emptyCollection = false, $componentValueType = null, $componentKeyType = null )
+    public function __construct( $key = null, $emptyCollection = false, $valueType = null, $keyType = null )
     {
-        parent::__construct($componentKey);
+        parent::__construct($key);
         
         $collectionParameter = null;
-        if ( $componentValueType == null && $componentKeyType == null ) {
+        if ( $valueType == null && $keyType == null ) {
             $collectionParameter = $emptyCollection ?
                 Xyster_Container_Parameter_Collection::ARRAY_ALLOW_EMPTY :
                 Xyster_Container_Parameter_Collection::ARRAY_TYPE; 
         } else {
-            $collectionParameter = new Xyster_Container_Parameter_Collection($componentKeyType,
-                $componentValueType, $emptyCollection);
+            $collectionParameter = new Xyster_Container_Parameter_Collection($keyType,
+                $valueType, $emptyCollection);
         }
     }
     
