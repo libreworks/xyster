@@ -116,28 +116,12 @@ abstract class Xyster_Container_Injection_Abstract extends Xyster_Container_Adap
                                                 Exception $e, Xyster_Container_Interface $container) {
         $componentMonitor->instantiationFailed($container, $this, $class, $e);
         require_once 'Xyster/Container/Exception.php';
-        throw new Xyster_Container_Exception("Should never get here");
-    }
-
-    protected function _caughtIllegalAccessException(Xyster_Container_Monitor $componentMonitor,
-                                                ReflectionClass $class,
-                                                Exception $e, Xyster_Container_Interface $container) {
-        $componentMonitor->instantiationFailed($container, $this, $class, $e);
-        require_once 'Xyster/Container/Exception.php';
         throw new Xyster_Container_Exception($e->getMessage());
     }
 
     protected function _caughtInvocationTargetException(Xyster_Container_Monitor $componentMonitor,
                                                    ReflectionMethod $member,
                                                    $componentInstance, Exception $e) {
-        $componentMonitor->invocationFailed($member, $componentInstance, $e);
-        require_once 'Xyster/Container/Exception.php';
-        throw new Xyster_Container_Exception($e->getMessage());
-    }
-
-    protected function _caughtIllegalAccessException(Xyster_Container_Monitor $componentMonitor,
-                                                ReflectionMethod $member,
-                                                $componentInstance, Exception $e) {
         $componentMonitor->invocationFailed($member, $componentInstance, $e);
         require_once 'Xyster/Container/Exception.php';
         throw new Xyster_Container_Exception($e->getMessage());

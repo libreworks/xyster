@@ -27,11 +27,10 @@ interface Xyster_Container_Monitor
      * Event thrown as the component is being instantiated using the given constructor
      *
      * @param Xyster_Container_Interface $container
-     * @param componentAdapter
-     * @param constructor the Constructor used to instantiate the addComponent
-     * @return ReflectionMethod the constructor to use in instantiation (nearly always the same one as passed in)
+     * @param Xyster_Container_Adapter $componentAdapter
+     * @param ReflectionClass $class the class being instantiated
      */
-    function instantiating(Xyster_Container_Interface $container, Xyster_Container_Adapter $componentAdapter, ReflectionMethod $constructor = null);
+    function instantiating(Xyster_Container_Interface $container, Xyster_Container_Adapter $componentAdapter, ReflectionClass $class = null);
 
     /**
      * Event thrown after the component has been instantiated using the given constructor.
@@ -39,29 +38,25 @@ interface Xyster_Container_Monitor
      *
      * @param Xyster_Container_Interface $container
      * @param Xyster_Container_Adapter $componentAdapter
-     * @param ReflectionMethod $constructor the Constructor used to instantiate the addComponent
-     * @param mixed $instantiated the component that was instantiated by PicoContainer
-     * @param array $injected the components during instantiation.
+     * @param ReflectionClass $class the class being instantiated
+     * @param mixed $instantiated the component that was instantiated
+     * @param array $injected the components during instantiation
      * @param float $duration the duration in millis of the instantiation
      */
-    function instantiated(Xyster_Container_Interface $container, Xyster_Container_Adapter $componentAdapter,
-                      ReflectionMethod $constructor = null,
-                      $instantiated,
-                      array $injected,
-                      $duration);
+    function instantiated(Xyster_Container_Interface $container,
+        Xyster_Container_Adapter $componentAdapter, ReflectionClass $class = null,
+        $instantiated, array $injected = null, $duration);
 
     /**
      * Event thrown if the component instantiation failed using the given constructor
      * 
      * @param Xyster_Container_Interface $container
      * @param Xyster_Container_Adapter $componentAdapter
-     * @param ReflectionMethod $constructor the Constructor used to instantiate the addComponent
+     * @param ReflectionClass $class the class being instantiated
      * @param Exception $cause the Exception detailing the cause of the failure
      */
     function instantiationFailed(Xyster_Container_Interface $container,
-                             Xyster_Container_Adapter $componentAdapter,
-                             ReflectionMethod $constructor,
-                             Exception $cause);
+        Xyster_Container_Adapter $componentAdapter, ReflectionClass $class, Exception $cause);
 
     /**
      * Event thrown as the component method is being invoked on the given instance
@@ -83,10 +78,7 @@ interface Xyster_Container_Monitor
      * @param float $duration the duration in millis of the invocation
      */
     function invoked(Xyster_Container_Interface $container,
-                 Xyster_Container_Adapter $componentAdapter,
-                 ReflectionMethod $method,
-                 $instance,
-                 $duration);
+        Xyster_Container_Adapter $componentAdapter, ReflectionMethod $method, $instance, $duration);
 
     /**
      * Event thrown if the component method invocation failed on the given instance

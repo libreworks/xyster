@@ -37,18 +37,19 @@ class Xyster_Container_Injection_Constructor extends Xyster_Container_Injection_
      */
     public function getInstance( Xyster_Container_Interface $container )
     {
-        $constructor = $this->getImplementation()->getConstructor();
+        $class = $this->getImplementation();
+        $constructor = $class->getConstructor();
         $componentMonitor = $this->currentMonitor();
         
         try {
             $parameters = $this->_getMemberArguments($container, $constructor);
-            $constructor = $componentMonitor->instantiating($container, $this, $constructor);
+            $componentMonitor->instantiating($container, $this, $class);
             $startTime = microtime(true);
             $inst = $this->_newInstance($constructor, $parameters);
-            $componentMonitor->instantiated($container, $this, $constructor, $inst, $parameters, microtime(true) - $startTime);
+            $componentMonitor->instantiated($container, $this, $class, $inst, $parameters, microtime(true) - $startTime);
             return $inst;
         } catch ( Exception $e ) {
-            $this->_caughtInstantiationException($componentMonitor, $constructor, $e, $container);
+            $this->_caughtInstantiationException($componentMonitor, $class, $e, $container);
         }
     }
     

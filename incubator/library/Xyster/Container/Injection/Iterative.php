@@ -48,9 +48,11 @@ abstract class Xyster_Container_Injection_Iterative extends Xyster_Container_Inj
     public function getInstance( Xyster_Container_Interface $container )
     {
         $matchingParameters = $this->_getMatchingParameterListForSetters($container);
-        $constructor = $this->getImplementation()->getConstructor();
+        
+        $class = $this->getImplementation();
+        $constructor = $class->getConstructor();
         $monitor = $this->currentMonitor();
-        $componentInstance = $this->_getOrMakeInstance($container, $constructor, $monitor);
+        $componentInstance = $this->_getOrMakeInstance($container, $class, $monitor);
         $member = null;
         $injected = array();
         try {
@@ -138,24 +140,24 @@ abstract class Xyster_Container_Injection_Iterative extends Xyster_Container_Inj
      * Gets an instance of the object
      *
      * @param Xyster_Container_Interface $container
-     * @param ReflectionMethod $constructor
+     * @param ReflectionClass $class
      * @param Xyster_Container_Monitor $monitor
      * @return object
      */
-    protected function _getOrMakeInstance( Xyster_Container_Interface $container, ReflectionMethod $constructor, Xyster_Container_Monitor $monitor )
+    protected function _getOrMakeInstance( Xyster_Container_Interface $container, ReflectionClass $class, Xyster_Container_Monitor $monitor )
     {
         $startTime = microtime(true);
-        $constructorToUse = $monitor->instantiating($container, $this, $constructor);
+        $monitor->instantiating($container, $this, $class);
         
         $componentInstance = null;
         try {
-            $componentInstance = $this->_newInstance($constructorToUse->getDeclaringClass(), null);
+            $componentInstance = $this->_newInstance($class);
         } catch ( Exception $thrown ) {
-            $this->_caughtInstantiationException($monitor, null, $thrown, $container);
+            $this->_caughtInstantiationException($monitor, $class, $thrown, $container);
         }
         
-        $monitor->instantiated($container, $this, $constructorToUse,
-            $componentInstance, null, microtime(true) - $startTime);
+        $monitor->instantiated($container, $this, $class, $componentInstance,
+            null, microtime(true) - $startTime);
         return $componentInstance;
     }
     
