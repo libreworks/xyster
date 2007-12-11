@@ -22,6 +22,10 @@ require_once 'Xyster/Container/Behavior/Factory.php';
  */
 require_once 'Xyster/Collection/List.php';
 /**
+ * @see Xyster_Container_Injection_Factory_Adaptive
+ */
+require_once 'Xyster_Container/Injection/Factory/Adaptive.php';
+/**
  * A component factory that creates property applicator instances
  *
  * @category  Xyster
@@ -106,11 +110,11 @@ class Xyster_Container_Behavior_Factory_Adaptive implements Xyster_Container_Beh
     /**
      * Gets the injection factory
      *
-     * @return Xyster_Container_Injection_Adaptive
+     * @return Xyster_Container_Injection_Factory_Adaptive
      */
     protected function _makeInjectionFactory()
     {
-        return new Xyster_Container_Injection_Adaptive;
+        return new Xyster_Container_Injection_Factory_Adaptive;
     }
 
     protected function _processCaching(Xyster_Collection_Map_Interface $properties, ReflectionClass $componentImplementation, Xyster_Collection_List $factories)

@@ -34,19 +34,19 @@ final class Xyster_Container_Adapter_Instance extends Xyster_Container_Adapter_A
     /**
      * @var object
      */
-    private $_componentInstance;
+    private $_instance;
     
     /**
      * Creates a new adapter for a key and implementation
      *
-     * @param mixed $componentKey
-     * @param mixed $componentImplementation string class name or ReflectionClass
+     * @param mixed $key
+     * @param mixed $instance The instance of the component
      * @param Xyster_Container_Monitor $monitor
      */
-    public function __construct( $componentKey, $componentInstance, Xyster_Container_Monitor $monitor = null )
+    public function __construct( $key, $instance, Xyster_Container_Monitor $monitor = null )
     {
-        parent::__construct($componentKey, $this->_getInstanceClass($componentInstance), $monitor);
-        $this->_componentInstance = $componentInstance;
+        parent::__construct($key, $this->_getInstanceClass($instance), $monitor);
+        $this->_instance = $instance;
     }
     
     /**
@@ -59,7 +59,7 @@ final class Xyster_Container_Adapter_Instance extends Xyster_Container_Adapter_A
      */
     function getInstance(Xyster_Container_Interface $container)
     {
-        return $this->_componentInstance;
+        return $this->_instance;
     }
 
     /**
@@ -85,11 +85,11 @@ final class Xyster_Container_Adapter_Instance extends Xyster_Container_Adapter_A
     /**
      * Gets the class of an instance
      *
-     * @param string $componentInstance
+     * @param string $instance
      * @return ReflectionClass
      */
-    private function _getInstanceClass( $componentInstance )
+    private function _getInstanceClass( $instance )
     {
-        return new ReflectionClass(get_class($componentInstance));        
+        return new ReflectionClass(get_class($instance));        
     }
 }
