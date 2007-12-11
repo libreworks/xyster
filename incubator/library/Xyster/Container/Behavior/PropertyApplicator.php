@@ -51,7 +51,7 @@ class Xyster_Container_Behavior_PropertyApplicator extends Xyster_Container_Beha
         }
         
         if ( $this->_properties != null ) {
-            $componentMonitor = $this->currentMonitor();
+            $monitor = $this->currentMonitor();
             $propertyNames = $this->_properties->keys();
             foreach( $propertyNames as $propertyName ) {
                 $propertyValue = $this->_properties[$propertyName];
@@ -61,12 +61,12 @@ class Xyster_Container_Behavior_PropertyApplicator extends Xyster_Container_Beha
                 $valueToInvoke = $this->_getSetterParameter($propertyName, $propertyValue, $componentInstance, $container);
 
                 try {
-                    $componentMonitor->invoking($container, $this, $setter, $componentInstance);
+                    $monitor->invoking($container, $this, $setter, $componentInstance);
                     $startTime = microtime(true);
                     $setter->invoke($componentInstance, $valueToInvoke);
-                    $componentMonitor->invoked($container, $this, $setter, $componentInstance, getmicrotime(true) - $startTime);
+                    $monitor->invoked($container, $this, $setter, $componentInstance, getmicrotime(true) - $startTime);
                 } catch ( Exception $thrown ) {
-                    $componentMonitor->invocationFailed($setter, $componentInstance, $thrown);
+                    $monitor->invocationFailed($setter, $componentInstance, $thrown);
                     throw new Xyster_Container_Exception("Failed to set property " . $propertyName . " to " . $propertyValue . ": " . $thrown->getMessage());
                 }
             }

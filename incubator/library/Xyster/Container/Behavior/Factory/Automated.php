@@ -33,16 +33,16 @@ class Xyster_Container_Behavior_Factory_Automated extends Xyster_Container_Behav
     /**
      * Adds a component adapter
      *
-     * @param Xyster_Container_Monitor $componentMonitor
-     * @param Zend_Config $componentProperties
+     * @param Xyster_Container_Monitor $monitor
+     * @param Xyster_Collection_Map_Interface $properties
      * @param Xyster_Container_Adapter $adapter
      * @return Xyster_Container_Adapter
      */
-    public function addComponentAdapter(Xyster_Container_Monitor $componentMonitor, Zend_Config $componentProperties, Xyster_Container_Adapter $adapter)
+    public function addComponentAdapter(Xyster_Container_Monitor $monitor, Xyster_Collection_Map_Interface $properties, Xyster_Container_Adapter $adapter)
     {
-        Xyster_Container_Behavior_Factory_Abstract::removePropertiesIfPresent($componentProperties, Xyster_Container_Features::AUTOMATIC());
+        Xyster_Container_Behavior_Factory_Abstract::removePropertiesIfPresent($properties, Xyster_Container_Features::AUTOMATIC());
         return new Xyster_Container_Behavior_Automated(parent::addComponentAdapter(
-            $componentMonitor, $componentProperties, $adapter));
+            $monitor, $properties, $adapter));
     }
     
     /**
@@ -50,16 +50,16 @@ class Xyster_Container_Behavior_Factory_Automated extends Xyster_Container_Behav
      *
      * {@inherit}
      *
-     * @param Xyster_Container_Monitor $componentMonitor
-     * @param Zend_Config $componentProperties
-     * @param mixed $componentKey
-     * @param mixed $componentImplementation
+     * @param Xyster_Container_Monitor $monitor
+     * @param Xyster_Collection_Map_Interface $properties
+     * @param mixed $key
+     * @param mixed $implementation
      * @param mixed $parameters
      */
-    public function createComponentAdapter(Xyster_Container_Monitor $componentMonitor, Zend_Config $componentProperties, $componentKey, $componentImplementation, $parameters)
+    public function createComponentAdapter(Xyster_Container_Monitor $monitor, Xyster_Collection_Map_Interface $properties, $key, $implementation, $parameters)
     {
-        Xyster_Container_Behavior_Factory_Abstract::removePropertiesIfPresent($componentProperties, Xyster_Container_Features::AUTOMATIC());
+        Xyster_Container_Behavior_Factory_Abstract::removePropertiesIfPresent($properties, Xyster_Container_Features::AUTOMATIC());
         return new Xyster_Container_Behavior_Automated(parent::createComponentAdapter(
-            $componentMonitor, $componentProperties, $componentKey, $componentImplementation, $parameters));
+            $monitor, $properties, $key, $implementation, $parameters));
     }
 }

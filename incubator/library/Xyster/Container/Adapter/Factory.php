@@ -29,14 +29,14 @@ interface Xyster_Container_Adapter_Factory
     /**
      * Create a new component adapter based on the specified arguments
      * 
-     * The $componentKey parameter should be returned from a call to
+     * The $key parameter should be returned from a call to
      * {@link Xyster_Container_Adapter#getComponentKey()} on the
      * created adapter.
      * 
-     * The $componentImplementation parameter is the implementation class to be
+     * The $implementation parameter is the implementation class to be
      * associated with this adapter. This value should be returned from a call
-     * to {@link Xyster_Container_Adapter#getComponentImplementation()}
-     * on the created adapter. Should not be null.
+     * to {@link Xyster_Container_Adapter#getImplementation()} on the created
+     * adapter. Should not be null.
      * 
      * The $parameters parameter are additional parameters to use by the
      * component adapter in constructing component instances. These may be used,
@@ -44,17 +44,13 @@ interface Xyster_Container_Adapter_Factory
      * component constructor. These should be considered hints; they may be
      * ignored by some implementations. May be null, and may be of zero length.
      * 
-     * @param Xyster_Container_Monitor $componentMonitor the component monitor
-     * @param Zend_Config $componentProperties the component properties
-     * @param mixed $componentKey the key to be associated with this adapter.
-     * @param string $componentImplementation 
+     * @param Xyster_Container_Monitor $monitor the component monitor
+     * @param Xyster_Collection_Map_Interface $properties the component properties
+     * @param mixed $key the key to be associated with this adapter.
+     * @param string $implementation 
      * @param mixed $parameters 
      * @throws Exception if the creation of the component adapter fails
      * @return Xyster_Container_Adapter The component adapter
      */
-    function createComponentAdapter(Xyster_Container_Monitor $componentMonitor,
-                                            Zend_Config $componentProperties,
-                                            $componentKey,
-                                            $componentImplementation,
-                                            $parameters); 
+    function createComponentAdapter(Xyster_Container_Monitor $monitor, Xyster_Collection_Map_Interface $properties, $key, $implementation, $parameters); 
 }

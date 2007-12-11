@@ -32,14 +32,15 @@ abstract class Xyster_Container_Injection_Abstract extends Xyster_Container_Adap
     /**
      * Constructs a new adapter for the given key and implementation
      *
-     * @param mixed $componentKey
-     * @param ReflectionClass $componentImplementation
+     * @param mixed $key
+     * @param ReflectionClass $implementation
      * @param array $parameters
      * @param Xyster_Container_Monitor $monitor
      */
-    public function __construct( $componentKey, $componentImplementation, array $parameters = null, Xyster_Container_Monitor $monitor )
+    public function __construct( $key, $implementation, array $parameters = null, Xyster_Container_Monitor $monitor )
     {
-        parent::__construct($componentKey, $componentImplementation, $monitor);
+        parent::__construct($key, $implementation, $monitor);
+        
         $this->_checkConcrete();
         if ( $parameters != null ) {
             foreach( $parameters as $k => $param ) {
@@ -111,18 +112,16 @@ abstract class Xyster_Container_Injection_Abstract extends Xyster_Container_Adap
         return $class->newInstanceArgs($parameters);
     }
 
-    protected function _caughtInstantiationException(Xyster_Container_Monitor $componentMonitor,
-                                                ReflectionClass $class,
-                                                Exception $e, Xyster_Container_Interface $container) {
-        $componentMonitor->instantiationFailed($container, $this, $class, $e);
+    protected function _caughtInstantiationException(Xyster_Container_Monitor $monitor, ReflectionClass $class, Exception $e, Xyster_Container_Interface $container)
+    {
+        $monitor->instantiationFailed($container, $this, $class, $e);
         require_once 'Xyster/Container/Exception.php';
         throw new Xyster_Container_Exception($e->getMessage());
     }
 
-    protected function _caughtInvocationTargetException(Xyster_Container_Monitor $componentMonitor,
-                                                   ReflectionMethod $member,
-                                                   $componentInstance, Exception $e) {
-        $componentMonitor->invocationFailed($member, $componentInstance, $e);
+    protected function _caughtInvocationTargetException(Xyster_Container_Monitor $monitor, ReflectionMethod $member, $componentInstance, Exception $e)
+    {
+        $monitor->invocationFailed($member, $componentInstance, $e);
         require_once 'Xyster/Container/Exception.php';
         throw new Xyster_Container_Exception($e->getMessage());
     }

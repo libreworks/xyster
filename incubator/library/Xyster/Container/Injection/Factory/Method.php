@@ -48,18 +48,18 @@ class Xyster_Container_Injection_Factory_Method implements Xyster_Container_Inje
      * 
      * {@inherit}
      * 
-     * @param Xyster_Container_Monitor $componentMonitor the component monitor
-     * @param Zend_Config $componentProperties the component properties
-     * @param mixed $componentKey the key to be associated with this adapter.
-     * @param string $componentImplementation 
+     * @param Xyster_Container_Monitor $monitor the component monitor
+     * @param Xyster_Collection_Map_Interface $properties the component properties
+     * @param mixed $key the key to be associated with this adapter.
+     * @param string $implementation 
      * @param mixed $parameters 
      * @throws Exception if the creation of the component adapter fails
      * @return Xyster_Container_Adapter The component adapter
      */
-    public function createComponentAdapter(Xyster_Container_Monitor $componentMonitor, Zend_Config $componentProperties, $componentKey, $componentImplementation, $parameters)
+    public function createComponentAdapter(Xyster_Container_Monitor $monitor, Xyster_Collection_Map_Interface $properties, $key, $implementation, $parameters)
     {
-        return new Xyster_Container_Injection_Method($componentKey,
-            $componentImplementation, $parameters, $componentMonitor,
+        return new Xyster_Container_Injection_Method($key,
+            $implementation, $parameters, $monitor,
             $this->_injectionMethodName);
     }
 }

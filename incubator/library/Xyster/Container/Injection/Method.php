@@ -55,19 +55,19 @@ class Xyster_Container_Injection_Method extends Xyster_Container_Injection_Singl
     public function getInstance( Xyster_Container_Interface $container )
     {
         $method = $this->_getInjectorMethod();
-        $componentMonitor = $this->currentMonitor();
+        $monitor = $this->currentMonitor();
         
         try {
             $class = $this->getImplementation();
-            $componentMonitor->instantiating($container, $this, $class);
+            $monitor->instantiating($container, $this, $class);
             $startTime = microtime(true);
             $inst = $class->newInstance();
             $parameters = $this->_getMemberArguments($container, $method);
             $method->invoke($inst, $parameters);
-            $componentMonitor->instantiated($container, $this, $class, $inst, $parameters, microtime(true) - $startTime);
+            $monitor->instantiated($container, $this, $class, $inst, $parameters, microtime(true) - $startTime);
             return $inst;
         } catch ( Exception $e ) {
-            $this->_caughtInstantiationException($componentMonitor, $class, $e, $container);
+            $this->_caughtInstantiationException($monitor, $class, $e, $container);
         }
     }
     

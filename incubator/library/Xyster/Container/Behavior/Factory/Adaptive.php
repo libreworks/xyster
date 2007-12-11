@@ -36,21 +36,21 @@ class Xyster_Container_Behavior_Factory_Adaptive implements Xyster_Container_Beh
      * 
      * {@inherit}
      * 
-     * @param Xyster_Container_Monitor $componentMonitor the component monitor
-     * @param Zend_Config $componentProperties the component properties
-     * @param mixed $componentKey the key to be associated with this adapter.
-     * @param string $componentImplementation 
+     * @param Xyster_Container_Monitor $monitor the component monitor
+     * @param Xyster_Collection_Map_Interface $properties the component properties
+     * @param mixed $key the key to be associated with this adapter.
+     * @param string $implementation 
      * @param mixed $parameters 
      * @throws Exception if the creation of the component adapter fails
      * @return Xyster_Container_Adapter The component adapter
      */
-    public function createComponentAdapter(Xyster_Container_Monitor $componentMonitor, Zend_Config $componentProperties, $componentKey, $componentImplementation, $parameters)
+    public function createComponentAdapter(Xyster_Container_Monitor $monitor, Xyster_Collection_Map_Interface $properties, $key, $implementation, $parameters)
     {
         $factories = new Xyster_Collection_List;
         $lastFactory = $this->_makeInjectionFactory();
-        $this->_processPropertyApplying($componentProperties, $factories);
-        $this->_processAutomatic($componentProperties, $factories);
-        $this->_processCaching($componentProperties, $componentImplementation, $factories);
+        $this->_processPropertyApplying($properties, $factories);
+        $this->_processAutomatic($properties, $factories);
+        $this->_processCaching($properties, $implementation, $factories);
 
         foreach( $factories as $componentFactory ) {
             if ($lastFactory != null && $componentFactory instanceof Xyster_Container_Behavior_Factory ) {
@@ -60,22 +60,22 @@ class Xyster_Container_Behavior_Factory_Adaptive implements Xyster_Container_Beh
             $lastFactory = $componentFactory;
         }
 
-        return $lastFactory->createComponentAdapter($componentMonitor,
-            $componentProperties, $componentKey, $componentImplementation, $parameters);
+        return $lastFactory->createComponentAdapter($monitor, $properties,
+            $key, $implementation, $parameters);
     }
 
     /**
      * Adds a component adapter
      *
-     * @param Xyster_Container_Monitor $componentMonitor
-     * @param Zend_Config $componentProperties
+     * @param Xyster_Container_Monitor $monitor
+     * @param Xyster_Collection_Map_Interface $properties
      * @param Xyster_Container_Adapter $adapter
      * @return Xyster_Container_Adapter
      */
-    public function addComponentAdapter(Xyster_Container_Monitor $componentMonitor, Zend_Config $componentProperties, Xyster_Container_Adapter $adapter)
+    public function addComponentAdapter(Xyster_Container_Monitor $monitor, Xyster_Collection_Map_Interface $properties, Xyster_Container_Adapter $adapter)
     {
         $factories = new Xyster_Collection_List;
-        $this->_processCaching($componentProperties, $adapter->getImplementation(), $factories);
+        $this->_processCaching($properties, $adapter->getImplementation(), $factories);
 
         $lastFactory = null;
         foreach( $factories as $componentFactory ) {
@@ -90,7 +90,7 @@ class Xyster_Container_Behavior_Factory_Adaptive implements Xyster_Container_Beh
             return $adapter;
         }
 
-        return $lastFactory->addComponentAdapter($componentMonitor, $componentProperties, $adapter);
+        return $lastFactory->addComponentAdapter($monitor, $properties, $adapter);
     }
 
     /**
@@ -113,24 +113,24 @@ class Xyster_Container_Behavior_Factory_Adaptive implements Xyster_Container_Beh
         return new Xyster_Container_Injection_Adaptive;
     }
 
-    protected function _processCaching(Zend_Config $componentProperties, ReflectionClass $componentImplementation, Xyster_Collection_List $factories)
+    protected function _processCaching(Xyster_Collection_Map_Interface $properties, ReflectionClass $componentImplementation, Xyster_Collection_List $factories)
     {
-        if (Xyster_Container_Behavior_Factory_Abstract::removePropertiesIfPresent($componentProperties, Xyster_Container_Features::CACHE()) ) {
+        if (Xyster_Container_Behavior_Factory_Abstract::removePropertiesIfPresent($properties, Xyster_Container_Features::CACHE()) ) {
             $factories->add(new Xyster_Container_Behavior_Factory_Cached);
         }
-        Xyster_Container_Behavior_Factory_Abstract::removePropertiesIfPresent($componentProperties, Xyster_Container_Features::NO_CACHE());
+        Xyster_Container_Behavior_Factory_Abstract::removePropertiesIfPresent($properties, Xyster_Container_Features::NO_CACHE());
     }
 
-    protected function _processPropertyApplying(Zend_Config $componentProperties, Xyster_Collection_List $factories)
+    protected function _processPropertyApplying(Xyster_Collection_Map_Interface $properties, Xyster_Collection_List $factories)
     {
-        if (Xyster_Container_Behavior_Factory_Abstract::removePropertiesIfPresent($componentProperties, Xyster_Container_Features::PROPERTY_APPLYING())) {
+        if (Xyster_Container_Behavior_Factory_Abstract::removePropertiesIfPresent($properties, Xyster_Container_Features::PROPERTY_APPLYING())) {
             $factories->add(new Xyster_Container_Behavior_Factory_PropertyApplicator);
         }
     }
 
-    protected function _processAutomatic(Zend_Config $componentProperties, Xyster_Collection_List $factories)
+    protected function _processAutomatic(Xyster_Collection_Map_Interface $properties, Xyster_Collection_List $factories)
     {
-        if (Xyster_Container_Behavior_Factory_Abstract::removePropertiesIfPresent($componentProperties, Xyster_Container_Features::AUTOMATIC())) {
+        if (Xyster_Container_Behavior_Factory_Abstract::removePropertiesIfPresent($properties, Xyster_Container_Features::AUTOMATIC())) {
             $factories->add(new Xyster_Container_Behavior_Factory_Automated);
         }
     }

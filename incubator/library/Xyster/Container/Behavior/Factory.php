@@ -33,14 +33,12 @@ interface Xyster_Container_Behavior_Factory extends Xyster_Container_Adapter_Fac
     /**
      * Adds a component adapter
      *
-     * @param Xyster_Container_Monitor $componentMonitor
-     * @param Zend_Config $componentProperties
+     * @param Xyster_Container_Monitor $monitor
+     * @param Xyster_Collection_Map_Interface $properties
      * @param Xyster_Container_Adapter $adapter
      * @return Xyster_Container_Adapter
      */
-    function addComponentAdapter(Xyster_Container_Monitor $componentMonitor,
-                        Zend_Config $componentProperties,
-                        Xyster_Container_Adapter $adapter);
+    function addComponentAdapter(Xyster_Container_Monitor $monitor, Xyster_Collection_Map_Interface $properties, Xyster_Container_Adapter $adapter);
 
     /**
      * Wraps a component factory

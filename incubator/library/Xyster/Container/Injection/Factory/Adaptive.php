@@ -32,81 +32,81 @@ class Xyster_Container_Injection_Factory_Adaptive implements Xyster_Container_In
      * 
      * {@inherit}
      * 
-     * @param Xyster_Container_Monitor $componentMonitor the component monitor
-     * @param Zend_Config $componentProperties the component properties
-     * @param mixed $componentKey the key to be associated with this adapter.
-     * @param string $componentImplementation 
+     * @param Xyster_Container_Monitor $monitor the component monitor
+     * @param Xyster_Collection_Map_Interface $properties the component properties
+     * @param mixed $key the key to be associated with this adapter.
+     * @param string $implementation 
      * @param mixed $parameters 
      * @throws Exception if the creation of the component adapter fails
      * @return Xyster_Container_Adapter The component adapter
      */
-    public function createComponentAdapter(Xyster_Container_Monitor $componentMonitor, Zend_Config $componentProperties, $componentKey, $componentImplementation, $parameters)
+    public function createComponentAdapter(Xyster_Container_Monitor $monitor, Xyster_Collection_Map_Interface $properties, $key, $implementation, $parameters)
     {
-        $componentAdapter = $this->_makeIfSetterInjection($componentProperties,
-            $componentMonitor, $componentKey, $componentImplementation,
+        $componentAdapter = $this->_makeIfSetterInjection($properties,
+            $monitor, $key, $implementation,
             $componentAdapter, $parameters);
 
         if ($componentAdapter != null) {
             return $componentAdapter;
         }
 
-        $componentAdapter = $this->_makeIfMethodInjection($componentProperties,
-            $componentMonitor, $componentKey, $componentImplementation,
+        $componentAdapter = $this->_makeIfMethodInjection($properties,
+            $monitor, $key, $implementation,
             $componentAdapter, $parameters);
 
         if ($componentAdapter != null) {
             return $componentAdapter;
         }
         
-        return $this->_makeDefaultInjection($componentProperties,
-            $componentMonitor, $componentKey, $componentImplementation,
+        return $this->_makeDefaultInjection($properties,
+            $monitor, $key, $implementation,
             $parameters);
     }
     
     /**
      * TSIA
      *
-     * @param Zend_Config $componentProperties
-     * @param Xyster_Container_Monitor $componentMonitor
-     * @param mixed $componentKey
-     * @param mixed $componentImplementation
+     * @param Xyster_Collection_Map_Interface $properties
+     * @param Xyster_Container_Monitor $monitor
+     * @param mixed $key
+     * @param mixed $implementation
      * @param mixed $parameters
      * @return Xyster_Container_Adapter
      */
-    protected function _makeDefaultInjection(Zend_Config $componentProperties, Xyster_Container_Monitor $componentMonitor, $componentKey, $componentImplementation, $parameters)
+    protected function _makeDefaultInjection(Xyster_Collection_Map_Interface $properties, Xyster_Container_Monitor $monitor, $key, $implementation, $parameters)
     {
         require_once 'Xyster/Container/Features.php';
         require_once 'Xyster/Container/Behavior/Factory/Abstract.php';
-        Xyster_Container_Behavior_Factory_Abstract::removePropertiesIfPresent($componentProperties, Xyster_Container_Features::CDI());
+        Xyster_Container_Behavior_Factory_Abstract::removePropertiesIfPresent($properties, Xyster_Container_Features::CDI());
         
         require_once 'Xyster/Container/Injection/Factory/Constructor.php';
         $injection = new Xyster_Container_Injection_Factory_Constructor;
-        return $injection->createComponentAdapter($componentMonitor,
-            $componentProperties, $componentKey, $componentImplementation,
+        return $injection->createComponentAdapter($monitor,
+            $properties, $key, $implementation,
             $parameters);
     }
 
     /**
      * TSIA
      *
-     * @param Zend_Config $componentProperties
-     * @param Xyster_Container_Monitor $componentMonitor
-     * @param mixed $componentKey
-     * @param mixed $componentImplementation
+     * @param Xyster_Collection_Map_Interface $properties
+     * @param Xyster_Container_Monitor $monitor
+     * @param mixed $key
+     * @param mixed $implementation
      * @param Xyster_Container_Adapter $componentAdapter
      * @param mixed $parameters
      * @return Xyster_Container_Adapter
      */
-    protected function _makeIfSetterInjection(Zend_Config $componentProperties, Xyster_Container_Monitor $componentMonitor, $componentKey, $componentImplementation, Xyster_Container_Adapter $componentAdapter, $parameters)
+    protected function _makeIfSetterInjection(Xyster_Collection_Map_Interface $properties, Xyster_Container_Monitor $monitor, $key, $implementation, Xyster_Container_Adapter $componentAdapter, $parameters)
     {
         require_once 'Xyster/Container/Features.php';
         require_once 'Xyster/Container/Behavior/Factory/Abstract.php';
         
-        if (Xyster_Container_Behavior_Factory_Abstract::removePropertiesIfPresent($componentProperties, Xyster_Container_Features::SDI())) {
+        if (Xyster_Container_Behavior_Factory_Abstract::removePropertiesIfPresent($properties, Xyster_Container_Features::SDI())) {
             require_once 'Xyster/Container/Injection/Factory/Setter.php';
             $injection = new Xyster_Container_Injection_Factory_Setter;
-            $componentAdapter = $injection->createComponentAdapter($componentMonitor,
-                $componentProperties, $componentKey, $componentImplementation,
+            $componentAdapter = $injection->createComponentAdapter($monitor,
+                $properties, $key, $implementation,
                 $parameters);
         }
         
@@ -116,24 +116,24 @@ class Xyster_Container_Injection_Factory_Adaptive implements Xyster_Container_In
     /**
      * TSIA
      *
-     * @param Zend_Config $componentProperties
-     * @param Xyster_Container_Monitor $componentMonitor
-     * @param mixed $componentKey
-     * @param mixed $componentImplementation
+     * @param Xyster_Collection_Map_Interface $properties
+     * @param Xyster_Container_Monitor $monitor
+     * @param mixed $key
+     * @param mixed $implementation
      * @param Xyster_Container_Adapter $componentAdapter
      * @param mixed $parameters
      * @return Xyster_Container_Adapter
      */
-    protected function _makeIfMethodInjection(Zend_Config $componentProperties, Xyster_Container_Monitor $componentMonitor, $componentKey, $componentImplementation, Xyster_Container_Adapter $componentAdapter, $parameters)
+    protected function _makeIfMethodInjection(Xyster_Collection_Map_Interface $properties, Xyster_Container_Monitor $monitor, $key, $implementation, Xyster_Container_Adapter $componentAdapter, $parameters)
     {
         require_once 'Xyster/Container/Features.php';
         require_once 'Xyster/Container/Behavior/Factory/Abstract.php';
         
-        if (Xyster_Container_Behavior_Factory_Abstract::removePropertiesIfPresent($componentProperties, Xyster_Container_Features::METHOD_INJECTION())) {
+        if (Xyster_Container_Behavior_Factory_Abstract::removePropertiesIfPresent($properties, Xyster_Container_Features::METHOD_INJECTION())) {
             require_once 'Xyster_Container_Injection_Factory_Method.php';
             $injection = new Xyster_Container_Injection_Factory_Method;
-            $componentAdapter = $injection->createComponentAdapter($componentMonitor,
-                $componentProperties, $componentKey, $componentImplementation,
+            $componentAdapter = $injection->createComponentAdapter($monitor,
+                $properties, $key, $implementation,
                 $parameters);
         }
         return $componentAdapter;

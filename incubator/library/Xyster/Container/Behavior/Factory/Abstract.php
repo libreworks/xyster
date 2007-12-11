@@ -38,15 +38,15 @@ class Xyster_Container_Behavior_Factory_Abstract implements Xyster_Container_Beh
     /**
      * Adds a component adapter
      *
-     * @param Xyster_Container_Monitor $componentMonitor
-     * @param Zend_Config $componentProperties
+     * @param Xyster_Container_Monitor $monitor
+     * @param Xyster_Collection_Map_Interface $componentProperties
      * @param Xyster_Container_Adapter $adapter
      * @return Xyster_Container_Adapter
      */
-    public function addComponentAdapter(Xyster_Container_Monitor $componentMonitor, Zend_Config $componentProperties, Xyster_Container_Adapter $adapter)
+    public function addComponentAdapter(Xyster_Container_Monitor $monitor, Xyster_Collection_Map_Interface $properties, Xyster_Container_Adapter $adapter)
     {
         if ($this->_delegate != null && $this->_delegate instanceof Xyster_Container_Behavior_Factory) {
-            return $this->_delegate->addComponentAdapter($componentMonitor, $componentProperties, $adapter);
+            return $this->_delegate->addComponentAdapter($monitor, $properties, $adapter);
         }
         return $adapter;
     }
@@ -56,30 +56,30 @@ class Xyster_Container_Behavior_Factory_Abstract implements Xyster_Container_Beh
      *
      * {@inherit}
      *
-     * @param Xyster_Container_Monitor $componentMonitor
-     * @param Zend_Config $componentProperties
+     * @param Xyster_Container_Monitor $monitor
+     * @param Xyster_Collection_Map_Interface $componentProperties
      * @param mixed $componentKey
      * @param mixed $componentImplementation
      * @param mixed $parameters
      */
-    public function createComponentAdapter(Xyster_Container_Monitor $componentMonitor,
-            Zend_Config $componentProperties, $componentKey, $componentImplementation, $parameters)
+    public function createComponentAdapter(Xyster_Container_Monitor $monitor, Xyster_Collection_Map_Interface $properties, $componentKey, $implementation, $parameters)
     {
         if ($this->_delegate == null) {
-            require_once 'Xyster/Container/Injection/Adaptive.php';
-            $this->_delegate = new Xyster_Container_Injection_Adaptive;
+            require_once 'Xyster/Container/Injection/Factory/Adaptive.php';
+            $this->_delegate = new Xyster_Container_Injection_Factory_Adaptive;
         }
-        return $this->_delegate->createComponentAdapter($componentMonitor, $componentProperties, $componentKey, $componentImplementation, $parameters);
+        return $this->_delegate->createComponentAdapter($monitor, $properties,
+            $key, $implementation, $parameters);
     }
 
     /**
-     * Removes properties from a Zend_Config
+     * Removes properties from a map
      * 
-     * @param Zend_Config $current This must be writable!
-     * @param Zend_Config $present
+     * @param Xyster_Collection_Map_Interface $current This must be writable!
+     * @param Xyster_Collection_Map_Interface $present
      * @return boolean
      */
-    public static function removePropertiesIfPresent(Zend_Config $current, Zend_Config $present)
+    public static function removePropertiesIfPresent(Xyster_Collection_Map_Interface $current, Xyster_Collection_Map_Interface $present)
     {
         foreach( $present as $key => $value ) {
             $presentValue = $present[$key];
