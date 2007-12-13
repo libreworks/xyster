@@ -98,7 +98,7 @@ class Xyster_Container_Parameter_Basic implements Xyster_Container_Parameter
     public function verify(Xyster_Container_Interface $container, Xyster_Container_Adapter $adapter, ReflectionParameter $expectedParameter)
     {
         $adapter = $this->_resolveAdapter($container, $adapter, $expectedParameter);
-        if ( $componentAdapter == null ) {
+        if ( $adapter == null ) {
             require_once 'Xyster/Container/Exception.php';
             throw new Xyster_Container_Exception('Unsatisfiable dependencies');
         }

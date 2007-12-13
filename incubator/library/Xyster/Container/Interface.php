@@ -45,11 +45,15 @@ interface Xyster_Container_Interface
      * 
      * The components are returned in their order of instantiation, which
      * depends on the dependency order between them.
+     * 
+     * If the type parameter is supplied, this method returns the components of
+     * the specified type. 
      *
+     * @param ReflectionClass $componentType the type to search
      * @return Xyster_Collection_List all the components.
      * @throws Exception if the instantiation of the component fails
      */
-    function getComponents();
+    function getComponents( ReflectionClass $componentType = null );
     
     /**
      * Find a component adapter associated with the specified key
@@ -57,7 +61,15 @@ interface Xyster_Container_Interface
      * @param mixed $componentKey the key that the component was registered with
      * @return Xyster_Container_Adapter the component adapter associated with this key, or null
      */
-    function getComponentAdapter( $componentKeyOrType, $componentParameterName );
+    function getComponentAdapter( $componentKey );
+    
+    /**
+     * Find a component adapter by type (and optionally by parameter name)
+     *
+     * @param mixed $componentType String class name or ReflectionClass
+     * @param string $componentParameterName
+     */
+    function getComponentAdapterByType( $componentType, $componentParameterName = null );
 
     /**
      * Retrieve all the component adapters inside this container.
@@ -68,16 +80,4 @@ interface Xyster_Container_Interface
      * @return Xyster_Collection_List a fixed collection containing all the adapters inside this container
      */
     function getComponentAdapters( ReflectionClass $componentType = null );
-
-    /**
-     * Returns a List of components of a certain componentType
-     * 
-     * The list is ordered by instantiation order, starting with the components
-     * instantiated first at the beginning.
-     *
-     * @param ReflectionClass $componentType the searched type.
-     * @return Xyster_Collection_List a List of components.
-     * @throws Exception if the instantiation of a component fails
-     */
-    function getComponents( ReflectionClass $componentType );
 }
