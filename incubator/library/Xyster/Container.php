@@ -22,9 +22,13 @@ require_once 'Xyster/Container/Interface.php';
  */
 require_once 'Xyster/Container/Monitor/Strategy.php';
 /**
- * @see Xyster_Collection_Map_String
+ * @see Xyster_Collection_List
  */
 require_once 'Xyster/Collection/List.php';
+/**
+ * @see Xyster_Collection_Map
+ */
+require_once 'Xyster/Collection/Map.php';
 /**
  * @see Xyster_Collection_Map_String
  */
@@ -86,6 +90,12 @@ class Xyster_Container implements Xyster_Container_Interface, Xyster_Container_M
             $factory = new Xyster_Container_Behavior_Factory_Adaptive;
         }
         $this->_componentFactory = $factory;
+        
+        if ( $monitor === null ) {
+            require_once 'Xyster/Container/Monitor/Null.php';
+            $monitor = new Xyster_Container_Monitor_Null;
+        }
+        $this->_monitor = $monitor;
     }
     
     /**

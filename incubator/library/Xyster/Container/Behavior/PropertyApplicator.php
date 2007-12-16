@@ -130,15 +130,14 @@ class Xyster_Container_Behavior_PropertyApplicator extends Xyster_Container_Beha
     /**
      * Converts and validates the given property value to an appropriate object for calling the bean's setter
      * 
-     * @param string $propertyName String the property name on the component that
-     * we will be setting the value to.
-     * @param mixed $propertyValue Object the property value that we've been given
+     * @param string $propertyName the property name on the component 
+     * @param mixed $propertyValue the property value that we've been given
      * @param mixed $componentInstance the component that we're looking to provide the setter to
-     * @return object the final converted object that can be used in the setter.
      * @param Xyster_Container_Interface $container
+     * @return object the final converted object that can be used in the setter.
      * @todo check working state
      */
-    protected function _getSetterParameter( $propertyName, $propertyValue, $componentInstance, $container )
+    protected function _getSetterParameter( $propertyName, $propertyValue, $componentInstance, Xyster_Container_Interface $container )
     {
         if ( $propertyValue == null ) {
             return null;

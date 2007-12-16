@@ -18,13 +18,21 @@
  */
 require_once 'Xyster/Container/Behavior/Factory.php';
 /**
+ * @see Xyster_Container_Behavior_Factory_Abstract
+ */
+require_once 'Xyster/Container/Behavior/Factory/Abstract.php';
+/**
+ * @see Xyster_Container_Features
+ */
+require_once 'Xyster/Container/Features.php';
+/**
  * @see Xyster_Collection_List
  */
 require_once 'Xyster/Collection/List.php';
 /**
  * @see Xyster_Container_Injection_Factory_Adaptive
  */
-require_once 'Xyster_Container/Injection/Factory/Adaptive.php';
+require_once 'Xyster/Container/Injection/Factory/Adaptive.php';
 /**
  * A component factory that creates property applicator instances
  *
@@ -120,6 +128,7 @@ class Xyster_Container_Behavior_Factory_Adaptive implements Xyster_Container_Beh
     protected function _processCaching(Xyster_Collection_Map_Interface $properties, ReflectionClass $componentImplementation, Xyster_Collection_List $factories)
     {
         if (Xyster_Container_Behavior_Factory_Abstract::removePropertiesIfPresent($properties, Xyster_Container_Features::CACHE()) ) {
+            require_once 'Xyster/Container/Behavior/Factory/Cached.php';
             $factories->add(new Xyster_Container_Behavior_Factory_Cached);
         }
         Xyster_Container_Behavior_Factory_Abstract::removePropertiesIfPresent($properties, Xyster_Container_Features::NO_CACHE());
@@ -128,6 +137,7 @@ class Xyster_Container_Behavior_Factory_Adaptive implements Xyster_Container_Beh
     protected function _processPropertyApplying(Xyster_Collection_Map_Interface $properties, Xyster_Collection_List $factories)
     {
         if (Xyster_Container_Behavior_Factory_Abstract::removePropertiesIfPresent($properties, Xyster_Container_Features::PROPERTY_APPLYING())) {
+            require_once 'Xyster/Container/Behavior/Factory/PropertyApplicator.php';
             $factories->add(new Xyster_Container_Behavior_Factory_PropertyApplicator);
         }
     }
@@ -135,6 +145,7 @@ class Xyster_Container_Behavior_Factory_Adaptive implements Xyster_Container_Beh
     protected function _processAutomatic(Xyster_Collection_Map_Interface $properties, Xyster_Collection_List $factories)
     {
         if (Xyster_Container_Behavior_Factory_Abstract::removePropertiesIfPresent($properties, Xyster_Container_Features::AUTOMATIC())) {
+            require_once 'Xyster/Container/Behavior/Factory/Automated.php';
             $factories->add(new Xyster_Container_Behavior_Factory_Automated);
         }
     }
