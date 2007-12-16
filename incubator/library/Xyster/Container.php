@@ -156,6 +156,15 @@ class Xyster_Container implements Xyster_Container_Interface, Xyster_Container_M
         if ( !count($parameters) ) {
             $parameters = null;
         }
+        if ( $key == null ) {
+            if ( $implementationOrInstance instanceof ReflectionClass ) {
+                $key = $implementationOrInstance;
+            } else if ( is_object($implementationOrInstance) ) {
+                $key = new ReflectionClass(get_class($implementationOrInstance));
+            } else if ( is_string($implementationOrInstance) ) {
+                $key = new ReflectionClass($implementationOrInstance);
+            }
+        }
         
         if ( $implementationOrInstance instanceof ReflectionClass ) {
             $tempProps = clone $this->_properties;

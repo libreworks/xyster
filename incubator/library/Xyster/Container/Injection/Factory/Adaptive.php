@@ -44,7 +44,7 @@ class Xyster_Container_Injection_Factory_Adaptive implements Xyster_Container_In
     {
         $componentAdapter = $this->_makeIfSetterInjection($properties,
             $monitor, $key, $implementation,
-            $componentAdapter, $parameters);
+            null, $parameters);
 
         if ($componentAdapter != null) {
             return $componentAdapter;
@@ -97,7 +97,7 @@ class Xyster_Container_Injection_Factory_Adaptive implements Xyster_Container_In
      * @param mixed $parameters
      * @return Xyster_Container_Adapter
      */
-    protected function _makeIfSetterInjection(Xyster_Collection_Map_Interface $properties, Xyster_Container_Monitor $monitor, $key, $implementation, Xyster_Container_Adapter $componentAdapter, $parameters)
+    protected function _makeIfSetterInjection(Xyster_Collection_Map_Interface $properties, Xyster_Container_Monitor $monitor, $key, $implementation, Xyster_Container_Adapter $componentAdapter = null, $parameters)
     {
         require_once 'Xyster/Container/Features.php';
         require_once 'Xyster/Container/Behavior/Factory/Abstract.php';
@@ -124,7 +124,7 @@ class Xyster_Container_Injection_Factory_Adaptive implements Xyster_Container_In
      * @param mixed $parameters
      * @return Xyster_Container_Adapter
      */
-    protected function _makeIfMethodInjection(Xyster_Collection_Map_Interface $properties, Xyster_Container_Monitor $monitor, $key, $implementation, Xyster_Container_Adapter $componentAdapter, $parameters)
+    protected function _makeIfMethodInjection(Xyster_Collection_Map_Interface $properties, Xyster_Container_Monitor $monitor, $key, $implementation, Xyster_Container_Adapter $componentAdapter = null, $parameters)
     {
         require_once 'Xyster/Container/Features.php';
         require_once 'Xyster/Container/Behavior/Factory/Abstract.php';
