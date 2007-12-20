@@ -26,7 +26,8 @@ require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHe
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
-// require_once '';
+require_once 'Xyster/Container/Adapter/AbstractTest.php';
+require_once 'Xyster/Container/Adapter/InstanceTest.php';
 
 error_reporting(E_ALL | E_STRICT);
 
@@ -40,7 +41,8 @@ class Xyster_Container_AllTests
     public static function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('Xyster Framework - Xyster_Container');
-        //$suite->addTestSuite('Xyster_Container_Test');
+        $suite->addTestSuite('Xyster_Container_Adapter_AbstractTest');
+        $suite->addTestSuite('Xyster_Container_Adapter_InstanceTest');
         return $suite;
     }
 }

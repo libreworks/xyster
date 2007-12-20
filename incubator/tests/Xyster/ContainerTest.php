@@ -38,15 +38,12 @@ class Xyster_ContainerTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var    Xyster_Container
-     * @access protected
      */
     protected $object;
 
     /**
      * Runs the test methods of this class.
      *
-     * @access public
-     * @static
      */
     public static function main()
     {
@@ -70,7 +67,6 @@ class Xyster_ContainerTest extends PHPUnit_Framework_TestCase
      */
     public function testAccept()
     {
-        // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
           'This test has not been implemented yet.'
         );

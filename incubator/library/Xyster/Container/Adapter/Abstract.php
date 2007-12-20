@@ -59,9 +59,11 @@ abstract class Xyster_Container_Adapter_Abstract implements Xyster_Container_Ada
         $this->_key = $key;
         $this->_implementation = $implementation instanceof ReflectionClass ?
             $implementation : new ReflectionClass($implementation);
-        if ( $monitor != null ) {
-            $this->_monitor = $monitor; 
+        if ( $monitor === null ) {
+            require_once 'Xyster/Container/Monitor/Null.php';
+            $monitor = new Xyster_Container_Monitor_Null; 
         }
+        $this->_monitor = $monitor;
         $this->_checkTypeCompatibility();
     }
     
@@ -135,7 +137,7 @@ abstract class Xyster_Container_Adapter_Abstract implements Xyster_Container_Ada
      */
     public function __toString()
     {
-        return $this->getKey();
+        return "" . $this->getKey();
     }
     
     /**
@@ -148,7 +150,7 @@ abstract class Xyster_Container_Adapter_Abstract implements Xyster_Container_Ada
             $componentType = $this->_key; /* @var $componentType ReflectionClass */
             $className = $this->_implementation->getName();
             if ( $componentType->getName() != $className &&
-                $componentType->isSubclassOf($className) ) {
+                !$componentType->isSubclassOf($this->_implementation) ) {
                 require_once 'Xyster/Container/Exception.php';
                 throw new Xyster_Container_Exception($className . ' is not a ' . 
                     $componentType->getName());
