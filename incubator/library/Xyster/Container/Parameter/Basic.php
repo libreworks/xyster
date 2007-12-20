@@ -39,7 +39,7 @@ class Xyster_Container_Parameter_Basic implements Xyster_Container_Parameter
     /**
      * Creates a new basic parameter
      *
-     * @param mixed $key
+     * @param mixed $key The key of the desired component
      */
     public function __construct( $key = null )
     {
@@ -116,39 +116,43 @@ class Xyster_Container_Parameter_Basic implements Xyster_Container_Parameter
     protected function _getTargetAdapter( Xyster_Container_Interface $container, ReflectionParameter $expectedParameter, Xyster_Container_Adapter $excludeAdapter = null )
     {
         $expectedType = $expectedParameter->getClass();
+        
         if ( $this->_key !== null ) {
             return $container->getComponentAdapter($this->_key);
-        } else if ( $excludeAdapter == null ) {
-            return $container->getComponentAdapter($expectedType, null);
+        } else if ( $excludeAdapter === null ) {
+            return $container->getComponentAdapterByType($expectedType, null);
+        }
+        
+        // try to find it by key
+        $excludeKey = $excludeAdapter->getKey();
+        $byKey = $container->getComponentAdapter($expectedType);
+        if ( $byKey !== null && $excludeKey == $byKey->getKey() ) {
+            return $byKey;
+        }
+        
+        // get all component adapters with the expected type
+        $found = $container->getComponentAdapters($expectedType);
+        $exclude = null;
+        foreach( $found as $foundAdapter ) {
+            if ( $foundAdapter->getKey() == $excludeKey ) {
+                $exclude = $foundAdapter;
+            }
+        }
+        $found->remove($exclude);
+        if ( count($found) == 0 ) {
+            return null; // none registered
+        } else if ( count($found) == 1 ) {
+            return $found->get(0); // one registered
         } else {
-            $excludeKey = $excludeAdapter->getKey();
-            $byKey = $container->getComponentAdapter($expectedType);
-            if ( $byKey !== null && $excludeKey == $byKey->getKey() ) {
-                return $byKey;
+            foreach( $found as $adapter ) { // look for parameter name as key
+                $key = $adapter->getKey();
+                if ( $key == $expectedParameter->getName() ) {
+                    return $adapter;
+                }
             }
             
-            $found = $container->getComponentAdapters($expectedType);
-            $exclude = null;
-            foreach( $found as $work ) {
-                if ( $work->getKey() == $excludeKey ) {
-                    $exclude = $work;
-                }
-            }
-            $found->remove($exclude);
-            if ( count($found) == 0 ) {
-                return null;
-            } else if ( count($found) == 1 ) {
-                return $found->get(0);
-            } else {
-                foreach( $found as $adapter ) {
-                    $key = $adapter->getKey();
-                    if ( $key == $expectedParameter->getName() ) {
-                        return $adapter;
-                    }
-                }
-                
-                throw new Xyster_Container_Exception('Ambiguous component resolution: ' . $expectedType->getName());
-            }
+            require_once 'Xyster/Container/Exception.php';
+            throw new Xyster_Container_Exception('Ambiguous component resolution: ' . $expectedType->getName());
         }
     }
     
@@ -169,7 +173,8 @@ class Xyster_Container_Parameter_Basic implements Xyster_Container_Parameter
         
         $expectedType = $expectedParameter->getClass();
         /* @var $expectedType ReflectionClass */
-        if ( $expectedType->getName() != $result->getImplementation()->getName() && !is_subclass_of($result->getImplementation->getName(), $expectedType->getName()) ) {
+        if ( $expectedType->getName() != $result->getImplementation()->getName() &&
+            !$result->getImplementation()->isSubclassOf($expectedType) ) {
             return null;
         }
         
