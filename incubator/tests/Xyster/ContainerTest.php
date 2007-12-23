@@ -63,33 +63,59 @@ class Xyster_ContainerTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testAccept().
+     * Tests the 'accept' method
      */
     public function testAccept()
     {
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->object->addComponent(new ArrayObject);
+        require_once 'Xyster/Container/Visitor/Mock.php';
+        $visitor = new Xyster_Container_Visitor_Mock;
+        $this->object->accept($visitor);
+        $this->assertEquals(1, $visitor->getCalled('visitContainer'));
+        $this->assertEquals(1, $visitor->getCalled('visitComponentAdapter'));
     }
 
     /**
-     * @todo Implement testAddAdapter().
+     * Tests the 'addAdapter' method
      */
     public function testAddAdapter()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        require_once 'Xyster/Container/Adapter/Instance.php';
+        $key = new ReflectionClass('ArrayObject');
+        $adapter = new Xyster_Container_Adapter_Instance($key, new ArrayObject);
+        $return = $this->object->addAdapter($adapter);
+        $this->assertSame($this->object, $return);
+        $adapter2 = $this->object->getComponentAdapter($key);
+        $this->assertSame($adapter, $adapter2);
     }
 
     /**
-     * @todo Implement testAddComponent().
+     * Tests the 'addComponent' method
      */
     public function testAddComponent()
     {
         $class = new ReflectionClass('Xyster_Collection_Map');
-        $this->object->addComponent($class);
+        $return = $this->object->addComponent($class);
+        $this->assertSame($this->object, $return);
+        $adapter = $this->object->getComponentAdapterByType($class);
+        $this->assertType('Xyster_Container_Adapter', $adapter);
+        $this->assertSame($class, $adapter->getKey());
+    }
+    
+    /**
+     * Tests the 'addComponent' method with an instance of an object
+     *
+     */
+    public function testAddComponentInstance()
+    {
+        $instance = new ArrayObject;
+        $return = $this->object->addComponent($instance);
+        $this->assertSame($this->object, $return);
+        $key = new ReflectionClass('ArrayObject');
+        $adapter = $this->object->getComponentAdapterByType($key);
+        $this->assertType('Xyster_Container_Adapter_Instance', $adapter);
+        $this->assertSame($instance, $adapter->getInstance($this->object));
+        $this->assertEquals($key, $adapter->getImplementation());
     }
 
     /**
@@ -104,25 +130,22 @@ class Xyster_ContainerTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testChangeMonitor().
+     * Tests the 'changeMonitor' method
      */
     public function testChangeMonitor()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        require_once 'Xyster/Container/Monitor/Null.php';
+        $monitor = new Xyster_Container_Monitor_Null;
+        $this->object->changeMonitor($monitor);
+        $this->assertAttributeSame($monitor, '_monitor', $this->object);
     }
 
     /**
-     * @todo Implement testCurrentMonitor().
+     * Tests the 'currentMonitor' method
      */
     public function testCurrentMonitor()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->assertAttributeSame($this->object->currentMonitor(), '_monitor', $this->object);
     }
 
     /**

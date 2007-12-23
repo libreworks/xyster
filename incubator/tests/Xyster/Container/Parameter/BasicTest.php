@@ -55,7 +55,7 @@ class Xyster_Container_Parameter_BasicTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new Xyster_Container_Parameter_Basic;
+        $this->object = new Xyster_Container_Parameter_Basic();
     }
 
     /**
@@ -85,10 +85,22 @@ class Xyster_Container_Parameter_BasicTest extends PHPUnit_Framework_TestCase
      */
     public function testResolveInstance()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        require_once 'Xyster/Container.php';
+        $container = new Xyster_Container;
+        $class = new ReflectionClass('TestControllerAction');
+        $container->addComponent($class);
+        require_once 'Zend/Controller/Request/Http.php';
+        $container->addComponent(new ReflectionClass('Zend_Controller_Request_Http'));
+        require_once 'Zend/Controller/Response/Http.php';
+        $container->addComponent(new ReflectionClass('Zend_Controller_Response_Http'));
+        require_once 'Xyster/Container/Adapter/Instance.php';
+        $adapter = new Xyster_Container_Adapter_Instance('uri', 'http://localhost/test');
+        $container->addAdapter($adapter);
+        $constructor = $class->getConstructor(); /* @var $constructor ReflectionMethod */
+        $parameters = $constructor->getParameters();
+        $parameter = $parameters[0];
+        $return = $this->object->resolveInstance($container, null, $parameter);
+        var_dump($return);
     }
 
     /**
@@ -101,6 +113,13 @@ class Xyster_Container_Parameter_BasicTest extends PHPUnit_Framework_TestCase
           'This test has not been implemented yet.'
         );
     }
+}
+
+require_once 'Zend/Controller/Action.php';
+
+class TestControllerAction extends Zend_Controller_Action
+{
+        
 }
 
 // Call Xyster_Container_Parameter_BasicTest::main() if this source file is executed directly.

@@ -14,9 +14,9 @@
  * @version   $Id$
  */
 /**
- * @see Xyster_Container_Interface
+ * @see Xyster_Container_Mutable
  */
-require_once 'Xyster/Container/Interface.php';
+require_once 'Xyster/Container/Mutable.php';
 /**
  * @see Xyster_Container_Monitor_Strategy
  */
@@ -41,7 +41,7 @@ require_once 'Xyster/Collection/Map/String.php';
  * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Container implements Xyster_Container_Interface, Xyster_Container_Monitor_Strategy
+class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Monitor_Strategy
 {
     /**
      * @var Xyster_Collection_List
@@ -108,7 +108,7 @@ class Xyster_Container implements Xyster_Container_Interface, Xyster_Container_M
         $visitor->visitContainer($this);
         foreach( $this->_adapters as $adapter ) {
             /* @var $adapter Xyster_Container_Adapter */
-            $adapter->accept($visit);
+            $adapter->accept($visitor);
         }
     }
     
@@ -118,7 +118,7 @@ class Xyster_Container implements Xyster_Container_Interface, Xyster_Container_M
      * @param Xyster_Container_Adapter $adapter
      * @param Xyster_Collection_Map_Interface $properties
      */
-    public function addAdapter( Xyster_Container_Adapter $adapter, Xyster_Collection_Map_Interface $properties )
+    public function addAdapter( Xyster_Container_Adapter $adapter, Xyster_Collection_Map_Interface $properties = null )
     {
         if ( $properties == null ) {
             $properties = $this->_properties;
@@ -176,8 +176,21 @@ class Xyster_Container implements Xyster_Container_Interface, Xyster_Container_M
             require_once 'Xyster/Container/Adapter/Instance.php';
             $adapter = new Xyster_Container_Adapter_Instance($key,
                 $implementationOrInstance, $this->_monitor);
+            $this->addAdapter($adapter, $this->_properties);
         }
         
+        return $this;
+    }
+    
+    /**
+     * Register a config item
+     *
+     * @param string $name
+     * @param mixed $value
+     * @return Xyster_Container provides a fluent interface
+     */
+    public function addConfig( $name, $value )
+    {
         return $this;
     }
     
@@ -333,12 +346,13 @@ class Xyster_Container implements Xyster_Container_Interface, Xyster_Container_M
         $list = null;
         
         if ( $componentType == null ) {
-            require_once 'Xyster/Collection.php';
-            $list = Xyster_Collection::fixedList($this->_adapters); 
+            require_once 'Xyster/Collection/List.php';
+            $list = new Xyster_Collection_List($this->_adapters); 
         } else {
             $list = new Xyster_Collection_List;
-            foreach( $this->getComponentAdapters() as $adapter ) {
-                if ( $adapter->getImplementation()->isSubclassOf($componentType) ) {
+            foreach( $this->_adapters as $adapter ) {
+                if ( $adapter->getImplementation()->getName() == $componentType->getName() ||
+                    $adapter->getImplementation()->isSubclassOf($componentType) ) {
                     $list->add($adapter);
                 }
             }
@@ -411,12 +425,18 @@ class Xyster_Container implements Xyster_Container_Interface, Xyster_Container_M
         $this->_componentKeyToAdapterCache->set($key, $adapter);
     }
     
+    /**
+     * Gets an instance of the component
+     *
+     * @param Xyster_Container_Adapter $adapter
+     * @return object
+     */
     protected function _getInstance( Xyster_Container_Adapter $adapter )
     {
         $instance = null;
         
         if ( $this->_adapters->contains($adapter) ) {
-
+            $instance = $adapter->getInstance($this);
         }
         
         return $instance;

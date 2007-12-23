@@ -36,6 +36,21 @@ class Xyster_Container_Parameter_Basic implements Xyster_Container_Parameter
 {   
     private $_key;
     
+    static protected $_default;
+    
+    /**
+     * Gets a simple parameter
+     *
+     * @return Xyster_Container_Parameter_Basic
+     */
+    public static function standard()
+    {
+        if ( !self::$_default ) {
+            self::$_default = new self;
+        }
+        return self::$_default;
+    }
+    
     /**
      * Creates a new basic parameter
      *
@@ -64,7 +79,7 @@ class Xyster_Container_Parameter_Basic implements Xyster_Container_Parameter
      * @param ReflectionParameter $expectedParameter      the expected parameter
      * @return boolean <code>true</code> if the component parameter can be resolved.
      */
-    public function isResolvable(Xyster_Container_Interface $container, Xyster_Container_Adapter $adapter, ReflectionParameter $expectedParameter)
+    public function isResolvable(Xyster_Container_Interface $container, Xyster_Container_Adapter $adapter = null, ReflectionParameter $expectedParameter)
     {
         return $this->_resolveAdapter($container, $adapter, $expectedParameter) != null;
     }
@@ -78,7 +93,7 @@ class Xyster_Container_Parameter_Basic implements Xyster_Container_Parameter
      * @return mixed the instance or <code>null</code> if no suitable instance can be found.
      * @throws Xyster_Container_Exception if a referenced component could not be instantiated.
      */
-    public function resolveInstance(Xyster_Container_Interface $container, Xyster_Container_Adapter $adapter, ReflectionParameter $expectedParameter)
+    public function resolveInstance(Xyster_Container_Interface $container, Xyster_Container_Adapter $adapter = null, ReflectionParameter $expectedParameter)
     {
         $adapter = $this->_resolveAdapter($container, $adapter, $expectedParameter);
         if ( $adapter !== null ) {
@@ -95,7 +110,7 @@ class Xyster_Container_Parameter_Basic implements Xyster_Container_Parameter
      * @param ReflectionParameter $expectedParameter      the expected parameter
      * @throws Xyster_Container_Exception if parameter and its dependencies cannot be resolved
      */
-    public function verify(Xyster_Container_Interface $container, Xyster_Container_Adapter $adapter, ReflectionParameter $expectedParameter)
+    public function verify(Xyster_Container_Interface $container, Xyster_Container_Adapter $adapter = null, ReflectionParameter $expectedParameter)
     {
         $adapter = $this->_resolveAdapter($container, $adapter, $expectedParameter);
         if ( $adapter == null ) {
@@ -120,14 +135,16 @@ class Xyster_Container_Parameter_Basic implements Xyster_Container_Parameter
         if ( $this->_key !== null ) {
             return $container->getComponentAdapter($this->_key);
         } else if ( $excludeAdapter === null ) {
-            return $container->getComponentAdapterByType($expectedType, null);
+            return $container->getComponentAdapterByType($expectedType);
         }
         
         // try to find it by key
         $excludeKey = $excludeAdapter->getKey();
-        $byKey = $container->getComponentAdapter($expectedType);
-        if ( $byKey !== null && $excludeKey == $byKey->getKey() ) {
-            return $byKey;
+        if ( $expectedType !== null ) {
+            $byKey = $container->getComponentAdapter($expectedType);
+            if ( $byKey !== null && $excludeKey == $byKey->getKey() ) {
+                return $byKey;
+            }
         }
         
         // get all component adapters with the expected type
@@ -152,7 +169,7 @@ class Xyster_Container_Parameter_Basic implements Xyster_Container_Parameter
             }
             
             require_once 'Xyster/Container/Exception.php';
-            throw new Xyster_Container_Exception('Ambiguous component resolution: ' . $expectedType->getName());
+            throw new Xyster_Container_Exception('Ambiguous component resolution: ' . $expectedParameter);
         }
     }
     
@@ -164,7 +181,7 @@ class Xyster_Container_Parameter_Basic implements Xyster_Container_Parameter
      * @param ReflectionParameter $expectedParameter
      * @return Xyster_Container_Adapter
      */
-    protected function _resolveAdapter( Xyster_Container_Interface $container, Xyster_Container_Adapter $adapter, ReflectionParameter $expectedParameter )
+    protected function _resolveAdapter( Xyster_Container_Interface $container, Xyster_Container_Adapter $adapter = null, ReflectionParameter $expectedParameter )
     {
         $result = $this->_getTargetAdapter($container, $expectedParameter, $adapter);
         if ( $result === null ) {

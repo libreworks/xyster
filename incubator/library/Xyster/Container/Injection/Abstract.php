@@ -95,7 +95,7 @@ abstract class Xyster_Container_Injection_Abstract extends Xyster_Container_Adap
     {
         $componentParameters = array();
         foreach( $parameters as $parameter ) {
-            $componentParameters[] = Xyster_Container_Parameter_Component::standard();
+            $componentParameters[] = Xyster_Container_Parameter_Basic::standard();
         }
         return $componentParameters;
     }

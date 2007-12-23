@@ -62,7 +62,7 @@ class Xyster_Container_Behavior_Factory_Adaptive implements Xyster_Container_Beh
         $lastFactory = $this->_makeInjectionFactory();
         $this->_processPropertyApplying($properties, $factories);
         $this->_processAutomatic($properties, $factories);
-        $this->_processCaching($properties, $implementation, $factories);
+        $this->_processCaching($properties, $factories);
 
         foreach( $factories as $componentFactory ) {
             if ($lastFactory != null && $componentFactory instanceof Xyster_Container_Behavior_Factory ) {
@@ -87,7 +87,7 @@ class Xyster_Container_Behavior_Factory_Adaptive implements Xyster_Container_Beh
     public function addComponentAdapter(Xyster_Container_Monitor $monitor, Xyster_Collection_Map_Interface $properties, Xyster_Container_Adapter $adapter)
     {
         $factories = new Xyster_Collection_List;
-        $this->_processCaching($properties, $adapter->getImplementation(), $factories);
+        $this->_processCaching($properties, $factories);
 
         $lastFactory = null;
         foreach( $factories as $componentFactory ) {
@@ -125,7 +125,7 @@ class Xyster_Container_Behavior_Factory_Adaptive implements Xyster_Container_Beh
         return new Xyster_Container_Injection_Factory_Adaptive;
     }
 
-    protected function _processCaching(Xyster_Collection_Map_Interface $properties, ReflectionClass $componentImplementation, Xyster_Collection_List $factories)
+    protected function _processCaching(Xyster_Collection_Map_Interface $properties, Xyster_Collection_List $factories)
     {
         if (Xyster_Container_Behavior_Factory_Abstract::removePropertiesIfPresent($properties, Xyster_Container_Features::CACHE()) ) {
             require_once 'Xyster/Container/Behavior/Factory/Cached.php';

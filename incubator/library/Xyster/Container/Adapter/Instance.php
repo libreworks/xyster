@@ -90,6 +90,6 @@ final class Xyster_Container_Adapter_Instance extends Xyster_Container_Adapter_A
      */
     private function _getInstanceClass( $instance )
     {
-        return new ReflectionClass(get_class($instance));        
+        return is_object($instance) ? new ReflectionClass(get_class($instance)) : null;        
     }
 }

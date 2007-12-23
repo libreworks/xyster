@@ -57,8 +57,11 @@ abstract class Xyster_Container_Adapter_Abstract implements Xyster_Container_Ada
             throw new Xyster_Container_Exception('Key cannot be null'); 
         }
         $this->_key = $key;
-        $this->_implementation = $implementation instanceof ReflectionClass ?
-            $implementation : new ReflectionClass($implementation);
+        if ( $implementation instanceof ReflectionClass ) {
+            $this->_implementation = $implementation;
+        } else if ( $implementation !== null ) {
+            $this->_implementation = new ReflectionClass($implementation);
+        }
         if ( $monitor === null ) {
             require_once 'Xyster/Container/Monitor/Null.php';
             $monitor = new Xyster_Container_Monitor_Null; 
