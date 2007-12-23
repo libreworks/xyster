@@ -70,18 +70,25 @@ class Xyster_Container_Parameter_BasicTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testIsResolvable().
+     * Tests the 'isResolvable' method
      */
     public function testIsResolvable()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        require_once 'Xyster/Container.php';
+        $container = new Xyster_Container;
+        $class = new ReflectionClass('TestControllerAction');
+        $container->addComponent($class);
+        require_once 'Zend/Controller/Response/Http.php';
+        $container->addComponent(new ReflectionClass('Zend_Controller_Response_Http'));
+        $constructor = $class->getConstructor(); /* @var $constructor ReflectionMethod */
+        $parameters = $constructor->getParameters();
+        $parameter = $parameters[1];
+        $return = $this->object->isResolvable($container, null, $parameter);
+        $this->assertTrue($return);
     }
 
     /**
-     * @todo Implement testResolveInstance().
+     * Tests the 'resolveInstance' method
      */
     public function testResolveInstance()
     {
@@ -89,20 +96,37 @@ class Xyster_Container_Parameter_BasicTest extends PHPUnit_Framework_TestCase
         $container = new Xyster_Container;
         $class = new ReflectionClass('TestControllerAction');
         $container->addComponent($class);
-        require_once 'Zend/Controller/Request/Http.php';
-        $container->addComponent(new ReflectionClass('Zend_Controller_Request_Http'));
         require_once 'Zend/Controller/Response/Http.php';
         $container->addComponent(new ReflectionClass('Zend_Controller_Response_Http'));
-        require_once 'Xyster/Container/Adapter/Instance.php';
-        $adapter = new Xyster_Container_Adapter_Instance('uri', 'http://localhost/test');
-        $container->addAdapter($adapter);
         $constructor = $class->getConstructor(); /* @var $constructor ReflectionMethod */
         $parameters = $constructor->getParameters();
-        $parameter = $parameters[0];
+        $parameter = $parameters[1];
         $return = $this->object->resolveInstance($container, null, $parameter);
-        var_dump($return);
+        $this->assertType('Zend_Controller_Response_Abstract', $return);
     }
-
+    
+    /**
+     * @todo Implement testResolveInstanceArray().
+     */
+    public function testResolveInstanceArray()
+    {
+        // Remove the following lines when you implement this test.
+        $this->markTestIncomplete(
+          'This test has not been implemented yet.'
+        );
+    }
+    
+    /**
+     * @todo Implement testResolveInstanceScalar().
+     */
+    public function testResolveInstanceScalar()
+    {
+        // Remove the following lines when you implement this test.
+        $this->markTestIncomplete(
+          'This test has not been implemented yet.'
+        );
+    }
+    
     /**
      * @todo Implement testVerify().
      */

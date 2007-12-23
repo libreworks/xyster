@@ -109,7 +109,8 @@ abstract class Xyster_Container_Injection_Abstract extends Xyster_Container_Adap
      */
     protected function _newInstance(ReflectionClass $class, array $parameters = array())
     {
-        return $class->newInstanceArgs($parameters);
+        return ( $class->getConstructor() ) ?
+            $class->newInstanceArgs($parameters) : $class->newInstance();
     }
 
     protected function _caughtInstantiationException(Xyster_Container_Monitor $monitor, ReflectionClass $class, Exception $e, Xyster_Container_Interface $container)

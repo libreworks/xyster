@@ -45,7 +45,7 @@ class Xyster_Container_Injection_Constructor extends Xyster_Container_Injection_
             $parameters = $this->_getMemberArguments($container, $constructor);
             $monitor->instantiating($container, $this, $class);
             $startTime = microtime(true);
-            $inst = $this->_newInstance($constructor, $parameters);
+            $inst = $this->_newInstance($class, $parameters);
             $monitor->instantiated($container, $this, $class, $inst, $parameters, microtime(true) - $startTime);
             return $inst;
         } catch ( ReflectionException $e ) {

@@ -153,7 +153,7 @@ class Xyster_Container_Features
         if ( !isset(self::$_features[$featuresKey]) ) {
             $map = new Xyster_Collection_Map_String;
             $map->set($key, $value);
-            self::$_features[$featuresKey] = Xyster_Collection::fixedMap($map); 
+            self::$_features[$featuresKey] = $map;//Xyster_Collection::fixedMap($map); 
         }
         return self::$_features[$featuresKey];
     }

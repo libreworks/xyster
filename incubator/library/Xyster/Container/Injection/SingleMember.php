@@ -34,8 +34,12 @@ abstract class Xyster_Container_Injection_SingleMember extends Xyster_Container_
      * @param ReflectionMethod $member
      * @param array $parameterTypes an array of {@link ReflectionClass} objects
      */
-    protected function _getMemberArguments( Xyster_Container_Interface $container, ReflectionMethod $member, array $parameterTypes = null )
+    protected function _getMemberArguments( Xyster_Container_Interface $container, ReflectionMethod $member = null, array $parameterTypes = null )
     {
+        if ( $member === null ) {
+            return array();
+        }
+        
         $reflectionParams = $member->getParameters();
         
         if ( $parameterTypes === null ) {
