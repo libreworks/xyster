@@ -28,9 +28,9 @@ interface Xyster_Container_Monitor
      *
      * @param Xyster_Container_Interface $container
      * @param Xyster_Container_Adapter $componentAdapter
-     * @param ReflectionClass $class the class being instantiated
+     * @param Xyster_Type $class the class being instantiated
      */
-    function instantiating(Xyster_Container_Interface $container, Xyster_Container_Adapter $componentAdapter, ReflectionClass $class = null);
+    function instantiating(Xyster_Container_Interface $container, Xyster_Container_Adapter $componentAdapter, Xyster_Type $class = null);
 
     /**
      * Event thrown after the component has been instantiated using the given constructor.
@@ -38,13 +38,13 @@ interface Xyster_Container_Monitor
      *
      * @param Xyster_Container_Interface $container
      * @param Xyster_Container_Adapter $componentAdapter
-     * @param ReflectionClass $class the class being instantiated
+     * @param Xyster_Type $class the class being instantiated
      * @param mixed $instantiated the component that was instantiated
      * @param array $injected the components during instantiation
      * @param float $duration the duration in millis of the instantiation
      */
     function instantiated(Xyster_Container_Interface $container,
-        Xyster_Container_Adapter $componentAdapter, ReflectionClass $class = null,
+        Xyster_Container_Adapter $componentAdapter, Xyster_Type $class = null,
         $instantiated, array $injected = null, $duration);
 
     /**
@@ -52,11 +52,11 @@ interface Xyster_Container_Monitor
      * 
      * @param Xyster_Container_Interface $container
      * @param Xyster_Container_Adapter $componentAdapter
-     * @param ReflectionClass $class the class being instantiated
+     * @param Xyster_Type $class the class being instantiated
      * @param Exception $cause the Exception detailing the cause of the failure
      */
     function instantiationFailed(Xyster_Container_Interface $container,
-        Xyster_Container_Adapter $componentAdapter, ReflectionClass $class, Exception $cause);
+        Xyster_Container_Adapter $componentAdapter, Xyster_Type $class, Exception $cause);
 
     /**
      * Event thrown as the component method is being invoked on the given instance

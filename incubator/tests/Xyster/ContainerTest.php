@@ -81,7 +81,7 @@ class Xyster_ContainerTest extends PHPUnit_Framework_TestCase
     public function testAddAdapter()
     {
         require_once 'Xyster/Container/Adapter/Instance.php';
-        $key = new ReflectionClass('ArrayObject');
+        $key = new Xyster_Type('ArrayObject');
         $adapter = new Xyster_Container_Adapter_Instance($key, new ArrayObject);
         $return = $this->object->addAdapter($adapter);
         $this->assertSame($this->object, $return);
@@ -94,7 +94,7 @@ class Xyster_ContainerTest extends PHPUnit_Framework_TestCase
      */
     public function testAddComponent()
     {
-        $class = new ReflectionClass('Xyster_Collection_Map');
+        $class = new Xyster_Type('Xyster_Collection_Map');
         $return = $this->object->addComponent($class);
         $this->assertSame($this->object, $return);
         $adapter = $this->object->getComponentAdapterByType($class);
@@ -111,7 +111,7 @@ class Xyster_ContainerTest extends PHPUnit_Framework_TestCase
         $instance = new ArrayObject;
         $return = $this->object->addComponent($instance);
         $this->assertSame($this->object, $return);
-        $key = new ReflectionClass('ArrayObject');
+        $key = new Xyster_Type('ArrayObject');
         $adapter = $this->object->getComponentAdapterByType($key);
         $this->assertType('Xyster_Container_Adapter_Instance', $adapter);
         $this->assertSame($instance, $adapter->getInstance($this->object));

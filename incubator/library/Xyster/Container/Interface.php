@@ -49,11 +49,11 @@ interface Xyster_Container_Interface
      * If the type parameter is supplied, this method returns the components of
      * the specified type. 
      *
-     * @param ReflectionClass $componentType the type to search
+     * @param Xyster_Type $componentType the type to search
      * @return Xyster_Collection_List all the components.
      * @throws Exception if the instantiation of the component fails
      */
-    function getComponents( ReflectionClass $componentType = null );
+    function getComponents( Xyster_Type $componentType = null );
     
     /**
      * Find a component adapter associated with the specified key
@@ -66,7 +66,7 @@ interface Xyster_Container_Interface
     /**
      * Find a component adapter by type (and optionally by parameter name)
      *
-     * @param mixed $componentType String class name or ReflectionClass
+     * @param mixed $componentType String class name or Xyster_Type
      * @param string $componentParameterName
      */
     function getComponentAdapterByType( $componentType, $componentParameterName = null );
@@ -79,5 +79,5 @@ interface Xyster_Container_Interface
      *
      * @return Xyster_Collection_List a fixed collection containing all the adapters inside this container
      */
-    function getComponentAdapters( ReflectionClass $componentType = null );
+    function getComponentAdapters( Xyster_Type $componentType = null );
 }

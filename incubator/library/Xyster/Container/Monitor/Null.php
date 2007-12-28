@@ -32,9 +32,9 @@ class Xyster_Container_Monitor_Null implements Xyster_Container_Monitor
      *
      * @param Xyster_Container_Interface $container
      * @param Xyster_Container_Adapter $componentAdapter
-     * @param ReflectionClass $class the class being instantiated
+     * @param Xyster_Type $class the class being instantiated
      */
-    public function instantiating(Xyster_Container_Interface $container, Xyster_Container_Adapter $componentAdapter, ReflectionClass $class = null)
+    public function instantiating(Xyster_Container_Interface $container, Xyster_Container_Adapter $componentAdapter, Xyster_Type $class = null)
     {
     }
 
@@ -44,12 +44,12 @@ class Xyster_Container_Monitor_Null implements Xyster_Container_Monitor
      *
      * @param Xyster_Container_Interface $container
      * @param Xyster_Container_Adapter $componentAdapter
-     * @param ReflectionClass $class the class being instantiated
+     * @param Xyster_Type $class the class being instantiated
      * @param mixed $instantiated the component that was instantiated
      * @param array $injected the components during instantiation
      * @param float $duration the duration in millis of the instantiation
      */
-    public function instantiated(Xyster_Container_Interface $container, Xyster_Container_Adapter $componentAdapter, ReflectionClass $class = null, $instantiated, array $injected = null, $duration)
+    public function instantiated(Xyster_Container_Interface $container, Xyster_Container_Adapter $componentAdapter, Xyster_Type $class = null, $instantiated, array $injected = null, $duration)
     {
     }
 
@@ -58,10 +58,10 @@ class Xyster_Container_Monitor_Null implements Xyster_Container_Monitor
      * 
      * @param Xyster_Container_Interface $container
      * @param Xyster_Container_Adapter $componentAdapter
-     * @param ReflectionClass $class the class being instantiated
+     * @param Xyster_Type $class the class being instantiated
      * @param Exception $cause the Exception detailing the cause of the failure
      */
-    public function instantiationFailed(Xyster_Container_Interface $container, Xyster_Container_Adapter $componentAdapter, ReflectionClass $class, Exception $cause)
+    public function instantiationFailed(Xyster_Container_Interface $container, Xyster_Container_Adapter $componentAdapter, Xyster_Type $class, Exception $cause)
     {
     }
 

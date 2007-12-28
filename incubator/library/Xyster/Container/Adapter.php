@@ -48,7 +48,7 @@ interface Xyster_Container_Adapter
      * Should normally be a concrete class (ie, a class that can be
      * instantiated).
      *
-     * @return ReflectionClass the component's implementation class
+     * @return Xyster_Type the component's implementation class
      */
     function getImplementation();
 

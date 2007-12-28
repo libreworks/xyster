@@ -33,7 +33,7 @@ abstract class Xyster_Container_Injection_Abstract extends Xyster_Container_Adap
      * Constructs a new adapter for the given key and implementation
      *
      * @param mixed $key
-     * @param ReflectionClass $implementation
+     * @param Xyster_Type $implementation
      * @param array $parameters
      * @param Xyster_Container_Monitor $monitor
      */
@@ -60,10 +60,11 @@ abstract class Xyster_Container_Injection_Abstract extends Xyster_Container_Adap
      */
     protected function _checkConcrete()
     {
-        $isAbstract = $this->getImplementation()->isAbstract();
-        if ( $this->getImplementation()->isInterface() || $isAbstract ) {
+        $class = $this->getImplementation()->getClass();
+        $isAbstract = $class->isAbstract();
+        if ( $class->isInterface() || $isAbstract ) {
             require_once 'Xyster/Container/Exception.php';
-            throw new Xyster_Container_Exception($this->getImplementation()->getName() . ' is not a concrete class');
+            throw new Xyster_Container_Exception($class->getName() . ' is not a concrete class');
         }
     }
     
@@ -88,7 +89,7 @@ abstract class Xyster_Container_Injection_Abstract extends Xyster_Container_Adap
     /**
      * Create default parameters for the given types
      *
-     * @param array $parameters the parameter types (ReflectionClass objects)
+     * @param array $parameters the parameter types (Xyster_Type objects)
      * @return array the array with the default parameters.
      */
     protected function _createDefaultParameters( array $parameters )
@@ -103,17 +104,18 @@ abstract class Xyster_Container_Injection_Abstract extends Xyster_Container_Adap
     /**
      * Instantiate an object with given parameters and respect the accessible flag
      * 
-     * @param ReflectionClass $class the class to construct
+     * @param Xyster_Type $type the class to construct
      * @param array $parameters the parameters for the constructor 
      * @return object the new object
      */
-    protected function _newInstance(ReflectionClass $class, array $parameters = array())
+    protected function _newInstance(Xyster_Type $type, array $parameters = array())
     {
+        $class = $type->getClass();
         return ( $class->getConstructor() ) ?
             $class->newInstanceArgs($parameters) : $class->newInstance();
     }
 
-    protected function _caughtInstantiationException(Xyster_Container_Monitor $monitor, ReflectionClass $class, Exception $e, Xyster_Container_Interface $container)
+    protected function _caughtInstantiationException(Xyster_Container_Monitor $monitor, Xyster_Type $class, Exception $e, Xyster_Container_Interface $container)
     {
         $monitor->instantiationFailed($container, $this, $class, $e);
         require_once 'Xyster/Container/Exception.php';

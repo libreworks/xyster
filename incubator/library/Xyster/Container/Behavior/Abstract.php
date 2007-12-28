@@ -98,7 +98,7 @@ abstract class Xyster_Container_Behavior_Abstract implements Xyster_Container_Be
      * 
      * {@inherit}
      *
-     * @return ReflectionClass the component's implementation class
+     * @return Xyster_Type the component's implementation class
      */
     public function getImplementation()
     {

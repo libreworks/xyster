@@ -86,10 +86,11 @@ final class Xyster_Container_Adapter_Instance extends Xyster_Container_Adapter_A
      * Gets the class of an instance
      *
      * @param string $instance
-     * @return ReflectionClass
+     * @return Xyster_Type
      */
     private function _getInstanceClass( $instance )
     {
-        return is_object($instance) ? new ReflectionClass(get_class($instance)) : null;        
+        require_once 'Xyster/Type.php';
+        return new Xyster_Type(is_object($instance)?get_class($instance):gettype($instance));        
     }
 }

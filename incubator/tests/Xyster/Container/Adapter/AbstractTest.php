@@ -60,7 +60,8 @@ class Xyster_Container_Adapter_AbstractTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $class = new ReflectionClass($this->_class);
+        require_once 'Xyster/Type.php';
+        $class = new Xyster_Type($this->_class);
         $this->_key = $class;
         $this->object = new Xyster_Container_Adapter_AbstractStub($this->_key, $class);
     }
@@ -109,7 +110,7 @@ class Xyster_Container_Adapter_AbstractTest extends PHPUnit_Framework_TestCase
      */
     public function testGetImplementation()
     {
-        $this->assertType('ReflectionClass', $this->object->getImplementation());
+        $this->assertType('Xyster_Type', $this->object->getImplementation());
         $this->assertEquals($this->_class, $this->object->getImplementation()->getName());
     }
 
@@ -146,7 +147,7 @@ class Xyster_Container_Adapter_AbstractTest extends PHPUnit_Framework_TestCase
     public function testIncompatibleTypes()
     {
         $this->setExpectedException('Xyster_Container_Exception');
-        $object = new Xyster_Container_Adapter_AbstractStub(new ReflectionClass('SplObjectStorage'), $this->_key);
+        $object = new Xyster_Container_Adapter_AbstractStub(new Xyster_Type('SplObjectStorage'), $this->_key);
     }
 }
 

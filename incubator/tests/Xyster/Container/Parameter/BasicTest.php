@@ -76,11 +76,11 @@ class Xyster_Container_Parameter_BasicTest extends PHPUnit_Framework_TestCase
     {
         require_once 'Xyster/Container.php';
         $container = new Xyster_Container;
-        $class = new ReflectionClass('TestControllerAction');
+        $class = new Xyster_Type('TestControllerAction');
         $container->addComponent($class);
         require_once 'Zend/Controller/Response/Http.php';
-        $container->addComponent(new ReflectionClass('Zend_Controller_Response_Http'));
-        $constructor = $class->getConstructor(); /* @var $constructor ReflectionMethod */
+        $container->addComponent(new Xyster_Type('Zend_Controller_Response_Http'));
+        $constructor = $class->getClass()->getConstructor(); /* @var $constructor ReflectionMethod */
         $parameters = $constructor->getParameters();
         $parameter = $parameters[1];
         $return = $this->object->isResolvable($container, null, $parameter);
@@ -94,11 +94,11 @@ class Xyster_Container_Parameter_BasicTest extends PHPUnit_Framework_TestCase
     {
         require_once 'Xyster/Container.php';
         $container = new Xyster_Container;
-        $class = new ReflectionClass('TestControllerAction');
+        $class = new Xyster_Type('TestControllerAction');
         $container->addComponent($class);
         require_once 'Zend/Controller/Response/Http.php';
-        $container->addComponent(new ReflectionClass('Zend_Controller_Response_Http'));
-        $constructor = $class->getConstructor(); /* @var $constructor ReflectionMethod */
+        $container->addComponent(new Xyster_Type('Zend_Controller_Response_Http'));
+        $constructor = $class->getClass()->getConstructor(); /* @var $constructor ReflectionMethod */
         $parameters = $constructor->getParameters();
         $parameter = $parameters[1];
         $return = $this->object->resolveInstance($container, null, $parameter);

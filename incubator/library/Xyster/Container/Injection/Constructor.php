@@ -38,7 +38,8 @@ class Xyster_Container_Injection_Constructor extends Xyster_Container_Injection_
     public function getInstance( Xyster_Container_Interface $container )
     {
         $class = $this->getImplementation();
-        $constructor = $class->getConstructor();
+        $classType = $class->getClass();
+        $constructor = $classType->getConstructor();
         $monitor = $this->currentMonitor();
         
         try {

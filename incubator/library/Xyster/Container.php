@@ -157,16 +157,16 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
             $parameters = null;
         }
         if ( $key == null ) {
-            if ( $implementationOrInstance instanceof ReflectionClass ) {
+            if ( $implementationOrInstance instanceof Xyster_Type ) {
                 $key = $implementationOrInstance;
             } else if ( is_object($implementationOrInstance) ) {
-                $key = new ReflectionClass(get_class($implementationOrInstance));
+                $key = new Xyster_Type(get_class($implementationOrInstance));
             } else if ( is_string($implementationOrInstance) ) {
-                $key = new ReflectionClass($implementationOrInstance);
+                $key = new Xyster_Type($implementationOrInstance);
             }
         }
         
-        if ( $implementationOrInstance instanceof ReflectionClass ) {
+        if ( $implementationOrInstance instanceof Xyster_Type ) {
             $tempProps = clone $this->_properties;
             $adapter = $this->_componentFactory->createComponentAdapter($this->_monitor,
                 $tempProps, $key, $implementationOrInstance, $parameters);
@@ -244,7 +244,7 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
         $return = null;
         $adapter = null;
         
-        if ( $componentKeyOrType instanceof ReflectionClass ) {
+        if ( $componentKeyOrType instanceof Xyster_Type ) {
             $adapter = $this->getComponentAdapterByType($componentKeyOrType, null);
         } else {
             $adapter = $this->getComponentAdapter($componentKeyOrType);
@@ -265,11 +265,11 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
      * If the type parameter is supplied, this method returns the components of
      * the specified type. 
      *
-     * @param ReflectionClass $componentType the type to search
+     * @param Xyster_Type $componentType the type to search
      * @return Xyster_Collection_List all the components.
      * @throws Exception if the instantiation of the component fails
      */
-    public function getComponents( ReflectionClass $componentType = null )
+    public function getComponents( Xyster_Type $componentType = null )
     {
         $result = new Xyster_Collection_List;
 
@@ -305,8 +305,8 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
      */
     public function getComponentAdapterByType( $componentType, $componentParameterName = null )
     {
-        if ( ! $componentType instanceof ReflectionClass ) {
-            $componentType = new ReflectionClass($componentType);
+        if ( ! $componentType instanceof Xyster_Type ) {
+            $componentType = new Xyster_Type($componentType);
         }
         
         $adapter = $this->getComponentAdapter($componentType);
@@ -341,7 +341,7 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
      *
      * @return Xyster_Collection_List a fixed collection containing all the adapters inside this container
      */
-    public function getComponentAdapters( ReflectionClass $componentType = null )
+    public function getComponentAdapters( Xyster_Type $componentType = null )
     {
         $list = null;
         
@@ -351,8 +351,7 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
         } else {
             $list = new Xyster_Collection_List;
             foreach( $this->_adapters as $adapter ) {
-                if ( $adapter->getImplementation()->getName() == $componentType->getName() ||
-                    $adapter->getImplementation()->isSubclassOf($componentType) ) {
+                if ( $componentType->isAssignableFrom($adapter->getImplementation()) ) {
                     $list->add($adapter);
                 }
             }

@@ -140,11 +140,11 @@ abstract class Xyster_Container_Injection_Iterative extends Xyster_Container_Inj
      * Gets an instance of the object
      *
      * @param Xyster_Container_Interface $container
-     * @param ReflectionClass $class
+     * @param Xyster_Type $class
      * @param Xyster_Container_Monitor $monitor
      * @return object
      */
-    protected function _getOrMakeInstance( Xyster_Container_Interface $container, ReflectionClass $class, Xyster_Container_Monitor $monitor )
+    protected function _getOrMakeInstance( Xyster_Container_Interface $container, Xyster_Type $class, Xyster_Container_Monitor $monitor )
     {
         $startTime = microtime(true);
         $monitor->instantiating($container, $this, $class);

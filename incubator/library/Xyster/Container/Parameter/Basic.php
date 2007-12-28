@@ -188,10 +188,8 @@ class Xyster_Container_Parameter_Basic implements Xyster_Container_Parameter
             return null;
         }
         
-        $expectedType = $expectedParameter->getClass();
-        /* @var $expectedType ReflectionClass */
-        if ( $expectedType->getName() != $result->getImplementation()->getName() &&
-            !$result->getImplementation()->isSubclassOf($expectedType) ) {
+        $expectedType = new Xyster_Type($expectedParameter->getClass());
+        if ( $result->getImplementation()->isAssignableFrom($expectedType) ) {
             return null;
         }
         

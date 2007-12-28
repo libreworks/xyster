@@ -34,7 +34,7 @@ abstract class Xyster_Container_Adapter_Abstract implements Xyster_Container_Ada
     private $_key;
     
     /**
-     * @var ReflectionClass
+     * @var Xyster_Type
      */
     private $_implementation;
     
@@ -47,7 +47,7 @@ abstract class Xyster_Container_Adapter_Abstract implements Xyster_Container_Ada
      * Creates a new adapter for a key and implementation
      *
      * @param mixed $key
-     * @param mixed $implementation string class name or ReflectionClass
+     * @param mixed $implementation string class name or Xyster_Type
      * @param Xyster_Container_Monitor $monitor
      */
     public function __construct( $key, $implementation, Xyster_Container_Monitor $monitor = null )
@@ -57,10 +57,11 @@ abstract class Xyster_Container_Adapter_Abstract implements Xyster_Container_Ada
             throw new Xyster_Container_Exception('Key cannot be null'); 
         }
         $this->_key = $key;
-        if ( $implementation instanceof ReflectionClass ) {
+        if ( $implementation instanceof Xyster_Type ) {
             $this->_implementation = $implementation;
         } else if ( $implementation !== null ) {
-            $this->_implementation = new ReflectionClass($implementation);
+            require_once 'Xyster/Type.php';
+            $this->_implementation = new Xyster_Type($implementation);
         }
         if ( $monitor === null ) {
             require_once 'Xyster/Container/Monitor/Null.php';
@@ -113,7 +114,7 @@ abstract class Xyster_Container_Adapter_Abstract implements Xyster_Container_Ada
     /**
      * Retrieve the class of the component
      *
-     * @return ReflectionClass the component's implementation class
+     * @return Xyster_Type the component's implementation class
      */
     public function getImplementation()
     {
@@ -144,16 +145,15 @@ abstract class Xyster_Container_Adapter_Abstract implements Xyster_Container_Ada
     }
     
     /**
-     * If the key is a ReflectionClass, checks compatibility with implementation
+     * If the key is a Xyster_Type, checks compatibility with implementation
      *
      */
     protected function _checkTypeCompatibility()
     {
-        if ( $this->_key instanceof ReflectionClass ) {
-            $componentType = $this->_key; /* @var $componentType ReflectionClass */
+        if ( $this->_key instanceof Xyster_Type ) {
+            $componentType = $this->_key; /* @var $componentType Xyster_Type */
             $className = $this->_implementation->getName();
-            if ( $componentType->getName() != $className &&
-                !$componentType->isSubclassOf($this->_implementation) ) {
+            if ( !$componentType->isAssignableFrom($this->_implementation) ) {
                 require_once 'Xyster/Container/Exception.php';
                 throw new Xyster_Container_Exception($className . ' is not a ' . 
                     $componentType->getName());
