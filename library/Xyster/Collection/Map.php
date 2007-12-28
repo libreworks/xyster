@@ -2,35 +2,34 @@
 /**
  * Xyster Framework
  *
- * LICENSE
- *
  * This source file is subject to the new BSD license that is bundled
  * with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
  * http://www.opensource.org/licenses/bsd-license.php
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to xyster@devweblog.org so we can send you a copy immediately.
  *
  * @category  Xyster
  * @package   Xyster_Collection
- * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
+ * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 /**
- * Xyster_Collection_Map_Abstract
+ * @see Xyster_Collection_Map_Abstract
  */
 require_once 'Xyster/Collection/Map/Abstract.php';
 /**
- * Xyster_Collection_Map_Entry
+ * @see Xyster_Collection_Map_Entry
  */
 require_once 'Xyster/Collection/Map/Entry.php';
+/**
+ * @see Xyster_Type
+ */
+require_once 'Xyster/Type.php';
 /**
  * Implementation of a key-based collection
  *
  * @category  Xyster
  * @package   Xyster_Collection
- * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
+ * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 class Xyster_Collection_Map extends Xyster_Collection_Map_Abstract
@@ -106,6 +105,7 @@ class Xyster_Collection_Map extends Xyster_Collection_Map_Abstract
 	    foreach( $this->_items as $entry ) {
 	        $keys->add($entry->getKey());
 	    }
+	    require_once 'Xyster/Collection/Set.php';
 	    return new Xyster_Collection_Set($keys, true);
 	}
 	
@@ -154,11 +154,8 @@ class Xyster_Collection_Map extends Xyster_Collection_Map_Abstract
 	 */
 	public function offsetExists( $key )
 	{
-		if ( !is_object($key) ) {
-		    require_once 'Xyster/Collection/Exception.php';
-			throw new Xyster_Collection_Exception("Only objects can be keys in this map");
-		}
-		return array_key_exists(spl_object_hash($key), $this->_items);
+	    $hash = $this->_hash($key);
+		return array_key_exists($hash, $this->_items);
 	}
 	
 	/**
@@ -170,7 +167,7 @@ class Xyster_Collection_Map extends Xyster_Collection_Map_Abstract
 	public function offsetGet( $key )
 	{
 		return $this->offsetExists($key) ? 
-			$this->_items[spl_object_hash($key)]->getValue() : null;
+			$this->_items[$this->_hash($key)]->getValue() : null;
 	}
 	
 	/**
@@ -184,11 +181,11 @@ class Xyster_Collection_Map extends Xyster_Collection_Map_Abstract
 	{
 		$this->_failIfImmutable();
 		if ( !$this->offsetExists($key) )  {
-			$index = spl_object_hash($key);
+			$index = $this->_hash($key);
 			$entry = new Xyster_Collection_Map_Entry($key, $value);
 			$this->_items[$index] = $entry;
 		} else {
-			$index = spl_object_hash($key);
+			$index = $this->_hash($key);
 			$this->_items[$index]->setValue($value);
 		}
 	}
@@ -203,7 +200,7 @@ class Xyster_Collection_Map extends Xyster_Collection_Map_Abstract
 	{
 		$this->_failIfImmutable();
 		if ( $this->offsetExists($key) ) {
-			unset($this->_items[spl_object_hash($key)]);
+			unset($this->_items[$this->_hash($key)]);
 		}
 	}
 	
@@ -244,5 +241,16 @@ class Xyster_Collection_Map extends Xyster_Collection_Map_Abstract
 	        require_once 'Xyster/Collection/Exception.php';
 			throw new Xyster_Collection_Exception("This collection cannot be changed");
 		} 
+	}
+	
+	/**
+	 * Gets the hash code for a value
+	 *
+	 * @param mixed $value
+	 * @return mixed
+	 */
+	private function _hash( $value )
+	{
+	    return Xyster_Type::hash($value);
 	}
 }

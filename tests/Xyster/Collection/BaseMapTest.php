@@ -135,7 +135,7 @@ class Xyster_Collection_BaseMapTest extends PHPUnit_Framework_TestCase
     }
     protected function _getNewValue()
     {
-        return new Xyster_Collection_Test_Value(md5(rand(0,100)));
+        return new Xyster_Collection_Test_Map_Value(md5(rand(0,100)));
     }
     /**
      * @return Xyster_Collection_Map
@@ -160,6 +160,23 @@ class Xyster_Collection_BaseMapTest extends PHPUnit_Framework_TestCase
  *
  */
 class Xyster_Collection_Test_Key
+{
+    public $foo;
+   
+    public function __construct( $value )
+    {
+        $this->foo = $value;
+    }
+    public function __toString()
+    {
+        return $this->foo;
+    }
+}
+/**
+ * A simple test class for collection items
+ *
+ */
+class Xyster_Collection_Test_Map_Value
 {
     public $foo;
    

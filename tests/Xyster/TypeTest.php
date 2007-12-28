@@ -239,14 +239,22 @@ class Xyster_TypeTest extends PHPUnit_Framework_TestCase
     public function testHash()
     {
         $test = $this->object->getClass();
-        $h = 0;
-        $hexArray = str_split(spl_object_hash($test), 2);
-        foreach( $hexArray as $v ) {
-            $h = 31 * $h + hexdec($v);
-        }
         
         $max = (float)PHP_INT_MAX;
         $min = (float)(0 - PHP_INT_MAX);
+        $h = 0;
+        $hexArray = str_split(spl_object_hash($test), 2);
+        foreach( $hexArray as $v ) {
+            $result = 31 * $h + hexdec($v);
+            if ( $result > $max ) {
+                $h = $result % $max;
+            } else if ( $result < $min ) {
+                $h = 0-(abs($result) % $max);
+            } else {
+                $h = $result;
+            }
+        }
+        
         $h2 = 0.0;
         foreach( $hexArray as $v ) {
             $result = 31 * $h2 + Xyster_Type::hash($v);
@@ -274,7 +282,9 @@ class Xyster_TypeTest extends PHPUnit_Framework_TestCase
                 array(1, new HashTest)
             );
         foreach( $expected as $array ) {
-            $this->assertEquals($array[0], Xyster_Type::hash($array[1]),
+            $hash = Xyster_Type::hash($array[1]);
+            $this->assertType('integer', $hash);
+            $this->assertEquals($array[0], $hash,
                 'Hash for "' . print_r($array[1], true) . '" should be ' . $array[0]);
         }
     }

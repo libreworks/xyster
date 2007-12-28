@@ -339,12 +339,9 @@ class Xyster_Type
             return (int)$object->hashCode();
         }
         
-        $h = 0;
-        foreach( str_split(spl_object_hash($object), 2) as $v ) {
-            $h = 31 * $h + hexdec($v);
-        }
+        $hex = str_split(spl_object_hash($object), 2);
         
-        return $h;
+        return self::hash(array_map('hexdec', $hex));
     }
     
     /**

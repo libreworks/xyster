@@ -2,34 +2,45 @@
 /**
  * Xyster Framework
  *
- * LICENSE
- *
  * This source file is subject to the new BSD license that is bundled
  * with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
  * http://www.opensource.org/licenses/bsd-license.php
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to xyster@devweblog.org so we can send you a copy immediately.
  *
  * @category  Xyster
  * @package   UnitTests
  * @subpackage Xyster_Collection
- * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
+ * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
+if (!defined('PHPUnit_MAIN_METHOD')) {
+    define('PHPUnit_MAIN_METHOD', 'Xyster_Collection_MapTest::main');
+}
 
-/**
- * PHPUnit test case
- */
+require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+
 require_once 'Xyster/Collection/BaseMapTest.php';
+require_once 'Xyster/Collection/Map.php';
+
 /**
  * Test for Xyster_Collection_Map
  *
  */
 class Xyster_Collection_MapTest extends Xyster_Collection_BaseMapTest
 {
+    /**
+     * Runs the test methods of this class.
+     *
+     */
+    public static function main()
+    {
+        require_once 'PHPUnit/TextUI/TestRunner.php';
+
+        $suite  = new PHPUnit_Framework_TestSuite(__CLASS__);
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
+    
     /**
      * Tests the 'containsKey' method
      *
@@ -100,8 +111,10 @@ class Xyster_Collection_MapTest extends Xyster_Collection_BaseMapTest
         $this->assertTrue($c->containsKey($key));
         $this->assertTrue($c->containsValue($value));
         $c->set($key, $this->_getNewValue()); // setting a pre-existing key
-        
-        $this->setExpectedException('Xyster_Collection_Exception');
-        $c->set(123, $value); // invalid key
     }
+}
+
+
+if (PHPUnit_MAIN_METHOD == 'Xyster_Collection_MapTest::main') {
+    Xyster_Collection_MapTest::main();
 }
