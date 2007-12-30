@@ -9,7 +9,7 @@
  *
  * @category  Xyster
  * @package   Xyster_Container
- * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
+ * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
@@ -22,7 +22,7 @@ require_once 'Xyster/Container/Injection/Abstract.php';
  *
  * @category  Xyster
  * @package   Xyster_Container
- * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
+ * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 abstract class Xyster_Container_Injection_Iterative extends Xyster_Container_Injection_Abstract
@@ -63,7 +63,7 @@ abstract class Xyster_Container_Injection_Iterative extends Xyster_Container_Inj
                 $monitor->invoking($container, $this, $member, $componentInstance);
                 $matchingParam = $matchingParameters[$i];
                 /* @var $matchingParam Xyster_Container_Parameter */
-                if ( $matchingParam == null ) {
+                if ( $matchingParam === null ) {
                     continue;
                 }
                 $toInject = $matchingParam->resolveInstance($container, $this, $this->_injectionParameters[$i]);
@@ -99,7 +99,7 @@ abstract class Xyster_Container_Injection_Iterative extends Xyster_Container_Inj
      */
     protected function _getMatchingParameterListForSetters( Xyster_Container_Interface $container )
     {
-        if ( $this->_injectionMembers == null ) {
+        if ( $this->_injectionMembers === null ) {
             $this->_initializeInjectionMembersAndParamLists();
         }
         
@@ -108,13 +108,13 @@ abstract class Xyster_Container_Injection_Iterative extends Xyster_Container_Inj
         $nonMatchingParameterPositions = array();
         $currentParameters = $this->_parameters != null ? $this->_parameters :
             $this->_createDefaultParameters($this->_injectionParameters);
-        
+            
         foreach( $currentParameters as $k => $parameter ) {
             /* @var $parameter Xyster_Container_Parameter */
             $failedDependency = true;
             for( $i=0; $i<count($this->_injectionParameters); $i++ ) {
-                if ( $matchingParameterList->get($i) == null && $parameter->resolveInstance($container, $this, $this->_injectionParameters[$i]) ) {
-                    $matchingParameterList->set($i, $parameter);
+                if ( $parameter->isResolvable($container, $this, $this->_injectionParameters[$i]) ) {
+                    $matchingParameterList->set($k, $parameter);
                     $failedDependency = false;
                     break;
                 }
@@ -135,7 +135,7 @@ abstract class Xyster_Container_Injection_Iterative extends Xyster_Container_Inj
         } else if ( count($nonMatchingParameterPositions) > 0 ) {
             throw new Xyster_Container_Exception('Unmatched parameter positions: ' . implode(',', $nonMatchingParameterPositions));
         }
-            
+        
         return $matchingParameterList->toArray();
     }
     
@@ -174,7 +174,7 @@ abstract class Xyster_Container_Injection_Iterative extends Xyster_Container_Inj
         $this->_injectionMembers = new Xyster_Collection_List;
         
         $parameters = array();
-        foreach( $this->getImplementation()->getMethods() as $method ) {
+        foreach( $this->getImplementation()->getClass()->getMethods() as $method ) {
             /* @var $method ReflectionMethod */
             if ( $method->getNumberOfParameters() == 1 ) {
                 if ( $this->_isInjectorMethod($method) ) {
@@ -183,7 +183,6 @@ abstract class Xyster_Container_Injection_Iterative extends Xyster_Container_Inj
                 }
             }
         }
-        
         $this->_injectionParameters = $parameters;
     }
 

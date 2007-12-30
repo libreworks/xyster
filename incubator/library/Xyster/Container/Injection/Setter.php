@@ -38,7 +38,7 @@ class Xyster_Container_Injection_Setter extends Xyster_Container_Injection_Itera
      * @param Xyster_Container_Monitor $monitor
      * @param string $setterMethodPrefix
      */
-    public function __construct( $componentKey, $componentImplementation, array $parameters, Xyster_Container_Monitor $monitor, $setterMethodPrefix = 'set')
+    public function __construct( $componentKey, $componentImplementation, array $parameters = null, Xyster_Container_Monitor $monitor = null, $setterMethodPrefix = 'set')
     {
         parent::__construct($componentKey, $componentImplementation, $parameters, $monitor);
         $this->_methodPrefix = $setterMethodPrefix;

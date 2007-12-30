@@ -9,7 +9,7 @@
  *
  * @category  Xyster
  * @package   Xyster_Container
- * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
+ * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
@@ -22,7 +22,7 @@ require_once 'Xyster/Container/Injection/SingleMember.php';
  *
  * @category  Xyster
  * @package   Xyster_Container
- * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
+ * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 class Xyster_Container_Injection_Method extends Xyster_Container_Injection_SingleMember
@@ -32,15 +32,15 @@ class Xyster_Container_Injection_Method extends Xyster_Container_Injection_Singl
     /**
      * Creates a methodinjector
      *
-     * @param mixed $componentKey
-     * @param mixed $componentImplementation
+     * @param mixed $key
+     * @param mixed $implementation
      * @param array $parameters
      * @param Xyster_Container_Monitor $monitor
      * @param string $methodName
      */
-    public function __construct( $componentKey, $componentImplementation, array $parameters = null, Xyster_Container_Monitor $monitor, $methodName )
+    public function __construct( $key, $implementation, array $parameters = null, Xyster_Container_Monitor $monitor, $methodName )
     {
-        parent::__construct($componentKey, $componentImplementation, $parameters, $monitor);
+        parent::__construct($key, $implementation, $parameters, $monitor);
         $this->_methodName = $methodName;
     }
     
@@ -59,11 +59,14 @@ class Xyster_Container_Injection_Method extends Xyster_Container_Injection_Singl
         
         try {
             $class = $this->getImplementation();
+            $classType = $class->getClass();
             $monitor->instantiating($container, $this, $class);
             $startTime = microtime(true);
-            $inst = $class->newInstance();
-            $parameters = $this->_getMemberArguments($container, $method);
-            $method->invoke($inst, $parameters);
+            $inst = $classType->newInstance();
+            if ( $method instanceof ReflectionMethod ) {
+                $parameters = $this->_getMemberArguments($container, $method);
+                $method->invokeArgs($inst, $parameters);
+            }
             $monitor->instantiated($container, $this, $class, $inst, $parameters, microtime(true) - $startTime);
             return $inst;
         } catch ( Exception $e ) {
@@ -110,6 +113,7 @@ class Xyster_Container_Injection_Method extends Xyster_Container_Injection_Singl
      */
     protected function _getInjectorMethod()
     {
-        return $this->getImplementation()->getMethod($this->_methodName);
+        $class = $this->getImplementation()->getClass();
+        return $class->hasMethod($this->_methodName) ? $class->getMethod($this->_methodName) : null;
     }
 }
