@@ -166,11 +166,13 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
             }
         }
         
-        $tempProps = clone $this->_properties;
-        $adapter = $this->_componentFactory->createComponentAdapter($this->_monitor,
-            $tempProps, $key, $implementation, $parameters);
-        $this->_throwIfPropertiesLeft($tempProps);
-        $this->_addAdapterInternal($adapter);
+        if ( $implementation instanceof Xyster_Type ) {
+            $tempProps = clone $this->_properties;
+            $adapter = $this->_componentFactory->createComponentAdapter($this->_monitor,
+                $tempProps, $key, $implementation, $parameters);
+            $this->_throwIfPropertiesLeft($tempProps);
+            $this->_addAdapterInternal($adapter);
+        }
         
         return $this;
     }
