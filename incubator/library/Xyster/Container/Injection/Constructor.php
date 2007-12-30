@@ -50,6 +50,7 @@ class Xyster_Container_Injection_Constructor extends Xyster_Container_Injection_
             $monitor->instantiated($container, $this, $class, $inst, $parameters, microtime(true) - $startTime);
             return $inst;
         } catch ( ReflectionException $e ) {
+            echo $e;
             $this->_caughtInstantiationException($monitor, $class, $e, $container);
         }
     }
@@ -62,18 +63,21 @@ class Xyster_Container_Injection_Constructor extends Xyster_Container_Injection_
      */
     public function verify( Xyster_Container_Interface $container )
     {
-        $constructor = $this->getImplementation()->getConstructor();
+        $class = $this->getImplementation()->getClass();
+        $constructor = ( $class ) ? $class->getConstructor() : null;
         /* @var $constructor ReflectionMethod */
-        $parameterTypes = array();
-        foreach( $constructor->getParameters() as $param ) {
-            /* @var $param ReflectionParameter */
-            $parameterTypes[] = $param->getClass();
-        }
-        $currentParameters = $this->_parameters !== null ? $this->_parameters :
-            $this->_createDefaultParameters($parameterTypes);
-        $reflectionParams = $constructor->getParameters();
-        foreach( $currentParameters as $k => $param ) {
-            $param->verify($container, $this, $reflectionParams[$k]);
+        if ( $constructor ) {
+            $reflectionParams = $constructor->getParameters();
+            $parameterTypes = array();
+            foreach( $reflectionParams as $param ) {
+                /* @var $param ReflectionParameter */
+                $parameterTypes[] = $param->getClass();
+            }
+            $currentParameters = $this->_parameters !== null ? $this->_parameters :
+                $this->_createDefaultParameters($parameterTypes);
+            foreach( $currentParameters as $k => $param ) {
+                $param->verify($container, $this, $reflectionParams[$k]);
+            }
         }
     }
     

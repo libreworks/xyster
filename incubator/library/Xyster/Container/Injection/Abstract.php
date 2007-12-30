@@ -37,7 +37,7 @@ abstract class Xyster_Container_Injection_Abstract extends Xyster_Container_Adap
      * @param array $parameters
      * @param Xyster_Container_Monitor $monitor
      */
-    public function __construct( $key, $implementation, array $parameters = null, Xyster_Container_Monitor $monitor )
+    public function __construct( $key, $implementation, array $parameters = null, Xyster_Container_Monitor $monitor = null )
     {
         parent::__construct($key, $implementation, $monitor);
         
@@ -95,6 +95,7 @@ abstract class Xyster_Container_Injection_Abstract extends Xyster_Container_Adap
     {
         $componentParameters = array();
         foreach( $parameters as $parameter ) {
+            require_once 'Xyster/Container/Parameter/Basic.php';
             $componentParameters[] = Xyster_Container_Parameter_Basic::standard();
         }
         return $componentParameters;

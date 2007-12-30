@@ -112,6 +112,9 @@ class Xyster_Container_Parameter_Basic implements Xyster_Container_Parameter
      */
     public function verify(Xyster_Container_Interface $container, Xyster_Container_Adapter $adapter = null, ReflectionParameter $expectedParameter)
     {
+        if ( $expectedParameter->allowsNull() ) {
+            return;
+        }
         $adapter = $this->_resolveAdapter($container, $adapter, $expectedParameter);
         if ( $adapter == null ) {
             require_once 'Xyster/Container/Exception.php';
@@ -130,8 +133,13 @@ class Xyster_Container_Parameter_Basic implements Xyster_Container_Parameter
      */
     protected function _getTargetAdapter( Xyster_Container_Interface $container, ReflectionParameter $expectedParameter, Xyster_Container_Adapter $excludeAdapter = null )
     {
-        $expectedType = ($expectedParameter->isArray())
-            ? new Xyster_Type('array') : new Xyster_Type($expectedParameter->getClass());
+        if ( $expectedParameter->isArray() ) {
+            $expectedType = new Xyster_Type('array');
+        } else if ( $expectedParameter->getClass() ) {
+            $expectedType = new Xyster_Type($expectedParameter->getClass());
+        } else {
+            $expectedType = null;
+        }
 
         if ( $this->_key !== null ) {
             return $container->getComponentAdapter($this->_key);
@@ -189,9 +197,15 @@ class Xyster_Container_Parameter_Basic implements Xyster_Container_Parameter
             return null;
         }
         
-        $expectedType = ($expectedParameter->isArray())
-            ? new Xyster_Type('array') : new Xyster_Type($expectedParameter->getClass());
-        if ( !$expectedType->isAssignableFrom($result->getImplementation()) ) {
+        if ( $expectedParameter->isArray() ) {
+            $expectedType = new Xyster_Type('array');
+        } else if ( $expectedParameter->getClass() ) {
+            $expectedType = new Xyster_Type($expectedParameter->getClass());
+        } else {
+            $expectedType = null;
+        }
+        
+        if ( $expectedType && !$expectedType->isAssignableFrom($result->getImplementation()) ) {
             return null;
         }
         return $result;

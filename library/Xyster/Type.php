@@ -123,7 +123,7 @@ class Xyster_Type
         }
         /* @var $class ReflectionClass */
         return $this->_type == $name ||
-            ($class && $class->isSubclassOf($this->_class));  
+            ($class && $this->_class && $class->isSubclassOf($this->_class));  
     }
     
     /**
