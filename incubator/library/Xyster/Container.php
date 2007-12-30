@@ -145,41 +145,62 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
      * 
      * {@inherit}
      *
-     * @param mixed $implementationOrInstance the component's implementation class or an instance of the compoent
+     * @param mixed $implementation the component's implementation class
      * @param mixed $key a key unique within the container that identifies the component
      * @param mixed $parameters the parameters that gives hints about what arguments to pass
      * @return Xyster_Container provides a fluent interface
      * @throws Xyster_Container_Exception if registration of the component fails
      */
-    public function addComponent($implementationOrInstance, $key = null, array $parameters = null)
+    public function addComponent($implementation, $key = null, array $parameters = null)
     {
         if ( !count($parameters) ) {
             $parameters = null;
         }
         if ( $key == null ) {
             require_once 'Xyster/Type.php';
-            if ( $implementationOrInstance instanceof Xyster_Type ) {
-                $key = $implementationOrInstance;
-            } else if ( is_object($implementationOrInstance) ) {
-                $key = new Xyster_Type(get_class($implementationOrInstance));
-            } else if ( is_string($implementationOrInstance) ) {
-                $key = new Xyster_Type($implementationOrInstance);
-                $implementationOrInstance = $key;
+            if ( $implementation instanceof Xyster_Type ) {
+                $key = $implementation;
+            } else if ( is_string($implementation) || $implementation instanceof ReflectionClass ) {
+                $key = new Xyster_Type($implementation);
+                $implementation = $key;
             }
         }
         
-        if ( $implementationOrInstance instanceof Xyster_Type ) {
-            $tempProps = clone $this->_properties;
-            $adapter = $this->_componentFactory->createComponentAdapter($this->_monitor,
-                $tempProps, $key, $implementationOrInstance, $parameters);
-            $this->_throwIfPropertiesLeft($tempProps);
-            $this->_addAdapterInternal($adapter);
-        } else {
-            require_once 'Xyster/Container/Adapter/Instance.php';
-            $adapter = new Xyster_Container_Adapter_Instance($key,
-                $implementationOrInstance, $this->_monitor);
-            $this->addAdapter($adapter, $this->_properties);
+        $tempProps = clone $this->_properties;
+        $adapter = $this->_componentFactory->createComponentAdapter($this->_monitor,
+            $tempProps, $key, $implementation, $parameters);
+        $this->_throwIfPropertiesLeft($tempProps);
+        $this->_addAdapterInternal($adapter);
+        
+        return $this;
+    }
+    
+    /**
+     * Register a component
+     * 
+     * {@inherit}
+     *
+     * @param mixed $instance an instance of the compoent
+     * @param mixed $key a key unique within the container that identifies the component
+     * @param mixed $parameters the parameters that gives hints about what arguments to pass
+     * @return Xyster_Container provides a fluent interface
+     * @throws Xyster_Container_Exception if registration of the component fails
+     */
+    public function addComponentInstance( $instance, $key = null, array $parameters = null)
+    {
+        if ( !count($parameters) ) {
+            $parameters = null;
         }
+        if ( $key === null ) {
+            require_once 'Xyster/Type.php';
+            $key = new Xyster_Type(is_object($instance)
+                ? get_class($instance) : gettype($instance));
+        }
+        
+        require_once 'Xyster/Container/Adapter/Instance.php';
+        $adapter = new Xyster_Container_Adapter_Instance($key, $instance,
+            $this->_monitor);
+        $this->addAdapter($adapter, $this->_properties);
         
         return $this;
     }

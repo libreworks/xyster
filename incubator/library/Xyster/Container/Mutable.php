@@ -63,14 +63,45 @@ interface Xyster_Container_Mutable extends Xyster_Container_Interface
      * constructed with the no-arg constructor, use a zero length Parameter
      * array.
      *
-     * @param mixed $implementationOrInstance the component's implementation class or an intance of the compoent
+     * @param mixed $implementationOrInstance the component's implementation class
      * @param mixed $key a key unique within the container that identifies the component
      * @param mixed $parameters the parameters that gives hints about what arguments to pass
      * @return Xyster_Container_Mutable provides a fluent interface
      * @throws Xyster_Container_Exception if registration of the component fails
      */
-    function addComponent($implementationOrInstance, $key = null, array $parameters = null);
+    function addComponent($implementation, $key = null, array $parameters = null);
 
+    /**
+     * Register a component instance
+     * 
+     * This method creates specific instructions with which components
+     * and/or constants to provide as constructor arguments.
+     * 
+     * If the key is null, the implementation class will be used as a key. 
+     * 
+     * These "directives" are provided through an array of Parameter objects.
+     * Parameter[0] correspondes to the first constructor argument,
+     * Parameter[N] corresponds to the  N+1th constructor argument.
+     * 
+     * Partial Autowiring: If you have two constructor args to match and you
+     * only wish to specify one of the constructors and let the Container wire
+     * the other one, you can use as parameters:
+     * <code>new ComponentParameter(), new ComponentParameter("someService")</code>
+     * The constructor for the component parameter indicates auto-wiring should
+     * take place for that parameter.
+     * 
+     * Force No-Arg constructor usage: If you wish to force a component to be
+     * constructed with the no-arg constructor, use a zero length Parameter
+     * array.
+     *
+     * @param mixed $instance an instance of the component
+     * @param mixed $key a key unique within the container that identifies the component
+     * @param array $parameters the parameters that gives hints about what arguments to pass
+     * @return Xyster_Container_Mutable provides a fluent interface
+     * @throws Xyster_Container_Exception if registration of the component fails
+     */
+    function addComponentInstance($instance, $key = null, array $parameters = null);
+    
     /**
      * Register a config item
      *
