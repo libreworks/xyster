@@ -47,12 +47,12 @@ class Xyster_Type
         if ( $type instanceof ReflectionClass ) {
             $type = $type->getName();
         }
-        if ( !in_array($type, self::$_types) && !class_exists($type, false) ) {
+        if ( !in_array($type, self::$_types) && !class_exists($type, false) && !interface_exists($type, false) ) {
             require_once 'Zend/Exception.php';
             throw new Zend_Exception('Invalid type: ' . $type);
         }
         $this->_type = $type;
-        if ( class_exists($type, false) ) {
+        if ( class_exists($type, false) || interface_exists($type, false) ) {
             $this->_class = self::_getReflectionClass($type);
         }
     }

@@ -157,12 +157,14 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
             $parameters = null;
         }
         if ( $key == null ) {
+            require_once 'Xyster/Type.php';
             if ( $implementationOrInstance instanceof Xyster_Type ) {
                 $key = $implementationOrInstance;
             } else if ( is_object($implementationOrInstance) ) {
                 $key = new Xyster_Type(get_class($implementationOrInstance));
             } else if ( is_string($implementationOrInstance) ) {
                 $key = new Xyster_Type($implementationOrInstance);
+                $implementationOrInstance = $key;
             }
         }
         
@@ -275,7 +277,7 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
         $adapterToInstanceMap = new Xyster_Collection_Map;
         foreach( $this->_adapters as $adapter ) {
             /* @var $adapter Xyster_Container_Adapter */
-            if ( $componentType == null || $adapter->getImplementation()->isSubclassOf($componentType) ) {
+            if ( $componentType == null || $componentType->isAssignableFrom($adapter->getImplementation()) ) {
                 $instance = $this->_getLocalInstance($adapter);
                 $result->add($instance);
             }
@@ -318,7 +320,7 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
             } else {
                 if ( $componentParameterName != null ) {
                     $ca = $this->getComponentAdapter($componentParameterName);
-                    if ( $ca != null && $ca->getImplementation()->isSubclassOf($componentType) ) {
+                    if ( $ca != null && $componentType->isAssignableFrom($ca->getImplementation()) ) {
                         $adapter = $ca;
                     }
                 } else {
