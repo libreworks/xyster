@@ -28,6 +28,7 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once 'Xyster/Container/Adapter/AbstractTest.php';
 require_once 'Xyster/Container/Adapter/InstanceTest.php';
+require_once 'Xyster/Container/Behavior/AbstractTest.php';
 require_once 'Xyster/Container/Parameter/BasicTest.php';
 require_once 'Xyster/Container/Parameter/ConstantTest.php';
 
@@ -45,6 +46,7 @@ class Xyster_Container_AllTests
         $suite = new PHPUnit_Framework_TestSuite('Xyster Framework - Xyster_Container');
         $suite->addTestSuite('Xyster_Container_Adapter_AbstractTest');
         $suite->addTestSuite('Xyster_Container_Adapter_InstanceTest');
+        $suite->addTestSuite('Xyster_Container_Behavior_AbstractTest');
         $suite->addTestSuite('Xyster_Container_Parameter_BasicTest');
         $suite->addTestSuite('Xyster_Container_Parameter_ConstantTest');
         return $suite;

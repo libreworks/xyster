@@ -18,6 +18,10 @@
  */
 require_once 'Xyster/Container/Behavior.php';
 /**
+ * @see Xyster_Container_Monitor_Strategy
+ */
+require_once 'Xyster/Container/Monitor/Strategy.php';
+/**
  * Component adapter which decorates another adapter
  *
  * This adapter supports a monitor strategoy and will propagate change of
@@ -28,7 +32,7 @@ require_once 'Xyster/Container/Behavior.php';
  * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-abstract class Xyster_Container_Behavior_Abstract implements Xyster_Container_Behavior
+abstract class Xyster_Container_Behavior_Abstract implements Xyster_Container_Behavior, Xyster_Container_Monitor_Strategy
 {
     /**
      * @var Xyster_Container_Adapter
