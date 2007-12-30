@@ -39,7 +39,7 @@ class Xyster_Container_Injection_Constructor extends Xyster_Container_Injection_
     {
         $class = $this->getImplementation();
         $classType = $class->getClass();
-        $constructor = $classType->getConstructor();
+        $constructor = ($classType) ? $classType->getConstructor() : null;
         $monitor = $this->currentMonitor();
         
         try {

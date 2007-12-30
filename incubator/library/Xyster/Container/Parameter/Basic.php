@@ -130,8 +130,9 @@ class Xyster_Container_Parameter_Basic implements Xyster_Container_Parameter
      */
     protected function _getTargetAdapter( Xyster_Container_Interface $container, ReflectionParameter $expectedParameter, Xyster_Container_Adapter $excludeAdapter = null )
     {
-        $expectedType = $expectedParameter->getClass();
-        
+        $expectedType = ($expectedParameter->isArray())
+            ? new Xyster_Type('array') : new Xyster_Type($expectedParameter->getClass());
+
         if ( $this->_key !== null ) {
             return $container->getComponentAdapter($this->_key);
         } else if ( $excludeAdapter === null ) {
@@ -188,11 +189,11 @@ class Xyster_Container_Parameter_Basic implements Xyster_Container_Parameter
             return null;
         }
         
-        $expectedType = new Xyster_Type($expectedParameter->getClass());
-        if ( $result->getImplementation()->isAssignableFrom($expectedType) ) {
+        $expectedType = ($expectedParameter->isArray())
+            ? new Xyster_Type('array') : new Xyster_Type($expectedParameter->getClass());
+        if ( !$expectedType->isAssignableFrom($result->getImplementation()) ) {
             return null;
         }
-        
         return $result;
     }
 }

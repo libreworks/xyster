@@ -106,14 +106,20 @@ class Xyster_Container_Parameter_BasicTest extends PHPUnit_Framework_TestCase
     }
     
     /**
-     * @todo Implement testResolveInstanceArray().
+     * Tests the 'resolveInstance' method for an array 
      */
     public function testResolveInstanceArray()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        require_once 'Xyster/Container.php';
+        $container = new Xyster_Container;
+        $class = new Xyster_Type('TestControllerAction');
+        $container->addComponent($class);
+        $container->addComponent(new Xyster_Type('array'));
+        $constructor = $class->getClass()->getConstructor(); /* @var $constructor ReflectionMethod */
+        $parameters = $constructor->getParameters();
+        $parameter = $parameters[2];
+        $return = $this->object->resolveInstance($container, null, $parameter);
+        $this->assertType('array', $return);
     }
     
     /**

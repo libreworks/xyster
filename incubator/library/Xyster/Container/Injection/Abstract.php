@@ -61,8 +61,7 @@ abstract class Xyster_Container_Injection_Abstract extends Xyster_Container_Adap
     protected function _checkConcrete()
     {
         $class = $this->getImplementation()->getClass();
-        $isAbstract = $class->isAbstract();
-        if ( $class->isInterface() || $isAbstract ) {
+        if ( $class instanceof ReflectionClass && ( $class->isInterface() || $class->isAbstract() ) ) {
             require_once 'Xyster/Container/Exception.php';
             throw new Xyster_Container_Exception($class->getName() . ' is not a concrete class');
         }
@@ -111,8 +110,12 @@ abstract class Xyster_Container_Injection_Abstract extends Xyster_Container_Adap
     protected function _newInstance(Xyster_Type $type, array $parameters = array())
     {
         $class = $type->getClass();
-        return ( $class->getConstructor() ) ?
-            $class->newInstanceArgs($parameters) : $class->newInstance();
+        if ( $type->getName() == 'array' ) {
+            return array();
+        } else {
+            return ( $class->getConstructor() ) ?
+                $class->newInstanceArgs($parameters) : $class->newInstance();
+        }
     }
 
     protected function _caughtInstantiationException(Xyster_Container_Monitor $monitor, Xyster_Type $class, Exception $e, Xyster_Container_Interface $container)

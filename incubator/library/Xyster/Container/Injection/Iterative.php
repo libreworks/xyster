@@ -49,12 +49,14 @@ abstract class Xyster_Container_Injection_Iterative extends Xyster_Container_Inj
     {
         $matchingParameters = $this->_getMatchingParameterListForSetters($container);
         
-        $class = $this->getImplementation();
+        $type = $this->getImplementation();
+        $class = $type->getClass();
         $constructor = $class->getConstructor();
         $monitor = $this->currentMonitor();
-        $componentInstance = $this->_getOrMakeInstance($container, $class, $monitor);
+        $componentInstance = $this->_getOrMakeInstance($container, $type, $monitor);
         $member = null;
         $injected = array();
+        
         try {
             for( $i=0; $i<count($this->_injectionMembers); $i++ ) {
                 $member = $this->_injectionMembers->get($i);
@@ -69,6 +71,7 @@ abstract class Xyster_Container_Injection_Iterative extends Xyster_Container_Inj
                 $this->_injectIntoMember($member, $componentInstance, $toInject);
                 $injected[] = $toInject;
             }
+            return $componentInstance;
         } catch ( Exception $e ) {
             $this->_caughtInvocationTargetException($monitor, $member, $componentInstance, $e);
         }

@@ -251,8 +251,7 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
         }
         
         $return = $adapter == null ? null : $this->_getInstance($adapter);
-        
-        if ( $return == null ) {
+        if ( $return === null ) {
             $return = $this->_monitor->noComponentFound($this, $componentKeyOrType);
         }
         
@@ -312,7 +311,6 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
         $adapter = $this->getComponentAdapter($componentType);
         if ( $adapter == null ) {
             $found = $this->getComponentAdapters($componentType);
-            
             if ( $found->isEmpty() ) {
                 return null;
             } else if ( count($found) == 1 ) {

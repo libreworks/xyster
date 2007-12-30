@@ -175,14 +175,17 @@ class Xyster_Container_Behavior_PropertyApplicator extends Xyster_Container_Beha
      * @param ReflectionClass $class
      * @return array an array full of ReflectionMethod objects
      */
-    protected function _getSetters(ReflectionClass $class)
+    protected function _getSetters(Xyster_Type $type)
     {
+        $class = $type->getClass();
         $result = array();
-        $methods = $class->getMethods();
-        foreach( $methods as $method ) {
-            /* @var $method ReflectionMethod */
-            if ( $this->_isSetter($method)) {
-                $result[ $this->_getPropertyName($method) ] = $method;
+        if ( $class instanceof ReflectionClass ) {
+            $methods = $class->getMethods();
+            foreach( $methods as $method ) {
+                /* @var $method ReflectionMethod */
+                if ( $this->_isSetter($method)) {
+                    $result[ $this->_getPropertyName($method) ] = $method;
+                }
             }
         }
         return $result;
