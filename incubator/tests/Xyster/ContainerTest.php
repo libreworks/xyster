@@ -2,20 +2,15 @@
 /**
  * Xyster Framework
  *
- * LICENSE
- *
  * This source file is subject to the new BSD license that is bundled
  * with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
  * http://www.opensource.org/licenses/bsd-license.php
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to xyster@devweblog.org so we can send you a copy immediately.
  *
  * @category  Xyster
  * @package   Xyster_Application
  * @subpackage   UnitTests
- * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
+ * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
@@ -67,7 +62,7 @@ class Xyster_ContainerTest extends PHPUnit_Framework_TestCase
      */
     public function testAccept()
     {
-        $this->object->addComponent(new ArrayObject);
+        $this->object->addComponentInstance(new ArrayObject);
         require_once 'Xyster/Container/Visitor/Mock.php';
         $visitor = new Xyster_Container_Visitor_Mock;
         $this->object->accept($visitor);
@@ -109,7 +104,7 @@ class Xyster_ContainerTest extends PHPUnit_Framework_TestCase
     public function testAddComponentInstance()
     {
         $instance = new ArrayObject;
-        $return = $this->object->addComponent($instance);
+        $return = $this->object->addComponentInstance($instance);
         $this->assertSame($this->object, $return);
         $key = new Xyster_Type('ArrayObject');
         $adapter = $this->object->getComponentAdapterByType($key);

@@ -9,7 +9,7 @@
  *
  * @category  Xyster
  * @package   Xyster_Container
- * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
+ * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
@@ -26,7 +26,7 @@ require_once 'Xyster/Collection/Map/String.php';
  *
  * @category  Xyster
  * @package   Xyster_Container
- * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
+ * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 class Xyster_Container_Features
@@ -153,7 +153,7 @@ class Xyster_Container_Features
         if ( !isset(self::$_features[$featuresKey]) ) {
             $map = new Xyster_Collection_Map_String;
             $map->set($key, $value);
-            self::$_features[$featuresKey] = $map;//Xyster_Collection::fixedMap($map); 
+            self::$_features[$featuresKey] = Xyster_Collection::fixedMap($map); 
         }
         return self::$_features[$featuresKey];
     }

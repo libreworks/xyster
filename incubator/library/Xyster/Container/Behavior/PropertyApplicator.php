@@ -9,7 +9,7 @@
  *
  * @category  Xyster
  * @package   Xyster_Container
- * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
+ * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
@@ -22,7 +22,7 @@ require_once 'Xyster/Container/Behavior/Abstract.php';
  * 
  * @category  Xyster
  * @package   Xyster_Container
- * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
+ * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 class Xyster_Container_Behavior_PropertyApplicator extends Xyster_Container_Behavior_Abstract
@@ -135,7 +135,6 @@ class Xyster_Container_Behavior_PropertyApplicator extends Xyster_Container_Beha
      * @param mixed $componentInstance the component that we're looking to provide the setter to
      * @param Xyster_Container_Interface $container
      * @return object the final converted object that can be used in the setter.
-     * @todo check working state
      */
     protected function _getSetterParameter( $propertyName, $propertyValue, $componentInstance, Xyster_Container_Interface $container )
     {
@@ -153,12 +152,12 @@ class Xyster_Container_Behavior_PropertyApplicator extends Xyster_Container_Beha
 
         $convertedValue = $propertyValue;
         
-        $givenParameterClass = is_object($propertyValue) ?
-            get_class($propertyValue) : null;
-        
-        if ( $convertedValue == null && $setterParameter != null ) {
-            if ( $givenParameterClass == $setterParameter->getName() || 
-                is_subclass_of($givenParameterClass, $setterParameter->getName()) ) {
+        if ( $convertedValue === null && $setterParameter !== null ) {
+            $givenParameterClass = is_object($propertyValue) ?
+                get_class($propertyValue) : gettype($propertyValue);
+            require_once 'Xyster/Type.php';
+            $setterParameterType = new Xyster_Type($setterParameter);
+            if ( $setterParameterType->isAssignableFrom($givenParameterClass) ) {
                 $convertedValue = $propertyValue;
             } else {
                 throw new Xyster_Container_Exception("Setter: " . $setter->getName() . " for addComponent: "

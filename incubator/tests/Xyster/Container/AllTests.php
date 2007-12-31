@@ -10,7 +10,7 @@
  * @category  Xyster
  * @package   UnitTests
  * @subpackage Xyster_Container
- * @copyright Copyright (c) 2007 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
@@ -26,6 +26,7 @@ require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHe
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
+require_once 'Xyster/Container/FeaturesTest.php';
 require_once 'Xyster/Container/Adapter/AbstractTest.php';
 require_once 'Xyster/Container/Adapter/InstanceTest.php';
 require_once 'Xyster/Container/Behavior/AbstractTest.php';
@@ -45,6 +46,7 @@ class Xyster_Container_AllTests
     public static function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('Xyster Framework - Xyster_Container');
+        $suite->addTestSuite('Xyster_Container_FeaturesTest');
         $suite->addTestSuite('Xyster_Container_Adapter_AbstractTest');
         $suite->addTestSuite('Xyster_Container_Adapter_InstanceTest');
         $suite->addTestSuite('Xyster_Container_Behavior_AbstractTest');
