@@ -31,6 +31,7 @@ require_once 'Xyster/Container/Adapter/AbstractTest.php';
 require_once 'Xyster/Container/Adapter/InstanceTest.php';
 require_once 'Xyster/Container/Behavior/AbstractTest.php';
 require_once 'Xyster/Container/Injection/ConstructorTest.php';
+require_once 'Xyster/Container/Injection/MethodTest.php';
 require_once 'Xyster/Container/Injection/SetterTest.php';
 require_once 'Xyster/Container/Parameter/BasicTest.php';
 require_once 'Xyster/Container/Parameter/ConstantTest.php';
@@ -52,6 +53,7 @@ class Xyster_Container_AllTests
         $suite->addTestSuite('Xyster_Container_Adapter_InstanceTest');
         $suite->addTestSuite('Xyster_Container_Behavior_AbstractTest');
         $suite->addTestSuite('Xyster_Container_Injection_ConstructorTest');
+        $suite->addTestSuite('Xyster_Container_Injection_MethodTest');
         $suite->addTestSuite('Xyster_Container_Injection_SetterTest');
         $suite->addTestSuite('Xyster_Container_Parameter_BasicTest');
         $suite->addTestSuite('Xyster_Container_Parameter_ConstantTest');

@@ -38,7 +38,7 @@ class Xyster_Container_Injection_Method extends Xyster_Container_Injection_Singl
      * @param Xyster_Container_Monitor $monitor
      * @param string $methodName
      */
-    public function __construct( $key, $implementation, array $parameters = null, Xyster_Container_Monitor $monitor, $methodName )
+    public function __construct( $key, $implementation, array $parameters = null, Xyster_Container_Monitor $monitor = null, $methodName = 'inject' )
     {
         parent::__construct($key, $implementation, $parameters, $monitor);
         $this->_methodName = $methodName;
