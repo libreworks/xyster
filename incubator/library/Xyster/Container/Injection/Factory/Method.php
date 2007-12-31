@@ -9,7 +9,7 @@
  *
  * @category  Xyster
  * @package   Xyster_Container
- * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
+ * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
@@ -26,7 +26,7 @@ require_once 'Xyster/Container/Injection/Method.php';
  *
  * @category  Xyster
  * @package   Xyster_Container
- * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
+ * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 class Xyster_Container_Injection_Factory_Method implements Xyster_Container_Injection_Factory
@@ -58,8 +58,7 @@ class Xyster_Container_Injection_Factory_Method implements Xyster_Container_Inje
      */
     public function createComponentAdapter(Xyster_Container_Monitor $monitor, Xyster_Collection_Map_Interface $properties, $key, $implementation, $parameters)
     {
-        return new Xyster_Container_Injection_Method($key,
-            $implementation, $parameters, $monitor,
-            $this->_injectionMethodName);
+        return new Xyster_Container_Injection_Method($key, $implementation,
+            $parameters, $monitor, $this->_injectionMethodName);
     }
 }
