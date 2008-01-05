@@ -200,12 +200,11 @@ class Xyster_Container_Parameter_Basic implements Xyster_Container_Parameter
             return null;
         }
         
+        $expectedType = null;
         if ( $expectedParameter->isArray() ) {
             $expectedType = new Xyster_Type('array');
         } else if ( $expectedParameter->getClass() ) {
             $expectedType = new Xyster_Type($expectedParameter->getClass());
-        } else {
-            $expectedType = null;
         }
         
         if ( $expectedType && !$expectedType->isAssignableFrom($result->getImplementation()) ) {

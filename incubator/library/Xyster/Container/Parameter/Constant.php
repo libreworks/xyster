@@ -94,7 +94,7 @@ class Xyster_Container_Parameter_Constant implements Xyster_Container_Parameter
     public function verify( Xyster_Container_Interface $container, Xyster_Container_Adapter $adapter, ReflectionParameter $expectedParameter )
     {
         $expectedType = $expectedParameter->getClass();
-        if ( !$this->_checkPrimitive($expectedParameter) && !$expectedType->isInstance($this->_value) ) {
+        if ( !$this->_checkPrimitive($expectedParameter) && ( !is_object($this->_value) || !$expectedType->isInstance($this->_value) ) ) {
             require_once 'Xyster/Container/Exception.php';
             throw new Xyster_Container_Exception($expectedType->getName() . " is not an instance of the value for this constant");
         }

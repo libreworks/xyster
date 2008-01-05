@@ -106,6 +106,25 @@ class Xyster_Container_Parameter_BasicTest extends PHPUnit_Framework_TestCase
     }
     
     /**
+     * Tests the 'resolveInstance' method with a null return
+     *
+     */
+    public function testResolveInstanceNull()
+    {
+        require_once 'Xyster/Container.php';
+        $container = new Xyster_Container;
+        $class = new Xyster_Type('TestControllerAction');
+        $container->addComponent($class);
+        require_once 'Zend/Controller/Response/Http.php';
+        $container->addComponent(new Xyster_Type('Zend_Controller_Response_Http'));
+        $constructor = $class->getClass()->getConstructor(); /* @var $constructor ReflectionMethod */
+        $parameters = $constructor->getParameters();
+        $parameter = $parameters[0];
+        $return = $this->object->resolveInstance($container, null, $parameter);
+        $this->assertNull($return);
+    }
+    
+    /**
      * Tests the 'resolveInstance' method for an array 
      */
     public function testResolveInstanceArray()
@@ -134,14 +153,21 @@ class Xyster_Container_Parameter_BasicTest extends PHPUnit_Framework_TestCase
     }
     
     /**
-     * @todo Implement testVerify().
+     * Test a fail verify call
      */
-    public function testVerify()
+    public function testVerifyFail()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        require_once 'Xyster/Container.php';
+        $container = new Xyster_Container;
+        $class = new Xyster_Type('TestControllerAction');
+        $container->addComponent($class);
+        require_once 'Zend/Controller/Response/Http.php';
+        $container->addComponent(new Xyster_Type('Zend_Controller_Response_Http'));
+        $constructor = $class->getClass()->getConstructor(); /* @var $constructor ReflectionMethod */
+        $parameters = $constructor->getParameters();
+        $parameter = $parameters[0];
+        $this->setExpectedException('Xyster_Container_Exception');
+        $this->object->verify($container, null, $parameter);
     }
 }
 

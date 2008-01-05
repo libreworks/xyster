@@ -117,6 +117,24 @@ class Xyster_Container_Parameter_ConstantTest extends PHPUnit_Framework_TestCase
         $parameter = $parameters[0];
         $this->object->verify($container, $adapter, $parameter);
     }
+    
+    /**
+     * Tests the 'verify' method to fail
+     *
+     */
+    public function testVerifyFail()
+    {
+        require_once 'Xyster/Container.php';
+        $container = new Xyster_Container;
+        require_once 'Xyster/Collection/Map.php';
+        $key = new Xyster_Type('Xyster_Collection_Map');
+        $container->addComponent($key);
+        $adapter = $container->getComponentAdapter($key);
+        $parameters = $key->getClass()->getConstructor()->getParameters();
+        $parameter = $parameters[0];
+        $this->setExpectedException('Xyster_Container_Exception');
+        $this->object->verify($container, $adapter, $parameter);
+    }
 }
 
 // Call Xyster_Container_Parameter_ConstantTest::main() if this source file is executed directly.
