@@ -99,6 +99,9 @@ class Xyster_Container_Parameter_Basic implements Xyster_Container_Parameter
         if ( $adapter !== null ) {
             return $container->getComponent($adapter->getKey());
         }
+        if ( $expectedParameter->isDefaultValueAvailable() ) {
+            return $expectedParameter->getDefaultValue();
+        }
         return null;
     }
     

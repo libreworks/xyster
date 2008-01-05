@@ -24,6 +24,7 @@ require_once "PHPUnit/Framework/TestSuite.php";
 require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
 require_once 'Xyster/Container.php';
+require_once 'Xyster/Container/Features.php';
 
 /**
  * Test class for Xyster_Container.
@@ -114,14 +115,26 @@ class Xyster_ContainerTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testChange().
+     * Tests the 'addConfig' method
+     *
+     */
+    public function testAddConfig()
+    {
+        $key = 'uri';
+        $value = 'http://localhost';
+        $this->object->addConfig($key, $value);
+        $this->assertSame($value, $this->object->getComponent('uri'));
+    }
+    
+    /**
+     * Tests the 'change' method
      */
     public function testChange()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $feature = Xyster_Container_Features::SDI();
+        $expected = new Xyster_Collection_Map_String($feature);
+        $this->object->change($feature);
+        $this->assertAttributeEquals($expected, '_properties', $this->object);
     }
 
     /**
@@ -129,6 +142,8 @@ class Xyster_ContainerTest extends PHPUnit_Framework_TestCase
      */
     public function testChangeMonitor()
     {
+        $this->object->addComponent('ArrayObject'); // to put adapters in the container
+        
         require_once 'Xyster/Container/Monitor/Null.php';
         $monitor = new Xyster_Container_Monitor_Null;
         $this->object->changeMonitor($monitor);
@@ -144,25 +159,30 @@ class Xyster_ContainerTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testGetComponent().
+     * Tests the 'getComponent' method
      */
     public function testGetComponent()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $type = new Xyster_Type('SplObjectStorage');
+        $this->object->addComponent($type, 'objstrg');
+        
+        $this->assertType('SplObjectStorage', $this->object->getComponent($type));
+        $this->assertType('SplObjectStorage', $this->object->getComponent('objstrg'));
+        $this->assertNull($this->object->getComponent('nonexist'));
+        
     }
 
     /**
-     * @todo Implement testGetComponents().
+     * Tests the 'getComponents' method
      */
     public function testGetComponents()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->object->addComponent('SplObjectStorage');
+        
+        $components = $this->object->getComponents();
+        $this->assertSame(1, count($components));
+        $this->assertType('Xyster_Collection_List_Interface', $components);
+        $this->assertType('SplObjectStorage', $components[0]);
     }
 
     /**
@@ -181,10 +201,17 @@ class Xyster_ContainerTest extends PHPUnit_Framework_TestCase
      */
     public function testGetComponentAdapterByType()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->object->addComponentInstance(new ArrayObject(array()), 'arrayObj');
+        
+        $adapter = $this->object->getComponentAdapterByType('ArrayObject');
+        $this->assertType('Xyster_Container_Adapter', $adapter);
+        
+        $adapter = $this->object->getComponentAdapterByType('SplObjectStorage');
+        $this->assertNull($adapter);
+        
+        $this->object->addComponentInstance(new ArrayObject(array(123)), 'myArrayObj');
+        $adapter = $this->object->getComponentAdapterByType('ArrayObject', 'myArrayObj');
+        $this->assertType('Xyster_Container_Adapter', $adapter);
     }
 
     /**
@@ -199,36 +226,38 @@ class Xyster_ContainerTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testRemoveComponent().
+     * Test the 'removeComponent' method
      */
     public function testRemoveComponent()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->object->addComponent('SplObjectStorage');
+        
+        $this->assertEquals(1, count($this->object->getComponentAdapters()));
+        $this->object->removeComponent(new Xyster_Type('SplObjectStorage'));
+        $this->assertEquals(0, count($this->object->getComponentAdapters()));
     }
 
     /**
-     * @todo Implement testRemoveComponentByInstance().
+     * Tests the 'removeComponentByInstance' method
      */
     public function testRemoveComponentByInstance()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->object->addComponentInstance(new ArrayObject(array()));
+        $this->object->addComponent('SplObjectStorage');
+        
+        $this->assertEquals(2, count($this->object->getComponentAdapters()));
+        $this->object->removeComponentByInstance(new SplObjectStorage);
+        $this->assertEquals(1, count($this->object->getComponentAdapters()));
     }
 
     /**
-     * @todo Implement testWith().
+     * Tests the 'with' method
      */
     public function testWith()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $feature = Xyster_Container_Features::CACHE();
+        $this->object->with($feature);
+        $this->assertAttributeSame($feature, '_with', $this->object);
     }
 }
 

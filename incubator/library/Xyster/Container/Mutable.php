@@ -142,5 +142,5 @@ interface Xyster_Container_Mutable extends Xyster_Container_Interface
      * @param Xyster_Collection_Map_Interface $properties
      * @return Xyster_Container_Mutable the same instance with temporary properties
      */
-    function with();
+    function with( Xyster_Collection_Map_Interface $properties );
 }

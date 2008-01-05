@@ -34,6 +34,10 @@ require_once 'Xyster/Collection/Map.php';
  */
 require_once 'Xyster/Collection/Map/String.php';
 /**
+ * @see Xyster_Type
+ */
+require_once 'Xyster/Type.php';
+/**
  * The standard container implementation.
  * 
  * @category  Xyster
@@ -67,6 +71,11 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
      * @var Xyster_Collection_Map_Interface
      */
     protected $_properties;
+    
+    /**
+     * @var Xyster_Collection_Map_Interface
+     */
+    protected $_with;
     
     /**
      * Creates a new container
@@ -127,6 +136,10 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
         $tempProps = clone $properties;
         require_once 'Xyster/Container/Behavior/Factory/Abstract.php';
         require_once 'Xyster/Container/Features.php';
+        if ( $this->_with instanceof Xyster_Collection_Map_Interface ) {
+            $tempProps->merge($this->_with);
+            $this->_with = null;
+        }
         if ( Xyster_Container_Behavior_Factory_Abstract::removePropertiesIfPresent($tempProps, Xyster_Container_Features::NONE()) == false &&
             $this->_componentFactory instanceof Xyster_Container_Behavior_Factory ) {
             $factory = $this->_componentFactory; /* @var $factory Xyster_Container_Behavior_Factory */
@@ -157,7 +170,6 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
             $parameters = null;
         }
         if ( $key == null ) {
-            require_once 'Xyster/Type.php';
             if ( $implementation instanceof Xyster_Type ) {
                 $key = $implementation;
             } else if ( is_string($implementation) || $implementation instanceof ReflectionClass ) {
@@ -168,6 +180,10 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
         
         if ( $implementation instanceof Xyster_Type ) {
             $tempProps = clone $this->_properties;
+            if ( $this->_with instanceof Xyster_Collection_Map_Instance ) {
+                $tempProps->merge($this->_with);
+                $this->_with = null;
+            }
             $adapter = $this->_componentFactory->createComponentAdapter($this->_monitor,
                 $tempProps, $key, $implementation, $parameters);
             $this->_throwIfPropertiesLeft($tempProps);
@@ -194,15 +210,19 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
             $parameters = null;
         }
         if ( $key === null ) {
-            require_once 'Xyster/Type.php';
             $key = new Xyster_Type(is_object($instance)
                 ? get_class($instance) : gettype($instance));
         }
         
+        $properties = clone $this->_properties;
+        if ( $this->_with instanceof Xyster_Collection_Map_Interface ) {
+            $properties->merge($this->_with);
+            $this->_with = null;
+        }
         require_once 'Xyster/Container/Adapter/Instance.php';
         $adapter = new Xyster_Container_Adapter_Instance($key, $instance,
             $this->_monitor);
-        $this->addAdapter($adapter, $this->_properties);
+        $this->addAdapter($adapter, $properties);
         
         return $this;
     }
@@ -216,6 +236,9 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
      */
     public function addConfig( $name, $value )
     {
+        require_once 'Xyster/Container/Adapter/Instance.php';
+        $this->_addAdapterInternal(new Xyster_Container_Adapter_Instance($name,
+            $value, $this->_monitor));
         return $this;
     }
     
@@ -369,7 +392,6 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
         $list = null;
         
         if ( $componentType == null ) {
-            require_once 'Xyster/Collection/List.php';
             $list = new Xyster_Collection_List($this->_adapters); 
         } else {
             $list = new Xyster_Collection_List;
@@ -402,7 +424,6 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
         return $adapter;
     }
     
-    
     /**
      * Unregister a component by instance
      *
@@ -413,7 +434,7 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
     {
         foreach( $this->_adapters as $adapter ) {
             /* @var $adapter Xyster_Container_Adapter */
-            if ( $this->_getLocalInstance($adapter) == $componentInstance ) {
+            if ( Xyster_Type::areDeeplyEqual($this->_getLocalInstance($adapter), $componentInstance) ) {
                 return $this->removeComponent($adapter->getKey());
             }
         }
@@ -425,9 +446,10 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
      * @param Xyster_Collection_Map_Interface $properties
      * @return Xyster_Container_Mutable the same instance with temporary properties
      */
-    public function with()
+    public function with( Xyster_Collection_Map_Interface $properties )
     {
-        
+        $this->_with = $properties;
+        return $this;
     }
     
     /**
