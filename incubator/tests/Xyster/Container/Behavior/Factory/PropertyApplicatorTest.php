@@ -51,6 +51,7 @@ class Xyster_Container_Behavior_Factory_PropertyApplicatorTest extends Xyster_Co
     protected function setUp()
     {
         parent::setUp();
+        $this->properties->merge(Xyster_Container_Features::PROPERTY_APPLYING());
         $this->object = new Xyster_Container_Behavior_Factory_PropertyApplicator;
     }
     

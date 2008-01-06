@@ -36,6 +36,7 @@ require_once 'Xyster/Container/Behavior/PropertyApplicatorTest.php';
 require_once 'Xyster/Container/Behavior/StoredTest.php';
 require_once 'Xyster/Container/Behavior/Factory/AdaptiveTest.php';
 require_once 'Xyster/Container/Behavior/Factory/AutomatedTest.php';
+require_once 'Xyster/Container/Behavior/Factory/CachedTest.php';
 require_once 'Xyster/Container/Behavior/Factory/PropertyApplicatorTest.php';
 require_once 'Xyster/Container/Injection/ConstructorTest.php';
 require_once 'Xyster/Container/Injection/MethodTest.php';
@@ -69,6 +70,7 @@ class Xyster_Container_AllTests
         $suite->addTestSuite('Xyster_Container_Behavior_StoredTest');
         $suite->addTestSuite('Xyster_Container_Behavior_Factory_AdaptiveTest');
         $suite->addTestSuite('Xyster_Container_Behavior_Factory_AutomatedTest');
+        $suite->addTestSuite('Xyster_Container_Behavior_Factory_CachedTest');
         $suite->addTestSuite('Xyster_Container_Behavior_Factory_PropertyApplicatorTest');
         $suite->addTestSuite('Xyster_Container_Injection_ConstructorTest');
         $suite->addTestSuite('Xyster_Container_Injection_MethodTest');

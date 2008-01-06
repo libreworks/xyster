@@ -92,9 +92,10 @@ class Xyster_Container_Behavior_Factory_Adaptive implements Xyster_Container_Beh
         $lastFactory = null;
         foreach( $factories as $componentFactory ) {
             /* @var $componentFactory Xyster_Container_Behavior_Factory */
-            if ($lastFactory != null) {
-                $componentFactory->wrap($lastFactory);
-            }
+            // if ($lastFactory != null) {
+            //    $componentFactory->wrap($lastFactory);
+            // }
+            // Since we're only processing one behavior, there's only one factory
             $lastFactory = $componentFactory;
         }
 

@@ -54,6 +54,9 @@ class Xyster_Container_Behavior_Factory_AdaptiveTest extends Xyster_Container_Be
     protected function setUp()
     {
         parent::setUp();
+        $this->properties->merge(Xyster_Container_Features::CACHE());
+        $this->properties->merge(Xyster_Container_Features::PROPERTY_APPLYING());
+        $this->properties->merge(Xyster_Container_Features::AUTOMATIC());
         $this->object = new Xyster_Container_Behavior_Factory_Adaptive;
     }
     

@@ -54,6 +54,7 @@ class Xyster_Container_Behavior_Factory_AutomatedTest extends Xyster_Container_B
     protected function setUp()
     {
         parent::setUp();
+        $this->properties->merge(Xyster_Container_Features::AUTOMATIC());
         $this->object = new Xyster_Container_Behavior_Factory_Automated;
     }
     

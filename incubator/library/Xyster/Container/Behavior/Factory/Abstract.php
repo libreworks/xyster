@@ -85,13 +85,11 @@ class Xyster_Container_Behavior_Factory_Abstract implements Xyster_Container_Beh
      */
     public static function removePropertiesIfPresent(Xyster_Collection_Map_Interface $current, Xyster_Collection_Map_Interface $present)
     {
+        $present = new Xyster_Collection_Map_String($present);
         foreach( $present as $key => $value ) {
             $presentValue = $present[$key];
             $currentValue = $current[$key];
-            if ($currentValue == null) {
-                return false;
-            }
-            if (!$presentValue == $currentValue) {
+            if ($currentValue == null || $presentValue != $currentValue ) {
                 return false;
             }
         }
