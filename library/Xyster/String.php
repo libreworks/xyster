@@ -30,15 +30,6 @@ class Xyster_String
      * parentheses.
      */
     const PARENTH_QUOTE_REGEX = '/(?<![\w\d])(\(((?:"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"|[^()])|(?1))+\))/m';
-    
-	/**
-	 * An array of words that shouldn't be capitalized in title case
-	 *
-	 * @var array
-	 */
-	static private $_smallWords = array( 'of','a','the','and','an','or','nor',
-		'but','is','if','then','else','when', 'at','from','by','on','off','for',
-		'in','out','over','to','into','with' );
 
 	/**
 	 * Converts an associative array into a string representation
@@ -167,26 +158,6 @@ class Xyster_String
 		}
 		$split[] = $buff;
 		return $split;
-	}
-	
-	/**
-	 * Converts a string to title case
-	 * 
-	 * @return string The input in title case
-	 */
-	static function titleCase( $title )
-	{	
-		// Split the string into separate words 
-		$words = explode(' ', strtolower($title));
-		
-		foreach ( $words as $key => $word ) {
-			// If this is the first, or it's not a small word, capitalize it
-			if ( $key == 0 or !in_array($word, self::$_smallWords) ) {
-				$words[$key] = ucwords($word);
-			}
-		}
-		
-		return implode(' ', $words);
 	}
 	
 	/**

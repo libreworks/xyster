@@ -23,10 +23,6 @@
  */
 require_once 'Zend/Filter/Interface.php';
 /**
- * @see Xyster_String
- */
-require_once 'Xyster/String.php';
-/**
  * A filter for title case
  *
  * @category  Xyster
@@ -37,14 +33,32 @@ require_once 'Xyster/String.php';
 class Xyster_Filter_TitleCase implements Zend_Filter_Interface
 {
     /**
-     * Defined by Zend_Validate_Interface
+     * An array of words that shouldn't be capitalized in title case
      *
-     * @param  string $value
-     * @return string
-     * @see Xyster_String::titleCase
+     * @var array
+     */
+    static private $_smallWords = array( 'of','a','the','and','an','or','nor',
+        'but','is','if','then','else','when', 'at','from','by','on','off','for',
+        'in','out','over','to','into','with' );
+    
+    /**
+     * Converts a string to title case
+     * 
+     * @param string $value
+     * @return string The input in title case
      */
     public function filter($value)
     {
-        return Xyster_String::titleCase($value);
+        // Split the string into separate words 
+        $words = explode(' ', strtolower($title));
+        
+        foreach ( $words as $key => $word ) {
+            // If this is the first, or it's not a small word, capitalize it
+            if ( $key == 0 or !in_array($word, self::$_smallWords) ) {
+                $words[$key] = ucwords($word);
+            }
+        }
+        
+        return implode(' ', $words);
     }
 }

@@ -41,11 +41,11 @@ class Xyster_Filter_TitleCaseTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->filter = new Xyster_Filter_TitleCase();
+        $this->filter = new Xyster_Filter_TitleCase;
     }
     
     /**
-     * Tests basic validation for a URI
+     * Tests basic operation of filter class
      *
      */
     public function testBasic()
@@ -55,7 +55,10 @@ class Xyster_Filter_TitleCaseTest extends PHPUnit_Framework_TestCase
                 'The Great Escape of Our Hero from Coding Hades',
             
             'I WANT THIS STRING TO BE IN TITLE CASE' => 
-                'I Want This String to Be in Title Case'
+                'I Want This String to Be in Title Case',
+        
+            'HOW ÄBÖUT INTERNATIONAL LETTERS' =>
+                'How ÄbÖut International Letters' // we'll leave this alone for now
         );
 
         foreach ($valuesExpected as $input => $output) {

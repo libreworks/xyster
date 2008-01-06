@@ -87,28 +87,6 @@ class Xyster_StringTest extends PHPUnit_Framework_TestCase
     }
     
     /**
-     * Tests the 'titleCase' method
-     *
-     */
-    public function testTitleCase()
-    {
-        $test = 'The great escape of our hero from coding hades';
-        $expected = 'The Great Escape of Our Hero from Coding Hades';
-        
-        $this->assertEquals($expected, Xyster_String::titleCase($test));
-        
-        $test = 'I WANT THIS STRING TO BE IN TITLE CASE';
-        $expected = 'I Want This String to Be in Title Case';
-
-        $this->assertEquals($expected, Xyster_String::titleCase($test));
-                
-        $test = 'HOW ÄBÖUT INTERNATIONAL LETTERS';
-        $expected = 'How ÄbÖut International Letters'; // should be left alone for now
-        
-        $this->assertEquals($expected, Xyster_String::titleCase($test));
-    }
-    
-    /**
      * Tests the 'toCamel' method
      *
      */
