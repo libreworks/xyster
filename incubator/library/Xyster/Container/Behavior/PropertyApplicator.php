@@ -33,7 +33,7 @@ class Xyster_Container_Behavior_PropertyApplicator extends Xyster_Container_Beha
     private $_properties;
     
     /**
-     * @var Xyster_Collection_Map_String
+     * @var array
      */
     private $_setters;
     
@@ -55,6 +55,9 @@ class Xyster_Container_Behavior_PropertyApplicator extends Xyster_Container_Beha
             $propertyNames = $this->_properties->keys();
             foreach( $propertyNames as $propertyName ) {
                 $propertyValue = $this->_properties[$propertyName];
+                if ( !isset($this->_setters[$propertyName]) ) {
+                    continue;
+                }
                 $setter = $this->_setters[$propertyName];
                 /* @var $setter ReflectionMethod */
                 

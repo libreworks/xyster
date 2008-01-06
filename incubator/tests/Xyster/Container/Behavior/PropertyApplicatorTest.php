@@ -61,32 +61,36 @@ class Xyster_Container_Behavior_PropertyApplicatorTest extends Xyster_Container_
      */
     public function testGetInstance()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        require_once 'Xyster/Container.php';
+        $container = new Xyster_Container;
+        $this->object->setProperty('foo', 'bar');
+        $instance = $this->object->getInstance($container);
     }
 
     /**
-     * @todo Implement testSetProperties().
+     * Tests the 'setProperties' method
      */
     public function testSetProperties()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $map = new Xyster_Collection_Map_String;
+        $map['foo'] = 'bar';
+        $map['bar'] = 'foo';
+        $map['abc'] = '123';
+        
+        $this->object->setProperties($map);
+        $this->assertAttributeSame($map, '_properties', $this->object);
     }
 
     /**
-     * @todo Implement testSetProperty().
+     * Tests the 'setProperty' method
      */
     public function testSetProperty()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $map = new Xyster_Collection_Map_String;
+        $map['foo'] = 'bar';
+        
+        $this->object->setProperty('foo', 'bar');
+        $this->assertAttributeEquals($map, '_properties', $this->object);
     }
 
     /**

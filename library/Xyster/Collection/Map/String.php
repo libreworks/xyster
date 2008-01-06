@@ -101,6 +101,7 @@ class Xyster_Collection_Map_String extends Xyster_Collection_Map_Abstract
 	 */
 	public function keys()
 	{
+	    require_once 'Xyster/Collection/Set.php';
 	    return new Xyster_Collection_Set(
 	        Xyster_Collection::using(array_keys($this->_items)),
 	        true );
@@ -128,6 +129,7 @@ class Xyster_Collection_Map_String extends Xyster_Collection_Map_Abstract
 	 */
 	public function keysFor( $value )
 	{
+        require_once 'Xyster/Collection/Set.php';
 		return new Xyster_Collection_Set(
 		    Xyster_Collection::using(array_keys($this->_items,$value,true)),
 		    true );
