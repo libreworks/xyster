@@ -19,6 +19,8 @@ require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR 
 
 require_once 'PHPUnit/Framework.php';
 require_once 'Xyster/Container/Adapter/Instance.php';
+require_once 'Xyster/Container.php';
+require_once 'Xyster/Type.php';
 
 /**
  * Test class for Xyster_Container_Behavior_Abstract.
@@ -35,15 +37,21 @@ class Xyster_Container_Behavior_CommonTest extends PHPUnit_Framework_TestCase
      * @var Xyster_Container_Adapter_Instance
      */
     protected $delegate;
+    
+    /**
+     * @var Xyster_Container
+     */
+    protected $container;
 
     /**
      * Sets up the fixture
      */
     protected function setUp()
     {
-        require_once 'Xyster/Type.php';
         $key = new Xyster_Type('ArrayObject');
         $this->delegate = new Xyster_Container_Adapter_Instance($key, new ArrayObject, null);
+        $this->container = new Xyster_Container;
+        $this->container->addAdapter($this->delegate);
     }
 
     /**
@@ -96,9 +104,7 @@ class Xyster_Container_Behavior_CommonTest extends PHPUnit_Framework_TestCase
      */
     public function testGetInstance()
     {
-        require_once 'Xyster/Container.php';
-        $container = new Xyster_Container;
-        $this->assertSame($this->delegate->getInstance($container), $this->object->getInstance($container));
+        $this->assertSame($this->delegate->getInstance($this->container), $this->object->getInstance($this->container));
     }
 
     /**
@@ -114,9 +120,7 @@ class Xyster_Container_Behavior_CommonTest extends PHPUnit_Framework_TestCase
      */
     public function testVerify()
     {
-        require_once 'Xyster/Container.php';
-        $container = new Xyster_Container;
-        $this->object->verify($container);
+        $this->object->verify($this->container);
     }
 
     /**

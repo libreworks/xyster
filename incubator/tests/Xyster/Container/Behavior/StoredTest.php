@@ -36,6 +36,11 @@ class Xyster_Container_Behavior_StoredTest extends Xyster_Container_Behavior_Com
      * @var Xyster_Container_Behavior_Stored
      */
     protected $object;
+    
+    /**
+     * @var Xyster_Container_ReferenceStub
+     */
+    protected $reference;
 
     /**
      * Runs the test methods of this class.
@@ -54,29 +59,30 @@ class Xyster_Container_Behavior_StoredTest extends Xyster_Container_Behavior_Com
     protected function setUp()
     {
         parent::setUp();
-        $this->object = new Xyster_Container_Behavior_Stored($this->delegate, new Xyster_Container_ReferenceStub);
+        $this->reference = new Xyster_Container_ReferenceStub;
+        $this->object = new Xyster_Container_Behavior_Stored($this->delegate, $this->reference);
     }
 
     /**
-     * @todo Implement testFlush().
+     * Tests the 'flush' method
      */
     public function testFlush()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $instance = $this->object->getInstance($this->container);
+        $this->assertType('ArrayObject', $instance);
+        $this->object->flush();
+        $this->assertAttributeEquals(null, '_ref', $this->reference);
     }
 
     /**
-     * @todo Implement testGetInstance().
+     * Tests the 'getInstance' method
      */
     public function testGetInstance()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $instance = $this->object->getInstance($this->container);
+        $this->assertType('ArrayObject', $instance);
+        $instance2 = $this->object->getInstance($this->container);
+        $this->assertSame($instance, $instance2);
     }
 }
 

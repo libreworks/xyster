@@ -57,36 +57,23 @@ class Xyster_Container_Behavior_CachedTest extends Xyster_Container_Behavior_Sto
     }
     
     /**
-     * @todo Implement testGet().
+     * Tests the 'get' and 'set' methods
      */
-    public function testGet()
+    public function testGetAndSet()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $instance = new SplObjectStorage();
+        $this->object->set($instance);
+        $this->assertAttributeSame($instance, '_instance', $this->object);
+        $return = $this->object->get();
+        $this->assertSame($instance, $return);
     }
 
     /**
-     * @todo Implement testSet().
-     */
-    public function testSet()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @todo Implement test__toString().
+     * Tests the 'toString' method
      */
     public function test__toString()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->assertSame('Cached:' . $this->delegate->__toString(), $this->object->__toString());
     }
 }
 

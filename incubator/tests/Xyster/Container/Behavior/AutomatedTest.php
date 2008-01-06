@@ -57,14 +57,11 @@ class Xyster_Container_Behavior_AutomatedTest extends Xyster_Container_Behavior_
     }
 
     /**
-     * @todo Implement test__toString().
+     * Tests the 'toString' method
      */
     public function test__toString()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->assertSame('Automated:' . $this->delegate->__toString(), $this->object->__toString());
     }
 }
 
