@@ -18,6 +18,10 @@
  */
 require_once 'Xyster/Container/Behavior/Factory/Abstract.php';
 /**
+ * @see Xyster_Container_Behavior_PropertyApplicator
+ */
+require_once 'Xyster/Container/Behavior/PropertyApplicator.php';
+/**
  * A component factory that creates property applicator instances
  *
  * @category  Xyster

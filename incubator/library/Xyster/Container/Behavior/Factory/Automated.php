@@ -18,6 +18,10 @@
  */
 require_once 'Xyster/Container/Behavior/Factory/Abstract.php';
 /**
+ * @see Xyster_Container_Behavior_Automated
+ */
+require_once 'Xyster/Container/Behavior/Automated.php';
+/**
  * Extends Xyster_Container_Adapter_Factory to provide methods for Behaviors
  * 
  * The main use of the factory is to customize the default component adapter 

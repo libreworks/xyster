@@ -18,6 +18,10 @@
  */
 require_once 'Xyster/Container/Behavior/Factory.php';
 /**
+ * @see Xyster_Container_Features
+ */
+require_once 'Xyster/Container/Features.php';
+/**
  * Extends Xyster_Container_Adapter_Factory to provide methods for Behaviors
  * 
  * The main use of the factory is to customize the default component adapter 
@@ -39,7 +43,7 @@ class Xyster_Container_Behavior_Factory_Abstract implements Xyster_Container_Beh
      * Adds a component adapter
      *
      * @param Xyster_Container_Monitor $monitor
-     * @param Xyster_Collection_Map_Interface $componentProperties
+     * @param Xyster_Collection_Map_Interface $properties
      * @param Xyster_Container_Adapter $adapter
      * @return Xyster_Container_Adapter
      */
@@ -57,12 +61,12 @@ class Xyster_Container_Behavior_Factory_Abstract implements Xyster_Container_Beh
      * {@inherit}
      *
      * @param Xyster_Container_Monitor $monitor
-     * @param Xyster_Collection_Map_Interface $componentProperties
-     * @param mixed $componentKey
-     * @param mixed $componentImplementation
+     * @param Xyster_Collection_Map_Interface $properties
+     * @param mixed $key
+     * @param mixed $implementation
      * @param mixed $parameters
      */
-    public function createComponentAdapter(Xyster_Container_Monitor $monitor, Xyster_Collection_Map_Interface $properties, $componentKey, $implementation, $parameters)
+    public function createComponentAdapter(Xyster_Container_Monitor $monitor, Xyster_Collection_Map_Interface $properties, $key, $implementation, $parameters)
     {
         if ($this->_delegate == null) {
             require_once 'Xyster/Container/Injection/Factory/Adaptive.php';

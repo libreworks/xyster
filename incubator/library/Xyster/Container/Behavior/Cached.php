@@ -14,6 +14,10 @@
  * @version   $Id$
  */
 /**
+ * @see Xyster_Container_Reference
+ */
+require_once 'Xyster/Container/Reference.php';
+/**
  * @see Xyster_Container_Behavior_Stored
  */
 require_once 'Xyster/Container/Behavior/Stored.php';
