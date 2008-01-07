@@ -50,7 +50,7 @@ class Xyster_Filter_TitleCase implements Zend_Filter_Interface
     public function filter($value)
     {
         // Split the string into separate words 
-        $words = explode(' ', strtolower($title));
+        $words = explode(' ', strtolower($value));
         
         foreach ( $words as $key => $word ) {
             // If this is the first, or it's not a small word, capitalize it

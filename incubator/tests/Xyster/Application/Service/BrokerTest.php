@@ -2,20 +2,15 @@
 /**
  * Xyster Framework
  *
- * LICENSE
- *
  * This source file is subject to the new BSD license that is bundled
  * with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
  * http://www.opensource.org/licenses/bsd-license.php
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to xyster@devweblog.org so we can send you a copy immediately.
  *
  * @category  Xyster
  * @package   Xyster_Application
  * @subpackage   UnitTests
- * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
+ * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
@@ -23,11 +18,9 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Xyster_Application_Service_BrokerTest::main');
 }
 
-require_once "PHPUnit/Framework/TestCase.php";
-require_once "PHPUnit/Framework/TestSuite.php";
-
 require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
+require_once 'PHPUnit/Framework.php';
 require_once dirname(dirname(__FILE__)) . '/_files/ExampleService.php';
 require_once 'Xyster/Application.php';
 
@@ -88,8 +81,6 @@ class Xyster_Application_Service_BrokerTest extends PHPUnit_Framework_TestCase
      */
     public function testAddPrefix()
     {
-        $this->assertAttributeEquals(array(), '_paths', $this->broker);
-        
         $prefix = 'Xyster_Application_Service_';
         $return = $this->broker->addPrefix($prefix);
         

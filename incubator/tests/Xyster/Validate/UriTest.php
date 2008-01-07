@@ -1,14 +1,28 @@
 <?php
+/**
+ * Xyster Framework
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/bsd-license.php
+ *
+ * @category  Xyster
+ * @package   UnitTests
+ * @subpackage Xyster_Validate
+ * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @version   $Id$
+ */
+
 // Call Xyster_Validate_UriTest::main() if this source file is executed directly.
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Xyster_Validate_UriTest::main');
 }
 
-require_once "PHPUnit/Framework/TestCase.php";
-require_once "PHPUnit/Framework/TestSuite.php";
-
 require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
+require_once "PHPUnit/Framework.php";
 require_once 'Xyster/Validate/Uri.php';
 
 /**
@@ -35,9 +49,8 @@ class Xyster_Validate_UriTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Sets up the fixture, for example, opens a network connection.
-     * This method is called before a test is executed.
-     *
+     * Sets up the fixture
+     * 
      */
     protected function setUp()
     {

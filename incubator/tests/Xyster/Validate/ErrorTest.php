@@ -1,14 +1,28 @@
 <?php
+/**
+ * Xyster Framework
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.opensource.org/licenses/bsd-license.php
+ *
+ * @category  Xyster
+ * @package   UnitTests
+ * @subpackage Xyster_Validate
+ * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @version   $Id$
+ */
+
 // Call Xyster_Validate_ErrorTest::main() if this source file is executed directly.
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Xyster_Validate_ErrorTest::main');
 }
 
-require_once "PHPUnit/Framework/TestCase.php";
-require_once "PHPUnit/Framework/TestSuite.php";
-
 require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
+require_once "PHPUnit/Framework.php";
 require_once 'Xyster/Validate/Error.php';
 
 /**
@@ -19,7 +33,6 @@ class Xyster_Validate_ErrorTest extends PHPUnit_Framework_TestCase
 {    
     /**
      * Runs the test methods of this class.
-     *
      */
     public static function main()
     {
@@ -39,7 +52,7 @@ class Xyster_Validate_ErrorTest extends PHPUnit_Framework_TestCase
         
         $this->assertEquals('myField', $error->getField());
         $this->assertEquals('This is my message', $error->getMessage());
-        $this->assertEquals('This is my message', (string)$error);
+        $this->assertEquals('myField: This is my message', (string)$error);
     }
 }
 
