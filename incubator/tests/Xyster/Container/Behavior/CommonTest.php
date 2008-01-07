@@ -10,7 +10,7 @@
  * @category  Xyster
  * @package   UnitTests
  * @subpackage Xyster_Container
- * @copyright Copyright (c) 2007 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
