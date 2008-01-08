@@ -24,6 +24,7 @@ require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR 
 
 require_once 'PHPUnit/Framework.php';
 require_once 'Xyster/Container/Injection/Method.php';
+require_once dirname(dirname(__FILE__)) . '/_files/Sdi.php';
 
 /**
  * Test class for Xyster_Container_Injection_Method.
@@ -55,12 +56,13 @@ class Xyster_Container_Injection_MethodTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         require_once 'Xyster/Type.php';
-        $key = new Xyster_Type('MethodFoo');
+        $key = new Xyster_Type('RocketShip');
         $this->object = new Xyster_Container_Injection_Method($key, $key);
         require_once 'Xyster/Container.php';
         $this->container = new Xyster_Container;
-        $this->container->addComponent('MethodBar');
-        $this->container->addComponent('MethodLorem');
+        $this->container->addComponent('RocketPilot')
+            ->addComponent('RocketFuel')
+            ->addComponent('SpaceSuit');
     }
 
     /**
@@ -80,9 +82,9 @@ class Xyster_Container_Injection_MethodTest extends PHPUnit_Framework_TestCase
     public function testGetInstance()
     {
         $inst = $this->object->getInstance($this->container);
-        $this->assertType('MethodFoo', $inst);
-        $this->assertType('MethodLorem', $inst->getLorem());
-        $this->assertType('MethodBar', $inst->getBar());
+        $this->assertType('RocketShip', $inst);
+        $this->assertType('RocketPilot', $inst->getPilot());
+        $this->assertType('RocketFuel', $inst->getFuel());
     }
 
     /**
@@ -98,37 +100,8 @@ class Xyster_Container_Injection_MethodTest extends PHPUnit_Framework_TestCase
      */
     public function test__toString()
     {
-        $this->assertSame('MethodInjector-Class MethodFoo', $this->object->__toString());
+        $this->assertSame('MethodInjector-Class RocketShip', $this->object->__toString());
     }
-}
-
-class MethodFoo
-{
-    private $_bar;
-    private $_lorem;
-    
-    public function getBar()
-    {
-        return $this->_bar;
-    }
-    public function getLorem()
-    {
-        return $this->_lorem;
-    }
-    
-    public function inject( MethodBar $bar, MethodLorem $lorem )
-    {
-        $this->_bar = $bar;
-        $this->_lorem = $lorem;
-    }
-}
-
-class MethodLorem
-{
-}
-
-class MethodBar
-{
 }
 
 // Call Xyster_Container_Injection_MethodTest::main() if this source file is executed directly.

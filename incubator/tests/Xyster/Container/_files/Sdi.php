@@ -8,9 +8,20 @@ class RocketShip
     protected $_astronaut;
     protected $_fuel;
     
+    public function getFuel()
+    {
+        return $this->_fuel;
+    }
+    
     public function getPilot()
     {
         return $this->_astronaut;
+    }
+    
+    public function inject( Astronaut $astronaut, RocketFuel $fuel )
+    {
+        $this->setPilot($astronaut);
+        $this->setFuel($fuel);
     }
     
     public function setPilot( Astronaut $astronaut )
@@ -32,6 +43,11 @@ interface Astronaut
 class RocketPilot implements Astronaut
 {
     protected $_suit;
+    
+    public function inject( SpaceSuit $suit )
+    {
+        $this->_suit = $suit;
+    }
     
     public function pilot()
     {

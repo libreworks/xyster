@@ -56,10 +56,49 @@ class Xyster_Container_Behavior_AbstractTest extends Xyster_Container_Behavior_C
         parent::setUp();
         $this->object = new Xyster_Container_Behavior_Stub($this->delegate);
     }
+    
+    /**
+     * Tests that an adapter with no monitor throws an exception
+     *
+     */
+    public function testNoMonitor()
+    {
+        $delegate = new Xyster_Container_Adapter_NoMonitorStub;
+        $behavior = new Xyster_Container_Behavior_Stub($delegate);
+        $this->setExpectedException('Xyster_Container_Exception');
+        $behavior->currentMonitor();
+    }
 }
 
 class Xyster_Container_Behavior_Stub extends Xyster_Container_Behavior_Abstract
 {
+}
+
+class Xyster_Container_Adapter_NoMonitorStub implements Xyster_Container_Adapter
+{
+    public function accept(Xyster_Container_Visitor $visitor)
+    {
+    }
+
+    public function getDelegate()
+    {
+    }
+
+    public function getImplementation()
+    {
+    }
+
+    public function getInstance(Xyster_Container_Interface $container)
+    {
+    }
+
+    public function getKey()
+    {
+    }
+
+    public function verify(Xyster_Container_Interface $container)
+    {
+    }
 }
 
 // Call Xyster_Container_Behavior_AbstractTest::main() if this source file is executed directly.

@@ -169,7 +169,6 @@ class Xyster_ContainerTest extends PHPUnit_Framework_TestCase
         $this->assertType('SplObjectStorage', $this->object->getComponent($type));
         $this->assertType('SplObjectStorage', $this->object->getComponent('objstrg'));
         $this->assertNull($this->object->getComponent('nonexist'));
-        
     }
 
     /**
