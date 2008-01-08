@@ -67,7 +67,7 @@ class Xyster_Container_Behavior_PropertyApplicator extends Xyster_Container_Beha
                     $monitor->invoking($container, $this, $setter, $componentInstance);
                     $startTime = microtime(true);
                     $setter->invoke($componentInstance, $valueToInvoke);
-                    $monitor->invoked($container, $this, $setter, $componentInstance, getmicrotime(true) - $startTime);
+                    $monitor->invoked($container, $this, $setter, $componentInstance, microtime(true) - $startTime);
                 } catch ( Exception $thrown ) {
                     $monitor->invocationFailed($setter, $componentInstance, $thrown);
                     throw new Xyster_Container_Exception("Failed to set property " . $propertyName . " to " . $propertyValue . ": " . $thrown->getMessage());
@@ -141,7 +141,7 @@ class Xyster_Container_Behavior_PropertyApplicator extends Xyster_Container_Beha
      */
     protected function _getSetterParameter( $propertyName, $propertyValue, $componentInstance, Xyster_Container_Interface $container )
     {
-        if ( $propertyValue == null ) {
+        if ( $propertyValue === null ) {
             return null;
         }
         
@@ -155,19 +155,20 @@ class Xyster_Container_Behavior_PropertyApplicator extends Xyster_Container_Beha
 
         $convertedValue = $propertyValue;
         
-        if ( $convertedValue === null && $setterParameter !== null ) {
-            $givenParameterClass = is_object($propertyValue) ?
-                get_class($propertyValue) : gettype($propertyValue);
-            require_once 'Xyster/Type.php';
-            $setterParameterType = new Xyster_Type($setterParameter);
-            if ( $setterParameterType->isAssignableFrom($givenParameterClass) ) {
-                $convertedValue = $propertyValue;
-            } else {
-                throw new Xyster_Container_Exception("Setter: " . $setter->getName() . " for addComponent: "
-                    . $componentInstance->__toString() . " can only take objects of: " . $setterParameter->getName()
-                    . " instead got: " . $givenParameterClass);
-            }
-        }
+//      ===== should be used when support for converting value into objects =====        
+//        if ( $convertedValue === null && $setterParameter !== null ) {
+//            $givenParameterClass = is_object($propertyValue) ?
+//                get_class($propertyValue) : gettype($propertyValue);
+//            require_once 'Xyster/Type.php';
+//            $setterParameterType = new Xyster_Type($setterParameter);
+//            if ( $setterParameterType->isAssignableFrom($givenParameterClass) ) {
+//                $convertedValue = $propertyValue;
+//            } else {
+//                throw new Xyster_Container_Exception("Setter: " . $setter->getName() . " for addComponent: "
+//                    . $componentInstance->__toString() . " can only take objects of: " . $setterParameter->getName()
+//                    . " instead got: " . $givenParameterClass);
+//            }
+//        }
         return $convertedValue;
     }
     

@@ -24,6 +24,9 @@ require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR 
 
 require_once 'PHPUnit/Framework.php';
 require_once 'Xyster/Container/Injection/Setter.php';
+require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . '_files/Sdi.php';
+require_once 'Xyster/Type.php';
+require_once 'Xyster/Container.php';
 
 /**
  * Test class for Xyster_Container_Injection_Setter.
@@ -54,12 +57,13 @@ class Xyster_Container_Injection_SetterTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        require_once 'Xyster/Type.php';
-        $key = new Xyster_Type('SetterFoo');
+        $key = new Xyster_Type('RocketShip');
         $this->object = new Xyster_Container_Injection_Setter($key, $key);
-        require_once 'Xyster/Container.php';
         $this->container = new Xyster_Container;
-        $this->container->addComponent('SetterBar');
+        $this->container->addComponent('RocketPilot')
+            ->addComponent('RocketFuel')
+            ->addComponent('SpaceSuit');
+            
     }
     
     /**
@@ -79,8 +83,8 @@ class Xyster_Container_Injection_SetterTest extends PHPUnit_Framework_TestCase
     public function testGetInstance()
     {
         $inst = $this->object->getInstance($this->container);
-        $this->assertType('SetterFoo', $inst);
-        $this->assertType('SetterBar', $inst->getBar());
+        $this->assertType('RocketShip', $inst);
+        $this->assertType('Astronaut', $inst->getPilot());
     }
 
     /**
@@ -96,26 +100,22 @@ class Xyster_Container_Injection_SetterTest extends PHPUnit_Framework_TestCase
      */
     public function test__toString()
     {
-        $this->assertSame('SetterInjector-Class SetterFoo', $this->object->__toString());
+        $this->assertSame('SetterInjector-Class RocketShip', $this->object->__toString());
     }
-}
-
-class SetterFoo
-{
-    private $_bar;
     
-    public function getBar()
+    /**
+     * Tests a bad method invocation
+     *
+     */
+    public function testBadSet()
     {
-        return $this->_bar;
+        $key = new Xyster_Type('ExtraTerrestrial');
+        $container = new Xyster_Container;
+        $container->addConfig('color', 'blue');
+        $inj = new Xyster_Container_Injection_Setter($key, $key);
+        $this->setExpectedException('Xyster_Container_Exception');
+        $inj->getInstance($container);
     }
-    public function setBar( SetterBar $bar )
-    {
-        $this->_bar = $bar;
-    }
-}
-
-class SetterBar
-{
 }
 
 // Call Xyster_Container_Injection_SetterTest::main() if this source file is executed directly.

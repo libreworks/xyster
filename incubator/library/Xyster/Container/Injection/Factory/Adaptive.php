@@ -125,7 +125,7 @@ class Xyster_Container_Injection_Factory_Adaptive implements Xyster_Container_In
     protected function _makeIfMethodInjection(Xyster_Collection_Map_Interface $properties, Xyster_Container_Monitor $monitor, $key, $implementation, Xyster_Container_Adapter $componentAdapter = null, $parameters)
     {
         if (Xyster_Container_Behavior_Factory_Abstract::removePropertiesIfPresent($properties, Xyster_Container_Features::METHOD_INJECTION())) {
-            require_once 'Xyster_Container_Injection_Factory_Method.php';
+            require_once 'Xyster/Container/Injection/Factory/Method.php';
             $injection = new Xyster_Container_Injection_Factory_Method;
             $componentAdapter = $injection->createComponentAdapter($monitor,
                 $properties, $key, $implementation, $parameters);

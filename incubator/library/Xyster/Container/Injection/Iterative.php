@@ -72,7 +72,7 @@ abstract class Xyster_Container_Injection_Iterative extends Xyster_Container_Inj
                 $injected[] = $toInject;
             }
             return $componentInstance;
-        } catch ( Exception $e ) {
+        } catch ( ReflectionException $e ) {
             $this->_caughtInvocationTargetException($monitor, $member, $componentInstance, $e);
         }
     }
@@ -204,8 +204,5 @@ abstract class Xyster_Container_Injection_Iterative extends Xyster_Container_Inj
      * @param ReflectionMethod $method
      * @return boolean
      */
-    protected function _isInjectorMethod( ReflectionMethod $method )
-    {
-        return false;
-    }
+    abstract protected function _isInjectorMethod( ReflectionMethod $method );
 }

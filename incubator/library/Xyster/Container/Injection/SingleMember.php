@@ -61,20 +61,4 @@ abstract class Xyster_Container_Injection_SingleMember extends Xyster_Container_
         
         return $result;
     }
-    
-    /**
-     * Looks up the parameter names
-     *
-     * @param ReflectionMethod $method
-     * @return string
-     */
-    protected function _lookupParameterNames( ReflectionMethod $method )
-    {
-        $names = array();
-        foreach( $method->getParameters() as $parameter ) {
-            /* @var $parameter ReflectionParameter */
-            $names[] = $parameter->getName();
-        }
-        return $names;
-    }
 }

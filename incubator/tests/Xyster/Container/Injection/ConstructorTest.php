@@ -24,6 +24,7 @@ require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR 
 
 require_once 'PHPUnit/Framework.php';
 require_once 'Xyster/Container/Injection/Constructor.php';
+require_once dirname(dirname(__FILE__)) . '/_files/Cdi.php';
 
 /**
  * Test class for Xyster_Container_Injection_Constructor.
@@ -60,17 +61,16 @@ class Xyster_Container_Injection_ConstructorTest extends PHPUnit_Framework_TestC
         require_once 'Xyster/Container.php';
         $this->container = new Xyster_Container;
         require_once 'Xyster/Type.php';
-        $this->key = new Xyster_Type('ConstructorTestControllerAction');
-        require_once 'Zend/Controller/Response/Cli.php';
-        require_once 'Zend/Controller/Request/Http.php';
+        $this->key = new Xyster_Type('Submarine');
+        $this->container->addConfig('name', 'Captain Crunch')
+            ->addComponent('SubmarineCaptain')
+            ->addComponent('SubFuel')
+            ->addComponent('ScubaGear')
+            ->addComponent('array');
         require_once 'Xyster/Container/Parameter/Basic.php';
-        $this->container->addComponent('http://localhost/index/index', 'uri');
-        $uriParam = $this->container->getComponent('uri');
-        $this->container->addComponent(new Xyster_Type('Zend_Controller_Response_Cli'));
-        $this->container->addComponent(new Xyster_Type('Zend_Controller_Request_Http'),
-            null, array(new Xyster_Container_Parameter_Basic('uri')));
-        $this->container->addComponent(new Xyster_Type('array'));
-        $this->object = new Xyster_Container_Injection_Constructor($this->key, $this->key);
+        $param = Xyster_Container_Parameter_Basic::standard();
+        $this->object = new Xyster_Container_Injection_Constructor($this->key,
+            $this->key, array($param, $param, $param));
     }
     
     /**
@@ -90,7 +90,7 @@ class Xyster_Container_Injection_ConstructorTest extends PHPUnit_Framework_TestC
     public function testGetInstance()
     {
         $inst = $this->object->getInstance($this->container);
-        $this->assertType('ConstructorTestControllerAction', $inst);
+        $this->assertType('Submarine', $inst);
     }
 
     /**
@@ -106,14 +106,21 @@ class Xyster_Container_Injection_ConstructorTest extends PHPUnit_Framework_TestC
      */
     public function test__toString()
     {
-        $this->assertSame('ConstructorInjector-Class ConstructorTestControllerAction', $this->object->__toString());
+        $this->assertSame('ConstructorInjector-Class Submarine', $this->object->__toString());
     }
-}
-
-require_once 'Zend/Controller/Action.php';
-
-class ConstructorTestControllerAction extends Zend_Controller_Action
-{        
+    
+    /**
+     * Tests an exception thrown for a construction problem
+     *
+     */
+    public function testBadConstruct()
+    {
+        $key = new Xyster_Type('SeaUrchin');
+        $container = new Xyster_Container;
+        $inj = new Xyster_Container_Injection_Constructor($key, $key);
+        $this->setExpectedException('Xyster_Container_Exception');
+        $inj->getInstance($container);
+    }
 }
 
 // Call Xyster_Container_Injection_ConstructorTest::main() if this source file is executed directly.

@@ -22,6 +22,10 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 
 require_once dirname(__FILE__) . '/CommonTest.php';
 require_once 'Xyster/Container/Injection/Factory/Adaptive.php';
+require_once 'Xyster/Container/Monitor/Null.php';
+require_once 'Xyster/Collection/Map/String.php';
+require_once 'Xyster/Container/Features.php';
+require_once 'Xyster/Type.php';
 
 /**
  * Test class for Xyster_Container_Injection_Factory_Adaptive.
@@ -47,6 +51,38 @@ class Xyster_Container_Injection_Factory_AdaptiveTest extends Xyster_Container_I
     {
         parent::setUp();
         $this->object = new Xyster_Container_Injection_Factory_Adaptive;
+    }
+
+    /**
+     * Tests the 'createComponentAdapter' with setter injection
+     *
+     */
+    public function testSetterInjection()
+    {
+        $monitor = new Xyster_Container_Monitor_Null;
+        $properties = new Xyster_Collection_Map_String;
+        $properties->merge(Xyster_Container_Features::SDI());
+        $key = new Xyster_Type('SplObjectStorage');
+        $parameters = array();
+        
+        $adapter = $this->object->createComponentAdapter($monitor, $properties, $key, $key, $parameters);
+        $this->assertType('Xyster_Container_Injection_Setter', $adapter);
+    }
+    
+    /**
+     * Tests the 'createComponentAdapter' with method injection
+     *
+     */
+    public function testMethodInjection()
+    {
+        $monitor = new Xyster_Container_Monitor_Null;
+        $properties = new Xyster_Collection_Map_String;
+        $properties->merge(Xyster_Container_Features::METHOD_INJECTION());
+        $key = new Xyster_Type('SplObjectStorage');
+        $parameters = array();
+        
+        $adapter = $this->object->createComponentAdapter($monitor, $properties, $key, $key, $parameters);
+        $this->assertType('Xyster_Container_Injection_Method', $adapter);
     }
 }
 

@@ -78,7 +78,7 @@ abstract class Xyster_Container_Injection_Abstract extends Xyster_Container_Adap
     {
         parent::accept($visitor);
         if ( $this->_parameters ) {
-            foreach( $parameter as $param ) {
+            foreach( $this->_parameters as $param ) {
                 /* @var $param Xyster_Container_Parameter */
                 $param->accept($visitor);
             }

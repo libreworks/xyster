@@ -24,6 +24,7 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'CommonTest.php';
 
 require_once 'PHPUnit/Framework.php';
 require_once 'Xyster/Container/Behavior/PropertyApplicator.php';
+require_once dirname(dirname(__FILE__)) . '/_files/Cdi.php';
 
 /**
  * Test class for Xyster_Container_Behavior_PropertyApplicator.
@@ -52,30 +53,49 @@ class Xyster_Container_Behavior_PropertyApplicatorTest extends Xyster_Container_
      */
     protected function setUp()
     {
-        parent::setUp();
+        $key = new Xyster_Type('Submarine');
+        $this->container = new Xyster_Container;
+        $this->container->addComponent($key)
+            ->addConfig('name', 'Captain Crunch')
+            ->addComponent('ScubaGear')
+            ->addComponent('SubmarineCaptain')
+            ->addComponent('SubFuel')
+            ->addComponent('array');
+        $this->delegate = $this->container->getComponentAdapter($key);
         $this->object = new Xyster_Container_Behavior_PropertyApplicator($this->delegate);
     }
 
     /**
-     * @todo Implement testGetInstance().
+     * Tests the 'getInstance' method
      */
     public function testGetInstance()
     {
-        require_once 'Xyster/Container.php';
-        $container = new Xyster_Container;
+        $this->object->setProperty('name', 'U.S.S. Submergible');
         $this->object->setProperty('foo', 'bar');
-        $instance = $this->object->getInstance($container);
+        $this->object->setProperty('location', null);
+        $this->object->setProperty('x', null);
+        $instance = $this->object->getInstance($this->container);
+        $this->assertAttributeEquals('U.S.S. Submergible', '_name', $instance);
     }
 
+    /**
+     * Tests the 'getInstance' method
+     */
+    public function testGetInstanceException()
+    {
+        $this->object->setProperty('error', 'error');
+        $this->setExpectedException('Xyster_Container_Exception');
+        $instance = $this->object->getInstance($this->container);
+    }
+    
     /**
      * Tests the 'setProperties' method
      */
     public function testSetProperties()
     {
         $map = new Xyster_Collection_Map_String;
-        $map['foo'] = 'bar';
-        $map['bar'] = 'foo';
         $map['abc'] = '123';
+        $map['name'] = 'U.S.S. Submergible';
         
         $this->object->setProperties($map);
         $this->assertAttributeSame($map, '_properties', $this->object);
@@ -87,9 +107,9 @@ class Xyster_Container_Behavior_PropertyApplicatorTest extends Xyster_Container_
     public function testSetProperty()
     {
         $map = new Xyster_Collection_Map_String;
-        $map['foo'] = 'bar';
+        $map['name'] = 'U.S.S. Submergible';
         
-        $this->object->setProperty('foo', 'bar');
+        $this->object->setProperty('name', 'U.S.S. Submergible');
         $this->assertAttributeEquals($map, '_properties', $this->object);
     }
 
