@@ -136,18 +136,18 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
         $tempProps = clone $properties;
         require_once 'Xyster/Container/Behavior/Factory/Abstract.php';
         require_once 'Xyster/Container/Features.php';
-        if ( $this->_with instanceof Xyster_Collection_Map_Interface ) {
-            $tempProps->merge($this->_with);
-            $this->_with = null;
-        }
-        if ( Xyster_Container_Behavior_Factory_Abstract::removePropertiesIfPresent($tempProps, Xyster_Container_Features::NONE()) == false &&
-            $this->_componentFactory instanceof Xyster_Container_Behavior_Factory ) {
+        $this->_processWith($tempProps);
+        $behaviors = ( Xyster_Container_Behavior_Factory_Abstract::removePropertiesIfPresent($tempProps,
+            Xyster_Container_Features::NONE()) == false &&
+            $this->_componentFactory instanceof Xyster_Container_Behavior_Factory ); 
+        if ( $behaviors ) {
             $factory = $this->_componentFactory; /* @var $factory Xyster_Container_Behavior_Factory */
-            $this->_addAdapterInternal($factory->addComponentAdapter($this->_monitor,
-                $tempProps, $adapter));
+            $adapter = $factory->addComponentAdapter($this->_monitor,
+                $tempProps, $adapter);
+        }
+        $this->_addAdapterInternal($adapter);
+        if ( $behaviors ) {
             $this->_throwIfPropertiesLeft($tempProps);
-        } else {
-            $this->_addAdapterInternal($adapter);
         }
         
         return $this;
@@ -180,10 +180,7 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
         
         if ( $implementation instanceof Xyster_Type ) {
             $tempProps = clone $this->_properties;
-            if ( $this->_with instanceof Xyster_Collection_Map_Instance ) {
-                $tempProps->merge($this->_with);
-                $this->_with = null;
-            }
+            $this->_processWith($tempProps);
             $adapter = $this->_componentFactory->createComponentAdapter($this->_monitor,
                 $tempProps, $key, $implementation, $parameters);
             $this->_throwIfPropertiesLeft($tempProps);
@@ -215,10 +212,7 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
         }
         
         $properties = clone $this->_properties;
-        if ( $this->_with instanceof Xyster_Collection_Map_Interface ) {
-            $properties->merge($this->_with);
-            $this->_with = null;
-        }
+        $this->_processWith($properties);
         require_once 'Xyster/Container/Adapter/Instance.php';
         $adapter = new Xyster_Container_Adapter_Instance($key, $instance,
             $this->_monitor);
@@ -499,6 +493,19 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
     }
     
     /**
+     * Merges supplied properties with those from the with() method
+     *
+     * @param Xyster_Collection_Map_Interface $properties
+     */
+    private function _processWith( Xyster_Collection_Map_Interface $properties )
+    {
+        if ( $this->_with instanceof Xyster_Collection_Map_Interface ) {                                                     
+            $properties->merge($this->_with);                                                                                
+            $this->_with = null;
+        } 
+    }
+    
+    /**
      * Throws an exception if the properties map still has values
      *
      * @param Xyster_Collection_Map_Interface $properties
@@ -508,7 +515,7 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
     {
         if ( !$properties->isEmpty() ) {
             require_once 'Xyster/Container/Exception.php';
-            throw new Xyster_Container_Exception('Unprocessed properties: ' . $properties);
+            throw new Xyster_Container_Exception('Unprocessed properties: ' . print_r($properties->toArray(), true));
         }
     }
 }

@@ -39,6 +39,9 @@ class Xyster_Container_Injection_SetterTest extends PHPUnit_Framework_TestCase
      */
     protected $object;
 
+    /**
+     * @var Xyster_Container
+     */
     protected $container;
     
     /**
@@ -92,6 +95,13 @@ class Xyster_Container_Injection_SetterTest extends PHPUnit_Framework_TestCase
      */
     public function testVerify()
     {
+        $this->object->verify($this->container);
+    }
+    
+    public function testVerifyNotLoaded()
+    {
+        $this->container = new Xyster_Container;
+        $this->setExpectedException('Xyster_Container_Exception');
         $this->object->verify($this->container);
     }
 

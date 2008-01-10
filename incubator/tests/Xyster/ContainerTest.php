@@ -84,6 +84,22 @@ class Xyster_ContainerTest extends PHPUnit_Framework_TestCase
         $adapter2 = $this->object->getComponentAdapter($key);
         $this->assertSame($adapter, $adapter2);
     }
+    
+    /**
+     * Tests the 'addAdapter' method using the with() method beforehand
+     *
+     */
+    public function testAddAdapterWith()
+    {
+        require_once 'Xyster/Container/Adapter/Instance.php';
+        $key = new Xyster_Type('ArrayObject');
+        $adapter = new Xyster_Container_Adapter_Instance($key, new ArrayObject);
+        $return = $this->object->with(Xyster_Container_Features::CACHE())
+            ->addAdapter($adapter);
+        $this->assertSame($this->object, $return);
+        $adapter2 = $this->object->getComponentAdapter($key);
+        $this->assertType('Xyster_Container_Behavior_Cached', $adapter2);
+    }
 
     /**
      * Tests the 'addComponent' method
@@ -96,6 +112,22 @@ class Xyster_ContainerTest extends PHPUnit_Framework_TestCase
         $adapter = $this->object->getComponentAdapterByType($class);
         $this->assertType('Xyster_Container_Adapter', $adapter);
         $this->assertSame($class, $adapter->getKey());
+    }
+    
+    /**
+     * Tests the 'addComponent' method for a key that already exists
+     *
+     */
+    public function testAddComponentExists()
+    {
+        $key = new Xyster_Type('Xyster_Collection_Map');
+        $return = $this->object->addComponent($key, $key);
+        $this->assertSame($this->object, $return);
+        $adapter = $this->object->getComponentAdapterByType($key);
+        $this->assertType('Xyster_Container_Adapter', $adapter);
+        $this->assertSame($key, $adapter->getKey());
+        $this->setExpectedException('Xyster_Container_Exception');
+        $this->object->addComponent($key, $key);
     }
     
     /**
@@ -185,17 +217,6 @@ class Xyster_ContainerTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testGetComponentAdapter().
-     */
-    public function testGetComponentAdapter()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
-    }
-
-    /**
      * @todo Implement testGetComponentAdapterByType().
      */
     public function testGetComponentAdapterByType()
@@ -211,6 +232,20 @@ class Xyster_ContainerTest extends PHPUnit_Framework_TestCase
         $this->object->addComponentInstance(new ArrayObject(array(123)), 'myArrayObj');
         $adapter = $this->object->getComponentAdapterByType('ArrayObject', 'myArrayObj');
         $this->assertType('Xyster_Container_Adapter', $adapter);
+    }
+    
+    /**
+     * Tests getting a component by type with more than one type
+     *
+     */
+    public function testGetComponentAdapterByTypeAmbiguous()
+    {
+        $key = new Xyster_Type('SplObjectStorage');
+        $this->object->addComponent($key, 'myObjStorage')
+            ->addComponent($key, 'myObjStorage2');
+        
+        $this->setExpectedException('Xyster_Container_Exception');
+        $this->object->getComponentAdapterByType($key);
     }
 
     /**
@@ -247,6 +282,9 @@ class Xyster_ContainerTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(2, count($this->object->getComponentAdapters()));
         $this->object->removeComponentByInstance(new SplObjectStorage);
         $this->assertEquals(1, count($this->object->getComponentAdapters()));
+        
+        $this->object->removeComponentByInstance(new ReflectionClass('SplObjectStorage'));
+        $this->assertEquals(1, count($this->object->getComponentAdapters()));
     }
 
     /**
@@ -257,6 +295,21 @@ class Xyster_ContainerTest extends PHPUnit_Framework_TestCase
         $feature = Xyster_Container_Features::CACHE();
         $this->object->with($feature);
         $this->assertAttributeSame($feature, '_with', $this->object);
+    }
+    
+    /**
+     * Tests checking for leftover properties
+     *
+     */
+    public function testLeftoverProperties()
+    {
+        require_once 'Xyster/Container/Behavior/Factory/PropertyApplicator.php';
+        $factory = new Xyster_Container_Behavior_Factory_PropertyApplicator;
+        $this->object = new Xyster_Container($factory);
+        
+        $this->setExpectedException('Xyster_Container_Exception');
+        $this->object->with(Xyster_Container_Features::CACHE())
+            ->addComponent('SplObjectStorage');
     }
 }
 

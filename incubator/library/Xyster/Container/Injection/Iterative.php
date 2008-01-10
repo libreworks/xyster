@@ -105,6 +105,9 @@ abstract class Xyster_Container_Injection_Iterative extends Xyster_Container_Inj
         
         require_once 'Xyster/Collection/List.php';
         $matchingParameterList = new Xyster_Collection_List;
+        for( $i=0; $i<count($this->_injectionMembers); $i++ ) {
+            $matchingParameterList->set($i, null);
+        }
         $nonMatchingParameterPositions = array();
         $currentParameters = $this->_parameters != null ? $this->_parameters :
             $this->_createDefaultParameters($this->_injectionParameters);
@@ -125,14 +128,16 @@ abstract class Xyster_Container_Injection_Iterative extends Xyster_Container_Inj
         }
         
         $unsatisfiableDependencyTypes = array();
-        foreach( $matchingParameterList as $i => $param ) {
-            if ( $param === null ) {
+        for( $i=0; $i<count($matchingParameterList); $i++ ) {
+            if ( $matchingParameterList->get($i) === null ) {
                 $unsatisfiableDependencyTypes[] = $this->_injectionParameters[$i];
             }
         }
         if ( count($unsatisfiableDependencyTypes) > 0 ) {
+            require_once 'Xyster/Container/Exception.php';
             throw new Xyster_Container_Exception('Unsatisfiable dependencies: ' . implode(',', $unsatisfiableDependencyTypes));
         } else if ( count($nonMatchingParameterPositions) > 0 ) {
+            require_once 'Xyster/Container/Exception.php';
             throw new Xyster_Container_Exception('Unmatched parameter positions: ' . implode(',', $nonMatchingParameterPositions));
         }
         
