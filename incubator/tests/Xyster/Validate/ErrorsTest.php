@@ -143,6 +143,9 @@ class Xyster_Validate_ErrorsTest extends PHPUnit_Framework_TestCase
         
         $returnError = $this->errors->getError('field2');
         $this->assertSame($error2, $returnError);
+        
+        $returnError2 = $this->errors->getError('field-does-not-exist');
+        $this->assertNull($returnError2);
     }
     
     /**

@@ -109,6 +109,10 @@ class Xyster_Container_Parameter_BasicTest extends PHPUnit_Framework_TestCase
         $this->assertType('SubFuel', $return);
     }
     
+    /**
+     * Tests the 'resolveInstance' method with ambiguous components
+     *
+     */
     public function testResolveInstanceAmbiguous()
     {
         $this->container->addComponent('Submarine')
@@ -120,6 +124,23 @@ class Xyster_Container_Parameter_BasicTest extends PHPUnit_Framework_TestCase
         $parameter = $parameters[1];
         $this->setExpectedException('Xyster_Container_Exception');
         $return = $this->object->resolveInstance($this->container, $adapter, $parameter);
+    }
+    
+    /**
+     * Tests the 'resolveInstance' method with a key defined for the parameter
+     *
+     */
+    public function testResolveInstanceKey()
+    {
+        $this->key = 'MyTestKey';
+        $this->object = new Xyster_Container_Parameter_Basic($this->key);
+        $this->container->addComponent('SubFuel', $this->key);
+        $type = new Xyster_Type('Submarine');
+        $constructor = $type->getClass()->getConstructor(); /* @var $constructor ReflectionMethod */
+        $parameters = $constructor->getParameters();
+        $parameter = $parameters[1];
+        $return = $this->object->resolveInstance($this->container, null, $parameter);
+        $this->assertType('SubFuel', $return);
     }
     
     /**

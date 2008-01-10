@@ -154,7 +154,7 @@ class Xyster_Container_Parameter_Basic implements Xyster_Container_Parameter
         $excludeKey = $excludeAdapter->getKey();
         if ( $expectedType !== null ) {
             $byKey = $container->getComponentAdapter($expectedType);
-            if ( $byKey !== null && $excludeKey == $byKey->getKey() ) {
+            if ( $byKey !== null && !Xyster_Type::areEqual($excludeKey, $byKey->getKey()) ) {
                 return $byKey;
             }
         }
@@ -195,11 +195,6 @@ class Xyster_Container_Parameter_Basic implements Xyster_Container_Parameter
      */
     protected function _resolveAdapter( Xyster_Container_Interface $container, Xyster_Container_Adapter $adapter = null, ReflectionParameter $expectedParameter )
     {
-        $result = $this->_getTargetAdapter($container, $expectedParameter, $adapter);
-        if ( $result === null ) {
-            return null;
-        }
-        
         $expectedType = null;
         if ( $expectedParameter->isArray() ) {
             $expectedType = new Xyster_Type('array');
@@ -207,9 +202,12 @@ class Xyster_Container_Parameter_Basic implements Xyster_Container_Parameter
             $expectedType = new Xyster_Type($expectedParameter->getClass());
         }
         
-        if ( $expectedType && !$expectedType->isAssignableFrom($result->getImplementation()) ) {
+        $result = $this->_getTargetAdapter($container, $expectedParameter, $adapter);
+        if ( $result === null ) {
             return null;
         }
-        return $result;
+        
+        return ( $expectedType && !$expectedType->isAssignableFrom($result->getImplementation()) )
+            ? null : $result;
     }
 }
