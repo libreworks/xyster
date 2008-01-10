@@ -41,6 +41,7 @@ require_once 'Xyster/EnumTest.php';
 require_once 'Xyster/OrmTest.php';
 require_once 'Xyster/Orm/AllTests.php';
 require_once 'Xyster/StringTest.php';
+require_once 'Xyster/TypeTest.php';
 
 class Xyster_AllTests
 {
@@ -62,6 +63,7 @@ class Xyster_AllTests
         $suite->addTestSuite('Xyster_OrmTest');
         $suite->addTest( Xyster_Orm_AllTests::suite() );
         $suite->addTestSuite('Xyster_StringTest');
+        $suite->addTestSuite('Xyster_TypeTest');
         return $suite;
     }
 }

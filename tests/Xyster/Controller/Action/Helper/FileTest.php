@@ -123,7 +123,7 @@ class Xyster_Controller_Action_Helper_FileTest extends PHPUnit_Framework_TestCas
         $this->assertContains(array('name'=>'Etag','value'=>md5($newDate), 'replace'=>false), $headers);
         $this->assertContains(array('name'=>'Accept-Ranges','value'=>'bytes', 'replace'=>false), $headers);
         $this->assertContains(array('name'=>'Content-Type','value'=>'text/plain', 'replace'=>false), $headers);
-        $this->assertContains(array('name'=>'Content-Disposition','value'=>'attachment; filename=myFileName.txt', 'replace'=>false), $headers);
+        $this->assertContains(array('name'=>'Content-Disposition','value'=>'attachment; filename="myFileName.txt"', 'replace'=>false), $headers);
         $this->assertNotEquals(304, $this->response->getHttpResponseCode());
     }
     

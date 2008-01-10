@@ -30,9 +30,9 @@ require_once "PHPUnit/Framework/TestSuite.php";
 require_once 'Xyster/Orm/CacheMock.php';
 
 /**
- * Zend_Db_TestSetup
+ * @see Xyster_Db_TestSetup
  */
-require_once 'Zend/Db/TestSetup.php';
+require_once 'Xyster/Db/TestSetup.php';
 
 /**
  * @see Zend/Registry
@@ -58,7 +58,7 @@ require_once 'Xyster/Orm/Mapper.php';
  * Test for Xyster_Orm_Mapper
  *
  */
-abstract class Xyster_Orm_Mapper_TestSetup extends Zend_Db_TestSetup
+abstract class Xyster_Orm_Mapper_TestSetup extends Xyster_Db_TestSetup
 {
     /**
      * @var Xyster_Orm_Mapper_Factory
