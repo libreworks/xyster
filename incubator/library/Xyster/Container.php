@@ -176,6 +176,8 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
                 $key = new Xyster_Type($implementation);
                 $implementation = $key;
             }
+        } else if ( is_string($implementation) || $implementation instanceof ReflectionClass ) {
+            $implementation = new Xyster_Type($implementation);
         }
         
         if ( $implementation instanceof Xyster_Type ) {
@@ -346,7 +348,7 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
      */
     public function getComponentAdapterByType( $componentType, $componentParameterName = null )
     {
-        if ( ! $componentType instanceof Xyster_Type ) {
+        if ( ! $componentType instanceof Xyster_Type && $componentType !== null ) {
             $componentType = new Xyster_Type($componentType);
         }
         

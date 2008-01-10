@@ -54,7 +54,7 @@ class SubmarineCaptain implements Sailor
     protected $_suit;
     protected $_name;
     
-    public function __construct( ScubaGear $suit, $name )
+    public function __construct( ScubaGear $suit, $name = 'Capn' )
     {
         $this->_suit = $suit;
     }

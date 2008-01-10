@@ -147,7 +147,7 @@ class Xyster_Container_Parameter_Basic implements Xyster_Container_Parameter
         if ( $this->_key !== null ) {
             return $container->getComponentAdapter($this->_key);
         } else if ( $excludeAdapter === null ) {
-            return $container->getComponentAdapterByType($expectedType);
+            return $container->getComponentAdapterByType($expectedType, $expectedParameter->getName());
         }
         
         // try to find it by key
@@ -158,7 +158,7 @@ class Xyster_Container_Parameter_Basic implements Xyster_Container_Parameter
                 return $byKey;
             }
         }
-        
+
         // get all component adapters with the expected type
         $found = $container->getComponentAdapters($expectedType);
         $exclude = null;

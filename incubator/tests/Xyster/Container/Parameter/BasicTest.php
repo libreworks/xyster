@@ -27,6 +27,8 @@ require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR 
 
 require_once 'PHPUnit/Framework.php';
 require_once 'Xyster/Container/Parameter/Basic.php';
+require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . '_files/Cdi.php';
+require_once 'Xyster/Container.php';
 
 /**
  * Test class for Xyster_Container_Parameter_Basic.
@@ -38,6 +40,16 @@ class Xyster_Container_Parameter_BasicTest extends PHPUnit_Framework_TestCase
      * @var    Xyster_Container_Parameter_Basic
      */
     protected $object;
+    
+    /**
+     * @var Xyster_Type
+     */
+    protected $key;
+    
+    /**
+     * @var Xyster_Container
+     */
+    protected $container;
 
     /**
      * Runs the test methods of this class.
@@ -56,6 +68,8 @@ class Xyster_Container_Parameter_BasicTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->object = new Xyster_Container_Parameter_Basic();
+        $this->key = new Xyster_Type('Submarine');
+        $this->container = new Xyster_Container;
     }
 
     /**
@@ -74,16 +88,11 @@ class Xyster_Container_Parameter_BasicTest extends PHPUnit_Framework_TestCase
      */
     public function testIsResolvable()
     {
-        require_once 'Xyster/Container.php';
-        $container = new Xyster_Container;
-        $class = new Xyster_Type('TestControllerAction');
-        $container->addComponent($class);
-        require_once 'Zend/Controller/Response/Http.php';
-        $container->addComponent(new Xyster_Type('Zend_Controller_Response_Http'));
-        $constructor = $class->getClass()->getConstructor(); /* @var $constructor ReflectionMethod */
+        $this->container->addComponent('SubFuel');
+        $constructor = $this->key->getClass()->getConstructor(); /* @var $constructor ReflectionMethod */
         $parameters = $constructor->getParameters();
         $parameter = $parameters[1];
-        $return = $this->object->isResolvable($container, null, $parameter);
+        $return = $this->object->isResolvable($this->container, null, $parameter);
         $this->assertTrue($return);
     }
 
@@ -92,17 +101,25 @@ class Xyster_Container_Parameter_BasicTest extends PHPUnit_Framework_TestCase
      */
     public function testResolveInstance()
     {
-        require_once 'Xyster/Container.php';
-        $container = new Xyster_Container;
-        $class = new Xyster_Type('TestControllerAction');
-        $container->addComponent($class);
-        require_once 'Zend/Controller/Response/Http.php';
-        $container->addComponent(new Xyster_Type('Zend_Controller_Response_Http'));
-        $constructor = $class->getClass()->getConstructor(); /* @var $constructor ReflectionMethod */
+        $this->container->addComponent('SubFuel');
+        $constructor = $this->key->getClass()->getConstructor(); /* @var $constructor ReflectionMethod */
         $parameters = $constructor->getParameters();
         $parameter = $parameters[1];
-        $return = $this->object->resolveInstance($container, null, $parameter);
-        $this->assertType('Zend_Controller_Response_Abstract', $return);
+        $return = $this->object->resolveInstance($this->container, null, $parameter);
+        $this->assertType('SubFuel', $return);
+    }
+    
+    public function testResolveInstanceAmbiguous()
+    {
+        $this->container->addComponent('Submarine')
+            ->addComponent('SubFuel', 'myfuel1')
+            ->addComponent('SubFuel', 'myfuel2');
+        $adapter = $this->container->getComponentAdapterByType('Submarine');
+        $constructor = $this->key->getClass()->getConstructor(); /* @var $constructor ReflectionMethod */
+        $parameters = $constructor->getParameters();
+        $parameter = $parameters[1];
+        $this->setExpectedException('Xyster_Container_Exception');
+        $return = $this->object->resolveInstance($this->container, $adapter, $parameter);
     }
     
     /**
@@ -111,16 +128,10 @@ class Xyster_Container_Parameter_BasicTest extends PHPUnit_Framework_TestCase
      */
     public function testResolveInstanceNull()
     {
-        require_once 'Xyster/Container.php';
-        $container = new Xyster_Container;
-        $class = new Xyster_Type('TestControllerAction');
-        $container->addComponent($class);
-        require_once 'Zend/Controller/Response/Http.php';
-        $container->addComponent(new Xyster_Type('Zend_Controller_Response_Http'));
-        $constructor = $class->getClass()->getConstructor(); /* @var $constructor ReflectionMethod */
+        $constructor = $this->key->getClass()->getConstructor(); /* @var $constructor ReflectionMethod */
         $parameters = $constructor->getParameters();
         $parameter = $parameters[0];
-        $return = $this->object->resolveInstance($container, null, $parameter);
+        $return = $this->object->resolveInstance($this->container, null, $parameter);
         $this->assertNull($return);
     }
     
@@ -129,27 +140,41 @@ class Xyster_Container_Parameter_BasicTest extends PHPUnit_Framework_TestCase
      */
     public function testResolveInstanceArray()
     {
-        require_once 'Xyster/Container.php';
-        $container = new Xyster_Container;
-        $class = new Xyster_Type('TestControllerAction');
-        $container->addComponent($class);
-        $container->addComponent(new Xyster_Type('array'));
-        $constructor = $class->getClass()->getConstructor(); /* @var $constructor ReflectionMethod */
+        $this->container->addComponent(new Xyster_Type('array'));
+        $constructor = $this->key->getClass()->getConstructor(); /* @var $constructor ReflectionMethod */
         $parameters = $constructor->getParameters();
         $parameter = $parameters[2];
-        $return = $this->object->resolveInstance($container, null, $parameter);
+        $return = $this->object->resolveInstance($this->container, null, $parameter);
         $this->assertType('array', $return);
     }
     
     /**
-     * @todo Implement testResolveInstanceScalar().
+     * Tests the 'resolveInstance' method for a scalar value
      */
     public function testResolveInstanceScalar()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->key = new Xyster_Type('SubmarineCaptain');
+        $this->container = new Xyster_Container;
+        $this->container->addConfig('name', 'Captain Crunch');
+        $constructor = $this->key->getClass()->getConstructor(); /* @var $constructor ReflectionMethod */
+        $parameters = $constructor->getParameters();
+        $parameter = $parameters[1];
+        $return = $this->object->resolveInstance($this->container, null, $parameter);
+        $this->assertSame('Captain Crunch', $return);
+    }
+
+    /**
+     * Tests the 'resolveInstance' method for a scalar value
+     */
+    public function testResolveInstanceDefault()
+    {
+        $this->key = new Xyster_Type('SubmarineCaptain');
+        $this->container = new Xyster_Container;
+        $constructor = $this->key->getClass()->getConstructor(); /* @var $constructor ReflectionMethod */
+        $parameters = $constructor->getParameters();
+        $parameter = $parameters[1];
+        $return = $this->object->resolveInstance($this->container, null, $parameter);
+        $this->assertSame('Capn', $return);
     }
     
     /**
@@ -157,25 +182,12 @@ class Xyster_Container_Parameter_BasicTest extends PHPUnit_Framework_TestCase
      */
     public function testVerifyFail()
     {
-        require_once 'Xyster/Container.php';
-        $container = new Xyster_Container;
-        $class = new Xyster_Type('TestControllerAction');
-        $container->addComponent($class);
-        require_once 'Zend/Controller/Response/Http.php';
-        $container->addComponent(new Xyster_Type('Zend_Controller_Response_Http'));
-        $constructor = $class->getClass()->getConstructor(); /* @var $constructor ReflectionMethod */
+        $constructor = $this->key->getClass()->getConstructor(); /* @var $constructor ReflectionMethod */
         $parameters = $constructor->getParameters();
         $parameter = $parameters[0];
         $this->setExpectedException('Xyster_Container_Exception');
-        $this->object->verify($container, null, $parameter);
+        $this->object->verify($this->container, null, $parameter);
     }
-}
-
-require_once 'Zend/Controller/Action.php';
-
-class TestControllerAction extends Zend_Controller_Action
-{
-        
 }
 
 // Call Xyster_Container_Parameter_BasicTest::main() if this source file is executed directly.

@@ -118,8 +118,7 @@ abstract class Xyster_Container_Injection_Iterative extends Xyster_Container_Inj
             for( $i=0; $i<count($this->_injectionParameters); $i++ ) {
                 if ( $parameter->isResolvable($container, $this, $this->_injectionParameters[$i]) ) {
                     $matchingParameterList->set($k, $parameter);
-                    $failedDependency = false;
-                    break;
+                    $failedDependency &= false;
                 }
             }
             if ( $failedDependency ) {

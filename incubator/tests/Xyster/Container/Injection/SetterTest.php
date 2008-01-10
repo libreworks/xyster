@@ -98,11 +98,29 @@ class Xyster_Container_Injection_SetterTest extends PHPUnit_Framework_TestCase
         $this->object->verify($this->container);
     }
     
+    /**
+     * Tests the 'verify' method when not loaded
+     *
+     */
     public function testVerifyNotLoaded()
     {
         $this->container = new Xyster_Container;
         $this->setExpectedException('Xyster_Container_Exception');
         $this->object->verify($this->container);
+    }
+    
+    /**
+     * Tests the 'verify' method with too many parameters
+     *
+     */
+    public function testVerifyTooManyParameters()
+    {
+        $key = new Xyster_Type('RocketFuel');
+        $container = new Xyster_Container;
+        $inj = new Xyster_Container_Injection_Setter($key, $key,
+            array(Xyster_Container_Parameter_Basic::standard()));
+        $this->setExpectedException('Xyster_Container_Exception');
+        $inj->verify($container);
     }
 
     /**
