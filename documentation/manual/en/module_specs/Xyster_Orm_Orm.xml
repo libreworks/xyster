@@ -73,7 +73,7 @@ $leia->affiliation = 'Rebel';
 $leia->alignment = 'good';
 $leia->gender = 'F';
 $leia->race = 'Human';
-$orm->save($leia);
+$orm->persist($leia);
 echo $leia->personId; // prints null
 $orm->commit();
 echo $leia->personId; // prints new primary key]]></programlisting>
@@ -82,7 +82,7 @@ echo $leia->personId; // prints new primary key]]></programlisting>
 
 		<programlisting role="php"><![CDATA[<?php
 $vader = $orm->get('person',2);
-$orm->delete($vader);
+$orm->remove($vader);
 $orm->commit();]]></programlisting>
 	    </sect2>
 

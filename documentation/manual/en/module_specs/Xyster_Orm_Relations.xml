@@ -59,7 +59,7 @@ $jabba->race = 'Hutt';
 // Jabba is Han's nemesis
 $han->nemesis = $jabba;
 // Jabba is too egocentric to have a nemesis, just save Han
-$orm->save($han);
+$orm->persist($han);
 $orm->commit();
 // both Han and Jabba are saved]]></programlisting>
 
@@ -233,7 +233,7 @@ $skills = array("Piloting", "Gunning", "The Force", "Diplomacy", "Leadership");
 foreach( $skills as $skillName ) {
         $skill = new Skill();
         $skill->name = $skillName;
-        $orm->save($skill);
+        $orm->persist($skill);
 }
 $orm->commit();]]></programlisting>
 
