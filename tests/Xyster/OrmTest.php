@@ -2,20 +2,15 @@
 /**
  * Xyster Framework
  *
- * LICENSE
- *
  * This source file is subject to the new BSD license that is bundled
  * with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
  * http://www.opensource.org/licenses/bsd-license.php
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to xyster@devweblog.org so we can send you a copy immediately.
  *
  * @category  Xyster
  * @package   UnitTests
  * @subpackage Xyster_Orm
- * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
+ * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
@@ -134,7 +129,7 @@ class Xyster_OrmTest extends Xyster_Orm_TestSetup
             $repoId[] = $key . '=' . $value;
         }
         $repoId = md5(implode("/", $repoId));
-        $entityFromSecondCache = $this->_orm->getSecondaryCache()->get($repoId);
+        $entityFromSecondCache = $this->_orm->getSecondaryCache()->load($repoId);
         $this->assertType('array', $entityFromSecondCache);
         $this->assertEquals($entity2->toArray(), $entityFromSecondCache['values']);
         $this->assertTrue($map->wasDeleted($entity));
@@ -290,6 +285,7 @@ class Xyster_OrmTest extends Xyster_Orm_TestSetup
     public function testRefresh()
     {
         $entity = $this->_orm->get('MockBug', 1);
+        $this->assertType('MockBug', $entity);
         $baseValues = $entity->getBase();
         $entity->reportedBy = 'doublecompile';
 

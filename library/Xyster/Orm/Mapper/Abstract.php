@@ -2,19 +2,14 @@
 /**
  * Xyster Framework
  *
- * LICENSE
- *
  * This source file is subject to the new BSD license that is bundled
  * with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
  * http://www.opensource.org/licenses/bsd-license.php
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to xyster@devweblog.org so we can send you a copy immediately.
  *
  * @category  Xyster
  * @package   Xyster_Orm
- * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
+ * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
@@ -35,6 +30,10 @@ require_once 'Xyster/Orm/Entity.php';
  */
 require_once 'Xyster/Orm/Entity/Meta.php';
 /**
+ * Zend_Filter
+ */
+require_once 'Zend/Filter.php';
+/**
  * An abstract implementation of the mapper interface
  * 
  * This class allows for a more simple implementation of the mapper interface,
@@ -42,7 +41,7 @@ require_once 'Xyster/Orm/Entity/Meta.php';
  *
  * @category  Xyster
  * @package   Xyster_Orm
- * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
+ * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
@@ -329,8 +328,8 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
     public function getTable()
     {
         if ( !$this->_table ) {
-            require_once 'Xyster/String.php';
-            $this->_table = Xyster_String::toUnderscores($this->getEntityName());
+            $this->_table = strtolower(Zend_Filter::get($this->getEntityName(),
+                'Word_CamelCaseToUnderscore'));
         }
         return $this->_table;
     }
@@ -443,8 +442,8 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
      */    
     public function translateField( $field )
     {
-        require_once 'Xyster/String.php';
-        return Xyster_String::toCamel($field);
+        $field = Zend_Filter::get($field, 'Word_UnderscoreToCamelCase');
+        return strtolower($field[0]) . substr($field, 1);
     }
 
     /**
@@ -454,8 +453,7 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
      */
     public function untranslateField( $field )
     {
-        require_once 'Xyster/String.php';
-        return Xyster_String::toUnderscores($field);
+        return strtolower(Zend_Filter::get($field, 'Word_CamelCaseToUnderscore'));
     }
     
     /**

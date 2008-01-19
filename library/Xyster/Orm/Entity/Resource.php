@@ -2,24 +2,19 @@
 /**
  * Xyster Framework
  *
- * LICENSE
- *
  * This source file is subject to the new BSD license that is bundled
  * with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
  * http://www.opensource.org/licenses/bsd-license.php
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to xyster@devweblog.org so we can send you a copy immediately.
  *
  * @category  Xyster
  * @package   Xyster_Orm
- * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
+ * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
 /**
- * Xyster_Orm_Entity
+ * @see Xyster_Orm_Entity
  */
 require_once 'Xyster/Orm/Entity.php';
 /**
@@ -27,15 +22,11 @@ require_once 'Xyster/Orm/Entity.php';
  */
 require_once 'Zend/Acl/Resource/Interface.php';
 /**
- * Xyster_String
- */
-require_once 'Xyster/String.php';
-/**
  * Entity that doubles as an ACL resource
  *
  * @category  Xyster
  * @package   Xyster_Orm
- * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
+ * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 class Xyster_Orm_Entity_Resource extends Xyster_Orm_Entity implements Zend_Acl_Resource_Interface
@@ -47,6 +38,6 @@ class Xyster_Orm_Entity_Resource extends Xyster_Orm_Entity implements Zend_Acl_R
      */
     public function getResourceId()
     {
-        return get_class($this) . '[' . Xyster_String::arrayToString($this->getPrimaryKey()) . ']';
+        return get_class($this) . '[' . $this->getPrimaryKeyAsString() . ']';
     }
 }

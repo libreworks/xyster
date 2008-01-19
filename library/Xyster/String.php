@@ -30,25 +30,6 @@ class Xyster_String
      * parentheses.
      */
     const PARENTH_QUOTE_REGEX = '/(?<![\w\d])(\(((?:"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"|[^()])|(?1))+\))/m';
-
-	/**
-	 * Converts an associative array into a string representation
-	 * 
-	 * For instance, an example output of this method might look like:
-	 * 
-	 * <code>1=January,2=February,3=March</code>
-	 * 
-	 * @param array $array The array to stringify
-	 * @return string The stringified array
-	 */
-	static public function arrayToString( array $array )
-	{
-	    $string = array();
-	    foreach( $array as $key => $value ) {
-	        $string[] = $key . '=' . $value;
-	    }
-	    return implode(',', $string);
-	}
 	
     /**
      * Match nested parentheses groups not inside of double-quotes
@@ -158,41 +139,5 @@ class Xyster_String
 		}
 		$split[] = $buff;
 		return $split;
-	}
-	
-	/**
-	 * Converts a string in Underscore case to Camel case
-	 *
-	 * <code>
-	 * $in = "this_is_underscore_case";
-	 * $out = Xyster_String::toCamel($in);
-	 * echo $out; // prints thisIsCamelCase
-	 * </code>
-	 *
-	 * @param string $name  A string in Underscore case (this_is_underscore_case)
-	 * @return string  The string in Camel case (thisIsCamelCase)
-	 * @see toUnderscores()
-	 */
-	static public function toCamel( $name )
-	{
-		return preg_replace("/_([a-z])/e", "strtoupper('\\1')", $name);
-	}
-	
-	/**
-	 * Converts a string in Camel case to Underscore case
-	 *
-	 * <code>
-	 * $in = "thisIsCamelCase";
-	 * $out = Xyster_String::toUnderscores($in);
-	 * echo $out; // prints this_is_underscore_case
-	 * </code>
-	 *
-	 * @param string $name A string in Camel case (thisIsCamelCase)
-	 * @return string The string in Underscore case (this_is_underscore_case)
-	 * @see toCamel()
-	 */
-	static public function toUnderscores( $name )
-	{
-		return strtolower(preg_replace('/([a-z])([A-Z])/', "$1_$2", $name));
 	}
 }

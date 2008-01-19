@@ -2,19 +2,14 @@
 /**
  * Xyster Framework
  *
- * LICENSE
- *
  * This source file is subject to the new BSD license that is bundled
  * with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
  * http://www.opensource.org/licenses/bsd-license.php
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to xyster@devweblog.org so we can send you a copy immediately.
  *
  * @category  Xyster
  * @package   Xyster_Orm
- * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
+ * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
@@ -22,10 +17,6 @@
  * @see Xyster_Orm_Loader
  */
 require_once 'Xyster/Orm/Loader.php';
-/**
- * @see Xyster_String
- */
-require_once 'Xyster/String.php';
 /**
  * @see Xyster_Collection_Map_String
  */
@@ -35,7 +26,7 @@ require_once 'Xyster/Collection/Map/String.php';
  *
  * @category  Xyster
  * @package   Xyster_Orm
- * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
+ * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 class Xyster_Orm_Repository
@@ -350,16 +341,21 @@ class Xyster_Orm_Repository
     /**
      * Convenience method to stringify the primary key
      * 
-     * @param Xyster_Orm_Entity $entity The entity whose key is retrieved
+     * @param mixed $key A primary key or an entity whose primary key is used
      * @return string The primary key as a string
      */
     protected function _stringifyPrimaryKey( $key )
     {
         if ( $key instanceof Xyster_Orm_Entity ) {
-            $key = $key->getPrimaryKey(); 
+        	/* @var $key Xyster_Orm_Entity */
+            $key = $key->getPrimaryKey();
         }
         if ( is_array($key) ) {
-            $key = Xyster_String::arrayToString($key);
+            $string = array();
+            foreach( $key as $k => $value ) {
+                $string[] = $k . '=' . $value;
+            }
+            $key = implode(',', $string);
         }
         return (string) $key;
     }

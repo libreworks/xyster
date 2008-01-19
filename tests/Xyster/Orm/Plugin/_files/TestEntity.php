@@ -2,20 +2,15 @@
 /**
  * Xyster Framework
  *
- * LICENSE
- *
  * This source file is subject to the new BSD license that is bundled
  * with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
  * http://www.opensource.org/licenses/bsd-license.php
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to xyster@devweblog.org so we can send you a copy immediately.
  *
  * @category  Xyster
  * @package   UnitTests
  * @subpackage Xyster_Orm
- * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
+ * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
@@ -24,14 +19,14 @@
  */
 require_once 'Xyster/Orm/Entity.php';
 /**
- * Zend_Acl_Resource_Interface
+ * @see Xyster_Orm_Entity_Resource
  */
-require_once 'Zend/Acl/Resource/Interface.php';
+require_once 'Xyster/Orm/Entity/Resource.php';
 /**
  * A stub entity for plugin testing
  *
  */
-class Xyster_Orm_Plugin_TestEntity extends Xyster_Orm_Entity implements Zend_Acl_Resource_Interface
+class Xyster_Orm_Plugin_TestEntity extends Xyster_Orm_Entity_Resource
 {
     /**
      * Creates a sample entity
@@ -41,15 +36,5 @@ class Xyster_Orm_Plugin_TestEntity extends Xyster_Orm_Entity implements Zend_Acl
     public function __construct( array $values = null )
     {
         $this->_values = array('test'=>1);
-    }
-    
-    /**
-     * Gets the ACL resource id
-     *
-     * @return string
-     */
-    public function getResourceId()
-    {
-        return spl_object_hash($this);
     }
 }
