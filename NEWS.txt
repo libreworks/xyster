@@ -1,6 +1,22 @@
 Xyster Framework                                                             NEWS
 |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
+=BUILD 4 / ??-Jan-2008 / based on revision ?? =
+- Unit tests now use PHPUnit's "setExpectedException" method
+- Xyster_Controller fixes:
+    * Action_Helper_File - use quotation marks around filename
+    * Plugin_Cache - using incorrect PHP ini setting value
+- Xyster_Orm features and fixes:
+    * Addition of Xyster_Orm_Entity_Resource (for ACL usage)
+    * Proper handling of relations loaded but set to null
+    * 0000004: Ease of use of relation setup from inside mapper
+    * 0000006: Simple Optimistic Offline Locking
+- Xyster_String
+    * 0000023: Create Xyster_Filter classes where appropriate and use new Zend
+        Filter_Word classes to replace toUnderscores and toCamel.
+- New Xyster_Container (Incubator) - A dependency injection container
+- New Xyster_Type - for working with classes, equality, and Java-style hashCodes
+
 =BUILD 3 / 05-Nov-2007 / based on revision 137 =
 - Better build tools
 - Docbook documentation

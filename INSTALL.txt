@@ -10,7 +10,7 @@ SYSTEM REQUIREMENTS
 -------------------
 
 Xyster is built with object-oriented PHP 5 and requires
-PHP 5.1.4 or later. 
+PHP 5.2.1 or later. 
 
 Xyster requires the availability of the Zend Framework, version 1.0.1 or later.
 
