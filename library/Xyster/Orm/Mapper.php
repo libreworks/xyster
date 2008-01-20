@@ -2,19 +2,14 @@
 /**
  * Xyster Framework
  *
- * LICENSE
- *
  * This source file is subject to the new BSD license that is bundled
  * with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
  * http://www.opensource.org/licenses/bsd-license.php
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to xyster@devweblog.org so we can send you a copy immediately.
  *
  * @category  Xyster
  * @package   Xyster_Orm
- * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
+ * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
@@ -33,7 +28,7 @@ require_once 'Xyster/Data/Set.php';
  * @see       Xyster_Orm_Mapper_Interface
  * @category  Xyster
  * @package   Xyster_Orm
- * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
+ * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
@@ -434,6 +429,7 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
 	 * Removes entities from the backend
 	 *
 	 * @param Xyster_Data_Criterion $where The criteria on which to remove entities
+	 * @return int The number of rows deleted
 	 */
 	protected function _delete( Xyster_Data_Criterion $where )
 	{
@@ -444,6 +440,7 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
 			. $this->_getAdapter()->quoteIdentifier($this->getTable())
 		    . ' WHERE ' . $token->getSql());
 		$stmt->execute($token->getBindValues());
+		return $stmt->rowCount();
 	}
 	
 	/**
@@ -746,7 +743,8 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
 	/**
 	 * Updates the values of an entity in the backend
 	 *
-	 * @param Xyster_Orm_Entity $entity  The entity to update
+	 * @param Xyster_Orm_Entity $entity The entity to update
+     * @throws Xyster_Orm_Mapper_Exception if the record was modified or deleted
 	 */
 	protected function _update( Xyster_Orm_Entity $entity )
 	{
@@ -766,8 +764,32 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
 	        $where[] = $db->quoteInto($sql, $key[$name]); 
     	}
     	
+        // optimistic locking
+    	$lockingField = $this->getOption('locking');
+    	$lockingVersion = 0;
+    	if ( $lockingField ) {
+    		$dbLockingField = $this->untranslateField($lockingField);
+    		$lockingVersion = $entity->$lockingField;
+    		$sql = $db->quoteIdentifier($dbLockingField) . ' = ?';
+            $where[] = $db->quoteInto($sql, $lockingVersion);
+            if ( count($values) > 0 ) {
+            	// if we have dirty values, increase the version number
+            	$values[$dbLockingField] = $entity->$lockingField++;
+            }
+    	}
+    	
     	if ( count($values) > 0 ) {
-    	    $this->_getAdapter()->update($this->getTable(), $values, $where);
+    	    $rows = $this->_getAdapter()->update($this->getTable(), $values, $where);
+    	    
+    	    // optimistic locking
+    	    if ( $lockingField && !$rows ) {
+    	    	require_once 'Xyster/Orm/Mapper/Exception.php';
+   	    		throw new Xyster_Orm_Mapper_Exception("Could not update the '" .
+   	    		  $this->getEntityName() . "' with ID '" .
+   	    		  $entity->getPrimaryKeyAsString(true) . "' and version #" .
+   	    		  $lockingVersion .
+   	    		  ".  The database record was either deleted or modified."); 
+    	    }
     	}
 	}
 }

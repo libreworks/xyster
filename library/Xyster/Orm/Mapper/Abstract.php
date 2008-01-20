@@ -101,6 +101,8 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
      * specified, the mapper will use the defaultMetadataCache.</dd>
      * <dt>doNotRefreshAfterSave</dt><dd>This will cause the mapper not to
      * refresh the entity after it's inserted or updated.</dd>
+     * <dt>locking</dt><dd>The name of the field which holds an integer
+     * version number of the record (used to avoid concurrent changes)</dd>
      * </dl>
      *
      * @var array
@@ -460,6 +462,7 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
      * Removes entities from the backend
      *
      * @param Xyster_Data_Criterion $where  The criteria on which to remove entities
+     * @return int The number of rows deleted
      */
     abstract protected function _delete( Xyster_Data_Criterion $where );
     
@@ -488,7 +491,12 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
     /**
      * Updates the values of an entity in the backend
      *
-     * @param Xyster_Orm_Entity $entity  The entity to update
+     * Class authors must remember to implement optimistic offline locking in
+     * this method.  See the {@link Xyster_Orm_Mapper::_update} method for an 
+     * example.
+     * 
+     * @param Xyster_Orm_Entity $entity The entity to update
+     * @throws Xyster_Orm_Mapper_Exception if the record was modified or deleted 
      */
     abstract protected function _update( Xyster_Orm_Entity $entity );
     

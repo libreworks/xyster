@@ -4,20 +4,6 @@
             <para>This static class was a place to gather all the useful string manipulation methods that piled up as the
                 framework grew. As a note for future development, similar string methods should be put here.</para>
 
-	<sect2 id="xyster.string.array">
-            <title>Stringify an Array</title>
-
-            <para>The <code>arrayToString</code> method converts an associative array into a string, joining keys and values
-                with an equals sign and separating key/value pairs with commas.</para>
-
-            <programlisting role="php"><![CDATA[<?php
-$months = array(1=>'January', 2=>'February', 3=>'March');
-echo Xyster_String::arrayToString($months);
-// prints 1=January,2=February,3=March
-}
-]]>
-            </programlisting>
-        </sect2>
         <sect2 id="xyster.string.titlecase">
             <title>Converting a String To Title Case</title>
 
@@ -31,22 +17,6 @@ echo Xyster_String::arrayToString($months);
 $myString = "the dogs came out of the rain";
 echo Xyster_String::titleCase($myString);
 // prints The Dogs Came out of the Rain
-]]>
-            </programlisting>
-        </sect2>
-
-        <sect2 id="xyster.string.camel">
-            <title>Camel and Underscore Case</title>
-
-            <para>There are two convenience methods for converting strings back and forth between camel case and
-                underscore case.</para>
-
-            <programlisting role="php"><![CDATA[<?php
-$myString = "some_method_name";
-$camel = Xyster_String::toCamel($myString);
-// $camel == someMethodName
-$under = Xyster_String::toUnderscores($camel);
-// $under == $myString
 ]]>
             </programlisting>
         </sect2>

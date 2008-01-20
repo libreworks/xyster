@@ -37,4 +37,15 @@ class Xyster_Orm_Plugin_TestEntity extends Xyster_Orm_Entity_Resource
     {
         $this->_values = array('test'=>1);
     }
+    
+    /**
+     * Gets the primary key of the entity
+     *
+     * @param boolean $base
+     * @return array
+     */
+    public function getPrimaryKey( $base = false )
+    {
+        return array() + $this->_values;
+    }
 }
