@@ -55,14 +55,6 @@ class Xyster_Container_Behavior_AutomatedTest extends Xyster_Container_Behavior_
         parent::setUp();
         $this->object = new Xyster_Container_Behavior_Automated($this->delegate);
     }
-
-    /**
-     * Tests the 'toString' method
-     */
-    public function test__toString()
-    {
-        $this->assertSame('Automated:' . $this->delegate->__toString(), $this->object->__toString());
-    }
 }
 
 // Call Xyster_Container_Behavior_AutomatedTest::main() if this source file is executed directly.

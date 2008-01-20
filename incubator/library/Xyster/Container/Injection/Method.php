@@ -45,6 +45,16 @@ class Xyster_Container_Injection_Method extends Xyster_Container_Injection_Singl
     }
     
     /**
+     * Gets the descriptor of this adapter
+     *
+     * @return string
+     */
+    public function getDescriptor()
+    {
+        return 'MethodInjector-';
+    }
+    
+    /**
      * Retrieve the component instance
      *
      * @param Xyster_Container_Interface $container the container, that is used to resolve any possible dependencies of the instance
@@ -94,16 +104,6 @@ class Xyster_Container_Injection_Method extends Xyster_Container_Injection_Singl
         foreach( $currentParameters as $k => $param ) {
             $param->verify($container, $this, $reflectionParams[$k]);
         }
-    }
-    
-    /**
-     * Gets the string representation of the object
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return "MethodInjector-" . parent::__toString();
     }
     
     /**

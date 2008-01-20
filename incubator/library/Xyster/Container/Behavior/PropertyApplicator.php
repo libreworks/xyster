@@ -103,13 +103,13 @@ class Xyster_Container_Behavior_PropertyApplicator extends Xyster_Container_Beha
     }
     
     /**
-     * Gets the string equivalent of the object
+     * Gets the descriptor for this adapter
      *
      * @return string
      */
-    public function __toString()
+    public function getDescriptor()
     {
-        return "PropertyApplied:" . parent::__toString();
+        return 'PropertyApplied';
     }
     
     /**

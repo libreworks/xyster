@@ -67,14 +67,6 @@ class Xyster_Container_Behavior_CachedTest extends Xyster_Container_Behavior_Sto
         $return = $this->object->get();
         $this->assertSame($instance, $return);
     }
-
-    /**
-     * Tests the 'toString' method
-     */
-    public function test__toString()
-    {
-        $this->assertSame('Cached:' . $this->delegate->__toString(), $this->object->__toString());
-    }
 }
 
 // Call Xyster_Container_Behavior_CachedTest::main() if this source file is executed directly.

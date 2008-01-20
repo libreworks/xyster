@@ -50,6 +50,16 @@ final class Xyster_Container_Adapter_Instance extends Xyster_Container_Adapter_A
     }
     
     /**
+     * Gets the descriptor of this adapter
+     *
+     * @return string
+     */
+    public function getDescriptor()
+    {
+        return 'Instance-';
+    }
+    
+    /**
      * Retrieve the component instance
      * 
      * @param Xyster_Container_Interface $container the container, that is used to resolve any possible dependencies of the instance
@@ -70,16 +80,6 @@ final class Xyster_Container_Adapter_Instance extends Xyster_Container_Adapter_A
      */
     public function verify(Xyster_Container_Interface $container)
     {
-    }
-    
-    /**
-     * Returns the string representation of the object
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return "Instance-" . parent::__toString();
     }
     
     /**

@@ -156,6 +156,6 @@ abstract class Xyster_Container_Behavior_Abstract implements Xyster_Container_Be
      */
     public function __toString()
     {
-        return $this->_delegate->__toString();
+        return $this->getDescriptor() . ":" . $this->_delegate->__toString();
     }
 }

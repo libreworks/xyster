@@ -72,6 +72,10 @@ class Xyster_Container_Behavior_AbstractTest extends Xyster_Container_Behavior_C
 
 class Xyster_Container_Behavior_Stub extends Xyster_Container_Behavior_Abstract
 {
+    public function getDescriptor()
+    {
+        return 'BehaviorStub:';
+    }
 }
 
 class Xyster_Container_Adapter_NoMonitorStub implements Xyster_Container_Adapter
@@ -82,6 +86,11 @@ class Xyster_Container_Adapter_NoMonitorStub implements Xyster_Container_Adapter
 
     public function getDelegate()
     {
+    }
+    
+    public function getDescriptor()
+    {
+        return 'NoMonitorStub:';
     }
 
     public function getImplementation()

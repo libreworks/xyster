@@ -112,14 +112,6 @@ class Xyster_Container_Behavior_PropertyApplicatorTest extends Xyster_Container_
         $this->object->setProperty('name', 'U.S.S. Submergible');
         $this->assertAttributeEquals($map, '_properties', $this->object);
     }
-
-    /**
-     * Tests the 'toString' method
-     */
-    public function test__toString()
-    {
-        $this->assertSame('PropertyApplied:' . $this->delegate->__toString(), $this->object->__toString());
-    }
 }
 
 // Call Xyster_Container_Behavior_PropertyApplicatorTest::main() if this source file is executed directly.

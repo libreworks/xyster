@@ -127,7 +127,7 @@ class Xyster_Container_Adapter_AbstractTest extends PHPUnit_Framework_TestCase
      */
     public function test__toString()
     {
-        $this->assertEquals((string)$this->_key, $this->object->__toString());
+        $this->assertEquals($this->object->getDescriptor() . (string)$this->_key, $this->object->__toString());
     }
     
     /**
@@ -163,6 +163,10 @@ class Xyster_Container_Adapter_AbstractStub extends Xyster_Container_Adapter_Abs
     }
     public function verify(Xyster_Container_Interface $container)
     {
+    }
+    public function getDescriptor()
+    {
+        return 'AbstractStub:';
     }
 }
 

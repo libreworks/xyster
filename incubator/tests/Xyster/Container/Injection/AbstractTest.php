@@ -87,6 +87,10 @@ abstract class TestClass
 
 class Xyster_Container_Injection_AbstractImpl extends Xyster_Container_Injection_Abstract 
 {
+    public function getDescriptor()
+    {
+        return 'Impl:';
+    }
     public function getInstance( Xyster_Container_Interface $container )
     {
     }

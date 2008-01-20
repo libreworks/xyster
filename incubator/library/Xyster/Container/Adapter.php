@@ -43,6 +43,13 @@ interface Xyster_Container_Adapter
     function getDelegate();
 
     /**
+     * Gets the descriptor of this adapter
+     *
+     * @return string
+     */
+    function getDescriptor();
+    
+    /**
      * Retrieve the class of the component
      * 
      * Should normally be a concrete class (ie, a class that can be

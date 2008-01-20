@@ -45,13 +45,13 @@ class Xyster_Container_Injection_Setter extends Xyster_Container_Injection_Itera
     }
     
     /**
-     * Gets the string representation of the object
+     * Gets the descriptor of this adapter
      *
      * @return string
      */
-    public function __toString()
+    public function getDescriptor()
     {
-        return "SetterInjector-" . parent::__toString();
+        return 'SetterInjector-';
     }
     
     /**

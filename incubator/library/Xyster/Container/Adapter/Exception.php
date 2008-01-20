@@ -11,29 +11,20 @@
  * @package   Xyster_Container
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
- * @version   $Id$
+ * @version   $Id: Exception.php 190 2008-01-07 22:39:57Z doublecompile $
  */
 /**
- * @see Xyster_Container_Behavior_Abstract
+ * @see Xyster_Container_Exception
  */
-require_once 'Xyster/Container/Behavior/Abstract.php';
+require_once 'Xyster/Container/Exception.php';
 /**
- * Automated behavior
- * 
+ * Exception for container adapter classes
+ *
  * @category  Xyster
  * @package   Xyster_Container
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Container_Behavior_Automated extends Xyster_Container_Behavior_Abstract
+class Xyster_Container_Adapter_Exception extends Xyster_Container_Exception
 {
-    /**
-     * Gets the descriptor for this adapter
-     *
-     * @return string
-     */
-    public function getDescriptor()
-    {
-        return 'Automated';
-    }
 }

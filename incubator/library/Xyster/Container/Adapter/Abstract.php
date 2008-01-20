@@ -141,7 +141,7 @@ abstract class Xyster_Container_Adapter_Abstract implements Xyster_Container_Ada
      */
     public function __toString()
     {
-        return "" . $this->getKey();
+        return $this->getDescriptor() . $this->getKey();
     }
     
     /**

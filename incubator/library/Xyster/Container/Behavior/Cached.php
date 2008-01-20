@@ -71,12 +71,12 @@ class Xyster_Container_Behavior_Cached extends Xyster_Container_Behavior_Stored 
     }
     
     /**
-     * Gets the string representation of the object
+     * Gets the descriptor for this adapter
      *
      * @return string
      */
-    public function __toString()
+    public function getDescriptor()
     {
-        return "Cached:" . parent::__toString();
+        return 'Cached';
     }
 }

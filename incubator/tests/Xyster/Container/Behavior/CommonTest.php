@@ -128,6 +128,6 @@ class Xyster_Container_Behavior_CommonTest extends PHPUnit_Framework_TestCase
      */
     public function test__toString()
     {
-        $this->assertSame($this->delegate->__toString(), $this->object->__toString());
+        $this->assertSame($this->object->getDescriptor() . ':' . $this->delegate->__toString(), $this->object->__toString());
     }
 }

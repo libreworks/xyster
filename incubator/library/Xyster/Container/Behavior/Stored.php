@@ -56,6 +56,16 @@ class Xyster_Container_Behavior_Stored extends Xyster_Container_Behavior_Abstrac
     }
 
     /**
+     * Gets the descriptor for this adapter 
+     *
+     * @return string
+     */
+    public function getDescriptor()
+    {
+        return 'Stored';
+    }
+    
+    /**
      * Retrieve the component instance
      * 
      * {@inherit}
