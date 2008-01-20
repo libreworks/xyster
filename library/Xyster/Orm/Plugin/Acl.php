@@ -2,20 +2,15 @@
 /**
  * Xyster Framework
  *
- * LICENSE
- *
  * This source file is subject to the new BSD license that is bundled
  * with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
  * http://www.opensource.org/licenses/bsd-license.php
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to xyster@devweblog.org so we can send you a copy immediately.
  *
  * @category  Xyster
  * @package   Xyster_Orm
  * @subpackage Plugins
- * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
+ * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
@@ -29,7 +24,7 @@ require_once 'Xyster/Orm/Plugin/Abstract.php';
  * @category  Xyster
  * @package   Xyster_Orm
  * @subpackage Plugins
- * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)
+ * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 class Xyster_Orm_Plugin_Acl extends Xyster_Orm_Plugin_Abstract
