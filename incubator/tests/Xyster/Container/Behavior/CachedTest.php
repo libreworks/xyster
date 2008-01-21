@@ -53,7 +53,7 @@ class Xyster_Container_Behavior_CachedTest extends Xyster_Container_Behavior_Sto
     protected function setUp()
     {
         parent::setUp();
-        $this->object = new Xyster_Container_Behavior_Cached($this->delegate);
+        $this->object = new Xyster_Container_Behavior_Cached($this->delegate, $this->reference);
     }
     
     /**
@@ -62,9 +62,9 @@ class Xyster_Container_Behavior_CachedTest extends Xyster_Container_Behavior_Sto
     public function testGetAndSet()
     {
         $instance = new SplObjectStorage();
-        $this->object->set($instance);
-        $this->assertAttributeSame($instance, '_instance', $this->object);
-        $return = $this->object->get();
+        $this->reference->set($instance);
+        $this->assertAttributeSame($instance, '_instance', $this->reference);
+        $return = $this->object->getStoredObject();
         $this->assertSame($instance, $return);
     }
 }

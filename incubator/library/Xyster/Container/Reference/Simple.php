@@ -14,41 +14,41 @@
  * @version   $Id$
  */
 /**
- * @see Xyster_Container_Behavior_Stored
+ * @see Xyster_Container_Reference
  */
-require_once 'Xyster/Container/Behavior/Stored.php';
+require_once 'Xyster/Container/Reference.php';
 /**
- * Cached behavior
+ * Simple instance implementation of Xyster_Container_Reference 
  * 
  * @category  Xyster
  * @package   Xyster_Container
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Container_Behavior_Cached extends Xyster_Container_Behavior_Stored
-{    
+class Xyster_Container_Reference_Simple implements Xyster_Container_Reference
+{
     /**
-     * Creates a new stored behavior
-     * 
-     * @param Xyster_Container_Adapter $delegate
-     * @param Xyster_Container_Reference $reference
+     * @var mixed
      */
-    public function __construct( Xyster_Container_Adapter $delegate, Xyster_Container_Reference $reference = null )
+    private $_instance;
+
+    /**
+     * Gets the value 
+     *
+     * @return mixed
+     */
+    public function get()
     {
-        if ( $reference == null ) {
-        	require_once 'Xyster/Container/Reference/Simple.php';
-            $reference = new Xyster_Container_Reference_Simple; 
-        }
-        parent::__construct($delegate, $reference);
+        return $this->_instance;
     }
     
     /**
-     * Gets the descriptor for this adapter
+     * Sets the value
      *
-     * @return string
+     * @param mixed $value
      */
-    public function getDescriptor()
+    public function set( $value )
     {
-        return 'Cached';
+        $this->_instance = $value;
     }
 }

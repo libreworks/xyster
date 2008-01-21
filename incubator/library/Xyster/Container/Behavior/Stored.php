@@ -84,4 +84,17 @@ class Xyster_Container_Behavior_Stored extends Xyster_Container_Behavior_Abstrac
         }
         return $instance;
     }
+    
+    /**
+     * Retrieves the stored reference.
+     * 
+     * May be null if it has never been set, or possibly if the reference has
+     * been flushed.
+     * 
+     * @return mixed the stored object or null
+     */
+    public function getStoredObject()
+    {
+        return $this->_instanceReference->get();
+    }
 }

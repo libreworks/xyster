@@ -22,6 +22,10 @@ require_once 'Xyster/Container/Behavior/Factory/Abstract.php';
  */
 require_once 'Xyster/Container/Behavior/Cached.php';
 /**
+ * @see Xyster_Container_Reference_Simple
+ */
+require_once 'Xyster/Container/Reference/Simple.php';
+/**
  * Factory class creating cached behaviors
  *
  * @category  Xyster
@@ -46,7 +50,7 @@ class Xyster_Container_Behavior_Factory_Cached extends Xyster_Container_Behavior
         }
         Xyster_Container_Behavior_Factory_Abstract::removePropertiesIfPresent($properties, Xyster_Container_Features::CACHE());
         return new Xyster_Container_Behavior_Cached(parent::addComponentAdapter(
-            $monitor, $properties, $adapter));
+            $monitor, $properties, $adapter), $this->_newObjectReference());
     }
     
     /**
@@ -67,6 +71,17 @@ class Xyster_Container_Behavior_Factory_Cached extends Xyster_Container_Behavior
         }
         Xyster_Container_Behavior_Factory_Abstract::removePropertiesIfPresent($properties, Xyster_Container_Features::CACHE());
         return new Xyster_Container_Behavior_Cached(parent::createComponentAdapter(
-            $monitor, $properties, $key, $implementation, $parameters));
+            $monitor, $properties, $key, $implementation, $parameters),
+            $this->_newObjectReference());
+    }
+
+    /**
+     * Gets a new object reference
+     * 
+     * @return Xyster_Container_Reference
+     */
+    protected function _newObjectReference()
+    {
+    	return new Xyster_Container_Reference_Simple;
     }
 }

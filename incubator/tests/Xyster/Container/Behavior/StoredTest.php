@@ -24,7 +24,7 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'CommonTest.php';
 
 require_once 'PHPUnit/Framework.php';
 require_once 'Xyster/Container/Behavior/Stored.php';
-require_once 'Xyster/Container/Reference.php';
+require_once 'Xyster/Container/Reference/Simple.php';
 
 /**
  * Test class for Xyster_Container_Behavior_Stored.
@@ -59,7 +59,7 @@ class Xyster_Container_Behavior_StoredTest extends Xyster_Container_Behavior_Com
     protected function setUp()
     {
         parent::setUp();
-        $this->reference = new Xyster_Container_ReferenceStub;
+        $this->reference = new Xyster_Container_Reference_Simple;
         $this->object = new Xyster_Container_Behavior_Stored($this->delegate, $this->reference);
     }
 
@@ -71,7 +71,7 @@ class Xyster_Container_Behavior_StoredTest extends Xyster_Container_Behavior_Com
         $instance = $this->object->getInstance($this->container);
         $this->assertType('ArrayObject', $instance);
         $this->object->flush();
-        $this->assertAttributeEquals(null, '_ref', $this->reference);
+        $this->assertAttributeEquals(null, '_instance', $this->reference);
     }
 
     /**
@@ -83,31 +83,6 @@ class Xyster_Container_Behavior_StoredTest extends Xyster_Container_Behavior_Com
         $this->assertType('ArrayObject', $instance);
         $instance2 = $this->object->getInstance($this->container);
         $this->assertSame($instance, $instance2);
-    }
-}
-
-class Xyster_Container_ReferenceStub implements Xyster_Container_Reference
-{
-    protected $_ref;
-    
-    /**
-     * Retrieve an actual reference to the object
-     * 
-     * @return mixed an actual reference to the object.
-     */
-    public function get()
-    {
-        return $this->_ref;
-    }
-
-    /**
-     * Assign an object to the reference.
-     * 
-     * @param mixed $item the object to assign to the reference, May be null
-     */
-    public function set( $item )
-    {
-        $this->_ref = $item;
     }
 }
 
