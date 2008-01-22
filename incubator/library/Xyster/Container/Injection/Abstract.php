@@ -28,6 +28,8 @@ require_once 'Xyster/Container/Adapter/Abstract.php';
 abstract class Xyster_Container_Injection_Abstract extends Xyster_Container_Adapter_Abstract
 {
     protected $_parameters = array();
+    
+    private $_useNames = false;
 
     /**
      * Constructs a new adapter for the given key and implementation
@@ -36,10 +38,12 @@ abstract class Xyster_Container_Injection_Abstract extends Xyster_Container_Adap
      * @param Xyster_Type $implementation
      * @param array $parameters
      * @param Xyster_Container_Monitor $monitor
+     * @param boolean $useNames
      */
-    public function __construct( $key, $implementation, array $parameters = null, Xyster_Container_Monitor $monitor = null )
+    public function __construct( $key, $implementation, array $parameters = null, Xyster_Container_Monitor $monitor = null, $useNames = false )
     {
         parent::__construct($key, $implementation, $monitor);
+        $this->_useNames = $useNames;
         
         $this->_checkConcrete();
         if ( $parameters != null ) {
@@ -51,20 +55,6 @@ abstract class Xyster_Container_Injection_Abstract extends Xyster_Container_Adap
             }
         }
         $this->_parameters = $parameters;
-    }
-    
-    /**
-     * Checks to make sure the current implementation is a concrete class
-     *
-     * @throws Xyster_Container_Exception if the implementation isn't concrete
-     */
-    protected function _checkConcrete()
-    {
-        $class = $this->getImplementation()->getClass();
-        if ( $class instanceof ReflectionClass && ( $class->isInterface() || $class->isAbstract() ) ) {
-            require_once 'Xyster/Container/Exception.php';
-            throw new Xyster_Container_Exception($class->getName() . ' is not a concrete class');
-        }
     }
     
     /**
@@ -82,6 +72,30 @@ abstract class Xyster_Container_Injection_Abstract extends Xyster_Container_Adap
                 /* @var $param Xyster_Container_Parameter */
                 $param->accept($visitor);
             }
+        }
+    }
+    
+    /**
+     * Gets whether the option to use parameter names has been set
+     *
+     * @return boolean
+     */
+    public function useNames()
+    {
+    	return $this->_useNames;
+    }
+    
+    /**
+     * Checks to make sure the current implementation is a concrete class
+     *
+     * @throws Xyster_Container_Exception if the implementation isn't concrete
+     */
+    protected function _checkConcrete()
+    {
+        $class = $this->getImplementation()->getClass();
+        if ( $class instanceof ReflectionClass && ( $class->isInterface() || $class->isAbstract() ) ) {
+            require_once 'Xyster/Container/Exception.php';
+            throw new Xyster_Container_Exception($class->getName() . ' is not a concrete class');
         }
     }
     
@@ -119,6 +133,14 @@ abstract class Xyster_Container_Injection_Abstract extends Xyster_Container_Adap
         }
     }
 
+    /**
+     * Inform monitor about component instantiation failure
+     *
+     * @param Xyster_Container_Monitor $monitor
+     * @param Xyster_Type $class
+     * @param Exception $e
+     * @param Xyster_Container_Interface $container
+     */
     protected function _caughtInstantiationException(Xyster_Container_Monitor $monitor, Xyster_Type $class, Exception $e, Xyster_Container_Interface $container)
     {
         $monitor->instantiationFailed($container, $this, $class, $e);
@@ -126,6 +148,14 @@ abstract class Xyster_Container_Injection_Abstract extends Xyster_Container_Adap
         throw new Xyster_Container_Exception($e->getMessage());
     }
 
+    /**
+     * Inform monitor about error while instantiating component
+     *
+     * @param Xyster_Container_Monitor $monitor
+     * @param ReflectionMethod $member
+     * @param mixed $componentInstance
+     * @param Exception $e
+     */
     protected function _caughtInvocationTargetException(Xyster_Container_Monitor $monitor, ReflectionMethod $member, $componentInstance, Exception $e)
     {
         $monitor->invocationFailed($member, $componentInstance, $e);

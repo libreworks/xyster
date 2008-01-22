@@ -65,22 +65,24 @@ class Xyster_Container_Injection_Method extends Xyster_Container_Injection_Singl
     public function getInstance( Xyster_Container_Interface $container )
     {
         $method = $this->_getInjectorMethod();
+        $inst = null;
+        
         $monitor = $this->currentMonitor();
         
         try {
-            $class = $this->getImplementation();
-            $classType = $class->getClass();
-            $monitor->instantiating($container, $this, $class);
+            $monitor->instantiating($container, $this, null);
             $startTime = microtime(true);
-            $inst = $classType->newInstance();
+            $parameters = null;
+            $inst = $this->getImplementation()->getClass()->newInstance();
             if ( $method instanceof ReflectionMethod ) {
-                $parameters = $this->_getMemberArguments($container, $method);
+                $parameters = $this->_getMemberArguments($container, $method,
+                    Xyster_Type::getForParameters($method));
                 $method->invokeArgs($inst, $parameters);
             }
-            $monitor->instantiated($container, $this, $class, $inst, $parameters, microtime(true) - $startTime);
+            $monitor->instantiated($container, $this, null, $inst, $parameters, microtime(true) - $startTime);
             return $inst;
-        } catch ( Exception $e ) {
-            $this->_caughtInstantiationException($monitor, $class, $e, $container);
+        } catch ( ReflectionException $e ) {
+            $this->_caughtInstantiationException($monitor, null, $e, $container);
         }
     }
     
@@ -93,16 +95,14 @@ class Xyster_Container_Injection_Method extends Xyster_Container_Injection_Singl
     public function verify( Xyster_Container_Interface $container )
     {
         $method = $this->_getInjectorMethod();
-        $parameterTypes = array();
-        foreach( $method->getParameters() as $param ) {
-            /* @var $param ReflectionParameter */
-            $parameterTypes[] = $param->getClass();
-        }
+        $parameterTypes = Xyster_Type::getForParameters($method);
         $currentParameters = $this->_parameters !== null ? $this->_parameters :
             $this->_createDefaultParameters($parameterTypes);
-        $reflectionParams = $method->getParameters();
         foreach( $currentParameters as $k => $param ) {
-            $param->verify($container, $this, $reflectionParams[$k]);
+        	/* @var $param Xyster_Container_Parameter */
+            $param->verify($container, $this, $parameterTypes[$k],
+                new Xyster_Container_NameBinding_Parameter($method, $k),
+                $this->useNames());
         }
     }
     
@@ -114,6 +114,7 @@ class Xyster_Container_Injection_Method extends Xyster_Container_Injection_Singl
     protected function _getInjectorMethod()
     {
         $class = $this->getImplementation()->getClass();
-        return $class->hasMethod($this->_methodName) ? $class->getMethod($this->_methodName) : null;
+        return $class->hasMethod($this->_methodName) ?
+            $class->getMethod($this->_methodName) : null;
     }
 }

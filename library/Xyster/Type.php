@@ -25,8 +25,11 @@ class Xyster_Type
 {
     private static $_nesting = 10;
     
-    private static $_types = array('boolean', 'integer', 'double', 'string',
-        'array');
+    private static $_types = array('array', 'scalar', 'boolean', 'integer',
+        'double', 'string');
+    
+    private static $_scalarTypes = array('boolean', 'integer', 'double',
+        'string');
     
     private static $_classes = array();
     
@@ -100,7 +103,7 @@ class Xyster_Type
     }
 
     /**
-     * Determines if the supplied type is a parent of the current type
+     * Determines if the supplied type is a child of the current type
      * 
      * The $type argument can be either a string, a ReflectionClass object or a
      * Xyster_Type object
@@ -113,7 +116,9 @@ class Xyster_Type
         $class = null;
         if ( is_string($type) ) {
             $name = $type;
-            $class = new ReflectionClass($type);
+            if ( class_exists($type, false) ) {
+                $class = new ReflectionClass($type);
+            }
         } else if ( $type instanceof ReflectionClass ) {
             $name = $type->getName();
             $class = $type;
@@ -121,9 +126,23 @@ class Xyster_Type
             $name = $type->getName();
             $class = $type->getClass();
         }
+        
         /* @var $class ReflectionClass */
         return $this->_type == $name ||
+            ($this->_type == 'scalar' && in_array($type, self::$_scalarTypes)) ||
             ($class && $this->_class && $class->isSubclassOf($this->_class));  
+    }
+    
+    /**
+     * Determines if the value supplied is an instance of this type
+     *
+     * @param mixed $value
+     * @return boolean
+     */
+    public function isInstance( $value )
+    {
+    	return ( $this->_class && $this->_class->isInstance($value) ) || 
+    	   ( $this->isAssignableFrom(self::of($value)) ); 
     }
     
     /**
@@ -206,6 +225,41 @@ class Xyster_Type
     public static function areDeeplyEqual( $arg1, $arg2 )
     {
         return self::_areEqual($arg1, $arg2);
+    }
+    
+    /**
+     * Gets the types of the parameters for a function or method
+     *
+     * @param ReflectionFunctionAbstract $function
+     * @return array
+     */
+    public static function getForParameters( ReflectionFunctionAbstract $function )
+    {
+    	$types = array();
+    	foreach( $function->getParameters() as $parameter ) {
+    		/* @var $parameter ReflectionParameter */
+    		if ( $parameter->isArray() ) {
+    			$types[] = new self('array');
+    		} else if ( $parameter->getClass() ) {
+    			$types[] = new self($parameter->getClass());
+    		} else if ( $parameter->isDefaultValueAvailable() ) {
+    			$types[] = self::of($parameter->getDefaultValue());
+    		} else {
+    			$types[] = new self('scalar');
+    		}
+    	}
+    	return $types;
+    }
+    
+    /**
+     * Gets the type of the value supplied
+     *
+     * @param mixed $value
+     * @return Xyster_Type
+     */
+    public static function of( $value )
+    {
+        return new self(is_object($value) ? get_class($value) : gettype($value));
     }
     
     /**

@@ -53,7 +53,9 @@ class Xyster_Container_Injection_Constructor extends Xyster_Container_Injection_
         $monitor = $this->currentMonitor();
         
         try {
-            $parameters = $this->_getMemberArguments($container, $constructor);
+        	$parameterTypes = $constructor ?
+        	   Xyster_Type::getForParameters($constructor) : array();
+            $parameters = $this->_getMemberArguments($container, $constructor, $parameterTypes);
             $monitor->instantiating($container, $this, $class);
             $startTime = microtime(true);
             $inst = $this->_newInstance($class, $parameters);
@@ -76,16 +78,14 @@ class Xyster_Container_Injection_Constructor extends Xyster_Container_Injection_
         $constructor = ( $class ) ? $class->getConstructor() : null;
         /* @var $constructor ReflectionMethod */
         if ( $constructor ) {
-            $reflectionParams = $constructor->getParameters();
-            $parameterTypes = array();
-            foreach( $reflectionParams as $param ) {
-                /* @var $param ReflectionParameter */
-                $parameterTypes[] = $param->getClass();
-            }
+            $parameterTypes = Xyster_Type::getForParameters($constructor);
             $currentParameters = $this->_parameters !== null ? $this->_parameters :
                 $this->_createDefaultParameters($parameterTypes);
             foreach( $currentParameters as $k => $param ) {
-                $param->verify($container, $this, $reflectionParams[$k]);
+            	/* @var $param Xyster_Container_Parameter */
+                $param->verify($container, $this, $parameterTypes[$k],
+                    new Xyster_Container_NameBinding_Parameter($constructor, $k),
+                    $this->useNames());
             }
         }
     }

@@ -57,13 +57,15 @@ class Xyster_Container_Parameter_Constant implements Xyster_Container_Parameter
      *
      * @param Xyster_Container_Interface $container       the container from which dependencies are resolved.
      * @param Xyster_Container_Adapter $adapter the Component Adapter that is asking for the instance
-     * @param ReflectionParameter $expectedParameter      the expected parameter
+     * @param Xyster_Type $expectedType the required type
+     * @param Xyster_Container_NameBinding $expectedNameBinding the expected parameter name
+     * @param boolean $useNames
      * @return boolean <code>true</code> if the component parameter can be resolved.
      */
-    public function isResolvable( Xyster_Container_Interface $container, Xyster_Container_Adapter $adapter, ReflectionParameter $expectedParameter )
+    public function isResolvable( Xyster_Container_Interface $container, Xyster_Container_Adapter $adapter, Xyster_Type $expectedType, Xyster_Container_NameBinding $expectedNameBinding, $useNames )
     {
         try {
-            $this->verify($container, $adapter, $expectedParameter);
+            $this->verify($container, $adapter, $expectedType, $expectedNameBinding, $useNames);
             return true;
         } catch ( Xyster_Container_Exception $e ) {
             return false;
@@ -75,10 +77,12 @@ class Xyster_Container_Parameter_Constant implements Xyster_Container_Parameter
      *
      * @param Xyster_Container_Interface $container       the container from which dependencies are resolved.
      * @param Xyster_Container_Adapter $adapter the Component Adapter that is asking for the instance
-     * @param ReflectionParameter $expectedParameter      the expected parameter
+     * @param Xyster_Type $expectedType the required type
+     * @param Xyster_Container_NameBinding $expectedNameBinding the expected parameter name
+     * @param boolean $useNames
      * @return mixed the instance or <code>null</code> if no suitable instance can be found.
      */
-    public function resolveInstance( Xyster_Container_Interface $container, Xyster_Container_Adapter $adapter, ReflectionParameter $expectedParameter )
+    public function resolveInstance( Xyster_Container_Interface $container, Xyster_Container_Adapter $adapter, Xyster_Type $expectedType, Xyster_Container_NameBinding $expectedNameBinding, $useNames )
     {
         return $this->_value;
     }
@@ -88,13 +92,14 @@ class Xyster_Container_Parameter_Constant implements Xyster_Container_Parameter
      *
      * @param Xyster_Container_Interface $container       the container from which dependencies are resolved.
      * @param Xyster_Container_Adapter $adapter the Component Adapter that is asking for the verification
-     * @param ReflectionParameter $expectedParameter      the expected parameter
+     * @param Xyster_Type $expectedType the required type
+     * @param Xyster_Container_NameBinding $expectedNameBinding the expected parameter name
+     * @param boolean $useNames
      * @throws Xyster_Container_Exception if parameter and its dependencies cannot be resolved
      */
-    public function verify( Xyster_Container_Interface $container, Xyster_Container_Adapter $adapter, ReflectionParameter $expectedParameter )
+    public function verify( Xyster_Container_Interface $container, Xyster_Container_Adapter $adapter, Xyster_Type $expectedType, Xyster_Container_NameBinding $expectedNameBinding, $useNames )
     {
-        $expectedType = $expectedParameter->getClass();
-        if ( !$this->_checkPrimitive($expectedParameter) && ( !is_object($this->_value) || !$expectedType->isInstance($this->_value) ) ) {
+        if ( !$this->_checkPrimitive($expectedType) && ( !is_object($this->_value) || !$expectedType->getClass()->isInstance($this->_value) ) ) {
             require_once 'Xyster/Container/Exception.php';
             throw new Xyster_Container_Exception($expectedType->getName() . " is not an instance of the value for this constant");
         }
@@ -102,14 +107,12 @@ class Xyster_Container_Parameter_Constant implements Xyster_Container_Parameter
 
     /**
      * Checks if a type is considered primative
-     * 
-     * In PHP reflection, a parameter without a class is considered a scalar.
      *
-     * @param ReflectionParameter $param
+     * @param Xyster_Type $expectedType
      * @return boolean
      */
-    protected function _checkPrimitive( ReflectionParameter $param )
+    protected function _checkPrimitive( Xyster_Type $expectedType )
     {
-        return !($param->getClass() instanceof ReflectionClass);
+        return !$expectedType->isObject();
     }
 }

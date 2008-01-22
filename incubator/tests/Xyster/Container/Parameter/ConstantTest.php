@@ -27,6 +27,8 @@ require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR 
 
 require_once 'PHPUnit/Framework.php';
 require_once 'Xyster/Container/Parameter/Constant.php';
+require_once 'Xyster/Container/NameBinding/Parameter.php';
+require_once 'Xyster/Container.php';
 
 /**
  * Test class for Xyster_Container_Parameter_Constant.
@@ -76,14 +78,13 @@ class Xyster_Container_Parameter_ConstantTest extends PHPUnit_Framework_TestCase
      */
     public function testIsResolvable()
     {
-        require_once 'Xyster/Container.php';
         $container = new Xyster_Container;
         $key = new Xyster_Type('Xyster_Type');
         $container->addComponent($key);
         $adapter = $container->getComponentAdapter($key);
-        $parameters = $key->getClass()->getConstructor()->getParameters();
-        $parameter = $parameters[0];
-        $this->assertTrue($this->object->isResolvable($container, $adapter, $parameter));
+        $nameBinding = new Xyster_Container_NameBinding_Parameter($key->getClass()->getConstructor(), 0);
+        
+        $this->assertTrue($this->object->isResolvable($container, $adapter, new Xyster_Type('string'), $nameBinding, true));
     }
 
     /**
@@ -91,14 +92,13 @@ class Xyster_Container_Parameter_ConstantTest extends PHPUnit_Framework_TestCase
      */
     public function testResolveInstance()
     {
-        require_once 'Xyster/Container.php';
         $container = new Xyster_Container;
         $key = new Xyster_Type('Xyster_Type');
         $container->addComponent($key);
         $adapter = $container->getComponentAdapter($key);
-        $parameters = $key->getClass()->getConstructor()->getParameters();
-        $parameter = $parameters[0];
-        $this->assertSame('unittest', $this->object->resolveInstance($container, $adapter, $parameter));
+        $nameBinding = new Xyster_Container_NameBinding_Parameter($key->getClass()->getConstructor(), 0);
+        
+        $this->assertSame('unittest', $this->object->resolveInstance($container, $adapter, new Xyster_Type('string'), $nameBinding, true));
     }
 
     /**
@@ -108,14 +108,13 @@ class Xyster_Container_Parameter_ConstantTest extends PHPUnit_Framework_TestCase
      */
     public function testVerify()
     {
-        require_once 'Xyster/Container.php';
         $container = new Xyster_Container;
         $key = new Xyster_Type('Xyster_Type');
         $container->addComponent($key);
         $adapter = $container->getComponentAdapter($key);
-        $parameters = $key->getClass()->getConstructor()->getParameters();
-        $parameter = $parameters[0];
-        $this->object->verify($container, $adapter, $parameter);
+        $nameBinding = new Xyster_Container_NameBinding_Parameter($key->getClass()->getConstructor(), 0);
+        
+        $this->object->verify($container, $adapter, new Xyster_Type('string'), $nameBinding, true);
     }
     
     /**
@@ -130,10 +129,10 @@ class Xyster_Container_Parameter_ConstantTest extends PHPUnit_Framework_TestCase
         $key = new Xyster_Type('Xyster_Collection_Map');
         $container->addComponent($key);
         $adapter = $container->getComponentAdapter($key);
-        $parameters = $key->getClass()->getConstructor()->getParameters();
-        $parameter = $parameters[0];
+        $nameBinding = new Xyster_Container_NameBinding_Parameter($key->getClass()->getConstructor(), 0);
+        
         $this->setExpectedException('Xyster_Container_Exception');
-        $this->object->verify($container, $adapter, $parameter);
+        $this->object->verify($container, $adapter, new Xyster_Type('Xyster_Collection_Map'), $nameBinding, true);
     }
 }
 

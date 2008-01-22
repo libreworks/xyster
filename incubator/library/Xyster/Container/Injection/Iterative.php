@@ -35,7 +35,7 @@ abstract class Xyster_Container_Injection_Iterative extends Xyster_Container_Inj
     /**
      * @var array
      */
-    protected $_injectionParameters = array();
+    protected $_injectionTypes = array();
     
     /**
      * Retrieve the component instance
@@ -48,15 +48,13 @@ abstract class Xyster_Container_Injection_Iterative extends Xyster_Container_Inj
     public function getInstance( Xyster_Container_Interface $container )
     {
         $matchingParameters = $this->_getMatchingParameterListForSetters($container);
-        
-        $type = $this->getImplementation();
-        $class = $type->getClass();
-        $constructor = $class->getConstructor();
         $monitor = $this->currentMonitor();
+        $type = $this->getImplementation();
         $componentInstance = $this->_getOrMakeInstance($container, $type, $monitor);
+        
+        $class = $type->getClass();
         $member = null;
         $injected = array();
-        
         try {
             for( $i=0; $i<count($this->_injectionMembers); $i++ ) {
                 $member = $this->_injectionMembers->get($i);
@@ -66,8 +64,9 @@ abstract class Xyster_Container_Injection_Iterative extends Xyster_Container_Inj
                 if ( $matchingParam === null ) {
                     continue;
                 }
-                $toInject = $matchingParam->resolveInstance($container, $this, $this->_injectionParameters[$i]);
-                
+                $toInject = $matchingParam->resolveInstance($container, $this, $this->_injectionTypes[$i],
+                    $this->_makeParameterNameImpl($this->_injectionMembers->get($i)),
+                    $this->useNames());
                 $this->_injectIntoMember($member, $componentInstance, $toInject);
                 $injected[] = $toInject;
             }
@@ -88,7 +87,9 @@ abstract class Xyster_Container_Injection_Iterative extends Xyster_Container_Inj
         $currentParameters = $this->_getMatchingParameterListForSetters($container);
         foreach( $currentParameters as $i => $param ) {
             /* @var $param Xyster_Container_Parameter */
-            $param->verify($container, $this, $this->_injectionParameters[$i]);
+            $param->verify($container, $this, $this->_injectionTypes[$i],
+                $this->_makeParameterNameImpl($this->_injectionMembers->get($i)),
+                $this->useNames());
         }
     }
     
@@ -100,7 +101,7 @@ abstract class Xyster_Container_Injection_Iterative extends Xyster_Container_Inj
     protected function _getMatchingParameterListForSetters( Xyster_Container_Interface $container )
     {
         if ( $this->_injectionMembers === null ) {
-            $this->_initializeInjectionMembersAndParamLists();
+            $this->_initializeInjectionMembersAndTypeLists();
         }
         
         require_once 'Xyster/Collection/List.php';
@@ -110,16 +111,22 @@ abstract class Xyster_Container_Injection_Iterative extends Xyster_Container_Inj
         }
         $nonMatchingParameterPositions = array();
         $currentParameters = $this->_parameters != null ? $this->_parameters :
-            $this->_createDefaultParameters($this->_injectionParameters);
+            $this->_createDefaultParameters($this->_injectionTypes);
             
         foreach( $currentParameters as $k => $parameter ) {
             /* @var $parameter Xyster_Container_Parameter */
             $failedDependency = true;
-            for( $i=0; $i<count($this->_injectionParameters); $i++ ) {
-                if ( $parameter->isResolvable($container, $this, $this->_injectionParameters[$i]) ) {
-                    $matchingParameterList->set($k, $parameter);
-                    $failedDependency &= false;
-                }
+            for( $i=0; $i<count($this->_injectionTypes); $i++ ) {
+            	$o = $matchingParameterList->get($i);
+            	$member = $this->_injectionMembers->get($k);
+            	$b = $parameter->isResolvable($container, $this, $this->_injectionTypes[$i],
+            	   $this->_makeParameterNameImpl($member), $this->useNames());
+            	   
+            	if ( $o === null && $b ) {
+            		$matchingParameterList->set($i, $parameter);
+            		$failedDependency = false;
+            		break;
+            	}
             }
             if ( $failedDependency ) {
                 $nonMatchingParameterPositions[] = $k;
@@ -129,7 +136,7 @@ abstract class Xyster_Container_Injection_Iterative extends Xyster_Container_Inj
         $unsatisfiableDependencyTypes = array();
         for( $i=0; $i<count($matchingParameterList); $i++ ) {
             if ( $matchingParameterList->get($i) === null ) {
-                $unsatisfiableDependencyTypes[] = $this->_injectionParameters[$i];
+                $unsatisfiableDependencyTypes[] = $this->_injectionTypes[$i];
             }
         }
         if ( count($unsatisfiableDependencyTypes) > 0 ) {
@@ -137,7 +144,7 @@ abstract class Xyster_Container_Injection_Iterative extends Xyster_Container_Inj
             throw new Xyster_Container_Exception('Unsatisfiable dependencies: ' . implode(',', $unsatisfiableDependencyTypes));
         } else if ( count($nonMatchingParameterPositions) > 0 ) {
             require_once 'Xyster/Container/Exception.php';
-            throw new Xyster_Container_Exception('Unmatched parameter positions: ' . implode(',', $nonMatchingParameterPositions));
+            throw new Xyster_Container_Exception('Following parameters do not match any of the injectionMembers for ' . $this->getImplementation() . ': ' . implode(',', $nonMatchingParameterPositions));
         }
         
         return $matchingParameterList->toArray();
@@ -172,22 +179,25 @@ abstract class Xyster_Container_Injection_Iterative extends Xyster_Container_Inj
      * Traverses the type and caches all injection methods and their parameters 
      *
      */
-    protected function _initializeInjectionMembersAndParamLists()
+    protected function _initializeInjectionMembersAndTypeLists()
     {
         require_once 'Xyster/Collection/List.php';
         $this->_injectionMembers = new Xyster_Collection_List;
-        
-        $parameters = array();
+        $typeList = array();
+
         foreach( $this->getImplementation()->getClass()->getMethods() as $method ) {
+        	$parameterTypes = Xyster_Type::getForParameters($method);
             /* @var $method ReflectionMethod */
-            if ( $method->getNumberOfParameters() == 1 ) {
+        	// We're only interested if there is only one parameter and the method name is bean-style.
+            if ( count($parameterTypes) == 1 ) {
                 if ( $this->_isInjectorMethod($method) ) {
                     $this->_injectionMembers->add($method);
-                    $parameters[] = current($method->getParameters());
+                    $typeList[] = $parameterTypes[0];
                 }
             }
         }
-        $this->_injectionParameters = $parameters;
+        
+        $this->_injectionTypes = $typeList;
     }
 
     /**
@@ -200,6 +210,17 @@ abstract class Xyster_Container_Injection_Iterative extends Xyster_Container_Inj
     protected function _injectIntoMember( ReflectionMethod $member, $componentInstance, $toInject )
     {
         $member->invoke($componentInstance, $toInject);
+    }
+    
+    /**
+     * Returns a NameBinding for a method
+     *
+     * @param ReflectionMethod $member
+     * @return Xyster_Container_NameBinding
+     */
+    protected function _makeParameterNameImpl( ReflectionMethod $member )
+    {
+    	return new Xyster_Container_NameBinding_Parameter($member, 0);
     }
     
     /**
