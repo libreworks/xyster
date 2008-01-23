@@ -136,7 +136,7 @@ class Xyster_Container_Adapter_AbstractTest extends PHPUnit_Framework_TestCase
      */
     public function testBadConstruct()
     {
-        $this->setExpectedException('Xyster_Container_Exception');
+        $this->setExpectedException('Xyster_Container_Adapter_Exception');
         $object = new Xyster_Container_Adapter_AbstractStub(null, $this->_key);
     }
 
@@ -146,7 +146,7 @@ class Xyster_Container_Adapter_AbstractTest extends PHPUnit_Framework_TestCase
      */
     public function testIncompatibleTypes()
     {
-        $this->setExpectedException('Xyster_Container_Exception');
+        $this->setExpectedException('Xyster_Container_Adapter_Exception');
         $object = new Xyster_Container_Adapter_AbstractStub(new Xyster_Type('SplObjectStorage'), $this->_key);
     }
 }

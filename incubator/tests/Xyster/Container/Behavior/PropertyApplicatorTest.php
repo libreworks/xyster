@@ -84,7 +84,7 @@ class Xyster_Container_Behavior_PropertyApplicatorTest extends Xyster_Container_
     public function testGetInstanceException()
     {
         $this->object->setProperty('error', 'error');
-        $this->setExpectedException('Xyster_Container_Exception');
+        $this->setExpectedException('Xyster_Container_Behavior_Exception');
         $instance = $this->object->getInstance($this->container);
     }
     

@@ -146,11 +146,11 @@ abstract class Xyster_Container_Injection_Iterative extends Xyster_Container_Inj
             }
         }
         if ( count($unsatisfiableDependencyTypes) > 0 ) {
-            require_once 'Xyster/Container/Exception.php';
-            throw new Xyster_Container_Exception('Unsatisfiable dependencies: ' . implode(',', $unsatisfiableDependencyTypes));
+            require_once 'Xyster/Container/Injection/Exception.php';
+            throw new Xyster_Container_Injection_Exception('Unsatisfiable dependencies: ' . implode(',', $unsatisfiableDependencyTypes));
         } else if ( count($nonMatchingParameterPositions) > 0 ) {
-            require_once 'Xyster/Container/Exception.php';
-            throw new Xyster_Container_Exception('Following parameters do not match any of the injectionMembers for ' . $this->getImplementation() . ': ' . implode(',', $nonMatchingParameterPositions));
+            require_once 'Xyster/Container/Injection/Exception.php';
+            throw new Xyster_Container_Injection_Exception('Following parameters do not match any of the injectionMembers for ' . $this->getImplementation() . ': ' . implode(',', $nonMatchingParameterPositions));
         }
         
         return $matchingParameterList->toArray();

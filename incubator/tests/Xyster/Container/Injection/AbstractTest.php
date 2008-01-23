@@ -63,7 +63,7 @@ class Xyster_Container_Injection_AbstractTest extends PHPUnit_Framework_TestCase
     public function testConcrete()
     {
         $key = new Xyster_Type('TestClass');
-        $this->setExpectedException('Xyster_Container_Exception');
+        $this->setExpectedException('Xyster_Container_Injection_Exception');
         $inj = new Xyster_Container_Injection_AbstractImpl($key, $key);
     }
     
@@ -74,8 +74,8 @@ class Xyster_Container_Injection_AbstractTest extends PHPUnit_Framework_TestCase
     public function testBadParam()
     {
         $key = new Xyster_Type('SplObjectStorage');
-        $this->setExpectedException('Xyster_Container_Exception');
         require_once 'Xyster/Container/Parameter/Basic.php';
+        $this->setExpectedException('Xyster_Container_Injection_Exception');
         $inj = new Xyster_Container_Injection_AbstractImpl($key, $key,
             array(Xyster_Container_Parameter_Basic::standard(), 123));
     }

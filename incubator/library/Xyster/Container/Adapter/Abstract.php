@@ -53,8 +53,8 @@ abstract class Xyster_Container_Adapter_Abstract implements Xyster_Container_Ada
     public function __construct( $key, $implementation, Xyster_Container_Monitor $monitor = null )
     {
         if ( $key === null ) {
-            require_once 'Xyster/Container/Exception.php';
-            throw new Xyster_Container_Exception('Key cannot be null'); 
+            require_once 'Xyster/Container/Adapter/Exception.php';
+            throw new Xyster_Container_Adapter_Exception('Key cannot be null'); 
         }
         $this->_key = $key;
         if ( $implementation instanceof Xyster_Type ) {
@@ -154,8 +154,8 @@ abstract class Xyster_Container_Adapter_Abstract implements Xyster_Container_Ada
             $componentType = $this->_key; /* @var $componentType Xyster_Type */
             $className = $this->_implementation->getName();
             if ( !$componentType->isAssignableFrom($this->_implementation) ) {
-                require_once 'Xyster/Container/Exception.php';
-                throw new Xyster_Container_Exception($className . ' is not a ' . 
+                require_once 'Xyster/Container/Adapter/Exception.php';
+                throw new Xyster_Container_Adapter_Exception($className . ' is not a ' . 
                     $componentType->getName());
             }
         }

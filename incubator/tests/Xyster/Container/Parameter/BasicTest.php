@@ -122,7 +122,7 @@ class Xyster_Container_Parameter_BasicTest extends PHPUnit_Framework_TestCase
         $constructor = $this->key->getClass()->getConstructor(); /* @var $constructor ReflectionMethod */
         $nameBinding = new Xyster_Container_NameBinding_Parameter($constructor, 1);
         
-        $this->setExpectedException('Xyster_Container_Exception');
+        $this->setExpectedException('Xyster_Container_Parameter_Exception');
         $return = $this->object->resolveInstance($this->container, $adapter, new Xyster_Type('SubFuel'), $nameBinding, true);
     }
     
@@ -192,7 +192,7 @@ class Xyster_Container_Parameter_BasicTest extends PHPUnit_Framework_TestCase
         $constructor = $this->key->getClass()->getConstructor(); /* @var $constructor ReflectionMethod */
         $nameBinding = new Xyster_Container_NameBinding_Parameter($constructor, 0);
         
-        $this->setExpectedException('Xyster_Container_Exception');
+        $this->setExpectedException('Xyster_Container_Parameter_Exception');
         $this->object->verify($this->container, null, new Xyster_Type('Sailor'), $nameBinding, true);
     }
 }

@@ -49,8 +49,8 @@ abstract class Xyster_Container_Injection_Abstract extends Xyster_Container_Adap
         if ( $parameters != null ) {
             foreach( $parameters as $k => $param ) {
                 if ( ! $param instanceof Xyster_Container_Parameter ) {
-                    require_once 'Xyster/Container/Exception.php';
-                    throw new Xyster_Container_Exception('Parameter ' . $k . ' is an incorrect type');
+                    require_once 'Xyster/Container/Injection/Exception.php';
+                    throw new Xyster_Container_Injection_Exception('Parameter ' . $k . ' is an incorrect type');
                 }
             }
         }
@@ -88,14 +88,14 @@ abstract class Xyster_Container_Injection_Abstract extends Xyster_Container_Adap
     /**
      * Checks to make sure the current implementation is a concrete class
      *
-     * @throws Xyster_Container_Exception if the implementation isn't concrete
+     * @throws Xyster_Container_Injection_Exception if the implementation isn't concrete
      */
     protected function _checkConcrete()
     {
         $class = $this->getImplementation()->getClass();
         if ( $class instanceof ReflectionClass && ( $class->isInterface() || $class->isAbstract() ) ) {
-            require_once 'Xyster/Container/Exception.php';
-            throw new Xyster_Container_Exception($class->getName() . ' is not a concrete class');
+            require_once 'Xyster/Container/Injection/Exception.php';
+            throw new Xyster_Container_Injection_Exception($class->getName() . ' is not a concrete class');
         }
     }
     
@@ -144,8 +144,8 @@ abstract class Xyster_Container_Injection_Abstract extends Xyster_Container_Adap
     protected function _caughtInstantiationException(Xyster_Container_Monitor $monitor, Xyster_Type $class, Exception $e, Xyster_Container_Interface $container)
     {
         $monitor->instantiationFailed($container, $this, $class, $e);
-        require_once 'Xyster/Container/Exception.php';
-        throw new Xyster_Container_Exception($e->getMessage());
+        require_once 'Xyster/Container/Injection/Exception.php';
+        throw new Xyster_Container_Injection_Exception($e->getMessage());
     }
 
     /**
@@ -159,7 +159,7 @@ abstract class Xyster_Container_Injection_Abstract extends Xyster_Container_Adap
     protected function _caughtInvocationTargetException(Xyster_Container_Monitor $monitor, ReflectionMethod $member, $componentInstance, Exception $e)
     {
         $monitor->invocationFailed($member, $componentInstance, $e);
-        require_once 'Xyster/Container/Exception.php';
-        throw new Xyster_Container_Exception($e->getMessage());
+        require_once 'Xyster/Container/Injection/Exception.php';
+        throw new Xyster_Container_Injection_Exception($e->getMessage());
     }
 }

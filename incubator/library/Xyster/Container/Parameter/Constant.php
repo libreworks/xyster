@@ -67,7 +67,7 @@ class Xyster_Container_Parameter_Constant implements Xyster_Container_Parameter
         try {
             $this->verify($container, $adapter, $expectedType, $expectedNameBinding, $useNames);
             return true;
-        } catch ( Xyster_Container_Exception $e ) {
+        } catch ( Xyster_Container_Parameter_Exception $e ) {
             return false;
         }
     }
@@ -95,13 +95,13 @@ class Xyster_Container_Parameter_Constant implements Xyster_Container_Parameter
      * @param Xyster_Type $expectedType the required type
      * @param Xyster_Container_NameBinding $expectedNameBinding the expected parameter name
      * @param boolean $useNames
-     * @throws Xyster_Container_Exception if parameter and its dependencies cannot be resolved
+     * @throws Xyster_Container_Parameter_Exception if parameter and its dependencies cannot be resolved
      */
     public function verify( Xyster_Container_Interface $container, Xyster_Container_Adapter $adapter, Xyster_Type $expectedType, Xyster_Container_NameBinding $expectedNameBinding, $useNames )
     {
         if ( !$this->_checkPrimitive($expectedType) && ( !is_object($this->_value) || !$expectedType->getClass()->isInstance($this->_value) ) ) {
-            require_once 'Xyster/Container/Exception.php';
-            throw new Xyster_Container_Exception($expectedType->getName() . " is not an instance of the value for this constant");
+            require_once 'Xyster/Container/Parameter/Exception.php';
+            throw new Xyster_Container_Parameter_Exception($expectedType->getName() . " is not an instance of the value for this constant");
         }
     }
 

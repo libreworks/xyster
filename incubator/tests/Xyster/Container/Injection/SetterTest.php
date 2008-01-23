@@ -105,7 +105,7 @@ class Xyster_Container_Injection_SetterTest extends PHPUnit_Framework_TestCase
     public function testVerifyNotLoaded()
     {
         $this->container = new Xyster_Container;
-        $this->setExpectedException('Xyster_Container_Exception');
+        $this->setExpectedException('Xyster_Container_Injection_Exception');
         $this->object->verify($this->container);
     }
     
@@ -119,7 +119,7 @@ class Xyster_Container_Injection_SetterTest extends PHPUnit_Framework_TestCase
         $container = new Xyster_Container;
         $inj = new Xyster_Container_Injection_Setter($key, $key,
             array(Xyster_Container_Parameter_Basic::standard()));
-        $this->setExpectedException('Xyster_Container_Exception');
+        $this->setExpectedException('Xyster_Container_Injection_Exception');
         $inj->verify($container);
     }
 
@@ -141,7 +141,7 @@ class Xyster_Container_Injection_SetterTest extends PHPUnit_Framework_TestCase
         $container = new Xyster_Container;
         $container->addConfig('color', 'blue');
         $inj = new Xyster_Container_Injection_Setter($key, $key);
-        $this->setExpectedException('Xyster_Container_Exception');
+        $this->setExpectedException('Xyster_Container_Injection_Exception');
         $inj->getInstance($container);
     }
 }

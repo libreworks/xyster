@@ -131,7 +131,7 @@ class Xyster_Container_Parameter_ConstantTest extends PHPUnit_Framework_TestCase
         $adapter = $container->getComponentAdapter($key);
         $nameBinding = new Xyster_Container_NameBinding_Parameter($key->getClass()->getConstructor(), 0);
         
-        $this->setExpectedException('Xyster_Container_Exception');
+        $this->setExpectedException('Xyster_Container_Parameter_Exception');
         $this->object->verify($container, $adapter, new Xyster_Type('Xyster_Collection_Map'), $nameBinding, true);
     }
 }

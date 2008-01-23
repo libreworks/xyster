@@ -85,8 +85,8 @@ abstract class Xyster_Container_Behavior_Abstract implements Xyster_Container_Be
         if ( $this->_delegate instanceof Xyster_Container_Monitor_Strategy ) {
             return $this->_delegate->currentMonitor();
         }
-        require_once 'Xyster/Container/Exception.php';
-        throw new Xyster_Container_Exception('No component monitor found in delegate');
+        require_once 'Xyster/Container/Behavior/Exception.php';
+        throw new Xyster_Container_Behavior_Exception('No component monitor found in delegate');
     }
     
     /**

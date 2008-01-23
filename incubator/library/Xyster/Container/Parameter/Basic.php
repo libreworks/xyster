@@ -124,14 +124,14 @@ class Xyster_Container_Parameter_Basic implements Xyster_Container_Parameter
      * @param Xyster_Type $expectedType the required type
      * @param Xyster_Container_NameBinding $expectedNameBinding the expected parameter name
      * @param boolean $useNames
-     * @throws Xyster_Container_Exception if parameter and its dependencies cannot be resolved
+     * @throws Xyster_Container_Parameter_Exception if parameter and its dependencies cannot be resolved
      */
     public function verify(Xyster_Container_Interface $container, Xyster_Container_Adapter $adapter = null, Xyster_Type $expectedType, Xyster_Container_NameBinding $expectedNameBinding, $useNames)
     {
         $adapter = $this->_resolveAdapter($container, $adapter, $expectedType, $expectedNameBinding, $useNames);
         if ( $adapter == null ) {
-            require_once 'Xyster/Container/Exception.php';
-            throw new Xyster_Container_Exception('Unsatisfiable dependencies: ' . $expectedType);
+            require_once 'Xyster/Container/Parameter/Exception.php';
+            throw new Xyster_Container_Parameter_Exception('Unsatisfiable dependencies: ' . $expectedType);
         }
         $adapter->verify($container);
     }
@@ -197,8 +197,8 @@ class Xyster_Container_Parameter_Basic implements Xyster_Container_Parameter
 	            foreach( $found as $adapter ) { // look for parameter name as key
 	            	$foundClasses[] = $adapter->getImplementation();
 	            }
-	            require_once 'Xyster/Container/Exception.php';
-	            throw new Xyster_Container_Exception('Ambiguous component resolution: ' .
+	            require_once 'Xyster/Container/Parameter/Exception.php';
+	            throw new Xyster_Container_Parameter_Exception('Ambiguous component resolution: ' .
 	               $expectedType . ', found ' . implode(', ', $foundClasses));
 	        }
         }

@@ -65,7 +65,7 @@ class Xyster_Container_Behavior_AbstractTest extends Xyster_Container_Behavior_C
     {
         $delegate = new Xyster_Container_Adapter_NoMonitorStub;
         $behavior = new Xyster_Container_Behavior_Stub($delegate);
-        $this->setExpectedException('Xyster_Container_Exception');
+        $this->setExpectedException('Xyster_Container_Behavior_Exception');
         $behavior->currentMonitor();
     }
 }

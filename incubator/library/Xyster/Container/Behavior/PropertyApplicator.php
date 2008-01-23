@@ -70,7 +70,8 @@ class Xyster_Container_Behavior_PropertyApplicator extends Xyster_Container_Beha
                     $monitor->invoked($container, $this, $setter, $componentInstance, microtime(true) - $startTime);
                 } catch ( Exception $thrown ) {
                     $monitor->invocationFailed($setter, $componentInstance, $thrown);
-                    throw new Xyster_Container_Exception("Failed to set property " . $propertyName . " to " . $propertyValue . ": " . $thrown->getMessage());
+                    require_once 'Xyster/Container/Behavior/Exception.php';
+                    throw new Xyster_Container_Behavior_Exception("Failed to set property " . $propertyName . " to " . $propertyValue . ": " . $thrown->getMessage());
                 }
             }
         }
@@ -164,7 +165,8 @@ class Xyster_Container_Behavior_PropertyApplicator extends Xyster_Container_Beha
 //            if ( $setterParameterType->isAssignableFrom($givenParameterClass) ) {
 //                $convertedValue = $propertyValue;
 //            } else {
-//                throw new Xyster_Container_Exception("Setter: " . $setter->getName() . " for addComponent: "
+//                require_once 'Xyster/Container/Behavior/Exception.php';
+//                throw new Xyster_Container_Behavior_Exception("Setter: " . $setter->getName() . " for addComponent: "
 //                    . $componentInstance->__toString() . " can only take objects of: " . $setterParameter->getName()
 //                    . " instead got: " . $givenParameterClass);
 //            }
