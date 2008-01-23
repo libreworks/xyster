@@ -58,15 +58,21 @@ abstract class Xyster_Container_Injection_Iterative extends Xyster_Container_Inj
         try {
             for( $i=0; $i<count($this->_injectionMembers); $i++ ) {
                 $member = $this->_injectionMembers->get($i);
+                /* @var $member ReflectionMethod */
+                $reflectionParameter = current($member->getParameters());
+                /* @var $reflectionParameter ReflectionParameter */
                 $monitor->invoking($container, $this, $member, $componentInstance);
                 $matchingParam = $matchingParameters[$i];
                 /* @var $matchingParam Xyster_Container_Parameter */
-                if ( $matchingParam === null ) {
+                if ( $matchingParam === null && !$reflectionParameter->allowsNull() ) {
                     continue;
                 }
                 $toInject = $matchingParam->resolveInstance($container, $this, $this->_injectionTypes[$i],
                     $this->_makeParameterNameImpl($this->_injectionMembers->get($i)),
                     $this->useNames());
+                if ( $toInject === null && $reflectionParameter->isDefaultValueAvailable() ) {
+                	$toInject = $reflectionParameter->getDefaultValue();
+                }
                 $this->_injectIntoMember($member, $componentInstance, $toInject);
                 $injected[] = $toInject;
             }

@@ -44,6 +44,7 @@ abstract class Xyster_Container_Injection_SingleMember extends Xyster_Container_
             $parameterTypes = array();	
         }
         
+        $reflectionParameters = $member->getParameters();
     	$currentParameters = $this->_parameters !== null ?
     	   $this->_parameters : $this->_createDefaultParameters($parameterTypes);
         
@@ -51,8 +52,14 @@ abstract class Xyster_Container_Injection_SingleMember extends Xyster_Container_
     	for( $i=0; $i<count($currentParameters); $i++ ) {
     		$parameter = $currentParameters[$i];
     		/* @var $parameter Xyster_Container_Parameter */
-    		$result[] = $parameter->resolveInstance($container, $this, $parameterTypes[$i],
-    		  new Xyster_Container_NameBinding_Parameter($member, $i), $this->useNames());
+            $reflectionParameter = $reflectionParameters[$i];
+            /* @var $reflectionParameter ReflectionParameter */
+    		$instance = $parameter->resolveInstance($container, $this, $parameterTypes[$i],
+                new Xyster_Container_NameBinding_Parameter($member, $i), $this->useNames());
+    		if ( $instance === null && !$reflectionParameter->isDefaultValueAvailable() ) {
+    			$instance = $reflectionParameter->getDefaultValue();
+    		}
+    	    $result[] = $instance;
     	}
     	
     	return $result;

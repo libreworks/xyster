@@ -183,20 +183,6 @@ class Xyster_Container_Parameter_BasicTest extends PHPUnit_Framework_TestCase
         $return = $this->object->resolveInstance($this->container, null, new Xyster_Type('string'), $nameBinding, true);
         $this->assertSame('Captain Crunch', $return);
     }
-
-    /**
-     * Tests the 'resolveInstance' method for a scalar value default
-     */
-    public function testResolveInstanceDefault()
-    {
-        $this->key = new Xyster_Type('SubmarineCaptain');
-        $this->container = new Xyster_Container;
-        $constructor = $this->key->getClass()->getConstructor(); /* @var $constructor ReflectionMethod */
-        $nameBinding = new Xyster_Container_NameBinding_Parameter($constructor, 1);
-        
-        $return = $this->object->resolveInstance($this->container, null, new Xyster_Type('string'), $nameBinding, true);
-        $this->assertSame('Capn', $return);
-    }
     
     /**
      * Test a fail verify call

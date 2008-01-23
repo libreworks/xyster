@@ -67,9 +67,9 @@ interface Xyster_Container_Interface
      * Find a component adapter by type (and optionally by parameter name)
      *
      * @param mixed $componentType String class name or Xyster_Type
-     * @param string $componentParameterName
+     * @param Xyster_Container_NameBinding $nameBinding the parameter binding
      */
-    function getComponentAdapterByType( $componentType, $componentParameterName = null );
+    function getComponentAdapterByType( $componentType, Xyster_Container_NameBinding $nameBinding = null );
 
     /**
      * Retrieve all the component adapters inside this container.

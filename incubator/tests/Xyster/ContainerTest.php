@@ -217,7 +217,7 @@ class Xyster_ContainerTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testGetComponentAdapterByType().
+     * Tests the 'getComponentAdapterByType' method
      */
     public function testGetComponentAdapterByType()
     {
@@ -230,7 +230,12 @@ class Xyster_ContainerTest extends PHPUnit_Framework_TestCase
         $this->assertNull($adapter);
         
         $this->object->addComponentInstance(new ArrayObject(array(123)), 'myArrayObj');
-        $adapter = $this->object->getComponentAdapterByType('ArrayObject', 'myArrayObj');
+        
+        $class = new ReflectionClass('TestObject');
+        $member = $class->getMethod('methodInject');
+        require_once 'Xyster/Container/NameBinding/Parameter.php';
+        $nameBinding = new Xyster_Container_NameBinding_Parameter($member, 0);
+        $adapter = $this->object->getComponentAdapterByType('ArrayObject', $nameBinding);
         $this->assertType('Xyster_Container_Adapter', $adapter);
     }
     
@@ -246,17 +251,6 @@ class Xyster_ContainerTest extends PHPUnit_Framework_TestCase
         
         $this->setExpectedException('Xyster_Container_Exception');
         $this->object->getComponentAdapterByType($key);
-    }
-
-    /**
-     * @todo Implement testGetComponentAdapters().
-     */
-    public function testGetComponentAdapters()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
     }
 
     /**
@@ -311,6 +305,14 @@ class Xyster_ContainerTest extends PHPUnit_Framework_TestCase
         $this->object->with(Xyster_Container_Features::CACHE())
             ->addComponent('SplObjectStorage');
     }
+}
+
+class TestObject
+{
+	public function methodInject( ArrayObject $myArrayObj )
+	{
+		// do nothing
+	}
 }
 
 // Call Xyster_ContainerTest::main() if this source file is executed directly.

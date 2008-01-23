@@ -50,27 +50,27 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
     /**
      * @var Xyster_Collection_List
      */
-    protected $_adapters;
+    private $_adapters;
     
     /**
      * @var Xyster_Collection_Map
      */
-    protected $_componentKeyToAdapterCache;
+    private $_componentKeyToAdapterCache;
     
     /**
      * @var Xyster_Container_Adapter_Factory
      */
-    protected $_componentFactory;
+    private $_componentFactory;
 
     /**
      * @var Xyster_Container_Monitor
      */
-    protected $_monitor;
+    private $_monitor;
     
     /**
      * @var Xyster_Collection_Map_Interface
      */
-    protected $_properties;
+    private $_properties;
     
     /**
      * @var Xyster_Collection_Map_Interface
@@ -115,10 +115,11 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
     public function accept(Xyster_Container_Visitor $visitor)
     {
         $visitor->visitContainer($this);
-        foreach( $this->_adapters as $adapter ) {
+        foreach( $this->_getModifiableComponentAdapterList() as $adapter ) {
             /* @var $adapter Xyster_Container_Adapter */
             $adapter->accept($visitor);
         }
+        // for the future - pass visitor to children
     }
     
     /**
@@ -129,7 +130,7 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
      */
     public function addAdapter( Xyster_Container_Adapter $adapter, Xyster_Collection_Map_Interface $properties = null )
     {
-        if ( $properties == null ) {
+        if ( $properties === null ) {
             $properties = $this->_properties;
         }
         
@@ -139,7 +140,7 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
         $this->_processWith($tempProps);
         $behaviors = ( Xyster_Container_Behavior_Factory_Abstract::removePropertiesIfPresent($tempProps,
             Xyster_Container_Features::NONE()) == false &&
-            $this->_componentFactory instanceof Xyster_Container_Behavior_Factory ); 
+            $this->_componentFactory instanceof Xyster_Container_Behavior_Factory );
         if ( $behaviors ) {
             $factory = $this->_componentFactory; /* @var $factory Xyster_Container_Behavior_Factory */
             $adapter = $factory->addComponentAdapter($this->_monitor,
@@ -169,7 +170,7 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
         if ( !count($parameters) ) {
             $parameters = null;
         }
-        if ( $key == null ) {
+        if ( $key === null ) {
             if ( $implementation instanceof Xyster_Type ) {
                 $key = $implementation;
             } else if ( is_string($implementation) || $implementation instanceof ReflectionClass ) {
@@ -188,8 +189,8 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
             $this->_throwIfPropertiesLeft($tempProps);
             $this->_addAdapterInternal($adapter);
         }
-        
-        return $this;
+
+        return $this; 
     }
     
     /**
@@ -199,18 +200,13 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
      *
      * @param mixed $instance an instance of the compoent
      * @param mixed $key a key unique within the container that identifies the component
-     * @param mixed $parameters the parameters that gives hints about what arguments to pass
      * @return Xyster_Container provides a fluent interface
      * @throws Xyster_Container_Exception if registration of the component fails
      */
-    public function addComponentInstance( $instance, $key = null, array $parameters = null)
+    public function addComponentInstance( $instance, $key = null )
     {
-        if ( !count($parameters) ) {
-            $parameters = null;
-        }
         if ( $key === null ) {
-            $key = new Xyster_Type(is_object($instance)
-                ? get_class($instance) : gettype($instance));
+            $key = Xyster_Type::of($instance);
         }
         
         $properties = clone $this->_properties;
@@ -218,9 +214,7 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
         require_once 'Xyster/Container/Adapter/Instance.php';
         $adapter = new Xyster_Container_Adapter_Instance($key, $instance,
             $this->_monitor);
-        $this->addAdapter($adapter, $properties);
-        
-        return $this;
+        return $this->addAdapter($adapter, $properties);
     }
     
     /**
@@ -233,9 +227,8 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
     public function addConfig( $name, $value )
     {
         require_once 'Xyster/Container/Adapter/Instance.php';
-        $this->_addAdapterInternal(new Xyster_Container_Adapter_Instance($name,
+        return $this->_addAdapterInternal(new Xyster_Container_Adapter_Instance($name,
             $value, $this->_monitor));
-        return $this;
     }
     
     /**
@@ -258,12 +251,13 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
     public function changeMonitor( Xyster_Container_Monitor $monitor )
     {
         $this->_monitor = $monitor;
-        foreach( $this->_adapters as $adapter ) {
+        foreach( $this->_getModifiableComponentAdapterList() as $adapter ) {
             if ( $adapter instanceof Xyster_Container_Monitor_Strategy ) {
                 /* @var $adapter Xyster_Container_Monitor_Strategy */
                 $adapter->changeMonitor($monitor);
             }
         }
+        // for the future - change monitor in chilren containers
     }
     
     /**
@@ -316,8 +310,7 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
     {
         $result = new Xyster_Collection_List;
 
-        $adapterToInstanceMap = new Xyster_Collection_Map;
-        foreach( $this->_adapters as $adapter ) {
+        foreach( $this->_getModifiableComponentAdapterList() as $adapter ) {
             /* @var $adapter Xyster_Container_Adapter */
             if ( $componentType == null || $componentType->isAssignableFrom($adapter->getImplementation()) ) {
                 $instance = $this->_getLocalInstance($adapter);
@@ -336,38 +329,50 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
      */
     public function getComponentAdapter( $componentKey )
     {
-        return $this->_componentKeyToAdapterCache->get($componentKey);
+        $adapter = $this->_getComponentKeyToAdapterCache()->get($componentKey);
+        // in the future - search in parent container
+        return $adapter;
     }
     
     /**
      * Find a component adapter associated with the specified key
      * 
      * @param mixed $componentType the key that the component was registered with
-     * @param string $componentParameterName the name of the parameter
+     * @param Xyster_Container_NameBinding $nameBinding the name binding of the parameter
      * @return Xyster_Container_Adapter the component adapter associated with this key, or null
      */
-    public function getComponentAdapterByType( $componentType, $componentParameterName = null )
+    public function getComponentAdapterByType( $componentType, Xyster_Container_NameBinding $nameBinding = null )
     {
         if ( ! $componentType instanceof Xyster_Type && $componentType !== null ) {
             $componentType = new Xyster_Type($componentType);
         }
         
         $adapter = $this->getComponentAdapter($componentType);
-        if ( $adapter == null ) {
+        if ( $adapter === null ) {
             $found = $this->getComponentAdapters($componentType);
             if ( $found->isEmpty() ) {
+            	// in the future - search in parent container
                 return null;
             } else if ( count($found) == 1 ) {
                 return $found->get(0);
             } else {
-                if ( $componentParameterName != null ) {
-                    $ca = $this->getComponentAdapter($componentParameterName);
-                    if ( $ca != null && $componentType->isAssignableFrom($ca->getImplementation()) ) {
-                        $adapter = $ca;
-                    }
+                if ( $nameBinding !== null ) {
+                	$parameterName = $nameBinding->getName();
+                	if ( $parameterName !== null ) {
+	                    $ca = $this->getComponentAdapter($parameterName);
+	                    if ( $ca !== null && $componentType->isAssignableFrom($ca->getImplementation()) ) {
+	                        $adapter = $ca;
+	                    }
+                	}
                 } else {
+                	$foundClasses = array();
+                	foreach( $found as $foundAdapter ) {
+                		/* @var $foundAdapter Xyster_Container_Adapter */
+                		$foundClasses[] = $foundAdapter->getImplementation();
+                	}
                     require_once 'Xyster/Container/Exception.php';
-                    throw new Xyster_Container_Exception('Ambiguous component resolution');
+                    throw new Xyster_Container_Exception('Ambiguous component resolution: '
+                        . $componentType . ', found ' . implode(',', $foundClasses));
                 }
             }
         }
@@ -388,7 +393,7 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
         $list = null;
         
         if ( $componentType == null ) {
-            $list = new Xyster_Collection_List($this->_adapters); 
+        	$list = Xyster_Collection::fixedList($this->_getModifiableComponentAdapterList());
         } else {
             $list = new Xyster_Collection_List;
             foreach( $this->_adapters as $adapter ) {
@@ -411,10 +416,11 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
     {
         $adapter = null;
         
-        if ( $this->_componentKeyToAdapterCache->containsKey($componentKey) ) {
-            $adapter = $this->_componentKeyToAdapterCache->get($componentKey);
-            $this->_componentKeyToAdapterCache->remove($componentKey);
-            $this->_adapters->remove($adapter);
+        $cache = $this->_getComponentKeyToAdapterCache();
+        if ( $cache->containsKey($componentKey) ) {
+            $adapter = $cache->get($componentKey);
+            $cache->remove($componentKey);
+            $this->_getModifiableComponentAdapterList()->remove($adapter);
         }
         
         return $adapter;
@@ -428,7 +434,7 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
      */
     public function removeComponentByInstance($componentInstance)
     {
-        foreach( $this->_adapters as $adapter ) {
+        foreach( $this->_getModifiableComponentAdapterList() as $adapter ) {
             /* @var $adapter Xyster_Container_Adapter */
             if ( Xyster_Type::areDeeplyEqual($this->_getLocalInstance($adapter), $componentInstance) ) {
                 return $this->removeComponent($adapter->getKey());
@@ -452,17 +458,29 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
      * Adds the adapter
      *
      * @param Xyster_Container_Adapter $adapter
+     * @return Xyster_Container
      */
     protected function _addAdapterInternal( Xyster_Container_Adapter $adapter )
     {
         $key = $adapter->getKey();
-        if ( $this->_componentKeyToAdapterCache->containsKey($key) ) {
+        if ( $this->_getComponentKeyToAdapterCache()->containsKey($key) ) {
             require_once 'Xyster/Container/Exception.php';
             throw new Xyster_Container_Exception('Duplicate keys not allowed ' . 
                 '(duplicate for "'. $key .'"');
         }
-        $this->_adapters->add($adapter);
-        $this->_componentKeyToAdapterCache->set($key, $adapter);
+        $this->_getModifiableComponentAdapterList()->add($adapter);
+        $this->_getComponentKeyToAdapterCache()->set($key, $adapter);
+        return $this;
+    }
+    
+    /**
+     * Gets the component key to adapter map
+     *
+     * @return Xyster_Collection_Map
+     */
+    protected function _getComponentKeyToAdapterCache()
+    {
+    	return $this->_componentKeyToAdapterCache;
     }
     
     /**
@@ -474,10 +492,12 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
     protected function _getInstance( Xyster_Container_Adapter $adapter )
     {
         $instance = null;
+        $isLocal = $this->_getModifiableComponentAdapterList()->contains($adapter);
         
-        if ( $this->_adapters->contains($adapter) ) {
+        if ( $isLocal ) {
             $instance = $adapter->getInstance($this);
         }
+        // for the future - check parent for adapter
         
         return $instance;
     }
@@ -492,6 +512,16 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
     {
         $instance = $adapter->getInstance($this);
         return $instance;
+    }
+    
+    /**
+     * Gets the adapters
+     *
+     * @return Xyster_Collection_List
+     */
+    protected function _getModifiableComponentAdapterList()
+    {
+    	return $this->_adapters;
     }
     
     /**
