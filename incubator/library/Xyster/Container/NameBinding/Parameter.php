@@ -68,7 +68,7 @@ class Xyster_Container_NameBinding_Parameter implements Xyster_Container_NameBin
 				$names[] = $parameter->getName();
 			}
 			
-			$this->_name = ( isset($names[$this->_index]) ) ?
+			$this->_name = ( !isset($names[$this->_index]) ) ?
                 '' : $names[$this->_index];
 		}
 		
