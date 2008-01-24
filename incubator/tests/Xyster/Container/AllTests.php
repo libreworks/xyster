@@ -46,8 +46,11 @@ require_once 'Xyster/Container/Injection/Factory/AdaptiveTest.php';
 require_once 'Xyster/Container/Injection/Factory/ConstructorTest.php';
 require_once 'Xyster/Container/Injection/Factory/MethodTest.php';
 require_once 'Xyster/Container/Injection/Factory/SetterTest.php';
+require_once 'Xyster/Container/Monitor/LogTest.php';
+require_once 'Xyster/Container/NameBinding/ParameterTest.php';
 require_once 'Xyster/Container/Parameter/BasicTest.php';
 require_once 'Xyster/Container/Parameter/ConstantTest.php';
+require_once 'Xyster/Container/Reference/SimpleTest.php';
 
 error_reporting(E_ALL | E_STRICT);
 
@@ -81,8 +84,11 @@ class Xyster_Container_AllTests
         $suite->addTestSuite('Xyster_Container_Injection_Factory_ConstructorTest');
         $suite->addTestSuite('Xyster_Container_Injection_Factory_MethodTest');
         $suite->addTestSuite('Xyster_Container_Injection_Factory_SetterTest');
+        $suite->addTestSuite('Xyster_Container_Monitor_LogTest');
+        $suite->addTestSuite('Xyster_Container_NameBinding_ParameterTest');
         $suite->addTestSuite('Xyster_Container_Parameter_BasicTest');
         $suite->addTestSuite('Xyster_Container_Parameter_ConstantTest');
+        $suite->addTestSuite('Xyster_Container_Reference_SimpleTest');
         return $suite;
     }
 }
