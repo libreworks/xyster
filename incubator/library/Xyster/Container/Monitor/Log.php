@@ -14,19 +14,42 @@
  * @version   $Id$
  */
 /**
- * @see Xyster_Container_Monitor
+ * @see Xyster_Container_Monitor_Abstract
  */
-require_once 'Xyster/Container/Monitor.php';
+require_once 'Xyster/Container/Monitor/Abstract.php';
 /**
- * A monitor that does nothing
+ * @see Xyster_Container_Monitor_Strategy
+ */
+require_once 'Xyster/Container/Monitor/Strategy.php';
+/**
+ * A monitor that writes out to a Zend_Log instance.
+ * 
+ * Tip: You can use a Zend_Log to write to the standard out stream
  * 
  * @category  Xyster
  * @package   Xyster_Container
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Container_Monitor_Null implements Xyster_Container_Monitor
+class Xyster_Container_Monitor_Log extends Xyster_Container_Monitor_Abstract
 {
+	/**
+	 * @var Zend_Log
+	 */
+	private $_log;
+	
+	/**
+	 * Creates a new delegating monitor
+	 *
+	 * @param Zend_Log $log
+	 * @param Xyster_Container_Monitor $delegate
+	 */
+	public function __construct( Zend_Log $log, Xyster_Container_Monitor $delegate = null )
+	{
+		$this->_log = $log;
+		parent::__construct($delegate);
+	}
+	
     /**
      * Event thrown as the component is being instantiated using the given constructor
      *
@@ -36,6 +59,8 @@ class Xyster_Container_Monitor_Null implements Xyster_Container_Monitor
      */
     public function instantiating(Xyster_Container_Interface $container, Xyster_Container_Adapter $adapter, Xyster_Type $class = null)
     {
+    	$this->_log->log(sprintf(parent::INSTANTIATING, (string)$class), Zend_Log::INFO);
+    	parent::instantiating($container, $adapter, $class);
     }
 
     /**
@@ -51,6 +76,8 @@ class Xyster_Container_Monitor_Null implements Xyster_Container_Monitor
      */
     public function instantiated(Xyster_Container_Interface $container, Xyster_Container_Adapter $adapter, Xyster_Type $class = null, $instantiated, array $injected = null, $duration)
     {
+    	$this->_log->log(sprintf(parent::INSTANTIATED, (string)$class, $duration, parent::parmsToString($injected)), Zend_Log::INFO);
+    	parent::instantiated($container, $adapter, $class, $instantiated, $injected, $duration);
     }
 
     /**
@@ -63,6 +90,8 @@ class Xyster_Container_Monitor_Null implements Xyster_Container_Monitor
      */
     public function instantiationFailed(Xyster_Container_Interface $container, Xyster_Container_Adapter $adapter, Xyster_Type $class, Exception $cause)
     {
+    	$this->_log->log(sprintf(parent::INSTANTIATION_FAILED, (string)$class, $cause->getMessage()), Zend_Log::ERR);
+    	parent::instantiationFailed($container, $adapter, $class, $cause);
     }
 
     /**
@@ -75,6 +104,8 @@ class Xyster_Container_Monitor_Null implements Xyster_Container_Monitor
      */
     public function invoking(Xyster_Container_Interface $container, Xyster_Container_Adapter $adapter, ReflectionMethod $member, $instance)
     {
+    	$this->_log->log(sprintf(parent::INVOKING, (string)$member, $member->getDeclaringClass()->getName()), Zend_Log::INFO);
+    	parent::invoking($container, $adapter, $member, $instance);
     }
 
     /**
@@ -88,6 +119,8 @@ class Xyster_Container_Monitor_Null implements Xyster_Container_Monitor
      */
     public function invoked(Xyster_Container_Interface $container, Xyster_Container_Adapter $adapter, ReflectionMethod $method, $instance, $duration)
     {
+    	$this->_log->log(sprintf(parent::INVOKED, (string)$method, $method->getDeclaringClass()->getName(), $duration), Zend_Log::INFO);
+    	parent::invoked($container, $adapter, $method, $instance, $duration);
     }
 
     /**
@@ -99,6 +132,8 @@ class Xyster_Container_Monitor_Null implements Xyster_Container_Monitor
      */
     public function invocationFailed(ReflectionMethod $member, $instance, Exception $cause)
     {
+    	$this->_log->log(sprintf(parent::INVOCATION_FAILED, (string)$member, $member->getDeclaringClass()->getName(), $cause->getMessage()), Zend_Log::ERR);
+    	parent::invocationFailed($member, $instance, $cause);
     }
 
     /**
@@ -109,6 +144,7 @@ class Xyster_Container_Monitor_Null implements Xyster_Container_Monitor
      */
     public function noComponentFound(Xyster_Container_Interface $container, $key)
     {
-        return null;
+    	$this->_log->log(sprintf(parent::NO_COMPONENT, $key), Zend_Log::NOTICE);
+        return parent::noComponentFound($container, $key);
     }
 }

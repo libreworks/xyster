@@ -18,15 +18,74 @@
  */
 require_once 'Xyster/Container/Monitor.php';
 /**
- * A monitor that does nothing
+ * @see Xyster_Container_Monitor_Strategy
+ */
+require_once 'Xyster/Container/Monitor/Strategy.php';
+/**
+ * A monitor which delegates to another monitor
+ * 
+ * It provides a Xyster_Container_Monitor_Null by default, but does not allow to
+ * use <code>null</code> for the delegate.
  * 
  * @category  Xyster
  * @package   Xyster_Container
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Container_Monitor_Null implements Xyster_Container_Monitor
+abstract class Xyster_Container_Monitor_Abstract implements Xyster_Container_Monitor, Xyster_Container_Monitor_Strategy
 {
+    const INSTANTIATING = "Xyster_Container: instantiating %s";
+    const INSTANTIATED = "Xyster_Container: instantiated %s [%0.5f ms] injected [%s]";
+    const INSTANTIATION_FAILED = "Xyster_Container: instantiation failed: %s, reason: %s";
+    const INVOKING = "Xyster_Container: invoking %s on %s";
+    const INVOKED = "Xyster_Container: invoked %s on %s [%0.5f ms]";
+    const INVOCATION_FAILED = "Xyster_Container: invocation failed: %s on %s, reason: %s";
+    const NO_COMPONENT = "Xyster_Container: No component for key: %s";
+    
+    /**
+	 * @var Xyster_Container_Monitor
+	 */
+	private $_delegate;
+
+	/**
+	 * Creates a new delegating monitor
+	 *
+	 * @param Xyster_Container_Monitor $delegate
+	 */
+	public function __construct( Xyster_Container_Monitor $delegate = null )
+	{
+		if ( $delegate === null ) {
+			require_once 'Xyster/Container/Monitor/Null.php';
+			$delegate = new Xyster_Container_Monitor_Null;
+		}
+		$this->_delegate = $delegate;
+	}
+	
+    /**
+     * Changes the component monitor used
+     * 
+     * @param Xyster_Container_Monitor $monitor the new monitor to use
+     */
+    public function changeMonitor( Xyster_Container_Monitor $monitor )
+    {
+        if ( $this->_delegate instanceof Xyster_Container_Monitor_Strategy ) {
+            $this->_delegate->changeMonitor($monitor);
+        } else {
+            $this->_delegate = $monitor;
+        }
+    }
+
+    /**
+     * Gets the monitor currently used
+     * 
+     * @return Xyster_Container_Monitor The monitor currently used
+     */
+    public function currentMonitor()
+    {
+        return ( $this->_delegate instanceof Xyster_Container_Monitor_Strategy ) ?
+           $this->_delegate->currentMonitor() : $this->_delegate;
+    }
+	
     /**
      * Event thrown as the component is being instantiated using the given constructor
      *
@@ -36,6 +95,7 @@ class Xyster_Container_Monitor_Null implements Xyster_Container_Monitor
      */
     public function instantiating(Xyster_Container_Interface $container, Xyster_Container_Adapter $adapter, Xyster_Type $class = null)
     {
+    	$this->_delegate->instantiating($container, $adapter, $class);
     }
 
     /**
@@ -51,6 +111,7 @@ class Xyster_Container_Monitor_Null implements Xyster_Container_Monitor
      */
     public function instantiated(Xyster_Container_Interface $container, Xyster_Container_Adapter $adapter, Xyster_Type $class = null, $instantiated, array $injected = null, $duration)
     {
+    	$this->_delegate->instantiated($container, $adapter, $class, $instantiated, $injected, $duration);
     }
 
     /**
@@ -63,6 +124,7 @@ class Xyster_Container_Monitor_Null implements Xyster_Container_Monitor
      */
     public function instantiationFailed(Xyster_Container_Interface $container, Xyster_Container_Adapter $adapter, Xyster_Type $class, Exception $cause)
     {
+    	$this->_delegate->instantiationFailed($container, $adapter, $class, $cause);
     }
 
     /**
@@ -75,6 +137,7 @@ class Xyster_Container_Monitor_Null implements Xyster_Container_Monitor
      */
     public function invoking(Xyster_Container_Interface $container, Xyster_Container_Adapter $adapter, ReflectionMethod $member, $instance)
     {
+    	$this->_delegate->invoking($container, $adapter, $member, $instance);
     }
 
     /**
@@ -88,6 +151,7 @@ class Xyster_Container_Monitor_Null implements Xyster_Container_Monitor
      */
     public function invoked(Xyster_Container_Interface $container, Xyster_Container_Adapter $adapter, ReflectionMethod $method, $instance, $duration)
     {
+    	$this->_delegate->invoked($container, $adapter, $method, $instance, $duration);
     }
 
     /**
@@ -99,6 +163,7 @@ class Xyster_Container_Monitor_Null implements Xyster_Container_Monitor
      */
     public function invocationFailed(ReflectionMethod $member, $instance, Exception $cause)
     {
+    	$this->_delegate->invocationFailed($member, $instance, $cause);
     }
 
     /**
@@ -109,6 +174,23 @@ class Xyster_Container_Monitor_Null implements Xyster_Container_Monitor
      */
     public function noComponentFound(Xyster_Container_Interface $container, $key)
     {
-        return null;
+        return $this->_delegate->noComponentFound($container, $key);
+    }
+    
+    /**
+     * Converts an array of values into a string of their type names
+     *
+     * @param array $injected
+     * @return string
+     */
+    public static function parmsToString( array $injected )
+    {
+    	require_once 'Xyster/Type.php';
+    	$types = array();
+    	foreach( $injected as $object ) {
+    		$type = Xyster_Type::of($object);
+    		$types[] = $type->getName();
+    	}
+    	return implode(', ', $types);
     }
 }

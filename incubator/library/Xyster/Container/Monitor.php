@@ -27,58 +27,58 @@ interface Xyster_Container_Monitor
      * Event thrown as the component is being instantiated using the given constructor
      *
      * @param Xyster_Container_Interface $container
-     * @param Xyster_Container_Adapter $componentAdapter
+     * @param Xyster_Container_Adapter $adapter
      * @param Xyster_Type $class the class being instantiated
      */
-    function instantiating(Xyster_Container_Interface $container, Xyster_Container_Adapter $componentAdapter, Xyster_Type $class = null);
+    function instantiating(Xyster_Container_Interface $container, Xyster_Container_Adapter $adapter, Xyster_Type $class = null);
 
     /**
      * Event thrown after the component has been instantiated using the given constructor.
      * This should be called for both Constructor and Setter DI.
      *
      * @param Xyster_Container_Interface $container
-     * @param Xyster_Container_Adapter $componentAdapter
+     * @param Xyster_Container_Adapter $adapter
      * @param Xyster_Type $class the class being instantiated
      * @param mixed $instantiated the component that was instantiated
      * @param array $injected the components during instantiation
      * @param float $duration the duration in millis of the instantiation
      */
     function instantiated(Xyster_Container_Interface $container,
-        Xyster_Container_Adapter $componentAdapter, Xyster_Type $class = null,
+        Xyster_Container_Adapter $adapter, Xyster_Type $class = null,
         $instantiated, array $injected = null, $duration);
 
     /**
      * Event thrown if the component instantiation failed using the given constructor
      * 
      * @param Xyster_Container_Interface $container
-     * @param Xyster_Container_Adapter $componentAdapter
+     * @param Xyster_Container_Adapter $adapter
      * @param Xyster_Type $class the class being instantiated
      * @param Exception $cause the Exception detailing the cause of the failure
      */
     function instantiationFailed(Xyster_Container_Interface $container,
-        Xyster_Container_Adapter $componentAdapter, Xyster_Type $class, Exception $cause);
+        Xyster_Container_Adapter $adapter, Xyster_Type $class, Exception $cause);
 
     /**
      * Event thrown as the component method is being invoked on the given instance
      * 
      * @param Xyster_Container_Interface $container
-     * @param Xyster_Container_Adapter $componentAdapter
+     * @param Xyster_Container_Adapter $adapter
      * @param ReflectionMethod $member
      * @param mixed $instance the component instance
      */
-    function invoking(Xyster_Container_Interface $container, Xyster_Container_Adapter $componentAdapter, ReflectionMethod $member, $instance);
+    function invoking(Xyster_Container_Interface $container, Xyster_Container_Adapter $adapter, ReflectionMethod $member, $instance);
 
     /**
      * Event thrown after the component method has been invoked on the given instance
      * 
      * @param Xyster_Container_Interface $container
-     * @param Xyster_Container_Adapter $componentAdapter
+     * @param Xyster_Container_Adapter $adapter
      * @param ReflectionMethod $method the Method invoked on the component instance
      * @param mixed $instance the component instance
      * @param float $duration the duration in millis of the invocation
      */
     function invoked(Xyster_Container_Interface $container,
-        Xyster_Container_Adapter $componentAdapter, ReflectionMethod $method, $instance, $duration);
+        Xyster_Container_Adapter $adapter, ReflectionMethod $method, $instance, $duration);
 
     /**
      * Event thrown if the component method invocation failed on the given instance
@@ -92,8 +92,8 @@ interface Xyster_Container_Monitor
     /**
      * 
      * @param Xyster_Container_Interface $container
-     * @param mixed $componentKey
+     * @param mixed $key
      * @return mixed 
      */
-    function noComponentFound(Xyster_Container_Interface $container, $componentKey);
+    function noComponentFound(Xyster_Container_Interface $container, $key);
 }
