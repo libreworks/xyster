@@ -18,6 +18,10 @@
  */
 require_once 'Xyster/Container/Injection/Abstract.php';
 /**
+ * @see Xyster_Container_NameBinding_Parameter
+ */
+require_once 'Xyster/Container/NameBinding/Parameter.php';
+/**
  * This adapter will instantiate a new object for each call to getInstance 
  *
  * @category  Xyster
