@@ -51,6 +51,9 @@ require_once 'Xyster/Container/NameBinding/ParameterTest.php';
 require_once 'Xyster/Container/Parameter/BasicTest.php';
 require_once 'Xyster/Container/Parameter/ConstantTest.php';
 require_once 'Xyster/Container/Reference/SimpleTest.php';
+require_once 'Xyster/Container/Reference/SimpleTest.php';
+require_once 'Xyster/Container/Visitor/MethodCallingTest.php';
+require_once 'Xyster/Container/Visitor/TraversalCheckingTest.php';
 
 error_reporting(E_ALL | E_STRICT);
 
@@ -89,6 +92,8 @@ class Xyster_Container_AllTests
         $suite->addTestSuite('Xyster_Container_Parameter_BasicTest');
         $suite->addTestSuite('Xyster_Container_Parameter_ConstantTest');
         $suite->addTestSuite('Xyster_Container_Reference_SimpleTest');
+        $suite->addTestSuite('Xyster_Container_Visitor_MethodCallingTest');
+        $suite->addTestSuite('Xyster_Container_Visitor_TraversalCheckingTest');
         return $suite;
     }
 }
