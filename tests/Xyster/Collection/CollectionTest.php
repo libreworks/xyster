@@ -18,7 +18,7 @@
 /**
  * PHPUnit test case
  */
-require_once 'Xyster/Collection/BaseCollectionTest.php';
+require_once dirname(__FILE__) . '/BaseCollectionTest.php';
 /**
  * Xyster_Collection
  */
@@ -42,14 +42,14 @@ require_once 'Xyster/Collection/Set.php';
 class Xyster_Collection_CollectionTest extends Xyster_Collection_BaseCollectionTest
 {
     /**
-     * Tests the 'using' method
+     * Tests the empty list method
      *
      */
-    public function testUsing()
+    public function testEmptyList()
     {
-        $c = Xyster_Collection::using( array(1,2,3,4,5) );
-        $this->assertType('Xyster_Collection_Interface',$c);
-        $this->assertEquals($c->count(),5);
+    	$list = Xyster_Collection::emptyList();
+    	$this->assertType('Xyster_Collection_List_Empty', $list);
+    	$this->assertSame($list, Xyster_Collection::emptyList());
     }
     
     /**
@@ -60,17 +60,6 @@ class Xyster_Collection_CollectionTest extends Xyster_Collection_BaseCollectionT
     {
         $this->setExpectedException('Xyster_Collection_Exception');
         $c = Xyster_Collection::fixedCollection( new Xyster_Collection() );
-        $c->clear();
-    }
-    
-    /**
-     * Tests the fixed set method
-     *
-     */
-    public function testFixedSet()
-    {
-        $this->setExpectedException('Xyster_Collection_Exception');
-        $c = Xyster_Collection::fixedSet( new Xyster_Collection_Set() );
         $c->clear();
     }
     
@@ -94,5 +83,27 @@ class Xyster_Collection_CollectionTest extends Xyster_Collection_BaseCollectionT
         $this->setExpectedException('Xyster_Collection_Exception');
         $c = Xyster_Collection::fixedMap( new Xyster_Collection_Map() );
         $c->clear();
+    }
+    
+    /**
+     * Tests the fixed set method
+     *
+     */
+    public function testFixedSet()
+    {
+        $this->setExpectedException('Xyster_Collection_Exception');
+        $c = Xyster_Collection::fixedSet( new Xyster_Collection_Set() );
+        $c->clear();
+    }
+        
+    /**
+     * Tests the 'using' method
+     *
+     */
+    public function testUsing()
+    {
+        $c = Xyster_Collection::using( array(1,2,3,4,5) );
+        $this->assertType('Xyster_Collection_Interface',$c);
+        $this->assertEquals($c->count(),5);
     }
 }

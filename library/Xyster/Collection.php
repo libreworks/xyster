@@ -28,6 +28,11 @@ require_once 'Xyster/Collection/Abstract.php';
 class Xyster_Collection extends Xyster_Collection_Abstract
 {
     private $_immutable = false;
+    
+    /**
+     * @var Xyster_Container_List_Empty
+     */
+    static private $_emptyList = null;
 
 	/**
 	 * Creates a new simple collection
@@ -107,19 +112,19 @@ class Xyster_Collection extends Xyster_Collection_Abstract
 	}
 
 	/**
-	 * Creates a new collection containing the values
+	 * Gets an immutable, empty list
 	 *
-	 * @param array $values
-	 * @param boolean $immutable
-	 * @return Xyster_Collection_Interface
+	 * @return Xyster_Container_List_Interface
 	 */
-	static public function using( array $values, $immutable = false )
+	static public function emptyList()
 	{
-		$collection = new Xyster_Collection(null,$immutable);
-		$collection->_items = array_values($values);
-		return $collection;
+		if ( self::$_emptyList === null ) {
+			require_once 'Xyster/Collection/List/Empty.php';
+			self::$_emptyList = new Xyster_Collection_List_Empty;
+		}
+		return self::$_emptyList;
 	}
-
+	
 	/**
 	 * Returns a new unchangable collection containing all the supplied values
 	 *
@@ -128,7 +133,7 @@ class Xyster_Collection extends Xyster_Collection_Abstract
 	 */
 	static public function fixedCollection( Xyster_Collection_Interface $collection )
 	{
-		return new Xyster_Collection( $collection, true );
+		return new Xyster_Collection($collection, true);
 	}
 
 	/**
@@ -140,7 +145,7 @@ class Xyster_Collection extends Xyster_Collection_Abstract
 	static public function fixedList( Xyster_Collection_List_Interface $list )
 	{
 	    require_once 'Xyster/Collection/List.php';
-		return new Xyster_Collection_List( $list, true );
+		return new Xyster_Collection_List($list, true);
 	}
 
 	/**
@@ -152,7 +157,7 @@ class Xyster_Collection extends Xyster_Collection_Abstract
 	static public function fixedMap( Xyster_Collection_Map_Interface $map )
 	{
 	    require_once 'Xyster/Collection/Map.php';
-		return new Xyster_Collection_Map( $map, true );
+		return new Xyster_Collection_Map($map, true);
 	}
 
 	/**
@@ -164,9 +169,23 @@ class Xyster_Collection extends Xyster_Collection_Abstract
 	static public function fixedSet( Xyster_Collection_Set_Interface $set )
 	{
 	    require_once 'Xyster/Collection/Set.php';
-		return new Xyster_Collection_Set( $set, true );
+		return new Xyster_Collection_Set($set, true);
 	}
-	
+
+    /**
+     * Creates a new collection containing the values
+     *
+     * @param array $values
+     * @param boolean $immutable
+     * @return Xyster_Collection_Interface
+     */
+    static public function using( array $values, $immutable = false )
+    {
+        $collection = new Xyster_Collection(null, $immutable);
+        $collection->_items = array_values($values);
+        return $collection;
+    }
+    	
 	/**
 	 * A convenience method to fail on modification of immutable collection
 	 *
