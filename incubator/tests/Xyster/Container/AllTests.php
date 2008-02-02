@@ -26,7 +26,10 @@ require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHe
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
+require_once 'Xyster/Container/EmptyTest.php';
 require_once 'Xyster/Container/FeaturesTest.php';
+require_once 'Xyster/Container/ImmutableTest.php';
+require_once 'Xyster/Container/PropertiesTest.php';
 require_once 'Xyster/Container/Adapter/AbstractTest.php';
 require_once 'Xyster/Container/Adapter/InstanceTest.php';
 require_once 'Xyster/Container/Behavior/AbstractTest.php';
@@ -38,6 +41,8 @@ require_once 'Xyster/Container/Behavior/Factory/AdaptiveTest.php';
 require_once 'Xyster/Container/Behavior/Factory/AutomatedTest.php';
 require_once 'Xyster/Container/Behavior/Factory/CachedTest.php';
 require_once 'Xyster/Container/Behavior/Factory/PropertyApplicatorTest.php';
+require_once 'Xyster/Container/Delegating/AbstractTest.php';
+require_once 'Xyster/Container/Delegating/MutableAbstractTest.php';
 require_once 'Xyster/Container/Injection/AbstractTest.php';
 require_once 'Xyster/Container/Injection/ConstructorTest.php';
 require_once 'Xyster/Container/Injection/MethodTest.php';
@@ -67,7 +72,10 @@ class Xyster_Container_AllTests
     public static function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('Xyster Framework - Xyster_Container');
+        $suite->addTestSuite('Xyster_Container_EmptyTest');
         $suite->addTestSuite('Xyster_Container_FeaturesTest');
+        $suite->addTestSuite('Xyster_Container_ImmutableTest');
+        $suite->addTestSuite('Xyster_Container_PropertiesTest');
         $suite->addTestSuite('Xyster_Container_Adapter_AbstractTest');
         $suite->addTestSuite('Xyster_Container_Adapter_InstanceTest');
         $suite->addTestSuite('Xyster_Container_Behavior_AbstractTest');
@@ -79,6 +87,8 @@ class Xyster_Container_AllTests
         $suite->addTestSuite('Xyster_Container_Behavior_Factory_AutomatedTest');
         $suite->addTestSuite('Xyster_Container_Behavior_Factory_CachedTest');
         $suite->addTestSuite('Xyster_Container_Behavior_Factory_PropertyApplicatorTest');
+        $suite->addTestSuite('Xyster_Container_Delegating_AbstractTest');
+        $suite->addTestSuite('Xyster_Container_Delegating_MutableAbstractTest');
         $suite->addTestSuite('Xyster_Container_Injection_AbstractTest');
         $suite->addTestSuite('Xyster_Container_Injection_ConstructorTest');
         $suite->addTestSuite('Xyster_Container_Injection_MethodTest');

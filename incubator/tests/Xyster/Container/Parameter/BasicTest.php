@@ -127,6 +127,39 @@ class Xyster_Container_Parameter_BasicTest extends PHPUnit_Framework_TestCase
     }
     
     /**
+     * Tests the 'resolveInstance' method using parameter names
+     *
+     */
+    public function testResolveInstanceParameterNames()
+    {
+    	$this->container->addComponent('Submarine')
+            ->addComponent('SubFuel', 'fuel');
+        $adapter = $this->container->getComponentAdapterByType('Submarine');
+        $constructor = $this->key->getClass()->getConstructor(); /* @var $constructor ReflectionMethod */
+        $nameBinding = new Xyster_Container_NameBinding_Parameter($constructor, 1);
+        
+        $return = $this->object->resolveInstance($this->container, $adapter, new Xyster_Type('SubFuel'), $nameBinding, true);
+        $this->assertType('SubFuel', $return);
+    }
+    
+    /**
+     * Tests the 'resolveInstance' method using no parameter names
+     *
+     */
+    public function testResolveInstanceParameterNoNames()
+    {
+        $this->container->addComponent('Submarine')
+            ->addComponent('SubFuel', 'fuel')
+            ->addComponent('SubFuel', 'fuel2');
+        $adapter = $this->container->getComponentAdapter('fuel');
+        $constructor = $this->key->getClass()->getConstructor(); /* @var $constructor ReflectionMethod */
+        $nameBinding = new Xyster_Container_NameBinding_Parameter($constructor, 1);
+        
+        $return = $this->object->resolveInstance($this->container, $adapter, new Xyster_Type('SubFuel'), $nameBinding, false);
+        $this->assertType('SubFuel', $return);
+    }
+    
+    /**
      * Tests the 'resolveInstance' method with a key defined for the parameter
      *
      */

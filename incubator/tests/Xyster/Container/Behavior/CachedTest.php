@@ -57,6 +57,15 @@ class Xyster_Container_Behavior_CachedTest extends Xyster_Container_Behavior_Sto
     }
     
     /**
+     * Tests a null argument to the constructor will create a new reference
+     */
+    public function testConstructor()
+    {
+    	$this->object = new Xyster_Container_Behavior_Cached($this->delegate);
+    	$this->assertAttributeEquals($this->reference, '_instanceReference', $this->object);
+    }
+    
+    /**
      * Tests the 'get' and 'set' methods
      */
     public function testGetAndSet()

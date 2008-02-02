@@ -64,7 +64,7 @@ abstract class Xyster_Container_Injection_Iterative extends Xyster_Container_Inj
                 $monitor->invoking($container, $this, $member, $componentInstance);
                 $matchingParam = $matchingParameters[$i];
                 /* @var $matchingParam Xyster_Container_Parameter */
-                if ( $matchingParam === null && !$reflectionParameter->allowsNull() ) {
+                if ( $matchingParam === null ) {
                     continue;
                 }
                 $toInject = $matchingParam->resolveInstance($container, $this, $this->_injectionTypes[$i],

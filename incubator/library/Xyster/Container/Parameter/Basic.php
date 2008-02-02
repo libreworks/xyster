@@ -172,9 +172,7 @@ class Xyster_Container_Parameter_Basic implements Xyster_Container_Parameter
             }
             if ( $useNames ) {
             	$found = $container->getComponentAdapter($expectedNameBinding->getName());
-            	if ( $found !== null
-            	   && $this->_areCompatible($expectedType, $found)
-            	   && $found !== $excludeAdapter ) {
+            	if ( $found !== null && $this->_areCompatible($expectedType, $found) && $found !== $excludeAdapter ) {
             		return $found;
             	}
             }
