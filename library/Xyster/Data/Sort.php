@@ -11,7 +11,12 @@
  * @package   Xyster_Data
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @version   $Id$
  */
+/**
+ * @see Xyster_Data_Symbol
+ */
+require_once 'Xyster/Data/Symbol.php';
 /**
  * A struct that holds a field and a direction
  *
@@ -20,7 +25,7 @@
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Data_Sort
+class Xyster_Data_Sort implements Xyster_Data_Symbol
 {
     /**
      * The direction of the sort, 'ASC' or 'DESC'

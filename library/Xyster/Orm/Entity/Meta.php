@@ -18,6 +18,10 @@
  */
 require_once 'Xyster/Orm/Entity/Field.php';
 /**
+ * @see Xyster_Orm_Xsql
+ */
+require_once 'Xyster/Orm/Xsql.php';
+/**
  * A helper for meta information about entities
  *
  * @category  Xyster
@@ -27,17 +31,52 @@ require_once 'Xyster/Orm/Entity/Field.php';
  */
 class Xyster_Orm_Entity_Meta
 {
+	/**
+	 * @var string
+	 */
     protected $_class;
+    
+    /**
+     * Cache for entity fields
+     *
+     * @var array
+     */
+    protected $_fields = array();
+    
     /**
      * The mapper factory
      *
      * @var Xyster_Orm_Mapper_Factory_Interface
      */
     protected $_mapFactory;
-    protected $_fields = array();
+    
+    /**
+     * A cache for all entity members
+     *
+     * @var array
+     */
     protected $_members = array();
+    
+    /**
+     * The field names of the primary key
+     *
+     * @var array
+     */
     protected $_primary = array();
+    
+    /**
+     * The relation objects
+     *
+     * @var array
+     */
     protected $_relations = array();
+    
+    /**
+     * The cache for runtime column lookups
+     *
+     * @var array
+     */
+    protected $_runtime = array();
 
     /**
      * Creates a new Entity Metadata helper
@@ -58,7 +97,103 @@ class Xyster_Orm_Entity_Meta
             }
         }
     }
+    
+    /**
+     * Asserts a field's presence in the entity class' members
+     *
+     * @param string $field
+     * @throws Xyster_Orm_Entity_Exception
+     */
+    public function assertValidField( $field )
+    {
+    	if ( $field instanceof Xyster_Data_Field ) {
+    		$field = trim($field->getName());
+    	} else {
+    		$field = trim($field);
+	        require_once 'Xyster/Data/Field/Aggregate.php';
+	        $matches = Xyster_Data_Field_Aggregate::match($field);
+	        if ( count($matches) ) {
+	            $field = trim($matches["field"]);
+	        }
+    	}
+        
+        $calls = Xyster_Orm_Xsql::splitArrow($field);
+        /*
+            for composite references (i.e.  supervisor->name )
+            - check each column exists in its container
+        */
+        if ( count($calls) > 1 ) {
+            
+            $container = $this->_class;
+            $meta = $this;
+            foreach( $calls as $k=>$v ) {
+                $meta->assertValidField($v);
+                if ( $meta->isRelation($v) ) {
+                    $details = $meta->getRelation($v);
+                    if ( !$details->isCollection() ) {
+                        $container = $details->getTo();
+                        $meta = $this->_mapFactory->getEntityMeta($container);
+                    } else {
+                        break;
+                    }
+                } else { 
+                    break;
+                }
+            }
+            
+        } else {
 
+            /*
+                for method calls
+                - check method exists in class
+                - check any method parameters that may themselves be members
+            */
+            if ( preg_match("/^(?P<name>[a-z0-9_]+)(?P<meth>\((?P<args>[\w\W]*)\))$/i", $field, $matches) ) {
+                if ( !in_array($matches['name'], $this->getMembers()) ) {
+                    require_once 'Xyster/Orm/Entity/Exception.php';
+                    throw new Xyster_Orm_Entity_Exception($matches['name'] . ' is not a member of the ' . $this->_class . ' class' );
+                }
+                if ( strlen(trim($matches['args'])) ) {
+                    foreach( Xyster_Orm_Xsql::splitComma($matches['args']) as $v ) {
+                        if ( Xyster_Orm_Xsql::isValidField($v) ) {
+                        	$this->assertValidField($v);
+                        }
+                    }
+                }
+            /*
+                for properties and relationships
+                - check column exists in class
+            */
+            } else if ( !in_array($field, $this->getMembers()) ) {
+                require_once 'Xyster/Orm/Entity/Exception.php';
+                throw new Xyster_Orm_Entity_Exception($field . ' is not a member of the ' . $this->_class . ' class');
+            }
+        }
+    }
+        
+    /**
+     * Creates a 'one to one' relationship for entities on the 'many' end of a 'one to many' relationship
+     * 
+     * Options can contain the following values:
+     * 
+     * <dl>
+     * <dt>class</dt><dd>The foreign class. The relation name by default</dd>
+     * <dt>id</dt><dd>The name of the foreign key field(s) on the declaring
+     * entity.  This should either be an array (if multiple) or a string (if
+     * one).  By default, this is <var>class</var>Id</dd>
+     * <dt>filters</dt><dd>In XSQL, any Criteria that should be used
+     * against the entity to be loaded</dd>
+     * </dl>
+     * 
+     * @param string $name  The name of the relationship
+     * @param array $options  An array of options
+     * @return Xyster_Orm_Relation  The relationship created
+     */
+    public function belongsTo( $name, array $options = array() )
+    {
+        return $this->_baseCreate('belongs', $name, $options);
+    }
+    
     /**
      * Gets the class name of the entity
      *
@@ -163,28 +298,6 @@ class Xyster_Orm_Entity_Meta
         return $this->_relations;
     }
     
-    /**
-	 * Creates a 'one to one' relationship for entities on the 'many' end of a 'one to many' relationship
-	 * 
-	 * Options can contain the following values:
-	 * 
-	 * <dl>
-	 * <dt>class</dt><dd>The foreign class. The relation name by default</dd>
-	 * <dt>id</dt><dd>The name of the foreign key field(s) on the declaring
-	 * entity.  This should either be an array (if multiple) or a string (if
-	 * one).  By default, this is <var>class</var>Id</dd>
-	 * <dt>filters</dt><dd>In XSQL, any Criteria that should be used
-	 * against the entity to be loaded</dd>
-	 * </dl>
-	 * 
-	 * @param string $name  The name of the relationship
-	 * @param array $options  An array of options
-	 * @return Xyster_Orm_Relation  The relationship created
-	 */
-	public function belongsTo( $name, array $options = array() )
-	{
-		return $this->_baseCreate('belongs', $name, $options);
-	}
 	/**
 	 * Creates a 'one to one' relationship
 	 * 
@@ -207,6 +320,7 @@ class Xyster_Orm_Entity_Meta
 	{
 		return $this->_baseCreate('one', $name, $options);
 	}
+	
 	/**
 	 * Creates a 'one to many' relationship 
 	 * 
@@ -230,6 +344,7 @@ class Xyster_Orm_Entity_Meta
 	{
 		return $this->_baseCreate('many', $name, $options);
 	}
+	
 	/**
 	 * Creates a 'many to many' relationship
 	 * 
@@ -266,7 +381,43 @@ class Xyster_Orm_Entity_Meta
 	{
 	    return array_key_exists($name, $this->_relations);
 	}
-	
+    
+    /**
+     * Verifies if a {@link Xyster_Data_Symbol} is runtime
+     * 
+     * @param Xyster_Data_Symbol $object 
+     * @param string $class
+     * @return boolean
+     */
+    public function isRuntime( Xyster_Data_Symbol $object )
+    {
+        if ( $object instanceof Xyster_Data_Criterion ) {
+            
+            foreach( Xyster_Data_Criterion::getFields($object) as $v ) {
+                if ($this->isRuntime($v)) {
+                    return true;
+                }
+            }
+            return false;
+            
+        } else if ( $object instanceof Xyster_Data_Field ) {
+            
+            $name = $object->getName();
+	        if ( !isset($this->_runtime[$name]) ) {
+	            $this->_runtime[$name] = $this->_isRuntime($object);
+	        }
+	        return $this->_runtime[$name];
+            
+        } else if ( $object instanceof Xyster_Data_Sort ) {
+            
+            return $this->isRuntime($object->getField());
+            
+        }
+        
+        require_once 'Xyster/Orm/Exception.php';
+        throw new Xyster_Orm_Exception('Unexpected type: ' . gettype($object));
+    }
+    	
     /**
      * Base creator method
      * 
@@ -289,5 +440,48 @@ class Xyster_Orm_Entity_Meta
         $this->_relations[$name] = new Xyster_Orm_Relation($this, $type, $name, $options);
             
         return $this->_relations[$name];
+    }
+    
+    /**
+     * Returns if a field is runtime
+     *
+     * @param Xyster_Data_Field $field
+     * @return boolean
+     */
+    protected function _isRuntime( Xyster_Data_Field $field )
+    {
+    	$calls = Xyster_Orm_Xsql::splitArrow($field->getName());
+
+        if ( count($calls) == 1 ) {
+        	
+        	$field = $field->getName();
+            // the call isn't composite - could be a member or a relation
+            return ( Xyster_Orm_Xsql::isMethodCall($calls[0]) ) ? true :
+                ( !in_array($field, $this->getFieldNames())
+                    && !$this->isRelation($field->getName()) );
+                    
+        } else {
+            
+            // the call is composite - loop through to see if we can figure 
+            // out the type bindings
+            $container = $this->_class;
+            $meta = $this;
+            foreach( $calls as $call ) {
+                if ( Xyster_Orm_Xsql::isMethodCall($call) ) {
+                    return true;
+                } else {
+                    $isRel = $meta->isRelation($call);
+                    if ( !in_array($call, array_keys($meta->getFields()))
+                        && !$isRel ) {
+                        return true;
+                    } else if ( $isRel ) {
+                        $container = $meta->getRelation($call)->getTo();
+                        $meta = $this->_mapFactory->getEntityMeta($container);
+                    }
+                }
+            }
+            return false;
+
+        }
     }
 }

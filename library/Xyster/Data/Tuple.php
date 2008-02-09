@@ -77,10 +77,10 @@ class Xyster_Data_Tuple extends Xyster_Data_Set
 	/**
 	 * Flattens the tuple into a data row
 	 *
-	 * @param array $fields
+	 * @param Xyster_Data_Field_Clause $fields
 	 * @return array
 	 */
-	public function toRow( array $fields )
+	public function toRow( Xyster_Data_Field_Clause $fields )
 	{
 		$values = array();
 		foreach( $fields as $field ) {
@@ -95,20 +95,16 @@ class Xyster_Data_Tuple extends Xyster_Data_Set
 	 *
 	 * @param Xyster_Data_Set $rs  The dataset to add rows representing the tuples
 	 * @param mixed $collection  The collection of objects/hashtables to use
-	 * @param array $fields  An array of {@link Xyster_Data_Field} objects to evaluate
+	 * @param Xyster_Data_Field_Clause $fields  The field objects to evaluate
 	 * @param array $having  Optional. An array of {@link Xyster_Data_Criterion} objects 
 	 * @param int $limit  Optional. The maximum number of tuples to create
 	 * @param int $offset  Optional.  The number of tuples to skip before adding
 	 * @throws Xyster_Data_Set_Exception if there are no grouped columns in the $fields array
 	 */
-	static public function makeTuples( Xyster_Data_Set $rs, $collection, array $fields, array $having = null, $limit = 0, $offset = 0 )
+	static public function makeTuples( Xyster_Data_Set $rs, $collection, Xyster_Data_Field_Clause $fields, array $having = null, $limit = 0, $offset = 0 )
 	{
 		$groups = array();
 		foreach( $fields as $v ) {
-			if (! $v instanceof Xyster_Data_Field ) {
-				require_once 'Xyster/Data/Set/Exception.php';
-				throw new Xyster_Data_Set_Exception('The $fields array must only contain Xyster_Data_Field objects');
-			}
 			if ( $v instanceof Xyster_Data_Field_Group ) {
 				$groups[] = $v;
 			}

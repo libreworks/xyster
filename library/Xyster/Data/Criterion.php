@@ -11,7 +11,12 @@
  * @package   Xyster_Data
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @version   $Id$
  */
+/**
+ * @see Xyster_Data_Symbol
+ */
+require_once 'Xyster/Data/Symbol.php';
 /**
  * The base class for Criteria
  *
@@ -20,7 +25,7 @@
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-abstract class Xyster_Data_Criterion
+abstract class Xyster_Data_Criterion implements Xyster_Data_Symbol
 {
 	/**
 	 * Evaluates the Criterion for a given object

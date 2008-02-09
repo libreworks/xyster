@@ -18,6 +18,10 @@
  */
 require_once 'Xyster/Orm/Query.php';
 /**
+ * @see Xyster_Data_Field_Clause
+ */
+require_once 'Xyster/Data/Field/Clause.php';
+/**
  * A report query object
  *
  * @category  Xyster
@@ -60,6 +64,7 @@ class Xyster_Orm_Query_Report extends Xyster_Orm_Query
         if ( count($this->_parts[self::GROUP]) ) {
             $groups = array();
             foreach( $this->_parts[self::GROUP] as $group ) {
+                /* @var $field Xyster_Data_Field_Group */
                 $groups[] = $group->getName();
             }
             foreach( $this->_parts[self::FIELDS] as $field )
@@ -84,15 +89,17 @@ class Xyster_Orm_Query_Report extends Xyster_Orm_Query
             $collection->filter(Xyster_Data_Criterion::fromArray('AND', $this->_runtime[Xyster_Orm_Query::WHERE]));
         }
 
-        $fieldsAndGroups = array_merge($this->_parts[self::GROUP], $this->_parts[self::FIELDS]);
+        $fieldsAndGroups = new Xyster_Data_Field_Clause($this->_parts[self::GROUP]);
+        $fieldsAndGroups->merge($this->_parts[self::FIELDS]);
         
         // setup the Xyster_Data_Set and add the columns to return
         $rs = new Xyster_Data_Set();
-        foreach( $fieldsAndGroups  as $field ) {
-            $rs->addColumn( $field->getAlias() );
+        foreach( $fieldsAndGroups as $field ) {
+        	/* @var $field Xyster_Data_Field */
+            $rs->addColumn($field->getAlias());
         }
 
-        if ( $this->_parts[self::GROUP] ) {
+        if ( count($this->_parts[self::GROUP]) > 0 ) {
             
             require_once 'Xyster/Data/Tuple.php';
             // let Xyster_Data_Tuple do the work for runtime grouping
@@ -111,6 +118,7 @@ class Xyster_Orm_Query_Report extends Xyster_Orm_Query
             $aggregate = false;
             foreach( $this->_parts[self::FIELDS] as $field ) {
                 if ( $field instanceof Xyster_Data_Field_Aggregate ) {
+                	/* @var $field Xyster_Data_Field_Aggregate */
                     $aggregate = $field->getFunction();
                     break;
                 }
@@ -126,6 +134,7 @@ class Xyster_Orm_Query_Report extends Xyster_Orm_Query
                     if ( $offset >= $this->_parts[Xyster_Orm_Query::OFFSET] ) {
                         $values = array();
                         foreach( $this->_parts[self::FIELDS] as $field ) {
+                        	/* @var $field Xyster_Data_Field */
                             $values[$field->getAlias()] = $field->evaluate($entity);
                         }
                         $rs->add( $values );
@@ -140,12 +149,14 @@ class Xyster_Orm_Query_Report extends Xyster_Orm_Query
 
         // apply any runtime sort order to the entity set
         if ( $this->_runtime[Xyster_Orm_Query::ORDER] ) {
-            $sorts = array();
+            $sorts = new Xyster_Data_Sort_Clause;
             foreach( $this->_parts[Xyster_Orm_Query::ORDER] as $sort ) {
+            	/* @var $sort Xyster_Data_Sort */
                 foreach( $this->_parts[self::FIELDS] as $field ) {
-                    // make sure the sort field is actually in those returned
+                	/* @var $field Xyster_Data_Field */
                     if ( $sort->getField()->getName() == $field->getName() ) {
-                        $sorts[] = $sort;
+                    // make sure the sort field is actually in those returned
+                        $sorts->add($sort);
                         break;
                     }
                 }
@@ -169,9 +180,9 @@ class Xyster_Orm_Query_Report extends Xyster_Orm_Query
             return $this->group($field);
         }
         
-        $this->_parser->assertValidFieldForClass($field, $this->_class);
-        $this->_runtime[self::FIELDS] |= $this->_parser->isRuntime($field, $this->_class);
-        $this->_parts[self::FIELDS][] = $field;
+        $this->_meta->assertValidField($field);
+        $this->_runtime[self::FIELDS] |= $this->_meta->isRuntime($field);
+        $this->getFields()->add($field);
         
         return $this;
     }
@@ -179,7 +190,7 @@ class Xyster_Orm_Query_Report extends Xyster_Orm_Query
     /**
      * Gets the non-group {@link Xyster_Data_Field} objects added to the statement
      * 
-     * @return array
+     * @return Xyster_Data_Field_Clause
      */
     public function getFields()
     {
@@ -189,7 +200,7 @@ class Xyster_Orm_Query_Report extends Xyster_Orm_Query
     /**
      * Gets the grouped {@link Xyster_Data_Field} objects added to the statement
      * 
-     * @return array
+     * @return Xyster_Data_Field_Clause
      */
     public function getGroup()
     {
@@ -214,10 +225,9 @@ class Xyster_Orm_Query_Report extends Xyster_Orm_Query
      */
     public function group( Xyster_Data_Field_Group $group )
     {
-        $this->_parser->assertValidFieldForClass($group, $this->_class);
-        $this->_runtime[self::GROUP] |= $this->_parser->isRuntime($group, $this->_class);
-        
-        $this->_parts[self::GROUP][] = $group;
+        $this->_meta->assertValidField($group);
+        $this->_runtime[self::GROUP] |= $this->_meta->isRuntime($group);
+        $this->getGroup()->add($group);
         
         return $this;
     }
@@ -238,7 +248,7 @@ class Xyster_Orm_Query_Report extends Xyster_Orm_Query
         $aggs = 0;
         $fields = Xyster_Data_Criterion::getFields($having);
         foreach ( $fields as $field ) {
-            $this->_parser->assertValidFieldForClass($field, $this->_class);
+            $this->_meta->assertValidField($field);
             $aggs += ($field instanceof Xyster_Data_Field_Aggregate) ? 1 : 0;
         }
 
@@ -247,7 +257,7 @@ class Xyster_Orm_Query_Report extends Xyster_Orm_Query
             throw new Xyster_Orm_Query_Exception('The criterion provided must contain only aggregated fields');
         }
         
-        if ( $this->_parser->isRuntime($having, $this->_class) ) {
+        if ( $this->_meta->isRuntime($having) ) {
             $this->_runtime[self::GROUP] = true;
         }
         
@@ -306,8 +316,8 @@ class Xyster_Orm_Query_Report extends Xyster_Orm_Query
         parent::_initParts();
         
         $this->_parts[self::DISTINCT] = false;
-        $this->_parts[self::FIELDS] = array();
-        $this->_parts[self::GROUP] = array();
+        $this->_parts[self::FIELDS] = new Xyster_Data_Field_Clause;
+        $this->_parts[self::GROUP] = new Xyster_Data_Field_Clause;
         $this->_parts[self::HAVING] = array();
         
         $this->_runtime[self::FIELDS] = false;

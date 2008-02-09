@@ -11,13 +11,16 @@
  * @package   Xyster_Data
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @version   $Id$
  */
- 
 /**
  * @see Xyster_Data_Aggregate
  */
 require_once 'Xyster/Data/Aggregate.php';
- 
+/**
+ * @see Xyster_Data_Symbol
+ */
+require_once 'Xyster/Data/Symbol.php';
 /**
  * A simple concept for data fields and columns
  *
@@ -26,7 +29,7 @@ require_once 'Xyster/Data/Aggregate.php';
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Data_Field
+class Xyster_Data_Field implements Xyster_Data_Symbol
 {
     /**
      * The name of the field
@@ -34,6 +37,7 @@ class Xyster_Data_Field
      * @var string
      */
     protected $_name;
+    
     /**
      * An alias for the field, equal to the field name by default
      *
@@ -66,6 +70,7 @@ class Xyster_Data_Field
     {
         return $this->_name;
     }
+    
     /**
      * Gets the alias assigned to this field
      *
@@ -75,6 +80,7 @@ class Xyster_Data_Field
     {
         return $this->_alias;
     }
+    
     /**
      * Sets the alias assigned to this column
      *
@@ -89,6 +95,7 @@ class Xyster_Data_Field
         }
         $this->_alias = trim($alias);
     }
+    
     /**
      * Evaluates the reference for the given object
      *
@@ -117,6 +124,7 @@ class Xyster_Data_Field
         }
         return $value;
     }
+    
     /**
      * String representation of this object
      * 
@@ -127,6 +135,7 @@ class Xyster_Data_Field
     {
         return $this->getName();
     }
+    
     /**
      * Factories an ascending {@link Xyster_Data_Sort} for this field name
      *
@@ -137,6 +146,7 @@ class Xyster_Data_Field
         require_once 'Xyster/Data/Sort.php';
         return Xyster_Data_Sort::asc($this);
     }
+    
     /**
      * Factories a descending {@link Xyster_Data_Sort} for this field name
      *
@@ -147,6 +157,7 @@ class Xyster_Data_Field
         require_once 'Xyster/Data/Sort.php';
         return Xyster_Data_Sort::desc($this);
     }
+    
     /**
      * Factories an Equal To Xyster_Data_Expression ( column = 'value' )
      *
@@ -157,6 +168,7 @@ class Xyster_Data_Field
     {
         return $this->_expression(__FUNCTION__, array($this, $value));
     }
+    
     /**
      * Factories a Not Equal To Xyster_Data_Expression ( column <> 'value' )
      *
@@ -167,6 +179,7 @@ class Xyster_Data_Field
     {
         return $this->_expression(__FUNCTION__, array($this, $value));
     }
+    
     /**
      * Factories a Less Than Xyster_Data_Expression ( column < 3 )
      *
@@ -177,6 +190,7 @@ class Xyster_Data_Field
     {
         return $this->_expression(__FUNCTION__, array($this, $value));
     }
+    
     /**
      * Factories a Less Than or Equal To Xyster_Data_Expression ( column <= 3 )
      *
@@ -187,6 +201,7 @@ class Xyster_Data_Field
     {
         return $this->_expression(__FUNCTION__, array($this, $value));
     }
+    
     /**
      * Factories a Greater Than Xyster_Data_Expression ( column > 2 )
      *
@@ -197,6 +212,7 @@ class Xyster_Data_Field
     {
         return $this->_expression(__FUNCTION__, array($this, $value));
     }
+    
     /**
      * Factories a Greater Than or Equal To Xyster_Data_Expression ( column >= 2 )
      *
@@ -207,6 +223,7 @@ class Xyster_Data_Field
     {
         return $this->_expression(__FUNCTION__, array($this, $value));
     }
+    
     /**
      * Factories a LIKE Xyster_Data_Expression ( column LIKE '%value' )
      *
@@ -217,6 +234,7 @@ class Xyster_Data_Field
     {
         return $this->_expression(__FUNCTION__, array($this, $value));
     }
+    
     /**
      * Factories a NOT LIKE Xyster_Data_Expression ( column NOT LIKE '%value' )
      *
@@ -227,6 +245,7 @@ class Xyster_Data_Field
     {
         return $this->_expression(__FUNCTION__, array($this, $value));
     }
+    
     /**
      * Factories a BETWEEN Xyster_Data_Expression ( column BETWEEN 'value' AND 'value' )
      *
@@ -238,6 +257,7 @@ class Xyster_Data_Field
     {
         return $this->_expression(__FUNCTION__, array($this, $start, $end));
     }
+    
     /**
      * Factories a NOT BETWEEN Xyster_Data_Expression ( column NOT BETWEEN 'value' AND 'value' )
      *
@@ -249,6 +269,7 @@ class Xyster_Data_Field
     {
         return $this->_expression(__FUNCTION__, array($this, $start, $end));
     }
+    
     /**
      * Factories an In expression ( column IN ( 1,1,2,3,5,8,13,21,'fibonacci','sequence' ) )
      *
@@ -259,6 +280,7 @@ class Xyster_Data_Field
     {
         return $this->_expression(__FUNCTION__, array($this, $choices));
     }
+    
     /**
      * Factories a Not in expression ( column NOT IN ( 1,1,2,3,5,8,13,21,'fibonacci','sequence' ) )
      *
@@ -317,6 +339,7 @@ class Xyster_Data_Field
         require_once 'Xyster/Data/Field/Group.php';
         return new Xyster_Data_Field_Group($name, $alias);
     }
+    
     /**
      * Creates an {@link Xyster_Data_Aggregate} field
      * 
@@ -330,6 +353,7 @@ class Xyster_Data_Field
         require_once 'Xyster/Data/Field/Aggregate.php';
         return new Xyster_Data_Field_Aggregate($function, $name, $alias);
     }
+    
     /**
      * Creates an {@link Xyster_Data_Aggregate} field to count items in a tuple
      *
@@ -341,6 +365,7 @@ class Xyster_Data_Field
     {
         return self::aggregate(Xyster_Data_Aggregate::Count(), $name, $alias);
     }
+    
     /**
      * Creates an {@link Xyster_Data_Aggregate} field to sum the values in a field
      *
@@ -352,6 +377,7 @@ class Xyster_Data_Field
     {
         return self::aggregate(Xyster_Data_Aggregate::Sum(), $name, $alias);
     }
+    
     /**
      * Creates an {@link Xyster_Data_Aggregate} field to average the values in a field
      *
@@ -363,6 +389,7 @@ class Xyster_Data_Field
     {
         return self::aggregate(Xyster_Data_Aggregate::Average(), $name, $alias);
     }
+    
     /**
      * Creates an {@link Xyster_Data_Aggregate} field to find the maximum value in a field
      *
@@ -374,6 +401,7 @@ class Xyster_Data_Field
     {
         return self::aggregate(Xyster_Data_Aggregate::Maximum(), $name, $alias);
     }
+    
     /**
      * Creates an {@link Xyster_Data_Aggregate} field to find the minimum value in a field
      *

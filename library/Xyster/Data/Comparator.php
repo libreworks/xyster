@@ -11,9 +11,10 @@
  * @package   Xyster_Data
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @version   $Id$
  */
 /**
- * Xyster_Collection_Comparator_Interface
+ * @see Xyster_Collection_Comparator_Interface
  */
 require_once 'Xyster/Collection/Comparator/Interface.php';
 /**
@@ -27,26 +28,23 @@ require_once 'Xyster/Collection/Comparator/Interface.php';
 class Xyster_Data_Comparator implements Xyster_Collection_Comparator_Interface
 {
 	/**
-	 * The array of {@link Xyster_Data_Sort} objects
+	 * The clause of {@link Xyster_Data_Sort} objects
 	 *
-	 * @var array
+	 * @var Xyster_Data_Sort_Clause
 	 */
-	protected $_sorts = array();
+	protected $_sorts;
 
 	/**
 	 * Create a new Data Comparator object
+	 * 
+	 * If you pass a clause containing no objects, this comparator will always
+	 * return zero when comparing objects.
 	 *
-	 * @param array $sort  An array of {@link Xyster_Data_Sort} objects
+	 * @param Xyster_Data_Sort_Clause $sorts A clause of sort objects
 	 */
-	public function __construct( array $sorts )
+	public function __construct( Xyster_Data_Sort_Clause $sorts )
 	{
-		foreach( $sorts as $sort ) {
-			if ( ! $sort instanceof Xyster_Data_Sort ) {
-				require_once 'Xyster/Data/Exception.php';
-				throw new Xyster_Data_Exception('Only Xyster_Data_Sort objects can be used');
-			}
-			$this->_sorts[] = $sort;
-		}
+        $this->_sorts = $sorts;
 	}
 
 	/**

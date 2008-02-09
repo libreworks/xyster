@@ -15,14 +15,17 @@
  * @version   $Id$
  */
 
+// Call Xyster_Orm_Entity_MetaTest::main() if this source file is executed directly.
+if (!defined('PHPUnit_MAIN_METHOD')) {
+    define('PHPUnit_MAIN_METHOD', 'Xyster_Orm_Entity_MetaTest::main');
+}
+
 /**
  * PHPUnit test case
  */
-require_once 'Xyster/Orm/TestSetup.php';
-/**
- * @see Xyster_Orm_Entity_Field
- */
+require_once dirname(__FILE__) . '/TestSetup.php';
 require_once 'Xyster/Orm/Entity/Meta.php';
+
 /**
  * Test for Xyster_Orm_Entity_Field
  *
@@ -33,6 +36,17 @@ class Xyster_Orm_Entity_MetaTest extends Xyster_Orm_TestSetup
      * @var Xyster_Orm_Entity_Meta
      */
     protected $_meta;
+
+    /**
+     * Runs the test methods of this class.
+     */
+    public static function main()
+    {
+        require_once 'PHPUnit/TextUI/TestRunner.php';
+
+        $suite  = new PHPUnit_Framework_TestSuite('Xyster_Orm_Entity_MetaTest');
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
     
     /**
      * Sets up the tests
@@ -44,6 +58,103 @@ class Xyster_Orm_Entity_MetaTest extends Xyster_Orm_TestSetup
         
         $map = $this->_mockFactory()->get('MockBug');
         $this->_meta = $map->getEntityMeta();
+    }
+
+    
+    /**
+     * Tests the 'assertValidFieldForClass' method
+     *
+     */
+    public function testValidField()
+    {
+        $this->_meta->assertValidField('bugDescription');
+        // should not throw exception
+        
+        $this->setExpectedException('Xyster_Orm_Entity_Exception');
+        $this->assertFalse($this->_meta->assertValidField('doesntExist'));
+    }
+    
+    /**
+     * Tests the 'assertValidField' method with a relation
+     *
+     * No operations in this method should throw exceptions
+     */
+    public function testValidFieldRelation()
+    {
+        $this->_meta->assertValidField('max(reporter->accountName)');
+        $this->_meta->assertValidField('products->count()');
+    }
+    
+    /**
+     * Tests the 'assertValidField' method with a method call
+     *
+     */
+    public function testValidFieldMethod()
+    {
+        $this->_meta->assertValidField('getCapitalOfNebraska(1,"test",createdOn)');
+        // should not throw exception
+        
+        $this->setExpectedException('Xyster_Orm_Entity_Exception');
+        $this->_meta->assertValidField('nonExistantMethod()');
+    }
+    
+    /**
+     * Tests the 'isRuntime' method
+     *
+     */
+    public function testIsRuntime()
+    {
+    	$this->assertFalse($this->_meta->isRuntime(Xyster_Data_Field::named('MAX(bugId)')));
+        $this->assertFalse($this->_meta->isRuntime(Xyster_Data_Field::named('bugDescription')));
+        $this->assertFalse($this->_meta->isRuntime(Xyster_Data_Field::named('reporter->accountName')));
+        $this->assertFalse($this->_meta->isRuntime(Xyster_Data_Field::named('MAX(reporter->accountName)')));
+        
+        $this->assertTrue($this->_meta->isRuntime(Xyster_Data_Field::named('reporter->accountName->somePublicField')));
+        $this->assertTrue($this->_meta->isRuntime(Xyster_Data_Field::named('assignee->isDirty()')));
+        $this->assertTrue($this->_meta->isRuntime(Xyster_Data_Field::named('getCapitalOfNebraska()')));
+    }
+    
+    /**
+     * Tests the 'isRuntime' method with criteria
+     *
+     */
+    public function testIsRuntimeCriteria()
+    {
+        $field = Xyster_Data_Field::named('bugDescription');
+        $criteria = Xyster_Data_Junction::all($field->notLike('foo%'),
+            $field->notLike('bar%'));
+            
+        $this->assertFalse($this->_meta->isRuntime($criteria));
+        
+        $field = Xyster_Data_Field::named('getCapitalOfNebraska()');
+        $criteria = Xyster_Data_Junction::all($field->notLike('foo%'),
+            $field->notLike('bar%'));
+            
+        $this->assertTrue($this->_meta->isRuntime($criteria));
+    }
+    
+    /**
+     * Tests the 'isRuntime' method with sorts
+     *
+     */
+    public function testIsRuntimeSort()
+    {
+        require_once 'Xyster/Data/Sort.php';
+        
+        $this->assertFalse($this->_meta->isRuntime(Xyster_Data_Sort::asc('bugDescription')));
+        
+        $this->assertTrue($this->_meta->isRuntime(Xyster_Data_Sort::asc('getCapitalOfNebraska()')));
+    }
+    
+    /**
+     * Tests the 'isRuntime' method
+     *
+     */
+    public function testIsRuntimeBadType()
+    {
+    	require_once 'Xyster/Data/Field/Clause.php';
+        $this->setExpectedException('Xyster_Orm_Exception');
+        $this->_meta->isRuntime(new Xyster_Data_Field_Clause);
     }
     
     /**
@@ -195,4 +306,9 @@ class Xyster_Orm_Entity_MetaTest extends Xyster_Orm_TestSetup
         $this->setExpectedException('Xyster_Orm_Relation_Exception');
         $this->_meta->belongsTo('reporter', array('class'=>'MockAccount','id'=>'reportedBy'));
     }
+}
+
+// Call Xyster_Orm_Entity_MetaTest::main() if this source file is executed directly.
+if (PHPUnit_MAIN_METHOD == 'Xyster_Orm_Entity_MetaTest::main') {
+    Xyster_Orm_Entity_MetaTest::main();
 }

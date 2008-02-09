@@ -110,15 +110,53 @@ class Xyster_Db_TranslatorTest extends PHPUnit_Framework_TestCase
     }
     
     /**
-     * Tests the 'translate' method with an invalid parameter
+     * Tests the 'translate' method with a clause
      *
      */
-    public function testTranslateInvalid()
+    public function testTranslateClause()
     {
-        $this->setExpectedException('Xyster_Db_Exception');
-        $this->translator->translate('invalid object');
+    	require_once 'Xyster/Data/Sort/Clause.php';
+    	$clause = new Xyster_Data_Sort_Clause;
+        $field = Xyster_Data_Field::named('testing');
+        $sort = $field->desc();
+        $clause->add($sort);
+        $field2 = Xyster_Data_Field::named('testing2');
+        $sort2 = $field2->asc();
+        $clause->add($sort2);
+        
+        $token = $this->translator->translate($clause);
+        
+        $this->assertType('Xyster_Db_Token', $token);
+        $this->assertEquals('"testing" DESC, "testing2" ASC', $token->getSql());
+        
+        $token = $this->translator->translate($clause, false);
+        
+        $this->assertType('Xyster_Db_Token', $token);
+        $this->assertEquals('testing DESC, testing2 ASC', $token->getSql());
     }
-
+    
+    /**
+     * The same test as 'testTranslateJunction' but another method
+     *
+     */
+    public function testTranslateClauseJunction()
+    {
+    	$field = Xyster_Data_Field::named('testing');
+        $field2 = Xyster_Data_Field::named('unitTesting');
+        $junction = Xyster_Data_Junction::any($field->neq('foo'), $field->neq(null))
+            ->add($field->neq($field2));
+        
+        $token = $this->translator->translateClause($junction);
+        
+        $this->assertType('Xyster_Db_Token', $token);
+        $this->assertRegExp('/\( "testing" <> :P[\S]+ OR "testing" IS NOT NULL OR "testing" <> "unitTesting" \)/', $token->getSql());
+        
+        $token = $this->translator->translateClause($junction, false);
+        
+        $this->assertType('Xyster_Db_Token', $token);
+        $this->assertRegExp('/\( testing <> :P[\S]+ OR testing IS NOT NULL OR testing <> unitTesting \)/', $token->getSql());
+    }
+    
     /**
      * Tests the 'translate' method with a field
      *

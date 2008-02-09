@@ -11,11 +11,16 @@
  * @package   Xyster_Data
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @version   $Id$
  */
 /**
- * Xyster_Data_Criterion
+ * @see Xyster_Data_Criterion
  */
 require_once 'Xyster/Data/Criterion.php';
+/**
+ * @see Xyster_Data_Operator_Expression
+ */
+require_once 'Xyster/Data/Operator/Expression.php';
 /**
  * An expression is a boolean evaluation comparing a column against a value
  *
@@ -52,12 +57,14 @@ class Xyster_Data_Expression extends Xyster_Data_Criterion
      * @var Xyster_Data_Field
      */
     protected $_left;
+    
     /**
      * The operator
      * 
-     * @var string
+     * @var Xyster_Data_Operator_Expression
      */
     protected $_operator;
+    
     /**
      * The right value, could be a scalar or a {@link Xyster_Data_Field}
      * 
@@ -79,7 +86,7 @@ class Xyster_Data_Expression extends Xyster_Data_Criterion
             $field = Xyster_Data_Field::named($field);
         }
         $this->_left = $field;
-        $this->_operator = $operator;
+        $this->_operator = Xyster_Enum::valueOf('Xyster_Data_Operator_Expression', $operator);
         if ( $value == "NULL" ) {
             $value = null;
         }
@@ -99,7 +106,7 @@ class Xyster_Data_Expression extends Xyster_Data_Criterion
     /**
      * Gets the operator
      *
-     * @return string
+     * @return Xyster_Data_Operator_Expression
      */
     public function getOperator()
     {
@@ -125,31 +132,33 @@ class Xyster_Data_Expression extends Xyster_Data_Criterion
     public function __toString()
     {
         $string = "";
+        $op = $this->_operator->getValue();
         $val = $this->_right;
-        if ( $val == "NULL" || $val === null ) {
+        
+        if ( $val === null ) {
             $string .= 'NULL';
-        } else if ( is_array($val) && strpos($this->_operator,'BETWEEN') !== false ) {
-            $string .= ( preg_match("/^[0-9.]+$/",$val[0]) ) ?
-                $val[0] : "'".str_replace("'","''",$val[0])."'";
+        } else if ( is_array($val) && strpos($op, 'BETWEEN') !== false ) {
+            $string .= ( preg_match("/^[0-9.]+$/", $val[0]) ) ?
+                $val[0] : "'" . str_replace("'", "''", $val[0]) . "'";
             $string .= ' AND ';
-            $string .= ( preg_match("/^[0-9.]+$/",$val[1]) ) ?
-                $val[1] : "'".str_replace("'","''",$val[1])."'";
-        } else if ( is_array($val)
-            && $this->_operator == "IN" || $this->_operator == "NOT IN" ) {
+            $string .= ( preg_match("/^[0-9.]+$/", $val[1]) ) ?
+                $val[1] : "'" . str_replace("'", "''", $val[1]) . "'";
+        } else if ( is_array($val) && $op == "IN" || $op == "NOT IN" ) {
             $quoted = array();
             foreach( $val as $v ) {
-                $quoted[] = ( preg_match("/^[0-9.]+$/",$v) ) ?
-                    $v : "'".str_replace("'","''",$v)."'";
+                $quoted[] = ( preg_match("/^[0-9.]+$/", $v) ) ?
+                    $v : "'" . str_replace("'", "''", $v) . "'";
             }
-            $string .= '('. implode(',',$quoted) . ')';
+            $string .= '(' . implode(',', $quoted) . ')';
         } else if ( $val instanceof Xyster_Data_Field ) {
             $string .= (string)$val;
         } else if ( !is_numeric($val) ) {
-            $string .= "'".str_replace("'","''",$val)."'";
+            $string .= "'" . str_replace("'", "''", $val) . "'";
         } else {
             $string .= $val;
         }
-        return (string)$this->_left . " " . $this->_operator . " " . $string;
+        
+        return (string)$this->_left . " " . $op . " " . $string;
     }
 
     /**
@@ -160,74 +169,10 @@ class Xyster_Data_Expression extends Xyster_Data_Criterion
      */
     public function evaluate( $object )
     {
-        $value = $this->_left->evaluate($object);
-        $value2 = ( $this->_right instanceof Xyster_Data_Field ) ?
+        $a = $this->_left->evaluate($object);
+        $b = ( $this->_right instanceof Xyster_Data_Field ) ?
             $this->_right->evaluate($object) : $this->_right;
-
-        $bool = false;
-        $eval = "\$bool = (bool)( \$value %s \$value2 );";
-        switch( $this->_operator ) {
-            case "=":
-                eval(sprintf($eval,'=='));
-                break;
-                
-            case "<>":
-                eval(sprintf($eval,'!='));
-                break;
-                
-            case "LIKE":
-            case "NOT LIKE":
-                $lookend = ( substr($value2,0,1) == '%' );
-                $lookbeg = ( substr($value2,-1,1) == '%' );
-                $lookin = ( $lookbeg && $lookend );
-                if ( $lookin ) {
-                    $bool = strpos($value,substr($value2,1,strlen($value2)-2)) > -1;
-                } else if ( $lookbeg ) {
-                    $bool = ( substr($value2,0,-1) == substr($value,0,strlen($value2)-1) );
-                } else if ( $lookend ) {
-                    $match = substr($value2,1);
-                    $bool = ( $match == substr($value,-strlen($match)) );
-                }
-                if ( $this->_operator == "NOT LIKE" ) {
-                    $bool = !$bool;
-                }
-                break;
-                
-            case "IN":
-                $bool = ( in_array($value,$value2) );
-                break;
-
-            case "NOT IN":
-                $bool = ( !in_array($value,$value2) );
-                break;
-                
-            case "BETWEEN":
-                $bool = ( $value >= $value2[0] ) && ( $value <= $value2[1] );
-                break;
-
-            case "NOT BETWEEN":
-                $bool = ( $value < $value2[0] ) || ( $value > $value2[1] );
-                break;
-    
-            case ">":
-            case "<":
-            case ">=":
-            case "<=":
-            default:
-                eval(sprintf($eval, $this->_operator));
-        }
-        return $bool;
-    }
-
-    /**
-     * Tests whether the string passed is a valid Expression operator
-     *
-     * @param string $operator
-     * @return boolean
-     */
-    static public function isOperator( $operator )
-    {
-        return in_array($operator,self::$_operators);
+        return $this->_operator->evaluate($a, $b);
     }
 
     /**
@@ -238,7 +183,8 @@ class Xyster_Data_Expression extends Xyster_Data_Criterion
      */
     static public function getMethodName( $operator )
     {
-        return array_search($operator,self::$_operators);
+        $method = array_search($operator, array_flip(Xyster_Enum::values('Xyster_Data_Operator_Expression')));
+        return strlen($method) > 1 ? strtolower($method[0]) . substr($method, 1) : false;
     }
 
     /**

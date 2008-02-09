@@ -89,11 +89,11 @@ class Xyster_Db_Translator
 	/**
 	 * Translates one of the Xyster Data objects into a SQL token
 	 *
-	 * @param mixed $object
+	 * @param Xyster_Data_Symbol $object
      * @param boolean $quote Whether to quote field names
 	 * @return Xyster_Db_Token
 	 */
-	public function translate( $object, $quote = true )
+	public function translate( Xyster_Data_Symbol $object, $quote = true )
 	{
 		if ( $object instanceof Xyster_Data_Field ) {
 			return $this->translateField($object, $quote);
@@ -101,9 +101,34 @@ class Xyster_Db_Translator
 			return $this->translateSort($object, $quote);
 		} else if ( $object instanceof Xyster_Data_Criterion ) {
 			return $this->translateCriterion($object, $quote);
+		} else if ( $object instanceof Xyster_Data_Clause_Interface ) {
+			return $this->translateClause($object, $quote);
 		}
-		require_once 'Xyster/Db/Exception.php';
-		throw new Xyster_Db_Exception('Invalid object');
+	}
+	
+	/**
+	 * Translates a clause
+	 *
+	 * @param Xyster_Data_Clause_Interface $clause
+	 * @param boolean $quote
+	 * @return Xyster_Db_Token
+	 */
+	public function translateClause( Xyster_Data_Clause_Interface $clause, $quote = true )
+	{
+		$translated = null;
+		if ( $clause instanceof Xyster_Data_Junction ) {
+			$translated = $this->translateJunction($clause, $quote);
+		} else {
+			$sql = array();
+			$binds = array();
+			foreach( $clause as $k => $symbol ) {
+				$token = $this->translate($symbol, $quote);
+				$sql[] = $token->getSql();
+				$binds += $token->getBindValues();
+			}
+			$translated = new Xyster_Db_Token(implode(', ', $sql), $binds);
+		}
+		return $translated;
 	}
 	
 	/**
@@ -195,10 +220,11 @@ class Xyster_Db_Translator
 		
 		$sql = $this->translateField($tosql->getLeft(), $quote)->getSql() . ' ';
 		$val = $tosql->getRight();
+		$operator = $tosql->getOperator()->getValue();
 		if ( $val === null || $val == "NULL" ) {
-		    $sql .= ( $tosql->getOperator() == '=' ) ? 'IS' : 'IS NOT';
+		    $sql .= ( $operator == '=' ) ? 'IS' : 'IS NOT';
 		} else {
-		    $sql .= $tosql->getOperator();
+		    $sql .= $operator;
 		}
 		$sql .= ' ';
 		
@@ -212,11 +238,11 @@ class Xyster_Db_Translator
 			
 			if ( is_array($val) ) {
 			    
-				if ( substr($tosql->getOperator(),-7) == 'BETWEEN' ) {
+				if ( substr($operator,-7) == 'BETWEEN' ) {
 					$sql .= "{$bindName}1 AND {$bindName}2";
 					$binds[$bindName.'1'] = $val[0];
 					$binds[$bindName.'2'] = $val[1];
-				} else if ( substr($tosql->getOperator(),-2) == 'IN' ) {
+				} else if ( substr($operator,-2) == 'IN' ) {
 					$quoted = array();
 					foreach( $val as $k=>$v ) {
 						$quoted[] = $bindName.$k;

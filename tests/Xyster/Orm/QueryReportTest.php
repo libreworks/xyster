@@ -15,6 +15,11 @@
  * @version   $Id$
  */
 
+// Call Xyster_Orm_Query_ReportTest::main() if this source file is executed directly.
+if (!defined('PHPUnit_MAIN_METHOD')) {
+    define('PHPUnit_MAIN_METHOD', 'Xyster_Orm_Query_ReportTest::main');
+}
+
 /**
  * PHPUnit test case
  */
@@ -42,6 +47,17 @@ class Xyster_Orm_Query_ReportTest extends Xyster_Orm_QueryTest
      */
     protected $_query;
     
+    /**
+     * Runs the test methods of this class.
+     */
+    public static function main()
+    {
+        require_once 'PHPUnit/TextUI/TestRunner.php';
+
+        $suite  = new PHPUnit_Framework_TestSuite('Xyster_Orm_Query_ReportTest');
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
+        
     /**
      * Sets up the query
      *
@@ -165,7 +181,7 @@ class Xyster_Orm_Query_ReportTest extends Xyster_Orm_QueryTest
             $this->assertSame($this->_query, $return); // tests fluent
         }
         
-        $select = $this->_query->getFields();
+        $select = $this->_query->getFields()->toArray();
         foreach( $fields as $field ) {
             $this->assertContains($field, $select);
         }
@@ -184,8 +200,8 @@ class Xyster_Orm_Query_ReportTest extends Xyster_Orm_QueryTest
         
         $this->_query->field($field);
         
-        $this->assertContains($field, $this->_query->getGroup());
-        $this->assertNotContains($field, $this->_query->getFields());
+        $this->assertContains($field, $this->_query->getGroup()->toArray());
+        $this->assertNotContains($field, $this->_query->getFields()->toArray());
     }
     
     /**
@@ -203,7 +219,7 @@ class Xyster_Orm_Query_ReportTest extends Xyster_Orm_QueryTest
             $this->assertSame($this->_query, $return); // tests fluent
         }
         
-        $select = $this->_query->getFields();
+        $select = $this->_query->getFields()->toArray();
         foreach( $fields as $field ) {
             $this->assertContains($field, $select);
         }
@@ -227,7 +243,7 @@ class Xyster_Orm_Query_ReportTest extends Xyster_Orm_QueryTest
             $this->assertSame($this->_query, $return); // tests fluent
         }
         
-        $groupBy = $this->_query->getGroup();
+        $groupBy = $this->_query->getGroup()->toArray();
         foreach( $groups as $group ) {
             $this->assertContains($group, $groupBy);
         }
@@ -251,7 +267,7 @@ class Xyster_Orm_Query_ReportTest extends Xyster_Orm_QueryTest
             $this->assertSame($this->_query, $return); // tests fluent
         }
         
-        $groupBy = $this->_query->getGroup();
+        $groupBy = $this->_query->getGroup()->toArray();
         foreach( $groups as $group ) {
             $this->assertContains($group, $groupBy);
         }
@@ -270,6 +286,8 @@ class Xyster_Orm_Query_ReportTest extends Xyster_Orm_QueryTest
             Xyster_Data_Expression::lt('min(createdOn)','2007-01-01')
             );
             
+        $meta = $this->_mockFactory()->getEntityMeta('MockBug');
+        
         foreach( $having as $criterion ) {
             $return = $this->_query->having($criterion);
             $this->assertSame($this->_query, $return);
@@ -317,4 +335,9 @@ class Xyster_Orm_Query_ReportTest extends Xyster_Orm_QueryTest
         $this->assertTrue($this->_query->hasRuntimeGroup());
         $this->assertTrue($this->_query->isRuntime());
     }
+}
+
+// Call Xyster_Orm_Query_ReportTest::main() if this source file is executed directly.
+if (PHPUnit_MAIN_METHOD == 'Xyster_Orm_Query_ReportTest::main') {
+    Xyster_Orm_Query_ReportTest::main();
 }

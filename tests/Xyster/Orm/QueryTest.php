@@ -15,22 +15,16 @@
  * @version   $Id$
  */
 
-/**
- * PHPUnit test case
- */
+// Call Xyster_Orm_QueryTest::main() if this source file is executed directly.
+if (!defined('PHPUnit_MAIN_METHOD')) {
+    define('PHPUnit_MAIN_METHOD', 'Xyster_Orm_QueryTest::main');
+}
+
 require_once dirname(__FILE__) . '/TestSetup.php';
-/**
- * @see Xyster_Orm_Query
- */
 require_once 'Xyster/Orm/Query.php';
-/**
- * @see Xyster_Data_Expression
- */
 require_once 'Xyster/Data/Expression.php';
-/**
- * @see Xyster_Data_Sort
- */
 require_once 'Xyster/Data/Sort.php';
+
 /**
  * Test for Xyster_Orm_Query
  *
@@ -42,6 +36,17 @@ class Xyster_Orm_QueryTest extends Xyster_Orm_TestSetup
      */
     protected $_query;
     
+    /**
+     * Runs the test methods of this class.
+     */
+    public static function main()
+    {
+        require_once 'PHPUnit/TextUI/TestRunner.php';
+
+        $suite  = new PHPUnit_Framework_TestSuite('Xyster_Orm_QueryTest');
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
+        
     /**
      * Sets up the query
      *
@@ -112,7 +117,7 @@ class Xyster_Orm_QueryTest extends Xyster_Orm_TestSetup
             $this->assertSame($this->_query, $return); // test fluent interface
         }
         
-        $sorts = $this->_query->getOrder();
+        $sorts = $this->_query->getOrder()->toArray();
         foreach( $orders as $order ) {
             $this->assertContains($order, $sorts);
         }
@@ -138,7 +143,7 @@ class Xyster_Orm_QueryTest extends Xyster_Orm_TestSetup
             $this->assertSame($this->_query, $return); // test fluent interface
         }
         
-        $sorts = $this->_query->getOrder();
+        $sorts = $this->_query->getOrder()->toArray();
         foreach( $orders as $order ) {
             $this->assertContains($order, $sorts);
         }
@@ -227,4 +232,9 @@ class Xyster_Orm_QueryTest extends Xyster_Orm_TestSetup
         $this->setExpectedException('Xyster_Orm_Query_Exception');
         $this->_query->where(Xyster_Data_Expression::eq('MAX(assignedTo)','zzz'));
     }
+}
+
+// Call Xyster_Orm_QueryTest::main() if this source file is executed directly.
+if (PHPUnit_MAIN_METHOD == 'Xyster_Orm_QueryTest::main') {
+    Xyster_Orm_QueryTest::main();
 }

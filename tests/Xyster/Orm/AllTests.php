@@ -39,9 +39,11 @@ require_once 'Xyster/Orm/Mapper/FactoryTest.php';
 require_once 'Xyster/Orm/Mapper/AbstractTest.php';
 require_once 'Xyster/Orm/QueryTest.php';
 require_once 'Xyster/Orm/QueryReportTest.php';
-require_once 'Xyster/Orm/QueryParserTest.php';
+require_once 'Xyster/Orm/Query/ParserTest.php';
 require_once 'Xyster/Orm/Plugin/BrokerTest.php';
 require_once 'Xyster/Orm/Plugin/AclTest.php';
+require_once 'Xyster/Orm/XsqlTest.php';
+require_once 'Xyster/Orm/Xsql/SplitTest.php';
 
 /**
  * @see Zend_Db_SkipTests
@@ -79,6 +81,9 @@ class Xyster_Orm_AllTests
         $suite->addTestSuite('Xyster_Orm_Query_ReportTest');
         $suite->addTestSuite('Xyster_Orm_Plugin_BrokerTest');
         $suite->addTestSuite('Xyster_Orm_Plugin_AclTest');
+        
+        $suite->addTestSuite('Xyster_Orm_XsqlTest');
+        $suite->addTestSuite('Xyster_Orm_Xsql_SplitTest');
         
         //self::_addDbTestSuites($suite, 'Db2');
         self::_addDbTestSuites($suite, 'Mysqli');

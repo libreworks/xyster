@@ -15,14 +15,10 @@
  * @version   $Id$
  */
 
-/**
- * @see Xyster_Data_SetTest
- */
 require_once 'Xyster/Data/SetTest.php';
-/**
- * @see Xyster_Data_Tuple
- */
 require_once 'Xyster/Data/Tuple.php';
+require_once 'Xyster/Data/Field/Clause.php';
+
 /**
  * Test for Xyster_Data_Tuple
  *
@@ -56,8 +52,9 @@ class Xyster_Data_TupleTest extends Xyster_Data_SetTest
         
         $tuple = new Xyster_Data_Tuple($groups, $c);
         
-        $fields = array(Xyster_Data_Field::named('city'),
-            Xyster_Data_Field::named('state'), Xyster_Data_Field::count('foo'));
+        $fields = new Xyster_Data_Field_Clause(Xyster_Data_Field::named('city'));
+        $fields->add(Xyster_Data_Field::named('state'))
+            ->add(Xyster_Data_Field::count('foo'));
         
         $row = array('city'=>'Baltimore', 'state'=>'Maryland', 'foo'=>$count);
         $this->assertEquals($row, $tuple->toRow($fields));
@@ -71,8 +68,9 @@ class Xyster_Data_TupleTest extends Xyster_Data_SetTest
     {
         $set = new Xyster_Data_Set();
         
-        $fields = array(Xyster_Data_Field::group('city'),
-            Xyster_Data_Field::group('state'), Xyster_Data_Field::count('foo'));
+        $fields = new Xyster_Data_Field_Clause(Xyster_Data_Field::group('city'));
+        $fields->add(Xyster_Data_Field::group('state'))
+            ->add(Xyster_Data_Field::count('foo'));
             
         $collection = array(
             array('city'=>'Baltimore', 'state'=>'Maryland', 'foo'=>'bar'),
@@ -90,28 +88,6 @@ class Xyster_Data_TupleTest extends Xyster_Data_SetTest
     }
     
     /**
-     * Tests the 'makeTuples' static method with bad types
-     *
-     */
-    public function testMakeTuplesBadFields()
-    {
-        $set = new Xyster_Data_Set();
-        
-        $fields = array(Xyster_Data_Field::group('city'),
-            Xyster_Data_Field::group('state'), Xyster_Data_Sort::asc('foo'));
-            
-        $collection = array(
-            array('city'=>'Baltimore', 'state'=>'Maryland', 'foo'=>'bar'),
-            array('city'=>'Baltimore', 'state'=>'Maryland', 'foo'=>'baz'),
-            array('city'=>'Frederick', 'state'=>'Maryland', 'foo'=>'wtf'),
-            array('city'=>'Frederick', 'state'=>'Maryland', 'foo'=>'lol')
-            );
-        
-        $this->setExpectedException('Xyster_Data_Set_Exception');
-        $tuples = Xyster_Data_Tuple::makeTuples($set, $collection, $fields);
-    }
-    
-    /**
      * Tests the 'makeTuples' static method with no grouped field
      *
      */
@@ -119,7 +95,7 @@ class Xyster_Data_TupleTest extends Xyster_Data_SetTest
     {
         $set = new Xyster_Data_Set();
         
-        $fields = array(Xyster_Data_Field::count('city'));
+        $fields = new Xyster_Data_Field_Clause(Xyster_Data_Field::count('city'));
             
         $collection = array(
             array('city'=>'Baltimore', 'state'=>'Maryland', 'foo'=>'bar'),

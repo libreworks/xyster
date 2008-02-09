@@ -11,11 +11,16 @@
  * @package   Xyster_Data
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @version   $Id$
  */
 /**
  * @see Xyster_Data_Criterion
  */
 require_once 'Xyster/Data/Criterion.php';
+/**
+ * @see Xyster_Data_Clause_Interface
+ */
+require_once 'Xyster/Data/Clause/Interface.php';
 /**
  * A Junction is an infix expression of {@link Xyster_Data_Criterion} objects
  * 
@@ -27,7 +32,7 @@ require_once 'Xyster/Data/Criterion.php';
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Data_Junction extends Xyster_Data_Criterion
+class Xyster_Data_Junction extends Xyster_Data_Criterion implements Xyster_Data_Clause_Interface
 {
     /**
      * The criteria in the junction (an array of {@link Xyster_Data_Criterion})
@@ -88,6 +93,16 @@ class Xyster_Data_Junction extends Xyster_Data_Criterion
         }
         return $this;
     }
+    
+    /**
+     * Gets the number of entries in the clause
+     *
+     * @return int
+     */
+    public function count()
+    {
+    	return count($this->_criteria);
+    }
 
     /**
      * Evaluates the Junction for a given object
@@ -129,6 +144,18 @@ class Xyster_Data_Junction extends Xyster_Data_Criterion
     }
 
     /**
+     * Gets the iterator for this clause
+     *
+     * @return Iterator
+     */
+    public function getIterator()
+    {
+    	// no need to return an emptyIterator -- at least 2 items always
+    	require_once 'Xyster/Collection/Iterator.php';
+    	return new Xyster_Collection_Iterator($this->_criteria);
+    }
+    
+    /**
      * Gets the Junction operator
      *
      * @return string
@@ -136,6 +163,16 @@ class Xyster_Data_Junction extends Xyster_Data_Criterion
     public function getOperator()
     {
         return $this->_operator;
+    }
+    
+    /**
+     * Converts the clause into an array of its symbols
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+    	return array_values($this->_criteria);
     }
 
     /**
@@ -163,6 +200,7 @@ class Xyster_Data_Junction extends Xyster_Data_Criterion
     {
         return new Xyster_Data_Junction($left, $right, 'OR'); 
     }
+    
     /**
      * Create a new 'AND' junction, i.e. ( x AND y )
      *

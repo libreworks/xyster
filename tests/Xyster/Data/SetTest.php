@@ -19,18 +19,11 @@
  * PHPUnit test case
  */
 require_once 'Xyster/Collection/SortableSetTest.php';
-/**
- * @see Xyster_Data_Set
- */
 require_once 'Xyster/Data/Set.php';
-/**
- * @see Xyster_Data_Aggregate
- */
 require_once 'Xyster/Data/Aggregate.php';
-/**
- * @see Xyster_Data_Comparator
- */
 require_once 'Xyster/Data/Comparator.php';
+require_once 'Xyster/Data/Sort/Clause.php';
+
 /**
  * Test for Xyster_Data_Set
  *
@@ -313,10 +306,11 @@ class Xyster_Data_SetTest extends Xyster_Collection_SortableSetTest
         $set = $this->_getNewCollectionWithRandomValues();
         /* @var $set Xyster_Data_Set */
         
-        $sorts = array(Xyster_Data_Sort::asc('foo'));
+        $sort = Xyster_Data_Sort::asc('foo');
+        $sorts = new Xyster_Data_Sort_Clause($sort);
         
         $values = $set->toArray();
-        $set->sortBy($sorts[0]);
+        $set->sortBy($sort);
         
         $comparator = new Xyster_Data_Comparator($sorts);
         usort($values, array($comparator, 'compare'));
@@ -330,15 +324,15 @@ class Xyster_Data_SetTest extends Xyster_Collection_SortableSetTest
     public function testSortByArrayOfSorts()
     {
         $set = $this->_getNewCollectionWithRandomValues();
+        /* @var $set Xyster_Data_Set */
         $first = $set->getIterator()->current();
         $set->add( clone $first );
         
-        /* @var $set Xyster_Data_Set */
-        
-        $sorts = array(Xyster_Data_Sort::asc('foo'));
+        $array = array(Xyster_Data_Sort::asc('foo'));
+        $sorts = new Xyster_Data_Sort_Clause($array[0]);
         
         $values = $set->toArray();
-        $set->sortBy($sorts);
+        $set->sortBy($array);
         
         $comparator = new Xyster_Data_Comparator($sorts);
         usort($values, array($comparator, 'compare'));
@@ -354,16 +348,6 @@ class Xyster_Data_SetTest extends Xyster_Collection_SortableSetTest
         $set = $this->_getNewCollectionWithRandomValues();
         /* @var $set Xyster_Data_Set */
         $this->setExpectedException('Xyster_Data_Set_Exception');
-        $set->sortBy(Xyster_Data_Field::named('foo'));
-    }
-    
-    /**
-     * Tests creating a comparator with bad values
-     *
-     */
-    public function testCreateComparator()
-    {
-        $this->setExpectedException('Xyster_Data_Exception');
-        $comparator = new Xyster_Data_Comparator(array(Xyster_Data_Field::named('foo')));
+        $set->sortBy('abc123');
     }
 }

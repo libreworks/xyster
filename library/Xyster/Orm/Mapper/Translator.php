@@ -18,9 +18,9 @@
  */
 require_once 'Xyster/Db/Translator.php';
 /**
- * @see Xyster_Orm_Query_Parser
+ * @see Xyster_Orm_Xsql
  */
-require_once 'Xyster/Orm/Query/Parser.php';
+require_once 'Xyster/Orm/Xsql.php';
 /**
  * A translator for db fields that is smart about ORM
  *
@@ -58,13 +58,6 @@ class Xyster_Orm_Mapper_Translator extends Xyster_Db_Translator
 	 * @var Xyster_Orm_Mapper_Factory_Interface
 	 */
 	protected $_mapFactory;
-	
-	/**
-	 * The query parser
-	 *
-	 * @var Xyster_Orm_Query_Parser
-	 */
-	protected $_parser;
 
 	/**
 	 * Creates a new orm sql translator
@@ -81,8 +74,6 @@ class Xyster_Orm_Mapper_Translator extends Xyster_Db_Translator
 	    Xyster_Orm_Loader::loadEntityClass($className);
 	    $this->_class = $className;
 	    $this->_mapFactory = $mapFactory;
-	    require_once 'Xyster/Orm/Query/Parser.php';
-	    $this->_parser = new Xyster_Orm_Query_Parser($mapFactory);
 	    $map = $mapFactory->get($className);
 	    $this->aliasField(current($map->getEntityMeta()->getPrimary()));
 	}
@@ -101,21 +92,22 @@ class Xyster_Orm_Mapper_Translator extends Xyster_Db_Translator
 	 * Returns an alias to prefix a column in a SQL query
 	 *
 	 * @param string $column  The column to alias
-	 * @throws Xyster_Orm_Backend_Sql_Exception if $column is runtime
+	 * @throws Xyster_Orm_Mapper_Exception if $column is runtime
 	 * @return string
 	 */
 	public function aliasField( $field )
 	{
-		if ( $this->_parser->isRuntime(Xyster_Data_Field::named($field), $this->_class) ) {
+        $factory = $this->_mapFactory;
+        $className = $this->_class;
+        $currentMeta = $factory->getEntityMeta($className);
+        
+		if ( $currentMeta->isRuntime(Xyster_Data_Field::named($field)) ) {
 			require_once 'Xyster/Orm/Mapper/Exception.php';
 			throw new Xyster_Orm_Mapper_Exception('Runtime fields cannot be aliased for the backend');
 		}
 
-		$factory = $this->_mapFactory;
-		$className = $this->_class;
 		$prefix = "";
-        $currentMeta = $factory->getEntityMeta($className);
-		$calls = Xyster_String::smartSplit('->',$field);
+		$calls = Xyster_Orm_Xsql::splitArrow($field);
 		
 		if ( count($calls) > 1 ) {
 			$prefixes = array();
@@ -221,7 +213,7 @@ class Xyster_Orm_Mapper_Translator extends Xyster_Db_Translator
 	    $factory = $this->_mapFactory;
 		$className = $this->_class;
 		
-	    $prefixes = Xyster_String::smartSplit('->', $field->getName());
+		$prefixes = Xyster_Orm_Xsql::splitArrow($field->getName());
 		$meta = $factory->getEntityMeta($className);
 
 		if ( count($prefixes) > 1 ) {

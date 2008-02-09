@@ -363,7 +363,8 @@ class Xyster_Data_FieldTest extends PHPUnit_Framework_TestCase
         /* @var $exp Xyster_Data_Expression */
         $this->assertType('Xyster_Data_Expression', $exp);
         $this->assertSame($this->_commonField, $exp->getLeft());
-        $this->assertEquals($operator, $exp->getOperator());
+        $enum = Xyster_Enum::valueOf('Xyster_Data_Operator_Expression', $operator);
+        $this->assertEquals($enum, $exp->getOperator());
     }
 }
 

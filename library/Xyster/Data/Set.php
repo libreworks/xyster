@@ -201,19 +201,28 @@ class Xyster_Data_Set extends Xyster_Collection_Set_Sortable
      */
     public function sortBy( $sorts )
     {
-        if ( !is_array($sorts) ) {
-            $sorts = array($sorts);
-        }
-
-        foreach( $sorts as $v ) {
-            if (! $v instanceof Xyster_Data_Sort ) {
-                require_once 'Xyster/Data/Set/Exception.php';
-                throw new Xyster_Data_Set_Exception('The argument must be one or more Xyster_Data_Sort objects');
-            }
+    	$param = ( $sorts instanceof Xyster_Data_Symbol ) ? $sorts : null;
+    	
+        require_once 'Xyster/Data/Sort/Clause.php';
+        $clause = new Xyster_Data_Sort_Clause($param);
+        
+        if ( $param === null ) {
+	        if ( !is_array($sorts) && ! $sorts instanceof Traversable ) {
+	        	$sorts = array($sorts);
+	        }
+	        if ( is_array($sorts) || $sorts instanceof Traversable ) {
+	        	foreach( $sorts as $sort ) {
+	        		if ( ! $sort instanceof Xyster_Data_Sort ) {
+	        			require_once 'Xyster/Data/Set/Exception.php';
+	        			throw new Xyster_Data_Set_Exception('Only Xyster_Data_Sort objects can be used');
+	        		}
+	        		$clause->add($sort);
+	        	}
+	        }
         }
 
         require_once 'Xyster/Data/Comparator.php';
-        $this->sort( new Xyster_Data_Comparator($sorts) );
+        $this->sort(new Xyster_Data_Comparator($clause));
     }
 
     /**

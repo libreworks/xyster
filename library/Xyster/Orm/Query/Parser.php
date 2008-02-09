@@ -14,197 +14,19 @@
  * @version   $Id$
  */
 /**
- * @see Xyster_String
+ * @see Xyster_Orm_Xsql
  */
-require_once 'Xyster/String.php';
+require_once 'Xyster/Orm/Xsql.php';
 /**
- * A data entity: the basic data unit of the ORM package
+ * Parses an XSQL string into a Xyster_Orm_Query object
  *
- * @category  XysterColumn
+ * @category  Xyster
  * @package   Xyster_Orm
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 class Xyster_Orm_Query_Parser
 {    
-    /**
-     * The mapper factory
-     *
-     * @var Xyster_Orm_Mapper_Factory_Interface
-     */
-    protected $_mapFactory;
-    
-    /**
-     * A cache for runtime evaluations
-     *
-     * @var unknown_type
-     */
-    static protected $_runtime = array();
-
-    /**
-     * Creates a new query parser
-     *
-     * @param Xyster_Orm_Mapper_Factory_Interface $mapFactory
-     */
-    public function __construct( Xyster_Orm_Mapper_Factory_Interface $mapFactory )
-    {
-        $this->_mapFactory = $mapFactory;
-    }
-    
-    /**
-     * Asserts a field's presence in a class' members
-     *
-     * @param string $field
-     * @param string $className
-     * @throws Xyster_Orm_Query_Parser_Exception
-     */
-    public function assertValidFieldForClass( $field, $className )
-    {
-        require_once 'Xyster/Orm/Relation.php';
-        require_once 'Xyster/Orm/Entity/Meta.php';
-        
-        require_once 'Xyster/Orm/Loader.php';
-        Xyster_Orm_Loader::loadEntityClass($className);
-        $map = $this->_mapFactory->get($className);
-        $meta = $map->getEntityMeta();
-        
-        $field = ( $field instanceof Xyster_Data_Field ) ?
-            trim($field->getName()) : trim($field);
-            
-        require_once 'Xyster/Data/Field/Aggregate.php';
-        $matches = Xyster_Data_Field_Aggregate::match($field);
-        if ( count($matches) ) {
-            $field = trim($matches["field"]);
-        }
-            
-        $calls = Xyster_String::smartSplit("->", $field);
-        /*
-            for composite references (i.e.  supervisor->name )
-            - check each column exists in its container
-        */
-        if ( count($calls) > 1 ) {
-            
-            $container = $className;
-            $currentMeta = $meta;
-            foreach( $calls as $k=>$v ) {
-                $this->assertValidFieldForClass($v, $container);
-                if ( $meta->isRelation($v) ) {
-                    $details = $meta->getRelation($v);
-                    if ( !$details->isCollection() ) {
-                        $container = $details->getTo();
-                        $currentMeta = $this->_mapFactory->get($container)->getEntityMeta();
-                    } else {
-                        break;
-                    }
-                } else { 
-                    break;
-                }
-            }
-            
-        } else {
-
-            /*
-                for method calls
-                - check method exists in class
-                - check any method parameters that may themselves be members
-            */
-            if ( preg_match("/^(?P<name>[a-z0-9_]+)(?P<meth>\((?P<args>[\w\W]*)\))$/i", $field, $matches) ) {
-                if ( $className != "" && !in_array($matches['name'], $meta->getMembers()) ) {
-                    require_once 'Xyster/Orm/Query/Parser/Exception.php';
-                    throw new Xyster_Orm_Query_Parser_Exception($matches['name'] . ' is not a member of the ' . $className . ' class' );
-                }
-                $args = array();
-                if ( strlen(trim($matches['args'])) ) {
-                    foreach( Xyster_String::smartSplit(",", $matches['args']) as $v ) {
-                        $v = trim($v);
-                        $args[] = ( $this->isValidField($v) ) ?
-                            $this->assertValidFieldForClass($v, $className) : $v;
-                    }
-                }
-            /*
-                for properties and relationships
-                - check column exists in class
-            */
-            } else if ( $className != "" && !in_array($field, $meta->getMembers()) ) {
-                require_once 'Xyster/Orm/Query/Parser/Exception.php';
-                throw new Xyster_Orm_Query_Parser_Exception($field . ' is not a member of the ' . $className . ' class');
-            }
-        }
-    }
-    
-    /**
-     * Checks if a literal is a method call
-     *
-     * @param string $field
-     * @return bool
-     */
-    public function isMethodCall( $field )
-    {
-        return (bool) preg_match("/^[a-z_][a-z0-9_]*\([\w\W]*\)$/i", $field);
-    }
-    
-    /**
-     * Verifies if a {@link Xyster_Data_Criterion} or {@link Xyster_Data_Field} is runtime
-     * 
-     * @param object $object 
-     * @param string $class
-     * @return bool
-     */
-    public function isRuntime( $object, $class ) 
-    {
-        if ( $object instanceof Xyster_Data_Criterion ) {
-            
-            foreach( Xyster_Data_Criterion::getFields($object) as $v ) {
-                if ($this->isRuntime($v, $class)) {
-                    return true;
-                }
-            }
-            return false;
-            
-        } else if ( $object instanceof Xyster_Data_Field ) {
-            
-            $name = $object->getName();
-            if ( !isset(self::$_runtime[$class][$name])) {
-                self::$_runtime[$class][$name] = $this->_isRuntime($name,$class);
-            }
-            return self::$_runtime[$class][$name];
-            
-        } else if ( $object instanceof Xyster_Data_Sort ) {
-            
-            return $this->isRuntime($object->getField(), $class);
-            
-        }
-        
-        require_once 'Xyster/Orm/Query/Parser/Exception.php';
-        throw new Xyster_Orm_Query_Parser_Exception('Unexpected type: ' . gettype($object));
-    }
-    
-    /**
-     * Checks a reference for syntactical correctness
-     *
-     * @param string $field
-     * @return boolean
-     */
-    public function isValidField( $field )
-    {
-        $field = trim($field);
-
-        $ok = true;
-        if ( !preg_match("/^[a-z][a-z0-9_]*(->[a-z0-9_]+(\([\s]*\))?)*$/i", $field) ) {
-            $mcs = Xyster_String::smartSplit("->", $field);
-            foreach( $mcs as $mc ) {
-                $matches = array();
-                $match = preg_match( "/^[a-z][a-z0-9_]*(\((?P<params>[\w\W]*)\))?$/i", $mc, $matches );
-                if ( ( $match && array_key_exists("params", $matches) && strlen(trim($matches['params']))
-                && !$this->_checkMethodParameters($matches['params']) ) || !$match ) {
-                    $ok = false;
-                    break;
-                }
-            }
-        }
-        return $ok;
-    }
-
     /**
      * Parse a statement into a Xyster_Data_Criterion
      *
@@ -218,22 +40,21 @@ class Xyster_Orm_Query_Parser
         $crit = null;
         $statement = trim($statement);
         
-        $groups = Xyster_String::matchGroups($statement);
+        $groups = Xyster_Orm_Xsql::matchGroups($statement);
         if ( count($groups) == 1 && strlen($groups[0]) == strlen($statement) ) {
-            $statement = trim(substr($statement,1,-1));
+            $statement = trim(substr($statement, 1, -1));
         }
 
-        $crits = Xyster_String::smartSplit(" AND ", $statement, true);
+        $crits = Xyster_Orm_Xsql_Split::Custom(' AND ')->split($statement, true);
         // in case it split the and of a "BETWEEN x AND y"
-        if ( count($crits) == 2 && $this->_checkLiteral($crits[1]) ) {
+        if ( count($crits) == 2 && Xyster_Orm_Xsql::isLiteral($crits[1]) ) {
             $crits = array($statement);
         }
         
         if ( count($crits) < 2 ) {
-           
-            $subcrits = Xyster_String::smartSplit(" OR ", $statement, true);
+            $subcrits = Xyster_Orm_Xsql_Split::Custom(' OR ')->split($statement, true);
             if ( count($subcrits) < 2 ) {
-                $groups = Xyster_String::matchGroups(trim($subcrits[0]));
+                $groups = Xyster_Orm_Xsql::matchGroups(trim($subcrits[0]));
                 $crit = ( count($groups) > 0 && strlen($groups[0]) ) ?
                     $this->parseCriterion($subcrits[0]) :
                     $this->parseExpression($subcrits[0]);
@@ -244,12 +65,12 @@ class Xyster_Orm_Query_Parser
 
         } else {
         
-            $crit = Xyster_Data_Junction::all( $this->parseCriterion($crits[0]),
-                $this->parseCriterion($crits[1]) );
+            $crit = Xyster_Data_Junction::all($this->parseCriterion($crits[0]),
+                $this->parseCriterion($crits[1]));
                 
             if ( count($crits) > 2 ) {
                 for ( $i=2; $i<count($crits); $i++ ) {
-                    $crit->add( $this->parseCriterion( $crits[$i] ) );
+                    $crit->add($this->parseCriterion($crits[$i]));
                 }
             }
         }
@@ -269,7 +90,7 @@ class Xyster_Orm_Query_Parser
         require_once 'Xyster/Data/Expression.php';
         
         // remove whitespace characters we don't like 
-        $statement = Xyster_String::smartSplit(" ", preg_replace("/[\t\n\r]+/", " ", trim($statement)));
+        $statement = Xyster_Orm_Xsql::splitSpace(preg_replace("/[\t\n\r]+/", " ", trim($statement)));
         
         $exp = array();
         foreach( $statement as $v ) {
@@ -291,7 +112,8 @@ class Xyster_Orm_Query_Parser
             $operator = $upper0;
         }
 
-        if ( !Xyster_Data_Expression::isOperator($operator) ) {
+        require_once 'Xyster/Enum.php';
+        if ( !in_array($operator, array_keys(Xyster_Enum::values('Xyster_Data_Operator_Expression'))) ) {
             require_once 'Xyster/Orm/Query/Parser/Exception.php';
             throw new Xyster_Orm_Query_Parser_Exception('Invalid expression operator: ' . $operator);
         }
@@ -304,30 +126,29 @@ class Xyster_Orm_Query_Parser
         }
 
         if ( $operator == "IN" || $operator == "NOT IN" ) {
-            $rightlit = trim(implode(" ",$exp));
+            $rightlit = trim(implode(' ', $exp));
             $matches = array();
-            if ( !preg_match('/^\([\s]*(?P<choices>.*)[\s]*\)$/',$rightlit,$matches) ) {
+            if ( !preg_match('/^\([\s]*(?P<choices>.*)[\s]*\)$/', $rightlit, $matches) ) {
                 require_once 'Xyster/Orm/Query/Parser/Exception.php';
                 throw new Xyster_Orm_Query_Parser_Exception('Invalid literal: ' . $rightlit);
-            }
-            else {
-                $inChoices = Xyster_String::smartSplit(',',$matches['choices']);
+            } else {
+            	$inChoices = Xyster_Orm_Xsql::splitComma($matches['choices']);
                 foreach( $inChoices as $k=>$choice ) {
                     $choice = trim($choice);
-                    $this->_assertLiteral($choice);
-                    if ( preg_match('/^"[^"]*"$/i',$choice) )
-                        $inChoices[$k] = substr($choice,1,-1);
+                    $this->_checkLiteral($choice);
+                    if ( preg_match('/^"[^"]*"$/i', $choice) )
+                        $inChoices[$k] = substr($choice, 1, -1);
                 }
                 $rightlit = $inChoices;
             }
         } else {
             $rightlit = ( $operator == "BETWEEN" || $operator == "NOT BETWEEN" ) ?
                 array( $exp[0], $exp[2] ) : $exp[0];
-            $this->_assertLiteral($rightlit);
+            $this->_checkLiteral($rightlit);
         }
 
-        if ( !is_array($rightlit) && preg_match('/^"[^"]*"$/i',$rightlit) ) {
-            $rightlit = substr($rightlit,1,-1);
+        if ( !is_array($rightlit) && preg_match('/^"[^"]*"$/i', $rightlit) ) {
+            $rightlit = substr($rightlit, 1, -1);
         }
 
         $args = array( $leftlit );
@@ -400,7 +221,7 @@ class Xyster_Orm_Query_Parser
      */
     public function parseQuery( Xyster_Orm_Query $query, $statement )
     {
-        $expecting = array('where','order');
+        $expecting = array('where', 'order');
 
         $parts = $this->_baseParseQuery($query, $statement, $expecting);
         if ( !empty($parts['where']) ) {
@@ -419,9 +240,9 @@ class Xyster_Orm_Query_Parser
      */
     public function parseReportQuery( Xyster_Orm_Query_Report $query, $statement )
     {
-        $expecting = array('select','where','group','having','order');
+        $expecting = array('select', 'where', 'group', 'having', 'order');
 
-        $parts = $this->_baseParseQuery($query,$statement,$expecting);
+        $parts = $this->_baseParseQuery($query, $statement, $expecting);
         if ( empty($parts['select']) ) {
             require_once 'Xyster/Orm/Query/Parser/Exception.php';
             throw new Xyster_Orm_Query_Parser_Exception('Invalid statement: ' . $statement);
@@ -476,13 +297,13 @@ class Xyster_Orm_Query_Parser
      * @param string $lit
      * @throws Xyster_Orm_Query_Parser_Exception if the syntax is incorrect
      */
-    protected function _assertLiteral( $lit )
+    protected function _checkLiteral( $lit )
     {
         if ( is_array($lit) ) {
             foreach( $lit as $v ) {
-                $this->_assertLiteral($v);
+                $this->_checkLiteral($v);
             }
-        } else if ( !$this->_checkLiteral($lit) ) {
+        } else if ( !Xyster_Orm_Xsql::isLiteral($lit) ) {
             require_once 'Xyster/Orm/Query/Parser/Exception.php';
             throw new Xyster_Orm_Query_Parser_Exception('Invalid literal: ' . $lit);
         }
@@ -505,12 +326,12 @@ class Xyster_Orm_Query_Parser
         $limit = ( isset($matches['limit']) ) ? $matches['limit'] : 0;
         $offset = ( isset($matches['offset']) ) ? $matches['offset'] : 0;
         if ( $limit ) { 
-            $query->limit($limit,$offset);
+            $query->limit($limit, $offset);
         }
         
         $parts = array();
         $part = '';
-        $split = Xyster_String::smartSplit(' ', trim($statement));
+        $split = Xyster_Orm_Xsql::splitSpace(trim($statement));
 
         foreach( $split as $v ) {
             if ( in_array($part, array('order','group')) && !strcasecmp($v, 'by') ) {
@@ -533,90 +354,6 @@ class Xyster_Orm_Query_Parser
     }
     
     /**
-     * Checks a literal for syntactical correctness
-     *
-     * @param string $lit
-     * @return boolean
-     */
-    protected function _checkLiteral( $lit )
-    {
-        return (
-            // either a string or a number or the word "null"
-            preg_match("/^(\"[^\"]*\"|[\d]+(.[\d]+)?|null)$/i", trim($lit))
-            //  a string with escapes in it
-            || preg_match('/^"[^"\\\\]*(\\\\.[^"\\\\]*)*"$/', trim($lit))
-            // check to see if it's a field
-            || $this->isValidField($lit)
-        );
-    }
-    
-    /**
-     * Checks method parameters for syntactical correctness
-     *
-     * @param array $params
-     * @return boolean
-     */
-    protected function _checkMethodParameters( $params )
-    {
-        $ps = Xyster_String::smartSplit(",", trim($params));
-        $ok = true;
-        foreach( $ps as $p ) {
-            if ( !$this->_checkLiteral($p) ) {
-                $ok = false;
-                break;
-            }
-        }
-        return $ok;
-    }
-    
-    /**
-     * Checks to see if a column can only be evaluated at runtime
-     *
-     * @param string $field
-     * @param string $className
-     * @return boolean
-     */
-    protected function _isRuntime( $field, $className )
-    {
-        require_once 'Xyster/Orm/Loader.php';
-        Xyster_Orm_Loader::loadEntityClass($className);
-        $meta = $this->_mapFactory->get($className)->getEntityMeta();
-
-        $calls = Xyster_String::smartSplit('->',trim($field));
-
-        if ( count($calls) == 1 ) {
-            
-            // the call isn't composite - could be a member or a relation
-            return ( $this->isMethodCall($calls[0]) ) ? true :
-                ( !in_array($field, $meta->getFieldNames())
-                    && !$meta->isRelation($field) );
-                    
-        } else {
-            
-            // the call is composite - loop through to see if we can figure 
-            // out the type bindings
-            $container = $className;
-            $currentMeta = $meta;
-            foreach( $calls as $call ) {
-                if ( $this->isMethodCall($call) ) {
-                    return true;
-                } else {
-                    $isRel = $currentMeta->isRelation($call);
-                    if ( !in_array($call, array_keys($currentMeta->getFields()))
-                        && !$isRel ) {
-                        return true;
-                    } else if ( $isRel ) {
-                        $container = $currentMeta->getRelation($call)->getTo();
-                        $currentMeta = $this->_mapFactory->get($container)->getEntityMeta();
-                    }
-                }
-            }
-            return false;
-
-        }
-    }
-    
-    /**
      * Parses a string statement clause into its corresponding parts
      *
      * @param Xyster_Orm_Query $query The query into which the parts will be set
@@ -631,8 +368,7 @@ class Xyster_Orm_Query_Parser
                 'group'=>array('Xyster_Data_Field', 'group')
             );
         $method = array('select'=>'field', 'order'=>'order', 'group'=>'group');
-
-        foreach( Xyster_String::smartSplit(",", $statement) as $item ) {
+        foreach( Xyster_Orm_Xsql::splitComma($statement) as $item ) {
             $query->{$method[$type]}( call_user_func($call[$type], $item) );
         }
     }

@@ -14,9 +14,9 @@
  * @version   $Id$
  */
 /**
- * @see Xyster_Orm_Query_Parser
+ * @see Xyster_Data_Sort_Clause
  */
-require_once 'Xyster/Orm/Query/Parser.php';
+require_once 'Xyster/Data/Sort/Clause.php';
 /**
  * A query object
  *
@@ -61,11 +61,11 @@ class Xyster_Orm_Query
     protected $_manager;
     
     /**
-     * The query parser
+     * The entity meta
      *
-     * @var Xyster_Orm_Query_Parser
+     * @var Xyster_Orm_Entity_Meta
      */
-    protected $_parser;
+    protected $_meta;
     
     /**
      * The parts of the query that must be used at runtime
@@ -84,7 +84,7 @@ class Xyster_Orm_Query
         $this->_class = $class;
         $this->_manager = $manager;
         $this->_initParts();
-        $this->_parser = new Xyster_Orm_Query_Parser($manager->getMapperFactory());
+        $this->_meta = $manager->getMapperFactory()->getEntityMeta($class);
     }
     
     /**
@@ -172,7 +172,7 @@ class Xyster_Orm_Query
     /**
      * Gets the order clause (an array of {@link Xyster_Data_Sort} objects)
      * 
-     * @return array 
+     * @return Xyster_Data_Sort_Clause 
      */
     public function getOrder()
     {
@@ -253,10 +253,10 @@ class Xyster_Orm_Query
      */
     public function order( Xyster_Data_Sort $order )
     {
-        $this->_parser->assertValidFieldForClass($order->getField(), $this->_class);
-        $this->_runtime[self::ORDER] |= $this->_parser->isRuntime($order, $this->_class);
+    	$this->_meta->assertValidField($order->getField());
+        $this->_runtime[self::ORDER] |= $this->_meta->isRuntime($order);
             
-        $this->_parts[self::ORDER][] = $order;
+        $this->getOrder()->add($order);
         
         return $this;
     }
@@ -274,10 +274,10 @@ class Xyster_Orm_Query
                 require_once 'Xyster/Orm/Query/Exception.php';
                 throw new Xyster_Orm_Query_Exception('Aggregated fields are not allowed in this query');
             }
-            $this->_parser->assertValidFieldForClass($field, $this->_class);
+            $this->_meta->assertValidField($field);
         }
         
-        if ( $this->_parser->isRuntime($where, $this->_class) ) {
+        if ( $this->_meta->isRuntime($where) ) {
             $this->_runtime[self::WHERE][] = $where;
         } else {
             $this->_backend[self::WHERE][] = $where;
@@ -297,7 +297,7 @@ class Xyster_Orm_Query
         $this->_parts[self::LIMIT] = 0;
         $this->_parts[self::OFFSET] = 0;
         $this->_parts[self::WHERE] = array();
-        $this->_parts[self::ORDER] = array();
+        $this->_parts[self::ORDER] = new Xyster_Data_Sort_Clause;
         
         $this->_runtime[self::WHERE] = array();
         $this->_runtime[self::ORDER] = false;

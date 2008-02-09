@@ -260,12 +260,12 @@ class Xyster_Orm
     public function query( $className, $xsql = null )
     {
         require_once 'Xyster/Orm/Query.php';
-        require_once 'Xyster/Orm/Query/Parser.php';
         
         $query = new Xyster_Orm_Query($className, $this->_manager);
         
         if ( $xsql ) {
-            $parser = new Xyster_Orm_Query_Parser($this->getMapperFactory());
+            require_once 'Xyster/Orm/Query/Parser.php';
+        	$parser = new Xyster_Orm_Query_Parser;
             $parser->parseQuery($query, $xsql);
         }
         
@@ -313,12 +313,12 @@ class Xyster_Orm
     public function reportQuery( $className, $xsql = null )
     {
         require_once 'Xyster/Orm/Query/Report.php';
-        require_once 'Xyster/Orm/Query/Parser.php';
         
         $query = new Xyster_Orm_Query_Report($className, $this->_manager);
                 
         if ( $xsql ) {
-            $parser = new Xyster_Orm_Query_Parser($this->getMapperFactory());
+            require_once 'Xyster/Orm/Query/Parser.php';
+        	$parser = new Xyster_Orm_Query_Parser;
             $parser->parseReportQuery($query, $xsql);
         }
         
