@@ -108,6 +108,21 @@ class Xyster_TypeTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Tests the 'getForParameters' method
+     */
+    public function testGetForParameters()
+    {
+    	$class = new ReflectionClass('HashTest');
+    	$params = Xyster_Type::getForParameters($class->getMethod('testMethod'));
+    	$this->assertEquals('ReflectionClass', $params[0]->getName());
+    	$this->assertEquals('array', $params[1]->getName());
+    	$this->assertEquals('scalar', $params[2]->getName());
+        $this->assertEquals('ReflectionParameter', $params[3]->getName());
+        $this->assertEquals('string', $params[4]->getName());
+        
+    }
+    
+    /**
      * Tests the 'hashCode' method
      */
     public function testHashCode()
@@ -153,7 +168,7 @@ class Xyster_TypeTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testAreEqual().
+     * Tests the 'areEqual' static method
      */
     public function testAreEqual()
     {
@@ -184,7 +199,7 @@ class Xyster_TypeTest extends PHPUnit_Framework_TestCase
     }
     
     /**
-     * @todo Implement testAreDeeplyEqual().
+     * Tests the 'areDeeplyEqual' static method
      */
     public function testAreDeeplyEqual()
     {
@@ -292,6 +307,10 @@ class Xyster_TypeTest extends PHPUnit_Framework_TestCase
 
 class HashTest
 {
+	public function testMethod( ReflectionClass $class, array $items, $scalar, ReflectionParameter $param = null, $default = 'test' )
+	{
+		
+	}
     public function hashCode()
     {
         return 1;

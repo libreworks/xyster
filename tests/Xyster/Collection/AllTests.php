@@ -30,6 +30,7 @@ require_once 'Xyster/Collection/CollectionTest.php';
 require_once 'Xyster/Collection/SetTest.php';
 require_once 'Xyster/Collection/SortableSetTest.php';
 require_once 'Xyster/Collection/ListTest.php';
+require_once 'Xyster/Collection/EmptyTest.php';
 require_once 'Xyster/Collection/MapTest.php';
 require_once 'Xyster/Collection/MapStringTest.php';
 require_once 'Xyster/Collection/IteratorTest.php';
@@ -54,6 +55,7 @@ class Xyster_Collection_AllTests
         $suite->addTestSuite('Xyster_Collection_SetTest');
         $suite->addTestSuite('Xyster_Collection_SortableSetTest');
         $suite->addTestSuite('Xyster_Collection_ListTest');
+        $suite->addTestSuite('Xyster_Collection_List_EmptyTest');
         $suite->addTestSuite('Xyster_Collection_MapTest');
         $suite->addTestSuite('Xyster_Collection_MapStringTest');
         $suite->addTestSuite('Xyster_Collection_IteratorTest');
