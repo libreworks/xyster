@@ -31,8 +31,11 @@ require_once 'Xyster/Data/JunctionTest.php';
 require_once 'Xyster/Data/ExpressionTest.php';
 require_once 'Xyster/Data/CriterionTest.php';
 require_once 'Xyster/Data/FieldTest.php';
+require_once 'Xyster/Data/Field/ClauseTest.php';
 require_once 'Xyster/Data/FieldAggregateTest.php';
+require_once 'Xyster/Data/Operator/ExpressionTest.php';
 require_once 'Xyster/Data/SortTest.php';
+require_once 'Xyster/Data/Sort/ClauseTest.php';
 require_once 'Xyster/Data/SetTest.php';
 require_once 'Xyster/Data/TupleTest.php';
 
@@ -54,7 +57,10 @@ class Xyster_Data_AllTests
         $suite->addTestSuite('Xyster_Data_CriterionTest');
         $suite->addTestSuite('Xyster_Data_FieldTest');
         $suite->addTestSuite('Xyster_Data_FieldAggregateTest');
+        $suite->addTestSuite('Xyster_Data_Field_ClauseTest');
+        $suite->addTestSuite('Xyster_Data_Operator_ExpressionTest');
         $suite->addTestSuite('Xyster_Data_SortTest');
+        $suite->addTestSuite('Xyster_Data_Sort_ClauseTest');
         $suite->addTestSuite('Xyster_Data_SetTest');
         $suite->addTestSuite('Xyster_Data_TupleTest');
         return $suite;
