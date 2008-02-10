@@ -242,7 +242,7 @@ class Xyster_Type
     			$types[] = new self('array');
     		} else if ( $parameter->getClass() ) {
     			$types[] = new self($parameter->getClass());
-    		} else if ( $parameter->isDefaultValueAvailable() ) {
+    		} else if ( $parameter->isDefaultValueAvailable() && !is_null($parameter->getDefaultValue()) ) {
     			$types[] = self::of($parameter->getDefaultValue());
     		} else {
     			$types[] = new self('scalar');

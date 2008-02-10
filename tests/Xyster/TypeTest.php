@@ -119,7 +119,7 @@ class Xyster_TypeTest extends PHPUnit_Framework_TestCase
     	$this->assertEquals('scalar', $params[2]->getName());
         $this->assertEquals('ReflectionParameter', $params[3]->getName());
         $this->assertEquals('string', $params[4]->getName());
-        
+        $this->assertEquals('scalar', $params[5]->getName());
     }
     
     /**
@@ -307,7 +307,7 @@ class Xyster_TypeTest extends PHPUnit_Framework_TestCase
 
 class HashTest
 {
-	public function testMethod( ReflectionClass $class, array $items, $scalar, ReflectionParameter $param = null, $default = 'test' )
+	public function testMethod( ReflectionClass $class, array $items, $scalar, ReflectionParameter $param = null, $default = 'test', $default2 = null )
 	{
 		
 	}
