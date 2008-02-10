@@ -9,7 +9,7 @@
     <bookinfo>
         <title>Programmer's Reference Guide</title>
         <subtitle>Xyster Framework</subtitle>
-        <edition>Build 3</edition>
+        <edition>Build 5</edition>
         <pubdate><?dbtimestamp format="Y-m-d"?></pubdate>
         <copyright>
             <year>2005-<?dbtimestamp format="Y"?></year>
@@ -61,12 +61,18 @@
 	<title>Xyster_Data</title>
     	<xi:include href="module_specs/Xyster_Data.xml" />
         <xi:include href="module_specs/Xyster_Data_Generic.xml" />
+        <xi:include href="module_specs/Xyster_Data_Clauses.xml" />
     	<xi:include href="module_specs/Xyster_Data_Sets.xml" />
     </chapter>
 
     <chapter id="xyster.enum">
         <title>Xyster_Enum</title>
     	<xi:include href="module_specs/Xyster_Enum.xml" />
+    </chapter>
+    
+    <chapter id="xyster.filter">
+        <title>Xyster_Filter</title>
+        <xi:include href="module_specs/Xyster_Filter.xml" />
     </chapter>
 
     <chapter id="xyster.orm">
@@ -81,12 +87,12 @@
     	<xi:include href="module_specs/Xyster_Orm_Plugins.xml" />
     </chapter>
 
-    <chapter id="xyster.string">
-        <title>Xyster_String</title>
-    	<xi:include href="module_specs/Xyster_String.xml" />
+    <chapter id="xyster.type">
+        <title>Xyster_Type</title>
+    	<xi:include href="module_specs/Xyster_Type.xml" />
+        <xi:include href="module_specs/Xyster_Type_Static.xml" />
     </chapter>
 </book>
 <!--
 vim:se ts=4 sw=4 et:
 -->
-
