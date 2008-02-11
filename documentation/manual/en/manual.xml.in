@@ -92,6 +92,12 @@
     	<xi:include href="module_specs/Xyster_Type.xml" />
         <xi:include href="module_specs/Xyster_Type_Static.xml" />
     </chapter>
+    
+    <chapter id="xyster.validate">
+        <title>Xyster_Validate</title>
+        <xi:include href="module_specs/Xyster_Validate.xml" />
+        <xi:include href="module_specs/Xyster_Validate_Errors.xml" />
+    </chapter>
 </book>
 <!--
 vim:se ts=4 sw=4 et:
