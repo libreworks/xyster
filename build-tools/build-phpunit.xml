@@ -49,7 +49,7 @@
   <property name="zf.src.default" value="${project.basedir}/.." />
   <property name="zf.product.name" value="Xyster Framework" />
   <property name="zf.productname" value="xyster" />
-  <property name="zf.version" value="build4" />
+  <property name="zf.version" value="build5" />
   <property name="svn.url" value="https://xyster.devweblog.org/svn" />
   <property name="zf.svn.url" value="${svn.url}/trunk" />
   <property name="zf.svn.tag" value="HEAD" />
