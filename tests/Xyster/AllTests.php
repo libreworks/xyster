@@ -37,6 +37,9 @@ require_once 'Xyster/Filter/TitleCaseTest.php';
 require_once 'Xyster/OrmTest.php';
 require_once 'Xyster/Orm/AllTests.php';
 require_once 'Xyster/TypeTest.php';
+require_once 'Xyster/Validate/ErrorTest.php';
+require_once 'Xyster/Validate/ErrorsTest.php';
+require_once 'Xyster/Validate/UriTest.php';
 
 class Xyster_AllTests
 {
@@ -59,6 +62,9 @@ class Xyster_AllTests
         $suite->addTestSuite('Xyster_OrmTest');
         $suite->addTest( Xyster_Orm_AllTests::suite() );
         $suite->addTestSuite('Xyster_TypeTest');
+        $suite->addTestSuite('Xyster_Validate_ErrorTest');
+        $suite->addTestSuite('Xyster_Validate_ErrorsTest');
+        $suite->addTestSuite('Xyster_Validate_UriTest');
         return $suite;
     }
 }
