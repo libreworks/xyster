@@ -27,7 +27,6 @@ require_once 'Xyster/ApplicationTest.php';
 require_once 'Xyster/Application/AllTests.php';
 require_once 'Xyster/ContainerTest.php';
 require_once 'Xyster/Container/AllTests.php';
-require_once 'Xyster/Filter/TitleCaseTest.php';
 require_once 'Xyster/Validate/ErrorTest.php';
 require_once 'Xyster/Validate/ErrorsTest.php';
 require_once 'Xyster/Validate/UriTest.php';
@@ -46,7 +45,6 @@ class Xyster_AllTests
         $suite->addTest( Xyster_Application_AllTests::suite() );
         $suite->addTestSuite('Xyster_ContainerTest');
         $suite->addTest( Xyster_Container_AllTests::suite() );
-        $suite->addTestSuite('Xyster_Filter_TitleCaseTest');
         $suite->addTestSuite('Xyster_Validate_ErrorTest');
         $suite->addTestSuite('Xyster_Validate_ErrorsTest');
         $suite->addTestSuite('Xyster_Validate_UriTest');
