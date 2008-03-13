@@ -23,6 +23,7 @@ require_once "PHPUnit/Framework/TestCase.php";
 require_once "PHPUnit/Framework/TestSuite.php";
 require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 require_once 'Xyster/Db/Gateway/Abstract.php';
+require_once 'Zend/Db/Adapter/Pdo/Sqlite.php';
 
 /**
  * Test class for Xyster_Db_Gateway_Abstract.
@@ -34,6 +35,11 @@ class Xyster_Db_Gateway_AbstractTest extends PHPUnit_Framework_TestCase
      * @var    Xyster_Db_Gateway_Abstract
      */
     protected $object;
+    
+    /**
+     * @var Zend_Db_Adapter_Abstract
+     */
+    protected $db;
 
     /**
      * Runs the test methods of this class.
@@ -52,8 +58,39 @@ class Xyster_Db_Gateway_AbstractTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new Xyster_Db_Gateway_Abstract;
+    	$this->db = new Zend_Db_Adapter_Pdo_Sqlite(array('host'=>':memory:', 'dbname'=>''));
+        $this->object = new Xyster_Db_Gateway_AbstractTest_Stub;
     }
+    
+    /**
+     * Tests the getting and setting of an adapter
+     *
+     */
+    public function testGetAndSetAdapter()
+    {
+    	$this->assertNull($this->object->getAdapter());
+    	$return = $this->object->setAdapter($this->db);
+    	$this->assertSame($this->db, $this->object->getAdapter());
+    	$this->assertSame($this->object, $return);
+    }
+    
+    /**
+     * Tests if passing the adapter to the constructor will work
+     *
+     */
+    public function testConstructor()
+    {
+    	$gateway = new Xyster_Db_Gateway_AbstractTest_Stub($this->db);
+    	$this->assertSame($this->db, $gateway->getAdapter());
+    }
+}
+
+class Xyster_Db_Gateway_AbstractTest_Stub extends Xyster_Db_Gateway_Abstract
+{
+	public function setAdapter( $db )
+	{
+		return $this->_setAdapter($db);
+	}
 }
 
 // Call Xyster_Db_Gateway_AbstractTest::main() if this source file is executed directly.
