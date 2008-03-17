@@ -93,6 +93,44 @@ class Xyster_Orm_EntityTest extends Xyster_Orm_TestSetup
         $entity->setDirty(false);
         $this->assertFalse($entity->isDirty());
     }
+    
+    /**
+     * Tests the 'equals' method on entities with a primary key
+     *
+     */
+    public function testEqualsWithPk()
+    {
+    	$entity = $this->_getMockEntity();
+    	$clone = clone $entity;
+        $notEqualTo = $this->_getMockEntityWithNoPk();
+        
+        $this->assertFalse($entity->equals('a string'));
+    	$this->assertFalse($entity->equals($notEqualTo));
+        $this->assertFalse($notEqualTo->equals($entity));
+    	$this->assertTrue($entity->equals($clone));
+    	$this->assertTrue($clone->equals($entity));
+    	$clone->bugId = 99999;
+    	$this->assertFalse($entity->equals($clone));
+    	$this->assertFalse($clone->equals($entity));
+    }
+    
+    /**
+     * Tests the 'equals' method on entities with no primary key
+     */
+    public function testEqualsWithNoPk()
+    {
+    	$entity = $this->_getMockEntityWithNoPk();
+    	$clone = clone $entity;
+    	$this->assertTrue($entity->equals($clone));
+    	
+    	$entity->bugDescription = 'This is normal';
+    	$clone->bugDescription = 'This is weird';
+    	$this->assertFalse($entity->equals($clone));
+    	
+    	$clone->bugDescription = 'This is normal';
+    	$this->assertTrue($entity->equals($clone));
+    }
+    
     /**
      * Tests the 'get dirty fields' method
      *
@@ -184,6 +222,24 @@ class Xyster_Orm_EntityTest extends Xyster_Orm_TestSetup
         
         $this->assertEquals('bugId=' . 99, $entity->getPrimaryKeyAsString());
         $this->assertEquals($preSet, $entity->getPrimaryKeyAsString(true));
+    }
+
+    /**
+     * Tests the hashCode method
+     *
+     */
+    public function testHashCode()
+    {
+    	$entity = $this->_getMockEntity();
+
+    	$clone = clone $entity;
+        $this->assertEquals($entity->hashCode(), $clone->hashCode());
+    	
+        $another = $this->_getMockEntityWithNoPk();
+        $this->assertNotEquals($entity->hashCode(), $another->hashCode());
+        
+        $anotherBlank = $this->_getMockEntityWithNoPk();
+        $this->assertEquals($another->hashCode(), $anotherBlank->hashCode());
     }
     
     /**

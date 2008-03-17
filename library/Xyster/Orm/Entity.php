@@ -14,6 +14,10 @@
  * @version   $Id$
  */
 /**
+ * @see Xyster_Type
+ */
+require_once 'Xyster/Type.php';
+/**
  * A data entity: the basic data unit of the ORM package
  *
  * @category  Xyster
@@ -150,6 +154,30 @@ class Xyster_Orm_Entity
     }
     
     /**
+     * Compares two values for equality
+     * 
+     * An entity is equal to another entity if they're identical or they're the
+     * same class name and have the same primary key.  If the primary key is
+     * empty, the actual values are compared.
+     *
+     * @param Xyster_Orm_Entity $object
+     * @return boolean
+     */
+    public function equals( $object )
+    {
+        if ( $this === $object ) {
+            return true;
+        } else {
+            $primaryKey = $this->getPrimaryKey();
+    		$notEmptyPrimaryKey = count($primaryKey) && current($primaryKey);
+	    	return ( is_object($object) &&
+                get_class($object) == get_class($this) &&
+	    	    ( ( $notEmptyPrimaryKey && $this->getPrimaryKey() == $object->getPrimaryKey() ) || 
+	    	    Xyster_Type::areEqual($this->_values, $object->_values) ));
+    	}
+    }
+    
+    /**
      * Gets the original values of the entity
      * 
      * @return array
@@ -231,6 +259,16 @@ class Xyster_Orm_Entity
     	}
         
     	return $pk;
+    }
+    
+    /**
+     * Gets the hash code for the entity
+     *
+     * @return int
+     */
+    public function hashCode()
+    {
+    	return Xyster_Type::hash($this->__toString());
     }
     
     /**

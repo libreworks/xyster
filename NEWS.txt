@@ -4,6 +4,8 @@ Xyster Framework                                                             NEW
 =BUILD 6 / ??-Apr-2008 / based on revision ??? =
 - Moved Xyster_Filter_TitleCase to core
 - Moved Xyster_Validate classes to core
+- Xyster_Orm
+    * 0000035: Xyster_Orm_Entity should have equals and hashCode
 
 =BUILD 5 / 05-Mar-2008 / based on revision 225 =
 - Xyster_Container
