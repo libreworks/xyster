@@ -27,6 +27,7 @@ class Xyster_Db_Gateway_TableBuilder_Column
 	protected $_type;
 	protected $_argument;
 	protected $_default;
+	protected $_null = false;
 	protected $_index = false;
 	/**
 	 * @var Xyster_Db_Gateway_TableBuilder_ForeignKey
@@ -171,6 +172,16 @@ class Xyster_Db_Gateway_TableBuilder_Column
 	}
 	
 	/**
+	 * Returns true if the column allows null values
+	 *
+	 * @return boolean
+	 */
+	public function isNull()
+	{
+		return $this->_null;
+	}
+	
+	/**
 	 * Returns true if the column is uniquely indexed
 	 *
 	 * @return boolean
@@ -214,6 +225,16 @@ class Xyster_Db_Gateway_TableBuilder_Column
     {
     	$this->_index = true;
     	$this->_fulltext = $fulltext;
+    }
+    
+    /**
+     * Sets whether the column can accept null
+     *
+     * @param boolean $allow True for NULL, false for NOT NULL
+     */
+    public function null( $allow=true )
+    {
+    	$this->_null = $allow;
     }
     	
 	/**

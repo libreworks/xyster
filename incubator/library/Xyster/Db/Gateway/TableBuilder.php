@@ -14,6 +14,14 @@
  * @version   $Id$
  */
 /**
+ * @see Xyster_Db_Gateway_DataType
+ */
+require_once 'Xyster/Db/Gateway/DataType.php';
+/**
+ * @see Xyster_Db_Gateway_TableBuilder_Column
+ */
+require_once 'Xyster/Db/Gateway/TableBuilder/Column.php';
+/**
  * A builder for table creation values
  *
  * @category  Xyster
@@ -33,6 +41,9 @@ class Xyster_Db_Gateway_TableBuilder
      */
     protected $_gateway;
     
+    /**
+     * @var Xyster_Db_Gateway_TableBuilder_Column
+     */
     protected $_current;
     
     protected $_columns = array();
@@ -67,6 +78,9 @@ class Xyster_Db_Gateway_TableBuilder
      */
     public function addVarchar( $name, $length )
     {
+    	$this->_current = new Xyster_Db_Gateway_TableBuilder_Column($name,
+    	   Xyster_Db_Gateway_DataType::Varchar(), $length);
+    	$this->_columns[] = $this->_current;
     	return $this;
     }
     
@@ -79,6 +93,9 @@ class Xyster_Db_Gateway_TableBuilder
      */
     public function addChar( $name, $length )
     {
+    	$this->_current = new Xyster_Db_Gateway_TableBuilder_Column($name,
+           Xyster_Db_Gateway_DataType::Char(), $length);
+        $this->_columns[] = $this->_current;
         return $this;
     }
     
@@ -90,6 +107,9 @@ class Xyster_Db_Gateway_TableBuilder
      */
     public function addInteger( $name )
     {
+    	$this->_current = new Xyster_Db_Gateway_TableBuilder_Column($name,
+           Xyster_Db_Gateway_DataType::Integer());
+        $this->_columns[] = $this->_current;
     	return $this;
     }
     
@@ -101,6 +121,9 @@ class Xyster_Db_Gateway_TableBuilder
      */
     public function addSmallint( $name )
     {
+        $this->_current = new Xyster_Db_Gateway_TableBuilder_Column($name,
+           Xyster_Db_Gateway_DataType::Smallint());
+        $this->_columns[] = $this->_current;
     	return $this;
     }
     
@@ -112,6 +135,9 @@ class Xyster_Db_Gateway_TableBuilder
      */
     public function addFloat( $name )
     {
+        $this->_current = new Xyster_Db_Gateway_TableBuilder_Column($name,
+           Xyster_Db_Gateway_DataType::Float());
+        $this->_columns[] = $this->_current;
     	return $this;
     }
     
@@ -123,6 +149,9 @@ class Xyster_Db_Gateway_TableBuilder
      */
     public function addTimestamp( $name )
     {
+        $this->_current = new Xyster_Db_Gateway_TableBuilder_Column($name,
+           Xyster_Db_Gateway_DataType::Timestamp());
+        $this->_columns[] = $this->_current;
     	return $this;
     }
     
@@ -134,6 +163,9 @@ class Xyster_Db_Gateway_TableBuilder
      */
     public function addDate( $name )
     {
+        $this->_current = new Xyster_Db_Gateway_TableBuilder_Column($name,
+           Xyster_Db_Gateway_DataType::Date());
+        $this->_columns[] = $this->_current;
     	return $this;
     }
     
@@ -145,6 +177,9 @@ class Xyster_Db_Gateway_TableBuilder
      */
     public function addTime( $name )
     {
+        $this->_current = new Xyster_Db_Gateway_TableBuilder_Column($name,
+           Xyster_Db_Gateway_DataType::Time());
+        $this->_columns[] = $this->_current;
     	return $this;
     }
     
@@ -156,6 +191,9 @@ class Xyster_Db_Gateway_TableBuilder
      */
     public function addClob( $name )
     {
+        $this->_current = new Xyster_Db_Gateway_TableBuilder_Column($name,
+           Xyster_Db_Gateway_DataType::Clob());
+        $this->_columns[] = $this->_current;
     	return $this;
     }
     
@@ -167,6 +205,9 @@ class Xyster_Db_Gateway_TableBuilder
      */
     public function addBlob( $name )
     {
+        $this->_current = new Xyster_Db_Gateway_TableBuilder_Column($name,
+           Xyster_Db_Gateway_DataType::Blob());
+        $this->_columns[] = $this->_current;
     	return $this;
     }
     
@@ -178,6 +219,9 @@ class Xyster_Db_Gateway_TableBuilder
      */
     public function addBoolean( $name )
     {
+        $this->_current = new Xyster_Db_Gateway_TableBuilder_Column($name,
+           Xyster_Db_Gateway_DataType::Boolean());
+        $this->_columns[] = $this->_current;
     	return $this;
     }
     
@@ -189,6 +233,9 @@ class Xyster_Db_Gateway_TableBuilder
      */
     public function addIdentity( $name )
     {
+        $this->_current = new Xyster_Db_Gateway_TableBuilder_Column($name,
+           Xyster_Db_Gateway_DataType::Identity());
+        $this->_columns[] = $this->_current;
     	return $this;
     }
     
@@ -200,6 +247,8 @@ class Xyster_Db_Gateway_TableBuilder
      */
     public function defaultValue( $default )
     {
+        $this->_checkColumnDefined();
+        $this->_current->defaultValue($default);
     	return $this;
     }
     
@@ -223,6 +272,8 @@ class Xyster_Db_Gateway_TableBuilder
      */
     public function foreign( $table, $column, Xyster_Db_Gateway_ReferentialAction $onDelete=null, Xyster_Db_Gateway_ReferentialAction $onUpdate=null )
     {
+        $this->_checkColumnDefined();
+        $this->_current->foreign($table, $column, $onDelete, $onUpdate);
     	return $this;
     }
     
@@ -238,6 +289,9 @@ class Xyster_Db_Gateway_TableBuilder
      */
     public function foreignMulti( array $columns, $table, array $foreignColumns, Xyster_Db_Gateway_ReferentialAction $onDelete=null, Xyster_Db_Gateway_ReferentialAction $onUpdate=null )
     {
+    	require_once 'Xyster/Db/Gateway/TableBuilder/ForeignKey.php';
+    	$this->_foreign[] = new Xyster_Db_Gateway_TableBuilder_ForeignKey($columns,
+    	   $table, $foreignColumns, $onDelete, $onUpdate);
     	return $this;
     }
     
@@ -248,7 +302,11 @@ class Xyster_Db_Gateway_TableBuilder
      */
     public function getColumns()
     {
-    	return array();
+    	$columns = array();
+    	foreach( $this->_columns as $column ) {
+    		$columns[] = clone $column;
+    	}
+    	return $columns;
     }
     
     /**
@@ -261,7 +319,7 @@ class Xyster_Db_Gateway_TableBuilder
      */
     public function getForeignKeys()
     {
-    	return array();
+    	return array() + $this->_foreign;
     }
     
     /**
@@ -274,7 +332,17 @@ class Xyster_Db_Gateway_TableBuilder
      */
     public function getIndexes()
     {
-    	return array();
+    	return array() + $this->_indexes;
+    }
+    
+    /**
+     * Gets the name of the table
+     *
+     * @return string
+     */
+    public function getName()
+    {
+    	return $this->_name;
     }
     
     /**
@@ -283,11 +351,11 @@ class Xyster_Db_Gateway_TableBuilder
      * Only primary keys that have been defined using the {@link primaryMulti}
      * method will be returned here.
      *
-     * @return array An array of {@link Xyster_Db_Gateway_TableBuilder_PrimaryKey} objects
+     * @return Xyster_Db_Gateway_TableBuilder_PrimaryKey the composite key used
      */
-    public function getPrimaryKeys()
+    public function getPrimaryKey()
     {
-    	return array();
+    	return $this->_primary;
     }
     
     /**
@@ -300,7 +368,7 @@ class Xyster_Db_Gateway_TableBuilder
      */
     public function getUniques()
     {
-    	return array();
+    	return array() + $this->_uniques;
     }
     
     /**
@@ -311,6 +379,8 @@ class Xyster_Db_Gateway_TableBuilder
      */
     public function index( $fulltext=false )
     {
+        $this->_checkColumnDefined();
+        $this->_current->index($fulltext);
     	return $this;
     }
     
@@ -323,6 +393,8 @@ class Xyster_Db_Gateway_TableBuilder
      */
     public function indexMulti( array $columns, $fulltext=false )
     {
+    	require_once 'Xyster/Db/Gateway/TableBuilder/Index.php';
+    	$this->_indexes[] = new Xyster_Db_Gateway_TableBuilder_Index($columns, $fulltext);
     	return $this;
     }
     
@@ -334,6 +406,8 @@ class Xyster_Db_Gateway_TableBuilder
      */
     public function null( $null=true )
     {
+        $this->_checkColumnDefined();
+        $this->_current->null($null);
     	return $this;
     }
     
@@ -346,6 +420,8 @@ class Xyster_Db_Gateway_TableBuilder
      */
     public function primary()
     {
+        $this->_checkColumnDefined();
+        $this->_current->primary();
     	return $this;
     }
     
@@ -357,6 +433,8 @@ class Xyster_Db_Gateway_TableBuilder
      */
     public function primaryMulti( array $columns )
     {
+    	require_once 'Xyster/Db/Gateway/TableBuilder/PrimaryKey.php';
+    	$this->_primary = new Xyster_Db_Gateway_TableBuilder_PrimaryKey($columns);
     	return $this;
     }
     
@@ -367,6 +445,8 @@ class Xyster_Db_Gateway_TableBuilder
      */
     public function unique()
     {
+    	$this->_checkColumnDefined();
+    	$this->_current->unique();
     	return $this;
     }
     
@@ -378,6 +458,21 @@ class Xyster_Db_Gateway_TableBuilder
      */
     public function uniqueMulti( array $columns )
     {
+    	require_once 'Xyster/Db/Gateway/TableBuilder/Unique.php';
+    	$this->_uniques[] = new Xyster_Db_Gateway_TableBuilder_Unique($columns);
         return $this;
+    }
+    
+    /**
+     * Checks that a column has been defined
+     *
+     * @throws Xyster_Db_Gateway_TableBuilder_Exception if one isn't
+     */
+    protected function _checkColumnDefined()
+    {
+    	if ( $this->_current === null ) {
+    		require_once 'Xyster/Db/Gateway/TableBuilder/Exception.php';
+    		throw new Xyster_Db_Gateway_TableBuilder_Exception('A column must be defined before this method can be used');
+    	}
     }
 }

@@ -81,8 +81,19 @@ class Xyster_Db_Gateway_AbstractTest extends PHPUnit_Framework_TestCase
      */
     public function testConstructor()
     {
-    	$gateway = new Xyster_Db_Gateway_AbstractTest_Stub($this->db);
+    	$gateway = new Xyster_Db_Gateway_Stub($this->db);
     	$this->assertSame($this->db, $gateway->getAdapter());
+    }
+    
+    /**
+     * Tests the 'createTable' method
+     *
+     */
+    public function testCreateTable()
+    {
+    	$return = $this->object->createTable('my_new_table');
+    	$this->assertType('Xyster_Db_Gateway_TableBuilder', $return);
+    	$this->assertEquals('my_new_table', $return->getName());
     }
 }
 

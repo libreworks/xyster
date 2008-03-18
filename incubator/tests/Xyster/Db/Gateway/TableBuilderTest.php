@@ -262,15 +262,15 @@ class Xyster_Db_Gateway_TableBuilderTest extends PHPUnit_Framework_TestCase
     public function testForeign()
     {
     	$table = 'some_foreign';
-    	$column = 'some_foreign_uid';
+    	$columnName = 'some_foreign_uid';
     	$onDelete = null;
     	$onUpdate = null;
-        $return = $this->object->addInteger('some_foreign_id')->foreign($table, $column, $onDelete, $onUpdate);
+        $return = $this->object->addInteger('some_foreign_id')->foreign($table, $columnName, $onDelete, $onUpdate);
         $this->assertSame($this->object, $return);
         $column = current($this->object->getColumns());
         $this->assertType('Xyster_Db_Gateway_TableBuilder_Column', $column);
         $this->assertEquals($table, $column->getForeignKeyTable());
-        $this->assertEquals($column, $column->getForeignKeyColumn());
+        $this->assertEquals($columnName, $column->getForeignKeyColumn());
         $this->assertEquals($onDelete, $column->getForeignKeyOnDelete());
         $this->assertEquals($onUpdate, $column->getForeignKeyOnUpdate());
     }
@@ -303,6 +303,15 @@ class Xyster_Db_Gateway_TableBuilderTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($cols, $fkey->getForeignColumns());
         $this->assertEquals($onDelete, $fkey->getOnDelete());
         $this->assertEquals($onUpdate, $fkey->getOnUpdate());
+    }
+    
+    /**
+     * Tests the 'getName' method
+     *
+     */
+    public function testGetName()
+    {
+    	$this->assertEquals('my_table', $this->object->getName());
     }
     
     /**
@@ -417,7 +426,7 @@ class Xyster_Db_Gateway_TableBuilderTest extends PHPUnit_Framework_TestCase
         $this->object->addVarchar('name', 50)->addVarchar('city', 50);
         $return = $this->object->primaryMulti(array('name', 'city'));
         $this->assertSame($this->object, $return);
-        $primary = current($this->object->getPrimaryKeys());
+        $primary = $this->object->getPrimaryKey();
         $this->assertType('Xyster_Db_Gateway_TableBuilder_PrimaryKey', $primary);
         $this->assertEquals(array('name', 'city'), $primary->getColumns());
     }

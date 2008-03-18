@@ -138,7 +138,8 @@ abstract class Xyster_Db_Gateway_Abstract
      */
     public function createTable( $name )
     {
-         
+    	require_once 'Xyster/Db/Gateway/TableBuilder.php';
+        return new Xyster_Db_Gateway_TableBuilder($name, $this);
     }
     
     /**
