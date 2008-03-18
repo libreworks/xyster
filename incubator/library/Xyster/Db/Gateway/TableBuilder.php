@@ -48,10 +48,11 @@ class Xyster_Db_Gateway_TableBuilder
     /**
      * Adds a VARCHAR data type column
      *
+     * @param string $name The column name
      * @param int $length
      * @return Xyster_Db_Gateway_TableBuilder
      */
-    public function addVarchar( $length )
+    public function addVarchar( $name, $length )
     {
     	return $this;
     }
@@ -59,10 +60,11 @@ class Xyster_Db_Gateway_TableBuilder
     /**
      * Adds a CHAR data type column
      *
+     * @param string $name The column name
      * @param int $length
      * @return Xyster_Db_Gateway_TableBuilder
      */
-    public function addChar( $length )
+    public function addChar( $name, $length )
     {
         return $this;
     }
@@ -70,9 +72,10 @@ class Xyster_Db_Gateway_TableBuilder
     /**
      * Adds an INTEGER/INT data type column
      *
+     * @param string $name The column name
      * @return Xyster_Db_Gateway_TableBuilder
      */
-    public function addInteger()
+    public function addInteger( $name )
     {
     	return $this;
     }
@@ -80,9 +83,10 @@ class Xyster_Db_Gateway_TableBuilder
     /**
      * Adds a SMALLINT data type column
      *
+     * @param string $name The column name
      * @return Xyster_Db_Gateway_TableBuilder
      */
-    public function addSmallint()
+    public function addSmallint( $name )
     {
     	return $this;
     }
@@ -90,9 +94,10 @@ class Xyster_Db_Gateway_TableBuilder
     /**
      * Adds a FLOAT data type column
      *
+     * @param string $name The column name
      * @return Xyster_Db_Gateway_TableBuilder
      */
-    public function addFloat()
+    public function addFloat( $name )
     {
     	return $this;
     }
@@ -100,9 +105,10 @@ class Xyster_Db_Gateway_TableBuilder
     /**
      * Adds a TIMESTAMP data type column
      *
+     * @param string $name The column name
      * @return Xyster_Db_Gateway_TableBuilder
      */
-    public function addTimestamp()
+    public function addTimestamp( $name )
     {
     	return $this;
     }
@@ -110,9 +116,10 @@ class Xyster_Db_Gateway_TableBuilder
     /**
      * Adds a DATE data type column
      *
+     * @param string $name The column name
      * @return Xyster_Db_Gateway_TableBuilder
      */
-    public function addDate()
+    public function addDate( $name )
     {
     	return $this;
     }
@@ -120,9 +127,10 @@ class Xyster_Db_Gateway_TableBuilder
     /**
      * Adds a TIME data type column
      *
+     * @param string $name The column name
      * @return Xyster_Db_Gateway_TableBuilder
      */
-    public function addTime()
+    public function addTime( $name )
     {
     	return $this;
     }
@@ -130,9 +138,10 @@ class Xyster_Db_Gateway_TableBuilder
     /**
      * Adds a CLOB/TEXT data type column
      *
+     * @param string $name The column name
      * @return Xyster_Db_Gateway_TableBuilder
      */
-    public function addClob()
+    public function addClob( $name )
     {
     	return $this;
     }
@@ -140,9 +149,10 @@ class Xyster_Db_Gateway_TableBuilder
     /**
      * Adds a BLOB/IMAGE data type column
      *
+     * @param string $name The column name
      * @return Xyster_Db_Gateway_TableBuilder
      */
-    public function addBlob()
+    public function addBlob( $name )
     {
     	return $this;
     }
@@ -150,9 +160,10 @@ class Xyster_Db_Gateway_TableBuilder
     /**
      * Adds a BOOLEAN data type column
      *
+     * @param string $name The column name
      * @return Xyster_Db_Gateway_TableBuilder
      */
-    public function addBoolean()
+    public function addBoolean( $name )
     {
     	return $this;
     }
@@ -160,9 +171,10 @@ class Xyster_Db_Gateway_TableBuilder
     /**
      * Adds an IDENTITY/SERIAL data type column
      *
+     * @param string $name The column name
      * @return Xyster_Db_Gateway_TableBuilder
      */
-    public function addIdentity()
+    public function addIdentity( $name )
     {
     	return $this;
     }
@@ -196,7 +208,7 @@ class Xyster_Db_Gateway_TableBuilder
      * @param mixed $onUpdate
      * @return Xyster_Db_Gateway_TableBuilder
      */
-    public function foreign( $table, $column, $onDelete, $onUpdate )
+    public function foreign( $table, $column, $onDelete=null, $onUpdate=null )
     {
     	return $this;
     }
@@ -211,9 +223,71 @@ class Xyster_Db_Gateway_TableBuilder
      * @param mixed $onUpdate
      * @return Xyster_Db_Gateway_TableBuilder
      */
-    public function foreignMulti( array $columns, $table, array $foreignColumns, $onDelete, $onUpdate )
+    public function foreignMulti( array $columns, $table, array $foreignColumns, $onDelete=null, $onUpdate=null )
     {
     	return $this;
+    }
+    
+    /**
+     * Gets the columns that have been defined in this table
+     *
+     * @return array An array of {@link Xyster_Db_Gateway_TableBuilder_Column} objects
+     */
+    public function getColumns()
+    {
+    	return array();
+    }
+    
+    /**
+     * Gets the foreign keys that have been defined at the table level
+     * 
+     * Only foreign keys that have been defined using the {@link foreignMulti}
+     * method will be returned here.
+     * 
+     * @return array An array of {@link Xyster_Db_Gateway_TableBuilder_ForeignKey} objects
+     */
+    public function getForeignKeys()
+    {
+    	return array();
+    }
+    
+    /**
+     * Gets the indexes that have been defined at the table level
+     * 
+     * Only indexes that have been defined using the {@link indexMulti} method
+     * will be returned here.
+     * 
+     * @return array An array of {@link Xyster_Db_Gateway_TableBuilder_Index} objects
+     */
+    public function getIndexes()
+    {
+    	return array();
+    }
+    
+    /**
+     * Gets the primary keys that have been defined at the table level
+     * 
+     * Only primary keys that have been defined using the {@link primaryMulti}
+     * method will be returned here.
+     *
+     * @return array An array of {@link Xyster_Db_Gateway_TableBuilder_PrimaryKey} objects
+     */
+    public function getPrimaryKeys()
+    {
+    	return array();
+    }
+    
+    /**
+     * Gets the unique indexes that have been defined at the table level
+     * 
+     * Only uniques that have been defined using the {@link uniqueMulti} method
+     * will be returned here.
+     *
+     * @return array An array of {@link Xyster_Db_Gateway_TableBuilder_Unique} objects
+     */
+    public function getUniques()
+    {
+    	return array();
     }
     
     /**
@@ -276,7 +350,7 @@ class Xyster_Db_Gateway_TableBuilder
     /**
      * Sets the current column as being indexed uniquely
      *
-     * @return Xyster_Db_Gateway_TableBuilder
+     * @return Xyster_Db_Gateway_TableBuilder provides a fluent interface
      */
     public function unique()
     {
@@ -287,7 +361,7 @@ class Xyster_Db_Gateway_TableBuilder
      * Adds a compound unique index to the table
      *
      * @param array $columns The columns to include
-     * @return Xyster_Db_Gateway_TableBuilder
+     * @return Xyster_Db_Gateway_TableBuilder provides a fluent interface
      */
     public function uniqueMulti( array $columns )
     {

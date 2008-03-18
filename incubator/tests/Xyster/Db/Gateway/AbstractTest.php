@@ -9,7 +9,7 @@
  *
  * @category  Xyster
  * @package   UnitTests
- * @subpackage Xyster_Data
+ * @subpackage Xyster_Db
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
@@ -23,6 +23,7 @@ require_once "PHPUnit/Framework/TestCase.php";
 require_once "PHPUnit/Framework/TestSuite.php";
 require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 require_once 'Xyster/Db/Gateway/Abstract.php';
+require_once 'Xyster/Db/Gateway/Stub.php';
 require_once 'Zend/Db/Adapter/Pdo/Sqlite.php';
 
 /**
@@ -59,7 +60,7 @@ class Xyster_Db_Gateway_AbstractTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
     	$this->db = new Zend_Db_Adapter_Pdo_Sqlite(array('host'=>':memory:', 'dbname'=>''));
-        $this->object = new Xyster_Db_Gateway_AbstractTest_Stub;
+        $this->object = new Xyster_Db_Gateway_Stub;
     }
     
     /**
@@ -83,14 +84,6 @@ class Xyster_Db_Gateway_AbstractTest extends PHPUnit_Framework_TestCase
     	$gateway = new Xyster_Db_Gateway_AbstractTest_Stub($this->db);
     	$this->assertSame($this->db, $gateway->getAdapter());
     }
-}
-
-class Xyster_Db_Gateway_AbstractTest_Stub extends Xyster_Db_Gateway_Abstract
-{
-	public function setAdapter( $db )
-	{
-		return $this->_setAdapter($db);
-	}
 }
 
 // Call Xyster_Db_Gateway_AbstractTest::main() if this source file is executed directly.
