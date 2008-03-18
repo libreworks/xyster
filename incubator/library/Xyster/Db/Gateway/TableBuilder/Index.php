@@ -23,6 +23,9 @@
  */
 class Xyster_Db_Gateway_TableBuilder_Index
 {
+	protected $_columns = array();
+	protected $_fulltext = false;
+	
 	/**
 	 * Creates a new index
 	 *
@@ -31,7 +34,8 @@ class Xyster_Db_Gateway_TableBuilder_Index
 	 */
 	public function __construct( array $columns, $fulltext=false )
 	{
-		
+		$this->_columns = $columns;
+		$this->_fulltext = $fulltext;
 	}
 	
 	/**
@@ -41,7 +45,7 @@ class Xyster_Db_Gateway_TableBuilder_Index
 	 */
 	public function getColumns()
 	{
-		
+		return $this->_columns;
 	}
 	
 	/**
@@ -51,6 +55,6 @@ class Xyster_Db_Gateway_TableBuilder_Index
 	 */
 	public function isFulltext()
 	{
-		
+		return $this->_fulltext;
 	}
 }

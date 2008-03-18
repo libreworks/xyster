@@ -32,6 +32,19 @@ class Xyster_Db_Gateway_TableBuilder
      * @var Xyster_Db_Gateway_Abstract
      */
     protected $_gateway;
+    
+    protected $_current;
+    
+    protected $_columns = array();
+    
+    protected $_foreign = array();
+    
+    protected $_indexes = array();
+    
+    protected $_primary;
+    
+    protected $_uniques = array();
+    
 
     /**
      * Creates a new table builder
@@ -204,11 +217,11 @@ class Xyster_Db_Gateway_TableBuilder
      *
      * @param string $table The foreign table name
      * @param string $column The foreign column name
-     * @param mixed $onDelete
-     * @param mixed $onUpdate
+     * @param Xyster_Db_Gateway_ReferentialAction $onDelete optional
+     * @param Xyster_Db_Gateway_ReferentialAction $onUpdate optional
      * @return Xyster_Db_Gateway_TableBuilder
      */
-    public function foreign( $table, $column, $onDelete=null, $onUpdate=null )
+    public function foreign( $table, $column, Xyster_Db_Gateway_ReferentialAction $onDelete=null, Xyster_Db_Gateway_ReferentialAction $onUpdate=null )
     {
     	return $this;
     }
@@ -219,11 +232,11 @@ class Xyster_Db_Gateway_TableBuilder
      * @param array $columns The columns in the current table
      * @param string $table The foreign table name
      * @param array $foreignColumns The columns in the foreign table
-     * @param mixed $onDelete
-     * @param mixed $onUpdate
+     * @param Xyster_Db_Gateway_ReferentialAction $onDelete optional
+     * @param Xyster_Db_Gateway_ReferentialAction $onUpdate optional
      * @return Xyster_Db_Gateway_TableBuilder
      */
-    public function foreignMulti( array $columns, $table, array $foreignColumns, $onDelete=null, $onUpdate=null )
+    public function foreignMulti( array $columns, $table, array $foreignColumns, Xyster_Db_Gateway_ReferentialAction $onDelete=null, Xyster_Db_Gateway_ReferentialAction $onUpdate=null )
     {
     	return $this;
     }

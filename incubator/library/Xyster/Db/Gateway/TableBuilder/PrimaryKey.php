@@ -23,6 +23,8 @@
  */
 class Xyster_Db_Gateway_TableBuilder_PrimaryKey
 {
+	protected $_columns = array();
+	
 	/**
 	 * Creates a new primary key
 	 *
@@ -30,7 +32,7 @@ class Xyster_Db_Gateway_TableBuilder_PrimaryKey
 	 */
 	public function __construct( array $columns )
 	{
-		
+		$this->_columns = $columns;
 	}
 	
 	/**
@@ -40,5 +42,6 @@ class Xyster_Db_Gateway_TableBuilder_PrimaryKey
 	 */
 	public function getColumns()
 	{
+		return $this->_columns;
 	}
 }

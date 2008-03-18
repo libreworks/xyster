@@ -71,10 +71,10 @@ abstract class Xyster_Db_Gateway_Abstract
      * @param mixed $cols The string column name or an array of column names in the source table
      * @param string $foreignTable The foreign table name
      * @param mixed $foreignCols The string column name or an array of column names in the foreign table
-     * @param mixed $onDelete
-     * @param mixed $onUpdate
+     * @param Xyster_Db_Gateway_ReferentialAction $onDelete optional
+     * @param Xyster_Db_Gateway_ReferentialAction $onUpdate optional
      */
-    public function addForeign( $table, $cols, $foreignTable, $foreignCols, $onDelete=null, $onUpdate=null )
+    public function addForeign( $table, $cols, $foreignTable, $foreignCols, Xyster_Db_Gateway_ReferentialAction $onDelete=null, Xyster_Db_Gateway_ReferentialAction $onUpdate=null )
     {
         
     }

@@ -23,15 +23,31 @@
  */
 class Xyster_Db_Gateway_TableBuilder_Column
 {
+	protected $_name;
+	protected $_type;
+	protected $_argument;
+	protected $_default;
+	protected $_index = false;
+	/**
+	 * @var Xyster_Db_Gateway_TableBuilder_ForeignKey
+	 */
+	protected $_foreign;
+	protected $_fulltext = false;
+	protected $_primary = false;
+	protected $_unique = false;
+	
 	/**
 	 * Creates a new column
 	 *
-	 * @param string $name
-	 * @param Xyster_Db_Gateway_DataType $type
+	 * @param string $name The column name
+	 * @param Xyster_Db_Gateway_DataType $type The data type
+	 * @param mixed $argument An optional argument for the data type
 	 */
-	public function __construct( $name, Xyster_Db_Gateway_DataType $type )
+	public function __construct( $name, Xyster_Db_Gateway_DataType $type, $argument=null )
 	{
-		
+		$this->_name = $name;
+		$this->_type = $type;
+		$this->_argument = $argument;
 	}
 	
 	/**
@@ -41,7 +57,7 @@ class Xyster_Db_Gateway_TableBuilder_Column
 	 */
 	public function getArgument()
 	{
-		
+		return $this->_argument;
 	}
 	
 	/**
@@ -51,7 +67,7 @@ class Xyster_Db_Gateway_TableBuilder_Column
 	 */
 	public function getName()
 	{
-		
+		return $this->_name;
 	}
 	
 	/**
@@ -61,7 +77,7 @@ class Xyster_Db_Gateway_TableBuilder_Column
 	 */
 	public function getDataType()
 	{
-		
+		return $this->_type;
 	}
 	
 	/**
@@ -71,7 +87,7 @@ class Xyster_Db_Gateway_TableBuilder_Column
 	 */
 	public function getDefault()
 	{
-		
+		return $this->_default;
 	}
 	
 	/**
@@ -81,7 +97,7 @@ class Xyster_Db_Gateway_TableBuilder_Column
 	 */
 	public function getForeignKeyTable()
 	{
-		
+		return $this->isForeign() ? $this->_foreign->getTable() : null;
 	}
 	
 	/**
@@ -91,27 +107,27 @@ class Xyster_Db_Gateway_TableBuilder_Column
 	 */
 	public function getForeignKeyColumn()
 	{
-		
+		return $this->isForeign() ? current($this->_foreign->getForeignColumns()) : null;
 	}
 	
 	/**
 	 * Gets the action to perform ondelete
 	 *
-	 * @return mixed
+	 * @return Xyster_Db_Gateway_ReferentialAction
 	 */
 	public function getForeignKeyOnDelete()
 	{
-		
+		return $this->isForeign() ? $this->_foreign->getOnDelete() : null;
 	}
 	
 	/**
 	 * Gets the action to perform onupdate
 	 *
-	 * @return mixed
+	 * @return Xyster_Db_Gateway_ReferentialAction
 	 */
 	public function getForeignKeyOnUpdate()
 	{
-		
+		return $this->isForeign() ? $this->_foreign->getOnUpdate() : null;
 	}
 	
 	/**
@@ -121,7 +137,7 @@ class Xyster_Db_Gateway_TableBuilder_Column
 	 */
 	public function isForeign()
 	{
-		
+		return $this->_foreign !== null;
 	}
 	
 	/**
@@ -131,7 +147,7 @@ class Xyster_Db_Gateway_TableBuilder_Column
 	 */
 	public function isFulltext()
 	{
-		
+		return $this->_fulltext;
 	}
 	
 	/**
@@ -141,7 +157,7 @@ class Xyster_Db_Gateway_TableBuilder_Column
 	 */
 	public function isPrimary()
 	{
-		
+		return $this->_primary;
 	}
 	
 	/**
@@ -151,7 +167,7 @@ class Xyster_Db_Gateway_TableBuilder_Column
 	 */
 	public function isIndexed()
 	{
-		
+		return $this->_index;
 	}
 	
 	/**
@@ -161,6 +177,60 @@ class Xyster_Db_Gateway_TableBuilder_Column
 	 */
 	public function isUnique()
 	{
-		
+		return $this->_unique;
+	}
+    
+	/**
+	 * Sets the default value for the column
+	 *
+	 * @param mixed $value
+	 */
+	public function defaultValue( $value )
+	{
+		$this->_default = $value;
+	}
+	
+	/**
+	 * Sets the column to be a foreign key
+	 *
+	 * @param string $table
+	 * @param string $column
+	 * @param Xyster_Db_Gateway_ReferentialAction $onDelete
+	 * @param Xyster_Db_Gateway_ReferentialAction $onUpdate
+	 */
+    public function foreign( $table, $column, Xyster_Db_Gateway_ReferentialAction $onDelete=null, Xyster_Db_Gateway_ReferentialAction $onUpdate=null )
+    {
+    	require_once 'Xyster/Db/Gateway/TableBuilder/ForeignKey.php';
+        $this->_foreign = new Xyster_Db_Gateway_TableBuilder_ForeignKey(array($this->_name),
+            $table, array($column), $onDelete, $onUpdate);
+    }
+    
+    /**
+     * Sets the column to be indexed
+     *
+     * @param boolean $fulltext True for fulltext indexing
+     */
+    public function index( $fulltext=false )
+    {
+    	$this->_index = true;
+    	$this->_fulltext = $fulltext;
+    }
+    	
+	/**
+	 * Sets the column to be a primary key
+	 *
+	 */
+	public function primary()
+	{
+		$this->_primary = true;
+	}
+	
+	/**
+	 * Sets the column to be uniquely indexed
+	 *
+	 */
+	public function unique()
+	{
+		$this->_unique = true;
 	}
 }
