@@ -107,16 +107,6 @@ class Xyster_Db_Gateway_TableBuilder_ColumnTest extends PHPUnit_Framework_TestCa
     }
 
     /**
-     * Tests the 'index' method with the fulltext flag
-     */
-    public function testIsFulltext()
-    {
-    	$this->assertFalse($this->object->isFulltext());
-        $this->object->index(true);
-        $this->assertTrue($this->object->isFulltext());
-    }
-
-    /**
      * Tests the 'primary' method
      */
     public function testIsPrimary()
@@ -124,17 +114,6 @@ class Xyster_Db_Gateway_TableBuilder_ColumnTest extends PHPUnit_Framework_TestCa
         $this->assertFalse($this->object->isPrimary());
         $this->object->primary();
         $this->assertTrue($this->object->isPrimary());
-    }
-
-    /**
-     * Tests the 'indexed' method
-     */
-    public function testIsIndexed()
-    {
-        $this->assertFalse($this->object->isIndexed());
-        $this->object->index(false);
-        $this->assertTrue($this->object->isIndexed());
-        $this->assertFalse($this->object->isFulltext());
     }
     
     /**
@@ -158,7 +137,6 @@ class Xyster_Db_Gateway_TableBuilder_ColumnTest extends PHPUnit_Framework_TestCa
         $this->assertFalse($this->object->isUnique());
         $this->object->unique();
         $this->assertTrue($this->object->isUnique());
-        $this->assertFalse($this->object->isFulltext());
     }
 }
 

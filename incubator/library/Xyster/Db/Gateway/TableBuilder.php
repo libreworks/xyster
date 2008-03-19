@@ -380,7 +380,7 @@ class Xyster_Db_Gateway_TableBuilder
     public function index( $fulltext=false )
     {
         $this->_checkColumnDefined();
-        $this->_current->index($fulltext);
+        $this->indexMulti(array($this->_current->getName()), $fulltext);
     	return $this;
     }
     

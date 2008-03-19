@@ -33,6 +33,24 @@ class Xyster_Db_Gateway_ReferentialAction extends Xyster_Enum
     const SetNull    = 3;
     const SetDefault = 4;
 
+    protected static $_sql = array(
+            0 => 'CASCADE',
+            1 => 'RESTRICT',
+            2 => 'NO ACTION',
+            3 => 'SET NULL',
+            4 => 'SET DEFAULT'
+        );
+    
+    /**
+     * Gets the SQL syntax for the action
+     *
+     * @return string
+     */
+    public function getSql()
+    {
+        return self::$_sql[$this->getValue()];
+    }
+        
     /**
      * The CASCADE action
      *

@@ -28,12 +28,10 @@ class Xyster_Db_Gateway_TableBuilder_Column
 	protected $_argument;
 	protected $_default;
 	protected $_null = false;
-	protected $_index = false;
 	/**
 	 * @var Xyster_Db_Gateway_TableBuilder_ForeignKey
 	 */
 	protected $_foreign;
-	protected $_fulltext = false;
 	protected $_primary = false;
 	protected $_unique = false;
 	
@@ -142,16 +140,6 @@ class Xyster_Db_Gateway_TableBuilder_Column
 	}
 	
 	/**
-	 * Returns true if the column is fulltext indexed
-	 *
-	 * @return boolean
-	 */
-	public function isFulltext()
-	{
-		return $this->_fulltext;
-	}
-	
-	/**
 	 * Returns true if the column is a primary key
 	 * 
 	 * @return boolean
@@ -159,16 +147,6 @@ class Xyster_Db_Gateway_TableBuilder_Column
 	public function isPrimary()
 	{
 		return $this->_primary;
-	}
-	
-	/**
-	 * Returns true if the column is indexed
-	 * 
-	 * @return boolean
-	 */
-	public function isIndexed()
-	{
-		return $this->_index;
 	}
 	
 	/**
@@ -214,17 +192,6 @@ class Xyster_Db_Gateway_TableBuilder_Column
     	require_once 'Xyster/Db/Gateway/TableBuilder/ForeignKey.php';
         $this->_foreign = new Xyster_Db_Gateway_TableBuilder_ForeignKey(array($this->_name),
             $table, array($column), $onDelete, $onUpdate);
-    }
-    
-    /**
-     * Sets the column to be indexed
-     *
-     * @param boolean $fulltext True for fulltext indexing
-     */
-    public function index( $fulltext=false )
-    {
-    	$this->_index = true;
-    	$this->_fulltext = $fulltext;
     }
     
     /**
