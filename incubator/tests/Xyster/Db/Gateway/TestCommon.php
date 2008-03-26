@@ -50,6 +50,7 @@ abstract class Xyster_Db_Gateway_TestCommon extends PHPUnit_Framework_TestCase
             $this->_db = null;
             $this->assertType('Zend_Db_Adapter_Exception', $e,
                 'Expecting Zend_Db_Adapter_Exception, got ' . get_class($e));
+            echo $e->getMessage() . "\n";
             $this->markTestSkipped($e->getMessage());
         }
     }
@@ -67,6 +68,20 @@ abstract class Xyster_Db_Gateway_TestCommon extends PHPUnit_Framework_TestCase
                 $this->_db->query('DROP TABLE ' . $name);
             }
         }
+        $indexes = $this->object->listIndexes();
+        foreach( $indexes as $name => $values ) {
+            if ( in_array($name, array('my_example_index')) ) {
+                $this->object->dropIndex($name, $values['TABLE_NAME']);
+            }
+        }
+        if ( $this->object->supportsSequences() ) {
+            $sequences = $this->object->listSequences();
+            foreach( $sequences as $name ) {
+                if ( in_array($name, array('my_sequence', 'my_sequence_awesome')) ) {
+                    $this->_db->query('DROP SEQUENCE ' . $name);
+                }
+            }
+        }
     }
     
     /**
@@ -82,6 +97,16 @@ abstract class Xyster_Db_Gateway_TestCommon extends PHPUnit_Framework_TestCase
      * @return string
      */
     abstract public function getDriver();
+    
+    /**
+     * Gets the options for the TableBuilder
+     *
+     * @return array
+     */
+    public function getOptions()
+    {
+        return array();
+    }
     
     /**
      * Tests the 'addColumn' method
@@ -115,15 +140,16 @@ abstract class Xyster_Db_Gateway_TestCommon extends PHPUnit_Framework_TestCase
     
     /**
      * Adds an index to a table
-     * 
-     * @todo implement testAddIndex
      */
     public function testAddIndex()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->_setupTestTable();
+        $indexes = $this->object->listIndexes();
+        $this->assertArrayNotHasKey('my_example_index', $indexes);
+        $this->object->addIndex('forum', array('username', 'title'), 'my_example_index');
+        $indexes2 = $this->object->listIndexes();
+        $this->assertArrayHasKey('my_example_index', $indexes2);
+        $this->assertEquals(array('username', 'title'), $indexes2['my_example_index']['COLUMNS']);
     }
     
     /**
@@ -170,28 +196,46 @@ abstract class Xyster_Db_Gateway_TestCommon extends PHPUnit_Framework_TestCase
     
     /**
      * Creates an index
-     * 
-     * @todo implement testCreateIndex
      */
-    public function testCreateIndex()
+    public function testCreateIndexOne()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->_setupTestTable();
+        $indexes = $this->object->listIndexes();
+        $this->assertArrayNotHasKey('my_example_index', $indexes);
+        $this->object->createIndex('my_example_index', 'forum', 'username');
+        $indexes2 = $this->object->listIndexes();
+        $this->assertArrayHasKey('my_example_index', $indexes2);
+        $this->assertEquals(array('username'), $indexes2['my_example_index']['COLUMNS']);
+    }
+    
+    /**
+     * Creates an index
+     */
+    public function testCreateIndexMulti()
+    {
+        $this->_setupTestTable();
+        $indexes = $this->object->listIndexes();
+        $this->assertArrayNotHasKey('my_example_index', $indexes);
+        $this->object->createIndex('my_example_index', 'forum', array('username', 'title'));
+        $indexes2 = $this->object->listIndexes();
+        $this->assertArrayHasKey('my_example_index', $indexes2);
+        $this->assertEquals(array('username', 'title'), $indexes2['my_example_index']['COLUMNS']);
     }
     
     /**
      * Creates a sequence
-     * 
-     * @todo implement testCreateSequence
      */
     public function testCreateSequence()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        if ( !$this->object->supportsSequences() ) {
+            $this->markTestSkipped();
+        }
+        $name = 'my_sequence';
+        $sequences = $this->object->listSequences();
+        $this->assertNotContains($name, $sequences);
+        $this->object->createSequence($name);
+        $sequences2 = $this->object->listSequences();
+        $this->assertContains($name, $sequences2);
     }
     
     /**
@@ -248,15 +292,16 @@ abstract class Xyster_Db_Gateway_TestCommon extends PHPUnit_Framework_TestCase
     
     /**
      * Removes an index
-     * 
-     * @todo implement testDropIndex
      */
     public function testDropIndex()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->_setupTestTable();
+        $this->object->createIndex('my_example_index', 'forum', 'username');
+        $indexes = $this->object->listIndexes();
+        $this->assertArrayHasKey('my_example_index', $indexes);
+        $this->object->dropIndex('my_example_index', 'forum');
+        $indexes2 = $this->object->listIndexes();
+        $this->assertArrayNotHasKey('my_example_index', $indexes2);
     }
     
     /**
@@ -276,15 +321,21 @@ abstract class Xyster_Db_Gateway_TestCommon extends PHPUnit_Framework_TestCase
     
     /**
      * Drops a sequence
-     * 
-     * @todo implement testDropSequence
      */
     public function testDropSequence()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        if ( !$this->object->supportsSequences() ) {
+            $this->markTestSkipped();
+        }
+        $name = 'my_sequence';
+        $sequences = $this->object->listSequences();
+        $this->assertNotContains($name, $sequences);
+        $this->object->createSequence($name);
+        $sequences2 = $this->object->listSequences();
+        $this->assertContains($name, $sequences2);
+        $this->object->dropSequence($name);
+        $sequences3 = $this->object->listSequences();
+        $this->assertNotContains($name, $sequences3);
     }
     
     /**
@@ -302,28 +353,25 @@ abstract class Xyster_Db_Gateway_TestCommon extends PHPUnit_Framework_TestCase
     
     /**
      * Lists all indexes
-     * 
-     * @todo implement testListIndexes
      */
     public function testListIndexes()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->_setupTestTable();
+        $this->object->createIndex('my_example_index', 'forum', array('username', 'title'));
+        $indexes = $this->object->listIndexes();
+        $this->assertType('array', $indexes);
     }
     
     /**
      * Lists all sequences
-     * 
-     * @todo implement testListSequences
      */
     public function testListSequences()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        if ( !$this->object->supportsSequences() ) {
+            $this->markTestSkipped();
+        }
+        $return = $this->object->listSequences();
+        $this->assertType('array', $return);
     }
     
     /**
@@ -360,15 +408,21 @@ abstract class Xyster_Db_Gateway_TestCommon extends PHPUnit_Framework_TestCase
     
     /**
      * Renames a sequence
-     * 
-     * @todo implement testRenameSequence
      */
     public function testRenameSequence()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        if ( !$this->object->supportsSequences() ) {
+            $this->markTestSkipped();
+        }
+        $name = 'my_sequence';
+        $sequences = $this->object->listSequences();
+        $this->assertNotContains($name, $sequences);
+        $this->object->createSequence($name);
+        $sequences2 = $this->object->listSequences();
+        $this->assertContains($name, $sequences2);
+        $this->object->renameSequence($name, $name.'_awesome');
+        $sequences3 = $this->object->listSequences();
+        $this->assertContains($name.'_awesome', $sequences3);
     }
     
     /**

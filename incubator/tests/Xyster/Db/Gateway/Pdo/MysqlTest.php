@@ -71,6 +71,16 @@ class Xyster_Db_Gateway_Pdo_MysqlTest extends Xyster_Db_Gateway_TestCommon
     }
     
     /**
+     * Gets the options for the TableBuilder
+     *
+     * @return array
+     */
+    public function getOptions()
+    {
+        return array('TYPE', 'InnoDB');
+    }
+    
+    /**
      * Tests the 'setAdapter' method
      */
     public function testSetAdapter()

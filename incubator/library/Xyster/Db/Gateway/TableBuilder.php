@@ -55,7 +55,8 @@ class Xyster_Db_Gateway_TableBuilder
     protected $_primary;
     
     protected $_uniques = array();
-    
+
+    protected $_options = array();
 
     /**
      * Creates a new table builder
@@ -346,6 +347,16 @@ class Xyster_Db_Gateway_TableBuilder
     }
     
     /**
+     * Gets the options set
+     *
+     * @return array
+     */
+    public function getOptions()
+    {
+        return array() + $this->_options;
+    }
+    
+    /**
      * Gets the primary keys that have been defined at the table level
      * 
      * Only primary keys that have been defined using the {@link primaryMulti}
@@ -411,6 +422,19 @@ class Xyster_Db_Gateway_TableBuilder
         $this->_checkColumnDefined();
         $this->_current->null($null);
     	return $this;
+    }
+    
+    /**
+     * Sets a database option
+     *
+     * @param string $name
+     * @param mixed $value
+     * @return Xyster_Db_Gateway_TableBuilder
+     */
+    public function option( $name, $value )
+    {
+        $this->_options[$name] = $value;
+        return $this;
     }
     
     /**

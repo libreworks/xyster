@@ -48,6 +48,52 @@ class Xyster_Db_Gateway_Pdo_Mysql extends Xyster_Db_Gateway_Abstract
     }
     
     /**
+     * Lists all indexes
+     * 
+     * The return value is an associative array keyed by the index name,
+     * as returned by the RDBMS.
+     *
+     * The value of each array element is an associative array
+     * with the following keys:
+     * 
+     * INDEX_NAME  => string; index name
+     * SCHEMA_NAME => string; name of database or schema
+     * TABLE_NAME  => string;
+     * COLUMNS     => array; An array of the column names
+     * PRIMARY     => boolean; true if the index is a primary key
+     * UNIQUE      => boolean; true if the index is a unique key
+     *
+     * @return array
+     */
+    public function listIndexes()
+    {
+        $config = $this->getAdapter()->getConfig();
+        $sql = "SELECT TABLE_NAME as tablename, INDEX_NAME as indexname, " . 
+            "COLUMN_NAME as colname, NON_UNIQUE as nonunique " . 
+            "FROM INFORMATION_SCHEMA.STATISTICS " . 
+            "WHERE index_schema = '" . $config['dbname'] . "'";
+        $statement = $this->getAdapter()->fetchAll($sql);
+        $indexes = array();
+        foreach( $statement as $row ) {
+            $name = ( $row['indexname'] == 'PRIMARY' ) ?
+                $row['tablename'] . '_PRIMARY' : $row['indexname'];
+            if ( array_key_exists($name, $indexes) ) {
+                $indexes[$name]['COLUMNS'][] = $row['colname'];
+            } else {
+                $indexes[$name] = array(
+                    'INDEX_NAME' => $row['indexname'],
+                    'SCHEMA_NAME' => null,
+                    'TABLE_NAME' => $row['tablename'],
+                    'COLUMNS' => array($row['colname']),
+                    'PRIMARY' => $row['indexname'] == 'PRIMARY',
+                    'UNIQUE' => $row['nonunique'] == 0
+                );
+            }
+        }
+        return $indexes;
+    }
+    
+    /**
      * Gets the SQL statement to create an index
      * 
      * If the DBMS doesn't support FULLTEXT indexes, it's safe to ignore the
@@ -64,6 +110,24 @@ class Xyster_Db_Gateway_Pdo_Mysql extends Xyster_Db_Gateway_Abstract
     	return "CREATE " . ( $fulltext ? 'FULLTEXT ' : '') . "INDEX " . 
     	   $this->_quote($name) . " ON " . $this->_quote($table) . " " . 
     	   $this->_quote($columns);
+    }
+    
+    /**
+     * Gets the SQL to create a table
+     *
+     * This method does not process index/fulltext; indexes are not part of the
+     * SQL standard.
+     * 
+     * @param Xyster_Db_Gateway_TableBuilder $builder
+     * @return string
+     */
+    protected function _getCreateTableSql( Xyster_Db_Gateway_TableBuilder $builder )
+    {
+        $sql = parent::_getCreateTableSql($builder);
+        foreach( $builder->getOptions() as $key => $value ) {
+            $sql .= ' ' . $key . ' ' . $value;
+        }
+        return $sql;
     }
     
     /**
@@ -104,18 +168,6 @@ class Xyster_Db_Gateway_Pdo_Mysql extends Xyster_Db_Gateway_Abstract
     protected function _getDropPrimarySql( $table, $name=null )
     {
     	return "ALTER TABLE " . $this->_quote($table) . " DROP PRIMARY KEY";
-    }
-    
-    /**
-     * Gets the SQL statement to list the indexes
-     *
-     * @return string
-     */
-    protected function _getListIndexesSql()
-    {
-        $config = $this->getAdapter()->getConfig();
-        return "SELECT * FROM INFORMATION_SCHEMA.STATISTICS " . 
-            "WHERE index_schema = '" . $config['dbname'] . "'";    	
     }
     
     /**

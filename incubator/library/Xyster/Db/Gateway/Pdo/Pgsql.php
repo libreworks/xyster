@@ -48,6 +48,54 @@ class Xyster_Db_Gateway_Pdo_Pgsql extends Xyster_Db_Gateway_Abstract
     }
     
     /**
+     * Lists all indexes
+     * 
+     * The return value is an associative array keyed by the index name,
+     * as returned by the RDBMS.
+     *
+     * The value of each array element is an associative array
+     * with the following keys:
+     * 
+     * INDEX_NAME  => string; index name
+     * SCHEMA_NAME => string; name of database or schema
+     * TABLE_NAME  => string;
+     * COLUMNS     => array; An array of the column names
+     * PRIMARY     => boolean; true if the index is a primary key
+     * UNIQUE      => boolean; true if the index is a unique key
+     *
+     * @return array
+     */
+    public function listIndexes()
+    {
+        $sql = 'select c.relname as "indexname", c2.relname as "tablename", ' . 
+            't.schemaname as "schemaname", a.attname as "colname", i.indisprimary, i.indisunique ' . 
+            'from pg_catalog.pg_index i ' . 
+            'inner join pg_catalog.pg_class c on i.indexrelid = c.oid ' . 
+            'inner join pg_catalog.pg_class c2 on i.indrelid = c2.oid ' . 
+            'inner join pg_catalog.pg_tables t on c2.relname = t.tablename ' .
+            'inner join pg_catalog.pg_attribute a on c2.oid = a.attrelid and a.attnum = any(i.indkey) ' .
+            "where t.schemaname <> 'pg_catalog' " . 
+            'order by indexname';
+        $statement = $this->getAdapter()->fetchAll($sql);
+        $indexes = array();
+        foreach( $statement as $row ) {
+            if ( array_key_exists($row['indexname'], $indexes) ) {
+                $indexes[$row['indexname']]['COLUMNS'][] = $row['colname'];
+            } else {
+                $indexes[$row['indexname']] = array(
+                    'INDEX_NAME' => $row['indexname'],
+                    'SCHEMA_NAME' => $row['schemaname'],
+                    'TABLE_NAME' => $row['tablename'],
+                    'COLUMNS' => array($row['colname']),
+                    'PRIMARY' => $row['indisprimary'] == 't',
+                    'UNIQUE' => $row['indisunique'] == 't'
+                );
+            }
+        }
+        return $indexes;
+    }
+    
+    /**
      * Whether the database supports sequences
      *
      * @return boolean
@@ -101,17 +149,6 @@ class Xyster_Db_Gateway_Pdo_Pgsql extends Xyster_Db_Gateway_Abstract
     }
     
     /**
-     * Gets the SQL statement to list the indexes
-     *
-     * @return string
-     */
-    protected function _getListIndexesSql()
-    {
-        return "SELECT schemaname, tablename, indexname FROM " . 
-            "pg_catalog.pg_indexes WHERE indexname NOT LIKE'pg%'";
-    }
-    
-    /**
      * Gets the SQL statement to list the sequences
      *
      * If the DBMS doesn't support sequences, this method won't be called.
@@ -139,6 +176,19 @@ class Xyster_Db_Gateway_Pdo_Pgsql extends Xyster_Db_Gateway_Abstract
     {
     	return "ALTER INDEX " . $this->_quote($old) . " RENAME TO " .
     	   $this->_quote($new);
+    }
+    
+    /**
+     * Gets the SQL statement to rename a sequence
+     *
+     * @param string $old The current sequence name
+     * @param string $new The new sequence name
+     * @return string
+     */
+    protected function _getRenameSequenceSql( $old, $new )
+    {
+        return "ALTER TABLE " . $this->_quote($old) . " RENAME TO " .
+            $this->_quote($new);
     }
     
     /**

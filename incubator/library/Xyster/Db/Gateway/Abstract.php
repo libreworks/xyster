@@ -233,26 +233,14 @@ abstract class Xyster_Db_Gateway_Abstract
     }
     
     /**
-     * Lists all indexes
-     *
-     * @return array An array of string index names
-     * @todo Needs to be fixed
-     */
-    public function listIndexes()
-    {
-        return $this->getAdapter()->query($this->_getListIndexesSql());
-    }
-    
-    /**
      * Lists all sequences
      * 
      * @return array An array of string sequence names
-     * @todo Needs to be fixed
      */
     public function listSequences()
     {
         $this->_checkSequenceSupport();
-        return $this->getAdapter()->query($this->_getListSequencesSql());
+        return $this->getAdapter()->fetchCol($this->_getListSequencesSql());
     }
     
     /**
@@ -290,7 +278,12 @@ abstract class Xyster_Db_Gateway_Abstract
     public function renameSequence( $old, $new )
     {
         $this->_checkSequenceSupport();
-        $this->getAdapter()->query($this->_getRenameSequenceSql($old, $new));
+        $sql = $this->_getRenameSequenceSql($old, $new);
+        // the SQL-2003 standard doesn't allow for renaming sequences, not all
+        // dbs support this capability
+        if ( $sql ) {
+            $this->getAdapter()->query($sql);
+        }
     }
     
     /**
@@ -366,6 +359,26 @@ abstract class Xyster_Db_Gateway_Abstract
     	return false;
     }
     
+    /**
+     * Lists all indexes
+     *
+     * The return value is an associative array keyed by the index name,
+     * as returned by the RDBMS.
+     *
+     * The value of each array element is an associative array
+     * with the following keys:
+     * 
+     * INDEX_NAME  => string; index name
+     * SCHEMA_NAME => string; name of database or schema
+     * TABLE_NAME  => string;
+     * COLUMNS     => array; An array of the column names
+     * PRIMARY     => boolean; true if the index is a primary key
+     * UNIQUE      => boolean; true if the index is a unique key
+     * 
+     * @return array An array of string index names
+     */
+    abstract public function listIndexes();
+        
     /**
      * Ensures the object passed is an array
      *
@@ -715,13 +728,6 @@ abstract class Xyster_Db_Gateway_Abstract
      * @return string
      */
     abstract protected function _getDropPrimarySql( $table, $name=null );
-    
-    /**
-     * Gets the SQL statement to list the indexes
-     *
-     * @return string
-     */
-    abstract protected function _getListIndexesSql();
     
     /**
      * Gets the SQL statement to list the sequences
