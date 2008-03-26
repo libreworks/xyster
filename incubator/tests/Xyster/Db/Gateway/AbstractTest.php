@@ -24,7 +24,7 @@ require_once "PHPUnit/Framework/TestSuite.php";
 require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 require_once 'Xyster/Db/Gateway/Abstract.php';
 require_once 'Xyster/Db/Gateway/Stub.php';
-require_once 'Zend/Db/Adapter/Pdo/Sqlite.php';
+require_once 'Xyster/Db/Adapter/Stub.php';
 
 /**
  * Test class for Xyster_Db_Gateway_Abstract.
@@ -38,7 +38,7 @@ class Xyster_Db_Gateway_AbstractTest extends PHPUnit_Framework_TestCase
     protected $object;
     
     /**
-     * @var Zend_Db_Adapter_Abstract
+     * @var Xyster_Db_Adapter_Stub
      */
     protected $db;
 
@@ -59,7 +59,7 @@ class Xyster_Db_Gateway_AbstractTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-    	$this->db = new Zend_Db_Adapter_Pdo_Sqlite(array('host'=>':memory:', 'dbname'=>''));
+    	$this->db = new Xyster_Db_Adapter_Stub(array('dbname'=>'stub'));
         $this->object = new Xyster_Db_Gateway_Stub;
     }
     

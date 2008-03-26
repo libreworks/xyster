@@ -74,7 +74,17 @@ class Xyster_Db_Gateway_Pdo_Mysql extends Xyster_Db_Gateway_Abstract
      */
     protected function _getCreateTableSql( Xyster_Db_Gateway_TableBuilder $builder )
     {
-    	
+    	$sql = parent::_getCreateTableSql($builder);
+    	$create = substr($sql, 0, -1);
+    	foreach( $builder->getIndexes() as $index ) {
+    	    /* @var $index Xyster_Db_Gateway_TableBuilder_Index */
+    	    $create .= ",\n";
+    	    if ( $index->isFulltext() ) {
+    	        $create .= "FULLTEXT ";
+    	    }
+    	    $create .= "INDEX " . $this->_quote($index->getColumns());
+    	}
+    	return $create . ')';
     }
     
     /**
@@ -148,6 +158,7 @@ class Xyster_Db_Gateway_Pdo_Mysql extends Xyster_Db_Gateway_Abstract
      * @param string $new The new index name
      * @param string $table The table name (not all dbs require this)
      * @return string
+     * @todo implement getRenameIndexSql method
      */
     protected function _getRenameIndexSql( $old, $new, $table=null )
     {
@@ -177,7 +188,19 @@ class Xyster_Db_Gateway_Pdo_Mysql extends Xyster_Db_Gateway_Abstract
      */
     protected function _getRenameColumnSql( $table, $old, $new )
     {
-        // need to look up schema informaiton
+        $sql = "ALTER TABLE " . $this->_quote($table) . " CHANGE COLUMN " . 
+           $this->_quote($old) . ' ' . $this->_quote($new);
+        $tableInfo = $this->getAdapter()->describeTable($table);
+        $columnInfo = $tableInfo[$old];
+        $sql .= ' ' . $columnInfo['DATA_TYPE'];
+        if ( $columnInfo['LENGTH'] ) {
+            $sql .= "(" . $columnInfo['LENGTH'] . ")"; 
+        }
+        $sql .= ( $columnInfo['NULLABLE'] ) ? ' NULL' : ' NOT NULL';
+        if ( $columnInfo['DEFAULT'] !== null ) {
+            $sql .= " DEFAULT " . $this->getAdapter()->quote($columnInfo['DEFAULT']);
+        }
+        return $sql;
     }
     
     /**
@@ -190,7 +213,19 @@ class Xyster_Db_Gateway_Pdo_Mysql extends Xyster_Db_Gateway_Abstract
      */
     protected function _getSetNullSql( $table, $column, $null=true )
     {
-    	// probably need to look up definition
+    	$sql = "ALTER TABLE " . $this->_quote($table) . " MODIFY COLUMN " . 
+    	   $this->_quote($column) . ' ';
+    	$tableInfo = $this->getAdapter()->describeTable($table);
+    	$columnInfo = $tableInfo[$column];
+    	$sql .= $columnInfo['DATA_TYPE'];
+    	if ( $columnInfo['LENGTH'] ) {
+    	    $sql .= "(" . $columnInfo['LENGTH'] . ")"; 
+    	}
+    	$sql .= ( $null ) ? ' NULL' : ' NOT NULL';
+        if ( $columnInfo['DEFAULT'] !== null ) {
+            $sql .= " DEFAULT " . $this->getAdapter()->quote($columnInfo['DEFAULT']); 
+        }
+    	return $sql;
     }
     
     /**
@@ -219,8 +254,15 @@ class Xyster_Db_Gateway_Pdo_Mysql extends Xyster_Db_Gateway_Abstract
      */
     protected function _getSetTypeSql( $table, $column, Xyster_Db_Gateway_DataType $type, $argument=null )
     {
-    	return "ALTER TABLE " . $this->_quote($table) . " MODIFY COLUMN " . 
+    	$sql = "ALTER TABLE " . $this->_quote($table) . " MODIFY COLUMN " . 
     	   $this->_quote($column) . " " . $this->_translateType($type, $argument);
+        $tableInfo = $this->getAdapter()->describeTable($table);
+        $columnInfo = $tableInfo[$column]; 
+        $sql .= ( $columnInfo['NULLABLE'] ) ? ' NULL' : ' NOT NULL';
+        if ( $columnInfo['DEFAULT'] !== null ) {
+            $sql .= " DEFAULT " . $this->getAdapter()->quote($columnInfo['DEFAULT']); 
+        }
+        return $sql;
     }
     
     /**
@@ -233,6 +275,30 @@ class Xyster_Db_Gateway_Pdo_Mysql extends Xyster_Db_Gateway_Abstract
     protected function _translateType( Xyster_Db_Gateway_DataType $type, $argument=null )
     {
         $sql = '';
+        if ( $type === Xyster_Db_Gateway_DataType::Blob() ) {
+            $sql = 'BLOB';
+        } else if ( $type === Xyster_Db_Gateway_DataType::Boolean() ) {
+            $sql = 'BOOLEAN';
+        } else if ( $type === Xyster_Db_Gateway_DataType::Char()
+            || $type === Xyster_Db_Gateway_DataType::Varchar() ) {
+            $sql = strtoupper($type->getName()) . '(' . intval($argument) . ')';
+        } else if ( $type === Xyster_Db_Gateway_DataType::Clob() ) {
+            $sql = 'TEXT';
+        } else if ( $type === Xyster_Db_Gateway_DataType::Date() ) {
+            $sql = 'DATE';
+        } else if ( $type === Xyster_Db_Gateway_DataType::Float() ) {
+            $sql = 'FLOAT';
+        } else if ( $type === Xyster_Db_Gateway_DataType::Identity() ) {
+            $sql = 'INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT';
+        } else if ( $type === Xyster_Db_Gateway_DataType::Integer() ) {
+            $sql = 'INT';
+        } else if ( $type === Xyster_Db_Gateway_DataType::Smallint() ) {
+            $sql = 'SMALLINT';
+        } else if ( $type === Xyster_Db_Gateway_DataType::Time() ) {
+            $sql = 'TIME';
+        } else if ( $type === Xyster_Db_Gateway_DataType::Timestamp() ) {
+            $sql = 'DATETIME';
+        }
         return $sql;
     }
 }

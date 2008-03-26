@@ -61,7 +61,7 @@ abstract class Xyster_Db_Gateway_Abstract
      */
     public function addColumn( $table, $name, Xyster_Db_Gateway_DataType $type, $argument=null )
     {
-        
+        $this->getAdapter()->query($this->_getAddColumnSql($table, $name, $type, $argument));
     }
     
     /**
@@ -76,7 +76,9 @@ abstract class Xyster_Db_Gateway_Abstract
      */
     public function addForeign( $table, $cols, $foreignTable, $foreignCols, Xyster_Db_Gateway_ReferentialAction $onDelete=null, Xyster_Db_Gateway_ReferentialAction $onUpdate=null )
     {
-        
+        $this->getAdapter()->query($this->_getAddForeignSql($table,
+            $this->_makeArray($cols), $foreignTable, $this->_makeArray($foreignCols),
+            $onDelete, $onUpdate));
     }
     
     /**
@@ -88,7 +90,8 @@ abstract class Xyster_Db_Gateway_Abstract
      */
     public function addIndex( $table, $cols, $name=null )
     {
-        
+        $this->getAdapter()->query($this->_getCreateIndexSql($name, $table,
+            $this->_makeArray($cols)));
     }
     
     /**
@@ -99,7 +102,8 @@ abstract class Xyster_Db_Gateway_Abstract
      */
     public function addPrimary( $table, $cols )
     {
-        
+        $this->getAdapter()->query($this->_getAddPrimarySql($table,
+            $this->_makeArray($cols)));
     }
     
     /**
@@ -113,7 +117,8 @@ abstract class Xyster_Db_Gateway_Abstract
      */
     public function createIndex( $name, $table, $cols )
     {
-        
+        $this->getAdapter()->query($this->_getCreateIndexSql($name, $table,
+            $this->_makeArray($cols)));
     }
     
     /**
@@ -128,6 +133,8 @@ abstract class Xyster_Db_Gateway_Abstract
     public function createSequence( $name, $inc=null, $start=null, $min=null, $max=null )
     {
         $this->_checkSequenceSupport();
+        $this->getAdapter()->query($this->_getCreateSequenceSql($name, $inc,
+            $start, $min, $max));
     }
     
     /**
@@ -143,6 +150,16 @@ abstract class Xyster_Db_Gateway_Abstract
     }
     
     /**
+     * Creates a table from a table builder
+     *
+     * @param Xyster_Db_Gateway_TableBuilder $builder
+     */
+    public function createTableExecute( Xyster_Db_Gateway_TableBuilder $builder )
+    {
+        $this->getAdapter()->query($this->_getCreateTableSql($builder));
+    }
+    
+    /**
      * Removes a column from a table
      *
      * @param string $table The table name
@@ -150,7 +167,7 @@ abstract class Xyster_Db_Gateway_Abstract
      */
     public function dropColumn( $table, $name )
     {
-        
+        $this->getAdapter()->query($this->_getDropColumnSql($table, $name));
     }
     
     /**
@@ -161,7 +178,7 @@ abstract class Xyster_Db_Gateway_Abstract
      */
     public function dropForeign( $table, $name )
     {
-        
+        $this->getAdapter()->query($this->_getDropForeignSql($table, $name));
     }
     
     /**
@@ -172,7 +189,7 @@ abstract class Xyster_Db_Gateway_Abstract
      */
     public function dropIndex( $name, $table=null )
     {
-    	
+    	$this->getAdapter()->query($this->_getDropIndexSql($name, $table));
     }
     
     /**
@@ -182,7 +199,7 @@ abstract class Xyster_Db_Gateway_Abstract
      */
     public function dropPrimary( $table )
     {
-        
+        $this->getAdapter()->query($this->_getDropPrimarySql($table));
     }
     
     /**
@@ -193,6 +210,7 @@ abstract class Xyster_Db_Gateway_Abstract
     public function dropSequence( $name )
     {
         $this->_checkSequenceSupport();
+        $this->getAdapter()->query($this->_getDropSequenceSql($name));
     }
     
     /**
@@ -202,61 +220,30 @@ abstract class Xyster_Db_Gateway_Abstract
      */
     public function dropTable( $name )
     {
-        
+        $this->getAdapter()->query($this->_getDropTableSql($name));
     }
     
     /**
      * Lists all indexes
      *
      * @return array An array of string index names
+     * @todo Needs to be fixed
      */
     public function listIndexes()
     {
-        
+        return $this->getAdapter()->query($this->_getListIndexesSql());
     }
     
     /**
      * Lists all sequences
      * 
      * @return array An array of string sequence names
+     * @todo Needs to be fixed
      */
     public function listSequences()
     {
         $this->_checkSequenceSupport();
-    }
-    
-    /**
-     * Renames an index
-     *
-     * @param string $old The current index name
-     * @param string $new The new index name
-     * @param string $table The table name (not required on all databases)
-     */
-    public function renameIndex( $old, $new, $table=null )
-    {
-    	
-    }
-    
-    /**
-     * Renames a table
-     *
-     * @param string $old The current table name
-     * @param string $new The new table name
-     */
-    public function renameTable( $old, $new )
-    {
-    	
-    }
-    
-    /**
-     * Renames a sequence
-     *
-     * @param string $old The current sequence name
-     * @param string $new The new sequence name
-     */
-    public function renameSequence( $old, $new )
-    {
-        $this->_checkSequenceSupport();
+        return $this->getAdapter()->query($this->_getListSequencesSql());
     }
     
     /**
@@ -268,7 +255,44 @@ abstract class Xyster_Db_Gateway_Abstract
      */
     public function renameColumn( $table, $old, $new )
     {
-    	
+        $this->getAdapter()->query($this->_getRenameColumnSql($table, $old,
+            $new));
+    }
+    
+    /**
+     * Renames an index
+     *
+     * @param string $old The current index name
+     * @param string $new The new index name
+     * @param string $table The table name (not required on all databases)
+     */
+    public function renameIndex( $old, $new, $table=null )
+    {
+    	$this->getAdapter()->query($this->_getRenameIndexSql($old, $new,
+    	   $table));
+    }
+    
+    /**
+     * Renames a sequence
+     *
+     * @param string $old The current sequence name
+     * @param string $new The new sequence name
+     */
+    public function renameSequence( $old, $new )
+    {
+        $this->_checkSequenceSupport();
+        $this->getAdapter()->query($this->_getRenameSequenceSql($old, $new));
+    }
+    
+    /**
+     * Renames a table
+     *
+     * @param string $old The current table name
+     * @param string $new The new table name
+     */
+    public function renameTable( $old, $new )
+    {
+        $this->getAdapter()->query($this->_getRenameTableSql($old, $new));
     }
     
     /**
@@ -280,7 +304,8 @@ abstract class Xyster_Db_Gateway_Abstract
      */
     public function setDefault( $table, $column, $default )
     {
-        
+        $this->getAdapter()->query($this->_getSetDefaultSql($table, $column,
+            $default));
     }
     
     /**
@@ -292,7 +317,8 @@ abstract class Xyster_Db_Gateway_Abstract
      */
     public function setNull( $table, $column, $null=true )
     {
-    	
+    	$this->getAdapter()->query($this->_getSetNullSql($table, $column,
+    	    $null));
     }
     
     /**
@@ -303,7 +329,8 @@ abstract class Xyster_Db_Gateway_Abstract
      */
     public function setUnique( $table, $cols )
     {
-    	
+    	$this->getAdapter()->query($this->_getSetUniqueSql($table,
+    	   $this->_makeArray($cols)));
     }
     
     /**
@@ -316,7 +343,8 @@ abstract class Xyster_Db_Gateway_Abstract
      */
     public function setType( $table, $column, Xyster_Db_Gateway_DataType $type, $argument=null )
     { 
-    	
+    	$this->getAdapter()->query($this->_getSetTypeSql($table, $column, $type,
+    	   $argument));
     }
     
     /**
@@ -327,6 +355,17 @@ abstract class Xyster_Db_Gateway_Abstract
     public function supportsSequences()
     {
     	return false;
+    }
+    
+    /**
+     * Ensures the object passed is an array
+     *
+     * @param mixed $object
+     * @return array
+     */
+    protected function _makeArray( $object ) 
+    {
+        return ( !is_array($object) ) ? array($object) : $object;
     }
     
     /**
@@ -431,7 +470,7 @@ abstract class Xyster_Db_Gateway_Abstract
      * @param array $columns The columns in the key
      * @return string
      */
-    protected function _getAddPrimary( $table, array $columns )
+    protected function _getAddPrimarySql( $table, array $columns )
     {
         return "ALTER TABLE " . $this->_quote($table) . " ADD PRIMARY KEY" . 
            $this->_quote($columns);
@@ -470,7 +509,72 @@ abstract class Xyster_Db_Gateway_Abstract
         }
         return $sql;
     }
-    
+
+    /**
+     * Gets the SQL to create a table
+     *
+     * This method does not process index/fulltext; indexes are not part of the
+     * SQL standard.
+     * 
+     * @param Xyster_Db_Gateway_TableBuilder $builder
+     * @return string
+     */
+    protected function _getCreateTableSql( Xyster_Db_Gateway_TableBuilder $builder )
+    {
+        $fullsql = 'CREATE TABLE ' . $this->_quote($builder->getName()) . ' (';
+        $tableElements = array();
+        foreach( $builder->getColumns() as $column ) {
+            /* @var $column Xyster_Db_Gateway_TableBuilder_Column */
+            $sql = '';
+            $sql .= $this->_quote($column->getName()) . ' ' .
+                $this->_translateType($column->getDataType(), $column->getArgument());
+            if ( !$column->isNull() ) {
+               $sql .= ' NOT NULL ';
+            }
+            if ( $column->getDefault() !== null ) {
+                $sql .= ' DEFAULT ' . $this->getAdapter()->quote($column->getDefault());
+            }
+            if ( $column->isPrimary() ) { 
+                $sql .= ' PRIMARY KEY';
+            } else if ( $column->isUnique() ) {
+                $sql .= ' UNIQUE';
+            }
+            if ( $column->isForeign() ) {
+                $sql .= ' REFRENCES ' . $this->_quote($column->getForeignKeyTable()) . 
+                    ' ' . $this->_quote($column->getForeignKeyColumn());
+                if ( $column->getForeignKeyOnDelete() !== null ) {
+                    $sql .= ' ON DELETE ' . $column->getForeignKeyOnDelete()->getSql();
+                }
+                if ( $column->getForeignKeyOnUpdate() !== null ) {
+                    $sql .= ' ON UPDATE ' . $column->getForeignKeyOnUpdate()->getSql();
+                }
+            }
+            $tableElements[] = $sql;
+        }
+        if ( $builder->getPrimaryKey() !== null ) {
+            $tableElements[] = ' PRIMARY KEY ' . $this->_quote($builder->getPrimaryKey()->getColumns());
+        }
+        foreach( $builder->getUniques() as $unique ) {
+            /* @var $unique Xyster_Db_Gateway_TableBuilder_Unique */
+            $tableElements[] = ' UNIQUE ' .  $this->_quote($unique->getColumns());
+        }
+        foreach( $builder->getForeignKeys() as $fk ) {
+            /* @var $fk Xyster_Db_Gateway_TableBuilder_ForeignKey */
+            $sql = ' FOREIGN KEY ' . $this->_quote($fk->getColumns()) . 
+                ' REFERENCES ' . $this->_quote($fk->getTable()) .  ' ' .
+                $this->_quote($fk->getForeignColumns());
+            if ( $fk->getOnDelete() !== null ) {
+                $sql .= ' ON DELETE ' . $fk->getOnDelete()->getSql();
+            }
+            if ( $fk->getOnUpdate() !== null ) {
+                $sql .= ' ON UPDATE ' . $fk->getOnUpdate()->getSql();
+            }
+            $tableElements[] = $sql;
+        }
+        $fullsql .= implode(",\n ", $tableElements) . ')';
+        return $fullsql;
+    }
+        
     /**
      * Gets the SQL statement to drop a column from a table
      *
@@ -584,71 +688,7 @@ abstract class Xyster_Db_Gateway_Abstract
      * @return string
      */
     abstract protected function _getCreateIndexSql( $name, $table, array $columns, $fulltext=false );
-    
-    /**
-     * Gets the SQL to create a table
-     *
-     * This method does not process index/fulltext; indexes are not part of the
-     * SQL standard.
-     * 
-     * @param Xyster_Db_Gateway_TableBuilder $builder
-     * @return string
-     */
-    protected function _getCreateTableSql( Xyster_Db_Gateway_TableBuilder $builder )
-    {
-        $fullsql = 'CREATE TABLE ' . $this->_quote($builder->getName()) . ' (';
-        $tableElements = array();
-        foreach( $builder->getColumns() as $column ) {
-            /* @var $column Xyster_Db_Gateway_TableBuilder_Column */
-            $sql = '';
-            $sql .= $this->_quote($column->getName()) . ' ' .
-                $this->_translateType($column->getDataType(), $column->getArgument());
-            if ( !$column->isNull() ) {
-               $sql .= ' NOT NULL ';
-            }
-            $sql .= ' DEFAULT ' . (( $column->getDefault() === null ) ?
-                'NULL' : $this->getAdapter()->quote($column->getDefault()));
-            if ( $column->isPrimary() ) { 
-                $sql .= ' PRIMARY KEY';
-            } else if ( $column->isUnique() ) {
-                $sql .= ' UNIQUE';
-            }
-            if ( $column->isForeign() ) {
-                $sql .= ' REFRENCES ' . $this->_quote($column->getForeignKeyTable()) . 
-                    ' ' . $this->_quote($column->getForeignKeyColumn());
-                if ( $column->getForeignKeyOnDelete() !== null ) {
-                    $sql .= ' ON DELETE ' . $column->getForeignKeyOnDelete()->getSql();
-                }
-                if ( $column->getForeignKeyOnUpdate() !== null ) {
-                    $sql .= ' ON UPDATE ' . $column->getForeignKeyOnUpdate()->getSql();
-                }
-            }
-            $tableElements[] = $sql;
-        }
-        if ( $builder->getPrimaryKey() !== null ) {
-            $tableElements[] = ' PRIMARY KEY ' . $this->_quote($builder->getPrimaryKey()->getColumns());
-        }
-        foreach( $builder->getUniques() as $unique ) {
-            /* @var $unique Xyster_Db_Gateway_TableBuilder_Unique */
-            $tableElements[] = ' UNIQUE ' .  $this->_quote($unique->getColumns());
-        }
-        foreach( $builder->getForeignKeys() as $fk ) {
-            /* @var $fk Xyster_Db_Gateway_TableBuilder_ForeignKey */
-            $sql = ' FOREIGN KEY ' . $this->_quote($fk->getColumns()) . 
-                ' REFERENCES ' . $this->_quote($fk->getTable()) .  ' ' .
-                $this->_quote($fk->getForeignColumns());
-            if ( $fk->getOnDelete() !== null ) {
-                $sql .= ' ON DELETE ' . $fk->getOnDelete()->getSql();
-            }
-            if ( $fk->getOnUpdate() !== null ) {
-                $sql .= ' ON UPDATE ' . $fk->getOnUpdate()->getSql();
-            }
-            $tableElements[] = $sql;
-        }
-        $fullsql .= implode(",\n ", $tableElements) . ')';
-        return $fullsql;
-    }
-    
+        
     /**
      * Gets the SQL statement to drop an index
      *

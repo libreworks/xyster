@@ -323,8 +323,6 @@ class Xyster_Db_Gateway_TableBuilderTest extends PHPUnit_Framework_TestCase
         $this->assertSame($this->object, $return);
         $column = current($this->object->getColumns());
         $this->assertType('Xyster_Db_Gateway_TableBuilder_Column', $column);
-        $this->assertTrue($column->isIndexed());
-        $this->assertFalse($column->isFulltext());
         $this->assertFalse($column->isUnique());
     }
     
@@ -337,8 +335,6 @@ class Xyster_Db_Gateway_TableBuilderTest extends PHPUnit_Framework_TestCase
         $this->assertSame($this->object, $return);
         $column = current($this->object->getColumns());
         $this->assertType('Xyster_Db_Gateway_TableBuilder_Column', $column);
-        $this->assertTrue($column->isIndexed());
-        $this->assertTrue($column->isFulltext());
         $this->assertFalse($column->isUnique());
     }
     
@@ -441,8 +437,6 @@ class Xyster_Db_Gateway_TableBuilderTest extends PHPUnit_Framework_TestCase
         $column = current($this->object->getColumns());
         $this->assertType('Xyster_Db_Gateway_TableBuilder_Column', $column);
         $this->assertTrue($column->isUnique());
-        $this->assertFalse($column->isFulltext());
-        $this->assertFalse($column->isIndexed());
     }
     
     /**

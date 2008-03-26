@@ -27,7 +27,7 @@ class Xyster_Db_Gateway_TableBuilder_Column
 	protected $_type;
 	protected $_argument;
 	protected $_default;
-	protected $_null = false;
+	protected $_null = true;
 	/**
 	 * @var Xyster_Db_Gateway_TableBuilder_ForeignKey
 	 */

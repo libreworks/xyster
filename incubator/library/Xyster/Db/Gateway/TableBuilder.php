@@ -258,7 +258,7 @@ class Xyster_Db_Gateway_TableBuilder
      */
     public function execute()
     {
-    	
+    	$this->_gateway->createTableExecute($this);
     }
     
     /**

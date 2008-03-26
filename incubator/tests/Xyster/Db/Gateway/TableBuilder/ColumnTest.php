@@ -122,11 +122,11 @@ class Xyster_Db_Gateway_TableBuilder_ColumnTest extends PHPUnit_Framework_TestCa
      */
     public function testIsNull()
     {
-    	$this->assertFalse($this->object->isNull());
-        $this->object->null();
-        $this->assertTrue($this->object->isNull());
+    	$this->assertTrue($this->object->isNull());
         $this->object->null(false);
         $this->assertFalse($this->object->isNull());
+        $this->object->null();
+        $this->assertTrue($this->object->isNull());
     }
 
     /**
