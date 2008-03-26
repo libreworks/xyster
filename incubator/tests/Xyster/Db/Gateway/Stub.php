@@ -62,7 +62,7 @@ class Xyster_Db_Gateway_Stub extends Xyster_Db_Gateway_Abstract
      * @param string $table The table name
      * @return string
      */
-    protected function _getDropPrimarySql( $table )
+    protected function _getDropPrimarySql( $table, $name=null )
     {
     }
     

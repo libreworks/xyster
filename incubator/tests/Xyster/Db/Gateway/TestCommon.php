@@ -90,14 +90,14 @@ abstract class Xyster_Db_Gateway_TestCommon extends PHPUnit_Framework_TestCase
     {
         $this->_setupTestTable();
         $describe = $this->_db->describeTable('forum');
-        
+        $this->assertArrayNotHasKey('category_id', $describe);
         $this->object->addColumn('forum', 'category_id',
             Xyster_Db_Gateway_DataType::Integer());
         
         $describe2 = $this->_db->describeTable('forum');
-        $this->assertNotEquals($describe, $describe2);
-        $this->assertEquals($describe2['category_id']['COLUMN_NAME'], 'category_id');
-        $this->assertEquals($describe2['category_id']['DATA_TYPE'], 'int');
+        $this->assertArrayHasKey('category_id', $describe2);
+        $this->assertEquals('category_id', $describe2['category_id']['COLUMN_NAME']);
+        $this->assertEquals('int', substr($describe2['category_id']['DATA_TYPE'], 0, 3));
     }
     
     /**

@@ -374,13 +374,14 @@ class Xyster_Db_Gateway_TableBuilder
     /**
      * Sets the current column as being indexed
      *
+     * @param string $name The name of the index
      * @param boolean $fulltext If the index is fulltext
      * @return Xyster_Db_Gateway_TableBuilder
      */
-    public function index( $fulltext=false )
+    public function index( $name=null, $fulltext=false )
     {
         $this->_checkColumnDefined();
-        $this->indexMulti(array($this->_current->getName()), $fulltext);
+        $this->indexMulti(array($this->_current->getName()), $name, $fulltext);
     	return $this;
     }
     
@@ -388,13 +389,14 @@ class Xyster_Db_Gateway_TableBuilder
      * Adds a compound index to the table
      *
      * @param array $columns The columns to include
+     * @param string $name The name of the index
      * @param boolean $fulltext If the index is fulltext
      * @return Xyster_Db_Gateway_TableBuilder
      */
-    public function indexMulti( array $columns, $fulltext=false )
+    public function indexMulti( array $columns, $name=null, $fulltext=false )
     {
     	require_once 'Xyster/Db/Gateway/TableBuilder/Index.php';
-    	$this->_indexes[] = new Xyster_Db_Gateway_TableBuilder_Index($columns, $fulltext);
+    	$this->_indexes[] = new Xyster_Db_Gateway_TableBuilder_Index($columns, $name, $fulltext);
     	return $this;
     }
     

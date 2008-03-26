@@ -25,14 +25,14 @@ require_once 'Xyster/Db/Gateway/Abstract.php';
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Db_Gateway_Pdo_Mysql extends Xyster_Db_Gateway_Abstract
+class Xyster_Db_Gateway_Pdo_Pgsql extends Xyster_Db_Gateway_Abstract
 {
     /**
      * Creates a new MySQL DB gateway
      *
-     * @param Zend_Db_Adapter_Pdo_Mysql $db The database adapter to use
+     * @param Zend_Db_Adapter_Pdo_Pgsql $db The database adapter to use
      */
-    public function __construct( Zend_Db_Adapter_Pdo_Mysql $db = null )
+    public function __construct( Zend_Db_Adapter_Pdo_Pgsql $db = null )
     {
         parent::__construct($db);
     }
@@ -40,12 +40,22 @@ class Xyster_Db_Gateway_Pdo_Mysql extends Xyster_Db_Gateway_Abstract
     /**
      * Sets the database adapter
      *
-     * @param Zend_Db_Adapter_Pdo_Mysql $db The database adapter to use
+     * @param Zend_Db_Adapter_Pdo_Pgsql $db The database adapter to use
      */
-    public function setAdapter( Zend_Db_Adapter_Pdo_Mysql $db )
+    public function setAdapter( Zend_Db_Adapter_Pdo_Pgsql $db )
     {
     	$this->_setAdapter($db);
     }
+    
+    /**
+     * Whether the database supports sequences
+     *
+     * @return boolean
+     */
+    public function supportsSequences()
+    {
+        return true;
+    }    
     
     /**
      * Gets the SQL statement to create an index
@@ -61,24 +71,8 @@ class Xyster_Db_Gateway_Pdo_Mysql extends Xyster_Db_Gateway_Abstract
      */
     protected function _getCreateIndexSql( $name, $table, array $columns, $fulltext=false )
     {
-    	return "CREATE " . ( $fulltext ? 'FULLTEXT ' : '') . "INDEX " . 
-    	   $this->_quote($name) . " ON " . $this->_quote($table) . " " . 
-    	   $this->_quote($columns);
-    }
-    
-    /**
-     * Gets the SQL statement to drop a foreign key from a table
-     *
-     * MySQL Syntax for removal of a foreign key is different from SQL-92
-     * 
-     * @param string $table The table name
-     * @param string $name The key name
-     * @return string
-     */
-    protected function _getDropForeignSql( $table, $name )
-    {
-    	return "ALTER TABLE " . $this->_quote($table) . " DROP FOREIGN KEY " .
-           $this->_quote($name);
+    	return "CREATE INDEX " . $this->_quote($name) . " ON " .
+    	   $this->_quote($table) . " " . $this->_quote($columns);
     }
     
     /**
@@ -90,8 +84,7 @@ class Xyster_Db_Gateway_Pdo_Mysql extends Xyster_Db_Gateway_Abstract
      */
     protected function _getDropIndexSql( $name, $table=null )
     {
-    	return "ALTER TABLE " . $this->_quote($table) . " DROP INDEX " .
-    	   $this->_quote($name);
+    	return "DROP INDEX " . $this->_quote($name);
     }
     
     /**
@@ -103,7 +96,8 @@ class Xyster_Db_Gateway_Pdo_Mysql extends Xyster_Db_Gateway_Abstract
      */
     protected function _getDropPrimarySql( $table, $name=null )
     {
-    	return "ALTER TABLE " . $this->_quote($table) . " DROP PRIMARY KEY";
+    	return "ALTER TABLE " . $this->_quote($table) . " DROP CONSTRAINT " .
+    	   $this->_quote($name);
     }
     
     /**
@@ -113,9 +107,8 @@ class Xyster_Db_Gateway_Pdo_Mysql extends Xyster_Db_Gateway_Abstract
      */
     protected function _getListIndexesSql()
     {
-        $config = $this->getAdapter()->getConfig();
-        return "SELECT * FROM INFORMATION_SCHEMA.STATISTICS " . 
-            "WHERE index_schema = '" . $config['dbname'] . "'";    	
+        return "SELECT schemaname, tablename, indexname FROM " . 
+            "pg_catalog.pg_indexes WHERE indexname NOT LIKE'pg%'";
     }
     
     /**
@@ -129,6 +122,9 @@ class Xyster_Db_Gateway_Pdo_Mysql extends Xyster_Db_Gateway_Abstract
      */
     protected function _getListSequencesSql()
     {
+        return "SELECT " . $this->_quote('relname') . ' FROM ' .
+            $this->_quote('pg_catalog') . '.' .
+            $this->_quote('pg_statio_all_sequences'); 
     }
     
     /**
@@ -138,11 +134,11 @@ class Xyster_Db_Gateway_Pdo_Mysql extends Xyster_Db_Gateway_Abstract
      * @param string $new The new index name
      * @param string $table The table name (not all dbs require this)
      * @return string
-     * @todo implement getRenameIndexSql method
      */
     protected function _getRenameIndexSql( $old, $new, $table=null )
     {
-    	// possibly drop/create ?
+    	return "ALTER INDEX " . $this->_quote($old) . " RENAME TO " .
+    	   $this->_quote($new);
     }
     
     /**
@@ -154,8 +150,8 @@ class Xyster_Db_Gateway_Pdo_Mysql extends Xyster_Db_Gateway_Abstract
      */
     protected function _getRenameTableSql( $old, $new )
     {
-    	return "RENAME TABLE " . $this->getAdapter()->quoteIdentifier($old) .
-            " TO " . $this->getAdapter()->quoteIdentifier($new);
+    	return "ALTER TABLE " . $this->getAdapter()->quoteIdentifier($old) .
+            " RENAME TO " . $this->getAdapter()->quoteIdentifier($new);
     }
     
     /**
@@ -168,19 +164,8 @@ class Xyster_Db_Gateway_Pdo_Mysql extends Xyster_Db_Gateway_Abstract
      */
     protected function _getRenameColumnSql( $table, $old, $new )
     {
-        $sql = "ALTER TABLE " . $this->_quote($table) . " CHANGE COLUMN " . 
-           $this->_quote($old) . ' ' . $this->_quote($new);
-        $tableInfo = $this->getAdapter()->describeTable($table);
-        $columnInfo = $tableInfo[$old];
-        $sql .= ' ' . $columnInfo['DATA_TYPE'];
-        if ( $columnInfo['LENGTH'] ) {
-            $sql .= "(" . $columnInfo['LENGTH'] . ")"; 
-        }
-        $sql .= ( $columnInfo['NULLABLE'] ) ? ' NULL' : ' NOT NULL';
-        if ( $columnInfo['DEFAULT'] !== null ) {
-            $sql .= " DEFAULT " . $this->getAdapter()->quote($columnInfo['DEFAULT']);
-        }
-        return $sql;
+        return "ALTER TABLE " . $this->_quote($table) . " RENAME COLUMN " . 
+           $this->_quote($old) . ' TO ' . $this->_quote($new);
     }
     
     /**
@@ -193,34 +178,10 @@ class Xyster_Db_Gateway_Pdo_Mysql extends Xyster_Db_Gateway_Abstract
      */
     protected function _getSetNullSql( $table, $column, $null=true )
     {
-    	$sql = "ALTER TABLE " . $this->_quote($table) . " MODIFY COLUMN " . 
+    	$sql = "ALTER TABLE " . $this->_quote($table) . " ALTER COLUMN " . 
     	   $this->_quote($column) . ' ';
-    	$tableInfo = $this->getAdapter()->describeTable($table);
-    	$columnInfo = $tableInfo[$column];
-    	$sql .= $columnInfo['DATA_TYPE'];
-    	if ( $columnInfo['LENGTH'] ) {
-    	    $sql .= "(" . $columnInfo['LENGTH'] . ")"; 
-    	}
-    	$sql .= ( $null ) ? ' NULL' : ' NOT NULL';
-        if ( $columnInfo['DEFAULT'] !== null ) {
-            $sql .= " DEFAULT " . $this->getAdapter()->quote($columnInfo['DEFAULT']); 
-        }
+    	$sql .= ( $null ) ? ' DROP NOT NULL' : ' SET NOT NULL';
     	return $sql;
-    }
-    
-    /**
-     * Gets the SQL statement to create a UNIQUE index for one or more columns
-     *
-     * It might be a better idea to use the "CREATE UNIQUE INDEX" syntax
-     * 
-     * @param string $table The table name
-     * @param array $columns The columns in the unique index
-     * @return string
-     */
-    protected function _getSetUniqueSql( $table, array $columns )
-    {
-        return "CREATE UNIQUE INDEX " . $this->_quote($name) . " ON " .
-            $this->_quote($table) . " " . $this->_quote($columns);
     }
     
     /**
@@ -234,15 +195,9 @@ class Xyster_Db_Gateway_Pdo_Mysql extends Xyster_Db_Gateway_Abstract
      */
     protected function _getSetTypeSql( $table, $column, Xyster_Db_Gateway_DataType $type, $argument=null )
     {
-    	$sql = "ALTER TABLE " . $this->_quote($table) . " MODIFY COLUMN " . 
-    	   $this->_quote($column) . " " . $this->_translateType($type, $argument);
-        $tableInfo = $this->getAdapter()->describeTable($table);
-        $columnInfo = $tableInfo[$column]; 
-        $sql .= ( $columnInfo['NULLABLE'] ) ? ' NULL' : ' NOT NULL';
-        if ( $columnInfo['DEFAULT'] !== null ) {
-            $sql .= " DEFAULT " . $this->getAdapter()->quote($columnInfo['DEFAULT']); 
-        }
-        return $sql;
+    	return "ALTER TABLE " . $this->_quote($table) . " ALTER COLUMN " . 
+    	   $this->_quote($column) . " TYPE " .
+    	   $this->_translateType($type, $argument);
     }
     
     /**
@@ -256,7 +211,7 @@ class Xyster_Db_Gateway_Pdo_Mysql extends Xyster_Db_Gateway_Abstract
     {
         $sql = '';
         if ( $type === Xyster_Db_Gateway_DataType::Blob() ) {
-            $sql = 'BLOB';
+            $sql = 'BYTEA';
         } else if ( $type === Xyster_Db_Gateway_DataType::Boolean() ) {
             $sql = 'BOOLEAN';
         } else if ( $type === Xyster_Db_Gateway_DataType::Char()
@@ -269,15 +224,15 @@ class Xyster_Db_Gateway_Pdo_Mysql extends Xyster_Db_Gateway_Abstract
         } else if ( $type === Xyster_Db_Gateway_DataType::Float() ) {
             $sql = 'FLOAT';
         } else if ( $type === Xyster_Db_Gateway_DataType::Identity() ) {
-            $sql = 'INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT';
+            $sql = 'SERIAL PRIMARY KEY';
         } else if ( $type === Xyster_Db_Gateway_DataType::Integer() ) {
-            $sql = 'INT';
+            $sql = 'INTEGER';
         } else if ( $type === Xyster_Db_Gateway_DataType::Smallint() ) {
             $sql = 'SMALLINT';
         } else if ( $type === Xyster_Db_Gateway_DataType::Time() ) {
             $sql = 'TIME';
         } else if ( $type === Xyster_Db_Gateway_DataType::Timestamp() ) {
-            $sql = 'DATETIME';
+            $sql = 'TIMESTAMP';
         }
         return $sql;
     }

@@ -87,11 +87,12 @@ abstract class Xyster_Db_Gateway_Abstract
      * @param string $table The table name
      * @param array $cols The string column name or an array of column names
      * @param string $name An optional name of the index
+     * @param boolean $fulltext Whether the index is fulltext
      */
-    public function addIndex( $table, $cols, $name=null )
+    public function addIndex( $table, $cols, $name=null, $fulltext=false )
     {
         $this->getAdapter()->query($this->_getCreateIndexSql($name, $table,
-            $this->_makeArray($cols)));
+            $this->_makeArray($cols), $fulltext));
     }
     
     /**
@@ -114,11 +115,12 @@ abstract class Xyster_Db_Gateway_Abstract
      * @param string $name The name of the index
      * @param string $table The table name
      * @param mixed $cols The string column name or an array of column names
+     * @param boolean $fulltext Whether the index is fulltext
      */
-    public function createIndex( $name, $table, $cols )
+    public function createIndex( $name, $table, $cols, $fulltext=false )
     {
         $this->getAdapter()->query($this->_getCreateIndexSql($name, $table,
-            $this->_makeArray($cols)));
+            $this->_makeArray($cols), $fulltext));
     }
     
     /**
@@ -157,6 +159,12 @@ abstract class Xyster_Db_Gateway_Abstract
     public function createTableExecute( Xyster_Db_Gateway_TableBuilder $builder )
     {
         $this->getAdapter()->query($this->_getCreateTableSql($builder));
+        
+        // create the indexes
+        foreach( $builder->getIndexes() as $index ) {
+            /* @var $index Xyster_Db_Gateway_TableBuilder_Index */
+            $this->createIndex($index->getName(), $builder->getName(), $index->getColumns(), $index->isFulltext());
+        }
     }
     
     /**
@@ -196,10 +204,11 @@ abstract class Xyster_Db_Gateway_Abstract
      * Removes a primary key from a table
      *
      * @param string $table The table name
+     * @param string $name The index name (not required for all databases)
      */
-    public function dropPrimary( $table )
+    public function dropPrimary( $table, $name=null )
     {
-        $this->getAdapter()->query($this->_getDropPrimarySql($table));
+        $this->getAdapter()->query($this->_getDropPrimarySql($table, $name));
     }
     
     /**
@@ -702,9 +711,10 @@ abstract class Xyster_Db_Gateway_Abstract
      * Gets the SQL statement to drop a primary key from a table
      *
      * @param string $table The table name
+     * @param string $name The index name (not all dbs require this)
      * @return string
      */
-    abstract protected function _getDropPrimarySql( $table );
+    abstract protected function _getDropPrimarySql( $table, $name=null );
     
     /**
      * Gets the SQL statement to list the indexes

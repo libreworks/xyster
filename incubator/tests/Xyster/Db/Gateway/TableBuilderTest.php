@@ -319,11 +319,15 @@ class Xyster_Db_Gateway_TableBuilderTest extends PHPUnit_Framework_TestCase
      */
     public function testIndex()
     {
-        $return = $this->object->addVarchar('example_column', 50)->index(false);
+        $return = $this->object->addVarchar('example_column', 50)->index('myIndexName', false);
         $this->assertSame($this->object, $return);
         $column = current($this->object->getColumns());
         $this->assertType('Xyster_Db_Gateway_TableBuilder_Column', $column);
-        $this->assertFalse($column->isUnique());
+        $index = current($this->object->getIndexes());
+        $this->assertType('Xyster_Db_Gateway_TableBuilder_Index', $index);
+        $this->assertEquals(array('example_column'), $index->getColumns());
+        $this->assertEquals('myIndexName', $index->getName());
+        $this->assertFalse($index->isFulltext());
     }
     
     /**
@@ -331,11 +335,15 @@ class Xyster_Db_Gateway_TableBuilderTest extends PHPUnit_Framework_TestCase
      */
     public function testIndexFulltext()
     {
-        $return = $this->object->addVarchar('example_column', 50)->index(true);
+        $return = $this->object->addVarchar('example_column', 50)->index('myIndexName', true);
         $this->assertSame($this->object, $return);
         $column = current($this->object->getColumns());
         $this->assertType('Xyster_Db_Gateway_TableBuilder_Column', $column);
-        $this->assertFalse($column->isUnique());
+        $index = current($this->object->getIndexes());
+        $this->assertType('Xyster_Db_Gateway_TableBuilder_Index', $index);
+        $this->assertEquals(array('example_column'), $index->getColumns());
+        $this->assertEquals('myIndexName', $index->getName());
+        $this->assertTrue($index->isFulltext());
     }
     
     /**
@@ -353,11 +361,12 @@ class Xyster_Db_Gateway_TableBuilderTest extends PHPUnit_Framework_TestCase
     public function testIndexMulti()
     {
         $this->object->addVarchar('name', 50)->addVarchar('city', 50);
-        $return = $this->object->indexMulti(array('name', 'city'));
+        $return = $this->object->indexMulti(array('name', 'city'), 'MyIndexName');
         $this->assertSame($this->object, $return);
         $index = current($this->object->getIndexes());
         $this->assertType('Xyster_Db_Gateway_TableBuilder_Index', $index);
         $this->assertEquals(array('name', 'city'), $index->getColumns());
+        $this->assertEquals('MyIndexName', $index->getName());
     }
 
     /**

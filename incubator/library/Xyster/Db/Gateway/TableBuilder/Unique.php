@@ -31,9 +31,10 @@ class Xyster_Db_Gateway_TableBuilder_Unique extends Xyster_Db_Gateway_TableBuild
 	 * Creates a new unique index
 	 *
 	 * @param array $columns
+     * @param string $name
 	 */
-	public function __construct( array $columns )
+	public function __construct( array $columns, $name=null )
 	{
-		parent::__construct($columns, false);
+		parent::__construct($columns, $name, false);
 	}
 }

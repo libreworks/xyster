@@ -56,7 +56,7 @@ class Xyster_Db_Gateway_TableBuilder_IndexTest extends PHPUnit_Framework_TestCas
     protected function setUp()
     {
     	$this->object = new Xyster_Db_Gateway_TableBuilder_Index($this->columns,
-            $this->fulltext);
+    	   'myIndexIsCool', $this->fulltext);
     }
     
     /**
@@ -67,6 +67,15 @@ class Xyster_Db_Gateway_TableBuilder_IndexTest extends PHPUnit_Framework_TestCas
         $this->assertEquals($this->columns, $this->object->getColumns());
     }
 
+    /**
+     * Tests the 'getName' method
+     *
+     */
+    public function testGetName()
+    {
+        $this->assertEquals('myIndexIsCool', $this->object->getName());
+    }
+    
     /**
      * Tests teh 'getForeignColumns' method
      */
