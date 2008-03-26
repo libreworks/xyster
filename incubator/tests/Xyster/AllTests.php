@@ -26,6 +26,8 @@ require_once 'Xyster/ApplicationTest.php';
 require_once 'Xyster/Application/AllTests.php';
 require_once 'Xyster/ContainerTest.php';
 require_once 'Xyster/Container/AllTests.php';
+require_once 'Xyster/Db/AllTests.php';
+
 
 class Xyster_AllTests
 {
@@ -41,6 +43,7 @@ class Xyster_AllTests
         $suite->addTest( Xyster_Application_AllTests::suite() );
         $suite->addTestSuite('Xyster_ContainerTest');
         $suite->addTest( Xyster_Container_AllTests::suite() );
+        $suite->addTest( Xyster_Db_AllTests::suite() );
         return $suite;
     }
 }
