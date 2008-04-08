@@ -360,6 +360,17 @@ abstract class Xyster_Db_Gateway_TestCommon extends PHPUnit_Framework_TestCase
         $this->object->createIndex('my_example_index', 'forum', array('username', 'title'));
         $indexes = $this->object->listIndexes();
         $this->assertType('array', $indexes);
+        $this->assertArrayHasKey('my_example_index', $indexes);
+        $index = array(
+                'INDEX_NAME' => 'my_example_index',
+                'TABLE_NAME' => 'forum',
+                'COLUMNS' => array('username', 'title'),
+                'PRIMARY' => false,
+                'UNIQUE' => false
+            );
+        $realIndex = $indexes['my_example_index'];
+        unset($realIndex['SCHEMA_NAME']);
+        $this->assertEquals($index, $realIndex);
     }
     
     /**

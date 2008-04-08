@@ -48,6 +48,28 @@ class Xyster_Db_Gateway_Pdo_Pgsql extends Xyster_Db_Gateway_Abstract
     }
     
     /**
+     * Lists all foreign keys
+     *
+     * The return value is an associative array keyed by the key name, as
+     * returned by the RDBMS.
+     * 
+     * The value of each array element is an associative array with the
+     * following keys:
+     * 
+     * KEY_NAME    => string; foreign key name
+     * SCHEMA_NAME => string; name of database or schema
+     * TABLE_NAME  => string; name of table
+     * COLUMNS     => array; An array of the column names
+     * ON_UPDATE   => string;
+     * ON_DELETE   => string;
+     */
+    public function listForeignKeys()
+    {
+        $fks = array();
+        return $fks;
+    }
+    
+    /**
      * Lists all indexes
      * 
      * The return value is an associative array keyed by the index name,
