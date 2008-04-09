@@ -62,7 +62,7 @@ abstract class Xyster_Db_Gateway_TestCommon extends PHPUnit_Framework_TestCase
     protected function tearDown()
     {
         $tables = $this->_db->listTables();
-        $drop = array('forum', 'message_board');
+        $drop = array('forum', 'message_board', 'forum_user');
         foreach( $tables as $name ) {
             if ( in_array($name, $drop) ) {
                 $this->_db->query('DROP TABLE ' . $name);
@@ -352,6 +352,42 @@ abstract class Xyster_Db_Gateway_TestCommon extends PHPUnit_Framework_TestCase
     }
     
     /**
+     * Tests the 'listForeignKeys' method
+     *
+     */
+    public function testListForeignKeys()
+    {
+        $this->_setupTestTable();
+        $builder = $this->object->createTable('forum_user');
+        foreach( $this->getOptions() as $name => $value ) {
+            $builder->option($name, $value);
+        }
+        $builder->addVarchar('forum_username', 50)->primary()->null(false)
+            ->addChar('gender', 1)
+            ->addTimestamp('created_on')
+            ->execute();
+        $this->object->addForeign('forum', 'username', 'forum_user', 'forum_username');
+        $keys = $this->object->listForeignKeys();
+        $this->assertType('array', $keys);
+        $expected = array(
+            'TABLE_NAME' => 'forum',
+            'COLUMNS' => array('username'),
+            'REFERENCED_TABLE_NAME' => 'forum_user',
+            'REFERENCED_COLUMNS' => array('forum_username'),
+            );
+        foreach( $keys as $name => $info ) {
+            unset($info['SCHEMA_NAME']);
+            unset($info['KEY_NAME']);
+            unset($info['ON_DELETE']);
+            unset($info['ON_UPDATE']);
+            if ( $info == $expected ) {
+                return;
+            }
+        }
+        $this->fail('The foreign key created was not found in the list');
+    }
+    
+    /**
      * Lists all indexes
      */
     public function testListIndexes()
@@ -525,6 +561,9 @@ abstract class Xyster_Db_Gateway_TestCommon extends PHPUnit_Framework_TestCase
     protected function _setupTestTable()
     {
         $builder = $this->object->createTable('forum');
+        foreach( $this->getOptions() as $name => $value ) {
+            $builder->option($name, $value);
+        }
         $builder->addInteger('forum_id')->primary()->null(false)
             ->addVarchar('username', 50)
             ->addVarchar('title', 255)->null(false)

@@ -77,7 +77,7 @@ class Xyster_Db_Gateway_Pdo_MysqlTest extends Xyster_Db_Gateway_TestCommon
      */
     public function getOptions()
     {
-        return array('TYPE', 'InnoDB');
+        return array('TYPE'=>'InnoDB');
     }
     
     /**

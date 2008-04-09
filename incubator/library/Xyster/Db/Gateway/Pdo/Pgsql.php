@@ -65,7 +65,39 @@ class Xyster_Db_Gateway_Pdo_Pgsql extends Xyster_Db_Gateway_Abstract
      */
     public function listForeignKeys()
     {
+        $config = $this->getAdapter()->getConfig();
+        $sql = "SELECT r.constraint_schema, r.constraint_name, k.table_name, " .
+            " k.column_name, kr.table_name as referenced_table_name, " .
+            " kr.column_name as referenced_column_name, r.update_rule, " .
+            "r.delete_rule from information_schema.referential_constraints r " .
+            " inner join information_schema.key_column_usage k on " .
+            " r.constraint_name = k.constraint_name and " . 
+            " r.constraint_schema = k.constraint_schema inner join " .
+            " information_schema.key_column_usage kr on " .
+            " r.unique_constraint_catalog = kr.constraint_catalog and " . 
+            " r.unique_constraint_schema = kr.constraint_schema and " . 
+            " r.unique_constraint_name = kr.constraint_name where " . 
+            " r.constraint_catalog = '" . $config['dbname'] . "'";
+        $statement = $this->getAdapter()->fetchAll($sql);
         $fks = array();
+        foreach( $statement as $row ) {
+            $name = $row['constraint_name'];
+            if ( array_key_exists($name, $fks) ) {
+                $fks[$name]['COLUMNS'][] = $row['column_name'];
+                $fks[$name]['REFERENCED_COLUMNS'][] = $row['referenced_column_name'];
+            } else {
+                $fks[$name] = array(
+                    'KEY_NAME' => $row['constraint_name'],
+                    'SCHEMA_NAME' => null,
+                    'TABLE_NAME' => $row['table_name'],
+                    'COLUMNS' => array($row['column_name']),
+                    'REFERENCED_TABLE_NAME' => $row['referenced_table_name'],
+                    'REFERENCED_COLUMNS' => array($row['referenced_column_name']),
+                    'ON_UPDATE' => $row['update_rule'],
+                    'ON_DELETE' => $row['delete_rule']
+                );
+            }
+        }
         return $fks;
     }
     

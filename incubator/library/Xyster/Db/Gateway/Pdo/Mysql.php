@@ -60,16 +60,55 @@ class Xyster_Db_Gateway_Pdo_Mysql extends Xyster_Db_Gateway_Abstract
      * SCHEMA_NAME => string; name of database or schema
      * TABLE_NAME  => string; name of table
      * COLUMNS     => array; An array of the column names
+     * REFERENCED_TABLE_NAME => string; name of referenced table
+     * REFERENCED_COLUMNS    => array; An array of the referenced column names
      * ON_UPDATE   => string;
      * ON_DELETE   => string;
      */
     public function listForeignKeys()
     {
+        $config = $this->getAdapter()->getConfig();
         $version = $this->getAdapter()->fetchOne('SELECT version()');
         if ( $version >= '5.1.10' ) {
-            
+            // this is the start of a SQL query for MySQL 5.1.10+ which has
+            // support the REFERENTIAL_CONSTRAINTS table
+            /* 
+            $sql = "SELECT r.CONSTRAINT_NAME as keyname, r.TABLE_NAME, " . 
+                "r.UPDATE_RULE as onupdate, r.DELETE_RULE as ondelete " .
+                " FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS r " .
+                " INNER JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE k ON " . 
+                " r.SCHEMA_NAME = k.SCHEMA_NAME AND " . 
+                " r.CONSTRAINT_NAME = k.CONSTRAINT_NAME " . 
+                " WHERE r.CONSTRAINT_NAME IS NOT NULL";
+            */
+        } else {
+            $sql = "SELECT CONSTRAINT_NAME as fkname, TABLE_NAME as tablename, " . 
+                " COLUMN_NAME as colname, REFERENCED_TABLE_NAME, " .
+                " REFERENCED_COLUMN_NAME as refcolname " . 
+                " FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE " .
+                " WHERE CONSTRAINT_SCHEMA = '" . $config['dbname'] .
+                "' AND CONSTRAINT_NAME <> 'PRIMARY'";
         }
+        $statement = $this->getAdapter()->fetchAll($sql);
         $fks = array();
+        foreach( $statement as $row ) {
+            $name = $row['fkname'];
+            if ( array_key_exists($name, $fks) ) {
+                $fks[$name]['COLUMNS'][] = $row['colname'];
+                $fks[$name]['REFERENCED_COLUMNS'][] = $row['refcolname'];
+            } else {
+                $fks[$name] = array(
+                    'KEY_NAME' => $row['fkname'],
+                    'SCHEMA_NAME' => null,
+                    'TABLE_NAME' => $row['tablename'],
+                    'COLUMNS' => array($row['colname']),
+                    'REFERENCED_TABLE_NAME' => $row['REFERENCED_TABLE_NAME'],
+                    'REFERENCED_COLUMNS' => array($row['refcolname']),
+                    'ON_UPDATE' => null, // change this when we get 5.1.10+
+                    'ON_DELETE' => null // change this when we get 5.1.10+
+                );
+            }
+        }
         return $fks;
     }
     
