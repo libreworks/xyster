@@ -43,7 +43,7 @@ class Xyster_Container_FeaturesTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testCDI().
+     * Tests the CDI method
      */
     public function testCDI()
     {
@@ -51,7 +51,7 @@ class Xyster_Container_FeaturesTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testSDI().
+     * Tests the SDI method
      */
     public function testSDI()
     {
@@ -59,7 +59,7 @@ class Xyster_Container_FeaturesTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testMETHOD_INJECTION().
+     * Tests the METHOD_INJECTION method
      */
     public function testMETHOD_INJECTION()
     {
@@ -67,7 +67,7 @@ class Xyster_Container_FeaturesTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testNO_CACHE().
+     * Tests the NO_CACHE method
      */
     public function testNO_CACHE()
     {
@@ -75,7 +75,7 @@ class Xyster_Container_FeaturesTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testCACHE().
+     * Tests the CACHE method
      */
     public function testCACHE()
     {
@@ -83,7 +83,7 @@ class Xyster_Container_FeaturesTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testSINGLE().
+     * Tests the SINGLE method
      */
     public function testSINGLE()
     {
@@ -91,7 +91,7 @@ class Xyster_Container_FeaturesTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testNONE().
+     * Tests the NONE method
      */
     public function testNONE()
     {
@@ -99,7 +99,7 @@ class Xyster_Container_FeaturesTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testPROPERTY_APPLYING().
+     * Tests the PROPERTY_APPLYING method
      */
     public function testPROPERTY_APPLYING()
     {
@@ -107,7 +107,7 @@ class Xyster_Container_FeaturesTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testAUTOMATIC().
+     * Tests the AUTOMATIC method
      */
     public function testAUTOMATIC()
     {
