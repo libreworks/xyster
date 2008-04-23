@@ -22,6 +22,10 @@ require_once 'Xyster/Db/Gateway/DataType.php';
  */
 require_once 'Xyster/Db/Gateway/TableBuilder/Column.php';
 /**
+ * @see Xyster_Db_Gateway_Builder
+ */
+require_once 'Xyster/Db/Gateway/Builder.php';
+/**
  * A builder for table creation values
  *
  * @category  Xyster
@@ -29,17 +33,8 @@ require_once 'Xyster/Db/Gateway/TableBuilder/Column.php';
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Db_Gateway_TableBuilder
+class Xyster_Db_Gateway_TableBuilder extends Xyster_Db_Gateway_Builder
 {
-	/**
-	 * @var string
-	 */
-    protected $_name;
-    
-    /**
-     * @var Xyster_Db_Gateway_Abstract
-     */
-    protected $_gateway;
     
     /**
      * @var Xyster_Db_Gateway_TableBuilder_Column
@@ -57,18 +52,6 @@ class Xyster_Db_Gateway_TableBuilder
     protected $_uniques = array();
 
     protected $_options = array();
-
-    /**
-     * Creates a new table builder
-     *
-     * @param string $name The table name
-     * @param Xyster_Db_Gateway_Abstract $gateway
-     */
-    public function __construct( $name, Xyster_Db_Gateway_Abstract $gateway )
-    {
-    	$this->_name = $name;
-    	$this->_gateway = $gateway;
-    }
     
     /**
      * Adds a VARCHAR data type column
@@ -259,7 +242,7 @@ class Xyster_Db_Gateway_TableBuilder
      */
     public function execute()
     {
-    	$this->_gateway->createTableExecute($this);
+    	$this->_getGateway()->executeTableBuilder($this);
     }
     
     /**
@@ -334,16 +317,6 @@ class Xyster_Db_Gateway_TableBuilder
     public function getIndexes()
     {
     	return array() + $this->_indexes;
-    }
-    
-    /**
-     * Gets the name of the table
-     *
-     * @return string
-     */
-    public function getName()
-    {
-    	return $this->_name;
     }
     
     /**

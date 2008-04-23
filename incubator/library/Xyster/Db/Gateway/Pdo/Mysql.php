@@ -160,21 +160,25 @@ class Xyster_Db_Gateway_Pdo_Mysql extends Xyster_Db_Gateway_Abstract
     
     /**
      * Gets the SQL statement to create an index
-     * 
-     * If the DBMS doesn't support FULLTEXT indexes, it's safe to ignore the
-     * setting (an exception doesn't need to be thrown).
      *
-     * @param string $name The name of the index
-     * @param string $table The table name 
-     * @param array $columns The columns in the index
-     * @param boolean $fulltext Whether the index should be fulltext
+     * @param Xyster_Db_Gateway_IndexBuilder $builder The index builder
      * @return string
      */
-    protected function _getCreateIndexSql( $name, $table, array $columns, $fulltext=false )
+    protected function _getCreateIndexSql( Xyster_Db_Gateway_IndexBuilder $builder )
     {
-    	return "CREATE " . ( $fulltext ? 'FULLTEXT ' : '') . "INDEX " . 
-    	   $this->_quote($name) . " ON " . $this->_quote($table) . " " . 
-    	   $this->_quote($columns);
+        $sql = "CREATE ";
+        if ( $builder->isFulltext() ) {
+            $sql .= 'FULLTEXT ';
+        } else if ( $builder->isUnique() ) {
+            $sql .= 'UNIQUE ';
+        }
+        $sql .= "INDEX " . $this->_quote($builder->getName()) . " ON " .
+            $this->_quote($builder->getTable()) . " ";
+        $columns = array();
+        foreach( $builder->getColumns() as $colName => $dir ) {
+            $columns[] = $this->_quote($colName) . ' ' . $dir;
+        }
+        return $sql . "( " . implode(', ', $columns) . " )";
     }
     
     /**
@@ -251,15 +255,25 @@ class Xyster_Db_Gateway_Pdo_Mysql extends Xyster_Db_Gateway_Abstract
     /**
      * Gets the SQL statement to rename an index
      *
+     * MySQL lacks a "rename index" feature, so we just drop the index and 
+     * recreate it.
+     * 
      * @param string $old The current index name
      * @param string $new The new index name
      * @param string $table The table name (not all dbs require this)
      * @return string
-     * @todo implement getRenameIndexSql method
      */
     protected function _getRenameIndexSql( $old, $new, $table=null )
     {
-    	// possibly drop/create ?
+        $indexes = $this->listIndexes();
+        foreach( $indexes as $name => $info ) {
+            if ( $name == $old && !strcasecmp($info['TABLE_NAME'], $table) ) {
+                if ( $info['UNIQUE'] ) {
+                }
+                $this->createIndex($new, $table, $info['COLUMNS']);
+            }
+        }
+    	$this->dropIndex($old, $table);
     }
     
     /**

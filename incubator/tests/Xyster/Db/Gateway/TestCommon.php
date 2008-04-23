@@ -132,24 +132,13 @@ abstract class Xyster_Db_Gateway_TestCommon extends PHPUnit_Framework_TestCase
      */
     public function testAddForeignKey()
     {
+        if ( !$this->object->supportsForeignKeys() ) {
+            $this->markTestSkipped();
+        }
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
           'This test has not been implemented yet.'
         );
-    }
-    
-    /**
-     * Adds an index to a table
-     */
-    public function testAddIndex()
-    {
-        $this->_setupTestTable();
-        $indexes = $this->object->listIndexes();
-        $this->assertArrayNotHasKey('my_example_index', $indexes);
-        $this->object->addIndex('forum', array('username', 'title'), 'my_example_index');
-        $indexes2 = $this->object->listIndexes();
-        $this->assertArrayHasKey('my_example_index', $indexes2);
-        $this->assertEquals(array('username', 'title'), $indexes2['my_example_index']['COLUMNS']);
     }
     
     /**
@@ -194,33 +183,6 @@ abstract class Xyster_Db_Gateway_TestCommon extends PHPUnit_Framework_TestCase
         $this->assertEquals(2, $describe2['username']['PRIMARY_POSITION']);
     }
     
-    /**
-     * Creates an index
-     */
-    public function testCreateIndexOne()
-    {
-        $this->_setupTestTable();
-        $indexes = $this->object->listIndexes();
-        $this->assertArrayNotHasKey('my_example_index', $indexes);
-        $this->object->createIndex('my_example_index', 'forum', 'username');
-        $indexes2 = $this->object->listIndexes();
-        $this->assertArrayHasKey('my_example_index', $indexes2);
-        $this->assertEquals(array('username'), $indexes2['my_example_index']['COLUMNS']);
-    }
-    
-    /**
-     * Creates an index
-     */
-    public function testCreateIndexMulti()
-    {
-        $this->_setupTestTable();
-        $indexes = $this->object->listIndexes();
-        $this->assertArrayNotHasKey('my_example_index', $indexes);
-        $this->object->createIndex('my_example_index', 'forum', array('username', 'title'));
-        $indexes2 = $this->object->listIndexes();
-        $this->assertArrayHasKey('my_example_index', $indexes2);
-        $this->assertEquals(array('username', 'title'), $indexes2['my_example_index']['COLUMNS']);
-    }
     
     /**
      * Creates a sequence
@@ -249,19 +211,6 @@ abstract class Xyster_Db_Gateway_TestCommon extends PHPUnit_Framework_TestCase
     }
     
     /**
-     * Creates a table from a table builder
-     * 
-     * @todo implement testCreateTableExecute
-     */
-    public function testCreateTableExecute()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
-    }
-    
-    /**
      * Removes a column from a table
      */
     public function testDropColumn()
@@ -284,6 +233,10 @@ abstract class Xyster_Db_Gateway_TestCommon extends PHPUnit_Framework_TestCase
      */
     public function testDropForeign()
     {
+        if ( !$this->object->supportsForeignKeys() ) {
+            $this->markTestSkipped();
+        }
+        
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
           'This test has not been implemented yet.'
@@ -296,7 +249,7 @@ abstract class Xyster_Db_Gateway_TestCommon extends PHPUnit_Framework_TestCase
     public function testDropIndex()
     {
         $this->_setupTestTable();
-        $this->object->createIndex('my_example_index', 'forum', 'username');
+        $this->object->createIndex('my_example_index')->on('forum', array('username'))->execute();
         $indexes = $this->object->listIndexes();
         $this->assertArrayHasKey('my_example_index', $indexes);
         $this->object->dropIndex('my_example_index', 'forum');
@@ -350,6 +303,47 @@ abstract class Xyster_Db_Gateway_TestCommon extends PHPUnit_Framework_TestCase
         $tables2 = $this->_db->listTables();
         $this->assertNotContains('forum', $tables2);
     }
+
+    /**
+     * Creates an index
+     */
+    public function testExecuteIndexBuilderOne()
+    {
+        $this->_setupTestTable();
+        $indexes = $this->object->listIndexes();
+        $this->assertArrayNotHasKey('my_example_index', $indexes);
+        $this->object->createIndex('my_example_index')->on('forum', array('username'))->execute();
+        $indexes2 = $this->object->listIndexes();
+        $this->assertArrayHasKey('my_example_index', $indexes2);
+        $this->assertEquals(array('username'), $indexes2['my_example_index']['COLUMNS']);
+    }
+    
+    /**
+     * Creates an index
+     */
+    public function testExecuteIndexBuilderMulti()
+    {
+        $this->_setupTestTable();
+        $indexes = $this->object->listIndexes();
+        $this->assertArrayNotHasKey('my_example_index', $indexes);
+        $this->object->createIndex('my_example_index')->on('forum', array('username', 'title'))->execute();
+        $indexes2 = $this->object->listIndexes();
+        $this->assertArrayHasKey('my_example_index', $indexes2);
+        $this->assertEquals(array('username', 'title'), $indexes2['my_example_index']['COLUMNS']);
+    }
+
+    /**
+     * Creates a table from a table builder
+     * 
+     * @todo implement testExecuteTableBuilder
+     */
+    public function testExecuteTableBuilder()
+    {
+        // Remove the following lines when you implement this test.
+        $this->markTestIncomplete(
+          'This test has not been implemented yet.'
+        );
+    }
     
     /**
      * Tests the 'listForeignKeys' method
@@ -357,6 +351,9 @@ abstract class Xyster_Db_Gateway_TestCommon extends PHPUnit_Framework_TestCase
      */
     public function testListForeignKeys()
     {
+        if ( !$this->object->supportsForeignKeys() ) {
+            $this->markTestSkipped();
+        }
         $this->_setupTestTable();
         $builder = $this->object->createTable('forum_user');
         foreach( $this->getOptions() as $name => $value ) {
@@ -393,7 +390,7 @@ abstract class Xyster_Db_Gateway_TestCommon extends PHPUnit_Framework_TestCase
     public function testListIndexes()
     {
         $this->_setupTestTable();
-        $this->object->createIndex('my_example_index', 'forum', array('username', 'title'));
+        $this->object->createIndex('my_example_index')->on('forum', array('username', 'title'))->execute();
         $indexes = $this->object->listIndexes();
         $this->assertType('array', $indexes);
         $this->assertArrayHasKey('my_example_index', $indexes);

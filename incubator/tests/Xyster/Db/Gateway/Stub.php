@@ -75,17 +75,11 @@ class Xyster_Db_Gateway_Stub extends Xyster_Db_Gateway_Abstract
     
     /**
      * Gets the SQL statement to create an index
-     * 
-     * If the DBMS doesn't support FULLTEXT indexes, it's safe to ignore the
-     * setting (an exception doesn't need to be thrown).
      *
-     * @param string $name The name of the index
-     * @param string $table The table name 
-     * @param array $columns The columns in the index
-     * @param boolean $fulltext Whether the index should be fulltext
+     * @param Xyster_Db_Gateway_IndexBuilder $builder The index builder
      * @return string
      */
-    protected function _getCreateIndexSql( $name, $table, array $columns, $fulltext=false )
+    protected function _getCreateIndexSql( Xyster_Db_Gateway_IndexBuilder $builder )
     {
     }
     

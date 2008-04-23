@@ -82,20 +82,6 @@ abstract class Xyster_Db_Gateway_Abstract
     }
     
     /**
-     * Adds an index to a table
-     *
-     * @param string $table The table name
-     * @param array $cols The string column name or an array of column names
-     * @param string $name An optional name of the index
-     * @param boolean $fulltext Whether the index is fulltext
-     */
-    public function addIndex( $table, $cols, $name=null, $fulltext=false )
-    {
-        $this->getAdapter()->query($this->_getCreateIndexSql($name, $table,
-            $this->_makeArray($cols), $fulltext));
-    }
-    
-    /**
      * Adds a primary key to a table
      *
      * @param string $table The table name
@@ -108,19 +94,16 @@ abstract class Xyster_Db_Gateway_Abstract
     }
     
     /**
-     * Creates an index
-     * 
-     * This method does the same thing as {@link addIndex}
+     * Creates an index builder
      *
      * @param string $name The name of the index
-     * @param string $table The table name
-     * @param mixed $cols The string column name or an array of column names
-     * @param boolean $fulltext Whether the index is fulltext
+     * @param string $schema Optional. The schema of the index
+     * @return Xyster_Db_Gateway_IndexBuilder
      */
-    public function createIndex( $name, $table, $cols, $fulltext=false )
+    public function createIndex( $name, $schema = null )
     {
-        $this->getAdapter()->query($this->_getCreateIndexSql($name, $table,
-            $this->_makeArray($cols), $fulltext));
+        require_once 'Xyster/Db/Gateway/IndexBuilder.php';
+        return new Xyster_Db_Gateway_IndexBuilder($this, $name, $schema);
     }
     
     /**
@@ -143,28 +126,13 @@ abstract class Xyster_Db_Gateway_Abstract
      * Creates a table builder
      *
      * @param string $name The name of the table
+     * @param string $schema Optional. The table schema
      * @return Xyster_Db_Gateway_TableBuilder
      */
-    public function createTable( $name )
+    final public function createTable( $name, $schema = null )
     {
     	require_once 'Xyster/Db/Gateway/TableBuilder.php';
-        return new Xyster_Db_Gateway_TableBuilder($name, $this);
-    }
-    
-    /**
-     * Creates a table from a table builder
-     *
-     * @param Xyster_Db_Gateway_TableBuilder $builder
-     */
-    public function createTableExecute( Xyster_Db_Gateway_TableBuilder $builder )
-    {
-        $this->getAdapter()->query($this->_getCreateTableSql($builder));
-        
-        // create the indexes
-        foreach( $builder->getIndexes() as $index ) {
-            /* @var $index Xyster_Db_Gateway_TableBuilder_Index */
-            $this->createIndex($index->getName(), $builder->getName(), $index->getColumns(), $index->isFulltext());
-        }
+        return new Xyster_Db_Gateway_TableBuilder($this, $name, $schema);
     }
     
     /**
@@ -230,6 +198,35 @@ abstract class Xyster_Db_Gateway_Abstract
     public function dropTable( $name )
     {
         $this->getAdapter()->query($this->_getDropTableSql($name));
+    }
+    
+    /**
+     * Executes an index builder
+     *
+     * @param Xyster_Db_Gateway_IndexBuilder $builder
+     */
+    public function executeIndexBuilder( Xyster_Db_Gateway_IndexBuilder $builder )
+    {
+        $this->getAdapter()->query($this->_getCreateIndexSql($builder));
+    }
+        
+    /**
+     * Creates a table from a table builder
+     *
+     * @param Xyster_Db_Gateway_TableBuilder $builder
+     */
+    public function executeTableBuilder( Xyster_Db_Gateway_TableBuilder $builder )
+    {
+        $this->getAdapter()->query($this->_getCreateTableSql($builder));
+        
+        // create the indexes
+        foreach( $builder->getIndexes() as $index ) {
+            /* @var $index Xyster_Db_Gateway_TableBuilder_Index */
+            $this->createIndex($index->getName(), $builder->getSchema())
+                ->on($builder->getName(), $index->getColumns())
+                ->fulltext($index->isFulltext())
+                ->execute();
+        }
     }
     
     /**
@@ -325,6 +322,9 @@ abstract class Xyster_Db_Gateway_Abstract
     
     /**
      * Creates a unique index on a column or columns
+     * 
+     * This method doesn't allow you to specify a name for the unique index.
+     * Use the {@link createIndex} method if you need more control. 
      *
      * @param string $table The table name
      * @param mixed $cols The string column name or an array of column names 
@@ -347,6 +347,16 @@ abstract class Xyster_Db_Gateway_Abstract
     { 
     	$this->getAdapter()->query($this->_getSetTypeSql($table, $column, $type,
     	   $argument));
+    }
+    
+    /**
+     * Whether the database supports foreign keys
+     *
+     * @return boolean
+     */
+    public function supportsForeignKeys()
+    {
+        return true;
     }
     
     /**
@@ -721,13 +731,10 @@ abstract class Xyster_Db_Gateway_Abstract
      * If the DBMS doesn't support FULLTEXT indexes, it's safe to ignore the
      * setting (an exception doesn't need to be thrown).
      *
-     * @param string $name The name of the index
-     * @param string $table The table name 
-     * @param array $columns The columns in the index
-     * @param boolean $fulltext Whether the index should be fulltext
+     * @param Xyster_Db_Gateway_IndexBuilder $builder The index builder
      * @return string
      */
-    abstract protected function _getCreateIndexSql( $name, $table, array $columns, $fulltext=false );
+    abstract protected function _getCreateIndexSql( Xyster_Db_Gateway_IndexBuilder $builder );
         
     /**
      * Gets the SQL statement to drop an index

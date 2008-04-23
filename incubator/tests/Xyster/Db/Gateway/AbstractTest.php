@@ -86,14 +86,27 @@ class Xyster_Db_Gateway_AbstractTest extends PHPUnit_Framework_TestCase
     }
     
     /**
+     * Tests the 'createIndex' method
+     *
+     */
+    public function testCreateIndex()
+    {
+        $return = $this->object->createIndex('my_new_index', 'my_schema');
+        $this->assertType('Xyster_Db_Gateway_IndexBuilder', $return);
+        $this->assertEquals('my_new_index', $return->getName());
+        $this->assertEquals('my_schema', $return->getSchema());
+    }
+        
+    /**
      * Tests the 'createTable' method
      *
      */
     public function testCreateTable()
     {
-    	$return = $this->object->createTable('my_new_table');
+    	$return = $this->object->createTable('my_new_table', 'my_schema');
     	$this->assertType('Xyster_Db_Gateway_TableBuilder', $return);
     	$this->assertEquals('my_new_table', $return->getName());
+        $this->assertEquals('my_schema', $return->getSchema());
     }
 }
 

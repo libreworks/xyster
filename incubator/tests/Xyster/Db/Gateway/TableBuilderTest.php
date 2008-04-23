@@ -63,7 +63,7 @@ class Xyster_Db_Gateway_TableBuilderTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
     	$this->gateway = new Xyster_Db_Gateway_Stub;
-        $this->object = new Xyster_Db_Gateway_TableBuilder('my_table', $this->gateway);
+        $this->object = new Xyster_Db_Gateway_TableBuilder($this->gateway, 'my_table');
     }
 
     /**
@@ -303,15 +303,6 @@ class Xyster_Db_Gateway_TableBuilderTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($cols, $fkey->getForeignColumns());
         $this->assertEquals($onDelete, $fkey->getOnDelete());
         $this->assertEquals($onUpdate, $fkey->getOnUpdate());
-    }
-    
-    /**
-     * Tests the 'getName' method
-     *
-     */
-    public function testGetName()
-    {
-    	$this->assertEquals('my_table', $this->object->getName());
     }
     
     /**
