@@ -24,6 +24,10 @@ require_once 'Xyster/Db/Gateway/Abstract.php';
  */
 class Xyster_Db_Gateway_Stub extends Xyster_Db_Gateway_Abstract
 {
+    public $indexExecuted = false;
+    
+    public $tableExecuted = false;
+    
     /**
      * Lists all foreign keys
      *
@@ -81,6 +85,19 @@ class Xyster_Db_Gateway_Stub extends Xyster_Db_Gateway_Abstract
      */
     protected function _getCreateIndexSql( Xyster_Db_Gateway_IndexBuilder $builder )
     {
+        $this->indexExecuted = true;
+    }
+    
+    /**
+     * Gets the SQL statement to create a table
+     *
+     * @param Xyster_Db_Gateway_TableBuilder $builder The table builder
+     * @return string
+     */
+    protected function _getCreateTableSql( Xyster_Db_Gateway_TableBuilder $builder )
+    {
+        $this->tableExecuted = true;
+        return parent::_getCreateTableSql($builder);
     }
     
     /**

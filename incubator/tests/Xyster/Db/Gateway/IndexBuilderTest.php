@@ -22,6 +22,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 require_once "PHPUnit/Framework/TestCase.php";
 require_once "PHPUnit/Framework/TestSuite.php";
 require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+require_once 'Xyster/Db/Adapter/Stub.php';
 require_once 'Xyster/Db/Gateway/IndexBuilder.php';
 require_once 'Xyster/Db/Gateway/Stub.php';
 
@@ -50,23 +51,25 @@ class Xyster_Db_Gateway_IndexBuilderTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Sets up the fixture, for example, opens a network connection.
-     * This method is called before a test is executed.
-     *
-     * @access protected
+     * Sets up the fixture
      */
     protected function setUp()
     {
         $this->gateway = new Xyster_Db_Gateway_Stub;
+        $this->gateway->setAdapter(new Xyster_Db_Adapter_Stub);
         $this->object = new Xyster_Db_Gateway_IndexBuilder($this->gateway, 'my_index', 'public');
     }
 
     /**
-     * @todo Implement testExecute().
+     * Tests that the execute method calls the proper gateway execute method
+     * 
      */
     public function testExecute()
     {
-        $this->markTestIncomplete('Implement testExecute');
+        $this->object->on('foo', array('columns'));
+        $this->assertFalse($this->gateway->indexExecuted);
+        $this->object->execute();
+        $this->assertTrue($this->gateway->indexExecuted);
     }
     
     /**
@@ -103,10 +106,10 @@ class Xyster_Db_Gateway_IndexBuilderTest extends PHPUnit_Framework_TestCase
                 'test'
             );
         $expected = array(
-                'foo' => 'ASC',
-                'bar' => 'DESC',
-                'foobar' => 'ASC',
-                'test' => 'ASC'
+                Xyster_Data_Sort::asc('foo'),
+                Xyster_Data_Sort::desc('bar'),
+                Xyster_Data_Sort::asc('foobar'),
+                Xyster_Data_Sort::asc('test')
             );
         $this->object->on($table, $columns);
         $this->assertEquals($table, $this->object->getTable());

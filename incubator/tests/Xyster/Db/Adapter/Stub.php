@@ -40,6 +40,14 @@ class Xyster_Db_Adapter_Stub extends Zend_Db_Adapter_Abstract
     public $config = null;
 
     /**
+     * Rewriting constructor
+     *
+     */
+    public function __construct()
+    {
+    }
+    
+    /**
      * Returns a list of the tables in the database.
      *
      * @return array

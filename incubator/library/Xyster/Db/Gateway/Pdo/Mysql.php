@@ -68,11 +68,10 @@ class Xyster_Db_Gateway_Pdo_Mysql extends Xyster_Db_Gateway_Abstract
     public function listForeignKeys()
     {
         $config = $this->getAdapter()->getConfig();
-        $version = $this->getAdapter()->fetchOne('SELECT version()');
-        if ( $version >= '5.1.10' ) {
-            // this is the start of a SQL query for MySQL 5.1.10+ which has
-            // support the REFERENTIAL_CONSTRAINTS table
-            /* 
+        $version = $this->_getVersion();
+        $hasRefConstr = $version >= '5.1.10';
+        // MySQL 5.1.10+ has support the REFERENTIAL_CONSTRAINTS table
+        if ( $hasRefConstr ) {
             $sql = "SELECT r.CONSTRAINT_NAME as keyname, r.TABLE_NAME, " . 
                 "r.UPDATE_RULE as onupdate, r.DELETE_RULE as ondelete " .
                 " FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS r " .
@@ -80,7 +79,6 @@ class Xyster_Db_Gateway_Pdo_Mysql extends Xyster_Db_Gateway_Abstract
                 " r.SCHEMA_NAME = k.SCHEMA_NAME AND " . 
                 " r.CONSTRAINT_NAME = k.CONSTRAINT_NAME " . 
                 " WHERE r.CONSTRAINT_NAME IS NOT NULL";
-            */
         } else {
             $sql = "SELECT CONSTRAINT_NAME as fkname, TABLE_NAME as tablename, " . 
                 " COLUMN_NAME as colname, REFERENCED_TABLE_NAME, " .
@@ -104,8 +102,8 @@ class Xyster_Db_Gateway_Pdo_Mysql extends Xyster_Db_Gateway_Abstract
                     'COLUMNS' => array($row['colname']),
                     'REFERENCED_TABLE_NAME' => $row['REFERENCED_TABLE_NAME'],
                     'REFERENCED_COLUMNS' => array($row['refcolname']),
-                    'ON_UPDATE' => null, // change this when we get 5.1.10+
-                    'ON_DELETE' => null // change this when we get 5.1.10+
+                    'ON_UPDATE' => $hasRefConstr ? $row['onupdate'] : null,
+                    'ON_DELETE' => $hasRefConstr ? $row['ondelete'] : null
                 );
             }
         }
@@ -159,6 +157,27 @@ class Xyster_Db_Gateway_Pdo_Mysql extends Xyster_Db_Gateway_Abstract
     }
     
     /**
+     * Renames an index
+     *
+     * @param string $old The current index name
+     * @param string $new The new index name
+     * @param string $table The table name (not required on all databases)
+     */
+    public function renameIndex( $old, $new, $table = null )
+    {
+        $indexes = $this->listIndexes();
+        foreach( $indexes as $name => $info ) {
+            if ( $name == $old && !strcasecmp($info['TABLE_NAME'], $table) ) {
+                $this->createIndex($new)->on($table, $info['COLUMNS'])
+                    ->unique($info['UNIQUE'])
+                    ->execute();
+                break;
+            }
+        }
+        $this->dropIndex($old, $table);
+    }
+    
+    /**
      * Gets the SQL statement to create an index
      *
      * @param Xyster_Db_Gateway_IndexBuilder $builder The index builder
@@ -175,8 +194,10 @@ class Xyster_Db_Gateway_Pdo_Mysql extends Xyster_Db_Gateway_Abstract
         $sql .= "INDEX " . $this->_quote($builder->getName()) . " ON " .
             $this->_quote($builder->getTable()) . " ";
         $columns = array();
-        foreach( $builder->getColumns() as $colName => $dir ) {
-            $columns[] = $this->_quote($colName) . ' ' . $dir;
+        foreach( $builder->getColumns() as $sort ) {
+            /* @var $sort Xyster_Data_Sort */
+            $columns[] = $this->_quote($sort->getField()->getName()) . ' ' .
+                $sort->getDirection();
         }
         return $sql . "( " . implode(', ', $columns) . " )";
     }
@@ -255,8 +276,8 @@ class Xyster_Db_Gateway_Pdo_Mysql extends Xyster_Db_Gateway_Abstract
     /**
      * Gets the SQL statement to rename an index
      *
-     * MySQL lacks a "rename index" feature, so we just drop the index and 
-     * recreate it.
+     * This method is left empty because in this class we overwrite the
+     * {@link renameIndex} method in the abstract gateway, which calls this one.
      * 
      * @param string $old The current index name
      * @param string $new The new index name
@@ -265,15 +286,6 @@ class Xyster_Db_Gateway_Pdo_Mysql extends Xyster_Db_Gateway_Abstract
      */
     protected function _getRenameIndexSql( $old, $new, $table=null )
     {
-        $indexes = $this->listIndexes();
-        foreach( $indexes as $name => $info ) {
-            if ( $name == $old && !strcasecmp($info['TABLE_NAME'], $table) ) {
-                if ( $info['UNIQUE'] ) {
-                }
-                $this->createIndex($new, $table, $info['COLUMNS']);
-            }
-        }
-    	$this->dropIndex($old, $table);
     }
     
     /**
@@ -340,21 +352,6 @@ class Xyster_Db_Gateway_Pdo_Mysql extends Xyster_Db_Gateway_Abstract
     }
     
     /**
-     * Gets the SQL statement to create a UNIQUE index for one or more columns
-     *
-     * It might be a better idea to use the "CREATE UNIQUE INDEX" syntax
-     * 
-     * @param string $table The table name
-     * @param array $columns The columns in the unique index
-     * @return string
-     */
-    protected function _getSetUniqueSql( $table, array $columns )
-    {
-        return "CREATE UNIQUE INDEX " . $this->_quote($name) . " ON " .
-            $this->_quote($table) . " " . $this->_quote($columns);
-    }
-    
-    /**
      * Gets the SQL statement to set the data type of a column
      *
      * @param string $table The table name
@@ -411,5 +408,15 @@ class Xyster_Db_Gateway_Pdo_Mysql extends Xyster_Db_Gateway_Abstract
             $sql = 'DATETIME';
         }
         return $sql;
+    }
+    
+    /**
+     * Gets the version information of MySQL
+     *
+     * @return mixed
+     */
+    private function _getVersion()
+    {
+        return $this->getAdapter()->fetchOne('SELECT version()');
     }
 }

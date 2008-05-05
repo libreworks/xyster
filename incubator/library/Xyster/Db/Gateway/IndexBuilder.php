@@ -18,6 +18,10 @@
  */
 require_once 'Xyster/Db/Gateway/Builder.php';
 /**
+ * @see Xyster_Data_Sort
+ */
+require_once 'Xyster/Data/Sort.php';
+/**
  * A builder for indexes
  *
  * @category  Xyster
@@ -65,11 +69,8 @@ class Xyster_Db_Gateway_IndexBuilder extends Xyster_Db_Gateway_Builder
     
     /**
      * Gets the columns in the index
-     * 
-     * This method will return an array with the column names as keys and the 
-     * sort direction as values. 
      *
-     * @return array
+     * @return array an array with {@link Xyster_Data_Sort} objects
      */
     public function getColumns()
     {
@@ -127,18 +128,15 @@ class Xyster_Db_Gateway_IndexBuilder extends Xyster_Db_Gateway_Builder
      * @param string $table
      * @param array $columns
      * @return Xyster_Db_Gateway_IndexBuilder provides a fluent interface
-     * @todo make this Xyster_Data_Sort objects
      */
     public function on( $table, array $columns )
     {
         $this->_table = $table;
         $accepted = array('ASC', 'DESC');
         foreach( $columns as $key => $value ) {
-            if ( in_array(strtoupper($value), $accepted) ) {
-                $this->_columns[$key] = strtoupper($value);
-            } else {
-                $this->_columns[$value] = 'ASC';
-            }
+            $column = ( in_array(strtoupper($value), $accepted) ) ? $key : $value;
+            $this->_columns[] = ( strtoupper($value) == 'DESC' ) ?
+                Xyster_Data_Sort::desc($column) : Xyster_Data_Sort::asc($column);
         }
         return $this;
     }

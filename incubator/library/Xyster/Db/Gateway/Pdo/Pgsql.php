@@ -175,9 +175,12 @@ class Xyster_Db_Gateway_Pdo_Pgsql extends Xyster_Db_Gateway_Abstract
         $sql = "CREATE " . ( ( $builder->isUnique() ) ? 'UNIQUE ' : '' ) .
             "INDEX " . $this->_quote($builder->getName()) . " ON " . $tableName . " ";
         $columns = array();
-        foreach( $builder->getColumns() as $colName => $dir ) {
-            // @todo hell. postgres doesn't support index ordering until 8.3
-            $columns[] = $this->_quote($colName); // . ' ' . $dir;
+        foreach( $builder->getColumns() as $sort ) {
+            /* @var $sort Xyster_Data_Sort */
+            // Postgres doesn't support index ordering until 8.3
+            $vdir = ( $this->_getVersion() >= 8.3 ) ?
+                ' ' . $sort->getDirection() : ''; 
+            $columns[] = $this->_quote($sort->getField()->getName()) . $vdir;
         }
         return $sql . "( " . implode(', ', $columns) . " )";
     }
@@ -344,5 +347,17 @@ class Xyster_Db_Gateway_Pdo_Pgsql extends Xyster_Db_Gateway_Abstract
             $sql = 'TIMESTAMP';
         }
         return $sql;
+    }
+    
+    /**
+     * Gets the version information of PostgreSQL
+     *
+     * @return mixed
+     */
+    private function _getVersion()
+    {
+        $version = $this->getAdapter()->fetchOne('SELECT version()');
+        $matches = array();
+        return preg_match('/^PostgreSQL ([0-9.]+)/', $version, $matches) ? $matches[1] : 0;
     }
 }

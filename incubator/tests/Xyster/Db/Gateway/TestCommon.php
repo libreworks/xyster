@@ -126,22 +126,6 @@ abstract class Xyster_Db_Gateway_TestCommon extends PHPUnit_Framework_TestCase
     }
     
     /**
-     * Enter description here...
-     *
-     * @todo implement testAddForeignKey
-     */
-    public function testAddForeignKey()
-    {
-        if ( !$this->object->supportsForeignKeys() ) {
-            $this->markTestSkipped();
-        }
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
-    }
-    
-    /**
      * Adds a primary key to a table
      */
     public function testAddPrimaryOneColumn()
@@ -229,18 +213,46 @@ abstract class Xyster_Db_Gateway_TestCommon extends PHPUnit_Framework_TestCase
     /**
      * Drops a foreign key from a table
      * 
-     * @todo implement testDropForeign
      */
     public function testDropForeign()
     {
         if ( !$this->object->supportsForeignKeys() ) {
             $this->markTestSkipped();
         }
-        
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->_setupTestTable();
+        $builder = $this->object->createTable('forum_user');
+        foreach( $this->getOptions() as $name => $value ) {
+            $builder->option($name, $value);
+        }
+        $builder->addVarchar('forum_username', 50)->primary()->null(false)
+            ->addChar('gender', 1)
+            ->addTimestamp('created_on')
+            ->execute();
+        $this->object->addForeign('forum', 'username', 'forum_user', 'forum_username');
+        $keys = $this->object->listForeignKeys();
+        $expected = array(
+            'TABLE_NAME' => 'forum',
+            'COLUMNS' => array('username'),
+            'REFERENCED_TABLE_NAME' => 'forum_user',
+            'REFERENCED_COLUMNS' => array('forum_username'),
+            );
+        $keyName = null;
+        foreach( $keys as $name => $info ) {
+            unset($info['SCHEMA_NAME']);
+            unset($info['ON_DELETE']);
+            unset($info['ON_UPDATE']);
+            $expected['KEY_NAME'] = $info['KEY_NAME'];
+            if ( $info == $expected ) {
+                $keyName = $info['KEY_NAME'];
+                break;
+            }
+        }
+        if ( $keyName === null ) {
+            $this->fail('The foreign key created was not found: ' . $keyName);
+        }
+        $this->object->dropForeign('forum', $keyName);
+        $keys2 = $this->object->listForeignKeys();
+        $this->assertArrayNotHasKey($keyName, $keys2);
     }
     
     /**
@@ -312,10 +324,11 @@ abstract class Xyster_Db_Gateway_TestCommon extends PHPUnit_Framework_TestCase
         $this->_setupTestTable();
         $indexes = $this->object->listIndexes();
         $this->assertArrayNotHasKey('my_example_index', $indexes);
-        $this->object->createIndex('my_example_index')->on('forum', array('username'))->execute();
+        $this->object->createIndex('my_example_index')->on('forum', array('username'))->unique()->execute();
         $indexes2 = $this->object->listIndexes();
         $this->assertArrayHasKey('my_example_index', $indexes2);
         $this->assertEquals(array('username'), $indexes2['my_example_index']['COLUMNS']);
+        $this->assertTrue($indexes2['my_example_index']['UNIQUE']);
     }
     
     /**
@@ -326,28 +339,17 @@ abstract class Xyster_Db_Gateway_TestCommon extends PHPUnit_Framework_TestCase
         $this->_setupTestTable();
         $indexes = $this->object->listIndexes();
         $this->assertArrayNotHasKey('my_example_index', $indexes);
-        $this->object->createIndex('my_example_index')->on('forum', array('username', 'title'))->execute();
+        $this->object->createIndex('my_example_index')->on('forum', array('username', 'title'))->unique()->execute();
         $indexes2 = $this->object->listIndexes();
         $this->assertArrayHasKey('my_example_index', $indexes2);
         $this->assertEquals(array('username', 'title'), $indexes2['my_example_index']['COLUMNS']);
-    }
-
-    /**
-     * Creates a table from a table builder
-     * 
-     * @todo implement testExecuteTableBuilder
-     */
-    public function testExecuteTableBuilder()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->assertTrue($indexes2['my_example_index']['UNIQUE']);
     }
     
     /**
      * Tests the 'listForeignKeys' method
      *
+     * This also tests the 'addForeign' method 
      */
     public function testListForeignKeys()
     {
@@ -440,14 +442,24 @@ abstract class Xyster_Db_Gateway_TestCommon extends PHPUnit_Framework_TestCase
     /**
      * Renames an index
      * 
-     * @todo implement testRenameIndex
      */
     public function testRenameIndex()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $indexName = 'my_example_index';
+        $table = 'forum';
+        $columns = array('username'); 
+        $this->_setupTestTable();
+        $indexes = $this->object->listIndexes();
+        $this->assertArrayNotHasKey($indexName, $indexes);
+        $this->object->createIndex($indexName)->on($table, $columns)->execute();
+        $indexes2 = $this->object->listIndexes();
+        $this->assertArrayHasKey($indexName, $indexes2);
+        $this->assertEquals($columns, $indexes2[$indexName]['COLUMNS']);
+        $this->object->renameIndex($indexName, 'my_renamed_example_index', $table);
+        $indexes3 = $this->object->listIndexes();
+        $this->assertArrayHasKey('my_renamed_example_index', $indexes3);
+        $this->assertArrayNotHasKey($indexName, $indexes3);
+        $this->assertEquals($columns, $indexes3['my_renamed_example_index']['COLUMNS']);
     }
     
     /**
@@ -522,14 +534,33 @@ abstract class Xyster_Db_Gateway_TestCommon extends PHPUnit_Framework_TestCase
     /**
      * Creates a unique index on a column or columns
      * 
-     * @todo implement testSetUnique
      */
     public function testSetUnique()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $indexes = $this->object->listIndexes();
+        $found = false;
+        foreach( $indexes as $name => $info ) {
+            if ( $info['TABLE_NAME'] == 'forum' && $info['COLUMNS'] == array('title') ) {
+                $found = true;
+                break;
+            }
+        }
+        if ( $found ) {
+            $this->fail('The unique index was already defined');
+        }
+        $this->_setupTestTable();
+        $this->object->setUnique('forum', 'title');
+        $indexes2 = $this->object->listIndexes();
+        $found = false;
+        foreach( $indexes2 as $name => $info ) {
+            if ( $info['TABLE_NAME'] == 'forum' && $info['COLUMNS'] == array('title') ) {
+                $found = true;
+                break;
+            }
+        }
+        if ( !$found ) {
+            $this->fail('The unique index was not found');
+        }
     }
     
     /**

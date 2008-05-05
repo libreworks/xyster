@@ -22,6 +22,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 require_once "PHPUnit/Framework/TestCase.php";
 require_once "PHPUnit/Framework/TestSuite.php";
 require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+require_once 'Xyster/Db/Adapter/Stub.php';
 require_once 'Xyster/Db/Gateway/Stub.php';
 require_once 'Xyster/Db/Gateway/DataType.php';
 require_once 'Xyster/Db/Gateway/TableBuilder.php';
@@ -63,6 +64,7 @@ class Xyster_Db_Gateway_TableBuilderTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
     	$this->gateway = new Xyster_Db_Gateway_Stub;
+    	$this->gateway->setAdapter(new Xyster_Db_Adapter_Stub);
         $this->object = new Xyster_Db_Gateway_TableBuilder($this->gateway, 'my_table');
     }
 
@@ -246,14 +248,13 @@ class Xyster_Db_Gateway_TableBuilderTest extends PHPUnit_Framework_TestCase
     }
     
     /**
-     * @todo Implement testExecute().
+     * Tests the execute method calls the proper gateway execute method
      */
     public function testExecute()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->assertFalse($this->gateway->tableExecuted);
+        $this->object->execute();
+        $this->assertTrue($this->gateway->tableExecuted);
     }
 
     /**
