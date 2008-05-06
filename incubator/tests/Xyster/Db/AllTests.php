@@ -38,7 +38,9 @@ require_once 'Xyster/Db/Gateway/TableBuilder/IndexTest.php';
 require_once 'Xyster/Db/Gateway/TableBuilder/PrimaryKeyTest.php';
 require_once 'Xyster/Db/Gateway/TableBuilder/UniqueTest.php';
 require_once 'Xyster/Db/Gateway/Pdo/MysqlTest.php';
+require_once 'Xyster/Db/Gateway/MysqliTest.php';
 require_once 'Xyster/Db/Gateway/Pdo/PgsqlTest.php';
+require_once 'Xyster/Db/Gateway/Pdo/SqliteTest.php';
 
 error_reporting(E_ALL | E_STRICT);
 
@@ -64,7 +66,9 @@ class Xyster_Db_AllTests
         $suite->addTestSuite('Xyster_Db_Gateway_TableBuilder_PrimaryKeyTest');
         $suite->addTestSuite('Xyster_Db_Gateway_TableBuilder_UniqueTest');
         $suite->addTestSuite('Xyster_Db_Gateway_Pdo_MysqlTest');
+        $suite->addTestSuite('Xyster_Db_Gateway_MysqliTest');
         $suite->addTestSuite('Xyster_Db_Gateway_Pdo_PgsqlTest');
+        $suite->addTestSuite('Xyster_Db_Gateway_Pdo_SqliteTest');
         return $suite;
     }
 }

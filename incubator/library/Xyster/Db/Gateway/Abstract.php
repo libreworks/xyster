@@ -76,6 +76,7 @@ abstract class Xyster_Db_Gateway_Abstract
      */
     public function addForeign( $table, $cols, $foreignTable, $foreignCols, Xyster_Db_Gateway_ReferentialAction $onDelete=null, Xyster_Db_Gateway_ReferentialAction $onUpdate=null )
     {
+        $this->_checkForeignKeySupport();
         $this->getAdapter()->query($this->_getAddForeignSql($table,
             $this->_makeArray($cols), $foreignTable, $this->_makeArray($foreignCols),
             $onDelete, $onUpdate));
@@ -154,6 +155,7 @@ abstract class Xyster_Db_Gateway_Abstract
      */
     public function dropForeign( $table, $name )
     {
+        $this->_checkForeignKeySupport();
         $this->getAdapter()->query($this->_getDropForeignSql($table, $name));
     }
     
@@ -472,6 +474,19 @@ abstract class Xyster_Db_Gateway_Abstract
         }
     }
     
+    /**
+     * Checks that the database system supports foreign keys
+     *
+     * @throws Xyster_Db_Gateway_Exception if it doesn't support foreign keys
+     */
+    private function _checkForeignKeySupport()
+    {
+        if ( !$this->supportsForeignKeys() ) {
+            require_once 'Xyster/Db/Gateway/Exception.php';
+            throw new Xyster_Db_Gateway_Exception('This database does not support foreign keys');
+        }
+    }
+        
     /**
      * Gets the SQL statement to add a column
      *

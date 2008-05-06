@@ -122,7 +122,7 @@ abstract class Xyster_Db_Gateway_TestCommon extends PHPUnit_Framework_TestCase
         $describe2 = $this->_db->describeTable('forum');
         $this->assertArrayHasKey('category_id', $describe2);
         $this->assertEquals('category_id', $describe2['category_id']['COLUMN_NAME']);
-        $this->assertEquals('int', substr($describe2['category_id']['DATA_TYPE'], 0, 3));
+        $this->assertEquals('int', strtolower(substr($describe2['category_id']['DATA_TYPE'], 0, 3)));
     }
     
     /**
