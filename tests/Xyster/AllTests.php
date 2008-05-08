@@ -31,6 +31,7 @@ require_once 'Xyster/Acl/AllTests.php';
 require_once 'Xyster/Collection/AllTests.php';
 require_once 'Xyster/Controller/AllTests.php';
 require_once 'Xyster/Data/AllTests.php';
+require_once 'Xyster/Date/RangeTest.php';
 require_once 'Xyster/Db/AllTests.php';
 require_once 'Xyster/EnumTest.php';
 require_once 'Xyster/Filter/TitleCaseTest.php';
@@ -56,6 +57,7 @@ class Xyster_AllTests
         $suite->addTest( Xyster_Collection_AllTests::suite() );
         $suite->addTest( Xyster_Controller_AllTests::suite() );
         $suite->addTestSuite('Xyster_EnumTest');
+        $suite->addTestSuite('Xyster_Date_RangeTest');
         $suite->addTest( Xyster_Data_AllTests::suite() );
         $suite->addTest( Xyster_Db_AllTests::suite() );
         $suite->addTestSuite('Xyster_Filter_TitleCaseTest');

@@ -28,7 +28,7 @@ require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHe
  * @see Xyster_Db_Translator
  */
 require_once 'Xyster/Db/Translator.php';
-require_once 'Zend/Db/Adapter/Static.php';
+require_once 'Xyster/Db/Adapter/Stub.php';
 require_once 'Xyster/Data/Field.php';
 require_once 'Xyster/Data/Junction.php';
 
@@ -61,7 +61,7 @@ class Xyster_Db_TranslatorTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $adapter = new Zend_Db_Adapter_Static(array('dbname'=>':memory:'));
+        $adapter = new Xyster_Db_Adapter_Stub;
         $this->translator = new Xyster_Db_Translator($adapter);     
     }
 
