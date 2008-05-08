@@ -279,7 +279,7 @@ class Xyster_Orm_ManagerTest extends Xyster_Orm_TestSetup
     public function testGetJoined()
     {
         $entity = $this->_manager->get('MockBug', 1);
-        $meta = $this->_mockFactory()->getEntityMeta('MockBug');
+        $meta = $this->_mockFactory()->getEntityType('MockBug');
         $relation = $meta->getRelation('products');
         $joined = $this->_manager->getJoined($entity, $relation);
         $set = $this->_mockFactory()->get($relation->getTo())->getSet();

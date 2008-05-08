@@ -228,7 +228,7 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
 		// get the join SQL for the left to the middle
 		$firstCond = array();
 		$left = $relation->getLeft();
-		foreach( $this->getEntityMeta()->getPrimary() as $k=>$primary ) {
+		foreach( $this->getEntityType()->getPrimary() as $k=>$primary ) {
 		    $firstCond[] = $db->quoteIdentifier('t1') . '.'
 		        . $db->quoteIdentifier($this->untranslateField($primary))
 		        . ' = ' . $db->quoteIdentifier($relation->getTable()) . '.'
@@ -239,7 +239,7 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
 		// get the join SQL for the middle to the right 
 		$secondCond = array();
 		$right = $relation->getRight();
-		foreach( $rightMap->getEntityMeta()->getPrimary() as $k=>$primary ) {
+		foreach( $rightMap->getEntityType()->getPrimary() as $k=>$primary ) {
 		    $secondCond[] = $db->quoteIdentifier($relation->getTable()) . '.'
 		        . $db->quoteIdentifier($right[$k]) . ' = '
 		        . $db->quoteIdentifier($targetTableAlias) . '.'
@@ -505,10 +505,10 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
          * it's the _first_ column in the compound key.
          */
         $primary = array_map(array($this, 'untranslateField'),
-            $this->getEntityMeta()->getPrimary());
+            $this->getEntityType()->getPrimary());
         $pkIdentity = $primary[0];
         if ( count($primary) > 0 ) {  
-	        $fields = $this->getEntityMeta()->getFields();
+	        $fields = $this->getEntityType()->getFields();
 	        foreach( $fields as $field ) {
 	            /* @var $field Xyster_Orm_Entity_Field */
 	            if ( $field->isIdentity() ) {
@@ -593,13 +593,13 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
 		
         $leftValues = array();
         $left = $relation->getLeft();
-        foreach( $this->getEntityMeta()->getPrimary() as $k=>$primary ) {
+        foreach( $this->getEntityType()->getPrimary() as $k=>$primary ) {
             $leftValues[$left[$k]] = $entity->$primary;
         }
         
         $rightMap = $this->getFactory()->get($relation->getTo());
         $right = $relation->getRight();
-        $rightPrimary = $rightMap->getEntityMeta()->getPrimary();
+        $rightPrimary = $rightMap->getEntityType()->getPrimary();
         
         foreach( $set->getDiffAdded() as $added ) {
             /* @var $added Xyster_Orm_Entity */
@@ -626,14 +626,14 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
 		
 		$firstCond = array();
 		$left = $relation->getLeft();
-		foreach( $this->getEntityMeta()->getPrimary() as $k=>$primary ) {
+		foreach( $this->getEntityType()->getPrimary() as $k=>$primary ) {
 		    $firstCond[] = Xyster_Data_Expression::eq($left[$k], $entity->$primary);
 		}
 		$leftCriteria = Xyster_Data_Criterion::fromArray('AND', $firstCond);		
 		
         $rightMap = $this->getFactory()->get($relation->getTo());
 		$right = $relation->getRight();
-		$rightPrimary = $rightMap->getEntityMeta()->getPrimary();
+		$rightPrimary = $rightMap->getEntityType()->getPrimary();
 
 		$diffRemoved = $set->getDiffRemoved();
 		if ( !count($diffRemoved) ) {
@@ -755,7 +755,7 @@ abstract class Xyster_Orm_Mapper extends Xyster_Orm_Mapper_Abstract
     	    $values[ $this->untranslateField($name) ] = $value;
     	}
 	    
-	    $keyNames = $this->getEntityMeta()->getPrimary();
+	    $keyNames = $this->getEntityType()->getPrimary();
 	    $key = $entity->getPrimaryKey(true);
 	    
 	    $where = array();

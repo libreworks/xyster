@@ -29,7 +29,7 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 require_once 'Xyster/Orm/LoaderTest.php';
 require_once 'Xyster/Orm/EntityTest.php';
 require_once 'Xyster/Orm/EntityFieldTest.php';
-require_once 'Xyster/Orm/EntityMetaTest.php';
+require_once 'Xyster/Orm/EntityTypeTest.php';
 require_once 'Xyster/Orm/SetTest.php';
 require_once 'Xyster/Orm/WorkUnitTest.php';
 require_once 'Xyster/Orm/RepositoryTest.php';
@@ -48,7 +48,7 @@ require_once 'Xyster/Orm/Xsql/SplitTest.php';
 /**
  * @see Zend_Db_SkipTests
  */
-require_once 'Zend/Db/SkipTests.php';
+//require_once 'Zend/Db/SkipTests.php';
 
 error_reporting(E_ALL | E_STRICT);
 
@@ -151,6 +151,8 @@ class Xyster_Orm_AllTests
     
     protected static function _skipTestSuite($driver, $message = '')
     {
+        return;
+        /* @todo Remove dependency on Zend_Db_Skip_Tests */
         $skipTestClass = "Zend_Db_Skip_{$driver}Test";
         $skipTest = new $skipTestClass();
         $skipTest->message = $message;

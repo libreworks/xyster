@@ -47,9 +47,9 @@ abstract class Xyster_Orm_Mapper_Factory_Abstract implements Xyster_Orm_Mapper_F
      * @param string $className The name of the entity class
      * @return Xyster_Orm_Entity_Type The meta object
      */
-    public function getEntityMeta( $className )
+    public function getEntityType( $className )
     {
-        return $this->get($className)->getEntityMeta();
+        return $this->get($className)->getEntityType();
     }
     
     /**

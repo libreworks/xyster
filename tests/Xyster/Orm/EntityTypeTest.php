@@ -35,7 +35,7 @@ class Xyster_Orm_Entity_TypeTest extends Xyster_Orm_TestSetup
     /**
      * @var Xyster_Orm_Entity_Type
      */
-    protected $_meta;
+    protected $object;
 
     /**
      * Runs the test methods of this class.
@@ -43,7 +43,6 @@ class Xyster_Orm_Entity_TypeTest extends Xyster_Orm_TestSetup
     public static function main()
     {
         require_once 'PHPUnit/TextUI/TestRunner.php';
-
         $suite  = new PHPUnit_Framework_TestSuite('Xyster_Orm_Entity_TypeTest');
         $result = PHPUnit_TextUI_TestRunner::run($suite);
     }
@@ -57,7 +56,7 @@ class Xyster_Orm_Entity_TypeTest extends Xyster_Orm_TestSetup
         parent::setUp();
         
         $map = $this->_mockFactory()->get('MockBug');
-        $this->_meta = $map->getEntityMeta();
+        $this->object = $map->getEntityType();
     }
 
     
@@ -67,11 +66,11 @@ class Xyster_Orm_Entity_TypeTest extends Xyster_Orm_TestSetup
      */
     public function testValidField()
     {
-        $this->_meta->assertValidField('bugDescription');
+        $this->object->assertValidField('bugDescription');
         // should not throw exception
         
         $this->setExpectedException('Xyster_Orm_Entity_Exception');
-        $this->assertFalse($this->_meta->assertValidField('doesntExist'));
+        $this->assertFalse($this->object->assertValidField('doesntExist'));
     }
     
     /**
@@ -81,8 +80,8 @@ class Xyster_Orm_Entity_TypeTest extends Xyster_Orm_TestSetup
      */
     public function testValidFieldRelation()
     {
-        $this->_meta->assertValidField('max(reporter->accountName)');
-        $this->_meta->assertValidField('products->count()');
+        $this->object->assertValidField('max(reporter->accountName)');
+        $this->object->assertValidField('products->count()');
     }
     
     /**
@@ -91,11 +90,11 @@ class Xyster_Orm_Entity_TypeTest extends Xyster_Orm_TestSetup
      */
     public function testValidFieldMethod()
     {
-        $this->_meta->assertValidField('getCapitalOfNebraska(1,"test",createdOn)');
+        $this->object->assertValidField('getCapitalOfNebraska(1,"test",createdOn)');
         // should not throw exception
         
         $this->setExpectedException('Xyster_Orm_Entity_Exception');
-        $this->_meta->assertValidField('nonExistantMethod()');
+        $this->object->assertValidField('nonExistantMethod()');
     }
     
     /**
@@ -104,14 +103,14 @@ class Xyster_Orm_Entity_TypeTest extends Xyster_Orm_TestSetup
      */
     public function testIsRuntime()
     {
-    	$this->assertFalse($this->_meta->isRuntime(Xyster_Data_Field::named('MAX(bugId)')));
-        $this->assertFalse($this->_meta->isRuntime(Xyster_Data_Field::named('bugDescription')));
-        $this->assertFalse($this->_meta->isRuntime(Xyster_Data_Field::named('reporter->accountName')));
-        $this->assertFalse($this->_meta->isRuntime(Xyster_Data_Field::named('MAX(reporter->accountName)')));
+    	$this->assertFalse($this->object->isRuntime(Xyster_Data_Field::named('MAX(bugId)')));
+        $this->assertFalse($this->object->isRuntime(Xyster_Data_Field::named('bugDescription')));
+        $this->assertFalse($this->object->isRuntime(Xyster_Data_Field::named('reporter->accountName')));
+        $this->assertFalse($this->object->isRuntime(Xyster_Data_Field::named('MAX(reporter->accountName)')));
         
-        $this->assertTrue($this->_meta->isRuntime(Xyster_Data_Field::named('reporter->accountName->somePublicField')));
-        $this->assertTrue($this->_meta->isRuntime(Xyster_Data_Field::named('assignee->isDirty()')));
-        $this->assertTrue($this->_meta->isRuntime(Xyster_Data_Field::named('getCapitalOfNebraska()')));
+        $this->assertTrue($this->object->isRuntime(Xyster_Data_Field::named('reporter->accountName->somePublicField')));
+        $this->assertTrue($this->object->isRuntime(Xyster_Data_Field::named('assignee->isDirty()')));
+        $this->assertTrue($this->object->isRuntime(Xyster_Data_Field::named('getCapitalOfNebraska()')));
     }
     
     /**
@@ -124,13 +123,13 @@ class Xyster_Orm_Entity_TypeTest extends Xyster_Orm_TestSetup
         $criteria = Xyster_Data_Junction::all($field->notLike('foo%'),
             $field->notLike('bar%'));
             
-        $this->assertFalse($this->_meta->isRuntime($criteria));
+        $this->assertFalse($this->object->isRuntime($criteria));
         
         $field = Xyster_Data_Field::named('getCapitalOfNebraska()');
         $criteria = Xyster_Data_Junction::all($field->notLike('foo%'),
             $field->notLike('bar%'));
             
-        $this->assertTrue($this->_meta->isRuntime($criteria));
+        $this->assertTrue($this->object->isRuntime($criteria));
     }
     
     /**
@@ -141,9 +140,9 @@ class Xyster_Orm_Entity_TypeTest extends Xyster_Orm_TestSetup
     {
         require_once 'Xyster/Data/Sort.php';
         
-        $this->assertFalse($this->_meta->isRuntime(Xyster_Data_Sort::asc('bugDescription')));
+        $this->assertFalse($this->object->isRuntime(Xyster_Data_Sort::asc('bugDescription')));
         
-        $this->assertTrue($this->_meta->isRuntime(Xyster_Data_Sort::asc('getCapitalOfNebraska()')));
+        $this->assertTrue($this->object->isRuntime(Xyster_Data_Sort::asc('getCapitalOfNebraska()')));
     }
     
     /**
@@ -154,7 +153,7 @@ class Xyster_Orm_Entity_TypeTest extends Xyster_Orm_TestSetup
     {
     	require_once 'Xyster/Data/Field/Clause.php';
         $this->setExpectedException('Xyster_Orm_Exception');
-        $this->_meta->isRuntime(new Xyster_Data_Field_Clause);
+        $this->object->isRuntime(new Xyster_Data_Field_Clause);
     }
     
     /**
@@ -163,7 +162,7 @@ class Xyster_Orm_Entity_TypeTest extends Xyster_Orm_TestSetup
      */
     public function testGetEntityName()
     {
-        $this->_meta->getEntityName();
+        $this->object->getEntityName();
     }
     
     /**
@@ -172,7 +171,7 @@ class Xyster_Orm_Entity_TypeTest extends Xyster_Orm_TestSetup
      */
     public function testGetFields()
     {
-        $fields = $this->_meta->getFields();
+        $fields = $this->object->getFields();
         $this->assertType('array', $fields);
         foreach( $fields as $field ) {
             $this->assertType('Xyster_Orm_Entity_Field', $field);
@@ -185,8 +184,8 @@ class Xyster_Orm_Entity_TypeTest extends Xyster_Orm_TestSetup
      */
     public function testGetFieldNames()
     {
-        $names = $this->_meta->getFieldNames();
-        $this->assertEquals(array_keys($this->_meta->getFields()), $names);
+        $names = $this->object->getFieldNames();
+        $this->assertEquals(array_keys($this->object->getFields()), $names);
     }
     
     /**
@@ -195,7 +194,7 @@ class Xyster_Orm_Entity_TypeTest extends Xyster_Orm_TestSetup
      */
     public function testGetMapperFactory()
     {
-        $this->assertSame($this->_mockFactory(), $this->_meta->getMapperFactory());
+        $this->assertSame($this->_mockFactory(), $this->object->getMapperFactory());
     }
     
     /**
@@ -205,11 +204,11 @@ class Xyster_Orm_Entity_TypeTest extends Xyster_Orm_TestSetup
     public function testGetMembers()
     {
         $membs = array();
-        $membs = array_merge($membs, $this->_meta->getFieldNames());
-        $membs = array_merge($membs, $this->_meta->getRelationNames());
-        $membs = array_merge($membs, get_class_methods($this->_meta->getEntityName()));
+        $membs = array_merge($membs, $this->object->getFieldNames());
+        $membs = array_merge($membs, $this->object->getRelationNames());
+        $membs = array_merge($membs, get_class_methods($this->object->getEntityName()));
         
-        $this->assertEquals($membs, $this->_meta->getMembers());
+        $this->assertEquals($membs, $this->object->getMembers());
     }
     
     /**
@@ -218,7 +217,7 @@ class Xyster_Orm_Entity_TypeTest extends Xyster_Orm_TestSetup
      */
     public function testGetPrimary()
     {
-        $primary = $this->_meta->getPrimary();
+        $primary = $this->object->getPrimary();
         $this->assertEquals(array('bugId'), $primary);
     }
     
@@ -228,7 +227,7 @@ class Xyster_Orm_Entity_TypeTest extends Xyster_Orm_TestSetup
      */
     public function testGetRelation()
     {
-        $rel = $this->_meta->getRelation('reporter');
+        $rel = $this->object->getRelation('reporter');
         $this->assertType('Xyster_Orm_Relation', $rel);
         $this->assertEquals('reporter', $rel->getName());
     }
@@ -240,7 +239,7 @@ class Xyster_Orm_Entity_TypeTest extends Xyster_Orm_TestSetup
     public function testGetRelationWithBadName()
     {
         $this->setExpectedException('Xyster_Orm_Relation_Exception');
-        $this->_meta->getRelation('foobar');
+        $this->object->getRelation('foobar');
     }
     
     /**
@@ -249,7 +248,7 @@ class Xyster_Orm_Entity_TypeTest extends Xyster_Orm_TestSetup
      */
     public function testGetRelations()
     {
-        $relations = $this->_meta->getRelations();
+        $relations = $this->object->getRelations();
         $this->assertType('array', $relations);
         foreach( $relations as $rel ) {
             $this->assertType('Xyster_Orm_Relation', $rel);
@@ -262,9 +261,9 @@ class Xyster_Orm_Entity_TypeTest extends Xyster_Orm_TestSetup
      */
     public function testGetRelationNames()
     {
-        $names = $this->_meta->getRelationNames();
+        $names = $this->object->getRelationNames();
         $this->assertType('array', $names);
-        $this->assertEquals($names, array_keys($this->_meta->getRelations()));
+        $this->assertEquals($names, array_keys($this->object->getRelations()));
     }
     
     /**
@@ -273,8 +272,8 @@ class Xyster_Orm_Entity_TypeTest extends Xyster_Orm_TestSetup
      */
     public function testIsRelation()
     {
-        $this->assertTrue($this->_meta->isRelation('assignee'));
-        $this->assertFalse($this->_meta->isRelation('foobar'));
+        $this->assertTrue($this->object->isRelation('assignee'));
+        $this->assertFalse($this->object->isRelation('foobar'));
     }
     
     public function testBelongsTo()
@@ -294,7 +293,7 @@ class Xyster_Orm_Entity_TypeTest extends Xyster_Orm_TestSetup
     
     public function testHasOne()
     {
-        $this->_meta->hasOne('reportingAccount', array('class'=>'MockAccount','id'=>'reportedBy'));
+        $this->object->hasOne('reportingAccount', array('class'=>'MockAccount','id'=>'reportedBy'));
     }
 
     /**
@@ -304,7 +303,7 @@ class Xyster_Orm_Entity_TypeTest extends Xyster_Orm_TestSetup
     public function testCreateExistingRelation()
     {
         $this->setExpectedException('Xyster_Orm_Relation_Exception');
-        $this->_meta->belongsTo('reporter', array('class'=>'MockAccount','id'=>'reportedBy'));
+        $this->object->belongsTo('reporter', array('class'=>'MockAccount','id'=>'reportedBy'));
     }
 }
 

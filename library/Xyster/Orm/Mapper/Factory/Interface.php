@@ -36,7 +36,7 @@ interface Xyster_Orm_Mapper_Factory_Interface
      * @param string $className The name of the entity class
      * @return Xyster_Orm_Entity_Type
      */
-    function getEntityMeta( $className );
+    function getEntityType( $className );
     /**
      * Gets the manager that contains the factory
      *

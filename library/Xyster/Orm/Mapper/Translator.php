@@ -75,7 +75,7 @@ class Xyster_Orm_Mapper_Translator extends Xyster_Db_Translator
 	    $this->_class = $className;
 	    $this->_mapFactory = $mapFactory;
 	    $map = $mapFactory->get($className);
-	    $this->aliasField(current($map->getEntityMeta()->getPrimary()));
+	    $this->aliasField(current($map->getEntityType()->getPrimary()));
 	}
 	
 	/**
@@ -99,7 +99,7 @@ class Xyster_Orm_Mapper_Translator extends Xyster_Db_Translator
 	{
         $factory = $this->_mapFactory;
         $className = $this->_class;
-        $currentMeta = $factory->getEntityMeta($className);
+        $currentMeta = $factory->getEntityType($className);
         
 		if ( $currentMeta->isRuntime(Xyster_Data_Field::named($field)) ) {
 			require_once 'Xyster/Orm/Mapper/Exception.php';
@@ -115,7 +115,7 @@ class Xyster_Orm_Mapper_Translator extends Xyster_Db_Translator
 			    if ( $currentMeta->isRelation($call) ) {
     				$prefixes[] = $call;
 				    $className = $currentMeta->getRelation($call)->getTo();
-				    $currentMeta = $factory->getEntityMeta($className);
+				    $currentMeta = $factory->getEntityType($className);
 			    }
 			}
 			$prefix = implode('->', $prefixes) . '->';
@@ -162,18 +162,18 @@ class Xyster_Orm_Mapper_Translator extends Xyster_Db_Translator
 
 				$prefixsofar .= $v.'->';
 				$fromMap = $factory->get($container);
-				$fromMeta = $fromMap->getEntityMeta();
+				$fromMeta = $fromMap->getEntityType();
 				$relation = $fromMeta->getRelation($v);
 				$class = $relation->getTo();
 				$toMap = $factory->get($class);
-				$alias = $this->aliasField($prefixsofar.current($toMap->getEntityMeta()->getPrimary()));
+				$alias = $this->aliasField($prefixsofar.current($toMap->getEntityType()->getPrimary()));
 
 				$binds = array();
 			    $localFrom = array();
 				
 				if (!in_array($prefixsofar, $joined)) {
 
-                    $keyMap = array_combine($relation->getId(), $toMap->getEntityMeta()->getPrimary());
+                    $keyMap = array_combine($relation->getId(), $toMap->getEntityType()->getPrimary());
 					foreach( $keyMap as $fromKey=>$toKey ) {
 					    $localFrom[] = $lastAlias . '.'
 							. $db->quoteIdentifier($fromMap->untranslateField($fromKey))
@@ -214,13 +214,13 @@ class Xyster_Orm_Mapper_Translator extends Xyster_Db_Translator
 		$className = $this->_class;
 		
 		$prefixes = Xyster_Orm_Xsql::splitArrow($field->getName());
-		$meta = $factory->getEntityMeta($className);
+		$meta = $factory->getEntityType($className);
 
 		if ( count($prefixes) > 1 ) {
 			foreach( $prefixes as $call ) {
 				if ( $meta->isRelation($call) ) {
 					$className = $meta->getRelation($call)->getTo();
-		            $meta = $factory->getEntityMeta($className);
+		            $meta = $factory->getEntityType($className);
 				}
 			}
 		}

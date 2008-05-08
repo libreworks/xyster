@@ -76,7 +76,7 @@ class Xyster_Orm_Mapper_AbstractTest extends PHPUnit_Framework_TestCase
             $manager->setMapperFactory($this->_mockFactory);
             Xyster_Orm_Loader::loadMapperClass('MockBugProduct');
             Xyster_Orm_Loader::loadSetClass('MockBugProduct');
-            $this->_mockFactory()->getEntityMeta('MockBugProduct');
+            $this->_mockFactory()->getEntityType('MockBugProduct');
         }
         return $this->_mockFactory;
     }

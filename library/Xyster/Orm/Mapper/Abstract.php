@@ -127,7 +127,7 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
     {
         $this->_factory = $factory;
         
-        $this->getEntityMeta(); // to assign the meta data to the entity class
+        $this->getEntityType(); // to assign the meta data to the entity class
         $this->getSet(); // to make sure the class is defined
     }
     
@@ -157,7 +157,7 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
         $this->_delete($entity->getPrimaryKeyAsCriterion());
         $broker->postDelete($entity);
         
-        $relations = $this->getEntityMeta()->getRelations();
+        $relations = $this->getEntityType()->getRelations();
         foreach( $relations as $relation ) { /* @var $relation Xyster_Orm_Relation */
             if ( $relation->getType() == 'many' ) {
                 $onDelete = $relation->getOnDelete();
@@ -195,7 +195,7 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
      */
     final public function get( $id )
     {
-        $keyNames = $this->getEntityMeta()->getPrimary();
+        $keyNames = $this->getEntityType()->getPrimary();
         $keyValues = array();
         
 	    if ( count($keyNames) > 1 ) {
@@ -231,7 +231,7 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
      *
      * @return Xyster_Orm_Entity_Type
      */
-    final public function getEntityMeta()
+    final public function getEntityType()
     {
         if ( !$this->_meta ) {
             $this->_meta = new Xyster_Orm_Entity_Type($this);
@@ -348,7 +348,7 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
         /*
 		 * Step 1: Sets ids for any single-entity relationships 
 		 */
-		foreach( $this->getEntityMeta()->getRelations() as $k=>$v ) {
+		foreach( $this->getEntityType()->getRelations() as $k=>$v ) {
 		    /* @var $v Xyster_Orm_Relation */
 			if ( !$v->isCollection() && $entity->isLoaded($k) && $entity->$k !== null ) {
 				$linked = $entity->$k; /* @var $linked Xyster_Orm_Entity */
@@ -396,7 +396,7 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
         /*
 		 * Step 3: work with many and joined relationships
 		 */
-		foreach( $this->getEntityMeta()->getRelations() as $k=>$relation ) {
+		foreach( $this->getEntityType()->getRelations() as $k=>$relation ) {
 		    /* @var $relation Xyster_Orm_Relation */
             if ( $relation->isCollection() && ( $updatedKey
 			    || $entity->isLoaded($k) ) ) {
@@ -525,7 +525,7 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
      */
     final protected function _belongsTo( $name, array $options = array() )
     {
-        $this->getEntityMeta()->belongsTo($name, $options);
+        $this->getEntityType()->belongsTo($name, $options);
         return $this;
     }
     
@@ -574,7 +574,7 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
      */
     protected function _checkPrimaryKey( $id )
     {
-        $keyNames = $this->getEntityMeta()->getPrimary();
+        $keyNames = $this->getEntityType()->getPrimary();
         
         if ( (!is_array($id) && count($keyNames) > 1) || count($id) != count($keyNames)) {
             require_once 'Xyster/Orm/Mapper/Exception.php';
@@ -604,7 +604,7 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
     protected function _checkPropertyNames( array $criteria )
     {
         // get the array of Xyster_Orm_Entity_Field objects
-        $fields = $this->getEntityMeta()->getFieldNames();
+        $fields = $this->getEntityType()->getFieldNames();
         
         foreach( $criteria as $k => $v ) { 
             if ( !in_array($k, $fields) ) {
@@ -633,7 +633,7 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
         
         $manager = $this->_factory->getManager();
         $primary = array_intersect_key($row,
-            array_flip($this->getEntityMeta()->getPrimary()));
+            array_flip($this->getEntityType()->getPrimary()));
         $loaded = $manager->getFromCache($entityName, $primary);
         if ( $loaded instanceof Xyster_Orm_Entity ) {
             return $loaded;
@@ -654,7 +654,7 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
      */
     final protected function _hasJoined( $name, array $options = array() )
     {
-        $this->getEntityMeta()->hasJoined($name, $options);
+        $this->getEntityType()->hasJoined($name, $options);
         return $this;
     }
     
@@ -668,7 +668,7 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
      */ 
     final protected function _hasMany( $name, array $options = array() )
     {
-        $this->getEntityMeta()->hasMany($name, $options);
+        $this->getEntityType()->hasMany($name, $options);
         return $this;
     }
         
@@ -682,7 +682,7 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
      */
     final protected function _hasOne( $name, array $options = array() )
     {
-        $this->getEntityMeta()->hasOne($name, $options);
+        $this->getEntityType()->hasOne($name, $options);
         return $this;
     }
 }

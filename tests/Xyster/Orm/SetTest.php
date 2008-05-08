@@ -181,7 +181,7 @@ class Xyster_Orm_SetTest extends Xyster_Orm_TestSetup
         
         $mf = $this->_mockFactory();
         $map = $mf->get('MockAccount');
-        $meta = $map->getEntityMeta();
+        $meta = $map->getEntityType();
         $relation = $meta->getRelation('reported');
         $entity = $this->_getMockEntity();
 

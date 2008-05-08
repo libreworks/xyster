@@ -62,7 +62,7 @@ class Xyster_Orm_Mapper_FactoryTest extends PHPUnit_Framework_TestCase
      */
     public function testGetEntityMeta()
     {
-        $meta = $this->_factory->getEntityMeta('MockBugProduct');
+        $meta = $this->_factory->getEntityType('MockBugProduct');
         $this->assertType('Xyster_Orm_Entity_Type', $meta);
     }
 

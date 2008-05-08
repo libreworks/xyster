@@ -84,7 +84,7 @@ class Xyster_Orm_Query
         $this->_class = $class;
         $this->_manager = $manager;
         $this->_initParts();
-        $this->_meta = $manager->getMapperFactory()->getEntityMeta($class);
+        $this->_meta = $manager->getMapperFactory()->getEntityType($class);
     }
     
     /**

@@ -149,7 +149,7 @@ class Xyster_Orm_Relation
 		    // if it's a one-to-many, we're just using the declaring class' key
 	        // if it's a one-to-one, we need the related class' key
 		    $meta = ( $type == 'many' ) ? $meta :
-		        $this->_mapFactory->getEntityMeta($class);
+		        $this->_mapFactory->getEntityType($class);
 	        $id = $meta->getPrimary();
 		}
 		if ( $type != 'joined' && !is_array($id) ) {
@@ -179,8 +179,8 @@ class Xyster_Orm_Relation
 		if ( $type == 'joined' ) {
 			$leftMap = $this->_mapFactory->get($declaringClass);
 			$rightMap = $this->_mapFactory->get($class);
-			$leftMeta = $leftMap->getEntityMeta();
-			$rightMeta = $rightMap->getEntityMeta();
+			$leftMeta = $leftMap->getEntityType();
+			$rightMeta = $rightMap->getEntityType();
 
 			$this->_joinTable = array_key_exists('table', $options) ? 
 			    $options['table'] : $leftMap->getTable().'_'.$rightMap->getTable();
@@ -337,7 +337,7 @@ class Xyster_Orm_Relation
         }
         
         if ( $this->_reverse === null ) {
-            $meta = $this->_mapFactory->getEntityMeta($this->_to);
+            $meta = $this->_mapFactory->getEntityType($this->_to);
 	        foreach( $meta->getRelations() as $relation ) {
 	            /* @var $relation Xyster_Orm_Relation */
 	            if ( $relation->_type == 'belongs'
@@ -398,7 +398,7 @@ class Xyster_Orm_Relation
 		     * A one-to-one
 		     */
             $key = array();
-            $keys = $this->_mapFactory->getEntityMeta($this->_to)->getPrimary();
+            $keys = $this->_mapFactory->getEntityType($this->_to)->getPrimary();
             foreach( $this->_id as $i => $name ) {
                 $key[$keys[$i]] = $entity->$name;
             }

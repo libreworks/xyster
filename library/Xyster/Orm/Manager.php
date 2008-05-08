@@ -149,7 +149,7 @@ class Xyster_Orm_Manager
         $map = $this->getMapperFactory()->get($className);
         
         if ( is_scalar($id) || is_null($id) ) {
-            $keyNames = $map->getEntityMeta()->getPrimary();
+            $keyNames = $map->getEntityType()->getPrimary();
             $id = array( $keyNames[0] => $id );
         }
         
@@ -183,7 +183,7 @@ class Xyster_Orm_Manager
             // we're getting a few entities by primary key
 
             if ( $this->getRepository()->hasAll($className) ) {
-                $keyNames = $map->getEntityMeta()->getPrimary();
+                $keyNames = $map->getEntityType()->getPrimary();
                 $all = $map->getSet();
                 foreach( $ids as $id ) {
                     if ( is_scalar($id) ) {
@@ -235,7 +235,7 @@ class Xyster_Orm_Manager
         $map = $this->getMapperFactory()->get($className);
         
         if ( is_scalar($id) || is_null($id) ) {
-            $keyNames = $map->getEntityMeta()->getPrimary();
+            $keyNames = $map->getEntityType()->getPrimary();
             $id = array( $keyNames[0] => $id );
         }
         
@@ -372,7 +372,7 @@ class Xyster_Orm_Manager
             
             $loaded = $cache->load($cacheId);
             if ( is_array($loaded) ) {
-                $entity = $this->_shellToEntity($loaded, $map->getEntityMeta());
+                $entity = $this->_shellToEntity($loaded, $map->getEntityType());
             }
         }
         return $entity;
@@ -399,7 +399,7 @@ class Xyster_Orm_Manager
                 $cacheId[] = $key . '=' . $value;
             }
             $cacheId = md5(implode("/", $cacheId));
-            $shell = $this->_entityToShell($entity, $map->getEntityMeta());
+            $shell = $this->_entityToShell($entity, $map->getEntityType());
             $cache->save($shell, $cacheId, array(), $cacheLifetime);
         }
     }

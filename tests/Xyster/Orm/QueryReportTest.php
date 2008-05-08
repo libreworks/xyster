@@ -286,7 +286,7 @@ class Xyster_Orm_Query_ReportTest extends Xyster_Orm_QueryTest
             Xyster_Data_Expression::lt('min(createdOn)','2007-01-01')
             );
             
-        $meta = $this->_mockFactory()->getEntityMeta('MockBug');
+        $meta = $this->_mockFactory()->getEntityType('MockBug');
         
         foreach( $having as $criterion ) {
             $return = $this->_query->having($criterion);

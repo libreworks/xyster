@@ -36,7 +36,7 @@ class Xyster_Orm_RelationTest extends Xyster_Orm_TestSetup
     public function testInvalidType()
     {
         $this->setExpectedException('Xyster_Orm_Relation_Exception');
-        $rel = new Xyster_Orm_Relation($this->_mockFactory()->getEntityMeta('MockBug'), 'Foobar', 'relationship');
+        $rel = new Xyster_Orm_Relation($this->_mockFactory()->getEntityType('MockBug'), 'Foobar', 'relationship');
     }
     
     /**
@@ -58,7 +58,7 @@ class Xyster_Orm_RelationTest extends Xyster_Orm_TestSetup
             'right' => 'product_id'
         );
 
-        $meta = $this->_mockFactory()->getEntityMeta('MockBug');
+        $meta = $this->_mockFactory()->getEntityType('MockBug');
         $relation = new Xyster_Orm_Relation($meta, $type, $name, $options);
 
         $this->assertEquals($name, $relation->getName());
@@ -89,7 +89,7 @@ class Xyster_Orm_RelationTest extends Xyster_Orm_TestSetup
             'onUpdate' => Xyster_Orm_Relation::ACTION_NONE    
         );
 
-        $meta = $this->_mockFactory()->getEntityMeta('MockAccount');
+        $meta = $this->_mockFactory()->getEntityType('MockAccount');
         $relation = new Xyster_Orm_Relation($meta, $type, $name, $options);
 
         $this->assertEquals($name, $relation->getName());
@@ -108,7 +108,7 @@ class Xyster_Orm_RelationTest extends Xyster_Orm_TestSetup
      */
     public function testAutoClassNameOne()
     {
-        $meta = $this->_mockFactory()->getEntityMeta('MockBug');
+        $meta = $this->_mockFactory()->getEntityType('MockBug');
         $relation = new Xyster_Orm_Relation($meta, 'one', 'mockAccount', array('id'=>'assignedTo'));
         
         $this->assertEquals('MockAccount', $relation->getTo());
@@ -120,7 +120,7 @@ class Xyster_Orm_RelationTest extends Xyster_Orm_TestSetup
      */
     public function testAutoClassNameMany()
     {
-        $meta = $this->_mockFactory()->getEntityMeta('MockBug');
+        $meta = $this->_mockFactory()->getEntityType('MockBug');
         $relation = new Xyster_Orm_Relation($meta, 'many', 'mockProducts');
         
         $this->assertEquals('MockProduct', $relation->getTo());
@@ -132,7 +132,7 @@ class Xyster_Orm_RelationTest extends Xyster_Orm_TestSetup
      */
     public function testWrongCountForLeftJoinedKeys()
     {
-        $meta = $this->_mockFactory()->getEntityMeta('MockBug');
+        $meta = $this->_mockFactory()->getEntityType('MockBug');
         
         $this->setExpectedException('Xyster_Orm_Relation_Exception');
         $relation = new Xyster_Orm_Relation($meta, 'joined', 'listOfProducts',
@@ -145,7 +145,7 @@ class Xyster_Orm_RelationTest extends Xyster_Orm_TestSetup
      */
     public function testWrongCountForRightJoinedKeys()
     {
-        $meta = $this->_mockFactory()->getEntityMeta('MockBug');
+        $meta = $this->_mockFactory()->getEntityType('MockBug');
         
         $this->setExpectedException('Xyster_Orm_Relation_Exception');
         $relation = new Xyster_Orm_Relation($meta, 'joined', 'listOfProducts',
@@ -160,8 +160,8 @@ class Xyster_Orm_RelationTest extends Xyster_Orm_TestSetup
      */
     public function testIsCollection()
     {
-        $bugMeta = $this->_mockFactory()->getEntityMeta('MockBug');
-        $accountMeta = $this->_mockFactory()->getEntityMeta('MockAccount');
+        $bugMeta = $this->_mockFactory()->getEntityType('MockBug');
+        $accountMeta = $this->_mockFactory()->getEntityType('MockAccount');
         
         $one = new Xyster_Orm_Relation($bugMeta, 'one', 'reporter', array('class'=>'MockAccount'));
         
@@ -179,7 +179,7 @@ class Xyster_Orm_RelationTest extends Xyster_Orm_TestSetup
      */
     public function testGetReverse()
     {
-        $accountMeta = $this->_mockFactory()->getEntityMeta('MockAccount');
+        $accountMeta = $this->_mockFactory()->getEntityType('MockAccount');
         
         $relation = $accountMeta->getRelation('reported');
         
@@ -194,7 +194,7 @@ class Xyster_Orm_RelationTest extends Xyster_Orm_TestSetup
      */
     public function testGetReverseNotMany()
     {
-        $bugMeta = $this->_mockFactory()->getEntityMeta('MockBug');
+        $bugMeta = $this->_mockFactory()->getEntityType('MockBug');
         $one = new Xyster_Orm_Relation($bugMeta, 'one', 'reporter', array('class'=>'MockAccount'));
         
         $this->setExpectedException('Xyster_Orm_Relation_Exception');
@@ -207,7 +207,7 @@ class Xyster_Orm_RelationTest extends Xyster_Orm_TestSetup
      */
     public function testGetReverseNotThere()
     {
-        $meta = $this->_mockFactory()->getEntityMeta('MockProduct');
+        $meta = $this->_mockFactory()->getEntityType('MockProduct');
         $meta->hasMany('mockBugProducts');
         
         $relation = $meta->getRelation('mockBugProducts');
@@ -224,7 +224,7 @@ class Xyster_Orm_RelationTest extends Xyster_Orm_TestSetup
     {
         $manager = $this->_mockFactory()->getManager();
         $account = $manager->get('MockAccount', 'doublecompile');
-        $meta = $this->_mockFactory()->getEntityMeta('MockAccount');
+        $meta = $this->_mockFactory()->getEntityType('MockAccount');
         $reported = $meta->getRelation('verified');
         $bug = $this->_getMockEntity();
         
@@ -248,7 +248,7 @@ class Xyster_Orm_RelationTest extends Xyster_Orm_TestSetup
 
         $bug = $this->_getMockEntity();
         
-        $meta = $this->_mockFactory()->getEntityMeta('MockBug');
+        $meta = $this->_mockFactory()->getEntityType('MockBug');
         $reported = $meta->getRelation('reporter');
         
         $this->setExpectedException('Xyster_Orm_Relation_Exception');
@@ -263,7 +263,7 @@ class Xyster_Orm_RelationTest extends Xyster_Orm_TestSetup
     {
         $bug = $this->_getMockEntity();
         
-        $meta = $this->_mockFactory()->getEntityMeta('MockAccount');
+        $meta = $this->_mockFactory()->getEntityType('MockAccount');
         $reported = $meta->getRelation('reported');
         
         $this->setExpectedException('Xyster_Orm_Relation_Exception');
@@ -279,7 +279,7 @@ class Xyster_Orm_RelationTest extends Xyster_Orm_TestSetup
         $manager = $this->_mockFactory()->getManager();
         $account = $manager->get('MockAccount', 'doublecompile');
                 
-        $meta = $this->_mockFactory()->getEntityMeta('MockAccount');
+        $meta = $this->_mockFactory()->getEntityType('MockAccount');
         $reported = $meta->getRelation('reported');
         
         $this->setExpectedException('Xyster_Orm_Relation_Exception');
@@ -294,7 +294,7 @@ class Xyster_Orm_RelationTest extends Xyster_Orm_TestSetup
     public function testLoadOne()
     {
         $bug = $this->_getMockEntity();
-        $meta = $this->_mockFactory()->getEntityMeta('MockBug');
+        $meta = $this->_mockFactory()->getEntityType('MockBug');
         $relation = $meta->getRelation('reporter');
         
         $account = $relation->load($bug);
@@ -312,7 +312,7 @@ class Xyster_Orm_RelationTest extends Xyster_Orm_TestSetup
         
         $account = $manager->get('MockAccount', 'mmouse');
         
-        $meta = $this->_mockFactory()->getEntityMeta('MockAccount');
+        $meta = $this->_mockFactory()->getEntityType('MockAccount');
         $relation = $meta->getRelation('assigned');
         
         $bugs = $relation->load($account);
@@ -331,7 +331,7 @@ class Xyster_Orm_RelationTest extends Xyster_Orm_TestSetup
     {
         $account = new MockAccount();
                 
-        $meta = $this->_mockFactory()->getEntityMeta('MockAccount');
+        $meta = $this->_mockFactory()->getEntityType('MockAccount');
         $relation = $meta->getRelation('reported');
         
         $set = $relation->load($account);
@@ -348,7 +348,7 @@ class Xyster_Orm_RelationTest extends Xyster_Orm_TestSetup
     {
         $bug = $this->_getMockEntity();
         
-        $meta = $this->_mockFactory()->getEntityMeta('MockBug');
+        $meta = $this->_mockFactory()->getEntityType('MockBug');
         $relation = $meta->getRelation('products');
         
         $products = $relation->load($bug);

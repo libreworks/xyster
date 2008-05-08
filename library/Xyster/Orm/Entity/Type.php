@@ -14,6 +14,10 @@
  * @version   $Id$
  */
 /**
+ * @see Xyster_Type
+ */
+require_once 'Xyster/Type.php';
+/**
  * @see Xyster_Orm_Entity_Field
  */
 require_once 'Xyster/Orm/Entity/Field.php';
@@ -29,13 +33,8 @@ require_once 'Xyster/Orm/Xsql.php';
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Orm_Entity_Type
-{
-	/**
-	 * @var string
-	 */
-    protected $_class;
-    
+class Xyster_Orm_Entity_Type extends Xyster_Type
+{    
     /**
      * Cache for entity fields
      *
@@ -79,13 +78,13 @@ class Xyster_Orm_Entity_Type
     protected $_runtime = array();
 
     /**
-     * Creates a new Entity Metadata helper
+     * Creates a new Entity type representation
      *
-     * @param Xyster_Orm_Mapper $map
+     * @param Xyster_Orm_Mapper_Interface $map
      */
     public function __construct( Xyster_Orm_Mapper_Interface $map )
     {
-        $this->_class = $map->getEntityName();
+        parent::__construct($map->getEntityName());
         $this->_mapFactory = $map->getFactory();
 
         foreach( $map->getFields() as $name => $values ) {
@@ -124,7 +123,7 @@ class Xyster_Orm_Entity_Type
         */
         if ( count($calls) > 1 ) {
             
-            $container = $this->_class;
+            $container = $this->getName();
             $meta = $this;
             foreach( $calls as $k=>$v ) {
                 $meta->assertValidField($v);
@@ -132,7 +131,7 @@ class Xyster_Orm_Entity_Type
                     $details = $meta->getRelation($v);
                     if ( !$details->isCollection() ) {
                         $container = $details->getTo();
-                        $meta = $this->_mapFactory->getEntityMeta($container);
+                        $meta = $this->_mapFactory->getEntityType($container);
                     } else {
                         break;
                     }
@@ -151,7 +150,7 @@ class Xyster_Orm_Entity_Type
             if ( preg_match("/^(?P<name>[a-z0-9_]+)(?P<meth>\((?P<args>[\w\W]*)\))$/i", $field, $matches) ) {
                 if ( !in_array($matches['name'], $this->getMembers()) ) {
                     require_once 'Xyster/Orm/Entity/Exception.php';
-                    throw new Xyster_Orm_Entity_Exception($matches['name'] . ' is not a member of the ' . $this->_class . ' class' );
+                    throw new Xyster_Orm_Entity_Exception($matches['name'] . ' is not a member of the ' . $this->getName() . ' class' );
                 }
                 if ( strlen(trim($matches['args'])) ) {
                     foreach( Xyster_Orm_Xsql::splitComma($matches['args']) as $v ) {
@@ -166,7 +165,7 @@ class Xyster_Orm_Entity_Type
             */
             } else if ( !in_array($field, $this->getMembers()) ) {
                 require_once 'Xyster/Orm/Entity/Exception.php';
-                throw new Xyster_Orm_Entity_Exception($field . ' is not a member of the ' . $this->_class . ' class');
+                throw new Xyster_Orm_Entity_Exception($field . ' is not a member of the ' . $this->getName() . ' class');
             }
         }
     }
@@ -201,7 +200,7 @@ class Xyster_Orm_Entity_Type
      */
     public function getEntityName()
     {
-        return $this->_class;
+        return $this->getName();
     }
     
     /**
@@ -244,7 +243,7 @@ class Xyster_Orm_Entity_Type
         if ( !$this->_members ) {
             $this->_members = array_merge($this->_members, array_keys($this->_fields));
             $this->_members = array_merge($this->_members, $this->getRelationNames());
-            $this->_members = array_merge($this->_members, get_class_methods($this->_class));
+            $this->_members = array_merge($this->_members, get_class_methods($this->getName()));
         }
         return $this->_members;
     }
@@ -272,7 +271,7 @@ class Xyster_Orm_Entity_Type
         if ( !$this->isRelation($name) ) {
             require_once 'Xyster/Orm/Relation/Exception.php';
             throw new Xyster_Orm_Relation_Exception("'" . $name
-                . "' is not a valid relation for the '" . $this->_class . "' class");
+                . "' is not a valid relation for the '" . $this->getName() . "' class");
         }
 
         return $this->_relations[$name];
@@ -429,7 +428,7 @@ class Xyster_Orm_Entity_Type
      */
     protected function _baseCreate( $type, $name, array $options )
     {
-        $declaringClass = $this->_class;
+        $declaringClass = $this->getName();
         
         if ( array_key_exists($name, $this->_relations) ) {
             require_once 'Xyster/Orm/Relation/Exception.php';
@@ -464,7 +463,7 @@ class Xyster_Orm_Entity_Type
             
             // the call is composite - loop through to see if we can figure 
             // out the type bindings
-            $container = $this->_class;
+            $container = $this->getName();
             $meta = $this;
             foreach( $calls as $call ) {
                 if ( Xyster_Orm_Xsql::isMethodCall($call) ) {
@@ -476,7 +475,7 @@ class Xyster_Orm_Entity_Type
                         return true;
                     } else if ( $isRel ) {
                         $container = $meta->getRelation($call)->getTo();
-                        $meta = $this->_mapFactory->getEntityMeta($container);
+                        $meta = $this->_mapFactory->getEntityType($container);
                     }
                 }
             }

@@ -69,12 +69,12 @@ class Xyster_Orm_Entity
      */
     public function __construct( array $values = null )
     {
-        if (! $this->_getMeta() instanceof Xyster_Orm_Entity_Type ) {
+        if (! $this->_getType() instanceof Xyster_Orm_Entity_Type ) {
             require_once 'Xyster/Orm/Entity/Exception.php';
             throw new Xyster_Orm_Entity_Exception('The metadata for ' . get_class($this) . 'has not been setup');
         }
 
-        foreach( $this->_getMeta()->getFieldNames() as $name ) {
+        foreach( $this->_getType()->getFieldNames() as $name ) {
             $this->_values[$name] = null;
         }
 
@@ -133,7 +133,7 @@ class Xyster_Orm_Entity
     public function __get( $name )
     {
         $isField = array_key_exists($name, $this->_values); 
-        if ( !$isField && !$this->_getMeta()->isRelation($name) ) {
+        if ( !$isField && !$this->_getType()->isRelation($name) ) {
             require_once 'Xyster/Orm/Entity/Exception.php';
             throw new Xyster_Orm_Entity_Exception("'" . $name . "' is not a valid field or relation name");
         }
@@ -209,7 +209,7 @@ class Xyster_Orm_Entity
     public function getPrimaryKey( $base = false )
     {
         return array_intersect_key((!$base ? $this->_values : $this->_base),
-            array_flip($this->_getMeta()->getPrimary()));
+            array_flip($this->_getType()->getPrimary()));
     }
 
     /**
@@ -304,7 +304,7 @@ class Xyster_Orm_Entity
      */
     public function isLoaded( $name )
     {
-        $this->_getMeta()->getRelation($name); // to test validity
+        $this->_getType()->getRelation($name); // to test validity
 	    return array_key_exists($name, $this->_related);
     }
     
@@ -362,7 +362,7 @@ class Xyster_Orm_Entity
     protected function _getRelated( $name )
     {
         if ( !array_key_exists($name, $this->_related) ) {
-            $this->_related[$name] = $this->_getMeta()->getRelation($name)->load($this);
+            $this->_related[$name] = $this->_getType()->getRelation($name)->load($this);
         }
         return $this->_related[$name];
     }
@@ -392,7 +392,7 @@ class Xyster_Orm_Entity
      */
     protected function _setRelated( $name, $value )
     {
-        $info = $this->_getMeta()->getRelation($name);
+        $info = $this->_getType()->getRelation($name);
         $class = $info->getTo();
 
         if ( !$info->isCollection() ) {
@@ -401,7 +401,7 @@ class Xyster_Orm_Entity
                 throw new Xyster_Orm_Exception("'" . $name . "' must be an instance of '" . $class . "'");
             }
         } else {
-            $setClass = get_class($this->_getMeta()->getMapperFactory()->get($class)->getSet());
+            $setClass = get_class($this->_getType()->getMapperFactory()->get($class)->getSet());
             if (! $value instanceof $setClass ) {
                 require_once 'Xyster/Orm/Exception.php';
                 throw new Xyster_Orm_Exception("'" . $name . "' must be an instance of '" . $setClass . "'");
@@ -440,11 +440,11 @@ class Xyster_Orm_Entity
     }
     
     /**
-     * Gets the entity meta
+     * Gets the entity type
      * 
      * @return Xyster_Orm_Entity_Type
      */
-    protected function _getMeta()
+    protected function _getType()
     {
         $class = get_class($this);
         return array_key_exists($class, self::$_meta) ?

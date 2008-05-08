@@ -78,7 +78,7 @@ interface Xyster_Orm_Mapper_Interface
      *
      * @return Xyster_Orm_Entity_Type
      */
-    function getEntityMeta();
+    function getEntityType();
     /**
      * Gets the class name of the entity
      *
