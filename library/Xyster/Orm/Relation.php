@@ -124,7 +124,7 @@ class Xyster_Orm_Relation
 	 * @param string $name  The name of the relationship
 	 * @param array $options  An array of options
 	 */
-	public function __construct( Xyster_Orm_Entity_Meta $meta, $type, $name, array $options = array() )
+	public function __construct( Xyster_Orm_Entity_Type $meta, $type, $name, array $options = array() )
 	{	
 	    $declaringClass = $meta->getEntityName();
 	    $this->_mapFactory = $meta->getMapperFactory();

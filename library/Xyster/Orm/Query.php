@@ -63,7 +63,7 @@ class Xyster_Orm_Query
     /**
      * The entity meta
      *
-     * @var Xyster_Orm_Entity_Meta
+     * @var Xyster_Orm_Entity_Type
      */
     protected $_meta;
     

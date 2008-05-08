@@ -34,7 +34,7 @@ interface Xyster_Orm_Mapper_Factory_Interface
      * A convenience method to get the entity meta for a given class
      *
      * @param string $className The name of the entity class
-     * @return Xyster_Orm_Entity_Meta
+     * @return Xyster_Orm_Entity_Type
      */
     function getEntityMeta( $className );
     /**

@@ -76,7 +76,7 @@ interface Xyster_Orm_Mapper_Interface
     /**
      * Gets the entity metadata
      *
-     * @return Xyster_Orm_Entity_Meta
+     * @return Xyster_Orm_Entity_Type
      */
     function getEntityMeta();
     /**

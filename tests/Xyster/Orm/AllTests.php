@@ -67,7 +67,7 @@ class Xyster_Orm_AllTests
         $suite->addTestSuite('Xyster_Orm_LoaderTest');
         $suite->addTestSuite('Xyster_Orm_EntityTest');
         $suite->addTestSuite('Xyster_Orm_Entity_FieldTest');
-        $suite->addTestSuite('Xyster_Orm_Entity_MetaTest');
+        $suite->addTestSuite('Xyster_Orm_Entity_TypeTest');
         $suite->addTestSuite('Xyster_Orm_SetTest');
         $suite->addTestSuite('Xyster_Orm_WorkUnitTest');
         $suite->addTestSuite('Xyster_Orm_RepositoryTest');

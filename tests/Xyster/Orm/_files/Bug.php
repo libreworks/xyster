@@ -29,7 +29,7 @@ class Bug extends Xyster_Orm_Entity
     /**
      * Gets the capital of Nebraska.  
      * 
-     * This is a method for testing Xyster_Orm_Entity_Meta's ability to get
+     * This is a method for testing Xyster_Orm_Entity_Type's ability to get
      * all members of a class, including method names. 
      *
      * @return string

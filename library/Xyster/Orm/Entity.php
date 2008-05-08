@@ -58,7 +58,7 @@ class Xyster_Orm_Entity
     /**
      * Entity meta-data (fields, relations, etc.)
      *
-     * @var Xyster_Orm_Entity_Meta[]
+     * @var Xyster_Orm_Entity_Type[]
      */
     static private $_meta = array();
     
@@ -69,7 +69,7 @@ class Xyster_Orm_Entity
      */
     public function __construct( array $values = null )
     {
-        if (! $this->_getMeta() instanceof Xyster_Orm_Entity_Meta ) {
+        if (! $this->_getMeta() instanceof Xyster_Orm_Entity_Type ) {
             require_once 'Xyster/Orm/Entity/Exception.php';
             throw new Xyster_Orm_Entity_Exception('The metadata for ' . get_class($this) . 'has not been setup');
         }
@@ -88,9 +88,9 @@ class Xyster_Orm_Entity
      * 
      * This shouldn't be called except by the Xyster_Orm_Mapper
      * 
-     * @param Xyster_Orm_Entity_Meta $meta
+     * @param Xyster_Orm_Entity_Type $meta
      */
-    static public function setMeta( Xyster_Orm_Entity_Meta $meta )
+    static public function setMeta( Xyster_Orm_Entity_Type $meta )
     {
         self::$_meta[ $meta->getEntityName() ] = $meta;
     }
@@ -442,7 +442,7 @@ class Xyster_Orm_Entity
     /**
      * Gets the entity meta
      * 
-     * @return Xyster_Orm_Entity_Meta
+     * @return Xyster_Orm_Entity_Type
      */
     protected function _getMeta()
     {

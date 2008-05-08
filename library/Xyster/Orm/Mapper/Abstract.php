@@ -26,9 +26,9 @@ require_once 'Xyster/Orm/Mapper/Interface.php';
  */
 require_once 'Xyster/Orm/Entity.php';
 /**
- * @see Xyster_Orm_Entity_Meta
+ * @see Xyster_Orm_Entity_Type
  */
-require_once 'Xyster/Orm/Entity/Meta.php';
+require_once 'Xyster/Orm/Entity/Type.php';
 /**
  * Zend_Filter
  */
@@ -88,7 +88,7 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
     /**
      * The class meta data
      *
-     * @var Xyster_Orm_Entity_Meta
+     * @var Xyster_Orm_Entity_Type
      */
     private $_meta;
     
@@ -229,12 +229,12 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
     /**
      * Gets the entity metadata
      *
-     * @return Xyster_Orm_Entity_Meta
+     * @return Xyster_Orm_Entity_Type
      */
     final public function getEntityMeta()
     {
         if ( !$this->_meta ) {
-            $this->_meta = new Xyster_Orm_Entity_Meta($this);
+            $this->_meta = new Xyster_Orm_Entity_Type($this);
             Xyster_Orm_Entity::setMeta($this->_meta);
         }
         return $this->_meta;
@@ -518,7 +518,7 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
     /**
      * Convenience method to create a 'belongs' relationship
      * 
-     * @see Xyster_Orm_Entity_Meta::belongsTo
+     * @see Xyster_Orm_Entity_Type::belongsTo
      * @param string $name The name of the relationship
      * @param array $options An array of options
      * @return Xyster_Orm_Mapper_Abstract provides a fluent interface
@@ -647,7 +647,7 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
     /**
      * Convenience method to create a 'many to many' relationship
      * 
-     * @see Xyster_Orm_Entity_Meta::hasJoined
+     * @see Xyster_Orm_Entity_Type::hasJoined
      * @param string $name The name of the relationship
      * @param array $options An array of options
      * @return Xyster_Orm_Mapper_Abstract provides a fluent interface
@@ -661,7 +661,7 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
     /**
      * Convenience method to create a 'one to many' relationship 
      * 
-     * @see Xyster_Orm_Entity_Meta::hasMany
+     * @see Xyster_Orm_Entity_Type::hasMany
      * @param string $name The name of the relationship
      * @param array $options An array of options
      * @return Xyster_Orm_Mapper_Abstract provides a fluent interface 
@@ -675,7 +675,7 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
     /**
      * Convenience method to create a 'one to one' relationship
      * 
-     * @see Xyster_Orm_Entity_Meta::hasOne
+     * @see Xyster_Orm_Entity_Type::hasOne
      * @param string $name The name of the relationship
      * @param array $options An array of options
      * @return Xyster_Orm_Mapper_Abstract provides a fluent interface

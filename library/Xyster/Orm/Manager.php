@@ -420,10 +420,10 @@ class Xyster_Orm_Manager
      * Turns an entity into a shell for storage
      *
      * @param Xyster_Orm_Entity $entity
-     * @param Xyster_Orm_Entity_Meta $meta
+     * @param Xyster_Orm_Entity_Type $meta
      * @return array
      */
-    final protected function _entityToShell( Xyster_Orm_Entity $entity, Xyster_Orm_Entity_Meta $meta )
+    final protected function _entityToShell( Xyster_Orm_Entity $entity, Xyster_Orm_Entity_Type $meta )
     {
         $related = array();
         foreach( $meta->getRelations() as $relation ) {
@@ -449,7 +449,7 @@ class Xyster_Orm_Manager
      * @param array $shell
      * @return Xyster_Orm_Entity
      */
-    final protected function _shellToEntity( array $shell, Xyster_Orm_Entity_Meta $meta )
+    final protected function _shellToEntity( array $shell, Xyster_Orm_Entity_Type $meta )
     {
         if ( !isset($shell['values']) ) {
             return;

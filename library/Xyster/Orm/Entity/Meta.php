@@ -29,7 +29,7 @@ require_once 'Xyster/Orm/Xsql.php';
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Orm_Entity_Meta
+class Xyster_Orm_Entity_Type
 {
 	/**
 	 * @var string

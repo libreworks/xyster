@@ -15,25 +15,25 @@
  * @version   $Id$
  */
 
-// Call Xyster_Orm_Entity_MetaTest::main() if this source file is executed directly.
+// Call Xyster_Orm_Entity_TypeTest::main() if this source file is executed directly.
 if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'Xyster_Orm_Entity_MetaTest::main');
+    define('PHPUnit_MAIN_METHOD', 'Xyster_Orm_Entity_TypeTest::main');
 }
 
 /**
  * PHPUnit test case
  */
 require_once dirname(__FILE__) . '/TestSetup.php';
-require_once 'Xyster/Orm/Entity/Meta.php';
+require_once 'Xyster/Orm/Entity/Type.php';
 
 /**
  * Test for Xyster_Orm_Entity_Field
  *
  */
-class Xyster_Orm_Entity_MetaTest extends Xyster_Orm_TestSetup
+class Xyster_Orm_Entity_TypeTest extends Xyster_Orm_TestSetup
 {
     /**
-     * @var Xyster_Orm_Entity_Meta
+     * @var Xyster_Orm_Entity_Type
      */
     protected $_meta;
 
@@ -44,7 +44,7 @@ class Xyster_Orm_Entity_MetaTest extends Xyster_Orm_TestSetup
     {
         require_once 'PHPUnit/TextUI/TestRunner.php';
 
-        $suite  = new PHPUnit_Framework_TestSuite('Xyster_Orm_Entity_MetaTest');
+        $suite  = new PHPUnit_Framework_TestSuite('Xyster_Orm_Entity_TypeTest');
         $result = PHPUnit_TextUI_TestRunner::run($suite);
     }
     
@@ -308,7 +308,7 @@ class Xyster_Orm_Entity_MetaTest extends Xyster_Orm_TestSetup
     }
 }
 
-// Call Xyster_Orm_Entity_MetaTest::main() if this source file is executed directly.
-if (PHPUnit_MAIN_METHOD == 'Xyster_Orm_Entity_MetaTest::main') {
-    Xyster_Orm_Entity_MetaTest::main();
+// Call Xyster_Orm_Entity_TypeTest::main() if this source file is executed directly.
+if (PHPUnit_MAIN_METHOD == 'Xyster_Orm_Entity_TypeTest::main') {
+    Xyster_Orm_Entity_TypeTest::main();
 }
