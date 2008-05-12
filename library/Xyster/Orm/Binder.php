@@ -68,12 +68,10 @@ class Xyster_Orm_Binder extends Xyster_Data_Binder
      */
     public function bind( array $values )
     {
-        $type = $this->_type;
         $bindable = array();
-        
         // go through the bindable values and replace relation foreign keys with actual relations
         $bindKeys = array_keys($values);
-        foreach( $type->getRelations() as $relation ) {
+        foreach( $this->_type->getRelations() as $relation ) {
             /* @var $relation Xyster_Orm_Relation */
             if ( !$relation->isCollection() ) {
                 $keys = $relation->getId(); 
