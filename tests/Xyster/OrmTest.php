@@ -178,6 +178,18 @@ class Xyster_OrmTest extends Xyster_Orm_TestSetup
     }
     
     /**
+     * Tests the 'getBinder' method
+     *
+     */
+    public function testGetBinder()
+    {
+        $entity = $this->_orm->get('MockBug', 1);
+        $binder = $this->_orm->getBinder($entity);
+        $this->assertType('Xyster_Orm_Binder', $binder);
+        $this->assertSame($entity, $binder->getTarget());
+    }
+    
+    /**
      * Tests the 'getOrFail' method
      *
      */

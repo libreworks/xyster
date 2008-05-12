@@ -159,6 +159,19 @@ class Xyster_Orm
     }
 
     /**
+     * Gets a value binder for an entity
+     *
+     * @param Xyster_Orm_Entity $entity The entity to use for binding
+     * @param boolean $allowPrimary Whether to allow the primary key to be set
+     * @return Xyster_Orm_Binder
+     */
+    public function getBinder( Xyster_Orm_Entity $entity, $allowPrimary = false )
+    {
+        require_once 'Xyster/Orm/Binder.php';
+        return new Xyster_Orm_Binder($this->_manager, $entity, $allowPrimary);
+    }
+    
+    /**
      * Gets the factory for entity mappers
      *
      * @return Xyster_Orm_Mapper_Factory_Interface
