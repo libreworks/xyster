@@ -29,6 +29,7 @@ require_once 'Zend/Controller/Response/Cli.php';
 require_once 'Zend/Controller/Front.php';
 require_once 'Zend/Auth.php';
 require_once 'Zend/Auth/Storage/NonPersistent.php';
+require_once 'Xyster/Auth/Adapter/Stub.php';
 require_once 'Xyster/Acl.php';
 
 /**
@@ -140,7 +141,7 @@ class Xyster_Controller_Plugin_AuthTest extends PHPUnit_Framework_TestCase
         $this->plugin->routeStartup($this->request);
         $this->assertAttributeEquals(true, '_started', $this->plugin);
         $this->assertFalse($this->acl->hasRole('doublecompile'));
-        $this->plugin->setAuthAdapter(new Xyster_AuthTest_Success_Adapter());
+        $this->plugin->setAuthAdapter(new Xyster_Auth_Adapter_Stub('doublecompile'));
         $this->assertTrue($this->acl->hasRole('doublecompile'));
     }
     
@@ -166,7 +167,7 @@ class Xyster_Controller_Plugin_AuthTest extends PHPUnit_Framework_TestCase
      */
     public function testGetRole()
     {
-        Zend_Auth::getInstance()->authenticate(new Xyster_AuthTest_Success_Adapter());
+        Zend_Auth::getInstance()->authenticate(new Xyster_Auth_Adapter_Stub('doublecompile'));
         $role = $this->plugin->getRole();
         
         $this->assertType('Zend_Acl_Role_Interface', $role);
@@ -191,7 +192,7 @@ class Xyster_Controller_Plugin_AuthTest extends PHPUnit_Framework_TestCase
      */
     public function testRouteStartup()
     {
-        $this->plugin->setAuthAdapter(new Xyster_AuthTest_Success_Adapter());
+        $this->plugin->setAuthAdapter(new Xyster_Auth_Adapter_Stub('doublecompile'));
         $this->assertFalse($this->acl->hasRole('doublecompile'));
         $this->plugin->routeStartup($this->request);
         $this->assertTrue($this->acl->hasRole('doublecompile'));
@@ -244,25 +245,6 @@ class Xyster_Controller_Plugin_AuthTest extends PHPUnit_Framework_TestCase
     }
 }
 
-/**
- * Zend_Auth_Adapter_Interface
- */
-require_once 'Zend/Auth/Adapter/Interface.php';
-/**
- * Zend_Auth_Result
- */
-require_once 'Zend/Auth/Result.php';
-/**
- * Just a simple stub object
- *
- */
-class Xyster_AuthTest_Success_Adapter implements Zend_Auth_Adapter_Interface
-{
-    public function authenticate()
-    {
-        return new Zend_Auth_Result(1, 'doublecompile');
-    }
-}
 /**
  * Just a simple stub object
  *

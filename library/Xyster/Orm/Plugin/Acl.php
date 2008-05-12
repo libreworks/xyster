@@ -19,7 +19,7 @@
  */
 require_once 'Xyster/Orm/Plugin/Abstract.php';
 /**
- * The base ORM plugin object 
+ * An ORM plugin for authorization checks 
  *
  * @category  Xyster
  * @package   Xyster_Orm

@@ -42,6 +42,7 @@ require_once 'Xyster/Orm/QueryReportTest.php';
 require_once 'Xyster/Orm/Query/ParserTest.php';
 require_once 'Xyster/Orm/Plugin/BrokerTest.php';
 require_once 'Xyster/Orm/Plugin/AclTest.php';
+require_once 'Xyster/Orm/Plugin/LogTest.php';
 require_once 'Xyster/Orm/XsqlTest.php';
 require_once 'Xyster/Orm/Xsql/SplitTest.php';
 
@@ -81,6 +82,7 @@ class Xyster_Orm_AllTests
         $suite->addTestSuite('Xyster_Orm_Query_ReportTest');
         $suite->addTestSuite('Xyster_Orm_Plugin_BrokerTest');
         $suite->addTestSuite('Xyster_Orm_Plugin_AclTest');
+        $suite->addTestSuite('Xyster_Orm_Plugin_LogTest');
         
         $suite->addTestSuite('Xyster_Orm_XsqlTest');
         $suite->addTestSuite('Xyster_Orm_Xsql_SplitTest');
