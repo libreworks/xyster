@@ -82,8 +82,10 @@ class Xyster_Data_Binder
     public function bind( array $values )
     {
         foreach( $values as $name => $value ) {
-            $setter = $this->_getSetter($name);
-            $setter->set($this->_target, $name, $value);
+            if ( $this->isAllowed($name) ) {
+                $setter = $this->_getSetter($name);
+                $setter->set($this->_target, $name, $value);
+            }
         }
     }
     

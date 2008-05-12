@@ -45,6 +45,8 @@ require_once 'Xyster/Orm/Plugin/AclTest.php';
 require_once 'Xyster/Orm/Plugin/LogTest.php';
 require_once 'Xyster/Orm/XsqlTest.php';
 require_once 'Xyster/Orm/Xsql/SplitTest.php';
+require_once 'Xyster/Orm/BinderTest.php';
+require_once 'Xyster/Orm/Binder/SetterTest.php';
 
 /**
  * @see Zend_Db_SkipTests
@@ -86,6 +88,8 @@ class Xyster_Orm_AllTests
         
         $suite->addTestSuite('Xyster_Orm_XsqlTest');
         $suite->addTestSuite('Xyster_Orm_Xsql_SplitTest');
+        $suite->addTestSuite('Xyster_Orm_BinderTest');
+        $suite->addTestSuite('Xyster_Orm_Binder_SetterTest');
         
         //self::_addDbTestSuites($suite, 'Db2');
         self::_addDbTestSuites($suite, 'Mysqli');

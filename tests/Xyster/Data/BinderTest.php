@@ -97,11 +97,12 @@ class Xyster_Data_BinderTest extends PHPUnit_Framework_TestCase
      */
     public function testBind()
     {
+        $this->object->setAllowedFields(array('foo', 'here'));
         $values = array('foo' => 'bar', 'this' => 'that', 'here' => 'there');
         $this->object->bind($values);
-        foreach( $values as $name => $value ) {
-            $this->assertEquals($value, $this->target->$name);
-        }
+        $this->assertEquals('bar', $this->target->foo);
+        $this->assertEquals('there', $this->target->here);
+        $this->assertObjectNotHasAttribute('this', $this->target);
     }
 
     /**
