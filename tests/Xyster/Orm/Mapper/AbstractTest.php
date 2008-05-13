@@ -389,5 +389,16 @@ class Xyster_Orm_Mapper_AbstractTest extends PHPUnit_Framework_TestCase
     public function testUnranslateField()
     {
         $this->assertEquals('bug_id', $this->_mapper->untranslateField('bugId'));
-    }    
+    }
+    
+    /**
+     * Tries using the wrong type with the mapper
+     *
+     */
+    public function testAssertThisType()
+    {
+        $entity = new MockBug();
+        $this->setExpectedException('Xyster_Orm_Mapper_Exception');
+        $this->_mapper->save($entity);
+    }
 }

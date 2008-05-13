@@ -90,7 +90,7 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
      *
      * @var Xyster_Orm_Entity_Type
      */
-    private $_meta;
+    private $_type;
     
     /**
      * Any additional options
@@ -149,7 +149,7 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
      */
     public function delete( Xyster_Orm_Entity $entity )
     {
-        $this->_assertThisEntityName($entity);
+        $this->_assertThisType($entity);
         
         $manager = $this->_factory->getManager();
         $broker = $manager->getPluginBroker();
@@ -233,11 +233,11 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
      */
     final public function getEntityType()
     {
-        if ( !$this->_meta ) {
-            $this->_meta = new Xyster_Orm_Entity_Type($this);
-            Xyster_Orm_Entity::setMeta($this->_meta);
+        if ( !$this->_type ) {
+            $this->_type = new Xyster_Orm_Entity_Type($this);
+            Xyster_Orm_Entity::addType($this->_type);
         }
-        return $this->_meta;
+        return $this->_type;
     }
 
     /**
@@ -343,7 +343,14 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
      */
     public function save( Xyster_Orm_Entity $entity )
     {
-        $this->_assertThisEntityName($entity);
+        $this->_assertThisType($entity);
+        
+        $type = $this->getEntityType();
+        if ( $type->isValidationEnabled() && $type->isValidateOnSave() ) {
+            foreach( $type->getFieldNames() as $name ) {
+                $type->validate($name, $entity->$name, true);
+            }
+        }
         
         /*
 		 * Step 1: Sets ids for any single-entity relationships 
@@ -506,12 +513,11 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
      * @param Xyster_Orm_Entity $entity
      * @throws Xyster_Orm_Mapper_Exception if the entity supplied is of the wrong type
      */
-    final protected function _assertThisEntityName( Xyster_Orm_Entity $entity )
+    final protected function _assertThisType( Xyster_Orm_Entity $entity )
     {
-        $name = $this->getEntityName();
-        if ( ! $entity instanceof $name ) {
+        if ( !$this->getEntityType()->isInstance($entity) ) {
             require_once 'Xyster/Orm/Mapper/Exception.php';
-            throw new Xyster_Orm_Mapper_Exception('This mapper only accepts entities of type ' . $name);
+            throw new Xyster_Orm_Mapper_Exception('This mapper only accepts entities of type ' . $this->getEntityName());
         }
     }
 

@@ -42,6 +42,13 @@ class Xyster_Orm_Entity
     protected $_dirty = false;
     
     /**
+     * A set of event listeners
+     *
+     * @var Xyster_Collection_Set
+     */
+    protected $_listeners = null;
+    
+    /**
      * Related entities or sets
      * 
      * @var array 
@@ -60,7 +67,7 @@ class Xyster_Orm_Entity
      *
      * @var Xyster_Orm_Entity_Type[]
      */
-    static private $_meta = array();
+    static private $_types = array();
     
     /**
      * Creates a new entity
@@ -88,11 +95,11 @@ class Xyster_Orm_Entity
      * 
      * This shouldn't be called except by the Xyster_Orm_Mapper
      * 
-     * @param Xyster_Orm_Entity_Type $meta
+     * @param Xyster_Orm_Entity_Type $type
      */
-    static public function setMeta( Xyster_Orm_Entity_Type $meta )
+    static public function addType( Xyster_Orm_Entity_Type $type )
     {
-        self::$_meta[ $meta->getEntityName() ] = $meta;
+        self::$_types[ $type->getName() ] = $type;
     }
     
     /**
@@ -151,6 +158,33 @@ class Xyster_Orm_Entity
     public function __set( $name, $value )
     {
         $this->{'set'.ucfirst($name)}( $value );
+    }
+    
+    /**
+     * Adds a listener for value edit events
+     * 
+     * Listeners can only be registered once.  Trying to add a listener a second
+     * time will return false.
+     *
+     * @param Xyster_Orm_Entity_Listener $listener The listener to add
+     * @return boolean Whether the listener was added
+     */
+    public function addListener( Xyster_Orm_Entity_Listener $listener )
+    {
+        if ( $this->_listeners === null ) {
+            require_once 'Xyster/Collection/Set.php';
+            $this->_listeners = new Xyster_Collection_Set;
+        }
+        return $this->_listeners->add($listener);
+    }
+    
+    /**
+     * Removes the listeners
+     *
+     */
+    public function clearListeners()
+    {
+        $this->_listeners = null;
     }
     
     /**
@@ -309,6 +343,18 @@ class Xyster_Orm_Entity
     }
     
     /**
+     * Removes a specific listener from the entity
+     *
+     * @param Xyster_Orm_Entity_Listener $listener The listener to remove
+     * @return boolean Whether anything was changed
+     */
+    public function removeListener( Xyster_Orm_Entity_Listener $listener )
+    {
+        return ( $this->_listeners instanceof Xyster_Collection_Set ) ?
+            $this->_listeners->remove($listener) : false;
+    }
+    
+    /**
      * Sets the entity as dirty or clean
      * 
      * This is only used by the transactional layer or associated collections to
@@ -379,6 +425,11 @@ class Xyster_Orm_Entity
     protected function _setField( $name, $value )
     {
         $this->_dirty = true;
+        if ( $this->_getType()->isValidationEnabled() &&
+            !$this->_getType()->isValidateOnSave() ) {
+            $this->_getType()->validate($name, $value, true);
+        }
+        $this->_notifyListeners('field', $name, $this->_values[$name], $value);
         $this->_values[$name] = $value;
     }
     
@@ -408,6 +459,9 @@ class Xyster_Orm_Entity
             }
         }
 
+        $this->_notifyListeners('relation', $name,
+            ($this->isLoaded($name) ? $this->_getRelated($name) : null), $value);
+        
         if ( $info->isCollection() ) {
 
             $value->relateTo($info, $this);
@@ -447,7 +501,26 @@ class Xyster_Orm_Entity
     protected function _getType()
     {
         $class = get_class($this);
-        return array_key_exists($class, self::$_meta) ?
-            self::$_meta[$class] : null; 
+        return array_key_exists($class, self::$_types) ?
+            self::$_types[$class] : null; 
+    }
+    
+    /**
+     * Notifies any observers of field/relation change events
+     *
+     * @param string $method Either 'relation' or 'field'
+     * @param string $field
+     * @param mixed $old
+     * @param mixed $new
+     */
+    private function _notifyListeners( $method, $field, $old, $new )
+    {
+        $methodName = $method == 'relation' ? 'onSetRelation' : 'onSetField'; 
+        if ( $this->_listeners !== null ) {
+            foreach( $this->_listeners as $listener ) {
+                /* @var $listener Xyster_Orm_Entity_Listener */
+                $listener->$methodName($this, $field, $old, $new);
+            }
+        }
     }
 }

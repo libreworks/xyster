@@ -78,6 +78,20 @@ class Xyster_Orm_Entity_Type extends Xyster_Type
     protected $_runtime = array();
 
     /**
+     * Whether validation is enabled for this type
+     *
+     * @var boolean
+     */
+    protected $_validate = true;
+    
+    /**
+     * Whether to validate entities when saved or per-field
+     * 
+     * @var boolean
+     */
+    protected $_validateOnSave = false;
+    
+    /**
      * Creates a new Entity type representation
      *
      * @param Xyster_Orm_Mapper_Interface $map
@@ -95,6 +109,21 @@ class Xyster_Orm_Entity_Type extends Xyster_Type
                 $this->_primary[] = $translated;
             }
         }
+    }
+    
+    /**
+     * Adds a validator for a field
+     *
+     * @param string $field The field name 
+     * @param Zend_Validate_Interface $validator The validator
+     * @param boolean $breakChainOnFailure Whether to break after fail
+     * @return Xyster_Orm_Entity_Type provides a fluent interface
+     * @throws Xyster_Orm_Entity_Exception if the field is invalid for this type
+     */
+    public function addValidator( $name, Zend_Validate_Interface $validator, $breakChainOnFailure = false )
+    {
+        $this->getField($name)->addValidator($validator, $breakChainOnFailure);
+        return $this;
     }
     
     /**
@@ -194,6 +223,18 @@ class Xyster_Orm_Entity_Type extends Xyster_Type
     }
     
     /**
+     * Disables validation for this entity type.  USE WITH CAUTION.
+     *
+     * @param boolean $flag
+     * @return Xyster_Orm_Entity_Type provides a fluent interface
+     */
+    public function disableValidation( $flag = true )
+    {
+        $this->_validate = !$flag;
+        return $this;
+    }
+    
+    /**
      * Gets the class name of the entity
      *
      * @return string The class name
@@ -201,6 +242,22 @@ class Xyster_Orm_Entity_Type extends Xyster_Type
     public function getEntityName()
     {
         return $this->getName();
+    }
+    
+    /**
+     * Gets a field by name
+     *
+     * @param string $name
+     * @return Xyster_Orm_Entity_Field
+     * @throws Xyster_Orm_Entity_Exception if the field is invalid for this type
+     */
+    public function getField( $name )
+    {
+        if ( !in_array($name, array_keys($this->_fields)) ) {
+            require_once 'Xyster/Orm/Entity/Exception.php';
+            throw new Xyster_Orm_Entity_Exception($name . ' is not a member of the ' . $this->getName() . ' class');
+        }
+        return $this->_fields[$name];
     }
     
     /**
@@ -415,6 +472,67 @@ class Xyster_Orm_Entity_Type extends Xyster_Type
         
         require_once 'Xyster/Orm/Exception.php';
         throw new Xyster_Orm_Exception('Unexpected type: ' . gettype($object));
+    }
+    
+    /**
+     * Whether this entity should be validated before save (instead of field) 
+     *
+     * @return boolean
+     */
+    public function isValidateOnSave()
+    {
+        return $this->_validateOnSave;
+    }
+    
+    /**
+     * Whether validation is enabled for this entity type
+     *
+     * @return boolean
+     */
+    public function isValidationEnabled()
+    {
+        return $this->_validate;
+    }
+    
+    /**
+     * Validates a field
+     *
+     * @param string $name The field name
+     * @param mixed $value The proposed value
+     * @param boolean $fail Whether to throw an exception if validation fails
+     * @return boolean Whether the value is valid for the field
+     * @throws Xyster_Orm_Entity_Exception if the field is invalid for this type
+     */
+    public function validate( $name, $value, $throwOnFail = false )
+    {
+        $field = $this->getField($name);
+        
+        $valid = true;
+        if ( $this->isValidationEnabled() ) {
+            /* @var $field Xyster_Orm_Entity_Field */
+            if ( $validator = $field->getValidator() ) {
+                $valid = $validator->isValid($value);
+                if ( !$valid && $throwOnFail ) {
+                    require_once 'Xyster/Orm/Entity/Exception.php';
+                    throw new Xyster_Orm_Entity_Exception('Invalid value for ' .
+                        $this->getName() . '::' . $name . ' (' .
+                        current($validator->getMessages()) . ')');
+                }
+            }
+        }
+        return $valid;
+    }
+    
+    /**
+     * Sets the validate-on-save setting
+     *
+     * @param boolean $flag
+     * @return Xyster_Orm_Entity_Type provides a fluent interface
+     */
+    public function validateOnSave( $flag = true )
+    {
+        $this->_validateOnSave = $flag;
+        return $this;
     }
     	
     /**

@@ -28,3 +28,10 @@ class CustomMapper extends BugMapper
 {
     protected $_domain = 'doesntExist';
 }
+/**
+ * A mock entity
+ *
+ */
+class Custom extends Xyster_Orm_Entity
+{
+}

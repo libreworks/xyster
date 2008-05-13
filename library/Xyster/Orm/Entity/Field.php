@@ -32,6 +32,11 @@ class Xyster_Orm_Entity_Field
     protected $_primary;
     protected $_primaryPosition;
     protected $_identity;
+    
+    /**
+     * @var Zend_Validate
+     */
+    protected $_validator;
 
     /**
      * Create a new entity field
@@ -135,5 +140,32 @@ class Xyster_Orm_Entity_Field
     public function isIdentity()
     {
         return $this->_identity;
+    }
+    
+    /**
+     * Adds a validator to this field
+     *
+     * @param Zend_Validate_Interface $validator
+     * @param boolean $breakChainOnFailure
+     * @return Xyster_Orm_Entity_Field provides a fluent interface
+     */
+    public function addValidator( Zend_Validate_Interface $validator, $breakChainOnFailure = false )
+    {
+        if ( !$this->_validator ) {
+            require_once 'Zend/Validate.php';
+            $this->_validator = new Zend_Validate;
+        }
+        $this->_validator->addValidator($validator, $breakChainOnFailure);
+        return $this;
+    }
+    
+    /**
+     * Gets the validator for this field
+     *
+     * @return Zend_Validate 
+     */
+    public function getValidator()
+    {
+        return $this->_validator;
     }
 }

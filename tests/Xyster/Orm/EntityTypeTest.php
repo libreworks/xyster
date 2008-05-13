@@ -305,6 +305,68 @@ class Xyster_Orm_Entity_TypeTest extends Xyster_Orm_TestSetup
         $this->setExpectedException('Xyster_Orm_Relation_Exception');
         $this->object->belongsTo('reporter', array('class'=>'MockAccount','id'=>'reportedBy'));
     }
+    
+    /**
+     * Tests the 'validateOnSave' and 'isValidateOnSave' methods
+     *
+     */
+    public function testValidateOnSave()
+    {
+        $this->assertFalse($this->object->isValidateOnSave());
+        $return = $this->object->validateOnSave(true);
+        $this->assertSame($this->object, $return);
+        $this->assertTrue($this->object->isValidateOnSave());
+        $this->object->validateOnSave(false);
+        $this->assertFalse($this->object->isValidateOnSave());
+    }
+    
+    /**
+     * Tests the 'addValidator' method
+     * 
+     */
+    public function testAddValidator()
+    {
+        require_once 'Zend/Validate/NotEmpty.php';
+        $validator = new Zend_Validate_NotEmpty;
+        $return = $this->object->addValidator('bugDescription', $validator, true);
+        $this->assertSame($this->object, $return);
+    }
+    
+    /**
+     * Tests the 'disableValidation' and 'isValidationEnabled' methods
+     * 
+     */
+    public function testDisableValidation()
+    {
+        $this->assertTrue($this->object->isValidationEnabled());
+        $return = $this->object->disableValidation();
+        $this->assertSame($this->object, $return);
+        $this->assertFalse($this->object->isValidationEnabled());
+        
+        $this->object->disableValidation(false);
+        $this->assertTrue($this->object->isValidationEnabled());
+    }
+    
+    /**
+     * Tests the 'getField' method
+     */
+    public function testGetField()
+    {
+        $field = $this->object->getField('bugDescription');
+        $this->assertType('Xyster_Orm_Entity_Field', $field);
+        
+        $this->setExpectedException('Xyster_Orm_Entity_Exception');
+        $this->object->getField('foobar');
+    }
+    
+    /**
+     * Tests the 'validate' method
+     * @todo implement the validate test
+     */
+    public function testValidate()
+    {
+        $this->markTestIncomplete();
+    }
 }
 
 // Call Xyster_Orm_Entity_TypeTest::main() if this source file is executed directly.

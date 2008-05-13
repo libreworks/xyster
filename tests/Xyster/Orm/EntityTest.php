@@ -95,6 +95,16 @@ class Xyster_Orm_EntityTest extends Xyster_Orm_TestSetup
     }
     
     /**
+     * Tests the 'equals' method
+     *
+     */
+    public function testEquals()
+    {
+        $entity = $this->_getMockEntity();
+        $this->assertTrue($entity->equals($entity));
+    }
+    
+    /**
      * Tests the 'equals' method on entities with a primary key
      *
      */
@@ -445,6 +455,78 @@ class Xyster_Orm_EntityTest extends Xyster_Orm_TestSetup
         $string .= ']';
         
         $this->assertEquals($string, $entity->__toString());
+    }
+    
+    /**
+     * Tests the 'addListener' method
+     *
+     */
+    public function testAddListener()
+    {
+        $entity = $this->_getMockEntity();
+        $listener = new Xyster_Orm_EntityTest_Listener;
+        $listener2 = new Xyster_Orm_EntityTest_Listener_Relation;
+        $this->assertTrue($entity->addListener($listener));
+        $this->assertFalse($entity->addListener($listener)); // second time
+        $this->assertTrue($entity->addListener($listener2));
+        
+        $this->assertFalse($listener->setField);
+        $entity->bugDescription .= ' Thingy!';
+        $this->assertTrue($listener->setField);
+        
+        $this->assertFalse($listener2->setRelation);
+        $entity->reporter = new MockAccount();
+        $this->assertTrue($listener2->setRelation);
+    }
+    
+    
+    /**
+     * Tests the 'removeListener' method
+     *
+     */
+    public function testRemoveListener()
+    {
+        $entity = $this->_getMockEntity();
+        $listener = new Xyster_Orm_EntityTest_Listener;
+        $listener2 = new Xyster_Orm_EntityTest_Listener;
+        $this->assertTrue($entity->addListener($listener));
+        $this->assertTrue($entity->removeListener($listener));
+        $this->assertFalse($entity->removeListener($listener2)); // not added
+    }
+    
+    /**
+     * Tests the 'clearListeners' method 
+     *
+     */
+    public function testClearListeners()
+    {
+        $entity = $this->_getMockEntity();
+        $listener = new Xyster_Orm_EntityTest_Listener;
+        $entity->addListener($listener);
+        $entity->clearListeners();
+        $this->assertAttributeEquals(null, '_listeners', $entity);
+    }
+}
+
+require_once 'Xyster/Orm/Entity/Listener.php';
+
+class Xyster_Orm_EntityTest_Listener extends Xyster_Orm_Entity_Listener
+{
+    public $setField = false;
+    
+    public function onSetField( Xyster_Orm_Entity $entity, $name, $old, $new )
+    {
+        $this->setField = true;
+    }
+}
+
+class Xyster_Orm_EntityTest_Listener_Relation extends Xyster_Orm_Entity_Listener
+{
+    public $setRelation = false;
+    
+    public function onSetRelation( Xyster_Orm_Entity $entity, $name, $old, $new )
+    {
+        $this->setRelation = true;
     }
 }
 
