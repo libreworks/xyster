@@ -103,6 +103,8 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
      * refresh the entity after it's inserted or updated.</dd>
      * <dt>locking</dt><dd>The name of the field which holds an integer
      * version number of the record (used to avoid concurrent changes)</dd>
+     * <dt>doNotCreateValidators</dt><dd>This will cause the mapper not to
+     * create validators from the constraints in the data store.</dd>
      * </dl>
      *
      * @var array
@@ -236,6 +238,7 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
         if ( !$this->_type ) {
             $this->_type = new Xyster_Orm_Entity_Type($this);
             Xyster_Orm_Entity::addType($this->_type);
+            $this->_addValidators($this->_type);
         }
         return $this->_type;
     }
@@ -506,6 +509,37 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
      * @throws Xyster_Orm_Mapper_Exception if the record was modified or deleted 
      */
     abstract protected function _update( Xyster_Orm_Entity $entity );
+    
+    /**
+     * Adds the validators from the constraints in the data store
+     * 
+     * Right now we add a NotEmpty validator for fields declared as NOT NULL.
+     * We also try to match integer types in the form of TINYINT, BIGINT,
+     * SMALLINT, INT, INTEGER and any variations.  We also try to match float 
+     * values in the form of FLOAT, REAL, DOUBLE, and DOUBLE PRECISION.
+     * 
+     * @param Xyster_Orm_Entity_Type $type
+     */
+    final protected function _addValidators( Xyster_Orm_Entity_Type $type )
+    {
+        if ( !$this->getOption('doNotCreateValidators') ) {
+            require_once 'Zend/Validate/NotEmpty.php';
+            foreach( $type->getFields() as $field ) {
+                /* @var $field Xyster_Orm_Entity_Field */
+                if ( !$field->isNullable() && !$field->isPrimary() ) {
+                    $field->addValidator(new Zend_Validate_NotEmpty, true);
+                }
+                if ( preg_match('/^(tiny|big|small)?int(eger)?/i', $field->getType()) ) {
+                    require_once 'Zend/Validate/Int.php';
+                    $field->addValidator(new Zend_Validate_Int, true);
+                }
+                if ( preg_match('/^(float|real|double( precision)?)/i', $field->getType()) ) {
+                    require_once 'Zend/Validate/Float.php';
+                    $field->addValidator(new Zend_Validate_Float, true);
+                }
+            }
+        }
+    }
     
     /**
      * A convenience method to assert entity type

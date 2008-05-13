@@ -354,6 +354,21 @@ class Xyster_Orm_Entity_Type extends Xyster_Type
         return $this->_relations;
     }
     
+    /**
+     * Gets the validators for a field
+     *
+     * This method returns a single Zend_Validate object containing all of the
+     * validators for the field. It will return null if there are no validators.
+     * 
+     * @param string $field The name of the field
+     * @return Zend_Validate
+     * @throws Xyster_Orm_Entity_Exception if the field is invalid for this type
+     */
+    public function getValidators( $field )
+    {
+        return $this->getField($field)->getValidator();
+    }
+    
 	/**
 	 * Creates a 'one to one' relationship
 	 * 
