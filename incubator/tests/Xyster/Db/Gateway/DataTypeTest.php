@@ -32,7 +32,7 @@ class Xyster_Db_Gateway_DataTypeTest extends PHPUnit_Framework_TestCase
 {
 	static protected $_types = array(
 	       'varchar', 'char', 'integer', 'smallint', 'float', 'timestamp',
-	       'date', 'time', 'clob', 'blob', 'boolean', 'identity'
+	       'date', 'time', 'clob', 'blob', 'boolean', 'identity', 'bigint'
 	   );
 	   
     /**

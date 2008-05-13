@@ -39,6 +39,7 @@ class Xyster_Db_Gateway_DataType extends Xyster_Enum
     const Blob      = 9;
     const Boolean   = 10;
     const Identity  = 11;
+    const Bigint    = 12;
 
     /**
      * The Varchar data type
@@ -157,6 +158,16 @@ class Xyster_Db_Gateway_DataType extends Xyster_Enum
      * @return Xyster_Db_Gateway_DataType
      */
     static public function Identity()
+    {
+       return Xyster_Enum::_factory();
+    }
+
+    /**
+     * The Bigint data type
+     *
+     * @return Xyster_Db_Gateway_DataType
+     */
+    static public function Bigint()
     {
        return Xyster_Enum::_factory();
     }
