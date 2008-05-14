@@ -28,9 +28,7 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once 'Xyster/Db/Gateway/AbstractTest.php';
 require_once 'Xyster/Db/Gateway/BuilderTest.php';
-require_once 'Xyster/Db/Gateway/DataTypeTest.php';
 require_once 'Xyster/Db/Gateway/IndexBuilderTest.php';
-require_once 'Xyster/Db/Gateway/ReferentialActionTest.php';
 require_once 'Xyster/Db/Gateway/TableBuilderTest.php';
 require_once 'Xyster/Db/Gateway/TableBuilder/ColumnTest.php';
 require_once 'Xyster/Db/Gateway/TableBuilder/ForeignKeyTest.php';
@@ -56,9 +54,7 @@ class Xyster_Db_AllTests
         $suite = new PHPUnit_Framework_TestSuite('Xyster Framework - Xyster_Db');
         $suite->addTestSuite('Xyster_Db_Gateway_AbstractTest');
         $suite->addTestSuite('Xyster_Db_Gateway_BuilderTest');
-        $suite->addTestSuite('Xyster_Db_Gateway_DataTypeTest');
         $suite->addTestSuite('Xyster_Db_Gateway_IndexBuilderTest');
-        $suite->addTestSuite('Xyster_Db_Gateway_ReferentialActionTest');
         $suite->addTestSuite('Xyster_Db_Gateway_TableBuilderTest');
         $suite->addTestSuite('Xyster_Db_Gateway_TableBuilder_ColumnTest');
         $suite->addTestSuite('Xyster_Db_Gateway_TableBuilder_ForeignKeyTest');

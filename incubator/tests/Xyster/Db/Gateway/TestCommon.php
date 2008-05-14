@@ -117,7 +117,7 @@ abstract class Xyster_Db_Gateway_TestCommon extends PHPUnit_Framework_TestCase
         $describe = $this->_db->describeTable('forum');
         $this->assertArrayNotHasKey('category_id', $describe);
         $this->object->addColumn('forum', 'category_id',
-            Xyster_Db_Gateway_DataType::Integer());
+            Xyster_Db_DataType::Integer());
         
         $describe2 = $this->_db->describeTable('forum');
         $this->assertArrayHasKey('category_id', $describe2);
@@ -571,7 +571,7 @@ abstract class Xyster_Db_Gateway_TestCommon extends PHPUnit_Framework_TestCase
         $this->_setupTestTable();
         $describe = $this->_db->describeTable('forum');
         $this->assertNotEquals('varchar', $describe['message']['DATA_TYPE']);
-        $this->object->setType('forum', 'title', Xyster_Db_Gateway_DataType::Varchar(), 255);
+        $this->object->setType('forum', 'title', Xyster_Db_DataType::Varchar(), 255);
         $describe2 = $this->_db->describeTable('forum');
         $this->assertEquals('varchar', $describe2['title']['DATA_TYPE']);
         $this->assertEquals(255, $describe2['title']['LENGTH']);

@@ -39,10 +39,10 @@ class Xyster_Db_Gateway_TableBuilder_Column
 	 * Creates a new column
 	 *
 	 * @param string $name The column name
-	 * @param Xyster_Db_Gateway_DataType $type The data type
+	 * @param Xyster_Db_DataType $type The data type
 	 * @param mixed $argument An optional argument for the data type
 	 */
-	public function __construct( $name, Xyster_Db_Gateway_DataType $type, $argument=null )
+	public function __construct( $name, Xyster_Db_DataType $type, $argument=null )
 	{
 		$this->_name = $name;
 		$this->_type = $type;
@@ -72,7 +72,7 @@ class Xyster_Db_Gateway_TableBuilder_Column
 	/**
 	 * Gets the data type of the column
 	 * 
-	 * @return Xyster_Db_Gateway_DataType
+	 * @return Xyster_Db_DataType
 	 */
 	public function getDataType()
 	{
@@ -112,7 +112,7 @@ class Xyster_Db_Gateway_TableBuilder_Column
 	/**
 	 * Gets the action to perform ondelete
 	 *
-	 * @return Xyster_Db_Gateway_ReferentialAction
+	 * @return Xyster_Db_ReferentialAction
 	 */
 	public function getForeignKeyOnDelete()
 	{
@@ -122,7 +122,7 @@ class Xyster_Db_Gateway_TableBuilder_Column
 	/**
 	 * Gets the action to perform onupdate
 	 *
-	 * @return Xyster_Db_Gateway_ReferentialAction
+	 * @return Xyster_Db_ReferentialAction
 	 */
 	public function getForeignKeyOnUpdate()
 	{
@@ -184,10 +184,10 @@ class Xyster_Db_Gateway_TableBuilder_Column
 	 *
 	 * @param string $table
 	 * @param string $column
-	 * @param Xyster_Db_Gateway_ReferentialAction $onDelete
-	 * @param Xyster_Db_Gateway_ReferentialAction $onUpdate
+	 * @param Xyster_Db_ReferentialAction $onDelete
+	 * @param Xyster_Db_ReferentialAction $onUpdate
 	 */
-    public function foreign( $table, $column, Xyster_Db_Gateway_ReferentialAction $onDelete=null, Xyster_Db_Gateway_ReferentialAction $onUpdate=null )
+    public function foreign( $table, $column, Xyster_Db_ReferentialAction $onDelete=null, Xyster_Db_ReferentialAction $onUpdate=null )
     {
     	require_once 'Xyster/Db/Gateway/TableBuilder/ForeignKey.php';
         $this->_foreign = new Xyster_Db_Gateway_TableBuilder_ForeignKey(array($this->_name),

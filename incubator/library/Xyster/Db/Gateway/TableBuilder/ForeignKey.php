@@ -35,10 +35,10 @@ class Xyster_Db_Gateway_TableBuilder_ForeignKey
 	 * @param array $columns
 	 * @param string $table
 	 * @param array $foreignColumns
-	 * @param Xyster_Db_Gateway_ReferentialAction $onDelete (optional)
-	 * @param Xyster_Db_Gateway_ReferentialAction $onUpdate (optional)
+	 * @param Xyster_Db_ReferentialAction $onDelete (optional)
+	 * @param Xyster_Db_ReferentialAction $onUpdate (optional)
 	 */
-	public function __construct( array $columns, $table, array $foreignColumns, Xyster_Db_Gateway_ReferentialAction $onDelete=null, Xyster_Db_Gateway_ReferentialAction $onUpdate=null )
+	public function __construct( array $columns, $table, array $foreignColumns, Xyster_Db_ReferentialAction $onDelete=null, Xyster_Db_ReferentialAction $onUpdate=null )
 	{
 		$this->_columns = $columns;
 		$this->_table = $table;
@@ -70,7 +70,7 @@ class Xyster_Db_Gateway_TableBuilder_ForeignKey
     /**
      * Gets the onDelete behavior
      *
-     * @return Xyster_Db_Gateway_ReferentialAction
+     * @return Xyster_Db_ReferentialAction
      */
     public function getOnDelete()
     {
@@ -80,7 +80,7 @@ class Xyster_Db_Gateway_TableBuilder_ForeignKey
     /**
      * Gets the onUpdate behavior
      *
-     * @return Xyster_Db_Gateway_ReferentialAction
+     * @return Xyster_Db_ReferentialAction
      */
     public function getOnUpdate()
     {

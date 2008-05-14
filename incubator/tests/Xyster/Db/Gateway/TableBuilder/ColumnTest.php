@@ -23,8 +23,8 @@ require_once "PHPUnit/Framework/TestCase.php";
 require_once "PHPUnit/Framework/TestSuite.php";
 require_once dirname(dirname(dirname(dirname(dirname(__FILE__))))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 require_once 'Xyster/Db/Gateway/TableBuilder/Column.php';
-require_once 'Xyster/Db/Gateway/DataType.php';
-require_once 'Xyster/Db/Gateway/ReferentialAction.php';
+require_once 'Xyster/Db/DataType.php';
+require_once 'Xyster/Db/ReferentialAction.php';
 
 /**
  * Test class for Xyster_Db_Gateway_TableBuilder_Column.
@@ -54,7 +54,7 @@ class Xyster_Db_Gateway_TableBuilder_ColumnTest extends PHPUnit_Framework_TestCa
     protected function setUp()
     {
         $this->object = new Xyster_Db_Gateway_TableBuilder_Column('example_column',
-            Xyster_Db_Gateway_DataType::Varchar(), 255);
+            Xyster_Db_DataType::Varchar(), 255);
     }
 
     /**
@@ -78,7 +78,7 @@ class Xyster_Db_Gateway_TableBuilder_ColumnTest extends PHPUnit_Framework_TestCa
      */
     public function testGetDataType()
     {
-        $this->assertSame(Xyster_Db_Gateway_DataType::Varchar(), $this->object->getDataType());
+        $this->assertSame(Xyster_Db_DataType::Varchar(), $this->object->getDataType());
     }
 
     /**
@@ -97,8 +97,8 @@ class Xyster_Db_Gateway_TableBuilder_ColumnTest extends PHPUnit_Framework_TestCa
     {
         $table = 'my_other_table';
         $column = 'my_other_table_id';
-        $onDelete = Xyster_Db_Gateway_ReferentialAction::SetNull();
-        $onUpdate = Xyster_Db_Gateway_ReferentialAction::Cascade();
+        $onDelete = Xyster_Db_ReferentialAction::SetNull();
+        $onUpdate = Xyster_Db_ReferentialAction::Cascade();
         $this->object->foreign($table, $column, $onDelete, $onUpdate);
         $this->assertEquals($table, $this->object->getForeignKeyTable());
         $this->assertEquals($column, $this->object->getForeignKeyColumn());

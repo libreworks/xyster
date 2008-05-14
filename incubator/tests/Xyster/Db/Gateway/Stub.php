@@ -195,22 +195,22 @@ class Xyster_Db_Gateway_Stub extends Xyster_Db_Gateway_Abstract
      *
      * @param string $table The table name
      * @param string $column The column name
-     * @param Xyster_Db_Gateway_DataType $type The data type
+     * @param Xyster_Db_DataType $type The data type
      * @param mixed $argument An argument for the data type
      * @return string
      */
-    protected function _getSetTypeSql( $table, $column, Xyster_Db_Gateway_DataType $type, $argument=null )
+    protected function _getSetTypeSql( $table, $column, Xyster_Db_DataType $type, $argument=null )
     {
     }
     
     /**
      * Translates a DataType enum into the correct SQL syntax
      *
-     * @param Xyster_Db_Gateway_DataType $type
+     * @param Xyster_Db_DataType $type
      * @param mixed $argument
      * @return string
      */
-    protected function _translateType( Xyster_Db_Gateway_DataType $type, $argument=null )
+    protected function _translateType( Xyster_Db_DataType $type, $argument=null )
     {
         return strtoupper($type->getName());
     }

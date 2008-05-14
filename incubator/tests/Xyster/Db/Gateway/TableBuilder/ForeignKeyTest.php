@@ -23,7 +23,7 @@ require_once "PHPUnit/Framework/TestCase.php";
 require_once "PHPUnit/Framework/TestSuite.php";
 require_once dirname(dirname(dirname(dirname(dirname(__FILE__))))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 require_once 'Xyster/Db/Gateway/TableBuilder/ForeignKey.php';
-require_once 'Xyster/Db/Gateway/ReferentialAction.php';
+require_once 'Xyster/Db/ReferentialAction.php';
 
 /**
  * Test class for Xyster_Db_Gateway_TableBuilder_ForeignKey.
@@ -62,8 +62,8 @@ class Xyster_Db_Gateway_TableBuilder_ForeignKeyTest extends PHPUnit_Framework_Te
      */
     protected function setUp()
     {
-        $this->onDelete = Xyster_Db_Gateway_ReferentialAction::SetNull();
-        $this->onUpdate = Xyster_Db_Gateway_ReferentialAction::Cascade();
+        $this->onDelete = Xyster_Db_ReferentialAction::SetNull();
+        $this->onUpdate = Xyster_Db_ReferentialAction::Cascade();
         
     	$this->object = new Xyster_Db_Gateway_TableBuilder_ForeignKey($this->columns,
             $this->table, $this->fcolumns, $this->onDelete, $this->onUpdate);

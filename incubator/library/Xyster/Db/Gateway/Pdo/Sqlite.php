@@ -357,12 +357,12 @@ class Xyster_Db_Gateway_Pdo_Sqlite extends Xyster_Db_Gateway_Abstract
      * 
      * @param string $table The table name
      * @param string $column The column name
-     * @param Xyster_Db_Gateway_DataType $type The data type
+     * @param Xyster_Db_DataType $type The data type
      * @param mixed $argument An argument for the data type
      * @return string
      * @throws Xyster_Db_Gateway_Exception always
      */
-    protected function _getSetTypeSql( $table, $column, Xyster_Db_Gateway_DataType $type, $argument=null )
+    protected function _getSetTypeSql( $table, $column, Xyster_Db_DataType $type, $argument=null )
     {
         require_once 'Xyster/Db/Gateway/Exception.php';
         throw new Xyster_Db_Gateway_Exception('SQLite does not support altering column type');
@@ -376,29 +376,29 @@ class Xyster_Db_Gateway_Pdo_Sqlite extends Xyster_Db_Gateway_Abstract
      * affinities.  Date times are part of the TEXT type, boolean part of
      * INTEGER.  
      *
-     * @param Xyster_Db_Gateway_DataType $type
+     * @param Xyster_Db_DataType $type
      * @param mixed $argument
      * @return string
      */
-    protected function _translateType( Xyster_Db_Gateway_DataType $type, $argument=null )
+    protected function _translateType( Xyster_Db_DataType $type, $argument=null )
     {
         $sql = '';
-        if ( $type === Xyster_Db_Gateway_DataType::Blob() ||
-            $type === Xyster_Db_Gateway_DataType::Clob() ) {
+        if ( $type === Xyster_Db_DataType::Blob() ||
+            $type === Xyster_Db_DataType::Clob() ) {
             $sql = 'BLOB';
-        } else if ( $type === Xyster_Db_Gateway_DataType::Char() ||
-            $type === Xyster_Db_Gateway_DataType::Varchar() ||
-            $type === Xyster_Db_Gateway_DataType::Date() ||
-            $type === Xyster_Db_Gateway_DataType::Time() ||
-            $type === Xyster_Db_Gateway_DataType::Timestamp() ) {
+        } else if ( $type === Xyster_Db_DataType::Char() ||
+            $type === Xyster_Db_DataType::Varchar() ||
+            $type === Xyster_Db_DataType::Date() ||
+            $type === Xyster_Db_DataType::Time() ||
+            $type === Xyster_Db_DataType::Timestamp() ) {
             $sql = 'TEXT';
-        } else if ( $type === Xyster_Db_Gateway_DataType::Float() ) {
+        } else if ( $type === Xyster_Db_DataType::Float() ) {
             $sql = 'REAL';
-        } else if ( $type === Xyster_Db_Gateway_DataType::Identity() ) {
+        } else if ( $type === Xyster_Db_DataType::Identity() ) {
             $sql = 'INTEGER PRIMARY KEY AUTOINCREMENT';
-        } else if ( $type === Xyster_Db_Gateway_DataType::Boolean() ||
-            $type === Xyster_Db_Gateway_DataType::Integer() ||
-            $type === Xyster_Db_Gateway_DataType::Smallint() ) {
+        } else if ( $type === Xyster_Db_DataType::Boolean() ||
+            $type === Xyster_Db_DataType::Integer() ||
+            $type === Xyster_Db_DataType::Smallint() ) {
             $sql = 'INTEGER';
         }
         return $sql;        

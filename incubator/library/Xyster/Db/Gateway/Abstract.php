@@ -56,10 +56,10 @@ abstract class Xyster_Db_Gateway_Abstract
      *
      * @param string $table The table name
      * @param string $name The name of the new column
-     * @param Xyster_Db_Gateway_DataType $type The data type
+     * @param Xyster_Db_DataType $type The data type
      * @param mixed $argument An optional argument for the data type
      */
-    public function addColumn( $table, $name, Xyster_Db_Gateway_DataType $type, $argument=null )
+    public function addColumn( $table, $name, Xyster_Db_DataType $type, $argument=null )
     {
         $this->getAdapter()->query($this->_getAddColumnSql($table, $name, $type, $argument));
     }
@@ -71,10 +71,10 @@ abstract class Xyster_Db_Gateway_Abstract
      * @param mixed $cols The string column name or an array of column names in the source table
      * @param string $foreignTable The foreign table name
      * @param mixed $foreignCols The string column name or an array of column names in the foreign table
-     * @param Xyster_Db_Gateway_ReferentialAction $onDelete optional
-     * @param Xyster_Db_Gateway_ReferentialAction $onUpdate optional
+     * @param Xyster_Db_ReferentialAction $onDelete optional
+     * @param Xyster_Db_ReferentialAction $onUpdate optional
      */
-    public function addForeign( $table, $cols, $foreignTable, $foreignCols, Xyster_Db_Gateway_ReferentialAction $onDelete=null, Xyster_Db_Gateway_ReferentialAction $onUpdate=null )
+    public function addForeign( $table, $cols, $foreignTable, $foreignCols, Xyster_Db_ReferentialAction $onDelete=null, Xyster_Db_ReferentialAction $onUpdate=null )
     {
         $this->_checkForeignKeySupport();
         $this->getAdapter()->query($this->_getAddForeignSql($table,
@@ -342,10 +342,10 @@ abstract class Xyster_Db_Gateway_Abstract
      *
      * @param string $table The table name
      * @param string $column The column name
-     * @param Xyster_Db_Gateway_DataType $type The new data type
+     * @param Xyster_Db_DataType $type The new data type
      * @param mixed $argument An optional argument for the data type
      */
-    public function setType( $table, $column, Xyster_Db_Gateway_DataType $type, $argument=null )
+    public function setType( $table, $column, Xyster_Db_DataType $type, $argument=null )
     { 
     	$this->getAdapter()->query($this->_getSetTypeSql($table, $column, $type,
     	   $argument));
@@ -492,11 +492,11 @@ abstract class Xyster_Db_Gateway_Abstract
      *
      * @param string $table The table name 
      * @param string $name The column name
-     * @param Xyster_Db_Gateway_DataType $type The data type
+     * @param Xyster_Db_DataType $type The data type
      * @param mixed $argument An argument for the data type
      * @return string
      */
-    protected function _getAddColumnSql( $table, $name, Xyster_Db_Gateway_DataType $type, $argument=null )
+    protected function _getAddColumnSql( $table, $name, Xyster_Db_DataType $type, $argument=null )
     {
         return "ALTER TABLE " . $this->getAdapter()->quoteIdentifier($table) . 
            " ADD COLUMN " . $this->getAdapter()->quoteIdentifier($name) . 
@@ -510,11 +510,11 @@ abstract class Xyster_Db_Gateway_Abstract
      * @param array $columns The columns in the key
      * @param string $foreignTable The foreign table name
      * @param array $foreignColumns The foreign columns referenced
-     * @param Xyster_Db_Gateway_ReferentialAction $onDelete The ON DELETE action
-     * @param Xyster_Db_Gateway_ReferentialAction $onUpdate The ON UPDATE action
+     * @param Xyster_Db_ReferentialAction $onDelete The ON DELETE action
+     * @param Xyster_Db_ReferentialAction $onUpdate The ON UPDATE action
      * @return string
      */
-    protected function _getAddForeignSql( $table, array $columns, $foreignTable, array $foreignColumns, Xyster_Db_Gateway_ReferentialAction $onDelete=null, Xyster_Db_Gateway_ReferentialAction $onUpdate=null )
+    protected function _getAddForeignSql( $table, array $columns, $foreignTable, array $foreignColumns, Xyster_Db_ReferentialAction $onDelete=null, Xyster_Db_ReferentialAction $onUpdate=null )
     {
         $sql = "ALTER TABLE " . $this->_quote($table) .
            " ADD FOREIGN KEY " . $this->_quote($columns) . " REFERENCES " . 
@@ -824,18 +824,18 @@ abstract class Xyster_Db_Gateway_Abstract
      *
      * @param string $table The table name
      * @param string $column The column name
-     * @param Xyster_Db_Gateway_DataType $type The data type
+     * @param Xyster_Db_DataType $type The data type
      * @param mixed $argument An argument for the data type
      * @return string
      */
-    abstract protected function _getSetTypeSql( $table, $column, Xyster_Db_Gateway_DataType $type, $argument=null );
+    abstract protected function _getSetTypeSql( $table, $column, Xyster_Db_DataType $type, $argument=null );
     
     /**
      * Translates a DataType enum into the correct SQL syntax
      *
-     * @param Xyster_Db_Gateway_DataType $type
+     * @param Xyster_Db_DataType $type
      * @param mixed $argument
      * @return string
      */
-    abstract protected function _translateType( Xyster_Db_Gateway_DataType $type, $argument=null );
+    abstract protected function _translateType( Xyster_Db_DataType $type, $argument=null );
 }

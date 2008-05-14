@@ -160,9 +160,9 @@ class Xyster_Db_Gateway_Pdo_SqliteTest extends Xyster_Db_Gateway_TestCommon
      */
     public function testSetType()
     {
-        require_once 'Xyster/Db/Gateway/DataType.php';
+        require_once 'Xyster/Db/DataType.php';
         $this->setExpectedException('Xyster_Db_Gateway_Exception');
-        $this->object->setType('forum', 'username', Xyster_Db_Gateway_DataType::Char());
+        $this->object->setType('forum', 'username', Xyster_Db_DataType::Char());
     }
 
     /**

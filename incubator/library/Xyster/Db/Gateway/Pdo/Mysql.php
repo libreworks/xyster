@@ -356,11 +356,11 @@ class Xyster_Db_Gateway_Pdo_Mysql extends Xyster_Db_Gateway_Abstract
      *
      * @param string $table The table name
      * @param string $column The column name
-     * @param Xyster_Db_Gateway_DataType $type The data type
+     * @param Xyster_Db_DataType $type The data type
      * @param mixed $argument An argument for the data type
      * @return string
      */
-    protected function _getSetTypeSql( $table, $column, Xyster_Db_Gateway_DataType $type, $argument=null )
+    protected function _getSetTypeSql( $table, $column, Xyster_Db_DataType $type, $argument=null )
     {
     	$sql = "ALTER TABLE " . $this->_quote($table) . " MODIFY COLUMN " . 
     	   $this->_quote($column) . " " . $this->_translateType($type, $argument);
@@ -376,35 +376,35 @@ class Xyster_Db_Gateway_Pdo_Mysql extends Xyster_Db_Gateway_Abstract
     /**
      * Translates a DataType enum into the correct SQL syntax
      *
-     * @param Xyster_Db_Gateway_DataType $type
+     * @param Xyster_Db_DataType $type
      * @param mixed $argument
      * @return string
      */
-    protected function _translateType( Xyster_Db_Gateway_DataType $type, $argument=null )
+    protected function _translateType( Xyster_Db_DataType $type, $argument=null )
     {
         $sql = '';
-        if ( $type === Xyster_Db_Gateway_DataType::Blob() ) {
+        if ( $type === Xyster_Db_DataType::Blob() ) {
             $sql = 'BLOB';
-        } else if ( $type === Xyster_Db_Gateway_DataType::Boolean() ) {
+        } else if ( $type === Xyster_Db_DataType::Boolean() ) {
             $sql = 'BOOLEAN';
-        } else if ( $type === Xyster_Db_Gateway_DataType::Char()
-            || $type === Xyster_Db_Gateway_DataType::Varchar() ) {
+        } else if ( $type === Xyster_Db_DataType::Char()
+            || $type === Xyster_Db_DataType::Varchar() ) {
             $sql = strtoupper($type->getName()) . '(' . intval($argument) . ')';
-        } else if ( $type === Xyster_Db_Gateway_DataType::Clob() ) {
+        } else if ( $type === Xyster_Db_DataType::Clob() ) {
             $sql = 'TEXT';
-        } else if ( $type === Xyster_Db_Gateway_DataType::Date() ) {
+        } else if ( $type === Xyster_Db_DataType::Date() ) {
             $sql = 'DATE';
-        } else if ( $type === Xyster_Db_Gateway_DataType::Float() ) {
+        } else if ( $type === Xyster_Db_DataType::Float() ) {
             $sql = 'FLOAT';
-        } else if ( $type === Xyster_Db_Gateway_DataType::Identity() ) {
+        } else if ( $type === Xyster_Db_DataType::Identity() ) {
             $sql = 'INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT';
-        } else if ( $type === Xyster_Db_Gateway_DataType::Integer() ) {
+        } else if ( $type === Xyster_Db_DataType::Integer() ) {
             $sql = 'INT';
-        } else if ( $type === Xyster_Db_Gateway_DataType::Smallint() ) {
+        } else if ( $type === Xyster_Db_DataType::Smallint() ) {
             $sql = 'SMALLINT';
-        } else if ( $type === Xyster_Db_Gateway_DataType::Time() ) {
+        } else if ( $type === Xyster_Db_DataType::Time() ) {
             $sql = 'TIME';
-        } else if ( $type === Xyster_Db_Gateway_DataType::Timestamp() ) {
+        } else if ( $type === Xyster_Db_DataType::Timestamp() ) {
             $sql = 'DATETIME';
         }
         return $sql;

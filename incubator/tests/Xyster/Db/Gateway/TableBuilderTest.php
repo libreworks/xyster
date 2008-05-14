@@ -24,7 +24,7 @@ require_once "PHPUnit/Framework/TestSuite.php";
 require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 require_once 'Xyster/Db/Adapter/Stub.php';
 require_once 'Xyster/Db/Gateway/Stub.php';
-require_once 'Xyster/Db/Gateway/DataType.php';
+require_once 'Xyster/Db/DataType.php';
 require_once 'Xyster/Db/Gateway/TableBuilder.php';
 require_once 'Xyster/Db/Gateway/TableBuilder/Column.php';
 require_once 'Xyster/Db/Gateway/TableBuilder/ForeignKey.php';
@@ -77,7 +77,7 @@ class Xyster_Db_Gateway_TableBuilderTest extends PHPUnit_Framework_TestCase
         $this->assertSame($this->object, $return);
         $column = current($this->object->getColumns());
         $this->assertType('Xyster_Db_Gateway_TableBuilder_Column', $column);
-        $this->assertSame(Xyster_Db_Gateway_DataType::Varchar(), $column->getDataType());
+        $this->assertSame(Xyster_Db_DataType::Varchar(), $column->getDataType());
         $this->assertEquals('disposition', $column->getName());
         $this->assertEquals('255', $column->getArgument());
     }
@@ -91,7 +91,7 @@ class Xyster_Db_Gateway_TableBuilderTest extends PHPUnit_Framework_TestCase
         $this->assertSame($this->object, $return);
         $column = current($this->object->getColumns());
         $this->assertType('Xyster_Db_Gateway_TableBuilder_Column', $column);
-        $this->assertSame(Xyster_Db_Gateway_DataType::Char(), $column->getDataType());
+        $this->assertSame(Xyster_Db_DataType::Char(), $column->getDataType());
         $this->assertEquals('juxtaposition', $column->getName());
         $this->assertEquals(255, $column->getArgument());
     }
@@ -105,7 +105,7 @@ class Xyster_Db_Gateway_TableBuilderTest extends PHPUnit_Framework_TestCase
         $this->assertSame($this->object, $return);
         $column = current($this->object->getColumns());
         $this->assertType('Xyster_Db_Gateway_TableBuilder_Column', $column);
-        $this->assertSame(Xyster_Db_Gateway_DataType::Integer(), $column->getDataType());
+        $this->assertSame(Xyster_Db_DataType::Integer(), $column->getDataType());
         $this->assertEquals('chronological_offset', $column->getName());        
     }
 
@@ -118,7 +118,7 @@ class Xyster_Db_Gateway_TableBuilderTest extends PHPUnit_Framework_TestCase
         $this->assertSame($this->object, $return);
         $column = current($this->object->getColumns());
         $this->assertType('Xyster_Db_Gateway_TableBuilder_Column', $column);
-        $this->assertSame(Xyster_Db_Gateway_DataType::Smallint(), $column->getDataType());
+        $this->assertSame(Xyster_Db_DataType::Smallint(), $column->getDataType());
         $this->assertEquals('occupancy', $column->getName());
     }
 
@@ -131,7 +131,7 @@ class Xyster_Db_Gateway_TableBuilderTest extends PHPUnit_Framework_TestCase
         $this->assertSame($this->object, $return);
         $column = current($this->object->getColumns());
         $this->assertType('Xyster_Db_Gateway_TableBuilder_Column', $column);
-        $this->assertSame(Xyster_Db_Gateway_DataType::Float(), $column->getDataType());
+        $this->assertSame(Xyster_Db_DataType::Float(), $column->getDataType());
         $this->assertEquals('interest_compounded', $column->getName());
     }
 
@@ -144,7 +144,7 @@ class Xyster_Db_Gateway_TableBuilderTest extends PHPUnit_Framework_TestCase
         $this->assertSame($this->object, $return);
         $column = current($this->object->getColumns());
         $this->assertType('Xyster_Db_Gateway_TableBuilder_Column', $column);
-        $this->assertSame(Xyster_Db_Gateway_DataType::Timestamp(), $column->getDataType());
+        $this->assertSame(Xyster_Db_DataType::Timestamp(), $column->getDataType());
         $this->assertEquals('subjugated_on', $column->getName());        
     }
 
@@ -157,7 +157,7 @@ class Xyster_Db_Gateway_TableBuilderTest extends PHPUnit_Framework_TestCase
         $this->assertSame($this->object, $return);
         $column = current($this->object->getColumns());
         $this->assertType('Xyster_Db_Gateway_TableBuilder_Column', $column);
-        $this->assertSame(Xyster_Db_Gateway_DataType::Date(), $column->getDataType());
+        $this->assertSame(Xyster_Db_DataType::Date(), $column->getDataType());
         $this->assertEquals('anniversary', $column->getName());
     }
 
@@ -170,7 +170,7 @@ class Xyster_Db_Gateway_TableBuilderTest extends PHPUnit_Framework_TestCase
         $this->assertSame($this->object, $return);
         $column = current($this->object->getColumns());
         $this->assertType('Xyster_Db_Gateway_TableBuilder_Column', $column);
-        $this->assertSame(Xyster_Db_Gateway_DataType::Time(), $column->getDataType());
+        $this->assertSame(Xyster_Db_DataType::Time(), $column->getDataType());
         $this->assertEquals('time_on_our_hands', $column->getName());        
     }
 
@@ -183,7 +183,7 @@ class Xyster_Db_Gateway_TableBuilderTest extends PHPUnit_Framework_TestCase
         $this->assertSame($this->object, $return);
         $column = current($this->object->getColumns());
         $this->assertType('Xyster_Db_Gateway_TableBuilder_Column', $column);
-        $this->assertSame(Xyster_Db_Gateway_DataType::Clob(), $column->getDataType());
+        $this->assertSame(Xyster_Db_DataType::Clob(), $column->getDataType());
         $this->assertEquals('senior_thesis', $column->getName());
     }
 
@@ -196,7 +196,7 @@ class Xyster_Db_Gateway_TableBuilderTest extends PHPUnit_Framework_TestCase
         $this->assertSame($this->object, $return);
         $column = current($this->object->getColumns());
         $this->assertType('Xyster_Db_Gateway_TableBuilder_Column', $column);
-        $this->assertSame(Xyster_Db_Gateway_DataType::Blob(), $column->getDataType());
+        $this->assertSame(Xyster_Db_DataType::Blob(), $column->getDataType());
         $this->assertEquals('encrypted_spatula', $column->getName());        
     }
 
@@ -209,7 +209,7 @@ class Xyster_Db_Gateway_TableBuilderTest extends PHPUnit_Framework_TestCase
         $this->assertSame($this->object, $return);
         $column = current($this->object->getColumns());
         $this->assertType('Xyster_Db_Gateway_TableBuilder_Column', $column);
-        $this->assertSame(Xyster_Db_Gateway_DataType::Boolean(), $column->getDataType());
+        $this->assertSame(Xyster_Db_DataType::Boolean(), $column->getDataType());
         $this->assertEquals('bewildering_confirmation', $column->getName());        
     }
 
@@ -222,7 +222,7 @@ class Xyster_Db_Gateway_TableBuilderTest extends PHPUnit_Framework_TestCase
         $this->assertSame($this->object, $return);
         $column = current($this->object->getColumns());
         $this->assertType('Xyster_Db_Gateway_TableBuilder_Column', $column);
-        $this->assertSame(Xyster_Db_Gateway_DataType::Identity(), $column->getDataType());
+        $this->assertSame(Xyster_Db_DataType::Identity(), $column->getDataType());
         $this->assertEquals('mistaken_identity', $column->getName());        
     }
 

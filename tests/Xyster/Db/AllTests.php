@@ -28,6 +28,8 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 
 error_reporting(E_ALL | E_STRICT);
 
+require_once 'Xyster/Db/DataTypeTest.php';
+require_once 'Xyster/Db/ReferentialActionTest.php';
 require_once 'Xyster/Db/TokenTest.php';
 require_once 'Xyster/Db/TranslatorTest.php';
 
@@ -41,6 +43,8 @@ class Xyster_Db_AllTests
     public static function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('Xyster Framework - Xyster_Db');
+        $suite->addTestSuite('Xyster_Db_DataTypeTest');
+        $suite->addTestSuite('Xyster_Db_ReferentialActionTest');
         $suite->addTestSuite('Xyster_Db_TokenTest');
         $suite->addTestSuite('Xyster_Db_TranslatorTest');
         return $suite;
