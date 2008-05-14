@@ -25,7 +25,7 @@ require_once 'Xyster/Enum.php';
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Db_Gateway_DataType extends Xyster_Enum
+class Xyster_Db_DataType extends Xyster_Enum
 {
     const Varchar   = 0;
     const Char      = 1;
@@ -44,7 +44,7 @@ class Xyster_Db_Gateway_DataType extends Xyster_Enum
     /**
      * The Varchar data type
      *
-     * @return Xyster_Db_Gateway_DataType
+     * @return Xyster_Db_DataType
      */
     static public function Varchar()
     {
@@ -54,7 +54,7 @@ class Xyster_Db_Gateway_DataType extends Xyster_Enum
     /**
      * The Char data type
      *
-     * @return Xyster_Db_Gateway_DataType
+     * @return Xyster_Db_DataType
      */
     static public function Char()
     {
@@ -64,7 +64,7 @@ class Xyster_Db_Gateway_DataType extends Xyster_Enum
     /**
      * The Integer data type
      *
-     * @return Xyster_Db_Gateway_DataType
+     * @return Xyster_Db_DataType
      */
     static public function Integer()
     {
@@ -74,7 +74,7 @@ class Xyster_Db_Gateway_DataType extends Xyster_Enum
     /**
      * The Smallint data type
      *
-     * @return Xyster_Db_Gateway_DataType
+     * @return Xyster_Db_DataType
      */
     static public function Smallint()
     {
@@ -84,7 +84,7 @@ class Xyster_Db_Gateway_DataType extends Xyster_Enum
     /**
      * The Float data type
      *
-     * @return Xyster_Db_Gateway_DataType
+     * @return Xyster_Db_DataType
      */
     static public function Float()
     {
@@ -94,7 +94,7 @@ class Xyster_Db_Gateway_DataType extends Xyster_Enum
     /**
      * The Timestamp data type
      *
-     * @return Xyster_Db_Gateway_DataType
+     * @return Xyster_Db_DataType
      */
     static public function Timestamp()
     {
@@ -104,7 +104,7 @@ class Xyster_Db_Gateway_DataType extends Xyster_Enum
     /**
      * The Date data type
      *
-     * @return Xyster_Db_Gateway_DataType
+     * @return Xyster_Db_DataType
      */
     static public function Date()
     {
@@ -114,7 +114,7 @@ class Xyster_Db_Gateway_DataType extends Xyster_Enum
     /**
      * The Time data type
      *
-     * @return Xyster_Db_Gateway_DataType
+     * @return Xyster_Db_DataType
      */
     static public function Time()
     {
@@ -125,7 +125,7 @@ class Xyster_Db_Gateway_DataType extends Xyster_Enum
     /**
      * The Clob data type
      *
-     * @return Xyster_Db_Gateway_DataType
+     * @return Xyster_Db_DataType
      */
     static public function Clob()
     {
@@ -135,7 +135,7 @@ class Xyster_Db_Gateway_DataType extends Xyster_Enum
     /**
      * The Blob data type
      *
-     * @return Xyster_Db_Gateway_DataType
+     * @return Xyster_Db_DataType
      */
     static public function Blob()
     {
@@ -145,7 +145,7 @@ class Xyster_Db_Gateway_DataType extends Xyster_Enum
     /**
      * The Boolean data type
      *
-     * @return Xyster_Db_Gateway_DataType
+     * @return Xyster_Db_DataType
      */
     static public function Boolean()
     {
@@ -155,7 +155,7 @@ class Xyster_Db_Gateway_DataType extends Xyster_Enum
     /**
      * The Identity data type
      *
-     * @return Xyster_Db_Gateway_DataType
+     * @return Xyster_Db_DataType
      */
     static public function Identity()
     {
@@ -165,7 +165,7 @@ class Xyster_Db_Gateway_DataType extends Xyster_Enum
     /**
      * The Bigint data type
      *
-     * @return Xyster_Db_Gateway_DataType
+     * @return Xyster_Db_DataType
      */
     static public function Bigint()
     {

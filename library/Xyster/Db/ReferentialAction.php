@@ -25,7 +25,7 @@ require_once 'Xyster/Enum.php';
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Db_Gateway_ReferentialAction extends Xyster_Enum
+class Xyster_Db_ReferentialAction extends Xyster_Enum
 {
     const Cascade    = 0;
     const Restrict   = 1;
@@ -54,7 +54,7 @@ class Xyster_Db_Gateway_ReferentialAction extends Xyster_Enum
     /**
      * The CASCADE action
      *
-     * @return Xyster_Db_Gateway_ReferentialAction
+     * @return Xyster_Db_ReferentialAction
      */
     static public function Cascade()
     {
@@ -64,7 +64,7 @@ class Xyster_Db_Gateway_ReferentialAction extends Xyster_Enum
     /**
      * The RESTRICT action
      *
-     * @return Xyster_Db_Gateway_ReferentialAction
+     * @return Xyster_Db_ReferentialAction
      */
     static public function Restrict()
     {
@@ -74,7 +74,7 @@ class Xyster_Db_Gateway_ReferentialAction extends Xyster_Enum
     /**
      * The NO ACTION action
      *
-     * @return Xyster_Db_Gateway_ReferentialAction
+     * @return Xyster_Db_ReferentialAction
      */
     static public function NoAction()
     {
@@ -84,7 +84,7 @@ class Xyster_Db_Gateway_ReferentialAction extends Xyster_Enum
     /**
      * The SET NULL action
      *
-     * @return Xyster_Db_Gateway_ReferentialAction
+     * @return Xyster_Db_ReferentialAction
      */
     static public function SetNull()
     {
@@ -94,7 +94,7 @@ class Xyster_Db_Gateway_ReferentialAction extends Xyster_Enum
     /**
      * The SET DEFAULT action
      *
-     * @return Xyster_Db_Gateway_ReferentialAction
+     * @return Xyster_Db_ReferentialAction
      */
     static public function SetDefault()
     {
