@@ -14,7 +14,6 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
-
 // Call Xyster_Orm_Entity_TypeTest::main() if this source file is executed directly.
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Xyster_Orm_Entity_TypeTest::main');
@@ -23,7 +22,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 /**
  * PHPUnit test case
  */
-require_once dirname(__FILE__) . '/TestSetup.php';
+require_once dirname(dirname(__FILE__)) . '/TestSetup.php';
 require_once 'Xyster/Orm/Entity/Type.php';
 
 /**

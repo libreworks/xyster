@@ -17,7 +17,7 @@
 /**
  * PHPUnit test case
  */
-require_once dirname(__FILE__) . '/TestSetup.php';
+require_once dirname(dirname(__FILE__)) . '/TestSetup.php';
 /**
  * @see Xyster_Orm_Entity_Field
  */
