@@ -28,8 +28,8 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once 'Xyster/Orm/LoaderTest.php';
 require_once 'Xyster/Orm/EntityTest.php';
-require_once 'Xyster/Orm/EntityFieldTest.php';
-require_once 'Xyster/Orm/EntityTypeTest.php';
+require_once 'Xyster/Orm/Entity/FieldTest.php';
+require_once 'Xyster/Orm/Entity/TypeTest.php';
 require_once 'Xyster/Orm/SetTest.php';
 require_once 'Xyster/Orm/WorkUnitTest.php';
 require_once 'Xyster/Orm/RepositoryTest.php';
