@@ -21,7 +21,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 
 require_once "PHPUnit/Framework/TestCase.php";
 require_once "PHPUnit/Framework/TestSuite.php";
-require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 require_once 'Xyster/Db/DataType.php';
 
 /**
@@ -30,11 +30,6 @@ require_once 'Xyster/Db/DataType.php';
  */
 class Xyster_Db_DataTypeTest extends PHPUnit_Framework_TestCase
 {
-	static protected $_types = array(
-	       'varchar', 'char', 'integer', 'smallint', 'float', 'timestamp',
-	       'date', 'time', 'clob', 'blob', 'boolean', 'identity', 'bigint'
-	   );
-	   
     /**
      * Runs the test methods of this class.
      */
@@ -45,19 +40,124 @@ class Xyster_Db_DataTypeTest extends PHPUnit_Framework_TestCase
         $suite  = new PHPUnit_Framework_TestSuite('Xyster_Db_DataTypeTest');
         $result = PHPUnit_TextUI_TestRunner::run($suite);
     }
-    
+
     /**
-     * Tests the datatype enum methods
-     *
+     * Tests a method
      */
-    public function testMain()
+    public function testVarchar()
     {
-    	foreach( self::$_types as $value => $name ) {
-            $enum = Xyster_Enum::valueOf('Xyster_Db_DataType', $value);
-            $this->_runTests($enum, ucfirst($name), $value);
-    	}
+        $enum = Xyster_Db_DataType::Varchar();
+        $this->_runTests($enum, 'Varchar', 0);
     }
 
+    /**
+     * Tests a method
+     */
+    public function testChar()
+    {
+        $enum = Xyster_Db_DataType::Char();
+        $this->_runTests($enum, 'Char', 1);
+    }
+
+    /**
+     * Tests a method
+     */
+    public function testInteger()
+    {
+        $enum = Xyster_Db_DataType::Integer();
+        $this->_runTests($enum, 'Integer', 2);
+    }
+
+    /**
+     * Tests a method
+     */
+    public function testSmallint()
+    {
+        $enum = Xyster_Db_DataType::Smallint();
+        $this->_runTests($enum, 'Smallint', 3);
+    }
+
+    /**
+     * Tests a method
+     */
+    public function testFloat()
+    {
+        $enum = Xyster_Db_DataType::Float();
+        $this->_runTests($enum, 'Float', 4);
+    }
+
+    /**
+     * Tests a method
+     */
+    public function testTimestamp()
+    {
+        $enum = Xyster_Db_DataType::Timestamp();
+        $this->_runTests($enum, 'Timestamp', 5);
+    }
+
+    /**
+     * Tests a method
+     */
+    public function testDate()
+    {
+        $enum = Xyster_Db_DataType::Date();
+        $this->_runTests($enum, 'Date', 6);
+    }
+
+    /**
+     * Tests a method
+     */
+    public function testTime()
+    {
+        $enum = Xyster_Db_DataType::Time();
+        $this->_runTests($enum, 'Time', 7);
+    }
+
+    /**
+     * Tests a method
+     */
+    public function testClob()
+    {
+        $enum = Xyster_Db_DataType::Clob();
+        $this->_runTests($enum, 'Clob', 8);
+    }
+
+    /**
+     * Tests a method
+     */
+    public function testBlob()
+    {
+        $enum = Xyster_Db_DataType::Blob();
+        $this->_runTests($enum, 'Blob', 9);
+    }
+
+    /**
+     * Tests a method
+     */
+    public function testBoolean()
+    {
+        $enum = Xyster_Db_DataType::Boolean();
+        $this->_runTests($enum, 'Boolean', 10);
+    }
+
+    /**
+     * Tests a method
+     */
+    public function testIdentity()
+    {
+        $enum = Xyster_Db_DataType::Identity();
+        $this->_runTests($enum, 'Identity', 11);
+    }
+
+    /**
+     * Tests a method
+     */
+    public function testBigint()
+    {
+        $enum = Xyster_Db_DataType::Bigint();
+        $this->_runTests($enum, 'Bigint', 12);
+    }
+    
     /**
      * Runs the unit tests on an enum
      *

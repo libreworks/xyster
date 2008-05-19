@@ -21,7 +21,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 
 require_once "PHPUnit/Framework/TestCase.php";
 require_once "PHPUnit/Framework/TestSuite.php";
-require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 require_once 'Xyster/Db/ReferentialAction.php';
 
 /**
@@ -30,10 +30,6 @@ require_once 'Xyster/Db/ReferentialAction.php';
  */
 class Xyster_Db_ReferentialActionTest extends PHPUnit_Framework_TestCase
 {
-	static protected $_actions = array(
-	       'Cascade', 'Restrict', 'NoAction', 'SetNull', 'SetDefault'
-	   );
-	   
     /**
      * Runs the test methods of this class.
      */
@@ -46,17 +42,50 @@ class Xyster_Db_ReferentialActionTest extends PHPUnit_Framework_TestCase
     }
     
     /**
-     * Tests the datatype enum methods
-     *
+     * Tests a method
      */
-    public function testMain()
+    public function testCascade()
     {
-    	foreach( self::$_actions as $value => $name ) {
-            $enum = Xyster_Enum::valueOf('Xyster_Db_ReferentialAction', $value);
-            $this->_runTests($enum, $name, $value);
-    	}
+        $enum = Xyster_Db_ReferentialAction::Cascade();
+        $this->_runTests($enum, 'Cascade', 0);
     }
-
+    
+    /**
+     * Tests a method
+     */
+    public function testRestrict()
+    {
+        $enum = Xyster_Db_ReferentialAction::Restrict();
+        $this->_runTests($enum, 'Restrict', 1);
+    }
+    
+    /**
+     * Tests a method
+     */
+    public function testNoAction()
+    {
+        $enum = Xyster_Db_ReferentialAction::NoAction();
+        $this->_runTests($enum, 'NoAction', 2);
+    }
+    
+    /**
+     * Tests a method
+     */
+    public function testSetNull()
+    {
+        $enum = Xyster_Db_ReferentialAction::SetNull();
+        $this->_runTests($enum, 'SetNull', 3);
+    }
+    
+    /**
+     * Tests a method
+     */
+    public function testSetDefault()
+    {
+        $enum = Xyster_Db_ReferentialAction::SetDefault();
+        $this->_runTests($enum, 'SetDefault', 4);
+    }
+    
     /**
      * Runs the unit tests on an enum
      *
@@ -71,6 +100,8 @@ class Xyster_Db_ReferentialActionTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('Xyster_Db_ReferentialAction ['.$value.','.$name.']', (string)$actual);
         $this->assertSame($actual, Xyster_Enum::parse('Xyster_Db_ReferentialAction', $name));
         $this->assertSame($actual, Xyster_Enum::valueOf('Xyster_Db_ReferentialAction', $value));
+        $sql = strtoupper(preg_replace('/([a-z])([A-Z])/', '$1 $2', $actual->getName()));
+        $this->assertEquals($sql, $actual->getSql());
     }
 }
 
