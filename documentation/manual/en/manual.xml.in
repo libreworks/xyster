@@ -65,6 +65,11 @@
     	<xi:include href="module_specs/Xyster_Data_Sets.xml" />
     </chapter>
 
+    <chapter id="xyster.date">
+        <title>Xyster_Date</title>
+        <xi:include href="module_specs/Xyster_Date.xml" />
+    </chapter>
+    
     <chapter id="xyster.enum">
         <title>Xyster_Enum</title>
     	<xi:include href="module_specs/Xyster_Enum.xml" />
@@ -83,6 +88,8 @@
     	<xi:include href="module_specs/Xyster_Orm_Entity.xml" />
     	<xi:include href="module_specs/Xyster_Orm_Orm.xml" />        
     	<xi:include href="module_specs/Xyster_Orm_Relations.xml" />
+        <xi:include href="module_specs/Xyster_Orm_Lookups.xml" />
+        <xi:include href="module_specs/Xyster_Orm_Validate.xml" />
     	<xi:include href="module_specs/Xyster_Orm_Queries.xml" />
     	<xi:include href="module_specs/Xyster_Orm_Plugins.xml" />
     </chapter>

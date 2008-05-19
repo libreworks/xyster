@@ -1,0 +1,48 @@
+    <sect1 id="xyster.orm.lookup">
+        <title>Lookups</title>
+        
+        <para>Lookups are special objects that can be added to an entity type.
+            The allow for runtime generation of values based on the contents of
+            an entity.  They also allow setting values back to the entity.
+            There are two different lookups that come with Xyster.</para>
+            
+        <glosslist>
+            <glossentry><glossterm>Xyster_Orm_Entity_Lookup_Date</glossterm><glossdef><para>Can generate <classname>Zend_Date</classname> objects based on a date field in an entity</para></glossdef></glossentry>
+            <glossentry><glossterm>Xyster_Orm_Entity_Lookup_Enum</glossterm><glossdef><para>Can generate <classname>Xyster_Enum</classname> objects based on the value of a field in an entity</para></glossdef></glossentry>
+        </glosslist>
+        
+        <para>The best place to instantiate and add these lookups is the <methodname>init</methodname>
+            method in your mapper classes.  You can create your own lookup classes
+            by implenting <interface>Xyster_Orm_Entity_Lookup_Interface</interface>.</para>
+        
+        <sect2 id="xyster.orm.lookup.date">
+            <title>Xyster_Orm_Entity_Lookup_Date</title>
+            
+            <para>The date object takes two or three arguments.  The type of 
+                entity that the lookup supports, the name of the field where
+                the date value is stored, and optionally the name of the property
+                on the entity that will invoke this lookup (by default it's the
+                name of the field appended with 'Date').</para>
+                
+            <para>When a new <classname>Zend_Date</classname> object is stored to
+                the lookup property, its value will be written to the original 
+                date field on the entity (additionally, you can specify the format).</para>
+        </sect2>
+        
+        <sect2 id="xyster.orm.lookup.enum">
+            <title>Xyster_Orm_Entity_Lookup_Enum</title>
+            
+            <para>The enum lookup takes between 3 and 5 arguments.  The type of 
+                entity that the lookup supports, a <classname>Xyster_Type</classname>
+                object that represents the type of enum class, the name of the
+                field where the lookup value is stored, optionally a flag for 
+                specifying whether the entity value is used as the enum name or
+                value, and optionally the name of the property on the entity
+                that will invoke this lookup (by default it's the name of the 
+                field appended with 'Type').</para>
+                
+            <para>When a new <classname>Xyster_Enum</classname> object is stored
+                to the lookup property, its value (or name) will be written to
+                the original value field on the entity.</para> 
+        </sect2>
+    </sect1>
