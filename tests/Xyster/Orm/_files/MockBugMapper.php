@@ -19,6 +19,7 @@
  * @see Xyster_Orm_Mapper_Mock
  */
 require_once 'Xyster/Orm/Mapper/Mock.php';
+require_once 'Xyster/Orm/Entity/Lookup/Date.php';
 
 /**
  * A mock mapper
@@ -37,6 +38,8 @@ class MockBugMapper extends Xyster_Orm_Mapper_Mock
             ->_belongsTo('verifier', array('class'=>'MockAccount','id'=>'verifiedBy'))
             ->_hasJoined('products', array('class'=>'MockProduct',
             'table'=>'zfbugs_products', 'left'=>'bug_id', 'right'=>'product_id'));
+        $lookup = new Xyster_Orm_Entity_Lookup_Date($this->getEntityType(), 'createdOn', 'createdOnDate');
+        $this->getEntityType()->addLookup($lookup);
     }
     
     /**

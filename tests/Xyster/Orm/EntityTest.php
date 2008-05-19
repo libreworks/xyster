@@ -283,6 +283,17 @@ class Xyster_Orm_EntityTest extends Xyster_Orm_TestSetup
     }
     
     /**
+     * Tests setting a bad field throws an exception
+     *
+     */
+    public function testSetBadField()
+    {
+        $entity = $this->_getMockEntity();
+        $this->setExpectedException('Xyster_Orm_Entity_Exception');
+        $entity->foobar = 12345;
+    }
+    
+    /**
      * Tests setting a field works correctly
      *
      */
@@ -505,6 +516,33 @@ class Xyster_Orm_EntityTest extends Xyster_Orm_TestSetup
         $entity->addListener($listener);
         $entity->clearListeners();
         $this->assertAttributeEquals(null, '_listeners', $entity);
+    }
+    
+    /**
+     * Tests the '_getLookup' method 
+     *
+     */
+    public function testGetLookup()
+    {
+        $entity = $this->_getMockEntity();
+        $lookup = $entity->createdOnDate;
+        $expected = new Zend_Date($entity->createdOn);
+        $this->assertEquals($expected, $lookup);
+        $this->assertEquals($expected, $entity->getCreatedOnDate());
+    }
+    
+    /**
+     * Tests the '_setLookup' method
+     *
+     */
+    public function testSetLookup()
+    {
+        $entity = $this->_getMockEntity();
+        $newDate = new Zend_Date();
+        $expected = $newDate->get(Zend_Date::ISO_8601);
+        $entity->createdOnDate = $newDate;
+        $this->assertSame($newDate, $entity->createdOnDate);
+        $this->assertEquals($expected, $entity->createdOn);
     }
 }
 

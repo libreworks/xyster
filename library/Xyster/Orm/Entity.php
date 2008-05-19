@@ -49,6 +49,13 @@ class Xyster_Orm_Entity
     protected $_listeners = null;
     
     /**
+     * Looked-up values
+     *
+     * @var array
+     */
+    protected $_lookups = array();
+    
+    /**
      * Related entities or sets
      * 
      * @var array 
@@ -109,6 +116,7 @@ class Xyster_Orm_Entity
      * @param array $args  Any arguments used
      * @magic
      * @return mixed  The result of the method
+     * @throws Xyster_Orm_Entity_Exception if the name is invalid
      */
     public function __call( $name, array $args )
     {
@@ -120,12 +128,23 @@ class Xyster_Orm_Entity
             } else if ( $action == 'set' ) {
                 $this->_setField($field, $args[0]);
             }
-        } else {
+        } else if ( array_key_exists($field, $this->_related) ||
+            $this->_getType()->isRelation($field) ) {
             if ( $action == 'get' ) {
                 return $this->_getRelated($field);
             } else if ( $action == 'set' ) {
                 $this->_setRelated($field, $args[0]);
             }
+        } else if ( array_key_exists($field, $this->_lookups) ||
+            $this->_getType()->isLookup($field) ) {
+            if ( $action == 'get' ) {
+                return $this->_getLookup($field);
+            } else if ( $action == 'set' ) {
+                $this->_setLookup($field, $args[0]);
+            }
+        } else {
+            require_once 'Xyster/Orm/Entity/Exception.php';
+            throw new Xyster_Orm_Entity_Exception("'" . $field . "' is not a valid field, relation, or lookup name");
         }
     }
 
@@ -139,12 +158,18 @@ class Xyster_Orm_Entity
      */
     public function __get( $name )
     {
-        $isField = array_key_exists($name, $this->_values); 
-        if ( !$isField && !$this->_getType()->isRelation($name) ) {
-            require_once 'Xyster/Orm/Entity/Exception.php';
-            throw new Xyster_Orm_Entity_Exception("'" . $name . "' is not a valid field or relation name");
+        if ( array_key_exists($name, $this->_values) ) {
+            return $this->_values[$name];
+        } else if ( array_key_exists($name, $this->_related) ||
+            $this->_getType()->isRelation($name) ) {
+            return $this->_getRelated($name);
+        } else if ( array_key_exists($name, $this->_lookups) ||
+            $this->_getType()->isLookup($name) ) {
+            return $this->_getLookup($name);
         }
-        return ( $isField ) ? $this->_values[$name] : $this->_getRelated($name);
+        
+        require_once 'Xyster/Orm/Entity/Exception.php';
+        throw new Xyster_Orm_Entity_Exception("'" . $name . "' is not a valid field, relation, or lookup name");
     }
 
     /**
@@ -399,6 +424,21 @@ class Xyster_Orm_Entity
     }
 
     /**
+     * Gets a lookup value
+     *
+     * @param string $name The name of the lookup
+     * @return mixed The lookup value
+     * @throws Xyster_Orm_Entity_Exception if the lookup name is invalid
+     */
+    protected function _getLookup( $name )
+    {
+        if ( !array_key_exists($name, $this->_lookups) ) {
+            $this->_lookups[$name] = $this->_getType()->getLookup($name)->get($this);
+        }
+        return $this->_lookups[$name];
+    }
+    
+    /**
      * Gets a related property
      *
      * @param string $name  The name of the property
@@ -431,6 +471,21 @@ class Xyster_Orm_Entity
         }
         $this->_notifyListeners('field', $name, $this->_values[$name], $value);
         $this->_values[$name] = $value;
+    }
+    
+    /**
+     * Sets the lookup value
+     *
+     * @param string $name
+     * @param mixed $value
+     * @throws Xyster_Orm_Entity_Exception if the lookup name is incorrect
+     * @throws Xyster_Orm_Entity_Exception if the lookup value is incorrect
+     */
+    protected function _setLookup( $name, $value )
+    {
+        $this->_getType()->getLookup($name)->set($this, $value);
+        // if no exception is thrown, we can assume the value is safe
+        $this->_lookups[$name] = $value;
     }
     
     /**

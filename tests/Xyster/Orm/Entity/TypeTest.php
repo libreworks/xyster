@@ -204,6 +204,7 @@ class Xyster_Orm_Entity_TypeTest extends Xyster_Orm_TestSetup
     {
         $membs = array();
         $membs = array_merge($membs, $this->object->getFieldNames());
+        $membs = array_merge($membs, $this->object->getLookupNames());
         $membs = array_merge($membs, $this->object->getRelationNames());
         $membs = array_merge($membs, get_class_methods($this->object->getEntityName()));
         
@@ -385,6 +386,69 @@ class Xyster_Orm_Entity_TypeTest extends Xyster_Orm_TestSetup
         $this->object->addValidator('bugDescription', $validator, true);
         $validators = $this->object->getValidators('bugDescription');
         $this->assertType('Zend_Validate', $validators);
+    }
+    
+    /**
+     * Tests the 'getLookup' method
+     *
+     */
+    public function testGetLookup()
+    {
+        $lookup = $this->object->getLookup('createdOnDate');
+        $this->assertType('Xyster_Orm_Entity_Lookup_Interface', $lookup);
+        $this->assertEquals('createdOnDate', $lookup->getName());
+    }
+    
+    /**
+     * Tests the 'getLookup' method with a bad lookup
+     *
+     */
+    public function testGetLookupInvalid()
+    {
+        $this->setExpectedException('Xyster_Orm_Entity_Exception');
+        $this->object->getLookup('foobar');
+    }
+    
+    /**
+     * Tests the 'addLookup' method with an already added lookup
+     *
+     */
+    public function testAddLookup()
+    {
+        $lookup = new Xyster_Orm_Entity_Lookup_Date($this->object, 'createdOn', 'createdOnDatetime');
+        $lookup2 = new Xyster_Orm_Entity_Lookup_Date($this->object, 'createdOn', 'createdOnDatetime');
+        
+        $return = $this->object->addLookup($lookup);
+        $this->assertSame($this->object, $return);
+        
+        $this->setExpectedException('Xyster_Orm_Entity_Exception');
+        $this->object->addLookup($lookup2);
+    }
+    
+    /**
+     * Tests the 'addLookup' method with a lookup of the wrong type
+     *
+     */
+    public function testAddLookupWrongType()
+    {
+        $type = $this->object->getMapperFactory()->getEntityType('MockAccount');
+        $lookup = new Xyster_Orm_Entity_Lookup_Date($type, 'accountName');
+        $this->setExpectedException('Xyster_Orm_Entity_Exception');
+        $this->object->addLookup($lookup);
+    }
+    
+    /**
+     * Tests the 'addLookup' method with a lookup whose name is taken
+     *
+     */
+    public function testAddLookupTakenMembername()
+    {
+        require_once 'Xyster/Orm/Entity/Lookup/Stub.php';
+        $lookup = new Xyster_Orm_Entity_Lookup_Stub;
+        $lookup->entityType = $this->object;
+        $lookup->name = 'createdOn';
+        $this->setExpectedException('Xyster_Orm_Entity_Exception');
+        $this->object->addLookup($lookup);
     }
 }
 

@@ -38,9 +38,16 @@ class Xyster_Orm_Entity_Type extends Xyster_Type
     /**
      * Cache for entity fields
      *
-     * @var array
+     * @var Xyster_Orm_Entity_Field[]
      */
     protected $_fields = array();
+    
+    /**
+     * An array of {@link Xyster_Orm_Entity_Lookup_Interface} objects 
+     *
+     * @var Xyster_Orm_Entity_Lookup_Interface[]
+     */
+    protected $_lookups = array();
     
     /**
      * The mapper factory
@@ -109,6 +116,32 @@ class Xyster_Orm_Entity_Type extends Xyster_Type
                 $this->_primary[] = $translated;
             }
         }
+    }
+    
+    /**
+     * Adds a lookup to the entity type
+     *
+     * @param Xyster_Orm_Entity_Lookup_Interface $lookup
+     * @return Xyster_Orm_Entity_Type provides a fluent interface
+     */
+    public function addLookup( Xyster_Orm_Entity_Lookup_Interface $lookup )
+    {
+        if ( !$lookup->getEntityType()->equals($this) ) {
+            require_once 'Xyster/Orm/Entity/Exception.php';
+            throw new Xyster_Orm_Entity_Exception('The lookup must be for ' . $this);
+        }
+        if ( in_array($lookup->getName(), array_keys($this->_lookups)) ) {
+            require_once 'Xyster/Orm/Entity/Exception.php';
+            throw new Xyster_Orm_Entity_Exception('The lookup has already been added');
+        }
+        if ( in_array($lookup->getName(), $this->getMembers()) ) {
+            require_once 'Xyster/Orm/Entity/Exception.php';
+            throw new Xyster_Orm_Entity_Exception('The class already has a member with the name ' . $lookup->getName());
+        }
+        
+        $this->_lookups[$lookup->getName()] = $lookup;
+        $this->_members = array();
+        return $this;
     }
     
     /**
@@ -281,6 +314,34 @@ class Xyster_Orm_Entity_Type extends Xyster_Type
     }
 
     /**
+     * Gets the lookup by name
+     *
+     * @param string $name the name of the lookup
+     * @return Xyster_Orm_Entity_Lookup_Interface 
+     * @throws Xyster_Orm_Entity_Exception if the name is invalid
+     */
+    public function getLookup( $name )
+    {
+        if ( !$this->isLookup($name) ) {
+            require_once 'Xyster/Orm/Entity/Exception.php';
+            throw new Xyster_Orm_Entity_Exception("'" . $name .
+                "' is not a valid lookup for the '" . $this->getName() .
+                "' class");
+        }
+        return $this->_lookups[$name];
+    }
+    
+    /**
+     * Gets the names of all lookups defined for this entity
+     *
+     * @return array The names of defined lookups
+     */
+    public function getLookupNames()
+    {
+        return array_keys($this->_lookups);
+    }
+    
+    /**
      * Gets the mapper factory
      *
      * @return Xyster_Orm_Mapper_Factory_Interface
@@ -299,6 +360,7 @@ class Xyster_Orm_Entity_Type extends Xyster_Type
     {
         if ( !$this->_members ) {
             $this->_members = array_merge($this->_members, array_keys($this->_fields));
+            $this->_members = array_merge($this->_members, $this->getLookupNames());
             $this->_members = array_merge($this->_members, $this->getRelationNames());
             $this->_members = array_merge($this->_members, get_class_methods($this->getName()));
         }
@@ -440,6 +502,17 @@ class Xyster_Orm_Entity_Type extends Xyster_Type
 	public function hasJoined( $name, array $options = array() )
 	{
 		return $this->_baseCreate('joined', $name, $options);
+	}
+	
+	/**
+	 * Whether the entity has a lookup with the name supplied
+	 * 
+	 * @param string $name The name of the lookup
+	 * @return boolean
+	 */
+	public function isLookup( $name )
+	{
+	    return array_key_exists($name, $this->_lookups);
 	}
 	
 	/**

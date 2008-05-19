@@ -50,7 +50,7 @@ class Xyster_Orm_Entity_Lookup_DateTest extends Xyster_Orm_TestSetup
     public function setUp()
     {
         $mf = $this->_mockFactory();
-        $this->object = new Xyster_Orm_Entity_Lookup_Date($mf->getEntityType('MockBug'), 'createdOn');
+        $this->object = new Xyster_Orm_Entity_Lookup_Date($mf->getEntityType('MockBug'), 'createdOn', 'createdOnDatetime');
     }
 
     /**
@@ -58,7 +58,7 @@ class Xyster_Orm_Entity_Lookup_DateTest extends Xyster_Orm_TestSetup
      */
     public function testGetName()
     {
-        $this->assertEquals('createdOnDate', $this->object->getName());
+        $this->assertEquals('createdOnDatetime', $this->object->getName());
     }
     
     /**

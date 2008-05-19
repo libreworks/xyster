@@ -30,6 +30,8 @@ require_once 'Xyster/Orm/LoaderTest.php';
 require_once 'Xyster/Orm/EntityTest.php';
 require_once 'Xyster/Orm/Entity/FieldTest.php';
 require_once 'Xyster/Orm/Entity/TypeTest.php';
+require_once 'Xyster/Orm/Entity/Lookup/DateTest.php';
+require_once 'Xyster/Orm/Entity/Lookup/EnumTest.php';
 require_once 'Xyster/Orm/SetTest.php';
 require_once 'Xyster/Orm/WorkUnitTest.php';
 require_once 'Xyster/Orm/RepositoryTest.php';
@@ -71,6 +73,8 @@ class Xyster_Orm_AllTests
         $suite->addTestSuite('Xyster_Orm_EntityTest');
         $suite->addTestSuite('Xyster_Orm_Entity_FieldTest');
         $suite->addTestSuite('Xyster_Orm_Entity_TypeTest');
+        $suite->addTestSuite('Xyster_Orm_Entity_Lookup_DateTest');
+        $suite->addTestSuite('Xyster_Orm_Entity_Lookup_EnumTest');
         $suite->addTestSuite('Xyster_Orm_SetTest');
         $suite->addTestSuite('Xyster_Orm_WorkUnitTest');
         $suite->addTestSuite('Xyster_Orm_RepositoryTest');

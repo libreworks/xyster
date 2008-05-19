@@ -64,7 +64,7 @@ class Xyster_Orm_Entity_Lookup_EnumTest extends Xyster_Orm_TestSetup
     }
 
     /**
-     * @todo Implement testGet().
+     * Tests the 'get' method
      */
     public function testGet()
     {
@@ -79,7 +79,7 @@ class Xyster_Orm_Entity_Lookup_EnumTest extends Xyster_Orm_TestSetup
     }
 
     /**
-     * @todo Implement testSet().
+     * Tests the 'set' method
      */
     public function testSet()
     {
@@ -90,6 +90,18 @@ class Xyster_Orm_Entity_Lookup_EnumTest extends Xyster_Orm_TestSetup
         
         $this->object->set($entity, null);
         $this->assertNull($entity->bugDescription);
+    }
+    
+    /**
+     * Tests passing an invalid entity type to the constructor
+     *
+     */
+    public function testBadConstruct()
+    {
+        $mf = $this->_mockFactory();
+        $type = $mf->getEntityType('MockBug');
+        $this->setExpectedException('Xyster_Orm_Entity_Exception');
+        $object = new Xyster_Orm_Entity_Lookup_Enum($type, $type, 'bugDescription');
     }
 }
 
