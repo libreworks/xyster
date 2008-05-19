@@ -1,11 +1,22 @@
 Xyster Framework                                                             NEWS
 |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-=BUILD 6 / ??-Apr-2008 / based on revision ??? =
+=BUILD 6 / 19-May-2008 / based on revision 272 =
 - Moved Xyster_Filter_TitleCase to core
 - Moved Xyster_Validate classes to core
+- Xyster_Data
+    * Addition of Xyster_Data_Binder; easy way to bind values to objects
 - Xyster_Orm
+    * Addition of entity listeners; register observers for entity changes
     * 0000035: Xyster_Orm_Entity should have equals and hashCode
+    * 0000041: Lookups ability in Xyster_Orm_Entity_Type and Xyster_Orm_Entity
+        * 0000033: ORM entity classes should create enum classes dynamically
+        * 0000034: ORM entity classes should create date objects automatically
+    * 0000031: Add validation capability to the ORM layer
+    * 0000038: Xyster_Orm_Plugin_Log
+- New in incubator:
+    * Xyster_Db_Gateway; a database DDL abstraction layer
+    * Xyster_Form_Binder and Xyster_Form_ErrorBinder
 
 =BUILD 5 / 05-Mar-2008 / based on revision 225 =
 - Xyster_Container
