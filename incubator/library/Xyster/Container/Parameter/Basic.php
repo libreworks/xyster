@@ -187,7 +187,11 @@ class Xyster_Container_Parameter_Basic implements Xyster_Container_Parameter
 	        }
 	        $found->remove($exclude);
 	        if ( count($found) == 0 ) {
-	            return null; // none registered
+	            if ( $container->getParent() !== null ) {
+	                return $container->getParent()->getComponentAdapterByType($expectedType, $expectedNameBinding); 
+	            } else {
+	                return null; // none registered
+	            }
 	        } else if ( count($found) == 1 ) {
 	            return $found->get(0); // one registered
 	        } else {

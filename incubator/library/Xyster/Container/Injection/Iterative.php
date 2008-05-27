@@ -47,7 +47,7 @@ abstract class Xyster_Container_Injection_Iterative extends Xyster_Container_Inj
     public function decorateInstance(Xyster_Container_Interface $container, Xyster_Type $into, $instance)
     {
         $matchingParameters = $this->_getMatchingParameterListForSetters($container);
-        return $this->_decorateInstance($matchingParamaters, $this->currentMonitor(), $instance, $container);
+        return $this->_decorateComponentInstance($matchingParameters, $this->currentMonitor(), $instance, $container);
     }
         
     /**
@@ -238,17 +238,16 @@ abstract class Xyster_Container_Injection_Iterative extends Xyster_Container_Inj
                 $monitor->invoking($container, $this, $member, $instance);
                 $matchingParam = $matchingParameters[$i];
                 /* @var $matchingParam Xyster_Container_Parameter */
-                if ( $matchingParam === null ) {
-                    continue;
+                if ( $matchingParam !== null ) {
+                    $toInject = $matchingParam->resolveInstance($container, $this, $this->_injectionTypes[$i],
+                        $this->_makeParameterNameImpl($this->_injectionMembers->get($i)),
+                        $this->useNames());
+                    if ( $toInject === null && $reflectionParameter->isDefaultValueAvailable() ) {
+                        $toInject = $reflectionParameter->getDefaultValue();
+                    }
+                    $this->_injectIntoMember($member, $instance, $toInject);
+                    $injected[] = $toInject;
                 }
-                $toInject = $matchingParam->resolveInstance($container, $this, $this->_injectionTypes[$i],
-                    $this->_makeParameterNameImpl($this->_injectionMembers->get($i)),
-                    $this->useNames());
-                if ( $toInject === null && $reflectionParameter->isDefaultValueAvailable() ) {
-                    $toInject = $reflectionParameter->getDefaultValue();
-                }
-                $this->_injectIntoMember($member, $instance, $toInject);
-                $injected[] = $toInject;
             }
             return $instance;
         } catch ( ReflectionException $e ) {

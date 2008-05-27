@@ -11,7 +11,7 @@
  * @package   Xyster_Container
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
- * @version   $Id: Setter.php 181 2007-12-31 14:47:15Z doublecompile $
+ * @version   $Id$
  */
 /**
  * @see Xyster_Container_Injection_Factory_Abstract
@@ -29,7 +29,7 @@ require_once 'Xyster/Container/Injection/Composite.php';
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Container_Injection_Factory_Setter extends Xyster_Container_Injection_Factory_Abstract
+class Xyster_Container_Injection_Factory_Composite extends Xyster_Container_Injection_Factory_Abstract
 {
     private $_injectionFactories = array();
     

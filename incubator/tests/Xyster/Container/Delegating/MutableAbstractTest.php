@@ -23,6 +23,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 require_once 'PHPUnit/Framework.php';
 require_once 'Xyster/Container.php';
+require_once 'Xyster/Container/Empty.php';
 require_once 'Xyster/Container/Features.php';
 require_once 'Xyster/Container/Delegating/MutableAbstract.php';
 
@@ -77,6 +78,20 @@ class Xyster_Container_Delegating_MutableAbstractTest extends PHPUnit_Framework_
         $this->assertSame($adapter, $adapter2);
     }
 
+    /**
+     * Tests the 'addChildContainer' method
+     */
+    public function testAddChildContainer()
+    {
+        $container = new Xyster_Container_Empty;
+        $containers = new Xyster_Collection_Set();
+        $containers->add($container);
+        
+        $return = $this->object->addChildContainer($container);
+        $this->assertSame($this->object, $return);
+        $this->assertAttributeEquals($containers, '_children', $this->delegate);
+    }
+    
     /**
      * Tests the 'addComponent' method
      */
@@ -139,6 +154,28 @@ class Xyster_Container_Delegating_MutableAbstractTest extends PHPUnit_Framework_
         $this->assertSame($this->delegate, $this->object->getDelegate());
     }
 
+    /**
+     * Tests the 'makeChildContainer' method
+     */
+    public function testMakeChildContainer()
+    {
+        // does nothing, just for code completion
+        $this->object->makeChildContainer();
+    }
+    
+    /**
+     * Tests the 'removeChildContainer' method
+     */
+    public function testRemoveChildContainer()
+    {
+        $container = new Xyster_Container_Empty;
+        $this->delegate->addChildContainer($container);
+        $return = $this->object->removeChildContainer($container);
+        $this->assertTrue($return);
+        $return2 = $this->object->removeChildContainer(new Xyster_Container_Empty);
+        $this->assertFalse($return2); 
+    }
+    
     /**
      * Test the 'removeComponent' method
      */

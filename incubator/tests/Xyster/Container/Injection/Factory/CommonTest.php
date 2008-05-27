@@ -45,6 +45,17 @@ abstract class Xyster_Container_Injection_Factory_CommonTest extends PHPUnit_Fra
     }
 
     /**
+     * Tests the 'accept' method
+     */
+    public function testAccept()
+    {
+        require_once 'Xyster/Container/Visitor/Mock.php';
+        $visitor = new Xyster_Container_Visitor_Mock;
+        $this->object->accept($visitor);
+        $this->assertEquals(1, $visitor->getCalled('visitComponentFactory'));
+    }
+    
+    /**
      * Tests the 'createComponentAdapter' method
      */
     public function testCreateComponentAdapter()
@@ -54,7 +65,16 @@ abstract class Xyster_Container_Injection_Factory_CommonTest extends PHPUnit_Fra
         $this->assertType($this->_getInjectorClass(), $adapter);
         $this->assertSame($adapter->getImplementation(), $key);
     }
-    
+
+    /**
+     * Tests the 'verify' method
+     */
+    public function testVerify()
+    {
+        require_once 'Xyster/Container/Empty.php';
+        $this->object->verify(new Xyster_Container_Empty);
+    }
+        
     protected function _getInjectorClass()
     {
         return 'Xyster_Container_Injection_Abstract';

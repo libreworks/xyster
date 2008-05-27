@@ -27,6 +27,7 @@ require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR 
 
 require_once 'PHPUnit/Framework.php';
 require_once 'Xyster/Container/Adapter/Abstract.php';
+require_once 'Xyster/Type.php';
 
 /**
  * Test class for Xyster_Container_Adapter_Abstract.
@@ -60,7 +61,6 @@ class Xyster_Container_Adapter_AbstractTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        require_once 'Xyster/Type.php';
         $class = new Xyster_Type($this->_class);
         $this->_key = $class;
         $this->object = new Xyster_Container_Adapter_AbstractStub($this->_key, $class);
@@ -128,6 +128,16 @@ class Xyster_Container_Adapter_AbstractTest extends PHPUnit_Framework_TestCase
     public function test__toString()
     {
         $this->assertEquals($this->object->getDescriptor() . (string)$this->_key, $this->object->__toString());
+    }
+    
+    /**
+     * Tests using a class name for the implementation instead of a Type object
+     *
+     */
+    public function testAltConstruct()
+    {
+        $adapter = new Xyster_Container_Adapter_AbstractStub('test123', $this->_class);
+        $this->assertEquals($this->_class, $adapter->getImplementation()->getName());
     }
     
     /**

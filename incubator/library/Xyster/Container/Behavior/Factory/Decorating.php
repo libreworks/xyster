@@ -48,7 +48,8 @@ abstract class Xyster_Container_Behavior_Factory_Decorating extends Xyster_Conta
      */
     public function addComponentAdapter(Xyster_Container_Monitor $monitor, Xyster_Collection_Map_Interface $properties, Xyster_Container_Adapter $adapter)
     {
-        return parent::addComponentAdapter($monitor, $properties, $adapter);
+        return new Xyster_Container_Behavior_Decorated(
+            parent::addComponentAdapter($monitor, $properties, $adapter), $this);
     }
     
     /**

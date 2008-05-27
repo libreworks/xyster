@@ -85,7 +85,7 @@ interface Xyster_Container_Interface
     /**
      * Retrieve the parent container of this container
      *
-     * @return Xyster_Container_Instance or null if no parent exists
+     * @return Xyster_Container_Interface or null if no parent exists
      */
     function getParent();
 }

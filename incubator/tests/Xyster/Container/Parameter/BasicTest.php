@@ -218,6 +218,24 @@ class Xyster_Container_Parameter_BasicTest extends PHPUnit_Framework_TestCase
     }
     
     /**
+     * Tests the 'standard' method
+     */
+    public function testStandard()
+    {
+        $standard = Xyster_Container_Parameter_Basic::standard();
+        $this->assertType('Xyster_Container_Parameter_Basic', $standard);
+        $this->assertSame(Xyster_Container_Parameter_Basic::standard(), $standard);
+    }
+    
+    /**
+     * Tests the 'verify' method
+     */
+    public function testVerify()
+    {
+        $this->markTestIncomplete();
+    }
+    
+    /**
      * Test a fail verify call
      */
     public function testVerifyFail()

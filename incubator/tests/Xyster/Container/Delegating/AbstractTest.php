@@ -23,6 +23,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 require_once 'PHPUnit/Framework.php';
 require_once 'Xyster/Container.php';
+require_once 'Xyster/Container/Empty.php';
 require_once 'Xyster/Container/Delegating/Abstract.php';
 
 /**
@@ -57,7 +58,7 @@ class Xyster_Container_Delegating_AbstractTest extends PHPUnit_Framework_TestCas
      */
     protected function setUp()
     {
-    	$this->delegate = new Xyster_Container;
+    	$this->delegate = new Xyster_Container(null, new Xyster_Container_Empty);
         $this->object = new Xyster_Container_Delegating_AbstractImpl($this->delegate);
     }
 
@@ -154,6 +155,14 @@ class Xyster_Container_Delegating_AbstractTest extends PHPUnit_Framework_TestCas
     public function testGetDelegate()
     {
         $this->assertSame($this->delegate, $this->object->getDelegate());
+    }
+    
+    /**
+     * Tests the 'getParent' method
+     */
+    public function testGetParent()
+    {
+        $this->assertSame($this->delegate->getParent(), $this->object->getParent());
     }
 }
 

@@ -22,6 +22,10 @@ require_once 'Xyster/Container/Mutable.php';
  */
 require_once 'Xyster/Container/Monitor/Strategy.php';
 /**
+ * @see Xyster_Container_Immutable
+ */
+require_once 'Xyster/Container/Immutable.php';
+/**
  * @see Xyster_Collection_List
  */
 require_once 'Xyster/Collection/List.php';
@@ -186,7 +190,7 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
      */
     public function addChildContainer(Xyster_Container_Interface $child)
     {
-        $this->_checkCircularDependencies($child);
+        $this->_checkCircularChildDependencies($child);
         $this->_children->add($child);
         return $this;
     }

@@ -29,7 +29,7 @@ abstract class Xyster_Container_Behavior_Factory_CommonTest extends Xyster_Conta
      * @var Xyster_Container_Behavior_Factory
      */
     protected $object;
-    
+        
     /**
      * Tests the 'addComponentAdapter' method
      */
@@ -42,7 +42,7 @@ abstract class Xyster_Container_Behavior_Factory_CommonTest extends Xyster_Conta
         $this->assertType($this->_getInjectorClass(), $return);
         $this->assertEquals($return->getImplementation(), $key);
     }
-
+    
     /**
      * Tests the 'wrap' method
      */

@@ -115,6 +115,14 @@ class Xyster_Container_FeaturesTest extends PHPUnit_Framework_TestCase
     }
     
     /**
+     * Tests the USE_NAMES method
+     */
+    public function testUSE_NAMES()
+    {
+        $this->_testFeature(Xyster_Container_Features::USE_NAMES(), 'use-parameter-names', 'true');
+    }
+    
+    /**
      * Tests a feature
      *
      * @param mixed $map

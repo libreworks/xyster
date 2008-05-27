@@ -84,6 +84,15 @@ class Xyster_Container_Behavior_StoredTest extends Xyster_Container_Behavior_Com
         $instance2 = $this->object->getInstance($this->container);
         $this->assertSame($instance, $instance2);
     }
+    
+    /**
+     * Tests the 'getStoredObject' method
+     */
+    public function testGetStoredObject()
+    {
+        $this->reference->set('test123');
+        $this->assertEquals('test123', $this->object->getStoredObject());
+    }
 }
 
 // Call Xyster_Container_Behavior_StoredTest::main() if this source file is executed directly.

@@ -59,6 +59,15 @@ class Xyster_Container_Behavior_Factory_AdaptiveTest extends Xyster_Container_Be
         $this->properties->merge(Xyster_Container_Features::AUTOMATIC());
         $this->object = new Xyster_Container_Behavior_Factory_Adaptive;
     }
+
+    /**
+     * Tests the 'addComponentAdapter' method with no properties
+     */
+    public function testAddComponentAdapterWithNoProperties()
+    {
+        $this->properties->clear();
+        $this->testAddComponentAdapter();
+    }
     
     /**
      * Tests the 'wrap' method throws an exception

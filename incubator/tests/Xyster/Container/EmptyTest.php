@@ -105,6 +105,14 @@ class Xyster_Container_EmptyTest extends PHPUnit_Framework_TestCase
     {
         $this->assertSame(Xyster_Collection::emptyList(), $this->object->getComponentAdapters());
     }
+    
+    /**
+     * Tests the 'getParent' method
+     */
+    public function testGetParent()
+    {
+        $this->assertNull($this->object->getParent());
+    }
 }
 
 // Call Xyster_Container_EmptyTest::main() if this source file is executed directly.

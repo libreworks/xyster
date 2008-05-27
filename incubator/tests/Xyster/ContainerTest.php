@@ -36,7 +36,12 @@ class Xyster_ContainerTest extends PHPUnit_Framework_TestCase
      * @var    Xyster_Container
      */
     protected $object;
-
+    
+    /**
+     * @var Xyster_Container
+     */
+    protected $child;
+    
     /**
      * Runs the test methods of this class.
      *
@@ -56,6 +61,8 @@ class Xyster_ContainerTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->object = new Xyster_Container;
+        $this->child = new Xyster_Container(null, $this->object);
+        $this->object->addChildContainer($this->child);
     }
 
     /**
@@ -67,7 +74,7 @@ class Xyster_ContainerTest extends PHPUnit_Framework_TestCase
         require_once 'Xyster/Container/Visitor/Mock.php';
         $visitor = new Xyster_Container_Visitor_Mock;
         $this->object->accept($visitor);
-        $this->assertEquals(1, $visitor->getCalled('visitContainer'));
+        $this->assertEquals(2, $visitor->getCalled('visitContainer'));
         $this->assertEquals(1, $visitor->getCalled('visitComponentAdapter'));
     }
 
@@ -102,6 +109,37 @@ class Xyster_ContainerTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Tests the 'addChildContainer' method
+     *
+     */
+    public function testAddChildContainer()
+    {
+        require_once 'Xyster/Container/Empty.php';
+        $child = new Xyster_Container_Empty;
+        $return = $this->object->addChildContainer($child);
+        $this->assertSame($this->object, $return);
+        $this->object->addChildContainer(new Xyster_Container_Immutable(new Xyster_Container));
+    }
+    
+    /**
+     * Tests the 'addChildContainer' method with a bad type
+     */
+    public function testAddChildContainerBad()
+    {
+        $this->setExpectedException('Xyster_Container_Exception');
+        $this->object->addChildContainer($this->object);
+    }
+    
+    /**
+     * Tests the 'addChildContainer' method with a bad type
+     */
+    public function testAddChildContainerBad2()
+    {
+        $this->setExpectedException('Xyster_Container_Exception');
+        $this->object->addChildContainer(new Xyster_Container_Immutable(new Xyster_Container_Immutable($this->object)));
+    }
+        
+    /**
      * Tests the 'addComponent' method
      */
     public function testAddComponent()
@@ -112,6 +150,19 @@ class Xyster_ContainerTest extends PHPUnit_Framework_TestCase
         $adapter = $this->object->getComponentAdapterByType($class);
         $this->assertType('Xyster_Container_Adapter', $adapter);
         $this->assertSame($class, $adapter->getKey());
+    }
+   
+    /**
+     * Tests the 'addComponent' method
+     */
+    public function testAddComponent2()
+    {
+        $class = new ReflectionClass('Xyster_Collection_Map');
+        $return = $this->object->addComponent($class, 'myKey123');
+        $this->assertSame($this->object, $return);
+        $adapter = $this->object->getComponentAdapterByType('Xyster_Collection_Map');
+        $this->assertType('Xyster_Container_Adapter', $adapter);
+        $this->assertEquals('myKey123', $adapter->getKey());
     }
     
     /**
@@ -201,6 +252,7 @@ class Xyster_ContainerTest extends PHPUnit_Framework_TestCase
         $this->assertType('SplObjectStorage', $this->object->getComponent($type));
         $this->assertType('SplObjectStorage', $this->object->getComponent('objstrg'));
         $this->assertNull($this->object->getComponent('nonexist'));
+        $this->assertType('SplObjectStorage', $this->child->getComponent($type));
     }
 
     /**
@@ -216,6 +268,16 @@ class Xyster_ContainerTest extends PHPUnit_Framework_TestCase
         $this->assertType('SplObjectStorage', $components[0]);
     }
 
+    /**
+     * Tests the 'getComponentAdapter' method
+     */
+    public function testGetComponentAdapter()
+    {
+        $this->object->addComponentInstance(new ArrayObject(array()), 'abc123');
+        $adapter = $this->child->getComponentAdapter('abc123');
+        $this->assertType('Xyster_Container_Adapter', $adapter);
+    }
+    
     /**
      * Tests the 'getComponentAdapterByType' method
      */
@@ -252,7 +314,39 @@ class Xyster_ContainerTest extends PHPUnit_Framework_TestCase
         $this->setExpectedException('Xyster_Container_Exception');
         $this->object->getComponentAdapterByType($key);
     }
+    
+    /**
+     * Tests the 'getParent' method
+     */
+    public function testGetParent()
+    {
+        $this->assertSame($this->object, $this->child->getParent()->getDelegate());
+    }
 
+    /**
+     * Tests the 'makeChildContainer' method
+     */
+    public function testMakeChildContainer()
+    {
+        $child = $this->object->makeChildContainer();
+        $this->assertType('Xyster_Container', $child);
+        $this->assertSame($this->object, $child->getParent()->getDelegate());
+    }
+    
+    /**
+     * Tests the 'removeChildContainer' method
+     */
+    public function testRemoveChildContainer()
+    {
+        $container = new Xyster_Container;
+        $this->object->addChildContainer($container);
+        require_once 'Xyster/Container/Empty.php';
+        $return = $this->object->removeChildContainer(new Xyster_Container_Empty);
+        $this->assertFalse($return);
+        $return2 = $this->object->removeChildContainer($container);
+        $this->assertTrue($return2);
+    }
+    
     /**
      * Test the 'removeComponent' method
      */

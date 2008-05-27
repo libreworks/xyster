@@ -85,6 +85,15 @@ class Xyster_Container_Injection_ConstructorTest extends PHPUnit_Framework_TestC
     }
     
     /**
+     * Tests the 'decorateInstance' method
+     */
+    public function testDecorateInstance()
+    {
+        // does nothing, just for code completion
+        $this->object->decorateInstance($this->container, $this->key, null);
+    }
+    
+    /**
      * Tests the 'getInstance' method
      */
     public function testGetInstance()

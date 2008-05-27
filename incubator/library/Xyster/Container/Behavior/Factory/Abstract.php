@@ -140,7 +140,9 @@ class Xyster_Container_Behavior_Factory_Abstract implements Xyster_Container_Beh
      */
     public function verify(Xyster_Container_Interface $container)
     {
-         $this->_delegate->verify($container);
+         if ( $this->_delegate !== null ) {
+             $this->_delegate->verify($container);
+         }
     }
     
     /**

@@ -64,6 +64,6 @@ class Xyster_Container_Behavior_Decorated extends Xyster_Container_Behavior_Abst
      */
     public function getDescriptor()
     {
-        return 'FieldDecorated';
+        return 'Decorated';
     }
 }

@@ -235,6 +235,15 @@ class Xyster_Container_Monitor_LogTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Tests the 'newInjectionFactory' method
+     *
+     */
+    public function testNewInjectionFactory()
+    {
+        $this->markTestIncomplete();
+    }
+    
+    /**
      * Tests the 'noComponentFound' method
      */
     public function testNoComponentFound()

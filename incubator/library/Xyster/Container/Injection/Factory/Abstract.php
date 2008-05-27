@@ -18,6 +18,10 @@
  */
 require_once 'Xyster/Container/Injection/Factory.php';
 /**
+ * @see Xyster_Container_Behavior_Factory_Abstract
+ */
+require_once 'Xyster/Container/Behavior/Factory/Abstract.php';
+/**
  * Abstract injection factory 
  *
  * @category  Xyster

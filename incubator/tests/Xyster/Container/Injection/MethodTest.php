@@ -75,7 +75,18 @@ class Xyster_Container_Injection_MethodTest extends PHPUnit_Framework_TestCase
         $this->object->accept($visitor);
         $this->assertEquals(1, $visitor->getCalled('visitComponentAdapter'));
     }
-    
+
+    /**
+     * Tests the 'decorateInstance' method
+     */
+    public function testDecorateInstance()
+    {
+        $inst = new RocketShip;
+        $this->object->decorateInstance($this->container, Xyster_Type::of($inst), $inst);
+        $this->assertType('RocketPilot', $inst->getPilot());
+        $this->assertType('RocketFuel', $inst->getFuel());
+    }
+        
     /**
      * Tests the 'getInstance' method
      */
