@@ -36,7 +36,18 @@ class Xyster_Container_Injection_Constructor extends Xyster_Container_Injection_
     {
         return 'ConstructorInjector-';
     }
-    
+
+    /**
+     * A decorator method 
+     *
+     * @param Xyster_Container_Interface $container
+     * @param Xyster_Type $into
+     * @param object $instance An instance of the type supported by this injector
+     */
+    public function decorateInstance(Xyster_Container_Interface $container, Xyster_Type $into, $instance)
+    {
+    }
+        
     /**
      * Retrieve the component instance
      *
@@ -45,7 +56,7 @@ class Xyster_Container_Injection_Constructor extends Xyster_Container_Injection_
      * @throws Exception if the component could not be instantiated.
      * @throws Exception  if the component has dependencies which could not be resolved, or instantiation of the component lead to an ambigous situation within the container.
      */
-    public function getInstance( Xyster_Container_Interface $container )
+    public function getInstance( Xyster_Container_Interface $container, Xyster_Type $into = null )
     {
         $class = $this->getImplementation();
         $classType = $class->getClass();

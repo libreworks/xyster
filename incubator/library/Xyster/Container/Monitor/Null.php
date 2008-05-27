@@ -102,6 +102,17 @@ class Xyster_Container_Monitor_Null implements Xyster_Container_Monitor
     }
 
     /**
+     * A mechanism to monitor or override the Abstract Injectors being made for components.
+     *
+     * @param Xyster_Container_Injection_Abstract the abstract injector the container intends to use for the component currently being added.
+     * @return Xyster_Container_Injection_Abstract the abstract Injector
+     */
+    public function newInjectionFactory(Xyster_Container_Injection_Abstract $abstractInjector)
+    {
+         return $abstractInjector;
+    }
+     
+    /**
      * 
      * @param Xyster_Container_Interface $container
      * @param mixed $key

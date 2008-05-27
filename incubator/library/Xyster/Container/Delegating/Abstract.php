@@ -56,11 +56,12 @@ abstract class Xyster_Container_Delegating_Abstract implements Xyster_Container_
      * Retrieve a component instance registered with a specific key or type
      *
      * @param mixed $componentKeyOrType the key or Type that the component was registered with
+     * @param Xyster_Type $into the type about to be injected into
      * @return object an instantiated component, or null if no component has been registered for the specified key
      */
-    public function getComponent($componentKeyOrType)
+    public function getComponent($componentKeyOrType, Xyster_Type $into = null)
     {
-    	return $this->_delegate->getComponent($componentKeyOrType);
+    	return $this->_delegate->getComponent($componentKeyOrType, $into);
     }
     
     /**
@@ -115,5 +116,15 @@ abstract class Xyster_Container_Delegating_Abstract implements Xyster_Container_
     public function getDelegate()
     {
     	return $this->_delegate;
+    }
+    
+    /**
+     * Gets the parent container of this container
+     *
+     * @return Xyster_Container_Interface
+     */
+    public function getParent()
+    {
+        return $this->_delegate->getParent();
     }
 }

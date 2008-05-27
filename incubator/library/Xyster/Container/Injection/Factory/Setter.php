@@ -14,9 +14,9 @@
  * @version   $Id$
  */
 /**
- * @see Xyster_Container_Injection_Factory
+ * @see Xyster_Container_Injection_Factory_Abstract
  */
-require_once 'Xyster/Container/Injection/Factory.php';
+require_once 'Xyster/Container/Injection/Factory/Abstract.php';
 /**
  * @see Xyster_Container_Injection_Setter
  */
@@ -29,7 +29,7 @@ require_once 'Xyster/Container/Injection/Setter.php';
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Container_Injection_Factory_Setter implements Xyster_Container_Injection_Factory
+class Xyster_Container_Injection_Factory_Setter extends Xyster_Container_Injection_Factory_Abstract
 {
     private $_setterMethodPrefix = 'set';
     
@@ -58,7 +58,8 @@ class Xyster_Container_Injection_Factory_Setter implements Xyster_Container_Inje
      */
     public function createComponentAdapter(Xyster_Container_Monitor $monitor, Xyster_Collection_Map_Interface $properties, $key, $implementation, $parameters)
     {
+        $useNames = Xyster_Container_Behavior_Factory_Abstract::arePropertiesPresent($properties, Xyster_Container_Features::USE_NAMES());
         return new Xyster_Container_Injection_Setter($key, $implementation,
-            $parameters, $monitor, $this->_setterMethodPrefix);
+            $parameters, $monitor, $this->_setterMethodPrefix, $useNames);
     }
 }

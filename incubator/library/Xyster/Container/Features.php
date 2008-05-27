@@ -39,6 +39,7 @@ class Xyster_Container_Features
     private static $_CACHE = "cache";
     private static $_PROPERTY_APPLYING = "property-applying";
     private static $_AUTOMATIC = "automatic";
+    private static $_USE_NAMES = "use-parameter-names";
     private static $_FALSE = "false";
     private static $_TRUE = "true";
 
@@ -138,6 +139,16 @@ class Xyster_Container_Features
     public static function AUTOMATIC()
     {
         return self::_config(self::$_AUTOMATIC, self::$_TRUE);
+    }
+
+    /**
+     * Used for property names
+     *
+     * @return Xyster_Collection_Map
+     */
+    public static function USE_NAMES()
+    {
+        return self::_config(self::$_USE_NAMES, self::$_TRUE);
     }
     
     /**

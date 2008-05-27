@@ -63,11 +63,12 @@ final class Xyster_Container_Adapter_Instance extends Xyster_Container_Adapter_A
      * Retrieve the component instance
      * 
      * @param Xyster_Container_Interface $container the container, that is used to resolve any possible dependencies of the instance
+     * @param Xyster_Type $into 
      * @return object the component instance.
      * @throws Exception if the component could not be instantiated.
      * @throws Exception  if the component has dependencies which could not be resolved, or instantiation of the component lead to an ambigous situation within the container.
      */
-    function getInstance(Xyster_Container_Interface $container)
+    function getInstance(Xyster_Container_Interface $container, Xyster_Type $into = null)
     {
         return $this->_instance;
     }

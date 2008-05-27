@@ -36,9 +36,10 @@ interface Xyster_Container_Interface
      * Retrieve a component instance registered with a specific key or type
      *
      * @param mixed $componentKeyOrType the key or Type that the component was registered with
+     * @param Xyster_Type $into the type about to be injected into
      * @return object an instantiated component, or null if no component has been registered for the specified key
      */
-    function getComponent($componentKeyOrType);
+    function getComponent($componentKeyOrType, Xyster_Type $into = null);
 
     /**
      * Retrieve all the registered component instances in the container
@@ -80,4 +81,11 @@ interface Xyster_Container_Interface
      * @return Xyster_Collection_List a fixed collection containing all the adapters inside this container
      */
     function getComponentAdapters( Xyster_Type $componentType = null );
+    
+    /**
+     * Retrieve the parent container of this container
+     *
+     * @return Xyster_Container_Instance or null if no parent exists
+     */
+    function getParent();
 }

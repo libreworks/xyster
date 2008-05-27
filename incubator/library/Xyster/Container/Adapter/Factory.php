@@ -27,6 +27,17 @@
 interface Xyster_Container_Adapter_Factory
 {
     /**
+     * Accepts a visitor for this ComponentFactory
+     * 
+     * The method is normally called by visiting a
+     * {@link Xyster_Container_Interface}, that cascades the visitor also down
+     * to all its Adapter Factory instances.
+     *
+     * @param Xyster_Container_Visitor $visitor the visitor
+     */
+    function accept(Xyster_Container_Visitor $visitor);
+    
+    /**
      * Create a new component adapter based on the specified arguments
      * 
      * The $key parameter should be returned from a call to
@@ -52,5 +63,13 @@ interface Xyster_Container_Adapter_Factory
      * @throws Exception if the creation of the component adapter fails
      * @return Xyster_Container_Adapter The component adapter
      */
-    function createComponentAdapter(Xyster_Container_Monitor $monitor, Xyster_Collection_Map_Interface $properties, $key, $implementation, $parameters); 
+    function createComponentAdapter(Xyster_Container_Monitor $monitor, Xyster_Collection_Map_Interface $properties, $key, $implementation, $parameters);
+    
+    /**
+     * Verification for the ComponentFactory - subject to implementation.
+     *
+     * @param Xyster_Container_Interface $container the container that is used for verification.
+     * @throws Exception if one or more dependencies cannot be resolved.
+     */
+    function verify(Xyster_Container_Interface $container); 
 }

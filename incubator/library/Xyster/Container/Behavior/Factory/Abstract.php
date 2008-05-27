@@ -38,7 +38,24 @@ class Xyster_Container_Behavior_Factory_Abstract implements Xyster_Container_Beh
      * @var Xyster_Container_Adapter_Factory 
      */
     private $_delegate;
-
+    
+    /**
+     * Accepts a visitor for this ComponentFactory
+     * 
+     * The method is normally called by visiting a
+     * {@link Xyster_Container_Interface}, that cascades the visitor also down
+     * to all its Adapter Factory instances.
+     *
+     * @param Xyster_Container_Visitor $visitor the visitor
+     */
+    public function accept(Xyster_Container_Visitor $visitor)
+    {
+        $visitor->visitComponentFactory($this);
+        if ( $this->_delegate != null ) {
+            $this->_delegate->accept($visitor);
+        }
+    }
+    
     /**
      * Adds a component adapter
      *
@@ -77,13 +94,13 @@ class Xyster_Container_Behavior_Factory_Abstract implements Xyster_Container_Beh
     }
 
     /**
-     * Removes properties from a map
-     * 
-     * @param Xyster_Collection_Map_Interface $current This must be writable!
+     * Checks to see if properties are in a map
+     *
+     * @param Xyster_Collection_Map_Interface $current
      * @param Xyster_Collection_Map_Interface $present
-     * @return boolean
+     * @return boolean Whether properties in $present are in $current
      */
-    public static function removePropertiesIfPresent(Xyster_Collection_Map_Interface $current, Xyster_Collection_Map_Interface $present)
+    public static function arePropertiesPresent( Xyster_Collection_Map_Interface $current, Xyster_Collection_Map_Interface $present )
     {
         $present = new Xyster_Collection_Map_String($present);
         foreach( $present as $key => $value ) {
@@ -93,12 +110,39 @@ class Xyster_Container_Behavior_Factory_Abstract implements Xyster_Container_Beh
                 return false;
             }
         }
-        foreach( $present as $key => $value ) {
-            unset($current[$key]);
-        }
         return true;
     }
-
+    
+    /**
+     * Removes properties from a map
+     * 
+     * @param Xyster_Collection_Map_Interface $current This must be writable!
+     * @param Xyster_Collection_Map_Interface $present
+     * @return boolean
+     */
+    public static function removePropertiesIfPresent(Xyster_Collection_Map_Interface $current, Xyster_Collection_Map_Interface $present)
+    {
+        if ( !self::arePropertiesPresent($current, $present)) {
+            return false;
+        }
+        foreach( $present as $entry) {
+            unset($current[$entry->getKey()]);
+        }
+        
+        return true;
+    }
+    
+    /**
+     * Verification for the ComponentFactory
+     *
+     * @param Xyster_Container_Interface $container the container that is used for verification.
+     * @throws Exception if one or more dependencies cannot be resolved.
+     */
+    public function verify(Xyster_Container_Interface $container)
+    {
+         $this->_delegate->verify($container);
+    }
+    
     /**
      * Wraps another factory
      *

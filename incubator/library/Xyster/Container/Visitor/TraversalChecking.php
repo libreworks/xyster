@@ -51,6 +51,16 @@ class Xyster_Container_Visitor_TraversalChecking extends Xyster_Container_Visito
     }
     
     /**
+     * Visit a component adapter factory that has to accept the visitor.
+     * 
+     * @param Xyster_Container_Adapter_Factory $componentFactory the visited factory
+     */
+    public function visitComponentFactory(Xyster_Container_Adapter_Factory $componentFactory)
+    {
+        $this->_checkTraversal();
+    }
+    
+    /**
      * Visit a that has to accept the visitor.
      * 
      * @param Xyster_Container_Parameter $parameter the visited Parameter.

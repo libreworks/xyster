@@ -3,7 +3,7 @@ require_once 'Xyster/Container/Visitor.php';
 
 class Xyster_Container_Visitor_Mock implements Xyster_Container_Visitor
 {
-    protected $_count = array('visitContainer'=>0,'visitComponentAdapter'=>0,'visitParameter'=>0);
+    protected $_count = array('visitContainer'=>0,'visitComponentAdapter'=>0,'visitComponentFactory'=>0,'visitParameter'=>0);
     
     /**
      * Entry point for the Visitor traversal
@@ -36,6 +36,16 @@ class Xyster_Container_Visitor_Mock implements Xyster_Container_Visitor
      * @param Xyster_Container_Adapter $componentAdapter the visited ComponentAdapter.
      */
     public function visitComponentAdapter(Xyster_Container_Adapter $componentAdapter)
+    {
+        $this->_count[__FUNCTION__]++;
+    }
+    
+    /**
+     * Visits a component adapter factory that has to accept the visitor.
+     *
+     * @param Xyster_Container_Adapter_Factory $componentFactory the visited factory
+     */
+    public function visitComponentFactory(Xyster_Container_Adapter_Factory $componentFactory)
     {
         $this->_count[__FUNCTION__]++;
     }

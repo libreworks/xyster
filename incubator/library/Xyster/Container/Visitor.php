@@ -52,7 +52,14 @@ interface Xyster_Container_Visitor
      * @param Xyster_Container_Adapter $componentAdapter the visited ComponentAdapter.
      */
     function visitComponentAdapter(Xyster_Container_Adapter $componentAdapter);
-    
+
+    /**
+     * Visit a component adapter factory that has to accept the visitor.
+     *
+     * @param Xyster_Container_Adapter_Factory $componentFactory the visited factory
+     */
+    function visitComponentFactory(Xyster_Container_Adapter_Factory $componentFactory);
+        
     /**
      * Visit a that has to accept the visitor.
      * 

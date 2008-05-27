@@ -41,6 +41,18 @@ interface Xyster_Container_Mutable extends Xyster_Container_Interface
     function addAdapter(Xyster_Container_Adapter $componentAdapter, Xyster_Collection_Map_Interface $properties = null);
     
     /**
+     * Adds a child container
+     * 
+     * This action will ilst the child as exactly that in the parents scope.  It
+     * will not change the child's view of a parent.  That is determined by the
+     * constructor arguments of the child itself.
+     *
+     * @param Xyster_Container_Interface $child
+     * @return Xyster_Container_Mutable provides a fluent interface
+     */
+    function addChildContainer(Xyster_Container_Interface $child);
+    
+    /**
      * Register a component
      * 
      * This method creates specific instructions with which components
@@ -63,7 +75,7 @@ interface Xyster_Container_Mutable extends Xyster_Container_Interface
      * constructed with the no-arg constructor, use a zero length Parameter
      * array.
      *
-     * @param mixed $implementationOrInstance the component's implementation class
+     * @param mixed $implementation the component's implementation class
      * @param mixed $key a key unique within the container that identifies the component
      * @param mixed $parameters the parameters that gives hints about what arguments to pass
      * @return Xyster_Container_Mutable provides a fluent interface
@@ -101,6 +113,26 @@ interface Xyster_Container_Mutable extends Xyster_Container_Interface
      */
     function change( Xyster_Collection_Map_Interface $properties );
 
+    /**
+     * Make a child container using the same implementation as the parent
+     * 
+     * It will have a reference to this as parent.  This will list the resulting
+     * container as a child.
+     *
+     * @return Xyster_Container_Mutable the new child container
+     */
+    function makeChildContainer();
+    
+    /**
+     * Removes a child container from this container
+     * 
+     * It will not change the child's view of a parent.
+     *
+     * @param Xyster_Container_Interface $child
+     * @return boolean true if the child container has been removed
+     */
+    function removeChildContainer(Xyster_Container_Interface $child);
+    
     /**
      * Unregister a component by key
      *

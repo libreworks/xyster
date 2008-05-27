@@ -37,6 +37,7 @@ abstract class Xyster_Container_Injection_SingleMember extends Xyster_Container_
      * @param Xyster_Container_Interface $container
      * @param ReflectionMethod $member
      * @param array $parameterTypes an array of {@link Xyster_Type} objects
+     * @return array
      */
     protected function _getMemberArguments( Xyster_Container_Interface $container, ReflectionMethod $member = null, array $parameterTypes = array() )
     {
@@ -56,7 +57,7 @@ abstract class Xyster_Container_Injection_SingleMember extends Xyster_Container_
             /* @var $reflectionParameter ReflectionParameter */
     		$instance = $parameter->resolveInstance($container, $this, $parameterTypes[$i],
                 new Xyster_Container_NameBinding_Parameter($member, $i), $this->useNames());
-    		if ( $instance === null && !$reflectionParameter->isDefaultValueAvailable() ) {
+    		if ( $instance === null && $reflectionParameter->isDefaultValueAvailable() ) {
     			$instance = $reflectionParameter->getDefaultValue();
     		}
     	    $result[] = $instance;

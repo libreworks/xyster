@@ -32,15 +32,16 @@ class Xyster_Container_Injection_Setter extends Xyster_Container_Injection_Itera
     /**
      * Creates a new setter injector
      *
-     * @param mixed $componentKey
-     * @param object $componentImplementation
-     * @param array $parameters
-     * @param Xyster_Container_Monitor $monitor
-     * @param string $setterMethodPrefix
+     * @param mixed $key the search key for this implementation 
+     * @param object $implementation the concrete implementation
+     * @param array $parameters the parameters to use for the initialization
+     * @param Xyster_Container_Monitor $monitor the component monitor used
+     * @param string $setterMethodPrefix the prefix of the setter method
+     * @param boolean $useNames use argument names when looking up dependencies
      */
-    public function __construct( $componentKey, $componentImplementation, array $parameters = null, Xyster_Container_Monitor $monitor = null, $setterMethodPrefix = 'set')
+    public function __construct( $key, $implementation, array $parameters = null, Xyster_Container_Monitor $monitor = null, $setterMethodPrefix = 'set', $useNames = false)
     {
-        parent::__construct($componentKey, $componentImplementation, $parameters, $monitor);
+        parent::__construct($key, $implementation, $parameters, $monitor, $useNames);
         $this->_methodPrefix = $setterMethodPrefix;
     }
     
@@ -64,6 +65,18 @@ class Xyster_Container_Injection_Setter extends Xyster_Container_Injection_Itera
         return $this->_methodPrefix;
     }
     
+    /**
+     * Injects a value into a member
+     *
+     * @param ReflectionMethod $member
+     * @param object $instance
+     * @param mixed $toInject
+     */
+    protected function _injectIntoMember( ReflectionMethod $member, $instance, $toInject )
+    {
+        $member->invoke($instance, $toInject);
+    }
+        
     /**
      * {@inherit}
      *

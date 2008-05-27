@@ -69,11 +69,12 @@ interface Xyster_Container_Adapter
      * the same instance.
      *
      * @param Xyster_Container_Interface $container the container, that is used to resolve any possible dependencies of the instance
+     * @param Xyster_Type $into the class that is about to be injected into.
      * @return object the component instance.
      * @throws Exception if the component could not be instantiated.
      * @throws Exception  if the component has dependencies which could not be resolved, or instantiation of the component lead to an ambigous situation within the container.
      */
-    function getInstance(Xyster_Container_Interface $container);
+    function getInstance(Xyster_Container_Interface $container, Xyster_Type $into = null);
 
     /**
      * Retrieve the key associated with the component

@@ -34,6 +34,10 @@ require_once 'Xyster/Collection/Map.php';
  */
 require_once 'Xyster/Collection/Map/String.php';
 /**
+ * @see Xyster_Collection_Set
+ */
+require_once 'Xyster/Collection/Set.php';
+/**
  * @see Xyster_Type
  */
 require_once 'Xyster/Type.php';
@@ -53,6 +57,11 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
     private $_adapters;
     
     /**
+     * @var Xyster_Collection_Set
+     */
+    private $_children;
+    
+    /**
      * @var Xyster_Collection_Map
      */
     private $_componentKeyToAdapterCache;
@@ -66,6 +75,11 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
      * @var Xyster_Container_Monitor
      */
     private $_monitor;
+    
+    /**
+     * @var Xyster_Container_Interface
+     */
+    private $_parent;
     
     /**
      * @var Xyster_Collection_Map_Interface
@@ -88,10 +102,11 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
      * @param Xyster_Container_Adapter_Factory $factory
      * @param Xyster_Container_Monitor $monitor
      */
-    public function __construct( Xyster_Container_Adapter_Factory $factory = null, Xyster_Container_Monitor $monitor = null )
+    public function __construct( Xyster_Container_Adapter_Factory $factory = null, Xyster_Container_Interface $parent = null, Xyster_Container_Monitor $monitor = null )
     {
         $this->_adapters = new Xyster_Collection_List;
         $this->_properties = new Xyster_Collection_Map_String;
+        $this->_children = new Xyster_Collection_Set;
         $this->_componentKeyToAdapterCache = new Xyster_Collection_Map;
         
         if ( $factory === null ) {
@@ -99,7 +114,9 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
             $factory = new Xyster_Container_Behavior_Factory_Adaptive;
         }
         $this->_componentFactory = $factory;
-        
+        $this->_parent = $parent;
+        $this->_parent = ( $parent != null && !($parent instanceof Xyster_Container_Empty) ) ? 
+            new Xyster_Container_Immutable($parent) : $parent;
         if ( $monitor === null ) {
             require_once 'Xyster/Container/Monitor/Null.php';
             $monitor = new Xyster_Container_Monitor_Null;
@@ -115,11 +132,14 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
     public function accept(Xyster_Container_Visitor $visitor)
     {
         $visitor->visitContainer($this);
+        $this->_componentFactory->accept($visitor); // will cascade through behaviors
         foreach( $this->_getModifiableComponentAdapterList() as $adapter ) {
             /* @var $adapter Xyster_Container_Adapter */
             $adapter->accept($visitor);
         }
-        // for the future - pass visitor to children
+        foreach( $this->_children as $child ) {
+            $child->accept($visitor);
+        }
     }
     
     /**
@@ -153,7 +173,24 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
         
         return $this;
     }
-    
+
+    /**
+     * Adds a child container
+     * 
+     * This action will ilst the child as exactly that in the parents scope.  It
+     * will not change the child's view of a parent.  That is determined by the
+     * constructor arguments of the child itself.
+     *
+     * @param Xyster_Container_Interface $child
+     * @return Xyster_Container_Mutable provides a fluent interface
+     */
+    public function addChildContainer(Xyster_Container_Interface $child)
+    {
+        $this->_checkCircularDependencies($child);
+        $this->_children->add($child);
+        return $this;
+    }
+        
     /**
      * Register a component
      * 
@@ -257,7 +294,12 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
                 $adapter->changeMonitor($monitor);
             }
         }
-        // for the future - change monitor in chilren containers
+        foreach( $this->_children as $child ) {
+            if ( $child instanceof Xyster_Container_Monitor_Strategy ) {
+                /* @var $child Xyster_Container_Monitor_Strategy */
+                $child->changeMonitor($monitor);
+            }
+        }
     }
     
     /**
@@ -275,13 +317,15 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
      * Retrieve a component instance registered with a specific key or type
      *
      * @param mixed $componentKeyOrType the key or Type that the component was registered with
+     * @param Xyster_Type $into the type about to be injected into
      * @return object an instantiated component, or null if no component has been registered for the specified key
      */
-    public function getComponent($componentKeyOrType)
+    public function getComponent($componentKeyOrType, Xyster_Type $into = null)
     {
         $return = null;
         $adapter = null;
         
+        // consult PicoContainer to see what the hell the IntoThreadLocal is
         if ( $componentKeyOrType instanceof Xyster_Type ) {
             $adapter = $this->getComponentAdapterByType($componentKeyOrType, null);
         } else {
@@ -330,7 +374,9 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
     public function getComponentAdapter( $componentKey )
     {
         $adapter = $this->_getComponentKeyToAdapterCache()->get($componentKey);
-        // in the future - search in parent container
+        if ( $adapter === null && $this->_parent !== null ) {
+            $adapter = $this->_parent->getComponentAdapter($componentKey);
+        }
         return $adapter;
     }
     
@@ -351,8 +397,8 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
         if ( $adapter === null ) {
             $found = $this->getComponentAdapters($componentType);
             if ( $found->isEmpty() ) {
-            	// in the future - search in parent container
-                return null;
+                return ( $this->_parent !== null ) ?
+                    $this->_parent->getComponentAdapterByType($componentType, $nameBinding) : null;
             } else if ( count($found) == 1 ) {
                 return $found->get(0);
             } else {
@@ -406,6 +452,44 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
         return $list;
     }
     
+    /**
+     * Retrieve the parent container of this container
+     *
+     * @return Xyster_Container_Instance or null if no parent exists
+     */
+    public function getParent()
+    {
+        return $this->_parent;
+    }
+
+    /**
+     * Make a child container using the same implementation as the parent
+     * 
+     * It will have a reference to this as parent.  This will list the resulting
+     * container as a child.
+     *
+     * @return Xyster_Container_Mutable the new child container
+     */
+    public function makeChildContainer()
+    {
+        $mc = new Xyster_Container($this->_componentFactory, $this);
+        $this->addChildContainer($mc);
+        return $mc;
+    }
+    
+    /**
+     * Removes a child container from this container
+     * 
+     * It will not change the child's view of a parent.
+     *
+     * @param Xyster_Container_Interface $child
+     * @return boolean true if the child container has been removed
+     */
+    public function removeChildContainer(Xyster_Container_Interface $child)
+    {
+        return $this->_children->remove($child);
+    }
+         
     /**
      * Unregister a component by key
      *
@@ -496,8 +580,9 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
         
         if ( $isLocal ) {
             $instance = $adapter->getInstance($this);
+        } else if ( $this->_parent !== null ) {
+            $instance = $this->_parent->getComponent($adapter->getKey());
         }
-        // for the future - check parent for adapter
         
         return $instance;
     }
@@ -522,6 +607,36 @@ class Xyster_Container implements Xyster_Container_Mutable, Xyster_Container_Mon
     protected function _getModifiableComponentAdapterList()
     {
     	return $this->_adapters;
+    }
+    
+    /**
+     * Checks for identical references in the child container
+     * 
+     * It doesn't traverse an entire hierarchy, namely it simply checks for
+     * child containers tht are identical to the current container.
+     *
+     * @param Xyster_Container_Interface $child
+     */
+    private function _checkCircularChildDependencies( Xyster_Container_Interface $child )
+    {
+        $message = "Cannot have circular dependency between parent " . get_class($this) .
+            " and child: " . get_class($child);
+        if ( $child === $this ) {
+            require_once 'Xyster/Container/Exception.php';
+            throw new Xyster_Container_Exception($message);
+        }
+        if ( $child instanceof Xyster_Container_Delegating_Abstract ) {
+            $delegateChild = $child;
+            while( $delegateChild !== null ) {
+                $delegateInstance = $delegateChild->getDelegate();
+                if ( $this === $delegateInstance ) {
+                    require_once 'Xyster/Container/Exception.php';
+                    throw new Xyster_Container_Exception($message);
+                }
+                $delegateChild = ( $delegateInstance instanceof Xyster_Container_Delegating_Abstract ) ?
+                    $delegateInstance : null;
+            }
+        }
     }
     
     /**

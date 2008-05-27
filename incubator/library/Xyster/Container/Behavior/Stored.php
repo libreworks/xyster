@@ -75,11 +75,11 @@ class Xyster_Container_Behavior_Stored extends Xyster_Container_Behavior_Abstrac
      * @throws Exception if the component could not be instantiated.
      * @throws Exception  if the component has dependencies which could not be resolved, or instantiation of the component lead to an ambigous situation within the container.
      */
-    public function getInstance( Xyster_Container_Interface $container )
+    public function getInstance( Xyster_Container_Interface $container, Xyster_Type $into = null )
     {
         $instance = $this->_instanceReference->get();
         if ($instance == null) {
-            $instance = parent::getInstance($container);
+            $instance = parent::getInstance($container, $into);
             $this->_instanceReference->set($instance);
         }
         return $instance;

@@ -18,18 +18,25 @@
  */
 require_once 'Xyster/Container/Behavior/Factory/Abstract.php';
 /**
- * @see Xyster_Container_Behavior_PropertyApplicator
+ * @see Xyster_Container_Behavior_Decorated
  */
-require_once 'Xyster/Container/Behavior/PropertyApplicator.php';
+require_once 'Xyster/Container/Behavior/Decorated.php';
 /**
- * A component factory that creates property applicator instances
+ * @see Xyster_Container_Behavior_Decorator
+ */
+require_once 'Xyster/Container/Behavior/Decorator.php';
+/**
+ * Behavior factory for decorating
+ * 
+ * This factory will create decorated that will allow you to decorate what you
+ * like on the component instance that has been created.
  *
  * @category  Xyster
  * @package   Xyster_Container
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Container_Behavior_Factory_PropertyApplicator extends Xyster_Container_Behavior_Factory_Abstract
+abstract class Xyster_Container_Behavior_Factory_Decorating extends Xyster_Container_Behavior_Factory_Abstract implements Xyster_Container_Behavior_Decorator 
 {
     /**
      * Adds a component adapter
@@ -41,9 +48,7 @@ class Xyster_Container_Behavior_Factory_PropertyApplicator extends Xyster_Contai
      */
     public function addComponentAdapter(Xyster_Container_Monitor $monitor, Xyster_Collection_Map_Interface $properties, Xyster_Container_Adapter $adapter)
     {
-        Xyster_Container_Behavior_Factory_Abstract::removePropertiesIfPresent($properties, Xyster_Container_Features::PROPERTY_APPLYING());
-        return new Xyster_Container_Behavior_PropertyApplicator(parent::addComponentAdapter(
-            $monitor, $properties, $adapter));
+        return parent::addComponentAdapter($monitor, $properties, $adapter);
     }
     
     /**
@@ -59,8 +64,7 @@ class Xyster_Container_Behavior_Factory_PropertyApplicator extends Xyster_Contai
      */
     public function createComponentAdapter(Xyster_Container_Monitor $monitor, Xyster_Collection_Map_Interface $properties, $key, $implementation, $parameters)
     {
-        $decoratedAdapter = parent::createComponentAdapter($monitor, $properties, $key, $implementation, $parameters);
-        Xyster_Container_Behavior_Factory_Abstract::removePropertiesIfPresent($properties, Xyster_Container_Features::PROPERTY_APPLYING());
-        return new Xyster_Container_Behavior_PropertyApplicator($decoratedAdapter);
+        return new Xyster_Container_Behavior_Decorated(parent::createComponentAdapter(
+            $monitor, $properties, $key, $implementation, $parameters), $this);
     }
 }

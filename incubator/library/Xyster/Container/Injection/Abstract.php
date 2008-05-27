@@ -18,6 +18,10 @@
  */
 require_once 'Xyster/Container/Adapter/Abstract.php';
 /**
+ * @see Xyster_Container_Injector
+ */
+require_once 'Xyster/Container/Injector.php';
+/**
  * This adapter will instantiate a new object for each call to getInstance 
  *
  * @category  Xyster
@@ -25,7 +29,7 @@ require_once 'Xyster/Container/Adapter/Abstract.php';
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-abstract class Xyster_Container_Injection_Abstract extends Xyster_Container_Adapter_Abstract
+abstract class Xyster_Container_Injection_Abstract extends Xyster_Container_Adapter_Abstract implements Xyster_Container_Injector
 {
     protected $_parameters = array();
     
@@ -83,6 +87,16 @@ abstract class Xyster_Container_Injection_Abstract extends Xyster_Container_Adap
     public function useNames()
     {
     	return $this->_useNames;
+    }
+
+    /**
+     * Verify that all dependencies for this adapter can be satisifed
+     * 
+     * @param Xyster_Container_Interface $container the container, that is used to resolve any possible dependencies of the instance
+     * @throws Exception if one or more dependencies cannot be resolved
+     */
+    public function verify(Xyster_Container_Interface $container)
+    {
     }
     
     /**

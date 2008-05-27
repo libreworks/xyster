@@ -165,7 +165,18 @@ abstract class Xyster_Container_Monitor_Abstract implements Xyster_Container_Mon
     {
     	$this->_delegate->invocationFailed($member, $instance, $cause);
     }
-
+        
+    /**
+     * A mechanism to monitor or override the Abstract Injectors being made for components.
+     *
+     * @param Xyster_Container_Injection_Abstract the abstract injector the container intends to use for the component currently being added.
+     * @return Xyster_Container_Injection_Abstract an abstract Injector. For most implementations, the same one as was passed in.
+     */
+    public function newInjectionFactory(Xyster_Container_Injection_Abstract $abstractInjector)
+    {
+        return $abstractInjector;
+    }
+    
     /**
      * 
      * @param Xyster_Container_Interface $container

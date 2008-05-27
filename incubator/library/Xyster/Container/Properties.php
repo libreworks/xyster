@@ -38,10 +38,11 @@ class Xyster_Container_Properties extends Xyster_Container_Delegating_Abstract
 	 * the keys in the container.
 	 *
 	 * @param Xyster_Collection_Map_Interface $properties
+	 * @param Xyster_Container_Interface $parent
 	 */
-    public function __construct( Xyster_Collection_Map_Interface $properties )
+    public function __construct( Xyster_Collection_Map_Interface $properties, Xyster_Container_Interface $parent = null )
     {
-    	$delegate = new Xyster_Container;
+    	$delegate = new Xyster_Container(null, $parent);
     	parent::__construct($delegate);
     	
     	foreach( $properties as $key => $value ) {

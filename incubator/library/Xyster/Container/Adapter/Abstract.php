@@ -152,11 +152,10 @@ abstract class Xyster_Container_Adapter_Abstract implements Xyster_Container_Ada
     {
         if ( $this->_key instanceof Xyster_Type ) {
             $componentType = $this->_key; /* @var $componentType Xyster_Type */
-            $className = $this->_implementation->getName();
             if ( !$componentType->isAssignableFrom($this->_implementation) ) {
                 require_once 'Xyster/Container/Adapter/Exception.php';
-                throw new Xyster_Container_Adapter_Exception($className . ' is not a ' . 
-                    $componentType->getName());
+                throw new Xyster_Container_Adapter_Exception($this->_implementation->getName() .
+                    ' is not a ' . $componentType->getName());
             }
         }
     }

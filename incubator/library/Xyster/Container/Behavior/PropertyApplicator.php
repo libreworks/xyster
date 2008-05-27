@@ -43,9 +43,9 @@ class Xyster_Container_Behavior_PropertyApplicator extends Xyster_Container_Beha
      * @param Xyster_Container_Interface $container
      * @return object the component instance with any properties set
      */
-    public function getInstance( Xyster_Container_Interface $container )
+    public function getInstance( Xyster_Container_Interface $container, Xyster_Type $into = null )
     {
-        $componentInstance = parent::getInstance($container);
+        $componentInstance = parent::getInstance($container, $into);
         if ( $this->_setters == null ) {
             $this->_setters = $this->_getSetters($this->getImplementation());
         }

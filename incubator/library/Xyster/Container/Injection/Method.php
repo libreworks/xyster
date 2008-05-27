@@ -32,18 +32,33 @@ class Xyster_Container_Injection_Method extends Xyster_Container_Injection_Singl
     /**
      * Creates a methodinjector
      *
-     * @param mixed $key
-     * @param mixed $implementation
-     * @param array $parameters
-     * @param Xyster_Container_Monitor $monitor
-     * @param string $methodName
+     * @param mixed $key the search key for this implementation
+     * @param mixed $implementation the concrete implementation
+     * @param array $parameters the parameters to use for the initialization
+     * @param Xyster_Container_Monitor $monitor the monitor used by addAdapter
+     * @param string $methodName the method name
+     * @param boolean $useNames use argument names when looking up dependencies
      */
-    public function __construct( $key, $implementation, array $parameters = null, Xyster_Container_Monitor $monitor = null, $methodName = 'inject' )
+    public function __construct( $key, $implementation, array $parameters = null, Xyster_Container_Monitor $monitor = null, $methodName = 'inject', $useNames = false )
     {
-        parent::__construct($key, $implementation, $parameters, $monitor);
+        parent::__construct($key, $implementation, $parameters, $monitor, $useNames);
         $this->_methodName = $methodName;
     }
-    
+
+    /**
+     * A decorator method 
+     *
+     * @param Xyster_Container_Interface $container
+     * @param Xyster_Type $into
+     * @param object $instance An instance of the type supported by this injector
+     */
+    public function decorateInstance(Xyster_Container_Interface $container, Xyster_Type $into, $instance)
+    {
+        $method = $this->_getInjectorMethod();
+        $parameters = $this->_getMemberArguments($container, $method);
+        $this->_invokeMethod($method, $parameters, $instance, $container);
+    }
+        
     /**
      * Gets the descriptor of this adapter
      *
@@ -58,15 +73,15 @@ class Xyster_Container_Injection_Method extends Xyster_Container_Injection_Singl
      * Retrieve the component instance
      *
      * @param Xyster_Container_Interface $container the container, that is used to resolve any possible dependencies of the instance
+     * @param Xyster_Type $into
      * @return object the component instance.
      * @throws Exception if the component could not be instantiated.
      * @throws Exception  if the component has dependencies which could not be resolved, or instantiation of the component lead to an ambigous situation within the container.
      */
-    public function getInstance( Xyster_Container_Interface $container )
+    public function getInstance( Xyster_Container_Interface $container, Xyster_Type $into = null )
     {
         $method = $this->_getInjectorMethod();
         $inst = null;
-        
         $monitor = $this->currentMonitor();
         
         try {
@@ -75,9 +90,8 @@ class Xyster_Container_Injection_Method extends Xyster_Container_Injection_Singl
             $parameters = null;
             $inst = $this->getImplementation()->getClass()->newInstance();
             if ( $method instanceof ReflectionMethod ) {
-                $parameters = $this->_getMemberArguments($container, $method,
-                    Xyster_Type::getForParameters($method));
-                $method->invokeArgs($inst, $parameters);
+                $parameters = $this->_getMemberArguments($container, $method);
+                $this->_invokeMethod($method, $parameters, $inst, $container);
             }
             $monitor->instantiated($container, $this, null, $inst, $parameters, microtime(true) - $startTime);
             return $inst;
@@ -116,5 +130,35 @@ class Xyster_Container_Injection_Method extends Xyster_Container_Injection_Singl
         $class = $this->getImplementation()->getClass();
         return $class->hasMethod($this->_methodName) ?
             $class->getMethod($this->_methodName) : null;
+    }
+    
+    /**
+     * Just a convenience method
+     *
+     * @param Xyster_Container_Interface $container
+     * @param ReflectionMethod $method
+     * @return array
+     */
+    protected function _getMemberArguments(Xyster_Container_Interface $container, ReflectionMethod $method = null, array $parameters = array() )
+    {
+        return parent::_getMemberArguments($container, $method, Xyster_Type::getForParameters($method));
+    }
+    
+    /**
+     * Invokes the method
+     *
+     * @param ReflectionMethod $method
+     * @param array $parameters
+     * @param object $instance
+     * @param Xyster_Container_Interface $container
+     * @return mixed
+     */
+    protected function _invokeMethod( ReflectionMethod $method, array $parameters, $instance, Xyster_Container_Interface $container )
+    {
+        try {
+            return $method->invokeArgs($instance, $parameters);
+        } catch ( ReflectionException $e ) {
+            $this->_caughtInvocationTargetException($this->currentMonitor(), $method, $instance, $e);
+        }
     }
 }

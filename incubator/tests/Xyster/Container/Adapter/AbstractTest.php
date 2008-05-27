@@ -157,7 +157,7 @@ class Xyster_Container_Adapter_AbstractTest extends PHPUnit_Framework_TestCase
  */
 class Xyster_Container_Adapter_AbstractStub extends Xyster_Container_Adapter_Abstract
 {
-    public function getInstance(Xyster_Container_Interface $container)
+    public function getInstance(Xyster_Container_Interface $container, Xyster_Type $into = null )
     {
         return $this->getImplementation()->newInstance();
     }

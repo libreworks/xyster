@@ -56,6 +56,22 @@ abstract class Xyster_Container_Delegating_MutableAbstract extends Xyster_Contai
     }
     
     /**
+     * Adds a child container
+     * 
+     * This action will ilst the child as exactly that in the parents scope.  It
+     * will not change the child's view of a parent.  That is determined by the
+     * constructor arguments of the child itself.
+     *
+     * @param Xyster_Container_Interface $child
+     * @return Xyster_Container_Mutable provides a fluent interface
+     */
+    public function addChildContainer(Xyster_Container_Interface $child)
+    {
+        $this->getDelegate()->addChildContainer($child);
+        return $this;
+    }
+        
+    /**
      * Register a component
      *
      * @param mixed $implementation the component's implementation class
@@ -119,7 +135,33 @@ abstract class Xyster_Container_Delegating_MutableAbstract extends Xyster_Contai
     {
     	return parent::getDelegate();
     }
+
+    /**
+     * Make a child container using the same implementation as the parent
+     * 
+     * It will have a reference to this as parent.  This will list the resulting
+     * container as a child.
+     *
+     * @return Xyster_Container_Mutable the new child container
+     */
+    public function makeChildContainer()
+    {
+        return null;
+    }
     
+    /**
+     * Removes a child container from this container
+     * 
+     * It will not change the child's view of a parent.
+     *
+     * @param Xyster_Container_Interface $child
+     * @return boolean true if the child container has been removed
+     */
+    public function removeChildContainer(Xyster_Container_Interface $child)
+    {
+        return $this->getDelegate()->removeChildContainer($child);
+    }
+        
     /**
      * Unregister a component by key
      *

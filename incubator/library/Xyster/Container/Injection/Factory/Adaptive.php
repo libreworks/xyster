@@ -14,9 +14,9 @@
  * @version   $Id$
  */
 /**
- * @see Xyster_Container_Injection_Factory
+ * @see Xyster_Container_Injection_Factory_Abstract
  */
-require_once 'Xyster/Container/Injection/Factory.php';
+require_once 'Xyster/Container/Injection/Factory/Abstract.php';
 /**
  * @see Xyster_Container_Features
  */
@@ -33,7 +33,7 @@ require_once 'Xyster/Container/Behavior/Factory/Abstract.php';
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Container_Injection_Factory_Adaptive implements Xyster_Container_Injection_Factory
+class Xyster_Container_Injection_Factory_Adaptive extends Xyster_Container_Injection_Factory_Abstract
 {
     /**
      * Create a new component adapter based on the specified arguments

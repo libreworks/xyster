@@ -11,16 +11,16 @@
  * @package   Xyster_Container
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
- * @version   $Id$
+ * @version   $Id: Setter.php 181 2007-12-31 14:47:15Z doublecompile $
  */
 /**
  * @see Xyster_Container_Injection_Factory_Abstract
  */
 require_once 'Xyster/Container/Injection/Factory/Abstract.php';
 /**
- * @see Xyster_Container_Injection_Method
+ * @see Xyster_Container_Injection_Composite
  */
-require_once 'Xyster/Container/Injection/Method.php';
+require_once 'Xyster/Container/Injection/Composite.php';
 /**
  * Creates constructor injection adapters 
  *
@@ -29,18 +29,24 @@ require_once 'Xyster/Container/Injection/Method.php';
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Container_Injection_Factory_Method extends Xyster_Container_Injection_Factory_Abstract
+class Xyster_Container_Injection_Factory_Setter extends Xyster_Container_Injection_Factory_Abstract
 {
-    private $_injectionMethodName = 'inject';
+    private $_injectionFactories = array();
     
     /**
-     * Creates a new method injection factory
+     * Creates a new setter injection factory
      *
-     * @param string $injectionMethodName the name of the injection method
+     * @param array $injectionFactories An array of injection factories
      */
-    public function __construct( $injectionMethodName = 'inject')
+    public function __construct( array $injectionFactories )
     {
-        $this->_injectionMethodName = $injectionMethodName;
+        foreach( $injectionFactories as $v ) {
+            if (! $v instanceof Xyster_Container_Injection_Factory ) {
+                require_once 'Xyster/Container/Injection/Exception.php';
+                throw new Xyster_Container_Injection_Exception('Arguments must be injection factories');
+            }
+            $this->_injectionFactories[] = $v;
+        }
     }
     
     /**
@@ -58,8 +64,15 @@ class Xyster_Container_Injection_Factory_Method extends Xyster_Container_Injecti
      */
     public function createComponentAdapter(Xyster_Container_Monitor $monitor, Xyster_Collection_Map_Interface $properties, $key, $implementation, $parameters)
     {
+        $injectors = array();
+        foreach( $this->_injectionFactories as $factory ) {
+            /* @var $factory Xyster_Container_Injection_Factory */
+            $injectors[] = $factory->createComponentAdapter($monitor,
+                $properties, $key, $implementation, $parameters);
+        }
+        
         $useNames = Xyster_Container_Behavior_Factory_Abstract::arePropertiesPresent($properties, Xyster_Container_Features::USE_NAMES());
-        return new Xyster_Container_Injection_Method($key, $implementation,
-            $parameters, $monitor, $this->_injectionMethodName, $useNames);
+        return new Xyster_Container_Injection_Composite($key, $implementation,
+            $parameters, $monitor, $useNames, $injectors);
     }
 }

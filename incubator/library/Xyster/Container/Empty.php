@@ -40,9 +40,10 @@ class Xyster_Container_Empty implements Xyster_Container_Interface
      * Retrieve a component instance registered with a specific key or type
      *
      * @param mixed $componentKeyOrType the key or Type that the component was registered with
+     * @param Xyster_Type $into the type about to be injected into
      * @return object an instantiated component, or null if no component has been registered for the specified key
      */
-    public function getComponent($componentKeyOrType)
+    public function getComponent($componentKeyOrType, Xyster_Type $into = null)
     {
     	return null;
     }
@@ -99,5 +100,15 @@ class Xyster_Container_Empty implements Xyster_Container_Interface
     {
         require_once 'Xyster/Collection.php';
         return Xyster_Collection::emptyList();
+    }
+    
+    /**
+     * Gets the parent container of this container
+     *
+     * @return Xyster_Container_Interface
+     */
+    public function getParent()
+    {
+        return null;
     }
 }

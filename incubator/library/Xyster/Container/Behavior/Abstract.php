@@ -115,13 +115,14 @@ abstract class Xyster_Container_Behavior_Abstract implements Xyster_Container_Be
      * {@inherit}
      *
      * @param Xyster_Container_Interface $container the container, that is used to resolve any possible dependencies of the instance
+     * @param Xyster_Type $into
      * @return object the component instance.
      * @throws Exception if the component could not be instantiated.
      * @throws Exception  if the component has dependencies which could not be resolved, or instantiation of the component lead to an ambigous situation within the container.
      */
-    public function getInstance( Xyster_Container_Interface $container )
+    public function getInstance( Xyster_Container_Interface $container, Xyster_Type $into = null )
     {
-        return $this->_delegate->getInstance($container);
+        return $this->_delegate->getInstance($container, $into);
     }
     
     /**

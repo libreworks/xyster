@@ -36,7 +36,20 @@ abstract class Xyster_Container_Injection_Iterative extends Xyster_Container_Inj
      * @var array
      */
     protected $_injectionTypes = array();
-    
+
+    /**
+     * A decorator method 
+     *
+     * @param Xyster_Container_Interface $container
+     * @param Xyster_Type $into
+     * @param object $instance An instance of the type supported by this injector
+     */
+    public function decorateInstance(Xyster_Container_Interface $container, Xyster_Type $into, $instance)
+    {
+        $matchingParameters = $this->_getMatchingParameterListForSetters($container);
+        return $this->_decorateInstance($matchingParamaters, $this->currentMonitor(), $instance, $container);
+    }
+        
     /**
      * Retrieve the component instance
      *
@@ -45,41 +58,12 @@ abstract class Xyster_Container_Injection_Iterative extends Xyster_Container_Inj
      * @throws Exception if the component could not be instantiated.
      * @throws Exception  if the component has dependencies which could not be resolved, or instantiation of the component lead to an ambigous situation within the container.
      */
-    public function getInstance( Xyster_Container_Interface $container )
+    public function getInstance( Xyster_Container_Interface $container, Xyster_Type $into = null )
     {
-        $matchingParameters = $this->_getMatchingParameterListForSetters($container);
         $monitor = $this->currentMonitor();
-        $type = $this->getImplementation();
-        $componentInstance = $this->_getOrMakeInstance($container, $type, $monitor);
-        
-        $class = $type->getClass();
-        $member = null;
-        $injected = array();
-        try {
-            for( $i=0; $i<count($this->_injectionMembers); $i++ ) {
-                $member = $this->_injectionMembers->get($i);
-                /* @var $member ReflectionMethod */
-                $reflectionParameter = current($member->getParameters());
-                /* @var $reflectionParameter ReflectionParameter */
-                $monitor->invoking($container, $this, $member, $componentInstance);
-                $matchingParam = $matchingParameters[$i];
-                /* @var $matchingParam Xyster_Container_Parameter */
-                if ( $matchingParam === null ) {
-                    continue;
-                }
-                $toInject = $matchingParam->resolveInstance($container, $this, $this->_injectionTypes[$i],
-                    $this->_makeParameterNameImpl($this->_injectionMembers->get($i)),
-                    $this->useNames());
-                if ( $toInject === null && $reflectionParameter->isDefaultValueAvailable() ) {
-                	$toInject = $reflectionParameter->getDefaultValue();
-                }
-                $this->_injectIntoMember($member, $componentInstance, $toInject);
-                $injected[] = $toInject;
-            }
-            return $componentInstance;
-        } catch ( ReflectionException $e ) {
-            $this->_caughtInvocationTargetException($monitor, $member, $componentInstance, $e);
-        }
+        $matchingParameters = $this->_getMatchingParameterListForSetters($container);
+        $componentInstance = $this->_makeInstance($container, $this->getImplementation(), $monitor);
+        return $this->_decorateComponentInstance($matchingParameters, $monitor, $componentInstance, $container);
     }
 
     /**
@@ -164,7 +148,7 @@ abstract class Xyster_Container_Injection_Iterative extends Xyster_Container_Inj
      * @param Xyster_Container_Monitor $monitor
      * @return object
      */
-    protected function _getOrMakeInstance( Xyster_Container_Interface $container, Xyster_Type $class, Xyster_Container_Monitor $monitor )
+    protected function _makeInstance( Xyster_Container_Interface $container, Xyster_Type $class, Xyster_Container_Monitor $monitor )
     {
         $startTime = microtime(true);
         $monitor->instantiating($container, $this, $class);
@@ -205,19 +189,6 @@ abstract class Xyster_Container_Injection_Iterative extends Xyster_Container_Inj
         
         $this->_injectionTypes = $typeList;
     }
-
-    /**
-     * Injects a value into a member
-     *
-     * @param ReflectionMethod $member
-     * @param object $componentInstance
-     * @param mixed $toInject
-     */
-    protected function _injectIntoMember( ReflectionMethod $member, $componentInstance, $toInject )
-    {
-        $member->invoke($componentInstance, $toInject);
-    }
-    
     /**
      * Returns a NameBinding for a method
      *
@@ -228,6 +199,15 @@ abstract class Xyster_Container_Injection_Iterative extends Xyster_Container_Inj
     {
     	return new Xyster_Container_NameBinding_Parameter($member, 0);
     }
+
+    /**
+     * Injects a value into a member
+     *
+     * @param ReflectionMethod $member
+     * @param object $componentInstance
+     * @param mixed $toInject
+     */
+    abstract protected function _injectIntoMember( ReflectionMethod $member, $componentInstance, $toInject );
     
     /**
      * Gets whether the method passed in should be used for injection
@@ -236,4 +216,43 @@ abstract class Xyster_Container_Injection_Iterative extends Xyster_Container_Inj
      * @return boolean
      */
     abstract protected function _isInjectorMethod( ReflectionMethod $method );
+    
+    /**
+     * Decorates a component
+     *
+     * @param array $matchingParameters
+     * @param Xyster_Container_Monitor $monitor
+     * @param object $instance
+     * @param Xyster_Container_Interface $container
+     * @return object
+     */
+    private function _decorateComponentInstance( array $matchingParameters, Xyster_Container_Monitor $monitor, $instance, Xyster_Container_Interface $container )
+    {
+        $injected = array();
+        try {
+            for( $i=0; $i<count($this->_injectionMembers); $i++ ) {
+                $member = $this->_injectionMembers->get($i);
+                /* @var $member ReflectionMethod */
+                $reflectionParameter = current($member->getParameters());
+                /* @var $reflectionParameter ReflectionParameter */
+                $monitor->invoking($container, $this, $member, $instance);
+                $matchingParam = $matchingParameters[$i];
+                /* @var $matchingParam Xyster_Container_Parameter */
+                if ( $matchingParam === null ) {
+                    continue;
+                }
+                $toInject = $matchingParam->resolveInstance($container, $this, $this->_injectionTypes[$i],
+                    $this->_makeParameterNameImpl($this->_injectionMembers->get($i)),
+                    $this->useNames());
+                if ( $toInject === null && $reflectionParameter->isDefaultValueAvailable() ) {
+                    $toInject = $reflectionParameter->getDefaultValue();
+                }
+                $this->_injectIntoMember($member, $instance, $toInject);
+                $injected[] = $toInject;
+            }
+            return $instance;
+        } catch ( ReflectionException $e ) {
+            $this->_caughtInvocationTargetException($monitor, $member, $instance, $e);
+        }
+    }
 }

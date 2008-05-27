@@ -44,6 +44,16 @@ require_once 'Xyster/Container/Injection/Factory/Adaptive.php';
 class Xyster_Container_Behavior_Factory_Adaptive implements Xyster_Container_Behavior_Factory
 {
     /**
+     * Accepts a visitor for this ComponentFactory
+     *
+     * @param Xyster_Container_Visitor $visitor the visitor
+     */
+    public function accept(Xyster_Container_Visitor $visitor)
+    {
+        $visitor->visitComponentFactory($this);
+    }
+    
+    /**
      * Create a new component adapter based on the specified arguments
      * 
      * {@inherit}
@@ -106,6 +116,16 @@ class Xyster_Container_Behavior_Factory_Adaptive implements Xyster_Container_Beh
         return $lastFactory->addComponentAdapter($monitor, $properties, $adapter);
     }
 
+        
+    /**
+     * Verification for the ComponentFactory
+     *
+     * @param Xyster_Container_Interface $container the container that is used for verification.
+     */
+    public function verify(Xyster_Container_Interface $container)
+    { 
+    }
+    
     /**
      * Wraps another factory -- not implemented
      *

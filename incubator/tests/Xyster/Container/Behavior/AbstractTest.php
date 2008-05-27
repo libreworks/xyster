@@ -97,7 +97,7 @@ class Xyster_Container_Adapter_NoMonitorStub implements Xyster_Container_Adapter
     {
     }
 
-    public function getInstance(Xyster_Container_Interface $container)
+    public function getInstance(Xyster_Container_Interface $container, Xyster_Type $into = null)
     {
     }
 
