@@ -52,7 +52,7 @@ class Xyster_Container_Injection_Method extends Xyster_Container_Injection_Singl
      * @param Xyster_Type $into
      * @param object $instance An instance of the type supported by this injector
      */
-    public function decorateInstance(Xyster_Container_Interface $container, Xyster_Type $into, $instance)
+    public function decorateInstance(Xyster_Container_Interface $container, Xyster_Type $into = null, $instance)
     {
         $method = $this->_getInjectorMethod();
         $parameters = $this->_getMemberArguments($container, $method);

@@ -34,5 +34,5 @@ interface Xyster_Container_Injector extends Xyster_Container_Adapter
      * @param Xyster_Type $into
      * @param object $instance An instance of the type supported by this injector
      */
-    function decorateInstance(Xyster_Container_Interface $container, Xyster_Type $into, $instance);
+    function decorateInstance(Xyster_Container_Interface $container, Xyster_Type $into = null, $instance);
 }

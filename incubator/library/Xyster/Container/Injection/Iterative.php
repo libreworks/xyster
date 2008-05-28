@@ -44,7 +44,7 @@ abstract class Xyster_Container_Injection_Iterative extends Xyster_Container_Inj
      * @param Xyster_Type $into
      * @param object $instance An instance of the type supported by this injector
      */
-    public function decorateInstance(Xyster_Container_Interface $container, Xyster_Type $into, $instance)
+    public function decorateInstance(Xyster_Container_Interface $container, Xyster_Type $into = null, $instance)
     {
         $matchingParameters = $this->_getMatchingParameterListForSetters($container);
         return $this->_decorateComponentInstance($matchingParameters, $this->currentMonitor(), $instance, $container);

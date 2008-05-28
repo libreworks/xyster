@@ -44,7 +44,7 @@ class Xyster_Container_Injection_Constructor extends Xyster_Container_Injection_
      * @param Xyster_Type $into
      * @param object $instance An instance of the type supported by this injector
      */
-    public function decorateInstance(Xyster_Container_Interface $container, Xyster_Type $into, $instance)
+    public function decorateInstance(Xyster_Container_Interface $container, Xyster_Type $into = null, $instance)
     {
     }
         
