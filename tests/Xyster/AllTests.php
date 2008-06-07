@@ -13,19 +13,13 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
-
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Xyster_AllTests::main');
 }
-
 /**
  * Test helper
  */
 require_once dirname(dirname(__FILE__)).'/TestHelper.php';
-               
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
-
 require_once 'Xyster/AclTest.php';
 require_once 'Xyster/Acl/AllTests.php';
 require_once 'Xyster/Collection/AllTests.php';
@@ -39,9 +33,7 @@ require_once 'Xyster/OrmTest.php';
 require_once 'Xyster/Orm/AllTests.php';
 require_once 'Xyster/TypeTest.php';
 require_once 'Xyster/ValidateTest.php';
-require_once 'Xyster/Validate/ErrorTest.php';
-require_once 'Xyster/Validate/ErrorsTest.php';
-require_once 'Xyster/Validate/UriTest.php';
+require_once 'Xyster/Validate/AllTests.php';
 
 class Xyster_AllTests
 {
@@ -66,9 +58,7 @@ class Xyster_AllTests
         $suite->addTest( Xyster_Orm_AllTests::suite() );
         $suite->addTestSuite('Xyster_TypeTest');
         $suite->addTestSuite('Xyster_ValidateTest');
-        $suite->addTestSuite('Xyster_Validate_ErrorTest');
-        $suite->addTestSuite('Xyster_Validate_ErrorsTest');
-        $suite->addTestSuite('Xyster_Validate_UriTest');
+        $suite->addTest( Xyster_Validate_AllTests::suite() );
         return $suite;
     }
 }

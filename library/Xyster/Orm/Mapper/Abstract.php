@@ -523,19 +523,19 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
     final protected function _addValidators( Xyster_Orm_Entity_Type $type )
     {
         if ( !$this->getOption('doNotCreateValidators') ) {
-            require_once 'Zend/Validate/NotEmpty.php';
+            require_once 'Xyster/Validate/NotNull.php';
             foreach( $type->getFields() as $field ) {
                 /* @var $field Xyster_Orm_Entity_Field */
                 if ( !$field->isNullable() && !$field->isPrimary() ) {
-                    $field->addValidator(new Zend_Validate_NotEmpty, true);
+                    $field->addValidator(new Xyster_Validate_NotNull, true);
                 }
                 if ( preg_match('/^(tiny|big|small)?int(eger)?/i', $field->getType()) ) {
-                    require_once 'Zend/Validate/Int.php';
-                    $field->addValidator(new Zend_Validate_Int, true);
+                    require_once 'Xyster/Validate/Int.php';
+                    $field->addValidator(new Xyster_Validate_Int, true, $field->isNullable());
                 }
                 if ( preg_match('/^(float|real|double( precision)?)/i', $field->getType()) ) {
                     require_once 'Zend/Validate/Float.php';
-                    $field->addValidator(new Zend_Validate_Float, true);
+                    $field->addValidator(new Zend_Validate_Float, true, $field->isNullable());
                 }
             }
         }

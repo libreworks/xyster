@@ -34,7 +34,7 @@ class Xyster_Orm_Entity_Field
     protected $_identity;
     
     /**
-     * @var Zend_Validate
+     * @var Xyster_Validate
      */
     protected $_validator;
 
@@ -147,15 +147,16 @@ class Xyster_Orm_Entity_Field
      *
      * @param Zend_Validate_Interface $validator
      * @param boolean $breakChainOnFailure
+     * @param boolean $allowEmpty
      * @return Xyster_Orm_Entity_Field provides a fluent interface
      */
-    public function addValidator( Zend_Validate_Interface $validator, $breakChainOnFailure = false )
+    public function addValidator( Zend_Validate_Interface $validator, $breakChainOnFailure = false, $allowEmpty = false )
     {
         if ( !$this->_validator ) {
-            require_once 'Zend/Validate.php';
-            $this->_validator = new Zend_Validate;
+            require_once 'Xyster/Validate.php';
+            $this->_validator = new Xyster_Validate;
         }
-        $this->_validator->addValidator($validator, $breakChainOnFailure);
+        $this->_validator->addValidator($validator, $breakChainOnFailure, $allowEmpty);
         return $this;
     }
     

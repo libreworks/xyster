@@ -364,13 +364,14 @@ class Xyster_Orm_Entity_TypeTest extends Xyster_Orm_TestSetup
      */
     public function testValidate()
     {
-        require_once 'Zend/Validate/NotEmpty.php';
-        $validator = new Zend_Validate_NotEmpty;
+        require_once 'Xyster/Validate/NotNull.php';
+        $validator = new Xyster_Validate_NotNull;
         $return = $this->object->addValidator('bugDescription', $validator, true);
         $this->assertTrue($this->object->validate('bugDescription', 'This is not empty'));
-        $this->assertFalse($this->object->validate('bugDescription', ''));
+        $this->assertTrue($this->object->validate('bugDescription', ''));
+        $this->assertFalse($this->object->validate('bugDescription', null));
         $this->setExpectedException('Xyster_Orm_Entity_Exception');
-        $this->object->validate('bugDescription', '', true);
+        $this->object->validate('bugDescription', null, true);
     }
     
     /**
