@@ -85,8 +85,8 @@ class Xyster_Orm_RelationTest extends Xyster_Orm_TestSetup
             'class' => 'MockBug',
             'id' => 'reportedBy',
             'filters' => 'assignedTo like "awesome%"',
-            'onDelete' => Xyster_Orm_Relation::ACTION_CASCADE,
-            'onUpdate' => Xyster_Orm_Relation::ACTION_NONE    
+            'onDelete' => Xyster_Db_ReferentialAction::Cascade(),
+            'onUpdate' => Xyster_Db_ReferentialAction::NoAction()    
         );
 
         $meta = $this->_mockFactory()->getEntityType('MockAccount');

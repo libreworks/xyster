@@ -27,11 +27,11 @@ require_once 'Xyster/Orm/Mapper/Db.php';
 class AccountMapper extends Xyster_Orm_Mapper_Db
 {
     protected $_table = 'zfaccounts';
-    protected $_options = array('metadataCache'=>null);
+    protected $_options = array('metadataCache'=>null, 'emulateReferentialActions'=>true);
     
     public function init()
     {
-        $this->_hasMany('reported', array('class'=>'Bug','id'=>'reportedBy', 'onDelete'=>Xyster_Orm_Relation::ACTION_SET_NULL))
+        $this->_hasMany('reported', array('class'=>'Bug','id'=>'reportedBy', 'onDelete'=>Xyster_Db_ReferentialAction::SetNull()))
             ->_hasMany('assigned', array('class'=>'Bug','id'=>'assignedTo','filters'=>'( assignedTo <> null )'))
             ->_hasMany('verified', array('class'=>'Bug','id'=>'verifiedBy'));
     }

@@ -22,12 +22,7 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 class Xyster_Orm_Relation
-{
-    const ACTION_NONE = 0x000000;
-    const ACTION_CASCADE = 0x000001;
-    const ACTION_SET_NULL = 0x000002;
-    const ACTION_REMOVE = 0x000003;
-    
+{    
     /**
      * The type of relation; one of ('one','belongs','many','joined')
      *
@@ -67,15 +62,15 @@ class Xyster_Orm_Relation
     /**
      * The activity to perform on entity delete
      *
-     * @var string
+     * @var Xyster_Db_ReferentialAction
      */
-    protected $_onDelete = self::ACTION_NONE;
+    protected $_onDelete;
     /**
      * The activity to perform when a primary key is changed
      *
-     * @var string
+     * @var Xyster_Db_ReferentialAction
      */
-    protected $_onUpdate = self::ACTION_NONE;
+    protected $_onUpdate;
     /**
      * In a join relationship, this is the table linking the two entities
      *
@@ -172,8 +167,12 @@ class Xyster_Orm_Relation
 		$this->_type = $type;
 		
 		if ( $this->isCollection() ) {
-            $this->_onUpdate = ( isset($options['onUpdate']) ) ? $options['onUpdate'] : self::ACTION_NONE;
-            $this->_onDelete = ( isset($options['onDelete']) ) ? $options['onDelete'] : self::ACTION_NONE;
+            $this->_onUpdate = ( isset($options['onUpdate']) &&
+                $options['onUpdate'] instanceof Xyster_Db_ReferentialAction ) ?
+                $options['onUpdate'] : null;
+            $this->_onDelete = ( isset($options['onDelete']) &&
+                $options['onDelete'] instanceof Xyster_Db_ReferentialAction ) ?
+                $options['onDelete'] : null;
 		}
 
 		if ( $type == 'joined' ) {
@@ -266,7 +265,7 @@ class Xyster_Orm_Relation
     /**
      * Gets the action type to perform onDelete
      *
-     * @return int
+     * @return Xyster_Db_ReferentialAction or null
      */
     public function getOnDelete()
     {
@@ -276,7 +275,7 @@ class Xyster_Orm_Relation
     /**
      * Gets the action type to perform onUpdate
      *
-     * @return int
+     * @return Xyster_Db_ReferentialAction or null
      */
     public function getOnUpdate()
     {

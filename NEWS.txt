@@ -1,6 +1,11 @@
 Xyster Framework                                                             NEWS
 |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
+=BUILD 7 / ??-???-2008 / basen on revision ??? =
+- Xyster_Orm/Xyster_Validate
+    * 0000043: Bigint validation
+    * 0000044: Notempty vs. notnull validation
+
 =BUILD 6 / 19-May-2008 / based on revision 272 =
 - Moved Xyster_Filter_TitleCase to core
 - Moved Xyster_Validate classes to core

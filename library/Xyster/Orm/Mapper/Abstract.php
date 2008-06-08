@@ -34,6 +34,10 @@ require_once 'Xyster/Orm/Entity/Type.php';
  */
 require_once 'Zend/Filter.php';
 /**
+ * @see Xyster_Orm_Mapper_Integrity
+ */
+require_once 'Xyster/Orm/Mapper/Integrity.php';
+/**
  * An abstract implementation of the mapper interface
  * 
  * This class allows for a more simple implementation of the mapper interface,
@@ -105,6 +109,10 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
      * version number of the record (used to avoid concurrent changes)</dd>
      * <dt>doNotCreateValidators</dt><dd>This will cause the mapper not to
      * create validators from the constraints in the data store.</dd>
+     * <dt>emulateReferentialActions</dt><dd>This option will emulate data store
+     * referential actions (on delete or update) instead of letting the data
+     * store do them itself.  Useful when your database system doesn't support
+     * them.</dd>
      * </dl>
      *
      * @var array
@@ -156,37 +164,17 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
         $manager = $this->_factory->getManager();
         $broker = $manager->getPluginBroker();
         $broker->preDelete($entity);
-        $this->_delete($entity->getPrimaryKeyAsCriterion());
-        $broker->postDelete($entity);
         
-        $relations = $this->getEntityType()->getRelations();
-        foreach( $relations as $relation ) { /* @var $relation Xyster_Orm_Relation */
-            if ( $relation->getType() == 'many' ) {
-                $onDelete = $relation->getOnDelete();
-                $map = $this->_factory->get($relation->getTo());
-                $name = $relation->getName();
-                $reverseName = $relation->hasBelongsTo() ?
-                    $relation->getReverse()->getName() : null;
-                $related = $entity->$name; /* @var $related Xyster_Orm_Set */
-                
-                // just remove the association
-                if ( $onDelete == Xyster_Orm_Relation::ACTION_SET_NULL && $reverseName ) {
-                    foreach( $related as $relatedEntity ) {
-                        $relatedEntity->$reverseName = null;
-                        $map->save($relatedEntity);
-                    }
-                // rely on the database to cascade the delete
-                } else if ( $onDelete == Xyster_Orm_Relation::ACTION_CASCADE ) {
-                    $manager->getRepository()->removeAll($related);
-                // we have to delete every last one ourselves
-                } else if ( $onDelete == Xyster_Orm_Relation::ACTION_REMOVE ) {
-                    $manager->getRepository()->removeAll($related);
-                    foreach( $related as $relatedEntity ) {
-                        $map->delete($relatedEntity);
-                    }
-                }
-            }
+        $integrity = new Xyster_Orm_Mapper_Integrity($this->_factory);
+        $toRefreshAfter = $integrity->delete($entity, $this->getOption('emulateReferentialActions'));
+        $this->_delete($entity->getPrimaryKeyAsCriterion());
+        foreach( $toRefreshAfter as $refreshEntity ) {
+            // these are related entities which reference the primary keys and
+            // should be updated by the database
+            $this->_factory->get(get_class($refreshEntity))->refresh($refreshEntity);
         }
+        
+        $broker->postDelete($entity);
     }
 
     /**
@@ -393,7 +381,16 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
         } else {
             $updatedKey = $entity->getPrimaryKey() != $entity->getPrimaryKey(true);
             $broker->preUpdate($entity);
+            
+            $integrity = new Xyster_Orm_Mapper_Integrity($this->_factory);
+            $toRefreshAfter = $integrity->update($entity, $this->getOption('emulateReferentialActions'));
             $this->_update($entity);
+            foreach( $toRefreshAfter as $refreshEntity ) {
+                // these are related entities which reference the primary keys and
+                // should be updated by the database
+                $this->_factory->get(get_class($refreshEntity))->refresh($refreshEntity);
+            }
+
             $broker->postUpdate($entity);
         }
         
@@ -412,12 +409,10 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
 			    || $entity->isLoaded($k) ) ) {
 			        
 				$set = $entity->$k;
-				$cascadeUpdate = $updatedKey &&
-				    $relation->getOnUpdate() == Xyster_Orm_Relation::ACTION_CASCADE;
 
 				$added = $set->getDiffAdded();
 				$removed = $set->getDiffRemoved();
-				if ( !$added && !$removed && !$cascadeUpdate ) {
+				if ( !$added && !$removed ) {
 					continue;
 				}
 
@@ -429,15 +424,7 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
 				} else if ( $relation->getType() == 'many' ) {
 
     				$map = $this->_factory->get($relation->getTo());
-    				if ( $cascadeUpdate ) {
-    				    // if we should cascade changed primary keys
-    				    foreach( $set as $setEntity ) {
-    				        $map->save($setEntity);
-    				    }
-       				} else {
-    				    // no cascade, just save newly added to set
-    				    array_walk($added, array($map, 'save'));
-    				}
+  				    array_walk($added, array($map, 'save'));
     				array_walk($removed, array($map, 'delete'));
     				
 				}
@@ -724,5 +711,34 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
     {
         $this->getEntityType()->hasOne($name, $options);
         return $this;
+    }
+    
+    /**
+     * Refreshes the supplied entities
+     *
+     * @param array $entities
+     */
+    final protected function _refresh( array $entities )
+    {
+        foreach( $entities as $entity ) {
+            $this->_factory->get(get_class($entity))->refresh($entity);
+        }
+    }
+
+    /**
+     * Checks dependencies 
+     *
+     * @param Xyster_Db_ReferentialAction $action
+     * @param Xyster_Orm_Set $related
+     * @throws Xyster_Orm_Mapper_Exception
+     */
+    final protected function _referentialIntegrityCheckDepends( Xyster_Db_ReferentialAction $action, Xyster_Orm_Set $related )
+    {
+        // stop deletes if entity is referenced
+        if ( ( $action === Xyster_Db_ReferentialAction::Restrict() ||
+            $action === Xyster_Db_ReferentialAction::NoAction() ) && count($related) ) {
+            require_once 'Xyster/Orm/Mapper/Exception.php';
+            throw new Xyster_Orm_Mapper_Exception('Cannot delete entity because others depend on it');
+        }
     }
 }

@@ -90,7 +90,7 @@ class Xyster_Orm_TestSetup extends PHPUnit_Framework_TestCase
      * Sets up the test
      *
      */
-    public function setUp()
+    protected function setUp()
     {
         $this->_mockFactory();
     }

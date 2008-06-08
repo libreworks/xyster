@@ -37,8 +37,9 @@ require_once 'Xyster/Orm/WorkUnitTest.php';
 require_once 'Xyster/Orm/RepositoryTest.php';
 require_once 'Xyster/Orm/RelationTest.php';
 require_once 'Xyster/Orm/ManagerTest.php';
-require_once 'Xyster/Orm/Mapper/FactoryTest.php';
 require_once 'Xyster/Orm/Mapper/AbstractTest.php';
+require_once 'Xyster/Orm/Mapper/FactoryTest.php';
+require_once 'Xyster/Orm/Mapper/IntegrityTest.php';
 require_once 'Xyster/Orm/QueryTest.php';
 require_once 'Xyster/Orm/QueryReportTest.php';
 require_once 'Xyster/Orm/Query/ParserTest.php';
@@ -80,8 +81,9 @@ class Xyster_Orm_AllTests
         $suite->addTestSuite('Xyster_Orm_RepositoryTest');
         $suite->addTestSuite('Xyster_Orm_RelationTest');
         $suite->addTestSuite('Xyster_Orm_ManagerTest');
-        $suite->addTestSuite('Xyster_Orm_Mapper_FactoryTest');
         $suite->addTestSuite('Xyster_Orm_Mapper_AbstractTest');
+        $suite->addTestSuite('Xyster_Orm_Mapper_FactoryTest');
+        $suite->addTestSuite('Xyster_Orm_Mapper_IntegrityTest');
         
         $suite->addTestSuite('Xyster_Orm_Query_ParserTest');
         $suite->addTestSuite('Xyster_Orm_QueryTest');
