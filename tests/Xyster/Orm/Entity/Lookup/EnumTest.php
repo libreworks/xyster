@@ -54,6 +54,17 @@ class Xyster_Orm_Entity_Lookup_EnumTest extends Xyster_Orm_TestSetup
     }
 
     /**
+     * Tests constructing a lookup with an existing field
+     */
+    public function testDoubleConstruct()
+    {
+        $mf = $this->_mockFactory();
+        $this->setExpectedException('Xyster_Orm_Entity_Exception', 'Field name already exists: reportedBy');
+        $object = new Xyster_Orm_Entity_Lookup_Enum($mf->getEntityType('MockBug'),
+            new Xyster_Type('Xyster_Data_Aggregate'), 'bugDescription', true, 'reportedBy');
+    }
+    
+    /**
      * Tests the 'getType' method
      */
     public function testGetType()
@@ -79,6 +90,15 @@ class Xyster_Orm_Entity_Lookup_EnumTest extends Xyster_Orm_TestSetup
     }
 
     /**
+     * Tests the 'get' method with an invalid parameter
+     */
+    public function testGetInvalid()
+    {
+        $this->setExpectedException('Xyster_Orm_Entity_Exception', 'You must provide a Class MockBug object');
+        $this->object->get($this->_mockFactory()->get('MockAccount')->get('doublecompile'));
+    }
+    
+    /**
      * Tests the 'set' method
      */
     public function testSet()
@@ -90,6 +110,16 @@ class Xyster_Orm_Entity_Lookup_EnumTest extends Xyster_Orm_TestSetup
         
         $this->object->set($entity, null);
         $this->assertNull($entity->bugDescription);
+    }
+    
+    /**
+     * Tests the 'set' method with an invalid type
+     */
+    public function testSetInvalid()
+    {
+        $entity = $this->_getMockEntity();
+        $this->setExpectedException('Xyster_Orm_Entity_Exception', 'You must provide a Class Xyster_Data_Aggregate object');
+        $this->object->set($entity, 'aoeu1234');
     }
     
     /**
