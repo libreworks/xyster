@@ -51,25 +51,112 @@ class Xyster_Orm_Mapper_IntegrityTest extends Xyster_Orm_TestSetup
     }
 
     /**
-     * @todo Implement testDelete().
+     * Tests the 'delete' method
      */
     public function testDelete()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $map = $this->_mockFactory()->get('MockAccount');
+        $map->getEntityType()->hasMany('verifiedAgain', array('class'=>'MockBug','id'=>'verifiedBy'));
+        $entity = $map->get('doublecompile');
+        $bmap = $this->_mockFactory()->get('MockBug');
+        $bug1 = $bmap->get(1);
+        $bug2 = $bmap->get(2);
+        $bug3 = $bmap->get(3);
+        $entity->reported->add($bug1);
+        $entity->assigned->add($bug2);
+        $entity->verified->add($bug3);
+        $return = $this->object->delete($entity);
+        $this->assertType('array', $return);
+        $this->assertTrue(in_array($bug1, $return, true));
+        $this->assertFalse(in_array($bug2, $return, true));
+        $this->assertTrue(in_array($bug3, $return, true));
     }
 
     /**
-     * @todo Implement testUpdate().
+     * Tests the 'delete' method with a NoAction action
+     */
+    public function testDeleteRestrict()
+    {
+        $map = $this->_mockFactory()->get('MockAccount');
+        $map->getEntityType()->hasMany('verifiedAgain', array('class'=>'MockBug','id'=>'verifiedBy','onUpdate'=>Xyster_Db_ReferentialAction::NoAction(), 'onDelete'=>Xyster_Db_ReferentialAction::NoAction()));
+        $entity = $map->get('doublecompile');
+        $bmap = $this->_mockFactory()->get('MockBug');
+        $bug1 = $bmap->get(1);
+        $entity->verifiedAgain->add($bug1);
+        $this->setExpectedException('Xyster_Orm_Mapper_Exception', 'Cannot delete entity because others depend on it');
+        $return = $this->object->delete($entity);
+    }
+    
+    /**
+     * Tests the 'delete' method with database integrity emulated
+     */
+    public function testDeleteEmulated()
+    {
+        $map = $this->_mockFactory()->get('MockAccount');
+        $entity = $map->get('doublecompile');
+        $bmap = $this->_mockFactory()->get('MockBug');
+        $bug1 = $bmap->get(1);
+        $bug2 = $bmap->get(2);
+        $bug3 = $bmap->get(3);
+        $entity->reported->add($bug1);
+        $entity->assigned->add($bug2);
+        $entity->verified->add($bug3);
+        $return = $this->object->delete($entity, true);
+        $this->assertType('array', $return);
+        $this->assertFalse(in_array($bug1, $return, true));
+        $this->assertFalse(in_array($bug2, $return, true));
+        $this->assertFalse(in_array($bug3, $return, true));
+        $this->assertNull($bug1->reportedBy);
+        $this->assertTrue($bmap->wasDeleted($bug2));
+        $this->assertNull($bug3->verifiedBy);
+    }
+
+    /**
+     * Tests the 'update' method
      */
     public function testUpdate()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $map = $this->_mockFactory()->get('MockAccount');
+        $map->getEntityType()->hasMany('verifiedAgain', array('class'=>'MockBug','id'=>'verifiedBy'));
+        $entity = $map->get('doublecompile');
+        $bmap = $this->_mockFactory()->get('MockBug');
+        $bug1 = $bmap->get(1);
+        $bug2 = $bmap->get(2);
+        $bug3 = $bmap->get(3);
+        $entity->reported->add($bug1);
+        $entity->assigned->add($bug2);
+        $entity->verified->add($bug3);
+        $entity->accountName = 'doublecompile2';
+        $return = $this->object->update($entity);
+        $this->assertType('array', $return);
+        $this->assertTrue(in_array($bug1, $return, true));
+        $this->assertTrue(in_array($bug2, $return, true));
+        $this->assertTrue(in_array($bug3, $return, true));
+    }
+    
+    /**
+     * Tests the 'update' method with database integrity emulated
+     */
+    public function testUpdateEmulated()
+    {
+        $map = $this->_mockFactory()->get('MockAccount');
+        $entity = $map->get('doublecompile');
+        $bmap = $this->_mockFactory()->get('MockBug');
+        $bug1 = $bmap->get(1);
+        $bug2 = $bmap->get(2);
+        $bug3 = $bmap->get(3);
+        $entity->reported->add($bug1);
+        $entity->assigned->add($bug2);
+        $entity->verified->add($bug3);
+        $entity->accountName = 'doublecompile2';
+        $return = $this->object->update($entity, true);
+        $this->assertType('array', $return);
+        $this->assertFalse(in_array($bug1, $return, true));
+        $this->assertFalse(in_array($bug2, $return, true));
+        $this->assertFalse(in_array($bug3, $return, true));
+        $this->assertNull($bug1->reportedBy);
+        $this->assertEquals('doublecompile2', $bug2->assignedTo);
+        $this->assertNull($bug3->verifiedBy);
     }
 }
 

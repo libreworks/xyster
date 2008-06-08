@@ -172,23 +172,36 @@ foreach( $people as $person ) {
         }
 }]]></programlisting>
 
-		<sect3 id="xyster.orm.relation.many.cascade">
-			<title>Cascading</title>
+		<sect3 id="xyster.orm.relation.many.refconst">
+			<title>Referential Constraints</title>
 
 			<para>When an entity is deleted or has its primary key changed, other entities that depend on it could be orphaned if necessary
-				constraints aren't defined in the 
-				data store.  If the backend doesn't have the capability to manage these kind of constraints, a one-to-many relationship can 
-				have options set to enforce them. There are two options available to a one-to-many relationship for this purpose.</para>
+				constraints aren't defined in the data store.</para>
+				
+	        <para>If the backend doesn't have the capability to manage referential constraints,
+	            you must set the <structfield>emulateReferentialActions</structfield> option to true on the 
+	            mapper class.  Doing this will cause the mapper to perform the referential constraints.</para> 
+	            
+	        <para>There are two options available to a one-to-many relationship for the purpose of referential integrity.
+	            These are optional; you don't have to set them at all.</para>
 
-			<para>The <structfield>onDelete</structfield> option supports three values
-				available as constants on the Xyster_Orm_Relation class.  <constant>ACTION_SET_NULL</constant> will set the foreign key to null on all entities
-				in the associated set.  <constant>ACTION_CASCADE</constant> will let the backend take care of the cascade and just removes the related entities
-				from the session.  <constant>ACTION_REMOVE</constant> will delete every related entity in the set one at a time.  ACTION_NONE does nothing; if
-				the backend has constraints they are still enforced.</para>
+			<para>The <structfield>onDelete</structfield> option should be any value on the <classname>Xyster_Db_ReferentialAction</classname> class.
+			    If the <structfield>emulateReferentialActions</structfield> option is disabled, the mapper will create a list of those related entities
+			    that should be refreshed after the delete occurs.  If the option is enabled, the mapper will perform the following tasks itself. 
+			    <constant>SetNull</constant> will set the foreign key to null on all entities
+				in the associated set.  <constant>Cascade</constant> will delete every related entity in the set one at a time.
+				<constant>SetDefault</constant> will set the default field values on all related entities in the associated set.
+				<constant>Restrict</constant> and <constant>NoAction</constant> will throw an exception if there are any related entities
+				in the set.</para>
 
-			<para>The 'onUpdate' option only supports one option in addition to <constant>ACTION_NONE</constant>.
-				<constant>ACTION_CASCADE</constant> will set the foreign key in each
-				entity in the set.  Regardless of the setting, any constraints the backend has defined are enforced.</para>
+			<para>The <structfield>onUpdate</structfield> option should be any value on the <classname>Xyster_Db_ReferentialAction</classname> class.
+				If the <structfield>emulateReferentialActions</structfield> option is disabled, the mapper will create a list of those related entities
+                that should be refreshed after the update occurs.  If the option is enabled, the mapper will perform the following tasks itself.
+                <constant>SetNull</constant> will set the foreign key to null on all entities in the associated set.
+                <constant>Cascade</constant> will update the foreign key with the new value in the set one at a time.
+                <constant>SetDefault</constant> will set the default field values on all related entities in the associated set.
+                <constant>Restrict</constant> and <constant>NoAction</constant> will throw an exception if there are any related entities
+                in the set.</para>
 		</sect3>
             </sect2>
 

@@ -130,6 +130,11 @@ abstract class Xyster_Orm_Mapper_Mock extends Xyster_Orm_Mapper_Abstract
         $this->_saved[] = $entity;
     }
     
+    public function setOption( $name, $value )
+    {
+        $this->_options[$name] = $value;
+    }
+    
     public function wasDeleted( Xyster_Orm_Entity $entity )
     {
         return in_array($entity->getPrimaryKeyAsCriterion(), $this->_deleted);

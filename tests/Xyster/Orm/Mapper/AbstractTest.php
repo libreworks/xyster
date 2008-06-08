@@ -111,10 +111,11 @@ class Xyster_Orm_Mapper_AbstractTest extends PHPUnit_Framework_TestCase
     public function testDeleteCascade()
     {
         $map = $this->_mockFactory()->get('MockAccount');
+        $map->setOption('emulateReferentialActions', true);
         $bmap = $this->_mockFactory()->get('MockBug');
         
         $account = $map->get('doublecompile');
-        $bug = $bmap->get(10);
+        $bug = $bmap->get(13);
         
         $map->delete($account);
         $this->assertTrue($map->wasDeleted($account));

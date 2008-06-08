@@ -213,6 +213,7 @@ class Xyster_Orm_Mapper_Integrity
                 foreach( $fkeyNames as $fkeyName ) {
                     $localDefaults[$fkeyName] = $type->getField($fkeyName)->getDefault();
                 }
+                $this->_defaults[$key] = $localDefaults;
             }
             $defaults = $this->_defaults[$key];
         }

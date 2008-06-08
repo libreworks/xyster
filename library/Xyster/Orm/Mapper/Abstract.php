@@ -168,11 +168,7 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
         $integrity = new Xyster_Orm_Mapper_Integrity($this->_factory);
         $toRefreshAfter = $integrity->delete($entity, $this->getOption('emulateReferentialActions'));
         $this->_delete($entity->getPrimaryKeyAsCriterion());
-        foreach( $toRefreshAfter as $refreshEntity ) {
-            // these are related entities which reference the primary keys and
-            // should be updated by the database
-            $this->_factory->get(get_class($refreshEntity))->refresh($refreshEntity);
-        }
+        $this->_refresh($toRefreshAfter);
         
         $broker->postDelete($entity);
     }
@@ -385,11 +381,7 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
             $integrity = new Xyster_Orm_Mapper_Integrity($this->_factory);
             $toRefreshAfter = $integrity->update($entity, $this->getOption('emulateReferentialActions'));
             $this->_update($entity);
-            foreach( $toRefreshAfter as $refreshEntity ) {
-                // these are related entities which reference the primary keys and
-                // should be updated by the database
-                $this->_factory->get(get_class($refreshEntity))->refresh($refreshEntity);
-            }
+            $this->_refresh($toRefreshAfter);
 
             $broker->postUpdate($entity);
         }
@@ -722,23 +714,6 @@ abstract class Xyster_Orm_Mapper_Abstract implements Xyster_Orm_Mapper_Interface
     {
         foreach( $entities as $entity ) {
             $this->_factory->get(get_class($entity))->refresh($entity);
-        }
-    }
-
-    /**
-     * Checks dependencies 
-     *
-     * @param Xyster_Db_ReferentialAction $action
-     * @param Xyster_Orm_Set $related
-     * @throws Xyster_Orm_Mapper_Exception
-     */
-    final protected function _referentialIntegrityCheckDepends( Xyster_Db_ReferentialAction $action, Xyster_Orm_Set $related )
-    {
-        // stop deletes if entity is referenced
-        if ( ( $action === Xyster_Db_ReferentialAction::Restrict() ||
-            $action === Xyster_Db_ReferentialAction::NoAction() ) && count($related) ) {
-            require_once 'Xyster/Orm/Mapper/Exception.php';
-            throw new Xyster_Orm_Mapper_Exception('Cannot delete entity because others depend on it');
         }
     }
 }
