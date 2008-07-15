@@ -49,18 +49,6 @@ class Xyster_Data_Field_Aggregate extends Xyster_Data_Field
         parent::__construct($name, $alias);
         $this->_function = $function;
     }
-
-    /**
-     * Evaluates the reference for the given object
-     *
-     * @param mixed $object
-     * @return mixed
-     */
-    public function evaluate( $object )
-    {
-        return ( $object instanceof Xyster_Data_Set ) ?
-            $object->aggregate($this) : parent::evaluate($object);
-    }
     
     /**
      * Gets the aggregate function associated with this field

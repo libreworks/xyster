@@ -11,11 +11,16 @@
  * @package   Xyster_Data
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @version   $Id$
  */
 /**
- * Xyster_Data_Set
+ * @see Xyster_Data_Set
  */
 require_once 'Xyster/Data/Set.php';
+/**
+ * @see Xyster_Data_Field_Getter
+ */
+require_once 'Xyster/Data/Field/Getter.php';
 /**
  * A set that holds rows and columns
  *
@@ -120,7 +125,7 @@ class Xyster_Data_Tuple extends Xyster_Data_Set
 			$groupValues = array();
 			$groupHash = '';
 			foreach( $groups as $group ) {
-				$value = $group->evaluate($v);
+				$value = Xyster_Data_Field_Getter::get($v, $group);
 				$groupValues[$group->getAlias()] = $value;
 				$groupHash .= "['".$value."']";
 			}

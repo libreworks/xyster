@@ -129,13 +129,14 @@ class Xyster_Orm_Query_Report extends Xyster_Orm_Query
                 $tuple = new Xyster_Data_Tuple(array(), $collection);
                 $rs->add($tuple->toRow($this->_parts[self::FIELDS]));
             } else {
+                require_once 'Xyster/Data/Field/Getter.php';
                 // add the values to the set (enforcing limit & offset)
                 foreach( $collection as $offset=>$entity ) {
                     if ( $offset >= $this->_parts[Xyster_Orm_Query::OFFSET] ) {
                         $values = array();
                         foreach( $this->_parts[self::FIELDS] as $field ) {
                         	/* @var $field Xyster_Data_Field */
-                            $values[$field->getAlias()] = $field->evaluate($entity);
+                            $values[$field->getAlias()] = Xyster_Data_Field_Getter::get($entity, $field);
                         }
                         $rs->add( $values );
                         if ( $this->_parts[Xyster_Orm_Query::LIMIT] > 0 &&

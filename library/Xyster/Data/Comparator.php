@@ -18,6 +18,10 @@
  */
 require_once 'Xyster/Collection/Comparator/Interface.php';
 /**
+ * @see Xyster_Data_Field_Getter
+ */
+require_once 'Xyster/Data/Field/Getter.php';
+/**
  * Comparator for objects or associative arrays
  *
  * @category  Xyster
@@ -59,8 +63,9 @@ class Xyster_Data_Comparator implements Xyster_Collection_Comparator_Interface
 	public function compare( $a, $b )
 	{
 		foreach( $this->_sorts as $sort ) {
-			$av = $sort->getField()->evaluate($a);
-			$bv = $sort->getField()->evaluate($b);
+		    $getter = new Xyster_Data_Field_Getter($sort->getField());
+		    $av = $getter->evaluate($a);
+			$bv = $getter->evaluate($b);
 			if ( $av < $bv ) { 
 				return ( $sort->getDirection() == 'ASC' ) ? -1 : 1;
 			} else if ( $av > $bv ) {

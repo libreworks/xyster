@@ -40,7 +40,9 @@ class Xyster_Db_DataType extends Xyster_Enum
     const Boolean   = 10;
     const Identity  = 11;
     const Bigint    = 12;
-
+    const Real      = 13;
+    const Decimal   = 14;
+    
     /**
      * The Varchar data type
      *
@@ -168,6 +170,26 @@ class Xyster_Db_DataType extends Xyster_Enum
      * @return Xyster_Db_DataType
      */
     static public function Bigint()
+    {
+       return Xyster_Enum::_factory();
+    }
+
+    /**
+     * The real data type
+     *
+     * @return Xyster_Db_DataType
+     */
+    static public function Real()
+    {
+       return Xyster_Enum::_factory();
+    }
+
+    /**
+     * The decimal data type
+     *
+     * @return Xyster_Db_DataType
+     */
+    static public function Decimal()
     {
        return Xyster_Enum::_factory();
     }

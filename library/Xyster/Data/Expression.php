@@ -22,6 +22,10 @@ require_once 'Xyster/Data/Criterion.php';
  */
 require_once 'Xyster/Data/Operator/Expression.php';
 /**
+ * @see Xyster_Data_Field_Getter
+ */
+require_once 'Xyster/Data/Field/Getter.php';
+/**
  * An expression is a boolean evaluation comparing a column against a value
  *
  * @category  Xyster
@@ -169,9 +173,10 @@ class Xyster_Data_Expression extends Xyster_Data_Criterion
      */
     public function evaluate( $object )
     {
-        $a = $this->_left->evaluate($object);
+        $a = Xyster_Data_Field_Getter::get($object, $this->_left);
         $b = ( $this->_right instanceof Xyster_Data_Field ) ?
-            $this->_right->evaluate($object) : $this->_right;
+            Xyster_Data_Field_Getter::get($object, $this->_right) :
+            $this->_right;
         return $this->_operator->evaluate($a, $b);
     }
 

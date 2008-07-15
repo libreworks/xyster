@@ -46,17 +46,7 @@ class Xyster_Data_FieldAggregateTest extends PHPUnit_Framework_TestCase
     {
         $this->_commonField = Xyster_Data_Field::count('userid', 'users');
     }
-    public function testEvaluate()
-    {
-        $this->assertEquals('Smith', $this->_commonField->evaluate(array('userid'=>'Smith')));
-        
-        $set = new Xyster_Data_Set();
-        $set->add(array('userid'=>'Smith'));
-        $set->add(array('userid'=>'Jones'));
-        $set->add(array('userid'=>'Brown'));
-        // test Field_Aggregate passes evaluation to the Data_Set
-        $this->assertEquals(3, $this->_commonField->evaluate($set));
-    }
+    
     public function testToString()
     {
         $this->assertEquals($this->_commonField->getFunction()->getValue() . '(' . 

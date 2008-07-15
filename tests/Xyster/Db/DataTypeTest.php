@@ -157,6 +157,24 @@ class Xyster_Db_DataTypeTest extends PHPUnit_Framework_TestCase
         $enum = Xyster_Db_DataType::Bigint();
         $this->_runTests($enum, 'Bigint', 12);
     }
+
+    /**
+     * Tests a method
+     */
+    public function testDecimal()
+    {
+        $enum = Xyster_Db_DataType::Decimal();
+        $this->_runTests($enum, 'Decimal', 14);
+    }
+
+    /**
+     * Tests a method
+     */
+    public function testReal()
+    {
+        $enum = Xyster_Db_DataType::Real();
+        $this->_runTests($enum, 'Real', 13);
+    }
     
     /**
      * Runs the unit tests on an enum

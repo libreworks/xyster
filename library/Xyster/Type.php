@@ -276,10 +276,24 @@ class Xyster_Type
     {
         $hash = 0;
         
-        if ( is_object($value) ) {
-            $hash = self::_objHash($value);
-        } else if ( is_string($value) ) {
-            $hash = self::_strHash($value);
+        if ( is_string($value) ) {
+            
+            $max = (float)PHP_INT_MAX;
+            $min = (float)(~PHP_INT_MAX + 1);
+            $h = 0.0;
+            // mmm... modular arithmetic...
+            for( $i=0; $i<strlen($value); $i++ ) {
+                $result = 31 * $h + ord($value[$i]);
+                if ( $result > $max ) {
+                    $h = $result >> 32;
+                } else if ( $result < $min ) {
+                    $h = ~(($result-$result*2) >> 32)+1;
+                } else {
+                    $h = $result;
+                }
+            }
+            $hash = (int)$h;
+            
         } else if ( is_bool($value) ) {
             $hash = $value ? 1231 : 1237;
         } else if ( is_float($value) ) {
@@ -287,16 +301,26 @@ class Xyster_Type
             $hash = $res[1];
         } else if ( is_int($value) ) {
             $hash = $value;
-        } else if ( is_array($value) ) {
+        } else if ( is_object($value) || is_array($value) ) {
+            
+            if ( is_object($value) ) {
+                if ( method_exists($value, 'hashCode') ) {
+                    return (int)$value->hashCode();
+                }
+                
+                $hex = str_split(spl_object_hash($value), 2);
+                $value = array_map('hexdec', $hex);
+            }
+            
             $max = (float)PHP_INT_MAX;
-            $min = (float)(0 - PHP_INT_MAX);
+            $min = (float)(~PHP_INT_MAX + 1);
             $h = 0.0;
             foreach( $value as $v ) {
                 $result = 31 * $h + self::hash($v);
                 if ( $result > $max ) {
-                    $h = $result % $max;
+                    $h = $result >> 32;
                 } else if ( $result < $min ) {
-                    $h = 0-(abs($result) % $max);
+                    $h = ~(($result-$result*2) >> 32)+1;
                 } else {
                     $h = $result;
                 }
@@ -383,47 +407,5 @@ class Xyster_Type
             self::$_classes[$name] = new ReflectionClass($name); 
         }
         return self::$_classes[$name];
-    }
-    
-    /**
-     * Gets the hash code for an object
-     *
-     * @param object $object
-     * @return int
-     */
-    private static function _objHash( $object )
-    {
-        if ( method_exists($object, 'hashCode') ) {
-            return (int)$object->hashCode();
-        }
-        
-        $hex = str_split(spl_object_hash($object), 2);
-        
-        return self::hash(array_map('hexdec', $hex));
-    }
-    
-    /**
-     * Gets the hash code for a string
-     *
-     * @param string $string
-     * @return int
-     */
-    private static function _strHash( $string )
-    {
-        $max = (float)PHP_INT_MAX;
-        $min = (float)(0 - PHP_INT_MAX);
-        $h = 0.0;
-        // mmm... modular arithmetic...
-        for( $i=0; $i<strlen($string); $i++ ) {
-            $result = 31 * $h + ord($string[$i]);
-            if ( $result > $max ) {
-                $h = $result % $max;
-            } else if ( $result < $min ) {
-                $h = 0-(abs($result) % $max);
-            } else {
-                $h = $result;
-            }
-        }
-        return (int)$h;
     }
 }

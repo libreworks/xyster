@@ -21,6 +21,10 @@ require_once 'Xyster/Collection/Set/Sortable.php';
  */
 require_once 'Xyster/Collection/Set.php';
 /**
+ * @see Xyster_Data_Field_Getter
+ */
+require_once 'Xyster/Data/Field/Getter.php';
+/**
  * A set that holds rows and columns
  *
  * @category  Xyster
@@ -132,12 +136,10 @@ class Xyster_Data_Set extends Xyster_Collection_Set_Sortable
      */
     public function fetchColumn( $field )
     {
-        if (! $field instanceof Xyster_Data_Field ) {
-            $field = Xyster_Data_Field::named($field);
-        }
+        $getter = new Xyster_Data_Field_Getter($field);
         $values = array();
         foreach( $this->_items as $v ) {
-            $values[] = $field->evaluate($v);
+            $values[] = $getter->evaluate($v);
         }
         return $values;
     }
@@ -163,13 +165,11 @@ class Xyster_Data_Set extends Xyster_Collection_Set_Sortable
      */
     public function fetchPairs( $key, $value )
     {
-        $field1 = (! $key instanceof Xyster_Data_Field) ?
-            Xyster_Data_Field::named($key) : $key;
-        $field2 = (! $value instanceof Xyster_Data_Field) ? 
-            Xyster_Data_Field::named($value) : $value;
+        $getter1 = new Xyster_Data_Field_Getter($key);
+        $getter2 = new Xyster_Data_Field_Getter($value);
         $pairs = array();
         foreach( $this->_items as $v ) {
-            $pairs[ $field1->evaluate($v) ] = $field2->evaluate($v);
+            $pairs[ $getter1->evaluate($v) ] = $getter2->evaluate($v);
         }
         return $pairs;
     }

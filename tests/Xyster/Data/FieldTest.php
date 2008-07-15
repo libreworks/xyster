@@ -166,49 +166,6 @@ class Xyster_Data_FieldTest extends PHPUnit_Framework_TestCase
     }
     
     /**
-     * Tests the 'evaluate' method
-     *
-     */
-    public function testEvaluate()
-    {
-        $field = Xyster_Data_Field::named('lastname', 'sn');
-
-        // array
-        $this->assertEquals('Smith', $field->evaluate(array('lastname'=>'Smith')));
-	    // arrayaccess
-	    $this->assertEquals('Smith', $field->evaluate(new ArrayObject(array('lastname'=>'Smith'))));
-
-	    $obj = new Xyster_Data_FieldTestObject;
-	    $obj->lastname = 'Smith';
-	    // object
-	    $this->assertEquals('Smith', $field->evaluate($obj));
-	    // object method call
-	    $field2 = Xyster_Data_Field::named('getLastname()', 'sn');
-	    $this->assertEquals($obj->getLastname(), $field2->evaluate($obj));
-    }
-    
-    /**
-     * Tests the 'evaluate' method with a bad name
-     *
-     */
-    public function testEvaluateBadName()
-    {
-        $this->setExpectedException('Xyster_Data_Exception');
-        $field = Xyster_Data_Field::named('lastname', 'sn');
-        $field->evaluate(array('firstname'=>'Bob'));
-    }
-    
-    /**
-     * Tests the evaluate method with a bad param
-     *
-     */
-    public function testEvaluateBadParam()
-    {
-        $this->setExpectedException('Xyster_Data_Exception');
-        $this->_commonField->evaluate(1234);
-    }
-    
-    /**
      * Tests the 'asc' method
      *
      */    

@@ -97,35 +97,6 @@ class Xyster_Data_Field implements Xyster_Data_Symbol
     }
     
     /**
-     * Evaluates the reference for the given object
-     *
-     * @param mixed $object
-     * @return mixed
-     */
-    public function evaluate( $object )
-    {
-        $value = null;
-        if ( is_array($object) || $object instanceof ArrayAccess ) {
-            if ( !isset($object[$this->_name]) && !array_key_exists($this->_name, $object) ) {
-                require_once 'Xyster/Data/Field/Exception.php';
-                throw new Xyster_Data_Field_Exception("Field name '{$this->_name}' is invalid");
-            }
-            $value = $object[$this->_name];
-        } else if ( is_object($object) && preg_match('/^[a-z_]\w*$/i', $this->_name) ) {
-            // name of a real property or one caught by __get()
-            $value = $object->{$this->_name};
-        } else if ( is_object($object) ) {
-            // this is eval'ed becuse $this->_name might be a method call 
-            // maybe sometime in the future we can do this better...
-            eval("\$value = \$object->{$this->_name};");
-        } else {
-            require_once 'Xyster/Data/Field/Exception.php';
-            throw new Xyster_Data_Field_Exception("Only objects or arrays can be evaluated");
-        }
-        return $value;
-    }
-    
-    /**
      * String representation of this object
      * 
      * @magic
