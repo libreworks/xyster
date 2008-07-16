@@ -11,11 +11,12 @@
  * @package   Xyster_Collection
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @version   $Id$
  */
 /**
- * Xyster_Collection_Set_Abstract
+ * @see Xyster_Collection_Set
  */
-require_once 'Xyster/Collection/Set/Abstract.php';
+require_once 'Xyster/Collection/Set.php';
 /**
  * No-duplicate collection whose elements can be reordered
  *
@@ -24,20 +25,8 @@ require_once 'Xyster/Collection/Set/Abstract.php';
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Collection_Set_Sortable extends Xyster_Collection_Set_Abstract
+class Xyster_Collection_Set_Sortable extends Xyster_Collection_Set
 {
-	/**
-	 * Creates a new set
-	 *
-	 * @param Xyster_Collection_Interface $set The values to add to this set
-	 */
-	public function __construct( Xyster_Collection_Interface $set = null )
-	{
-	    if ( $set ) {
-		    $this->merge($set);
-	    }
-	}
-
 	/**
 	 * Sorts the collection according to the values in the elements
 	 *

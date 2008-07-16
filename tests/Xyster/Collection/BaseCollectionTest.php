@@ -14,17 +14,11 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
+require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+require_once 'Xyster/Collection.php';
 
 /**
- * PHPUnit test case
- */
-require_once 'PHPUnit/Framework/TestCase.php';
-/**
- * Xyster_Collection
- */
-require_once 'Xyster/Collection.php';
-/**
- * Test for Xyster_Collection
+ * Common tests for Xyster_Collection
  *
  */
 class Xyster_Collection_BaseCollectionTest extends PHPUnit_Framework_TestCase
@@ -188,6 +182,7 @@ class Xyster_Collection_BaseCollectionTest extends PHPUnit_Framework_TestCase
         return $c;
     }
 }
+
 /**
  * A simple test class for collection items
  *

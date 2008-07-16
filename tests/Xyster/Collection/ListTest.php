@@ -14,15 +14,13 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
-
-/**
- * PHPUnit test case
- */
-require_once 'Xyster/Collection/BaseCollectionTest.php';
-/**
- * Xyster_Collection_List
- */
+// Call Xyster_Collection_ListTest::main() if this source file is executed directly.
+if (!defined('PHPUnit_MAIN_METHOD')) {
+    define('PHPUnit_MAIN_METHOD', 'Xyster_Collection_ListTest::main');
+}
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'BaseCollectionTest.php';
 require_once 'Xyster/Collection/List.php';
+
 /**
  * Test for Xyster_Collection
  *
@@ -31,6 +29,16 @@ class Xyster_Collection_ListTest extends Xyster_Collection_BaseCollectionTest
 {
     protected $_className = 'Xyster_Collection_List';
 
+    /**
+     * Runs the test methods of this class.
+     */
+    public static function main()
+    {
+        require_once 'PHPUnit/TextUI/TestRunner.php';
+        $suite  = new PHPUnit_Framework_TestSuite('Xyster_Collection_ListTest');
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
+    
     /**
      * Tests the 'get' method
      *
@@ -145,4 +153,9 @@ class Xyster_Collection_ListTest extends Xyster_Collection_BaseCollectionTest
         $this->assertEquals($post, $pre - 2);
         $list->slice(-2, -1);
     }
+}
+
+// Call Xyster_Collection_ListTest::main() if this source file is executed directly.
+if (PHPUnit_MAIN_METHOD == 'Xyster_Collection_ListTest::main') {
+    Xyster_Collection_ListTest::main();
 }

@@ -14,33 +14,32 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
-
-/**
- * PHPUnit test case
- */
+// Call Xyster_Collection_CollectionTest::main() if this source file is executed directly.
+if (!defined('PHPUnit_MAIN_METHOD')) {
+    define('PHPUnit_MAIN_METHOD', 'Xyster_Collection_CollectionTest::main');
+}
 require_once dirname(__FILE__) . '/BaseCollectionTest.php';
-/**
- * Xyster_Collection
- */
 require_once 'Xyster/Collection.php';
-/**
- * Xyster_Collection_Map
- */
 require_once 'Xyster/Collection/Map.php';
-/**
- * Xyster_Collection_List
- */
 require_once 'Xyster/Collection/List.php';
-/**
- * Xyster_Collection_Set
- */
 require_once 'Xyster/Collection/Set.php';
+
 /**
  * Test for Xyster_Collection
  *
  */
 class Xyster_Collection_CollectionTest extends Xyster_Collection_BaseCollectionTest
 {
+    /**
+     * Runs the test methods of this class.
+     */
+    public static function main()
+    {
+        require_once 'PHPUnit/TextUI/TestRunner.php';
+        $suite  = new PHPUnit_Framework_TestSuite('Xyster_Collection_CollectionTest');
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
+    
     /**
      * Tests the empty list method
      */
@@ -109,4 +108,9 @@ class Xyster_Collection_CollectionTest extends Xyster_Collection_BaseCollectionT
         $c = Xyster_Collection::using(array(1, 2, 3, 4, 5));
         $this->assertEquals('[1,2,3,4,5]', (string)$c);
     }
+}
+
+// Call Xyster_Collection_CollectionTest::main() if this source file is executed directly.
+if (PHPUnit_MAIN_METHOD == 'Xyster_Collection_CollectionTest::main') {
+    Xyster_Collection_CollectionTest::main();
 }

@@ -30,7 +30,7 @@ require_once 'Xyster/Collection/CollectionTest.php';
 require_once 'Xyster/Collection/DelegateTest.php';
 require_once 'Xyster/Collection/FixedTest.php';
 require_once 'Xyster/Collection/SetTest.php';
-require_once 'Xyster/Collection/SortableSetTest.php';
+require_once 'Xyster/Collection/Set/SortableTest.php';
 require_once 'Xyster/Collection/ListTest.php';
 require_once 'Xyster/Collection/List/EmptyTest.php';
 require_once 'Xyster/Collection/List/FixedTest.php';
@@ -56,7 +56,7 @@ class Xyster_Collection_AllTests
         $suite->addTestSuite('Xyster_Collection_DelegateTest');
         $suite->addTestSuite('Xyster_Collection_FixedTest');
         $suite->addTestSuite('Xyster_Collection_SetTest');
-        $suite->addTestSuite('Xyster_Collection_SortableSetTest');
+        $suite->addTestSuite('Xyster_Collection_Set_SortableTest');
         $suite->addTestSuite('Xyster_Collection_ListTest');
         $suite->addTestSuite('Xyster_Collection_List_EmptyTest');
         $suite->addTestSuite('Xyster_Collection_List_FixedTest');

@@ -14,21 +14,29 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
-
-/**
- * PHPUnit test case
- */
-require_once 'PHPUnit/Framework/TestCase.php';
-/**
- * Xyster_Collection
- */
+// Call Xyster_Collection_IteratorTest::main() if this source file is executed directly.
+if (!defined('PHPUnit_MAIN_METHOD')) {
+    define('PHPUnit_MAIN_METHOD', 'Xyster_Collection_IteratorTest::main');
+}
+require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 require_once 'Xyster/Collection.php';
+
 /**
  * Test for Xyster_Collection_Iterator
  *
  */
 class Xyster_Collection_IteratorTest extends PHPUnit_Framework_TestCase
 {
+    /**
+     * Runs the test methods of this class.
+     */
+    public static function main()
+    {
+        require_once 'PHPUnit/TextUI/TestRunner.php';
+        $suite  = new PHPUnit_Framework_TestSuite('Xyster_Collection_IteratorTest');
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
+    
     /**
      * Tests using foreach
      *
@@ -71,8 +79,15 @@ class Xyster_Collection_IteratorTest extends PHPUnit_Framework_TestCase
     {
         $c = new Xyster_Collection();
         for( $i=0; $i<rand(3, 10); $i++ ) {
-            $c->add(new Xyster_Collection_Test_Value(md5(rand(0, 100))));
+            $val = new stdClass;
+            $val->value = md5(rand(0, 100));
+            $c->add($val);
         }
         return $c;
     }
+}
+
+// Call Xyster_Collection_IteratorTest::main() if this source file is executed directly.
+if (PHPUnit_MAIN_METHOD == 'Xyster_Collection_IteratorTest::main') {
+    Xyster_Collection_IteratorTest::main();
 }

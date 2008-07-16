@@ -2,9 +2,16 @@ Xyster Framework                                                             NEW
 |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
 =BUILD 7 / ??-???-2008 / basen on revision ??? =
+- Xyster_Collection
+    * Rework to allow for delegates.  New fixed classes removing immutable logic
+      from existing ones.  Unit test improvement.
+- Xyster_Type
+    * Speed improvements with hashing math using bit shifting
 - Xyster_Orm/Xyster_Validate
     * 0000043: Bigint validation
     * 0000044: Notempty vs. notnull validation
+- Xyster_Db
+    * Xyster_Db_Gateway renamed Xyster_Db_Schema; API changed and improved
 
 =BUILD 6 / 19-May-2008 / based on revision 272 =
 - Moved Xyster_Filter_TitleCase to core
