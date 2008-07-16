@@ -18,9 +18,6 @@
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Xyster_Db_ReferentialActionTest::main');
 }
-
-require_once "PHPUnit/Framework/TestCase.php";
-require_once "PHPUnit/Framework/TestSuite.php";
 require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 require_once 'Xyster/Db/ReferentialAction.php';
 
@@ -39,6 +36,23 @@ class Xyster_Db_ReferentialActionTest extends PHPUnit_Framework_TestCase
 
         $suite  = new PHPUnit_Framework_TestSuite('Xyster_Db_ReferentialActionTest');
         $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
+    
+    /**
+     * Tests the 'fromSql' method
+     */
+    public function testFromSql()
+    {
+        $test = array(
+            'CASCADE' => Xyster_Db_ReferentialAction::Cascade(),
+            'RESTRICT' => Xyster_Db_ReferentialAction::Restrict(),
+            'NO ACTION' => Xyster_Db_ReferentialAction::NoAction(),
+            'SET NULL' => Xyster_Db_ReferentialAction::SetNull(),
+            'SET DEFAULT' => Xyster_Db_ReferentialAction::SetDefault()
+        );
+        foreach( $test as $sql => $expected ) {
+            $this->assertSame($expected, Xyster_Db_ReferentialAction::fromSql($sql));
+        }
     }
     
     /**

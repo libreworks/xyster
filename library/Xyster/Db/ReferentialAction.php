@@ -50,7 +50,19 @@ class Xyster_Db_ReferentialAction extends Xyster_Enum
     {
         return self::$_sql[$this->getValue()];
     }
-        
+
+    /**
+     * Gets the correct enum for the SQL syntax
+     *
+     * @param string $sql
+     * @return Xyster_Db_ReferentialAction
+     */
+    static public function fromSql( $sql )
+    {
+        $method = str_replace(' ', '', ucwords(strtolower($sql)));
+        return Xyster_Enum::parse(__CLASS__, $method);
+    }
+    
     /**
      * The CASCADE action
      *

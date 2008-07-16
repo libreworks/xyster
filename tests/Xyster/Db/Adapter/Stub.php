@@ -86,7 +86,7 @@ class Xyster_Db_Adapter_Stub extends Zend_Db_Adapter_Abstract
      */
     public function describeTable( $tableName, $schemaName = null )
     {
-        return array(
+        return array(array(
             'SCHEMA_NAME'      => $schemaName,
             'TABLE_NAME'       => $tableName,
             'COLUMN_NAME'      => null,
@@ -100,7 +100,7 @@ class Xyster_Db_Adapter_Stub extends Zend_Db_Adapter_Abstract
             'UNSIGNED'         => null,
             'PRIMARY'          => null,
             'PRIMARY_POSITION' => null,
-        );
+        ));
     }
 
     /**
