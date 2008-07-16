@@ -26,19 +26,18 @@ require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHe
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
-require_once 'Xyster/Db/Gateway/AbstractTest.php';
-require_once 'Xyster/Db/Gateway/BuilderTest.php';
-require_once 'Xyster/Db/Gateway/IndexBuilderTest.php';
-require_once 'Xyster/Db/Gateway/TableBuilderTest.php';
-require_once 'Xyster/Db/Gateway/TableBuilder/ColumnTest.php';
-require_once 'Xyster/Db/Gateway/TableBuilder/ForeignKeyTest.php';
-require_once 'Xyster/Db/Gateway/TableBuilder/IndexTest.php';
-require_once 'Xyster/Db/Gateway/TableBuilder/PrimaryKeyTest.php';
-require_once 'Xyster/Db/Gateway/TableBuilder/UniqueTest.php';
-require_once 'Xyster/Db/Gateway/Pdo/MysqlTest.php';
-require_once 'Xyster/Db/Gateway/MysqliTest.php';
-require_once 'Xyster/Db/Gateway/Pdo/PgsqlTest.php';
-require_once 'Xyster/Db/Gateway/Pdo/SqliteTest.php';
+require_once 'Xyster/Db/Table/BuilderTest.php';
+require_once 'Xyster/Db/ColumnTest.php';
+require_once 'Xyster/Db/ColumnOwnerTest.php';
+require_once 'Xyster/Db/ForeignKeyTest.php';
+require_once 'Xyster/Db/IndexTest.php';
+require_once 'Xyster/Db/ConstraintTest.php';
+require_once 'Xyster/Db/TableTest.php';
+require_once 'Xyster/Db/Schema/AbstractTest.php';
+require_once 'Xyster/Db/Schema/MysqliTest.php';
+require_once 'Xyster/Db/Schema/Pdo/MysqlTest.php';
+require_once 'Xyster/Db/Schema/Pdo/PgsqlTest.php';
+require_once 'Xyster/Db/Schema/Pdo/SqliteTest.php';
 
 error_reporting(E_ALL | E_STRICT);
 
@@ -52,19 +51,18 @@ class Xyster_Db_AllTests
     public static function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('Xyster Framework - Xyster_Db');
-        $suite->addTestSuite('Xyster_Db_Gateway_AbstractTest');
-        $suite->addTestSuite('Xyster_Db_Gateway_BuilderTest');
-        $suite->addTestSuite('Xyster_Db_Gateway_IndexBuilderTest');
-        $suite->addTestSuite('Xyster_Db_Gateway_TableBuilderTest');
-        $suite->addTestSuite('Xyster_Db_Gateway_TableBuilder_ColumnTest');
-        $suite->addTestSuite('Xyster_Db_Gateway_TableBuilder_ForeignKeyTest');
-        $suite->addTestSuite('Xyster_Db_Gateway_TableBuilder_IndexTest');
-        $suite->addTestSuite('Xyster_Db_Gateway_TableBuilder_PrimaryKeyTest');
-        $suite->addTestSuite('Xyster_Db_Gateway_TableBuilder_UniqueTest');
-        $suite->addTestSuite('Xyster_Db_Gateway_Pdo_MysqlTest');
-        $suite->addTestSuite('Xyster_Db_Gateway_MysqliTest');
-        $suite->addTestSuite('Xyster_Db_Gateway_Pdo_PgsqlTest');
-        $suite->addTestSuite('Xyster_Db_Gateway_Pdo_SqliteTest');
+        $suite->addTestSuite('Xyster_Db_Table_BuilderTest');
+        $suite->addTestSuite('Xyster_Db_ColumnTest');
+        $suite->addTestSuite('Xyster_Db_ColumnOwnerTest');
+        $suite->addTestSuite('Xyster_Db_ForeignKeyTest');
+        $suite->addTestSuite('Xyster_Db_IndexTest');
+        $suite->addTestSuite('Xyster_Db_ConstraintTest');
+        $suite->addTestSuite('Xyster_Db_TableTest');
+        $suite->addTestSuite('Xyster_Db_Schema_AbstractTest');
+        $suite->addTestSuite('Xyster_Db_Schema_MysqliTest');
+        $suite->addTestSuite('Xyster_Db_Schema_Pdo_MysqlTest');
+        $suite->addTestSuite('Xyster_Db_Schema_Pdo_PgsqlTest');
+        $suite->addTestSuite('Xyster_Db_Schema_Pdo_SqliteTest');
         return $suite;
     }
 }
