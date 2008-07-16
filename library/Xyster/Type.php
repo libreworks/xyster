@@ -287,7 +287,7 @@ class Xyster_Type
                 if ( $result > $max ) {
                     $h = $result >> 32;
                 } else if ( $result < $min ) {
-                    $h = ~(($result-$result*2) >> 32)+1;
+                    $h = ~(($result * -1) >> 32)+1;
                 } else {
                     $h = $result;
                 }
@@ -320,7 +320,7 @@ class Xyster_Type
                 if ( $result > $max ) {
                     $h = $result >> 32;
                 } else if ( $result < $min ) {
-                    $h = ~(($result-$result*2) >> 32)+1;
+                    $h = ~(($result * -1) >> 32)+1;
                 } else {
                     $h = $result;
                 }
