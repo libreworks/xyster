@@ -14,26 +14,33 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
-
-/**
- * PHPUnit test case
- */
-require_once 'Xyster/Collection/BaseMapTest.php';
-/**
- * Xyster_Collection_Map_String
- */
+// Call Xyster_Collection_Map_StringTest::main() if this source file is executed directly.
+if (!defined('PHPUnit_MAIN_METHOD')) {
+    define('PHPUnit_MAIN_METHOD', 'Xyster_Collection_Map_StringTest::main');
+}
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'TestCommon.php';
 require_once 'Xyster/Collection/Map/String.php';
+
 /**
  * Test for Xyster_Collection_Map
  *
  */
-class Xyster_Collection_MapStringTest extends Xyster_Collection_BaseMapTest
+class Xyster_Collection_Map_StringTest extends Xyster_Collection_Map_TestCommon
 {
     protected $_className = 'Xyster_Collection_Map_String';
 
     /**
+     * Runs the test methods of this class.
+     */
+    public static function main()
+    {
+        require_once 'PHPUnit/TextUI/TestRunner.php';
+        $suite  = new PHPUnit_Framework_TestSuite('Xyster_Collection_Map_StringTest');
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
+    
+    /**
      * Tests the constructor
-     *
      */
     public function testConstruct()
     {
@@ -43,7 +50,6 @@ class Xyster_Collection_MapStringTest extends Xyster_Collection_BaseMapTest
     
     /**
      * Tests the 'containsKey' method
-     *
      */
     public function testContainsKey()
     {
@@ -59,7 +65,6 @@ class Xyster_Collection_MapStringTest extends Xyster_Collection_BaseMapTest
     
     /**
      * Tests the 'get' method
-     *
      */
     public function testGet()
     {
@@ -73,7 +78,6 @@ class Xyster_Collection_MapStringTest extends Xyster_Collection_BaseMapTest
     
     /**
      * Tests the 'merge' method
-     *
      */
     public function testMerge()
     {
@@ -88,7 +92,6 @@ class Xyster_Collection_MapStringTest extends Xyster_Collection_BaseMapTest
     
     /**
      * Tests the 'set' method
-     *
      */
     public function testSet()
     {
@@ -111,4 +114,9 @@ class Xyster_Collection_MapStringTest extends Xyster_Collection_BaseMapTest
     {
         return rand(1, 1000);
     }
+}
+
+// Call Xyster_Collection_Map_StringTest::main() if this source file is executed directly.
+if (PHPUnit_MAIN_METHOD == 'Xyster_Collection_Map_StringTest::main') {
+    Xyster_Collection_Map_StringTest::main();
 }

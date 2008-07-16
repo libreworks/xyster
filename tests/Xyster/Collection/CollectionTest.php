@@ -43,7 +43,6 @@ class Xyster_Collection_CollectionTest extends Xyster_Collection_BaseCollectionT
 {
     /**
      * Tests the empty list method
-     *
      */
     public function testEmptyList()
     {
@@ -54,56 +53,60 @@ class Xyster_Collection_CollectionTest extends Xyster_Collection_BaseCollectionT
     
     /**
      * Tests the fixed collection method
-     *
      */
     public function testFixedCollection()
     {
-        $this->setExpectedException('Xyster_Collection_Exception');
         $c = Xyster_Collection::fixedCollection( new Xyster_Collection() );
+        $this->setExpectedException('Xyster_Collection_Exception');
         $c->clear();
     }
     
     /**
      * Tests the fixed list method
-     *
      */
     public function testFixedList()
     {
-        $this->setExpectedException('Xyster_Collection_Exception');
         $c = Xyster_Collection::fixedList( new Xyster_Collection_List() );
+        $this->setExpectedException('Xyster_Collection_Exception');
         $c->clear();
     }
     
     /**
      * Tests the fixed map method
-     *
      */
     public function testFixedMap()
     {
+        $c = Xyster_Collection::fixedMap(new Xyster_Collection_Map());
         $this->setExpectedException('Xyster_Collection_Exception');
-        $c = Xyster_Collection::fixedMap( new Xyster_Collection_Map() );
         $c->clear();
     }
     
     /**
      * Tests the fixed set method
-     *
      */
     public function testFixedSet()
     {
-        $this->setExpectedException('Xyster_Collection_Exception');
         $c = Xyster_Collection::fixedSet( new Xyster_Collection_Set() );
+        $this->setExpectedException('Xyster_Collection_Exception');
         $c->clear();
     }
         
     /**
      * Tests the 'using' method
-     *
      */
     public function testUsing()
     {
-        $c = Xyster_Collection::using( array(1,2,3,4,5) );
-        $this->assertType('Xyster_Collection_Interface',$c);
-        $this->assertEquals($c->count(),5);
+        $c = Xyster_Collection::using(array(1, 2, 3, 4, 5));
+        $this->assertType('Xyster_Collection_Interface', $c);
+        $this->assertEquals(5, $c->count());
+    }
+    
+    /**
+     * Tests the 'toString' method
+     */
+    public function testToString()
+    {
+        $c = Xyster_Collection::using(array(1, 2, 3, 4, 5));
+        $this->assertEquals('[1,2,3,4,5]', (string)$c);
     }
 }

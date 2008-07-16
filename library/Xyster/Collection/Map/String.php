@@ -97,9 +97,11 @@ class Xyster_Collection_Map_String extends Xyster_Collection_Map_Abstract
 	public function keys()
 	{
 	    require_once 'Xyster/Collection/Set.php';
-	    return new Xyster_Collection_Set(
-	        Xyster_Collection::using(array_keys($this->_items)),
-	        true );
+	    $c = new Xyster_Collection_Set;
+	    foreach( array_keys($this->_items) as $key ) {
+	        $c->add($key);
+	    }
+	    return Xyster_Collection::fixedSet($c);
 	}
 	
 	/**
@@ -125,9 +127,11 @@ class Xyster_Collection_Map_String extends Xyster_Collection_Map_Abstract
 	public function keysFor( $value )
 	{
         require_once 'Xyster/Collection/Set.php';
-		return new Xyster_Collection_Set(
-		    Xyster_Collection::using(array_keys($this->_items,$value,true)),
-		    true );
+		$c = new Xyster_Collection_Set;
+		foreach( array_keys($this->_items, $value, true) as $key ) {
+		    $c->add($key);
+		}
+		return Xyster_Collection::fixedSet($c);
 	}
 	
 	/**
@@ -143,7 +147,7 @@ class Xyster_Collection_Map_String extends Xyster_Collection_Map_Abstract
 		    require_once 'Xyster/Collection/Exception.php';
 			throw new Xyster_Collection_Exception("Only strings can be keys in this map");
 		}
-		return array_key_exists( $key, $this->_items );
+		return array_key_exists($key, $this->_items);
 	}
 	
 	/**
@@ -154,9 +158,7 @@ class Xyster_Collection_Map_String extends Xyster_Collection_Map_Abstract
 	 */
 	public function offsetGet( $key )
 	{
-		return $this->offsetExists($key) ? 
-			$this->_items[$key] : 
-			null;
+		return $this->offsetExists($key) ? $this->_items[$key] : null;
 	}
 	
 	/**
@@ -194,7 +196,7 @@ class Xyster_Collection_Map_String extends Xyster_Collection_Map_Abstract
 	 */
 	public function toArray()
 	{
-		return array()+$this->_items;
+		return array() + $this->_items;
 	}
 	
 	/**

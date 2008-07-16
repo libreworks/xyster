@@ -27,17 +27,18 @@ require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once 'Xyster/Collection/CollectionTest.php';
+require_once 'Xyster/Collection/DelegateTest.php';
+require_once 'Xyster/Collection/FixedTest.php';
 require_once 'Xyster/Collection/SetTest.php';
 require_once 'Xyster/Collection/SortableSetTest.php';
 require_once 'Xyster/Collection/ListTest.php';
-require_once 'Xyster/Collection/EmptyTest.php';
+require_once 'Xyster/Collection/List/EmptyTest.php';
+require_once 'Xyster/Collection/List/FixedTest.php';
 require_once 'Xyster/Collection/MapTest.php';
-require_once 'Xyster/Collection/MapStringTest.php';
+require_once 'Xyster/Collection/Map/DelegateTest.php';
+require_once 'Xyster/Collection/Map/FixedTest.php';
+require_once 'Xyster/Collection/Map/StringTest.php';
 require_once 'Xyster/Collection/IteratorTest.php';
-require_once 'Xyster/Collection/ImmutableCollectionTest.php';
-require_once 'Xyster/Collection/ImmutableSetTest.php';
-require_once 'Xyster/Collection/ImmutableListTest.php';
-require_once 'Xyster/Collection/ImmutableMapTest.php';
 
 error_reporting(E_ALL | E_STRICT);
 
@@ -52,17 +53,18 @@ class Xyster_Collection_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Xyster Framework - Xyster_Collection');
         $suite->addTestSuite('Xyster_Collection_CollectionTest');
+        $suite->addTestSuite('Xyster_Collection_DelegateTest');
+        $suite->addTestSuite('Xyster_Collection_FixedTest');
         $suite->addTestSuite('Xyster_Collection_SetTest');
         $suite->addTestSuite('Xyster_Collection_SortableSetTest');
         $suite->addTestSuite('Xyster_Collection_ListTest');
         $suite->addTestSuite('Xyster_Collection_List_EmptyTest');
+        $suite->addTestSuite('Xyster_Collection_List_FixedTest');
         $suite->addTestSuite('Xyster_Collection_MapTest');
-        $suite->addTestSuite('Xyster_Collection_MapStringTest');
+        $suite->addTestSuite('Xyster_Collection_Map_DelegateTest');
+        $suite->addTestSuite('Xyster_Collection_Map_FixedTest');
+        $suite->addTestSuite('Xyster_Collection_Map_StringTest');
         $suite->addTestSuite('Xyster_Collection_IteratorTest');
-        $suite->addTestSuite('Xyster_Collection_ImmutableCollectionTest');
-        $suite->addTestSuite('Xyster_Collection_ImmutableSetTest');
-        $suite->addTestSuite('Xyster_Collection_ImmutableListTest');
-        $suite->addTestSuite('Xyster_Collection_ImmutableMapTest');
         return $suite;
     }
 }

@@ -31,21 +31,23 @@ class Xyster_Collection_List_Empty implements Xyster_Collection_List_Interface
      *
      * @param mixed $item The item to add
      * @return boolean Whether the collection changed as a result of this method
-     * @throws Xyster_Collection_Exception if the collection cannot be modified
+     * @throws Xyster_Collection_Exception Always
      */
     public function add( $item )
     {
-    	$this->_immutable();
+    	require_once 'Xyster/Collection/Exception.php';
+        throw new Xyster_Collection_Exception('This list is immutable');
     }
     
     /**
      * Removes all items from the collection
      *
-     * @throws Xyster_Collection_Exception if the collection cannot be modified
+     * @throws Xyster_Collection_Exception Always
      */
     public function clear()
     {
-    	$this->_immutable();
+    	require_once 'Xyster/Collection/Exception.php';
+        throw new Xyster_Collection_Exception('This list is immutable');
     }
     
     /**
@@ -134,11 +136,12 @@ class Xyster_Collection_List_Empty implements Xyster_Collection_List_Interface
      *
      * @param int $index The index at which to insert
      * @param mixed $value The value to insert
-     * @throws Xyster_Collection_Exception if the collection cannot be modified
+     * @throws Xyster_Collection_Exception Always
      */
     public function insert( $index, $value )
     {
-    	$this->_immutable();
+    	require_once 'Xyster/Collection/Exception.php';
+        throw new Xyster_Collection_Exception('This list is immutable');
     }
     
     /**
@@ -150,11 +153,12 @@ class Xyster_Collection_List_Empty implements Xyster_Collection_List_Interface
      * 
      * @param int $index The index at which to insert
      * @param Xyster_Collection_Interface $values The value to insert
-     * @throws Xyster_Collection_Exception if the collection cannot be modified
+     * @throws Xyster_Collection_Exception Always
      */
     public function insertAll( $index, Xyster_Collection_Interface $values )
     {
-    	$this->_immutable();
+    	require_once 'Xyster/Collection/Exception.php';
+        throw new Xyster_Collection_Exception('This list is immutable');
     }
     
     /**
@@ -175,11 +179,12 @@ class Xyster_Collection_List_Empty implements Xyster_Collection_List_Interface
      *
      * @param Xyster_Collection_Interface $values
      * @return boolean Whether the collection changed as a result of this method
-     * @throws Xyster_Collection_Exception if the collection cannot be modified
+     * @throws Xyster_Collection_Exception Always
      */
     public function merge( Xyster_Collection_Interface $values )
     {
-        $this->_immutable();
+        require_once 'Xyster/Collection/Exception.php';
+        throw new Xyster_Collection_Exception('This list is immutable');
     }
 
     /**
@@ -219,7 +224,8 @@ class Xyster_Collection_List_Empty implements Xyster_Collection_List_Interface
      */
     public function offsetSet( $index, $value )
     {
-        $this->_immutable();
+        require_once 'Xyster/Collection/Exception.php';
+        throw new Xyster_Collection_Exception('This list is immutable');
     }
     
     /**
@@ -233,7 +239,8 @@ class Xyster_Collection_List_Empty implements Xyster_Collection_List_Interface
      */
     public function offsetUnset( $index )
     {
-        $this->_immutable();
+        require_once 'Xyster/Collection/Exception.php';
+        throw new Xyster_Collection_Exception('This list is immutable');
     }
         
     /**
@@ -241,11 +248,12 @@ class Xyster_Collection_List_Empty implements Xyster_Collection_List_Interface
      *
      * @param mixed $item The value to remove
      * @return boolean If the value was in the collection
-     * @throws Xyster_Collection_Exception if the collection cannot be modified
+     * @throws Xyster_Collection_Exception Always
      */
     public function remove( $item )
     {
-    	$this->_immutable();
+    	require_once 'Xyster/Collection/Exception.php';
+        throw new Xyster_Collection_Exception('This list is immutable');
     }
     
     /**
@@ -253,11 +261,12 @@ class Xyster_Collection_List_Empty implements Xyster_Collection_List_Interface
      *
      * @param Xyster_Collection_Interface $values The values to remove
      * @return boolean Whether the collection changed as a result of this method
-     * @throws Xyster_Collection_Exception if the collection cannot be modified
+     * @throws Xyster_Collection_Exception Always
      */
     public function removeAll( Xyster_Collection_Interface $values )
     {
-    	$this->_immutable();
+    	require_once 'Xyster/Collection/Exception.php';
+        throw new Xyster_Collection_Exception('This list is immutable');
     }
         
     /**
@@ -266,11 +275,12 @@ class Xyster_Collection_List_Empty implements Xyster_Collection_List_Interface
      * This method is an alias to ArrayAccess::offsetUnset  
      *
      * @param int $index The index to "unset"
-     * @throws Xyster_Collection_Exception if the collection cannot be modified
+     * @throws Xyster_Collection_Exception Always
      */
     public function removeAt( $index )
     {
-        $this->_immutable();
+        require_once 'Xyster/Collection/Exception.php';
+        throw new Xyster_Collection_Exception('This list is immutable');
     }
     
     /**
@@ -281,11 +291,12 @@ class Xyster_Collection_List_Empty implements Xyster_Collection_List_Interface
      *
      * @param Xyster_Collection_Interface $values The values to keep
      * @return boolean Whether the collection changed as a result of this method
-     * @throws Xyster_Collection_Exception if the collection cannot be modified
+     * @throws Xyster_Collection_Exception Always
      */
     public function retainAll( Xyster_Collection_Interface $values )
     {
-    	$this->_immutable();
+    	require_once 'Xyster/Collection/Exception.php';
+        throw new Xyster_Collection_Exception('This list is immutable');
     }
         
     /**
@@ -299,11 +310,12 @@ class Xyster_Collection_List_Empty implements Xyster_Collection_List_Interface
      *
      * @param int $index The index to set
      * @param mixed $value The value to set
-     * @throws Xyster_Collection_Exception if the collection cannot be modified
+     * @throws Xyster_Collection_Exception Always
      */
     public function set( $index, $value )
     {
-    	$this->_immutable();
+    	require_once 'Xyster/Collection/Exception.php';
+        throw new Xyster_Collection_Exception('This list is immutable');
     }
     
     /**
@@ -311,11 +323,12 @@ class Xyster_Collection_List_Empty implements Xyster_Collection_List_Interface
      *
      * @param int $from The starting index
      * @param int $to The index to end before reaching
-     * @throws Xyster_Collection_Exception if the collection cannot be modified
+     * @throws Xyster_Collection_Exception Always
      */
     public function slice( $from, $to )
     {
-        $this->_immutable();
+        require_once 'Xyster/Collection/Exception.php';
+        throw new Xyster_Collection_Exception('This list is immutable');
     }
     
     /**
@@ -326,16 +339,5 @@ class Xyster_Collection_List_Empty implements Xyster_Collection_List_Interface
     public function toArray()
     {
         return array();
-    }
-    
-    /**
-     * Throws an exception
-     *
-     * @throws Xyster_Collection_Exception always
-     */
-    protected function _immutable()
-    {
-    	require_once 'Xyster/Collection/Exception.php';
-    	throw new Xyster_Collection_Exception('This list is immutable');
     }
 }

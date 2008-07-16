@@ -40,6 +40,7 @@ class Xyster_Collection_Set_Abstract extends Xyster_Collection_Abstract implemen
 	{
 		if ( !$this->contains($item) ) {
 			return parent::add($item);
-		} return false;
+		}
+		return false;
 	}
 }

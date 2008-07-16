@@ -17,33 +17,37 @@
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Xyster_Collection_MapTest::main');
 }
-
-require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
-
-require_once 'Xyster/Collection/BaseMapTest.php';
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Map/TestCommon.php';
 require_once 'Xyster/Collection/Map.php';
 
 /**
  * Test for Xyster_Collection_Map
  *
  */
-class Xyster_Collection_MapTest extends Xyster_Collection_BaseMapTest
+class Xyster_Collection_MapTest extends Xyster_Collection_Map_TestCommon
 {
     /**
      * Runs the test methods of this class.
-     *
      */
     public static function main()
     {
         require_once 'PHPUnit/TextUI/TestRunner.php';
-
         $suite  = new PHPUnit_Framework_TestSuite(__CLASS__);
         $result = PHPUnit_TextUI_TestRunner::run($suite);
     }
     
     /**
+     * Tests the basic constructor
+     */
+    public function testConstruct()
+    {
+        $c = $this->_getNewMapWithRandomValues();
+        $map = new Xyster_Collection_Map($c);
+        $this->assertEquals($map->keys(), $c->keys());
+    }
+    
+    /**
      * Tests the 'containsKey' method
-     *
      */
     public function testContainsKey()
     {
@@ -56,7 +60,6 @@ class Xyster_Collection_MapTest extends Xyster_Collection_BaseMapTest
     
     /**
      * Tests the 'entry' method
-     *
      */
     public function testEntry()
     {
@@ -68,7 +71,6 @@ class Xyster_Collection_MapTest extends Xyster_Collection_BaseMapTest
     
     /**
      * Tests the 'get' method
-     *
      */
     public function testGet()
     {
@@ -82,7 +84,6 @@ class Xyster_Collection_MapTest extends Xyster_Collection_BaseMapTest
     
     /**
      * Tests the 'merge' method
-     *
      */
     public function testMerge()
     {
@@ -97,7 +98,6 @@ class Xyster_Collection_MapTest extends Xyster_Collection_BaseMapTest
     
     /**
      * Tests the 'set' method
-     *
      */
     public function testSet()
     {
@@ -113,7 +113,6 @@ class Xyster_Collection_MapTest extends Xyster_Collection_BaseMapTest
         $c->set($key, $this->_getNewValue()); // setting a pre-existing key
     }
 }
-
 
 if (PHPUnit_MAIN_METHOD == 'Xyster_Collection_MapTest::main') {
     Xyster_Collection_MapTest::main();

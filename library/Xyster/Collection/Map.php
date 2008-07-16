@@ -11,7 +11,12 @@
  * @package   Xyster_Collection
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @version   $Id$
  */
+/**
+ * @see Xyster_Collection
+ */
+require_once 'Xyster/Collection.php';
 /**
  * @see Xyster_Collection_Map_Abstract
  */
@@ -24,6 +29,10 @@ require_once 'Xyster/Collection/Map/Entry.php';
  * @see Xyster_Type
  */
 require_once 'Xyster/Type.php';
+/**
+ * @see Xyster_Collection_Iterator
+ */
+require_once 'Xyster/Collection/Iterator.php';
 /**
  * Implementation of a key-based collection
  *
@@ -40,36 +49,24 @@ class Xyster_Collection_Map extends Xyster_Collection_Map_Abstract
 	 * @var array
 	 */
 	protected $_items = array();
-	
-	/**
-	 * Whether this map is immutable
-	 * 
-	 * @var boolean
-	 */
-	private $_immutable = false;
 
 	/**
 	 * Creates a new map with object keys
 	 *
 	 * @param Xyster_Collection_Map_Interface $map The values to add to this map
-	 * @param boolean $immutable
 	 */
-	public function __construct( Xyster_Collection_Map_Interface $map = null, $immutable = false )
+	public function __construct( Xyster_Collection_Map_Interface $map = null )
 	{
 	    if ( $map ) {
 		    $this->merge($map);
 	    }
-		$this->_immutable = $immutable;
 	}
 
 	/**
 	 * Removes all items from the map
-	 *
-	 * @throws Xyster_Collection_Exception if the collection cannot be modified
 	 */
 	public function clear()
 	{
-		$this->_failIfImmutable();
 		$this->_items = array();
 	}
 	
@@ -90,7 +87,7 @@ class Xyster_Collection_Map extends Xyster_Collection_Map_Abstract
 	 */
 	public function getIterator()
 	{
-		return ( $this->count() ) ? 
+	    return ( !$this->isEmpty() ) ? 
 			new Xyster_Collection_Iterator($this->_items) : new EmptyIterator();
 	}
 	
@@ -101,12 +98,12 @@ class Xyster_Collection_Map extends Xyster_Collection_Map_Abstract
 	 */
 	public function keys()
 	{
-	    $keys = new Xyster_Collection();
+	    require_once 'Xyster/Collection/Set.php';
+	    $keys = new Xyster_Collection_Set();
 	    foreach( $this->_items as $entry ) {
 	        $keys->add($entry->getKey());
 	    }
-	    require_once 'Xyster/Collection/Set.php';
-	    return new Xyster_Collection_Set($keys, true);
+	    return Xyster_Collection::fixedSet($keys);
 	}
 	
 	/**
@@ -136,13 +133,13 @@ class Xyster_Collection_Map extends Xyster_Collection_Map_Abstract
 	 */
 	public function keysFor( $value )
 	{
-		$c = new Xyster_Collection();
+		$c = new Xyster_Collection_Set();
 	    foreach( $this->_items as $entry ) {
 			if ( $entry->getValue() === $value ) {
 				$c->add($entry->getKey());
 			}
 		}
-		return new Xyster_Collection_Set($c, true);
+		return Xyster_Collection::fixedSet($c);
 	}
 	
 	/**
@@ -154,8 +151,7 @@ class Xyster_Collection_Map extends Xyster_Collection_Map_Abstract
 	 */
 	public function offsetExists( $key )
 	{
-	    $hash = $this->_hash($key);
-		return array_key_exists($hash, $this->_items);
+		return array_key_exists(Xyster_Type::hash($key), $this->_items);
 	}
 	
 	/**
@@ -166,8 +162,9 @@ class Xyster_Collection_Map extends Xyster_Collection_Map_Abstract
 	 */
 	public function offsetGet( $key )
 	{
-		return $this->offsetExists($key) ? 
-			$this->_items[$this->_hash($key)]->getValue() : null;
+	    $hash = Xyster_Type::hash($key);
+	    return array_key_exists($hash, $this->_items) ? 
+			$this->_items[$hash]->getValue() : null;
 	}
 	
 	/**
@@ -175,17 +172,13 @@ class Xyster_Collection_Map extends Xyster_Collection_Map_Abstract
 	 *
 	 * @param object $key The key to set
 	 * @param mixed $value The value to set
-	 * @throws Xyster_Collection_Exception if the collection cannot be modified
 	 */
 	public function offsetSet( $key, $value )
 	{
-		$this->_failIfImmutable();
-		if ( !$this->offsetExists($key) )  {
-			$index = $this->_hash($key);
-			$entry = new Xyster_Collection_Map_Entry($key, $value);
-			$this->_items[$index] = $entry;
+	    $index = Xyster_Type::hash($key);
+		if ( !array_key_exists($index, $this->_items) )  {
+			$this->_items[$index] = new Xyster_Collection_Map_Entry($key, $value);
 		} else {
-			$index = $this->_hash($key);
 			$this->_items[$index]->setValue($value);
 		}
 	}
@@ -194,13 +187,12 @@ class Xyster_Collection_Map extends Xyster_Collection_Map_Abstract
 	 * Removes a value at the specified key
 	 *
 	 * @param object $key The key to "unset"
-	 * @throws Xyster_Collection_Exception if the collection cannot be modified
 	 */
 	public function offsetUnset( $key )
 	{
-		$this->_failIfImmutable();
-		if ( $this->offsetExists($key) ) {
-			unset($this->_items[$this->_hash($key)]);
+	    $hash = Xyster_Type::hash($key);
+		if ( array_key_exists($hash, $this->_items) ) {
+			unset($this->_items[$hash]);
 		}
 	}
 	
@@ -223,34 +215,10 @@ class Xyster_Collection_Map extends Xyster_Collection_Map_Abstract
 	 */
 	public function values()
 	{
-		$values = array();
+		$values = new Xyster_Collection;
 		foreach( $this->_items as $entry ) {
-		    $values[] = $entry->getValue();
+		    $values->add($entry->getValue());
 		}
-		return Xyster_Collection::using($values, true);
-	}
-	
-	/**
-	 * A convenience method to fail on modification of immutable collection
-	 *
-	 * @throws Xyster_Collection_Exception if the collection is immutable
-	 */
-	private function _failIfImmutable()
-	{
-	    if ( $this->_immutable ) {
-	        require_once 'Xyster/Collection/Exception.php';
-			throw new Xyster_Collection_Exception("This collection cannot be changed");
-		} 
-	}
-	
-	/**
-	 * Gets the hash code for a value
-	 *
-	 * @param mixed $value
-	 * @return mixed
-	 */
-	private function _hash( $value )
-	{
-	    return Xyster_Type::hash($value);
+		return Xyster_Collection::fixedCollection($values);
 	}
 }
