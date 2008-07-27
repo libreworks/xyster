@@ -211,7 +211,17 @@ class Xyster_Collection_Delegate implements Xyster_Collection_Interface
     {
         return $this->_delegate->toArray();
     }
-    
+
+    /**
+     * Returns the string representation of this object
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->_delegate->__toString();
+    }
+        
     /**
      * Gets the delegate collection
      *

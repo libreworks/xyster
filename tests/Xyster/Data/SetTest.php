@@ -18,7 +18,7 @@
 /**
  * PHPUnit test case
  */
-require_once 'Xyster/Collection/SortableSetTest.php';
+require_once 'Xyster/Collection/Set/SortableTest.php';
 require_once 'Xyster/Data/Set.php';
 require_once 'Xyster/Data/Aggregate.php';
 require_once 'Xyster/Data/Comparator.php';
@@ -28,7 +28,7 @@ require_once 'Xyster/Data/Sort/Clause.php';
  * Test for Xyster_Data_Set
  *
  */
-class Xyster_Data_SetTest extends Xyster_Collection_SortableSetTest
+class Xyster_Data_SetTest extends Xyster_Collection_Set_SortableTest
 {
     protected $_className = 'Xyster_Data_Set';
     
