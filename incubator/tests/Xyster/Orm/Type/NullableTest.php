@@ -105,7 +105,7 @@ class Xyster_Orm_Type_NullableImpl extends Xyster_Orm_Type_Nullable
      * @param Xyster_Orm_Session_Interface $sess The ORM session
      * @param array $names The column names
      */
-    function get(Zend_Db_Statement_Interface $rs, $owner, Xyster_Orm_Session_Interface $sess, array $names = array() )
+    function get(Zend_Db_Statement_Interface $rs, array $names, $owner, Xyster_Orm_Session_Interface $sess )
     {
     }
     
