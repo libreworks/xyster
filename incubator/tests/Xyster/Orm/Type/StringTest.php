@@ -52,16 +52,6 @@ class Xyster_Orm_Type_StringTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests the 'get' method
-     */
-    public function testGet()
-    {
-        $stmt = new Xyster_Db_Statement_Stub;
-        $sess = $this->getMock('Xyster_Orm_Session_Interface');
-        $this->assertEquals('bar', $this->object->get($stmt, array('foo'), 0, $sess));
-    }
-
-    /**
      * Tests the 'getDataType' method
      */
     public function testGetDataType()
@@ -69,6 +59,14 @@ class Xyster_Orm_Type_StringTest extends PHPUnit_Framework_TestCase
         $this->assertSame(Xyster_Db_DataType::Varchar(), $this->object->getDataType());
     }
 
+    /**
+     * Tests the 'getFetchType' method
+     */
+    public function testGetFetchType()
+    {
+        $this->assertEquals(Zend_Db::PARAM_STR, $this->object->getFetchType());
+    }
+    
     /**
      * Tests the 'getName' method
      */

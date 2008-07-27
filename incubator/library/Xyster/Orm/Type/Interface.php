@@ -34,12 +34,11 @@ interface Xyster_Orm_Type_Interface
     /**
      * Gets the type out of a result set statement
      *
-     * @param Zend_Db_Statement_Interface $rs The statement used to fetch
+     * @param array $values The values returned from the result fetch
      * @param object $owner The owning entity
      * @param Xyster_Orm_Session_Interface $sess The ORM session
-     * @param array $names The column names
      */
-    function get(Zend_Db_Statement_Interface $rs, array $names, $owner, Xyster_Orm_Session_Interface $sess );
+    function get(array $values, $owner, Xyster_Orm_Session_Interface $sess );
     
     /**
      * Gets how many columns are used to persist this type
@@ -54,7 +53,16 @@ interface Xyster_Orm_Type_Interface
      * @return array of {@link Xyster_Db_DataType} objects
      */
     function getDataTypes();
-    
+
+    /**
+     * Gets the fetch type for binding
+     * 
+     * See the Zend_Db::PARAM_* constants.
+     *
+     * @return int
+     */
+    function getFetchType();
+        
     /**
      * Returns the type name
      *
@@ -68,6 +76,13 @@ interface Xyster_Orm_Type_Interface
      * @return Xyster_Type
      */
     function getReturnedType();
+    
+    /**
+     * Whether this type needs to have {@link get}() called
+     *
+     * @return boolean
+     */
+    function hasResolve();
     
     /**
      * Whether this type is a collection

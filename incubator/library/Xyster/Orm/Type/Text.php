@@ -18,20 +18,30 @@
  */
 require_once 'Xyster/Orm/Type/Immutable.php';
 /**
- * Maps a SQL DOUBLE PRECISION (8-bytes) to a PHP float
+ * Maps a SQL CLOB to a string
  *
  * @category  Xyster
  * @package   Xyster_Orm
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Orm_Type_Float extends Xyster_Orm_Type_Immutable
+class Xyster_Orm_Type_Text extends Xyster_Orm_Type_Immutable
 {
     /**
      * @var Xyster_Type
      */
     static protected $_type;
- 
+
+    /**
+     * Gets the fetch type for binding
+     *
+     * @return int
+     */
+    public function getFetchType()
+    {
+        return Zend_Db::PARAM_STR;
+    }
+        
     /**
      * Gets the underlying database type
      *
@@ -39,9 +49,9 @@ class Xyster_Orm_Type_Float extends Xyster_Orm_Type_Immutable
      */
     public function getDataType()
     {
-        return Xyster_Db_DataType::Float();
+        return Xyster_Db_DataType::Clob();
     }
-        
+    
     /**
      * Returns the type name
      *
@@ -49,7 +59,7 @@ class Xyster_Orm_Type_Float extends Xyster_Orm_Type_Immutable
      */
     public function getName()
     {
-        return 'float';
+        return 'text';
     }
     
     /**
@@ -60,7 +70,7 @@ class Xyster_Orm_Type_Float extends Xyster_Orm_Type_Immutable
     public function getReturnedType()
     {
         if ( !self::$_type ) {
-            self::$_type = new Xyster_Type('double');
+            self::$_type = new Xyster_Type('string');
         }
         return self::$_type;
     }
@@ -77,7 +87,7 @@ class Xyster_Orm_Type_Float extends Xyster_Orm_Type_Immutable
     public function set(Zend_Db_Statement_Interface $stmt, $value, $index, Xyster_Orm_Session_Interface $sess, array $settable = array() )
     {
         if ( !count($settable) || $settable[0] ) {
-            $stmt->bindValue($index, $value);
+            $stmt->bindValue($index, $value, Zend_Db::PARAM_STR);
         }
-    }
+    }   
 }

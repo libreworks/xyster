@@ -56,11 +56,9 @@ class Xyster_Orm_Type_TimeTest extends PHPUnit_Framework_TestCase
      */
     public function testGet()
     {
-        $stmt = new Xyster_Db_Statement_Stub;
-        $stmt->columnValues['foo'] = '11:59:45';
         $date = new Zend_Date('11:59:45', Zend_Date::TIMES);
         $sess = $this->getMock('Xyster_Orm_Session_Interface');
-        $this->assertEquals($date, $this->object->get($stmt, array('foo'), 0, $sess));
+        $this->assertEquals($date, $this->object->get(array('11:59:45'), 0, $sess));
     }
 
     /**
@@ -89,7 +87,15 @@ class Xyster_Orm_Type_TimeTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('Zend_Date', $type->getName());
         $this->assertSame($type, $this->object->getReturnedType());
     }
-
+    
+    /**
+     * Tests the 'hasResolve' method
+     */
+    public function testHasResolve()
+    {
+        $this->assertTrue($this->object->hasResolve());
+    }
+    
     /**
      * Tests the 'isEqual' method
      *

@@ -31,21 +31,15 @@ class Xyster_Orm_Type_Boolean extends Xyster_Orm_Type_Immutable
      * @var Xyster_Type
      */
     static protected $_type;
-    
+
     /**
-     * Gets the type out of a result set statement
+     * Gets the fetch type for binding
      *
-     * @param Zend_Db_Statement_Interface $rs The statement used to fetch
-     * @param object $owner The owning entity
-     * @param Xyster_Orm_Session_Interface $sess The ORM session
-     * @param array $names The column names
+     * @return int
      */
-    public function get(Zend_Db_Statement_Interface $rs, array $names, $owner, Xyster_Orm_Session_Interface $sess )
+    public function getFetchType()
     {
-        $val = null;
-        $rs->bindColumn($names[0], $val, Zend_Db::PARAM_BOOL);
-        $rs->fetch(Zend_Db::FETCH_BOUND);
-        return $val;
+        return Zend_Db::PARAM_BOOL;
     }
         
     /**

@@ -52,17 +52,6 @@ class Xyster_Orm_Type_IntegerTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests the 'get' method
-     */
-    public function testGet()
-    {
-        $stmt = new Xyster_Db_Statement_Stub;
-        $stmt->columnValues['foo'] = 123;
-        $sess = $this->getMock('Xyster_Orm_Session_Interface');
-        $this->assertEquals(123, $this->object->get($stmt, array('foo'), 0, $sess));
-    }
-
-    /**
      * Tests the 'getDataType' method
      */
     public function testGetDataType()
@@ -70,6 +59,14 @@ class Xyster_Orm_Type_IntegerTest extends PHPUnit_Framework_TestCase
         $this->assertSame(Xyster_Db_DataType::Integer(), $this->object->getDataType());
     }
 
+    /**
+     * Tests the 'getFetchType' method
+     */
+    public function testGetFetchType()
+    {
+        $this->assertEquals(Zend_Db::PARAM_INT, $this->object->getFetchType());
+    }
+    
     /**
      * Tests the 'getName' method
      */

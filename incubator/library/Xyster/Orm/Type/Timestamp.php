@@ -39,17 +39,13 @@ class Xyster_Orm_Type_Timestamp extends Xyster_Orm_Type_Mutable
     /**
      * Gets the type out of a result set statement
      *
-     * @param Zend_Db_Statement_Interface $rs The statement used to fetch
+     * @param array $values The values returned from the result fetch
      * @param object $owner The owning entity
      * @param Xyster_Orm_Session_Interface $sess The ORM session
-     * @param array $names The column names
      */
-    public function get(Zend_Db_Statement_Interface $rs, array $names, $owner, Xyster_Orm_Session_Interface $sess )
+    public function get(array $values, $owner, Xyster_Orm_Session_Interface $sess )
     {
-        $val = null;
-        $rs->bindColumn($names[0], $val);
-        $rs->fetch(Zend_Db::FETCH_BOUND);
-        return new Zend_Date($val);
+        return new Zend_Date($values[0]);
     }
         
     /**
@@ -85,6 +81,16 @@ class Xyster_Orm_Type_Timestamp extends Xyster_Orm_Type_Mutable
         return self::$_type;
     }
 
+    /**
+     * Whether this type needs to have {@link get}() called
+     *
+     * @return boolean
+     */
+    public function hasResolve()
+    {
+        return true;
+    }
+    
     /**
      * Compares the values supplied for persistence equality
      *

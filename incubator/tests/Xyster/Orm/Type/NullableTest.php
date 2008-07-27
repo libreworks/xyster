@@ -98,18 +98,6 @@ class Xyster_Orm_Type_NullableImpl extends Xyster_Orm_Type_Nullable
     }
     
     /**
-     * Gets the type out of a result set statement
-     *
-     * @param Zend_Db_Statement_Interface $rs The statement used to fetch
-     * @param object $owner The owning entity
-     * @param Xyster_Orm_Session_Interface $sess The ORM session
-     * @param array $names The column names
-     */
-    function get(Zend_Db_Statement_Interface $rs, array $names, $owner, Xyster_Orm_Session_Interface $sess )
-    {
-    }
-    
-    /**
      * Returns the type name
      *
      * @return string

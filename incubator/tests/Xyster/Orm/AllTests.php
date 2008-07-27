@@ -35,6 +35,7 @@ require_once 'Xyster/Orm/Type/IntegerTest.php';
 require_once 'Xyster/Orm/Type/NullableTest.php';
 require_once 'Xyster/Orm/Type/RealTest.php';
 require_once 'Xyster/Orm/Type/StringTest.php';
+require_once 'Xyster/Orm/Type/TextTest.php';
 require_once 'Xyster/Orm/Type/TimeTest.php';
 require_once 'Xyster/Orm/Type/TimestampTest.php';
 
@@ -62,6 +63,7 @@ class Xyster_Orm_AllTests
         $suite->addTestSuite('Xyster_Orm_Type_NullableTest');
         $suite->addTestSuite('Xyster_Orm_Type_RealTest');
         $suite->addTestSuite('Xyster_Orm_Type_StringTest');
+        $suite->addTestSuite('Xyster_Orm_Type_TextTest');
         $suite->addTestSuite('Xyster_Orm_Type_TimeTest');
         $suite->addTestSuite('Xyster_Orm_Type_TimestampTest');
         return $suite;

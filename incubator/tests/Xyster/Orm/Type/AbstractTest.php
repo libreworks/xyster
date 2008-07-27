@@ -51,6 +51,22 @@ class Xyster_Orm_Type_AbstractTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Tests the 'getFetchType' method
+     */
+    public function testGetFetchType()
+    {
+        $this->assertNull($this->object->getFetchType());
+    }
+    
+    /**
+     * Tests the 'hasResolve' method
+     */
+    public function testHasResolve()
+    {
+        $this->assertFalse($this->object->hasResolve());
+    }
+    
+    /**
      * Tests the 'isCollection' method
      */
     public function testIsCollection()
@@ -104,19 +120,7 @@ class Xyster_Orm_Type_AbstractTest extends PHPUnit_Framework_TestCase
 }
 
 class Xyster_Orm_Type_AbstractImpl extends Xyster_Orm_Type_Abstract
-{
-    /**
-     * Gets the type out of a result set statement
-     *
-     * @param Zend_Db_Statement_Interface $rs The statement used to fetch
-     * @param object $owner The owning entity
-     * @param Xyster_Orm_Session_Interface $sess The ORM session
-     * @param array $names The column names
-     */
-    function get(Zend_Db_Statement_Interface $rs, array $names, $owner, Xyster_Orm_Session_Interface $sess )
-    {
-    }
-    
+{    
     /**
      * Gets how many columns are used to persist this type
      *

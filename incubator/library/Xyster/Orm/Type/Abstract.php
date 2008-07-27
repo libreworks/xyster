@@ -32,6 +32,40 @@ require_once 'Xyster/Type.php';
 abstract class Xyster_Orm_Type_Abstract implements Xyster_Orm_Type_Interface
 {
     /**
+     * Gets the type out of a result set
+     *
+     * This should be overridden by types that need to do something with the
+     * values pulled out of the result set.
+     * 
+     * @param array $values The values returned from the result fetch
+     * @param object $owner The owning entity
+     * @param Xyster_Orm_Session_Interface $sess The ORM session
+     */
+    public function get(array $values, $owner, Xyster_Orm_Session_Interface $sess )
+    {
+    }
+
+    /**
+     * Gets the fetch type for binding
+     *
+     * @return int
+     */
+    public function getFetchType()
+    {
+        return null;
+    }
+        
+    /**
+     * Whether this type needs to have {@link get}() called
+     *
+     * @return boolean
+     */
+    public function hasResolve()
+    {
+        return false;
+    }
+    
+    /**
      * Whether this type is a collection
      *
      * @return boolean

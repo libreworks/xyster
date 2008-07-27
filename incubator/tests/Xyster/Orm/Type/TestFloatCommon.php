@@ -23,17 +23,6 @@ require_once 'Xyster/Db/Statement/Stub.php';
 class Xyster_Orm_Type_TestFloatCommon extends PHPUnit_Framework_TestCase
 {
     /**
-     * Tests the 'get' method
-     */
-    public function testGet()
-    {
-        $stmt = new Xyster_Db_Statement_Stub;
-        $stmt->columnValues['foo'] = 48.12;
-        $sess = $this->getMock('Xyster_Orm_Session_Interface');
-        $this->assertEquals(48.12, $this->object->get($stmt, array('foo'), 0, $sess));
-    }
-
-    /**
      * Tests the 'getReturnedType' method
      */
     public function testGetReturnedType()
