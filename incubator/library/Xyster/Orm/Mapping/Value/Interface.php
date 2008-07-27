@@ -45,6 +45,13 @@ interface Xyster_Orm_Mapping_Value_Interface
     function getTable();
     
     /**
+     * Gets the underlying ORM type
+     *
+     * @return Xyster_Orm_Type_Interface
+     */
+    function getType();
+        
+    /**
      * Gets whether this type is nullable
      *
      * @return boolean
