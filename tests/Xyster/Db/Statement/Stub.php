@@ -33,11 +33,17 @@ require_once 'Zend/Db/Statement/Interface.php';
  */
 class Xyster_Db_Statement_Stub implements Zend_Db_Statement_Interface
 {
+    public $columnValues = array('foo'=>'bar');
+    public $values = array();
+    
     /**
      * binds a PHP variable to an output column in a result set
      */
     public function bindColumn( $column, &$param, $type = null )
     {
+        if ( array_key_exists($column, $this->columnValues) ) {
+            $param = $this->columnValues[$column];
+        }
     }
 
     /**
@@ -52,6 +58,7 @@ class Xyster_Db_Statement_Stub implements Zend_Db_Statement_Interface
      */
     public function bindValue( $parameter, $value, $type = null )
     {
+        $this->values[$parameter] = $value;
     }
 
     /**
