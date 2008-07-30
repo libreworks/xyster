@@ -143,6 +143,30 @@ class Xyster_Orm_Type_TimestampTest extends PHPUnit_Framework_TestCase
         $this->object->set($stmt, '2008-07-27T11:59:45+05:00', 0, $sess, array(true));
         $this->assertEquals($date->get(Zend_Date::ISO_8601), $stmt->values[0]);
     }
+    
+    /**
+     * Tests the 'getComparator' method
+     */
+    public function testGetComparator()
+    {
+        $this->assertSame($this->object, $this->object->getComparator());
+    }
+    
+    /**
+     * Tests the 'initial' method
+     */
+    public function testInitial()
+    {
+        $this->assertType('Zend_Date', $this->object->initial());
+    }
+    
+    /**
+     * Tests the 'next' method
+     */
+    public function testNext()
+    {
+        $this->assertType('Zend_Date', $this->object->next(time()));
+    }
 }
 
 // Call Xyster_Orm_Type_TimestampTest::main() if this source file is executed directly.

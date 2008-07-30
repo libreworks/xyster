@@ -14,6 +14,10 @@
  * @version   $Id$
  */
 /**
+ * @see Xyster_Orm_Type_Version
+ */
+require_once 'Xyster/Orm/Type/Version.php';
+/**
  * @see Xyster_Orm_Type_Mutable
  */
 require_once 'Xyster/Orm/Type/Mutable.php';
@@ -29,7 +33,7 @@ require_once 'Zend/Date.php';
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Orm_Type_Timestamp extends Xyster_Orm_Type_Mutable
+class Xyster_Orm_Type_Timestamp extends Xyster_Orm_Type_Mutable implements Xyster_Orm_Type_Version 
 {
     /**
      * @var Xyster_Type
@@ -70,7 +74,17 @@ class Xyster_Orm_Type_Timestamp extends Xyster_Orm_Type_Mutable
     {
         return new Zend_Date($values[0]);
     }
-        
+    
+    /**
+     * Gets a comparator for version values
+     *
+     * @return Xyster_Collection_Comparator_Interface
+     */
+    public function getComparator()
+    {
+        return $this;
+    }
+            
     /**
      * Gets the underlying database type
      *
@@ -103,7 +117,7 @@ class Xyster_Orm_Type_Timestamp extends Xyster_Orm_Type_Mutable
         }
         return self::$_type;
     }
-
+    
     /**
      * Whether this type needs to have {@link get}() called
      *
@@ -113,7 +127,17 @@ class Xyster_Orm_Type_Timestamp extends Xyster_Orm_Type_Mutable
     {
         return true;
     }
-    
+
+    /**
+     * Gets the initial version id
+     *
+     * @return mixed The initial version
+     */
+    public function initial()
+    {
+        return new Zend_Date();
+    }
+        
     /**
      * Compares the values supplied for persistence equality
      *
@@ -130,6 +154,17 @@ class Xyster_Orm_Type_Timestamp extends Xyster_Orm_Type_Mutable
         return $a->equals($b);
     }
     
+    /**
+     * Gets the next version id
+     *
+     * @param mixed $current
+     * @return mixed The next version
+     */
+    public function next( $current )
+    {
+        return $this->initial();
+    }
+        
     /**
      * Sets the value to the prepared statement
      *

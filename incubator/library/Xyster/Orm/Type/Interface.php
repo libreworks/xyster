@@ -18,6 +18,10 @@
  */
 require_once 'Xyster/Orm/Session/Interface.php';
 /**
+ * @see Xyster_Collection_Comparator_Interface
+ */
+require_once 'Xyster/Collection/Comparator/Interface.php';
+/**
  * Zend_Db_Statement_Interface
  */
 require_once 'Zend/Db/Statement/Interface.php';
@@ -29,7 +33,7 @@ require_once 'Zend/Db/Statement/Interface.php';
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-interface Xyster_Orm_Type_Interface
+interface Xyster_Orm_Type_Interface extends Xyster_Collection_Comparator_Interface
 {
     /**
      * Called before the unpack to allow batch fetching of uncached entities
@@ -58,15 +62,6 @@ interface Xyster_Orm_Type_Interface
      * @return mixed The reconstructed value
      */
     function cacheUnpack( $cached, Xyster_Orm_Session_Interface $sess, $owner );
-    
-    /**
-     * Compare two instances of this type
-     *
-     * @param mixed $a
-     * @param mixed $b
-     * @return int -1, 0, or 1
-     */
-    function compare( $a, $b );
     
     /**
      * Gets a deep copy of the persistent state; stop on entity and collection

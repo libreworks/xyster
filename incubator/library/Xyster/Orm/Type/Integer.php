@@ -14,6 +14,10 @@
  * @version   $Id$
  */
 /**
+ * @see Xyster_Orm_Type_Version
+ */
+require_once 'Xyster/Orm/Type/Version.php';
+/**
  * @see Xyster_Orm_Type_Immutable
  */
 require_once 'Xyster/Orm/Type/Immutable.php';
@@ -25,7 +29,7 @@ require_once 'Xyster/Orm/Type/Immutable.php';
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Orm_Type_Integer extends Xyster_Orm_Type_Immutable
+class Xyster_Orm_Type_Integer extends Xyster_Orm_Type_Immutable implements Xyster_Orm_Type_Version 
 {
     /**
      * @var Xyster_Type
@@ -48,6 +52,16 @@ class Xyster_Orm_Type_Integer extends Xyster_Orm_Type_Immutable
         } else {
             return -1;
         }
+    }
+    
+    /**
+     * Gets a comparator for version values
+     *
+     * @return Xyster_Collection_Comparator_Interface
+     */
+    public function getComparator()
+    {
+        return $this;
     }
     
     /**
@@ -92,7 +106,28 @@ class Xyster_Orm_Type_Integer extends Xyster_Orm_Type_Immutable
         }
         return self::$_type;
     }
-    
+
+    /**
+     * Gets the initial version id
+     *
+     * @return mixed The initial version
+     */
+    public function initial()
+    {
+        return 0;
+    }
+        
+    /**
+     * Gets the next version id
+     *
+     * @param mixed $current
+     * @return mixed The next version
+     */
+    public function next( $current )
+    {
+        return $current + 1;
+    }
+        
     /**
      * Sets the value to the prepared statement
      *

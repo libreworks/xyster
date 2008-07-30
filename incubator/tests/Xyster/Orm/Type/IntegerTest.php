@@ -106,6 +106,30 @@ class Xyster_Orm_Type_IntegerTest extends PHPUnit_Framework_TestCase
         $this->object->set($stmt, 1234, 0, $sess, array(true));
         $this->assertEquals(1234, $stmt->values[0]);
     }
+    
+    /**
+     * Tests the 'getComparator' method
+     */
+    public function testGetComparator()
+    {
+        $this->assertSame($this->object, $this->object->getComparator());
+    }
+    
+    /**
+     * Tests the 'initial' method
+     */
+    public function testInitial()
+    {
+        $this->assertEquals(0, $this->object->initial());
+    }
+    
+    /**
+     * Tests the 'next' method
+     */
+    public function testNext()
+    {
+        $this->assertEquals(2, $this->object->next(1));
+    }
 }
 
 // Call Xyster_Orm_Type_IntegerTest::main() if this source file is executed directly.
