@@ -23,6 +23,16 @@ require_once 'Xyster/Db/Statement/Stub.php';
 class Xyster_Orm_Type_TestFloatCommon extends PHPUnit_Framework_TestCase
 {
     /**
+     * Tests the 'compare' method
+     */
+    public function testCompare()
+    {
+        $this->assertEquals(1, $this->object->compare(456.123, 123.123));
+        $this->assertEquals(0, $this->object->compare(456.123, 456.123));
+        $this->assertEquals(-1, $this->object->compare(123.123, 456.123));
+    }
+    
+    /**
      * Tests the 'getReturnedType' method
      */
     public function testGetReturnedType()

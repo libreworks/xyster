@@ -51,11 +51,36 @@ class Xyster_Orm_Type_AbstractTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests the 'getFetchType' method
+     * Tests the 'cachePack' method
      */
-    public function testGetFetchType()
+    public function testCachePack()
     {
-        $this->assertNull($this->object->getFetchType());
+        $sess = $this->getMock('Xyster_Orm_Session_Interface');
+        $owner = new stdClass;
+        $this->assertNull($this->object->cachePack(null, $sess, $owner));
+        $this->assertEquals(123, $this->object->cachePack(123, $sess, $owner));
+    }
+
+    /**
+     * Tests the 'cacheUnpack' method
+     */
+    public function testCacheUnpack()
+    {
+        $sess = $this->getMock('Xyster_Orm_Session_Interface');
+        $owner = new stdClass;
+        $this->object->beforeUnpack(null, $sess); // just for code coverage
+        $this->assertNull($this->object->cacheUnpack(null, $sess, $owner));
+        $this->assertEquals(123, $this->object->cacheUnpack(123, $sess, $owner));
+    }
+    
+    /**
+     * Tests the 'compare' method
+     */
+    public function testCompare()
+    {
+        $this->assertEquals(1, $this->object->compare('def', 'abc'));
+        $this->assertEquals(0, $this->object->compare('def', 'def'));
+        $this->assertEquals(-1, $this->object->compare('abc', 'def'));
     }
     
     /**
@@ -64,6 +89,8 @@ class Xyster_Orm_Type_AbstractTest extends PHPUnit_Framework_TestCase
     public function testHasResolve()
     {
         $this->assertFalse($this->object->hasResolve());
+        $sess = $this->getMock('Xyster_Orm_Session_Interface');
+        $this->object->get(array(), 123, $sess);
     }
     
     /**
@@ -121,6 +148,11 @@ class Xyster_Orm_Type_AbstractTest extends PHPUnit_Framework_TestCase
 
 class Xyster_Orm_Type_AbstractImpl extends Xyster_Orm_Type_Abstract
 {    
+    function deepCopy($value)
+    {
+        return $value;
+    }
+    
     /**
      * Gets how many columns are used to persist this type
      *
@@ -136,6 +168,10 @@ class Xyster_Orm_Type_AbstractImpl extends Xyster_Orm_Type_Abstract
      * @return array of {@link Xyster_Db_DataType} objects
      */
     function getDataTypes()
+    {
+    }
+    
+    function getFetchTypes()
     {
     }
     

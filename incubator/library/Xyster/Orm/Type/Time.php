@@ -35,6 +35,29 @@ class Xyster_Orm_Type_Time extends Xyster_Orm_Type_Mutable
      * @var Xyster_Type
      */
     static protected $_type;
+
+    /**
+     * Compare two instances of this type
+     * 
+     * @param mixed $a
+     * @param mixed $b
+     * @return int -1, 0, or 1
+     */
+    public function compare( $a, $b )
+    {
+        return $a->compareTime($b);
+    }
+    
+    /**
+     * Gets a deep copy of the persistent state; stop on entity and collection
+     *
+     * @param mixed $value
+     * @return mixed A copy
+     */
+    public function deepCopy( $value )
+    {
+        return new Zend_Date($value, Zend_Date::TIMES);
+    }
     
     /**
      * Gets the type out of a result set statement

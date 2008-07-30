@@ -33,6 +33,24 @@ class Xyster_Orm_Type_Float extends Xyster_Orm_Type_Immutable
     static protected $_type;
  
     /**
+     * Compare two instances of this type
+     *
+     * @param mixed $a
+     * @param mixed $b
+     * @return int -1, 0, or 1
+     */
+    public function compare( $a, $b )
+    {
+        if ( $a > $b ) {
+            return 1;
+        } else if ( $a == $b ) {
+            return 0;
+        } else {
+            return -1;
+        }
+    }
+    
+    /**
      * Gets the underlying database type
      *
      * @return Xyster_Db_DataType

@@ -52,6 +52,27 @@ class Xyster_Orm_Type_TimeTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Tests the 'compare' method
+     */
+    public function testCompare()
+    {
+        $date = new Zend_Date('11:59:45', Zend_Date::TIMES);
+        $date2 = new Zend_Date('01:23:45', Zend_Date::TIMES);
+        $this->assertEquals(-1, $this->object->compare($date2, $date));
+        $this->assertEquals(0, $this->object->compare($date, $date));
+        $this->assertEquals(1, $this->object->compare($date, $date2));
+    }
+
+    /**
+     * Tests the 'deepCopy' method
+     */
+    public function testDeepCopy()
+    {
+        $date = new Zend_Date('11:59:45', Zend_Date::TIMES);
+        $this->assertEquals($date, $this->object->deepCopy($date));
+    }
+        
+    /**
      * Tests the 'get' method
      */
     public function testGet()
@@ -117,6 +138,9 @@ class Xyster_Orm_Type_TimeTest extends PHPUnit_Framework_TestCase
         $sess = $this->getMock('Xyster_Orm_Session_Interface');
         $date = new Zend_Date('11:59:45', Zend_Date::TIMES);
         $this->object->set($stmt, $date, 0, $sess, array(true));
+        $this->assertEquals($date->get(Zend_Date::TIMES), $stmt->values[0]);
+        
+        $this->object->set($stmt, '11:59:45', 0, $sess, array(true));
         $this->assertEquals($date->get(Zend_Date::TIMES), $stmt->values[0]);
     }
 }

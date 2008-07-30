@@ -32,13 +32,58 @@ require_once 'Zend/Db/Statement/Interface.php';
 interface Xyster_Orm_Type_Interface
 {
     /**
-     * Gets the type out of a result set statement
+     * Called before the unpack to allow batch fetching of uncached entities
+     *
+     * @param unknown_type $cached
+     * @param Xyster_Orm_Session_Interface $sess
+     */
+    function beforeUnpack( $cached, Xyster_Orm_Session_Interface $sess );
+    
+    /**
+     * Return a cacheable copy of the object
+     *
+     * @param mixed $value
+     * @param Xyster_Orm_Session_Interface $sess
+     * @param object $owner
+     * @return mixed Disassembled, deep copy
+     */
+    function cachePack( $value, Xyster_Orm_Session_Interface $sess, $owner );
+    
+    /**
+     * Reconstruct the object from its cached copy
+     *
+     * @param mixed $cached
+     * @param Xyster_Orm_Session_Interface $sess
+     * @param object $owner
+     * @return mixed The reconstructed value
+     */
+    function cacheUnpack( $cached, Xyster_Orm_Session_Interface $sess, $owner );
+    
+    /**
+     * Compare two instances of this type
+     *
+     * @param mixed $a
+     * @param mixed $b
+     * @return int -1, 0, or 1
+     */
+    function compare( $a, $b );
+    
+    /**
+     * Gets a deep copy of the persistent state; stop on entity and collection
+     *
+     * @param mixed $value
+     * @return mixed A copy
+     */
+    function deepCopy( $value );
+    
+    /**
+     * Resolves the value pulled from the statement into the proper type
      *
      * @param array $values The values returned from the result fetch
      * @param object $owner The owning entity
      * @param Xyster_Orm_Session_Interface $sess The ORM session
      */
-    function get(array $values, $owner, Xyster_Orm_Session_Interface $sess );
+    function get( array $values, $owner, Xyster_Orm_Session_Interface $sess );
     
     /**
      * Gets how many columns are used to persist this type
@@ -55,13 +100,13 @@ interface Xyster_Orm_Type_Interface
     function getDataTypes();
 
     /**
-     * Gets the fetch type for binding
+     * Gets the fetch types for binding
      * 
      * See the Zend_Db::PARAM_* constants.
      *
-     * @return int
+     * @return array
      */
-    function getFetchType();
+    function getFetchTypes();
         
     /**
      * Returns the type name

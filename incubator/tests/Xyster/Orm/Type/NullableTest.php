@@ -50,7 +50,7 @@ class Xyster_Orm_Type_NullableTest extends PHPUnit_Framework_TestCase
     {
         $this->object = new Xyster_Orm_Type_NullableImpl;
     }
-
+    
     /**
      * Tests the 'getColumnSpan' method
      */
@@ -69,6 +69,23 @@ class Xyster_Orm_Type_NullableTest extends PHPUnit_Framework_TestCase
         $this->assertType('Xyster_Db_DataType', $types[0]);
     }
 
+    /**
+     * Tests the 'getFetchType' method
+     *
+     */
+    public function testGetFetchTypes()
+    {
+        $this->assertType('array', $this->object->getFetchTypes());
+    }
+    
+    /**
+     * Tests the 'getFetchType' method
+     */
+    public function testGetFetchType()
+    {
+        $this->assertNull($this->object->getFetchType());
+    }
+    
     /**
      * Tests the 'isDirty' method
      */
@@ -92,6 +109,10 @@ class Xyster_Orm_Type_NullableTest extends PHPUnit_Framework_TestCase
 
 class Xyster_Orm_Type_NullableImpl extends Xyster_Orm_Type_Nullable
 {
+    function deepCopy($value)
+    {
+    }
+    
     function getDataType()
     {
         return Xyster_Db_DataType::Varchar();

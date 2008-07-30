@@ -52,6 +52,16 @@ class Xyster_Orm_Type_IntegerTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Tests the 'compare' method
+     */
+    public function testCompare()
+    {
+        $this->assertEquals(1, $this->object->compare(456, 123));
+        $this->assertEquals(0, $this->object->compare(456, 456));
+        $this->assertEquals(-1, $this->object->compare(123, 456));
+    }
+    
+    /**
      * Tests the 'getDataType' method
      */
     public function testGetDataType()

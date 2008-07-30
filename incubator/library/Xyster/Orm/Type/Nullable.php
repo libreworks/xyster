@@ -34,7 +34,7 @@ require_once 'Zend/Db.php';
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 abstract class Xyster_Orm_Type_Nullable extends Xyster_Orm_Type_Abstract
-{
+{    
     /**
      * Gets how many columns are used to persist this type
      *
@@ -55,6 +55,28 @@ abstract class Xyster_Orm_Type_Nullable extends Xyster_Orm_Type_Abstract
         return array($this->getDataType());
     }
     
+    /**
+     * Gets the fetch type for binding
+     *
+     * This should be overridden if there is a specific fetch type that applies 
+     * 
+     * @return int
+     */
+    public function getFetchType()
+    {
+        return null;
+    }
+        
+    /**
+     * Gets an array of fetch types for the columns
+     *
+     * @return array of int
+     */
+    public function getFetchTypes()
+    {
+        return array($this->getFetchType());
+    }
+        
     /**
      * Tests whether an object is dirty
      *

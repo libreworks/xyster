@@ -28,6 +28,17 @@ require_once 'Xyster/Orm/Type/Nullable.php';
 abstract class Xyster_Orm_Type_Immutable extends Xyster_Orm_Type_Nullable
 {
     /**
+     * Gets a deep copy of the persistent state; stop on entity and collection
+     *
+     * @param mixed $value
+     * @return mixed A copy
+     */
+    public function deepCopy( $value )
+    {
+        return $value;
+    }
+    
+    /**
      * Whether this type can be altered 
      *
      * @return boolean
