@@ -94,14 +94,14 @@ class Xyster_Orm_Mapping_PropertyTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests the 'getPersistentClass' and 'getPersistentClass' methods
+     * Tests the 'getEntityMapping' and 'setEntityMapping' methods
      */
     public function testGetAndSetPersistentClass()
     {
-        require_once 'Xyster/Orm/Mapping/PersistentClass.php';
-        $pc = new Xyster_Orm_Mapping_PersistentClass;
-        $this->assertSame($this->object, $this->object->setPersistentClass($pc));
-        $this->assertSame($pc, $this->object->getPersistentClass());
+        require_once 'Xyster/Orm/Mapping/Entity.php';
+        $pc = new Xyster_Orm_Mapping_Entity;
+        $this->assertSame($this->object, $this->object->setEntityMapping($pc));
+        $this->assertSame($pc, $this->object->getEntityMapping());
     }
 
     /**

@@ -14,6 +14,18 @@
  * @version   $Id$
  */
 /**
+ * @see Xyster_Db_Table
+ */
+require_once 'Xyster/Db/Table.php';
+/**
+ * @see Xyster_Orm_Mapping_Property
+ */
+require_once 'Xyster/Orm/Mapping/Property.php';
+/**
+ * @see Xyster_Type
+ */
+require_once 'Xyster/Type.php';
+/**
  * The persistence and meta information about an entity type
  *
  * @category  Xyster
@@ -56,12 +68,17 @@ class Xyster_Orm_Mapping_Entity
     /**
      * @var array
      */
-    protected $_properties;
+    protected $_properties = array();
     
     /**
      * @var Xyster_Db_Table
      */
     protected $_table;
+    
+    /**
+     * @var Xyster_Type
+     */
+    protected $_tuplizerType;
     
     /**
      * @var Xyster_Orm_Mapping_Property
@@ -76,7 +93,8 @@ class Xyster_Orm_Mapping_Entity
      */
     public function addProperty( Xyster_Orm_Mapping_Property $prop )
     {
-        
+        $this->_properties[$prop->getName()] = $prop;
+        return $this;
     }
     
     /**
@@ -86,7 +104,7 @@ class Xyster_Orm_Mapping_Entity
      */
     public function getClassName()
     {
-        
+        return $this->_name;
     }
     
     /**
@@ -96,7 +114,7 @@ class Xyster_Orm_Mapping_Entity
      */
     public function getIdentifier()
     {
-        
+        return $this->_identifier;
     }
     
     /**
@@ -106,7 +124,7 @@ class Xyster_Orm_Mapping_Entity
      */
     public function getLoaderType()
     {
-        
+        return $this->_loaderType;
     }
     
     /**
@@ -116,7 +134,7 @@ class Xyster_Orm_Mapping_Entity
      */
     public function getMappedType()
     {
-        
+        return new Xyster_Type($this->_name);
     }
     
     /**
@@ -126,7 +144,7 @@ class Xyster_Orm_Mapping_Entity
      */
     public function getPersisterType()
     {
-        
+        return $this->_persisterType;
     }
     
     /**
@@ -136,7 +154,7 @@ class Xyster_Orm_Mapping_Entity
      */
     public function getProperties()
     {
-        
+        return array() + $this->_properties;
     }
     
     /**
@@ -148,7 +166,11 @@ class Xyster_Orm_Mapping_Entity
      */
     public function getProperty( $name )
     {
-        
+        if ( !array_key_exists($name, $this->_properties) ) {
+            require_once 'Xyster/Orm/Mapping/Exception.php';
+            throw new Xyster_Orm_Mapping_Exception('Property not found: ' . $name);
+        }
+        return $this->_properties[$name];
     }
     
     /**
@@ -158,7 +180,17 @@ class Xyster_Orm_Mapping_Entity
      */
     public function getTable()
     {
-        
+        return $this->_table;
+    }
+    
+    /**
+     * Gets the type of tuplizer for this entity type
+     *
+     * @return Xyster_Type
+     */
+    public function getTuplizerType()
+    {
+        return $this->_tuplizerType;
     }
     
     /**
@@ -168,7 +200,7 @@ class Xyster_Orm_Mapping_Entity
      */
     public function getVersion()
     {
-        
+        return $this->_version;
     }
     
     /**
@@ -176,9 +208,9 @@ class Xyster_Orm_Mapping_Entity
      * 
      * @return boolean
      */
-    public function hasIdentifierProperty()
+    public function hasIdentifier()
     {
-        
+        return $this->_identifier !== null;
     }
     
     /**
@@ -188,16 +220,17 @@ class Xyster_Orm_Mapping_Entity
      */
     public function isLazy()
     {
-        
+        return $this->_lazy;
     }
     
     /**
      * Whether the mapped type is mutable
      *
+     * @return boolean
      */
     public function isMutable()
     {
-        
+        return $this->_mutable;
     }
     
     /**
@@ -207,7 +240,19 @@ class Xyster_Orm_Mapping_Entity
      */
     public function isVersioned()
     {
-        
+        return $this->_version !== null;
+    }
+    
+    /**
+     * Sets the class name of the entity supported
+     *
+     * @param string $name The entity class name
+     * @return Xyster_Orm_Mapping_Entity provides a fluent interface
+     */
+    public function setClassName( $name )
+    {
+        $this->_name = $name;
+        return $this;
     }
     
     /**
@@ -218,7 +263,8 @@ class Xyster_Orm_Mapping_Entity
      */
     public function setIdentifier( Xyster_Orm_Mapping_Property $prop )
     {
-        
+        $this->_identifier = $prop;
+        return $this;
     }
     
     /**
@@ -229,7 +275,8 @@ class Xyster_Orm_Mapping_Entity
      */
     public function setLazy( $lazy = true )
     {
-        
+        $this->_lazy = $lazy;
+        return $this;
     }
     
     /**
@@ -240,7 +287,8 @@ class Xyster_Orm_Mapping_Entity
      */
     public function setLoaderType( Xyster_Type $type )
     {
-        
+        $this->_loaderType = $type;
+        return $this;
     }
     
     /**
@@ -251,7 +299,8 @@ class Xyster_Orm_Mapping_Entity
      */
     public function setMutable( $mutable = true )
     {
-        
+        $this->_mutable = $mutable;
+        return $this;
     }
     
     /**
@@ -262,7 +311,8 @@ class Xyster_Orm_Mapping_Entity
      */
     public function setPersisterType( Xyster_Type $type )
     {
-        
+        $this->_persisterType = $type;
+        return $this;
     }
     
     /**
@@ -273,7 +323,20 @@ class Xyster_Orm_Mapping_Entity
      */
     public function setTable( Xyster_Db_Table $table )
     {
-        
+        $this->_table = $table;
+        return $this;
+    }
+    
+    /**
+     * Sets the type of tuplizer for this entity type
+     *
+     * @param Xyster_Type $type
+     * @return Xyster_Orm_Mapping_Entity provides a fluent interface
+     */
+    public function setTuplizerType( Xyster_Type $type )
+    {
+        $this->_tuplizerType = $type;
+        return $this;
     }
     
     /**
@@ -284,6 +347,7 @@ class Xyster_Orm_Mapping_Entity
      */
     public function setVersion( Xyster_Orm_Mapping_Property $prop )
     {
-        
+        $this->_version = $prop;
+        return $this;
     }
 }

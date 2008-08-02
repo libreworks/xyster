@@ -36,7 +36,7 @@ class Xyster_Orm_Mapping_Property
      */
     protected $_name;
     /**
-     * @var Xyster_Orm_Mapping_PersistentClass
+     * @var Xyster_Orm_Mapping_Entity
      */
     protected $_pc;
     /**
@@ -87,9 +87,9 @@ class Xyster_Orm_Mapping_Property
     /**
      * Gets the entity class information
      *
-     * @return Xyster_Orm_Mapping_PersistentClass
+     * @return Xyster_Orm_Mapping_Entity
      */
-    public function getPersistentClass()
+    public function getEntityMapping()
     {
         return $this->_pc;
     }
@@ -173,12 +173,12 @@ class Xyster_Orm_Mapping_Property
     /**
      * Sets the entity class information
      *
-     * @param Xyster_Orm_Mapping_PersistentClass $pc
+     * @param Xyster_Orm_Mapping_Entity $entity
      * @return Xyster_Orm_Mapping_Property provides a fluent interface
      */
-    public function setPersistentClass( Xyster_Orm_Mapping_PersistentClass $pc )
+    public function setEntityMapping( Xyster_Orm_Mapping_Entity $entity )
     {
-        $this->_pc = $pc;
+        $this->_pc = $entity;
         return $this;
     }
     

@@ -23,6 +23,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
  */
 require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
+require_once 'Xyster/Orm/Mapping/EntityTest.php';
 require_once 'Xyster/Orm/Mapping/PropertyTest.php';
 require_once 'Xyster/Orm/Mapping/ValueTest.php';
 require_once 'Xyster/Orm/Type/AbstractTest.php';
@@ -51,6 +52,7 @@ class Xyster_Orm_AllTests
     public static function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('Xyster Framework - Xyster_Orm');
+        $suite->addTestSuite('Xyster_Orm_Mapping_EntityTest');
         $suite->addTestSuite('Xyster_Orm_Mapping_PropertyTest');
         $suite->addTestSuite('Xyster_Orm_Mapping_ValueTest');
         $suite->addTestSuite('Xyster_Orm_Type_AbstractTest');
