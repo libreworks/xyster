@@ -21,7 +21,7 @@
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Orm_Mapping_Class
+class Xyster_Orm_Mapping_Entity
 {
     /**
      * @var Xyster_Orm_Mapping_Property
@@ -72,7 +72,7 @@ class Xyster_Orm_Mapping_Class
      * Adds a property to the class
      *
      * @param Xyster_Orm_Mapping_Property $prop
-     * @return Xyster_Orm_Mapping_Class provides a fluent interface
+     * @return Xyster_Orm_Mapping_Entity provides a fluent interface
      */
     public function addProperty( Xyster_Orm_Mapping_Property $prop )
     {
@@ -214,7 +214,7 @@ class Xyster_Orm_Mapping_Class
      * Sets the identifier property
      *
      * @param Xyster_Orm_Mapping_Property $prop
-     * @return Xyster_Orm_Mapping_Class provides a fluent interface
+     * @return Xyster_Orm_Mapping_Entity provides a fluent interface
      */
     public function setIdentifier( Xyster_Orm_Mapping_Property $prop )
     {
@@ -225,7 +225,7 @@ class Xyster_Orm_Mapping_Class
      * Sets whether this type has lazy loaded parts or not
      *
      * @param boolean $lazy
-     * @return Xyster_Orm_Mapping_Class provides a fluent interface
+     * @return Xyster_Orm_Mapping_Entity provides a fluent interface
      */
     public function setLazy( $lazy = true )
     {
@@ -236,7 +236,7 @@ class Xyster_Orm_Mapping_Class
      * Sets the loader for this entity type
      *
      * @param Xyster_Type $type
-     * @return Xyster_Orm_Mapping_Class provides a fluent interface
+     * @return Xyster_Orm_Mapping_Entity provides a fluent interface
      */
     public function setLoaderType( Xyster_Type $type )
     {
@@ -247,7 +247,7 @@ class Xyster_Orm_Mapping_Class
      * Sets whether this type is mutable or not
      *
      * @param boolean $mutable
-     * @return Xyster_Orm_Mapping_Class provides a fluent interface
+     * @return Xyster_Orm_Mapping_Entity provides a fluent interface
      */
     public function setMutable( $mutable = true )
     {
@@ -258,7 +258,7 @@ class Xyster_Orm_Mapping_Class
      * Sets the persister for this entity type
      *
      * @param Xyster_Type $type
-     * @return Xyster_Orm_Mapping_Class provides a fluent interface
+     * @return Xyster_Orm_Mapping_Entity provides a fluent interface
      */
     public function setPersisterType( Xyster_Type $type )
     {
@@ -269,7 +269,7 @@ class Xyster_Orm_Mapping_Class
      * Sets the table for this type
      *
      * @param Xyster_Db_Table $table The table
-     * @return Xyster_Orm_Mapping_Class provides a fluent interface
+     * @return Xyster_Orm_Mapping_Entity provides a fluent interface
      */
     public function setTable( Xyster_Db_Table $table )
     {
@@ -280,7 +280,7 @@ class Xyster_Orm_Mapping_Class
      * Sets the version property for this type
      *
      * @param Xyster_Orm_Mapping_Property $prop The property
-     * @return Xyster_Orm_Mapping_Class provides a fluent interface
+     * @return Xyster_Orm_Mapping_Entity provides a fluent interface
      */
     public function setVersion( Xyster_Orm_Mapping_Property $prop )
     {
