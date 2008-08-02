@@ -127,6 +127,40 @@ class Xyster_Orm_Mapping_PropertyTest extends PHPUnit_Framework_TestCase
         $this->assertSame($this->object, $this->object->setLazy(false));
         $this->assertFalse($this->object->isLazy());
     }
+    
+    /**
+     * Tests the 'isOptimisticLocked' and 'setOptimisticLocked' methods
+     */
+    public function testIsAndSetOptimisticLocked()
+    {
+        $this->assertFalse($this->object->isOptimisticLocked());
+        $this->assertSame($this->object, $this->object->setOptimisticLocked());
+        $this->assertTrue($this->object->isOptimisticLocked());
+        $this->assertSame($this->object, $this->object->setOptimisticLocked(false));
+        $this->assertFalse($this->object->isOptimisticLocked());
+    }
+    
+    /**
+     * Tests the 'isOptional' and 'setOptional' methods
+     */
+    public function testIsAndSetOptional()
+    {
+        require_once 'Xyster/Db/Column.php';
+        $col = new Xyster_Db_Column('foobar');
+        require_once 'Xyster/Orm/Mapping/Value.php';
+        $val = new Xyster_Orm_Mapping_Value();
+        $val->addColumn($col);
+        require_once 'Xyster/Orm/Type/String.php';
+        $type = new Xyster_Orm_Type_String;
+        $val->setType($type);
+        
+        $this->object->setValue($val);
+        $this->assertTrue($this->object->isOptional());
+        $this->object->setOptional(false);
+        $this->assertTrue($this->object->isOptional());
+        $col->setNullable(false);
+        $this->assertFalse($this->object->isOptional());
+    }
 }
 
 // Call Xyster_Orm_Mapping_PropertyTest::main() if this source file is executed directly.

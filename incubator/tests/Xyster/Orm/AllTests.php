@@ -26,6 +26,9 @@ require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHe
 require_once 'Xyster/Orm/Mapping/EntityTest.php';
 require_once 'Xyster/Orm/Mapping/PropertyTest.php';
 require_once 'Xyster/Orm/Mapping/ValueTest.php';
+require_once 'Xyster/Orm/Runtime/Property/IdentifierTest.php';
+require_once 'Xyster/Orm/Runtime/Property/StandardTest.php';
+require_once 'Xyster/Orm/Runtime/Property/VersionTest.php';
 require_once 'Xyster/Orm/Type/AbstractTest.php';
 require_once 'Xyster/Orm/Type/BigIntegerTest.php';
 require_once 'Xyster/Orm/Type/BooleanTest.php';
@@ -55,6 +58,9 @@ class Xyster_Orm_AllTests
         $suite->addTestSuite('Xyster_Orm_Mapping_EntityTest');
         $suite->addTestSuite('Xyster_Orm_Mapping_PropertyTest');
         $suite->addTestSuite('Xyster_Orm_Mapping_ValueTest');
+        $suite->addTestSuite('Xyster_Orm_Runtime_Property_IdentifierTest');
+        $suite->addTestSuite('Xyster_Orm_Runtime_Property_StandardTest');
+        $suite->addTestSuite('Xyster_Orm_Runtime_Property_VersionTest');
         $suite->addTestSuite('Xyster_Orm_Type_AbstractTest');
         $suite->addTestSuite('Xyster_Orm_Type_BigIntegerTest');
         $suite->addTestSuite('Xyster_Orm_Type_BooleanTest');

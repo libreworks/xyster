@@ -36,6 +36,14 @@ class Xyster_Orm_Mapping_Property
      */
     protected $_name;
     /**
+     * @var boolean
+     */
+    protected $_optimisticLocked = false;
+    /**
+     * @var boolean
+     */
+    protected $_optional = false;
+    /**
      * @var Xyster_Orm_Mapping_Entity
      */
     protected $_pc;
@@ -135,6 +143,36 @@ class Xyster_Orm_Mapping_Property
     }
 
     /**
+     * Whether this property is nullable
+     *
+     * @return boolean
+     */
+    public function isNullable()
+    {
+        return $this->_value === null || $this->_value->isNullable();
+    }
+    
+    /**
+     * Whether this property is optimistic locked
+     *
+     * @return boolean
+     */
+    public function isOptimisticLocked()
+    {
+        return $this->_optimisticLocked;
+    }
+    
+    /**
+     * Whether the property is optional
+     *
+     * @return boolean
+     */
+    public function isOptional()
+    {
+        return $this->_optional || $this->isNullable();
+    }
+    
+    /**
      * Sets that this property is lazy-loaded
      *
      * @param boolean $flag
@@ -167,6 +205,30 @@ class Xyster_Orm_Mapping_Property
     public function setName( $name )
     {
         $this->_name = $name;
+        return $this;
+    }
+    
+    /**
+     * Sets whether the property is opmitistic locked
+     *
+     * @param boolean $flag
+     * @return Xyster_Orm_Mapping_Property provides a fluent interface
+     */
+    public function setOptimisticLocked( $flag = true )
+    {
+        $this->_optimisticLocked = $flag;
+        return $this;
+    }
+    
+    /**
+     * Sets whether the property is optional
+     *
+     * @param boolean $flag
+     * @return Xyster_Orm_Mapping_Property provides a fluent interface
+     */
+    public function setOptional( $flag = true )
+    {
+        $this->_optional = $flag;
         return $this;
     }
     
