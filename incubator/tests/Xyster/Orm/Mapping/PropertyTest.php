@@ -73,6 +73,18 @@ class Xyster_Orm_Mapping_PropertyTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Tests the 'getGeneration' and 'setGeneration' methods
+     */
+    public function testGetAndSetGeneration()
+    {
+        require_once 'Xyster/Orm/Mapping/Generation.php';
+        $generation = Xyster_Orm_Mapping_Generation::Always();
+        $this->assertSame(Xyster_Orm_Mapping_Generation::Never(), $this->object->getGeneration());
+        $this->object->setGeneration($generation);
+        $this->assertSame($generation, $this->object->getGeneration());
+    }
+    
+    /**
      * Tests the 'getMapper' and 'setMapper' methods
      */
     public function testGetAndSetMapper()

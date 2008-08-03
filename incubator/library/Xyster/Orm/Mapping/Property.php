@@ -14,6 +14,10 @@
  * @version   $Id$
  */
 /**
+ * @see Xyster_Orm_Mapping_Generation
+ */
+require_once 'Xyster/Orm/Mapping/Generation.php';
+/**
  * An entity or component property
  *
  * @category  Xyster
@@ -23,6 +27,10 @@
  */
 class Xyster_Orm_Mapping_Property
 {
+    /**
+     * @var Xyster_Orm_Mapping_Generation
+     */
+    protected $_generation;
     /**
      * @var boolean
      */
@@ -53,6 +61,14 @@ class Xyster_Orm_Mapping_Property
     protected $_value;
     
     /**
+     * Creates a new Property mapping
+     */
+    public function __construct()
+    {
+        $this->_generation = Xyster_Orm_Mapping_Generation::Never();
+    }
+    
+    /**
      * Gets the columns in the property
      *
      * @return array of {@link Xyster_Db_Column} objects
@@ -70,6 +86,16 @@ class Xyster_Orm_Mapping_Property
     public function getColumnSpan()
     {
         return $this->_value->getColumnSpan();
+    }
+    
+    /**
+     * Gets the property generation for this property
+     *
+     * @return Xyster_Orm_Mapping_Generation
+     */
+    public function getGeneration()
+    {
+        return $this->_generation;
     }
     
     /**
@@ -170,6 +196,18 @@ class Xyster_Orm_Mapping_Property
     public function isOptional()
     {
         return $this->_optional || $this->isNullable();
+    }
+    
+    /**
+     * Sets the property generation
+     *
+     * @param Xyster_Orm_Mapping_Generation $generation
+     * @return Xyster_Orm_Mapping_Property provides a fluent interface
+     */
+    public function setGeneration( Xyster_Orm_Mapping_Generation $generation )
+    {
+        $this->_generation = $generation;
+        return $this;
     }
     
     /**
