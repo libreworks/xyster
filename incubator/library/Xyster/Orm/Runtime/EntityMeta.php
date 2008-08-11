@@ -112,6 +112,10 @@ class Xyster_Orm_Runtime_EntityMeta
      */
     private $_sessionFactory;
     /**
+     * @var Xyster_Orm_Tuplizer_Entity_Interface
+     */
+    private $_tuplizer;
+    /**
      * @var array 
      */
     private $_updateInclusions = array();
@@ -127,12 +131,52 @@ class Xyster_Orm_Runtime_EntityMeta
     /**
      * Creates a new runtime entity meta object
      *
-     * @param Xyster_Orm_Mapping_Entity $entityMapping
+     * @param Xyster_Orm_Mapping_Entity $em
      * @param Xyster_Orm_Session_Factory_Interface $sessionFactory
      */
-    public function __construct( Xyster_Orm_Mapping_Entity $entityMapping, Xyster_Orm_Session_Factory_Interface $sessionFactory )
+    public function __construct( Xyster_Orm_Mapping_Entity $em, Xyster_Orm_Session_Factory_Interface $sessionFactory )
     {
+        $this->_sessionFactory = $sessionFactory;
+        $this->_name = $em->getClassName();
         
+        $this->_optimisticLockMode = $em->getOptimisticLockMode();
+        $this->_mutable = (boolean)$em->isMutable();
+        $this->_versioned = (boolean)$em->isVersioned();
+        $this->_selectBeforeUpdate = (boolean)$em->isSelectBeforeUpdate();
+        $this->_lazy = (boolean)$em->isLazy();
+        
+        $props = (array)$em->getProperties();
+        $this->_propertySpan = count($props);
+        $foundCollection = false;
+        $foundInsertGenerated = false;
+        $foundUpdateGenerated = false;
+        foreach( $props as $i => $prop ) {
+            /* @var $prop Xyster_Orm_Mapping_Property */
+            if ( $prop === $em->getVersion() ) {
+                $this->_versionPropertyIndex = $i;
+                // $this->_properties[$i] = 
+                $this->_properties[$i] = null;
+            } else {
+                // $this->_properties[$i] = 
+                $this->_properties[$i] = null;
+            }
+            if ( $prop->getName() == 'id' ) {
+                $this->_hasNonIdentifierPropertyNamedId = true;
+            }
+            $lazy = $prop->isLazy();
+            if ( $lazy ) { 
+                $this->_hasLazyProperties = true;
+            }
+            $this->_propertyLaziness[$i] = $prop->isLazy();
+            $this->_propertyNames[$i] = $prop->getName();
+            $this->_propertyTypes[$i] = $prop->getType();
+            $this->_propertyNullability[$i] = $prop->isNullable();
+            // $this->_propertyVersionability[$i] =
+            if ( $prop->getType()->isMutable() ) {
+                $this->_hasMutableProperties = true;
+            }
+            $this->_propertyIndexes[$prop->getName()] = $i;
+        }
     }
     
     /**
@@ -142,7 +186,7 @@ class Xyster_Orm_Runtime_EntityMeta
      */
     public function getIdentifier()
     {
-        
+        return $this->_identifierProperty;
     }
     
     /**
@@ -152,7 +196,7 @@ class Xyster_Orm_Runtime_EntityMeta
      */
     public function getName()
     {
-        
+        return $this->_name;
     }
     
     /**
@@ -162,7 +206,7 @@ class Xyster_Orm_Runtime_EntityMeta
      */
     public function getOptimisticLockMode()
     {
-        
+        return $this->_optimisticLockMode;
     }
     
     /**
@@ -174,7 +218,7 @@ class Xyster_Orm_Runtime_EntityMeta
      */
     public function getProperties()
     {
-        
+        return array() + $this->_properties;
     }
     
     /**
@@ -187,7 +231,14 @@ class Xyster_Orm_Runtime_EntityMeta
      */
     public function getPropertyIndex( $name, $nullIfNone = false )
     {
+        if ( array_key_exists($name, $this->_propertyIndexes) ) {
+            return $this->_propertyIndexes[$name];
+        } else if ( $nullIfNone) {
+            return null;
+        }
         
+        require_once 'Xyster/Orm/Exception.php';
+        throw new Xyster_Orm_Exception('Property not found: ' . $name);
     }
     
     /**
@@ -197,7 +248,7 @@ class Xyster_Orm_Runtime_EntityMeta
      */
     public function getPropertyLaziness()
     {
-        
+        return $this->_propertyLaziness;
     }
     
     /**
@@ -207,7 +258,7 @@ class Xyster_Orm_Runtime_EntityMeta
      */
     public function getPropertyNames()
     {
-        
+        return $this->_propertyNames;
     }
     
     /**
@@ -217,7 +268,7 @@ class Xyster_Orm_Runtime_EntityMeta
      */
     public function getPropertyNullability()
     {
-        
+        return $this->_propertyNullability;
     }
     
     /**
@@ -227,7 +278,7 @@ class Xyster_Orm_Runtime_EntityMeta
      */
     public function getPropertySpan()
     {
-        
+        return $this->_propertySpan;
     }
     
     /**
@@ -237,7 +288,7 @@ class Xyster_Orm_Runtime_EntityMeta
      */
     public function getPropertyTypes()
     {
-        
+        return $this->_propertyTypes;
     }
     
     /**
@@ -247,7 +298,7 @@ class Xyster_Orm_Runtime_EntityMeta
      */
     public function getPropertyVersionability()
     {
-        
+        return $this->_propertyVersionability;
     }
     
     /**
@@ -257,7 +308,7 @@ class Xyster_Orm_Runtime_EntityMeta
      */
     public function getSessionFactory()
     {
-        
+        return $this->_sessionFactory;
     }
     
     /**
@@ -267,7 +318,7 @@ class Xyster_Orm_Runtime_EntityMeta
      */
     public function getTuplizer()
     {
-        
+        return $this->_tuplizer;
     }
     
     /**
@@ -277,7 +328,8 @@ class Xyster_Orm_Runtime_EntityMeta
      */
     public function getVersion()
     {
-        
+        return ( $this->_versioned ) ?
+            $this->_properties[$this->_versionPropertyIndex] : null;
     }
     
     /**
@@ -287,7 +339,7 @@ class Xyster_Orm_Runtime_EntityMeta
      */
     public function getVersionIndex()
     {
-        
+        return $this->_versionPropertyIndex;
     }
     
     /**
@@ -297,7 +349,7 @@ class Xyster_Orm_Runtime_EntityMeta
      */
     public function hasCollections()
     {
-        
+        return $this->_hasCollections;
     }
     
     /**
@@ -307,7 +359,7 @@ class Xyster_Orm_Runtime_EntityMeta
      */
     public function hasInsertGeneratedValues()
     {
-        
+        return $this->_hasInsertGeneratedValues;
     }
     
     /**
@@ -317,7 +369,7 @@ class Xyster_Orm_Runtime_EntityMeta
      */
     public function hasLazyProperties()
     {
-        
+        return $this->_hasLazyProperties;
     }
     
     /**
@@ -327,7 +379,7 @@ class Xyster_Orm_Runtime_EntityMeta
      */
     public function hasMutableProperties()
     {
-        
+        return $this->_hasMutableProperties;
     }
     
     /**
@@ -337,7 +389,7 @@ class Xyster_Orm_Runtime_EntityMeta
      */
     public function hasNonIdentifierPropertyNamedId()
     {
-        
+        return $this->_hasNonIdentifierPropertyNamedId;
     }
     
     /**
@@ -347,7 +399,7 @@ class Xyster_Orm_Runtime_EntityMeta
      */
     public function hasUpdateGeneratedValues()
     {
-        
+        return $this->_hasUpdateGeneratedValues;
     }
     
     /**
@@ -357,7 +409,7 @@ class Xyster_Orm_Runtime_EntityMeta
      */
     public function isLazy()
     {
-        
+        return $this->_lazy;
     }
     
     /**
@@ -367,7 +419,7 @@ class Xyster_Orm_Runtime_EntityMeta
      */
     public function isMutable()
     {
-        
+        return $this->_mutable;
     }
     
     /**
@@ -377,7 +429,7 @@ class Xyster_Orm_Runtime_EntityMeta
      */
     public function isSelectBeforeUpdate()
     {
-        
+        return $this->_selectBeforeUpdate;
     }
     
     /**
@@ -387,7 +439,7 @@ class Xyster_Orm_Runtime_EntityMeta
      */
     public function isVersioned()
     {
-        
+        return $this->_versioned;
     }
     
     /**
@@ -398,7 +450,8 @@ class Xyster_Orm_Runtime_EntityMeta
      */
     public function setLazy( $lazy = true )
     {
-        
+        $this->_lazy = $lazy;
+        return $this;
     }
     
     /**
@@ -408,6 +461,11 @@ class Xyster_Orm_Runtime_EntityMeta
      */
     public function __toString()
     {
-        
+        return 'EntityMeta(' . $this->getName() . ')';
+    }
+    
+    protected static function _buildIdentifierProperty(Xyster_Orm_Mapping_Entity $em, Xyster_Orm_Engine_IdGenerator_Interface $generator)
+    {
+        $unsavedValue = null;
     }
 }

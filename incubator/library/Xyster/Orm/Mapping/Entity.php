@@ -22,6 +22,10 @@ require_once 'Xyster/Db/Table.php';
  */
 require_once 'Xyster/Orm/Mapping/Property.php';
 /**
+ * @see Xyster_Orm_Engine_Versioning
+ */
+require_once 'Xyster/Orm/Engine/Versioning.php';
+/**
  * @see Xyster_Type
  */
 require_once 'Xyster/Type.php';
@@ -61,6 +65,11 @@ class Xyster_Orm_Mapping_Entity
     protected $_name;
 
     /**
+     * @var Xyster_Orm_Engine_Versioning
+     */
+    protected $_optimisticLock;
+    
+    /**
      * @var Xyster_Type
      */
     protected $_persisterType;
@@ -69,6 +78,11 @@ class Xyster_Orm_Mapping_Entity
      * @var array
      */
     protected $_properties = array();
+    
+    /**
+     * @var boolean
+     */
+    protected $_selectBeforeUpdate = false;
     
     /**
      * @var Xyster_Db_Table
@@ -135,6 +149,16 @@ class Xyster_Orm_Mapping_Entity
     public function getMappedType()
     {
         return new Xyster_Type($this->_name);
+    }
+    
+    /**
+     * Gets the mode of optimistic locking 
+     *
+     * @return Xyster_Orm_Engine_Versioning
+     */
+    public function getOptimisticLockMode()
+    {
+        return $this->_optimisticLock;
     }
     
     /**
@@ -232,6 +256,16 @@ class Xyster_Orm_Mapping_Entity
     {
         return $this->_mutable;
     }
+ 
+    /**
+     * Whether this type should be selected before it's updated
+     *
+     * @return boolean
+     */
+    public function isSelectBeforeUpdate()
+    {
+        return $this->_selectBeforeUpdate;
+    }
     
     /**
      * Gets whether the entity has a version property
@@ -304,6 +338,18 @@ class Xyster_Orm_Mapping_Entity
     }
     
     /**
+     * Sets the mode of optimistic locking 
+     *
+     * @param Xyster_Orm_Engine_Versioning $mode
+     * @return Xyster_Orm_Mapping_Entity provides a fluent interface
+     */
+    public function setOptimisticLockMode( Xyster_Orm_Engine_Versioning $mode )
+    {
+        $this->_optimisticLock = $mode;
+        return $this;
+    }
+    
+    /**
      * Sets the persister for this entity type
      *
      * @param Xyster_Type $type
@@ -312,6 +358,18 @@ class Xyster_Orm_Mapping_Entity
     public function setPersisterType( Xyster_Type $type )
     {
         $this->_persisterType = $type;
+        return $this;
+    }
+    
+    /**
+     * Sets that a select must be performed before an update occurs
+     *
+     * @param boolean $flag
+     * @return Xyster_Orm_Mapping_Entity provides a fluent interface
+     */
+    public function setSelectBeforeUpdate( $flag = true )
+    {
+        $this->_selectBeforeUpdate = $flag;
         return $this;
     }
     

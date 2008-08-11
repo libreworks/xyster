@@ -22,6 +22,10 @@ require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR 
 require_once 'Xyster/Orm/Runtime/EntityMeta.php';
 require_once 'Xyster/Orm/Session/Factory/Interface.php';
 require_once 'Xyster/Orm/Mapping/Entity.php';
+require_once 'Xyster/Orm/Mapping/Value.php';
+require_once 'Xyster/Orm/Type/Integer.php';
+require_once 'Xyster/Orm/Runtime/Property/Identifier.php';
+require_once 'Xyster/Orm/Tuplizer/Entity/Interface.php';
 
 /**
  * Test class for Xyster_Orm_Runtime_EntityMeta.
@@ -30,17 +34,14 @@ require_once 'Xyster/Orm/Mapping/Entity.php';
 class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @var    Xyster_Orm_Runtime_EntityMeta
-     */
-    protected $object;
-    /**
      * @var Xyster_Orm_Session_Factory_Interface
      */
     protected $sessionFactory;
+    
     /**
-     * @var Xyster_Orm_Mapping_Entity
+     * @var PHPUnit_Framework_MockObject_MockObject
      */
-    protected $entityclass;
+    protected $em;
 
     /**
      * Runs the test methods of this class.
@@ -58,173 +59,278 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->sessionFactory = $this->getMock('Xyster_Orm_Session_Factory_Interface');
+        $this->em = $this->getMock('Xyster_Orm_Mapping_Entity'); 
+        
+        /*
+        $proptype = new Xyster_Orm_Type_String;
+        $propval = new Xyster_Orm_Mapping_Value;
+        $propval->setType($proptype);
+        $prop1 = new Xyster_Orm_Mapping_Property;
+        $prop1->setOptional(true)->setName('title')->setValue($propval);
+        $prop2 = new Xyster_Orm_Mapping_Property;
+        $prop2->setOptional(false)->setName('username')->setValue($propval);
+        
+        $idval = new Xyster_Orm_Mapping_Value;
+        $idval->setType(new Xyster_Orm_Type_Integer);
+        $idprop = new Xyster_Orm_Mapping_Property;
+        $idprop->setName('foobarId')->setValue($idval);
+
+        $verval = new Xyster_Orm_Mapping_Value;
+        $verval->setType(new Xyster_Orm_Type_Timestamp);
+        $verprop = new Xyster_Orm_Mapping_Property;
+        $verprop->setName('modifiedOn')->setOptional(false)->setGeneration(Xyster_Orm_Mapping_Generation::Always());
+        
         $this->entityclass = new Xyster_Orm_Mapping_Entity;
-        $this->object = new Xyster_Orm_Runtime_EntityMeta($this->entityclass, $this->sessionFactory);
+        $this->entityclass->setClassName('Foobar')
+            ->setLazy()
+            ->setOptimisticLockMode(Xyster_Orm_Engine_Versioning::Dirty())
+            ->addProperty($prop1)
+            ->addProperty($prop2)
+            ->addProperty($verprop)
+            ->setIdentifier($idprop)
+            ->setVersion($verprop);
+        
+        $this->object = new Xyster_Orm_Runtime_EntityMeta($this->entityclass, $this->sessionFactory); */
     }
 
     /**
-     * @todo Implement testGetIdentifier().
+     * Tests the 'isIdentifier' method
      */
     public function testGetIdentifier()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $prop = $this->_getProperty('foobarId', 'Integer');
+        $this->em->expects($this->once())
+            ->method('getIdentifierProperty')
+            ->will($this->returnValue($prop));
+        $object = $this->_getFixture();
+        
+        $id = $object->getIdentifier();
+        $this->assertType('Xyster_Orm_Runtime_Property_Identifier', $id);
+        $this->assertEquals('foobarId', $id->getName());
+        $this->assertType('Xyster_Orm_Type_Integer', $id->getType());
     }
 
     /**
-     * @todo Implement testGetName().
+     * Tests the 'getName' method
      */
     public function testGetName()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->em->expects($this->once())
+            ->method('getClassName')
+            ->will($this->returnValue('foobar'));
+        $object = $this->_getFixture();
+        
+        $this->assertEquals('foobar', $object->getName());
     }
 
     /**
-     * @todo Implement testGetOptimisticLockMode().
+     * Tests the 'getOptimisticLockMode' method
      */
     public function testGetOptimisticLockMode()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->em->expects($this->once())
+            ->method('getOptimisticLockMode')
+            ->will($this->returnValue(Xyster_Orm_Engine_Versioning::Dirty()));
+        $object = $this->_getFixture();
+        
+        $this->assertSame(Xyster_Orm_Engine_Versioning::Dirty(), $object->getOptimisticLockMode());
     }
 
     /**
-     * @todo Implement testGetProperties().
+     * Tests the 'getProperties' method
      */
     public function testGetProperties()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $prop1 = $this->_getProperty('foobarId', 'integer', false);
+        $prop2 = $this->_getProperty('username', 'string');
+        $prop3 = $this->_getProperty('modifiedOn', 'timestamp', false, false, true);
+        
+        $this->em->expects($this->once())
+            ->method('getProperties')
+            ->will($this->returnValue(array($prop1, $prop2, $prop3)));
+        $object = $this->_getFixture();
+        
+        $props = $object->getProperties();
+        $this->assertType('array', $props);
+        $this->assertType('Xyster_Orm_Runtime_Property', $props[0]);
+        $this->assertEquals('foobarId', $props[0]->getName());
+        $this->assertEquals('integer', $props[0]->getType()->getName());
+        $this->assertType('Xyster_Orm_Runtime_Property', $props[1]);
+        $this->assertEquals('username', $props[1]->getName());
+        $this->assertEquals('string', $props[1]->getType()->getName());
+        $this->assertType('Xyster_Orm_Runtime_Property', $props[2]);
+        $this->assertEquals('modifiedOn', $props[2]->getName());
+        $this->assertEquals('timestamp', $props[2]->getType()->getName());
     }
 
     /**
-     * @todo Implement testGetPropertyIndex().
+     * Tests the 'getPropertyIndex' method
      */
     public function testGetPropertyIndex()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $prop1 = $this->_getProperty('title');
+        $prop2 = $this->_getProperty('username');
+        $prop3 = $this->_getProperty('modifiedOn');
+        
+        $this->em->expects($this->once())
+            ->method('getProperties')
+            ->will($this->returnValue(array($prop1, $prop2, $prop3)));
+        $object = $this->_getFixture();
+        
+        $this->assertEquals(2, $object->getPropertyIndex('modifiedOn'));
+        $this->assertNull($object->getPropertyIndex('notthere', true));
+        $this->setExpectedException('Xyster_Orm_Exception');
+        $object->getPropertyIndex('notthere');
     }
 
     /**
-     * @todo Implement testGetPropertyLaziness().
+     * Tests the 'getPropertyLaziness' method
      */
     public function testGetPropertyLaziness()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $prop1 = $this->_getProperty('title');
+        $prop2 = $this->_getProperty('username', 'string', true, true);
+        $prop3 = $this->_getProperty('modifiedOn');
+        
+        $this->em->expects($this->once())
+            ->method('getProperties')
+            ->will($this->returnValue(array($prop1, $prop2, $prop3)));
+        $object = $this->_getFixture();
+        
+        $this->assertEquals(array(false, true, false), $object->getPropertyLaziness());
     }
 
     /**
-     * @todo Implement testGetPropertyNames().
+     * Tests the 'getPropertyNames' method
      */
     public function testGetPropertyNames()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $prop1 = $this->_getProperty('title');
+        $prop2 = $this->_getProperty('username');
+        $prop3 = $this->_getProperty('modifiedOn');
+        
+        $this->em->expects($this->once())
+            ->method('getProperties')
+            ->will($this->returnValue(array($prop1, $prop2, $prop3)));
+        $object = $this->_getFixture();
+        
+        $this->assertEquals(array('title', 'username', 'modifiedOn'), $object->getPropertyNames());
     }
 
     /**
-     * @todo Implement testGetPropertyNullability().
+     * Tests the 'getPropertyNullability' method
      */
     public function testGetPropertyNullability()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $prop1 = $this->_getProperty('title');
+        $prop2 = $this->_getProperty('username', 'string', false);
+        $prop3 = $this->_getProperty('modifiedOn', 'timestamp', false);
+        
+        $this->em->expects($this->once())
+            ->method('getProperties')
+            ->will($this->returnValue(array($prop1, $prop2, $prop3)));
+        $object = $this->_getFixture();
+        
+        $this->assertEquals(array(true, false, false), $object->getPropertyNullability());
     }
 
     /**
-     * @todo Implement testGetPropertySpan().
+     * Tests the 'getPropertySpan' method
      */
     public function testGetPropertySpan()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $prop1 = $this->_getProperty('title');
+        $prop2 = $this->_getProperty('username');
+        $prop3 = $this->_getProperty('modifiedOn');
+        
+        $this->em->expects($this->once())
+            ->method('getProperties')
+            ->will($this->returnValue(array($prop1, $prop2, $prop3)));
+        $object = $this->_getFixture();
+        
+        $this->assertEquals(3, $object->getPropertySpan());
     }
 
     /**
-     * @todo Implement testGetPropertyTypes().
+     * Tests the 'getPropertyTypes' method
      */
     public function testGetPropertyTypes()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $prop1 = $this->_getProperty('title');
+        $prop2 = $this->_getProperty('username');
+        $prop3 = $this->_getProperty('modifiedOn', 'timestamp');
+        
+        $this->em->expects($this->once())
+            ->method('getProperties')
+            ->will($this->returnValue(array($prop1, $prop2, $prop3)));
+        $object = $this->_getFixture();
+        
+        $types = $object->getPropertyTypes();
+        $this->assertType('array', $types);
+        $this->assertEquals(3, count($types));
+        $this->assertEquals('string', $types[0]->getName());
+        $this->assertEquals('string', $types[1]->getName());
+        $this->assertEquals('timestamp', $types[2]->getName());
     }
 
     /**
-     * @todo Implement testGetPropertyVersionability().
+     * Tests the 'getPropertyVersionability' method
      */
     public function testGetPropertyVersionability()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $prop1 = $this->_getProperty('title');
+        $prop2 = $this->_getProperty('username');
+        $prop3 = $this->_getProperty('modifiedOn', 'timestamp', false, false, true);
+        
+        $this->em->expects($this->once())
+            ->method('getProperties')
+            ->will($this->returnValue(array($prop1, $prop2, $prop3)));
+        $object = $this->_getFixture();
+        
+        $this->assertEquals(array(false, false, true), $object->getPropertyVersionability());
     }
 
     /**
-     * @todo Implement testGetSessionFactory().
+     * Tests the 'getSessionFactory' method
      */
     public function testGetSessionFactory()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $object = $this->_getFixture();
+        $this->assertSame($this->sessionFactory, $object->getSessionFactory());
     }
 
     /**
-     * @todo Implement testGetTuplizer().
+     * Tests the 'getTuplizer' method
      */
     public function testGetTuplizer()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $object = $this->_getFixture();
+        $tuplizer = $object->getTuplizer();
+        $this->assertType('Xyster_Orm_Tuplizer_Entity_Interface', $tuplizer);
     }
 
     /**
-     * @todo Implement testGetVersion().
+     * Tests the 'getVersion' and 'getVersionIndex' methods
      */
-    public function testGetVersion()
+    public function testGetVersionAndGetVersionIndex()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @todo Implement testGetVersionIndex().
-     */
-    public function testGetVersionIndex()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $prop1 = $this->_getProperty('title');
+        $prop2 = $this->_getProperty('username');
+        $prop3 = $this->_getProperty('modifiedOn', 'timestamp', false, false, true);
+        
+        $this->em->expects($this->once())
+            ->method('getProperties')
+            ->will($this->returnValue(array($prop1, $prop2, $prop3)));
+        $this->em->expects($this->any())
+            ->method('getVersion')
+            ->will($this->returnValue($prop3));
+        $object = $this->_getFixture();
+        
+        $version = $object->getVersion();
+        $this->assertType('Xyster_Orm_Runtime_Property_Version', $version);
+        $this->assertEquals('modifiedOn', $version->getName());
+        $this->assertEquals('timestamp', $version->getType()->getName());
+        $this->assertEquals(2, $object->getVersionIndex());
     }
 
     /**
@@ -239,124 +345,223 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testHasInsertGeneratedValues().
+     * Tests the 'hasInsertGeneratedValues' method
      */
     public function testHasInsertGeneratedValues()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $prop1 = $this->_getProperty('title');
+        $prop2 = $this->_getProperty('username');
+        $prop3 = $this->_getProperty('modifiedOn')->setGeneration(Xyster_Orm_Mapping_Generation::Insert());
+              
+        $this->em->expects($this->once())
+            ->method('getProperties')
+            ->will($this->returnValue(array($prop1, $prop2, $prop3)));
+        $object = $this->_getFixture();
+        
+        $this->assertTrue($object->hasUpdateGeneratedValues());
     }
 
     /**
-     * @todo Implement testHasLazyProperties().
-     */
-    public function testHasLazyProperties()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @todo Implement testHasMutableProperties().
+     * Tests the 'hasMutableProperties' method
      */
     public function testHasMutableProperties()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $prop1 = $this->_getProperty('id');
+        $prop2 = $this->_getProperty('username');
+        $prop3 = $this->_getProperty('modifiedOn', 'timestamp');
+        
+        $this->em->expects($this->once())
+            ->method('getProperties')
+            ->will($this->returnValue(array($prop1, $prop2, $prop3)));
+        $object = $this->_getFixture();
+        
+        $this->assertTrue($object->hasMutableProperties());
     }
 
     /**
-     * @todo Implement testHasNonIdentifierPropertyNamedId().
+     * Tests the 'hasNonIdentifierPropertyNamedId' method
      */
     public function testHasNonIdentifierPropertyNamedId()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $prop1 = $this->_getProperty('id');
+        $prop2 = $this->_getProperty('username');
+        $prop3 = $this->_getProperty('modifiedOn');
+        
+        $this->em->expects($this->once())
+            ->method('getProperties')
+            ->will($this->returnValue(array($prop1, $prop2, $prop3)));
+        $object = $this->_getFixture();
+        
+        $this->assertTrue($object->hasNonIdentifierPropertyNamedId());
     }
 
     /**
-     * @todo Implement testHasUpdateGeneratedValues().
+     * Tests the 'hasUpdateGeneratedValues' method
      */
     public function testHasUpdateGeneratedValues()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $prop1 = $this->_getProperty('title');
+        $prop2 = $this->_getProperty('username');
+        $prop3 = $this->_getProperty('modifiedOn')->setGeneration(Xyster_Orm_Mapping_Generation::Always());
+        
+        $this->em->expects($this->once())
+            ->method('getProperties')
+            ->will($this->returnValue(array($prop1, $prop2, $prop3)));
+        $object = $this->_getFixture();
+        
+        $this->assertTrue($object->hasUpdateGeneratedValues());
     }
 
     /**
-     * @todo Implement testIsLazy().
+     * Tests the 'isLazy' method with no lazy properties
      */
-    public function testIsLazy()
+    public function testIsLazyFalse()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $prop1 = $this->_getProperty('title');
+        $prop2 = $this->_getProperty('username');
+        $prop3 = $this->_getProperty('modifiedOn');
+        
+        $this->em->expects($this->once())
+            ->method('getProperties')
+            ->will($this->returnValue(array($prop1, $prop2, $prop3)));
+        $object = $this->_getFixture();
+        
+        $this->assertFalse($object->isLazy());
+        $this->assertFalse($object->hasLazyProperties());
     }
-
+    
     /**
-     * @todo Implement testIsMutable().
+     * Tests the 'isLazy' method with lazy properties
+     */
+    public function testIsLazyTrue()
+    {
+        $prop1 = $this->_getProperty('title');
+        $prop2 = $this->_getProperty('username');
+        $prop3 = $this->_getProperty('modifiedOn', 'timestamp', false, true);
+        
+        $this->em->expects($this->once())
+            ->method('getProperties')
+            ->will($this->returnValue(array($prop1, $prop2, $prop3)));
+        $this->em->expects($this->once())
+            ->method('isLazy')
+            ->will($this->returnValue(true));
+        $object = $this->_getFixture();
+        
+        $this->assertTrue($object->isLazy());
+        $this->assertTrue($object->hasLazyProperties());
+    }
+    
+    /**
+     * Tests the 'isLazy' and 'setLazy' method
+     */
+    public function testIsAndSetLazy()
+    {
+        $object = $this->_getFixture();
+        
+        $this->assertFalse($object->isLazy());
+        $this->assertSame($object, $object->setLazy());
+        $this->assertTrue($object->isLazy());
+        $object->setLazy(false);
+        $this->assertFalse($object->isLazy());
+    }
+    
+    /**
+     * Tests the 'isMutable' method
      */
     public function testIsMutable()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->em->expects($this->once())
+            ->method('isMutable')
+            ->will($this->returnValue(true));
+        $object = $this->_getFixture();
+        
+        $this->assertTrue($object->isMutable());
     }
 
     /**
-     * @todo Implement testIsSelectBeforeUpdate().
+     * Tests the 'isSelectBeforeUpdate' method
      */
     public function testIsSelectBeforeUpdate()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->em->expects($this->once())
+            ->method('isSelectBeforeUpdate')
+            ->will($this->returnValue(true));
+        $object = $this->_getFixture();
+        
+        $this->assertTrue($object->isSelectBeforeUpdate());
     }
 
     /**
-     * @todo Implement testIsVersioned().
+     * Tests the 'isVersioned' method
      */
     public function testIsVersioned()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->em->expects($this->once())
+            ->method('isVersioned')
+            ->will($this->returnValue(true));
+        $object = $this->_getFixture();
+        
+        $this->assertTrue($object->isVersioned());
     }
 
     /**
-     * @todo Implement testSetLazy().
+     * Tests the 'isVersioned' method
      */
-    public function testSetLazy()
+    public function testIsVersionedFalse()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->em->expects($this->once())
+            ->method('isVersioned')
+            ->will($this->returnValue(false));
+        $object = $this->_getFixture();
+        
+        $this->assertFalse($object->isVersioned());
     }
 
     /**
-     * @todo Implement test__toString().
+     * Tests the 'toString' method
      */
     public function test__toString()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->em->expects($this->once())
+            ->method('getClassName')
+            ->will($this->returnValue('Foobar'));
+        $object = $this->_getFixture();
+        
+        $this->assertEquals('EntityMeta(Foobar)', $object->__toString());
+    }
+    
+    /**
+     * Gets the fixture
+     *
+     * @return Xyster_Orm_Runtime_EntityMeta
+     */
+    protected function _getFixture()
+    {
+        return new Xyster_Orm_Runtime_EntityMeta($this->em, $this->sessionFactory);
+    }
+    
+    /**
+     * Gets a property for testing
+     *
+     * @param string $name
+     * @param string $typeName
+     * @param boolean $nullable
+     * @param boolean $lazy
+     * @param boolean $optLock
+     * @return Xyster_Orm_Mapping_Property
+     */
+    protected function _getProperty( $name, $typeName = 'string', $nullable = true, $lazy = false, $optLock = false )
+    {
+        $typeClass = 'Xyster_Orm_Type_' . ucfirst($typeName);
+        Zend_Loader::loadClass($typeClass);
+        $type = new $typeClass;
+        $column = new Xyster_Db_Column($name);
+        $column->setNullable($nullable);
+        $value = new Xyster_Orm_Mapping_Value;
+        $value->setType($type)->addColumn($column);
+        $prop = new Xyster_Orm_Mapping_Property;
+        $prop->setName($name)->setValue($value)->setLazy($lazy)->setOptimisticLocked($optLock);
+        return $prop;
     }
 }
 

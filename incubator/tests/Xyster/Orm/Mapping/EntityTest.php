@@ -109,6 +109,17 @@ class Xyster_Orm_Mapping_EntityTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Tests the 'getOptimisticLockMode' and 'setOptimisticLockMode' methods
+     */
+    public function testGetAndSetOptimisticLockMode()
+    {
+        $this->assertNull($this->object->getOptimisticLockMode());
+        $lock = Xyster_Orm_Engine_Versioning::Version();
+        $this->assertSame($this->object, $this->object->setOptimisticLockMode($lock));
+        $this->assertSame($lock, $this->object->getOptimisticLockMode());
+    }
+    
+    /**
      * Tests the 'getPersisterType' and 'setPersisterType' methods
      */
     public function testGetAndSetPersisterType()
@@ -193,6 +204,19 @@ class Xyster_Orm_Mapping_EntityTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($this->object->isMutable());
         $this->object->setMutable();
         $this->assertTrue($this->object->isMutable());
+    }
+    
+    /**
+     * Tests the 'isSelectBeforeUpdate' and 'setSelectBeforeUpdate' methods
+     */
+    public function testIsAndSetSelectBeforeUpdate()
+    {
+        $this->assertFalse($this->object->isSelectBeforeUpdate());
+        $return = $this->object->setSelectBeforeUpdate();
+        $this->assertSame($this->object, $return);
+        $this->assertTrue($this->object->isSelectBeforeUpdate());
+        $this->object->setSelectBeforeUpdate(false);
+        $this->assertFalse($this->object->isSelectBeforeUpdate());
     }
 }
 
