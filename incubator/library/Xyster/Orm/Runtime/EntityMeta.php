@@ -14,6 +14,22 @@
  * @version   $Id$
  */
 /**
+ * @see Xyster_Orm_Engine_IdentifierValue
+ */
+require_once 'Xyster/Orm/Engine/IdentifierValue.php';
+/**
+ * @see Xyster_Orm_Engine_VersionValue
+ */
+require_once 'Xyster/Orm/Engine/VersionValue.php';
+/**
+ * @see Xyster_Orm_Runtime_Property_Identifier
+ */
+require_once 'Xyster/Orm/Runtime/Property/Identifier.php';
+/**
+ * @see Xyster_Orm_Runtime_Property_Version
+ */
+require_once 'Xyster/Orm/Runtime/Property/Version.php';
+/**
  * Runtime metamodel entity information
  *
  * @category  Xyster
@@ -139,6 +155,9 @@ class Xyster_Orm_Runtime_EntityMeta
         $this->_sessionFactory = $sessionFactory;
         $this->_name = $em->getClassName();
         
+        $this->_identifierProperty = self::_buildIdentifierProperty($em,
+            $sessionFactory->getIdentifierGenerator($this->_name));
+        
         $this->_optimisticLockMode = $em->getOptimisticLockMode();
         $this->_mutable = (boolean)$em->isMutable();
         $this->_versioned = (boolean)$em->isVersioned();
@@ -154,11 +173,11 @@ class Xyster_Orm_Runtime_EntityMeta
             /* @var $prop Xyster_Orm_Mapping_Property */
             if ( $prop === $em->getVersion() ) {
                 $this->_versionPropertyIndex = $i;
-                // $this->_properties[$i] = 
-                $this->_properties[$i] = null;
+                $this->_properties[$i] = self::_buildVersionProperty($prop);
+                $this->_propertyVersionability[$i] = $this->_properties[$i]->isVersionable();
             } else {
-                // $this->_properties[$i] = 
-                $this->_properties[$i] = null;
+                $this->_properties[$i] = $this->_buildStandardProperty($prop);
+                $this->_propertyVersionability[$i] = false;
             }
             if ( $prop->getName() == 'id' ) {
                 $this->_hasNonIdentifierPropertyNamedId = true;
@@ -171,7 +190,6 @@ class Xyster_Orm_Runtime_EntityMeta
             $this->_propertyNames[$i] = $prop->getName();
             $this->_propertyTypes[$i] = $prop->getType();
             $this->_propertyNullability[$i] = $prop->isNullable();
-            // $this->_propertyVersionability[$i] =
             if ( $prop->getType()->isMutable() ) {
                 $this->_hasMutableProperties = true;
             }
@@ -464,8 +482,52 @@ class Xyster_Orm_Runtime_EntityMeta
         return 'EntityMeta(' . $this->getName() . ')';
     }
     
-    protected static function _buildIdentifierProperty(Xyster_Orm_Mapping_Entity $em, Xyster_Orm_Engine_IdGenerator_Interface $generator)
+    /**
+     * Generates an identifierproperty for an entity mapping
+     *
+     * @param Xyster_Orm_Mapping_Entity $em
+     * @param Xyster_Orm_Engine_IdGenerator_Interface $generator
+     * @return Xyster_Orm_Runtime_Property_Identifier
+     */
+    protected static function _buildIdentifierProperty(Xyster_Orm_Mapping_Entity $em, Xyster_Orm_Engine_IdGenerator_Interface $generator = null)
     {
-        $unsavedValue = null;
+        $mappedUnsaved = null;
+        $unsavedValue = Xyster_Orm_Engine_IdentifierValue::factory($mappedUnsaved);
+        
+        $prop = $em->getIdentifier();
+        if ( $prop ) {
+            return new Xyster_Orm_Runtime_Property_Identifier($prop->getName(),
+                $prop->getType(), false, $unsavedValue, $generator);
+        }
+        return null;
+    }
+    
+    /**
+     * Generates a standardproperty for an entity mapping
+     *
+     * @param Xyster_Orm_Mapping_Property $property
+     * @return Xyster_Orm_Runtime_Property_Standard
+     */
+    protected static function _buildStandardProperty( Xyster_Orm_Mapping_Property $property )
+    {
+        return new Xyster_Orm_Runtime_Property_Standard($property->getName(),
+            $property->getType(), $property->isLazy(), $property->isOptional(),
+            $property->isOptimisticLocked());
+    }
+    
+    /**
+     * Generates a versionproperty for an entity mapping
+     *
+     * @param Xyster_Orm_Mapping_Property $property
+     * @return Xyster_Orm_Runtime_Property_Version
+     */
+    protected static function _buildVersionProperty(Xyster_Orm_Mapping_Property $property)
+    {
+        $mappedUnsaved = null;
+        $unsavedValue = Xyster_Orm_Engine_VersionValue::factory($mappedUnsaved);
+                
+        return new Xyster_Orm_Runtime_Property_Version($property->getName(),
+                $property->getType(), $property->isLazy(), $property->isOptional(),
+                $property->isOptimisticLocked(), $unsavedValue);
     }
 }

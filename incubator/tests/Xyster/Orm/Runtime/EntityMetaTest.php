@@ -59,38 +59,7 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->sessionFactory = $this->getMock('Xyster_Orm_Session_Factory_Interface');
-        $this->em = $this->getMock('Xyster_Orm_Mapping_Entity'); 
-        
-        /*
-        $proptype = new Xyster_Orm_Type_String;
-        $propval = new Xyster_Orm_Mapping_Value;
-        $propval->setType($proptype);
-        $prop1 = new Xyster_Orm_Mapping_Property;
-        $prop1->setOptional(true)->setName('title')->setValue($propval);
-        $prop2 = new Xyster_Orm_Mapping_Property;
-        $prop2->setOptional(false)->setName('username')->setValue($propval);
-        
-        $idval = new Xyster_Orm_Mapping_Value;
-        $idval->setType(new Xyster_Orm_Type_Integer);
-        $idprop = new Xyster_Orm_Mapping_Property;
-        $idprop->setName('foobarId')->setValue($idval);
-
-        $verval = new Xyster_Orm_Mapping_Value;
-        $verval->setType(new Xyster_Orm_Type_Timestamp);
-        $verprop = new Xyster_Orm_Mapping_Property;
-        $verprop->setName('modifiedOn')->setOptional(false)->setGeneration(Xyster_Orm_Mapping_Generation::Always());
-        
-        $this->entityclass = new Xyster_Orm_Mapping_Entity;
-        $this->entityclass->setClassName('Foobar')
-            ->setLazy()
-            ->setOptimisticLockMode(Xyster_Orm_Engine_Versioning::Dirty())
-            ->addProperty($prop1)
-            ->addProperty($prop2)
-            ->addProperty($verprop)
-            ->setIdentifier($idprop)
-            ->setVersion($verprop);
-        
-        $this->object = new Xyster_Orm_Runtime_EntityMeta($this->entityclass, $this->sessionFactory); */
+        $this->em = $this->getMock('Xyster_Orm_Mapping_Entity');
     }
 
     /**
@@ -98,9 +67,13 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
      */
     public function testGetIdentifier()
     {
+        $gen = $this->getMock('Xyster_Orm_Engine_IdGenerator_Interface');
+        $this->sessionFactory->expects($this->once())
+            ->method('getIdentifierGenerator')
+            ->will($this->returnValue($gen));
         $prop = $this->_getProperty('foobarId', 'Integer');
         $this->em->expects($this->once())
-            ->method('getIdentifierProperty')
+            ->method('getIdentifier')
             ->will($this->returnValue($prop));
         $object = $this->_getFixture();
         
@@ -285,6 +258,9 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
         $this->em->expects($this->once())
             ->method('getProperties')
             ->will($this->returnValue(array($prop1, $prop2, $prop3)));
+         $this->em->expects($this->any())
+            ->method('getVersion')
+            ->will($this->returnValue($prop3));
         $object = $this->_getFixture();
         
         $this->assertEquals(array(false, false, true), $object->getPropertyVersionability());
@@ -322,15 +298,18 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
             ->method('getProperties')
             ->will($this->returnValue(array($prop1, $prop2, $prop3)));
         $this->em->expects($this->any())
+            ->method('isVersioned')
+            ->will($this->returnValue(true));
+        $this->em->expects($this->any())
             ->method('getVersion')
             ->will($this->returnValue($prop3));
         $object = $this->_getFixture();
         
+        $this->assertEquals(2, $object->getVersionIndex());
         $version = $object->getVersion();
         $this->assertType('Xyster_Orm_Runtime_Property_Version', $version);
         $this->assertEquals('modifiedOn', $version->getName());
         $this->assertEquals('timestamp', $version->getType()->getName());
-        $this->assertEquals(2, $object->getVersionIndex());
     }
 
     /**
