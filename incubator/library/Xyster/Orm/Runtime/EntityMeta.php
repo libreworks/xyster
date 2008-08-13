@@ -18,6 +18,10 @@
  */
 require_once 'Xyster/Orm/Engine/IdentifierValue.php';
 /**
+ * @see Xyster_Orm_Engine_ValueInclusion
+ */
+require_once 'Xyster/Orm/Engine/ValueInclusion.php';
+/**
  * @see Xyster_Orm_Engine_VersionValue
  */
 require_once 'Xyster/Orm/Engine/VersionValue.php';
@@ -482,14 +486,38 @@ class Xyster_Orm_Runtime_EntityMeta
         return 'EntityMeta(' . $this->getName() . ')';
     }
     
+    /**
+     * Figures out the type of valueinclusion for a value on insert
+     *
+     * @param Xyster_Orm_Mapping_Property $prop
+     * @param Xyster_Orm_Runtime_Property_Standard $runtimeProp
+     * @return Xyster_Orm_Engine_ValueInclusion
+     */
     protected function _getInsertValueGeneration(Xyster_Orm_Mapping_Property $prop, Xyster_Orm_Runtime_Property_Standard $runtimeProp )
     {
         if ( $runtimeProp->isInsertGenerated() ) {
-            
+            return Xyster_Orm_Engine_ValueInclusion::Full();
         } else if ( $prop->getValue() instanceof Xyster_Orm_Mapping_Component ) {
             // @todo component stuff
         }
-        // return 
+        return Xyster_Orm_Engine_ValueInclusion::None(); 
+    }
+    
+    /**
+     * Figures out the type of valueinclusion for a value on update
+     *
+     * @param Xyster_Orm_Mapping_Property $prop
+     * @param Xyster_Orm_Runtime_Property_Standard $runtimeProp
+     * @return Xyster_Orm_Engine_ValueInclusion
+     */
+    protected function _getUpdateValueGeneration(Xyster_Orm_Mapping_Property $prop, Xyster_Orm_Runtime_Property_Standard $runtimeProp )
+    {
+        if ( $runtimeProp->isUpdateGenerated() ) {
+            return Xyster_Orm_Engine_ValueInclusion::Full();
+        } else if ( $prop->getValue() instanceof Xyster_Orm_Mapping_Component ) {
+            // @todo component stuff
+        } 
+        return Xyster_Orm_Engine_ValueInclusion::None();
     }
     
     /**
