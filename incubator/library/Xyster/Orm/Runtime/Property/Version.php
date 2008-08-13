@@ -38,13 +38,15 @@ class Xyster_Orm_Runtime_Property_Version extends Xyster_Orm_Runtime_Property_St
      * @param string $name
      * @param Xyster_Orm_Type_Interface $type
      * @param boolean $lazy
+     * @param boolean $insertGenerated
+     * @param boolean $updateGenerated
      * @param boolean $nullable
      * @param boolean $versionable
      * @param Xyster_Orm_Engine_VersionValue $unsavedValue
      */
-    public function __construct( $name, Xyster_Orm_Type_Interface $type, $lazy, $nullable, $versionable, Xyster_Orm_Engine_VersionValue $unsavedValue )
+    public function __construct( $name, Xyster_Orm_Type_Interface $type, $lazy, $insertGenerated, $updateGenerated, $nullable, $versionable, Xyster_Orm_Engine_VersionValue $unsavedValue )
     {
-        parent::__construct($name, $type, $lazy, $nullable, $versionable);
+        parent::__construct($name, $type, $lazy, $insertGenerated, $updateGenerated, $nullable, $versionable);
         $this->_unsavedValue = $unsavedValue;
     }
     

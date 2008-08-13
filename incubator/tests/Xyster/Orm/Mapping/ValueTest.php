@@ -72,6 +72,16 @@ class Xyster_Orm_Mapping_ValueTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Tests the 'getNullValue' and 'setNullValue' methods
+     */
+    public function testGetAndSetNullValue()
+    {
+        $this->assertNull($this->object->getNullValue());
+        $this->assertSame($this->object, $this->object->setNullValue('all'));
+        $this->assertSame('all', $this->object->getNullValue());
+    }
+    
+    /**
      * Tests the 'getTable' and 'setTable' methods
      */
     public function testGetAndSetTable()

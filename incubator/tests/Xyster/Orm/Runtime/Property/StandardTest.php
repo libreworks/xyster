@@ -44,16 +44,20 @@ class Xyster_Orm_Runtime_Property_StandardTest extends PHPUnit_Framework_TestCas
     {
         require_once 'Xyster/Orm/Type/String.php';
         $type = new Xyster_Orm_Type_String;
-        $prop = new Xyster_Orm_Runtime_Property_Standard('foobar', $type, true, true, true);
+        $prop = new Xyster_Orm_Runtime_Property_Standard('foobar', $type, true, true, true, true, true);
         $this->assertEquals('foobar', $prop->getName());
         $this->assertSame($type, $prop->getType());
         $this->assertTrue($prop->isLazy());
+        $this->assertTrue($prop->isInsertGenerated());
+        $this->assertTrue($prop->isUpdateGenerated());
         $this->assertTrue($prop->isNullable());
         $this->assertTrue($prop->isVersionable());
         $this->assertEquals('Property(foobar:string)', $prop->__toString());
         
-        $prop = new Xyster_Orm_Runtime_Property_Standard('foobar', $type, false, true, false);
+        $prop = new Xyster_Orm_Runtime_Property_Standard('foobar', $type, false, false, true, true, false);
         $this->assertFalse($prop->isLazy());
+        $this->assertFalse($prop->isInsertGenerated());
+        $this->assertTrue($prop->isUpdateGenerated());
         $this->assertTrue($prop->isNullable());
         $this->assertFalse($prop->isVersionable());
     }

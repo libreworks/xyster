@@ -482,6 +482,16 @@ class Xyster_Orm_Runtime_EntityMeta
         return 'EntityMeta(' . $this->getName() . ')';
     }
     
+    protected function _getInsertValueGeneration(Xyster_Orm_Mapping_Property $prop, Xyster_Orm_Runtime_Property_Standard $runtimeProp )
+    {
+        if ( $runtimeProp->isInsertGenerated() ) {
+            
+        } else if ( $prop->getValue() instanceof Xyster_Orm_Mapping_Component ) {
+            // @todo component stuff
+        }
+        // return 
+    }
+    
     /**
      * Generates an identifierproperty for an entity mapping
      *
@@ -491,11 +501,10 @@ class Xyster_Orm_Runtime_EntityMeta
      */
     protected static function _buildIdentifierProperty(Xyster_Orm_Mapping_Entity $em, Xyster_Orm_Engine_IdGenerator_Interface $generator = null)
     {
-        $mappedUnsaved = null;
-        $unsavedValue = Xyster_Orm_Engine_IdentifierValue::factory($mappedUnsaved);
-        
         $prop = $em->getIdentifier();
         if ( $prop ) {
+            $mappedUnsaved = $prop->getValue()->getNullValue();
+            $unsavedValue = Xyster_Orm_Engine_IdentifierValue::factory($mappedUnsaved);
             return new Xyster_Orm_Runtime_Property_Identifier($prop->getName(),
                 $prop->getType(), false, $unsavedValue, $generator);
         }
@@ -510,9 +519,11 @@ class Xyster_Orm_Runtime_EntityMeta
      */
     protected static function _buildStandardProperty( Xyster_Orm_Mapping_Property $property )
     {
+        $alwaysGen = $property->getGeneration() == Xyster_Orm_Mapping_Generation::Always();
         return new Xyster_Orm_Runtime_Property_Standard($property->getName(),
-            $property->getType(), $property->isLazy(), $property->isOptional(),
-            $property->isOptimisticLocked());
+            $property->getType(), $property->isLazy(),
+            $property->getGeneration() == Xyster_Orm_Mapping_Generation::Insert() || $alwaysGen,
+            $alwaysGen, $property->isOptional(), $property->isOptimisticLocked());
     }
     
     /**
@@ -523,11 +534,13 @@ class Xyster_Orm_Runtime_EntityMeta
      */
     protected static function _buildVersionProperty(Xyster_Orm_Mapping_Property $property)
     {
-        $mappedUnsaved = null;
+        $mappedUnsaved = $property->getValue()->getNullValue();
         $unsavedValue = Xyster_Orm_Engine_VersionValue::factory($mappedUnsaved);
-                
+        $alwaysGen = $property->getGeneration() == Xyster_Orm_Mapping_Generation::Always();
         return new Xyster_Orm_Runtime_Property_Version($property->getName(),
-                $property->getType(), $property->isLazy(), $property->isOptional(),
-                $property->isOptimisticLocked(), $unsavedValue);
+                $property->getType(), $property->isLazy(),
+                $property->getGeneration() == Xyster_Orm_Mapping_Generation::Insert() || $alwaysGen,
+                $alwaysGen, $property->isOptional(), $property->isOptimisticLocked(),
+                $unsavedValue);
     }
 }

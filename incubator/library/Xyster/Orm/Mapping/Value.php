@@ -33,6 +33,11 @@ class Xyster_Orm_Mapping_Value implements Xyster_Orm_Mapping_Value_Interface
     protected $_columns = array();
     
     /**
+     * @var string
+     */
+    protected $_nullValue;
+    
+    /**
      * @var Xyster_Db_Table
      */
     protected $_table;
@@ -89,6 +94,16 @@ class Xyster_Orm_Mapping_Value implements Xyster_Orm_Mapping_Value_Interface
     }
     
     /**
+     * Gets the name of the value used for unsaved key or version fields
+     *
+     * @return string
+     */
+    public function getNullValue()
+    {
+        return $this->_nullValue;
+    }
+    
+    /**
      * Gets the table associated with this value
      *
      * @return Xyster_Db_Table
@@ -133,6 +148,18 @@ class Xyster_Orm_Mapping_Value implements Xyster_Orm_Mapping_Value_Interface
     public function isSimple()
     {
         return true;
+    }
+    
+    /**
+     * Sets the name of the value used for unsaved key or version fields
+     *
+     * @param string $value
+     * @return Xyster_Orm_Mapping_Value provides a fluent interface
+     */
+    public function setNullValue( $value )
+    {
+        $this->_nullValue = $value;
+        return $this;
     }
     
     /**
