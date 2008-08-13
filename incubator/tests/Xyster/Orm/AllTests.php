@@ -24,6 +24,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
 require_once 'Xyster/Orm/Engine/IdentifierValueTest.php';
+require_once 'Xyster/Orm/Engine/ValueInclusionTest.php';
 require_once 'Xyster/Orm/Engine/VersioningTest.php';
 require_once 'Xyster/Orm/Engine/VersionValueTest.php';
 require_once 'Xyster/Orm/Mapping/EntityTest.php';
@@ -60,6 +61,7 @@ class Xyster_Orm_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Xyster Framework - Xyster_Orm');
         $suite->addTestSuite('Xyster_Orm_Engine_IdentifierValueTest');
+        $suite->addTestSuite('Xyster_Orm_Engine_ValueInclusionTest');
         $suite->addTestSuite('Xyster_Orm_Engine_VersioningTest');
         $suite->addTestSuite('Xyster_Orm_Engine_VersionValueTest');
         $suite->addTestSuite('Xyster_Orm_Mapping_EntityTest');
