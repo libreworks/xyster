@@ -103,4 +103,19 @@ class Xyster_Orm_Runtime_Property_Standard extends Xyster_Orm_Runtime_Property
     {
         return $this->_versionable;
     }
+    
+    /**
+     * Builds a runtime standard property based on a configuration-time one
+     *
+     * @param Xyster_Orm_Mapping_Property $property
+     * @return Xyster_Orm_Runtime_Property_Standard
+     */
+    public static function build( Xyster_Orm_Mapping_Property $property )
+    {
+        $alwaysGen = $property->getGeneration() == Xyster_Orm_Mapping_Generation::Always();
+        return new Xyster_Orm_Runtime_Property_Standard($property->getName(),
+            $property->getType(), $property->isLazy(),
+            $property->getGeneration() == Xyster_Orm_Mapping_Generation::Insert() || $alwaysGen,
+            $alwaysGen, $property->isOptional(), $property->isOptimisticLocked());
+    }
 }
