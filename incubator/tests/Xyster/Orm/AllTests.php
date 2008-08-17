@@ -37,6 +37,7 @@ require_once 'Xyster/Orm/Runtime/EntityMetaTest.php';
 require_once 'Xyster/Orm/Runtime/Property/IdentifierTest.php';
 require_once 'Xyster/Orm/Runtime/Property/StandardTest.php';
 require_once 'Xyster/Orm/Runtime/Property/VersionTest.php';
+require_once 'Xyster/Orm/Tuplizer/ComponentTest.php';
 require_once 'Xyster/Orm/Type/AbstractTest.php';
 require_once 'Xyster/Orm/Type/BigIntegerTest.php';
 require_once 'Xyster/Orm/Type/BooleanTest.php';
@@ -77,6 +78,7 @@ class Xyster_Orm_AllTests
         $suite->addTestSuite('Xyster_Orm_Runtime_Property_IdentifierTest');
         $suite->addTestSuite('Xyster_Orm_Runtime_Property_StandardTest');
         $suite->addTestSuite('Xyster_Orm_Runtime_Property_VersionTest');
+        $suite->addTestSuite('Xyster_Orm_Tuplizer_ComponentTest');
         $suite->addTestSuite('Xyster_Orm_Type_AbstractTest');
         $suite->addTestSuite('Xyster_Orm_Type_BigIntegerTest');
         $suite->addTestSuite('Xyster_Orm_Type_BooleanTest');
