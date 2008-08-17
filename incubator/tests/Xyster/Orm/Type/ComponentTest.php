@@ -27,6 +27,8 @@ require_once 'Xyster/Orm/Runtime/ComponentMeta.php';
 require_once 'Xyster/Orm/Type/String.php';
 require_once 'Xyster/Orm/Type/Integer.php';
 require_once 'Xyster/Orm/Type/Timestamp.php';
+require_once 'Xyster/Orm/Tuplizer/Component.php';
+require_once 'Xyster/Data/Field/Mapper/Method.php';
 
 /**
  * Test class for Xyster_Orm_Type_Component.
@@ -57,21 +59,23 @@ class Xyster_Orm_Type_ComponentTest extends PHPUnit_Framework_TestCase
         $titleVal = new Xyster_Orm_Mapping_Value;
         $titleVal->setType(new Xyster_Orm_Type_String)->addColumn(new Xyster_Db_Column);
         $title = new Xyster_Orm_Mapping_Property;
-        $title->setName('title')->setValue($titleVal);
+        $title->setName('title')->setValue($titleVal)->setMapper(new Xyster_Data_Field_Mapper_Method('title'));
         
         $userVal = new Xyster_Orm_Mapping_Value;
         $userCol = new Xyster_Db_Column;
         $userCol->setNullable(false);
         $userVal->setType(new Xyster_Orm_Type_Integer)->addColumn($userCol);
         $userId = new Xyster_Orm_Mapping_Property;
-        $userId->setName('userId')->setValue($userVal);
+        $userId->setName('userId')->setValue($userVal)->setMapper(new Xyster_Data_Field_Mapper_Method('userId'));
         
         $createdVal = new Xyster_Orm_Mapping_Value;
         $createdVal->setType(new Xyster_Orm_Type_Timestamp)->addColumn(new Xyster_Db_Column);
         $created = new Xyster_Orm_Mapping_Property;
-        $created->setName('created')->setValue($createdVal);
+        $created->setName('created')->setValue($createdVal)->setMapper(new Xyster_Data_Field_Mapper_Method('created'));
         
         $component = new Xyster_Orm_Mapping_Component;
+        $component->setComponentType(new Xyster_Type('Xyster_Orm_Type_ComponentTest_Example'));
+        $component->setTuplizerType(new Xyster_Type('Xyster_Orm_Tuplizer_Component'));
         $component->addProperty($title)->addProperty($userId)->addProperty($created);
 
         $meta = new Xyster_Orm_Runtime_ComponentMeta($component);
@@ -136,14 +140,11 @@ class Xyster_Orm_Type_ComponentTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testGetColumnSpan().
+     * Tests the 'getColumnSpan' method
      */
     public function testGetColumnSpan()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->assertEquals(3, $this->object->getColumnSpan());
     }
 
     /**
@@ -169,25 +170,20 @@ class Xyster_Orm_Type_ComponentTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testGetName().
+     * Tests the 'getName' method
      */
     public function testGetName()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->assertEquals('component[title,userId,created]', $this->object->getName());
     }
 
     /**
-     * @todo Implement testGetPropertyNames().
+     * Tests the 'getPropertyNames' method
      */
     public function testGetPropertyNames()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $names = array('title', 'userId', 'created');
+        $this->assertEquals($names, $this->object->getPropertyNames());
     }
 
     /**
@@ -224,14 +220,13 @@ class Xyster_Orm_Type_ComponentTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testGetReturnedType().
+     * Tests the 'getReturnedType' method
      */
     public function testGetReturnedType()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $type = $this->object->getReturnedType();
+        $this->assertType('Xyster_Type', $type);
+        $this->assertEquals('Xyster_Orm_Type_ComponentTest_Example', $type->getName());
     }
 
     /**
@@ -246,14 +241,11 @@ class Xyster_Orm_Type_ComponentTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testHasResolve().
+     * Tests the 'hasResolve' method
      */
     public function testHasResolve()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->assertTrue($this->object->hasResolve());
     }
 
     /**
@@ -268,25 +260,19 @@ class Xyster_Orm_Type_ComponentTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testInstantiateNoParent().
+     * Tests the 'instantiateNoParent' method
      */
     public function testInstantiateNoParent()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->assertType('Xyster_Orm_Type_ComponentTest_Example', $this->object->instantiateNoParent());
     }
 
     /**
-     * @todo Implement testIsComponentType().
+     * Tests the 'isComponentType' method
      */
     public function testIsComponentType()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->assertTrue($this->object->isComponentType());
     }
 
     /**
@@ -364,6 +350,38 @@ class Xyster_Orm_Type_ComponentTest extends PHPUnit_Framework_TestCase
         $this->markTestIncomplete(
           'This test has not been implemented yet.'
         );
+    }
+}
+
+class Xyster_Orm_Type_ComponentTest_Example
+{
+    protected $_title;
+    protected $_userId;
+    protected $_created;
+    
+    public function getTitle()
+    {
+        return $this->_title;
+    }
+    public function setTitle( $title )
+    {
+        $this->_title = $title;
+    }
+    public function setUserId( $userId )
+    {
+        $this->_userId = $userId;
+    }
+    public function getUserId()
+    {
+        return $this->_userId;
+    }
+    public function getCreated()
+    {
+        return $this->_created;
+    }
+    public function setCreated( Zend_Date $created )
+    {
+        $this->_created = $created;
     }
 }
 
