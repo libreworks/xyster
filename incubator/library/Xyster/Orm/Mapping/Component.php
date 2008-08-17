@@ -22,6 +22,10 @@ require_once 'Xyster/Orm/Mapping/Value.php';
  */
 require_once 'Xyster/Orm/Mapping/Entity.php';
 /**
+ * @see Xyster_Orm_Type_Component
+ */
+require_once 'Xyster/Orm/Type/Component.php';
+/**
  * A component or composite value
  *
  * @category  Xyster
@@ -47,6 +51,10 @@ class Xyster_Orm_Mapping_Component extends Xyster_Orm_Mapping_Value
      * @var Xyster_Type
      */
     protected $_tuplizerType;
+    /**
+     * @var Xyster_Orm_Type_Component
+     */
+    protected $_type;
         
     /**
      * Adds a column to the value
@@ -196,7 +204,12 @@ class Xyster_Orm_Mapping_Component extends Xyster_Orm_Mapping_Value
      */
     public function getType()
     {
-    
+        if ( !$this->_type ) {
+            require_once 'Xyster/Orm/Runtime/ComponentMeta.php';
+            $meta = new Xyster_Orm_Runtime_ComponentMeta($this);
+            $this->_type = new Xyster_Orm_Type_Component($meta);
+        }
+        return $this->_type;
     }
     
     /**

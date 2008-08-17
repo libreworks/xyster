@@ -51,6 +51,8 @@ class Xyster_Orm_Runtime_ComponentMeta
             $this->_properties[] = Xyster_Orm_Runtime_Property_Standard::build($prop);
             $this->_propertyIndexes[$prop->getName()] = count($this->_propertyIndexes);
         }
+        $this->_tuplizer = ( $value->getTuplizerType() ) ?
+            $value->getTuplizerType()->getClass()->newInstance($value) : null;
     }
     
     /**
@@ -123,7 +125,7 @@ class Xyster_Orm_Runtime_ComponentMeta
      */
     public function getTuplizer()
     {
-        
+        return $this->_tuplizer;
     }
     
     /**

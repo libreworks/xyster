@@ -207,14 +207,11 @@ class Xyster_Orm_Mapping_ComponentTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testGetType().
+     * Tests the 'getType' method
      */
     public function testGetType()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->assertType('Xyster_Orm_Type_Component', $this->object->getType());
     }
 
     /**

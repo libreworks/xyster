@@ -102,14 +102,16 @@ class Xyster_Orm_Runtime_ComponentMetaTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testGetTuplizer().
+     * Tests the 'getTuplizer' method
      */
     public function testGetTuplizer()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        require_once 'Xyster/Orm/Tuplizer/Component.php';
+        $value = new Xyster_Orm_Mapping_Component;
+        $value->setTuplizerType(new Xyster_Type('Xyster_Orm_Tuplizer_Component'));
+        $object = new Xyster_Orm_Runtime_ComponentMeta($value);
+        
+        $this->assertType('Xyster_Orm_Tuplizer_Component', $object->getTuplizer());
     }
 
     /**
