@@ -129,14 +129,18 @@ class Xyster_Orm_Type_ComponentTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testGet().
+     * Tests the 'get' method
      */
     public function testGet()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $sess = $this->getMock('Xyster_Orm_Session_Interface');
+        $values = array('Lorem ipsum', 123, '2008-8-19 20:00:00');
+        $ex = $this->object->get($values, null, $sess);
+        $this->assertType('Xyster_Orm_Type_ComponentTest_Example', $ex);
+        $this->assertEquals($values[0], $ex->getTitle());
+        $this->assertEquals($values[1], $ex->getUserId());
+        $this->assertType('Zend_Date', $ex->getCreated());
+        $this->assertEquals($values[2], $ex->getCreated()->toString('Y-M-d H:m:s'));
     }
 
     /**
@@ -148,25 +152,21 @@ class Xyster_Orm_Type_ComponentTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testGetDataTypes().
+     * Tests the 'getDataTypes' method
      */
     public function testGetDataTypes()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $types = array(Xyster_Db_DataType::Varchar(),
+            Xyster_Db_DataType::Integer(), Xyster_Db_DataType::Timestamp());
+        $this->assertEquals($types, $this->object->getDataTypes());
     }
 
     /**
-     * @todo Implement testGetFetchTypes().
+     * Tests the 'getFetchTypes' method
      */
     public function testGetFetchTypes()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->assertEquals(array(Zend_Db::PARAM_STR, Zend_Db::PARAM_INT, null), $this->object->getFetchTypes());
     }
 
     /**
@@ -187,36 +187,36 @@ class Xyster_Orm_Type_ComponentTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testGetPropertyNullability().
+     * Tests the 'getPropertyNullability' method
      */
     public function testGetPropertyNullability()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->assertEquals(array(true, false, true), $this->object->getPropertyNullability());
     }
 
     /**
-     * @todo Implement testGetPropertyValue().
+     * Tests the 'getPropertyValue' method
      */
     public function testGetPropertyValue()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $date = new Zend_Date;
+        $ex = new Xyster_Orm_Type_ComponentTest_Example;
+        $ex->setCreated($date);
+        $this->assertEquals($date, $this->object->getPropertyValue($ex, 2));
     }
 
     /**
-     * @todo Implement testGetPropertyValues().
+     * Tests the 'getPropertyValues' method
      */
     public function testGetPropertyValues()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $date = new Zend_Date;
+        $ex = new Xyster_Orm_Type_ComponentTest_Example;
+        $ex->setCreated($date);
+        $ex->setTitle('Lorem ipsum');
+        $ex->setUserId(123);
+        $values = array('Lorem ipsum', 123, $date);
+        $this->assertEquals($values, $this->object->getPropertyValues($ex));
     }
 
     /**
@@ -230,14 +230,13 @@ class Xyster_Orm_Type_ComponentTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testGetTypes().
+     * Tests the 'getTypes' method
      */
     public function testGetTypes()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $types = array(new Xyster_Orm_Type_String(),
+            new Xyster_Orm_Type_Integer(), new Xyster_Orm_Type_Timestamp());
+        $this->assertEquals($types, $this->object->getTypes());
     }
 
     /**
@@ -298,14 +297,11 @@ class Xyster_Orm_Type_ComponentTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testIsMutable().
+     * Tests the 'isMutable' method
      */
     public function testIsMutable()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->assertTrue($this->object->isMutable());
     }
 
     /**
@@ -331,25 +327,30 @@ class Xyster_Orm_Type_ComponentTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testSetPropertyValues().
+     * Tests the 'setPropertyValues' method
      */
     public function testSetPropertyValues()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $ex = new Xyster_Orm_Type_ComponentTest_Example;
+        $date = new Zend_Date;
+        $values = array('Lorem ipsum', 123, $date);
+        
+        $this->object->setPropertyValues($ex, $values);
+        $this->assertEquals($values[0], $ex->getTitle());
+        $this->assertEquals($values[1], $ex->getUserId());
+        $this->assertEquals($values[2], $ex->getCreated());
     }
 
     /**
-     * @todo Implement testToColumnNullness().
+     * Tests the 'toColumnNullness' method
      */
     public function testToColumnNullness()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $ex = new Xyster_Orm_Type_ComponentTest_Example;
+        $date = new Zend_Date;
+        $ex->setCreated($date);
+        $ex->setUserId(123);
+        $this->assertEquals(array(false, true, true), $this->object->toColumnNullness($ex));
     }
 }
 

@@ -185,7 +185,7 @@ class Xyster_Orm_Type_Component extends Xyster_Orm_Type_Abstract
             }
             $val = $type->hasResolve() ?
                 $type->get($range, $owner, $sess) : $range;
-            if ( $len == 1 ) { 
+            if ( is_array($val) && $len == 1 ) { 
                 $val = $val[0];
             }
             $vals[$k] = $val;
@@ -525,12 +525,14 @@ class Xyster_Orm_Type_Component extends Xyster_Orm_Type_Abstract
      */
     public function toColumnNullness( $value )
     {
-        $nulls = array_fill(0, $this->getColumnSpan(), false);
+        $nulls = array();
         if ( $value !== null ) {
             $values = $this->getPropertyValues($value);
             foreach( $this->_propertyTypes as $k=>$type ) {
                 $nulls = array_merge($nulls, $type->toColumnNullness($values[$k]));
             }
+        } else {
+            $nulls = array_fill(0, $this->getColumnSpan(), false);
         }
         return $nulls;
     }
