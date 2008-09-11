@@ -32,12 +32,39 @@ require_once 'Xyster/Orm/Session/Interface.php';
 interface Xyster_Orm_Tuplizer_Entity_Interface extends Xyster_Orm_Tuplizer_Interface
 {
     /**
+     * Create a proxy for the entity 
+     *
+     * @param mixed $id
+     * @param Xyster_Orm_Session_Interface $sess
+     * @return object
+     */
+    function createProxy( $id, Xyster_Orm_Session_Interface $sess );
+    
+    /**
      * Gets the identifier value from an entity
      *
      * @param mixed $entity
      * @return mixed
      */
     function getIdentifier( $entity );
+    
+    // @todo figure out how getPropertyValuesToInsert is used
+    // function getPropertyValuesToInsert( $entity, Xyster_Collection_Map_Interface $map, Xyster_Orm_Session_Interface $sess );
+    
+    /**
+     * Gets the value of the version property
+     *
+     * @param object $entity
+     * @return mixed
+     */
+    function getVersion( $entity );
+    
+    /**
+     * Whether the entity can be proxied
+     *
+     * @return boolean
+     */
+    function hasProxy();
     
     /**
      * Create an instanceof the entity type with the given id
