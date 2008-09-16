@@ -168,7 +168,7 @@ class Xyster_Orm_Runtime_EntityMeta
         $this->_selectBeforeUpdate = (boolean)$em->isSelectBeforeUpdate();
         $this->_lazy = (boolean)$em->isLazy();
         
-        $props = (array)$em->getProperties();
+        $props = array_values((array)$em->getProperties());
         $this->_propertySpan = count($props);
         $foundCollection = false;
         $foundInsertGenerated = false;

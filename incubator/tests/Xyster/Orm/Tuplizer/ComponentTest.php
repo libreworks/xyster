@@ -23,6 +23,7 @@ require_once 'Xyster/Orm/Tuplizer/Component.php';
 require_once 'Xyster/Orm/Mapping/Component.php';
 require_once 'Xyster/Orm/Mapping/Property.php';
 require_once 'Xyster/Data/Field/Mapper/Method.php';
+require_once '_files/TuplizerTestExample.php';
 
 /**
  * Test class for Xyster_Orm_Tuplizer_Component.
@@ -62,7 +63,7 @@ class Xyster_Orm_Tuplizer_ComponentTest extends PHPUnit_Framework_TestCase
         $gender = new Xyster_Orm_Mapping_Property;
         $gender->setName('gender')->setMapper(new Xyster_Data_Field_Mapper_Method('gender'));
         $component = new Xyster_Orm_Mapping_Component;
-        $component->setComponentType(new Xyster_Type('Xyster_Orm_Tuplizer_ComponentTest_Example'));
+        $component->setComponentType(new Xyster_Type('TuplizerTestExample'));
         $component->addProperty($name)->addProperty($age)->addProperty($gender);
         $this->component = $component;
         
@@ -86,7 +87,7 @@ class Xyster_Orm_Tuplizer_ComponentTest extends PHPUnit_Framework_TestCase
         $this->object = new Xyster_Orm_Tuplizer_Component($this->component);
         $this->assertTrue($this->object->hasParentProperty());
         
-        $ex = new Xyster_Orm_Tuplizer_ComponentTest_Example;
+        $ex = new TuplizerTestExample;
         $this->object->setParent($ex, 'foo');
         $this->assertEquals('foo', $this->object->getParent($ex)); 
     }
@@ -96,7 +97,7 @@ class Xyster_Orm_Tuplizer_ComponentTest extends PHPUnit_Framework_TestCase
      */
     public function testGetPropertyValue()
     {
-        $ex = new Xyster_Orm_Tuplizer_ComponentTest_Example;
+        $ex = new TuplizerTestExample;
         $ex->setAge(50);
         $ex->setName('Bob');
         $ex->setGender('Male');
@@ -111,7 +112,7 @@ class Xyster_Orm_Tuplizer_ComponentTest extends PHPUnit_Framework_TestCase
      */
     public function testGetPropertyValues()
     {
-        $ex = new Xyster_Orm_Tuplizer_ComponentTest_Example;
+        $ex = new TuplizerTestExample;
         $ex->setAge(50);
         $ex->setName('Bob');
         $ex->setGender('Male');
@@ -134,7 +135,7 @@ class Xyster_Orm_Tuplizer_ComponentTest extends PHPUnit_Framework_TestCase
     public function testInstantiate()
     {
         $ex = $this->object->instantiate();
-        $this->assertType('Xyster_Orm_Tuplizer_ComponentTest_Example', $ex);
+        $this->assertType('TuplizerTestExample', $ex);
     }
 
     /**
@@ -142,7 +143,7 @@ class Xyster_Orm_Tuplizer_ComponentTest extends PHPUnit_Framework_TestCase
      */
     public function testIsInstance()
     {
-        $ex = new Xyster_Orm_Tuplizer_ComponentTest_Example;
+        $ex = new TuplizerTestExample;
         $this->assertTrue($this->object->isInstance($ex));
         $this->assertFalse($this->object->isInstance($this));
         $this->assertFalse($this->object->isInstance(false));
@@ -153,57 +154,12 @@ class Xyster_Orm_Tuplizer_ComponentTest extends PHPUnit_Framework_TestCase
      */
     public function testSetPropertyValues()
     {
-        $ex = new Xyster_Orm_Tuplizer_ComponentTest_Example;
+        $ex = new TuplizerTestExample;
         $values = array('Alice', 30, 'Female');
         $this->object->setPropertyValues($ex, $values);
         $this->assertEquals('Alice', $ex->getName());
         $this->assertEquals(30, $ex->getAge());
         $this->assertEquals('Female', $ex->getGender());
-    }
-}
-
-class Xyster_Orm_Tuplizer_ComponentTest_Example
-{
-    protected $_name;
-    protected $_age;
-    protected $_gender;
-    protected $_parent;
-    
-    public function getName()
-    {
-        return $this->_name;
-    }
-    
-    public function setName( $name )
-    {
-        $this->_name = $name;
-    }
-    
-    public function setAge( $age )
-    {
-        $this->_age = $age;
-    }
-    public function getAge()
-    {
-        return $this->_age;
-    }
-    
-    public function getGender()
-    {
-        return $this->_gender;
-    }
-    public function setGender( $gender )
-    {
-        $this->_gender = $gender;
-    }
-    
-    public function setParent( $parent )
-    {
-        $this->_parent = $parent;
-    }
-    public function getParent()
-    {
-        return $this->_parent;
     }
 }
 

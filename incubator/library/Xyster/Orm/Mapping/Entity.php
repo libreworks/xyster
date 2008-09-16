@@ -178,7 +178,7 @@ class Xyster_Orm_Mapping_Entity
      */
     public function getProperties()
     {
-        return array() + $this->_properties;
+        return array_values($this->_properties);
     }
     
     /**

@@ -198,8 +198,8 @@ class Xyster_Orm_Tuplizer_Entity implements Xyster_Orm_Tuplizer_Entity_Interface
         } else {
             $dot = strpos($i, '.');
             $basePropertyName = ($dot !== false) ? substr($i, 0, $dot) : $i;
-            $key = $this->_entityMeta->getPropertyIndex($i);
-            $value = $this->getPropertyValue($entity, $i);
+            $key = $this->_entityMeta->getPropertyIndex($basePropertyName);
+            $value = $this->getPropertyValue($entity, $key);
             if ( $dot !== false ) {
                 $types = $this->_entityMeta->getPropertyTypes();
                 return $this->getComponentValue($types[$key], $value, substr($i, $dot+1));
@@ -308,7 +308,7 @@ class Xyster_Orm_Tuplizer_Entity implements Xyster_Orm_Tuplizer_Entity_Interface
     public function setIdentifier( $entity, $id )
     {
         if ( $this->_idMapper != null ) {
-            $this->_idMapper->set($entity, $id);   
+            $this->_idMapper->set($entity, $id);
         }
     }
     

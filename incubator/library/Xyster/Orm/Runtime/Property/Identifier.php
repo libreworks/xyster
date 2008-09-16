@@ -56,7 +56,7 @@ class Xyster_Orm_Runtime_Property_Identifier extends Xyster_Orm_Runtime_Property
      * @param Xyster_Orm_Engine_IdentifierValue $unsavedValue
      * @param unknown_type $identifierGenerator
      */
-    public function __construct( $name, Xyster_Orm_Type_Interface $type, $hasIdentifierMapper, Xyster_Orm_Engine_IdentifierValue $unsavedValue, Xyster_Orm_Engine_IdGenerator_Interface $identifierGenerator )
+    public function __construct( $name, Xyster_Orm_Type_Interface $type, $hasIdentifierMapper, Xyster_Orm_Engine_IdentifierValue $unsavedValue, Xyster_Orm_Engine_IdGenerator_Interface $identifierGenerator = null )
     {
         parent::__construct($name, $type);
         $this->_hasIdentifierMapper = $hasIdentifierMapper;
