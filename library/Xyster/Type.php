@@ -141,9 +141,9 @@ class Xyster_Type
      */
     public function isInstance( $value )
     {
-    	return ( $this->_class && is_object($value) &&
+    	return  $value !== null && (( $this->_class && is_object($value) &&
     	   $this->_class->isInstance($value) ) || 
-    	   ( $this->isAssignableFrom(self::of($value)) ); 
+    	   ( $this->isAssignableFrom(self::of($value)) )); 
     }
     
     /**
