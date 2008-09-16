@@ -74,7 +74,8 @@ class Xyster_Orm_Tuplizer_Entity implements Xyster_Orm_Tuplizer_Entity_Interface
             $this->_idMapper = $mappedEntity->getIdentifier()->getMapper();
         }
         $this->_propertySpan = $entityMeta->getPropertySpan();
-        foreach( $mappedEntity->getProperties() as $prop ) {
+        $props = (array)$mappedEntity->getProperties();
+        foreach( $props as $prop ) {
             /* @var $prop Xyster_Orm_Mapping_Property */
             $this->_mappers[] = $prop->getMapper();
             if ( $prop->isLazy() ) {

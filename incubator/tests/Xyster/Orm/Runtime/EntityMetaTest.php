@@ -68,11 +68,11 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
     public function testGetIdentifier()
     {
         $gen = $this->getMock('Xyster_Orm_Engine_IdGenerator_Interface');
-        $this->sessionFactory->expects($this->once())
+        $this->sessionFactory->expects($this->any())
             ->method('getIdentifierGenerator')
             ->will($this->returnValue($gen));
         $prop = $this->_getProperty('foobarId', 'Integer');
-        $this->em->expects($this->once())
+        $this->em->expects($this->any())
             ->method('getIdentifier')
             ->will($this->returnValue($prop));
         $object = $this->_getFixture();
@@ -88,7 +88,7 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
      */
     public function testGetName()
     {
-        $this->em->expects($this->once())
+        $this->em->expects($this->any())
             ->method('getClassName')
             ->will($this->returnValue('foobar'));
         $object = $this->_getFixture();
@@ -101,7 +101,7 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
      */
     public function testGetOptimisticLockMode()
     {
-        $this->em->expects($this->once())
+        $this->em->expects($this->any())
             ->method('getOptimisticLockMode')
             ->will($this->returnValue(Xyster_Orm_Engine_Versioning::Dirty()));
         $object = $this->_getFixture();
@@ -118,7 +118,7 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
         $prop2 = $this->_getProperty('username', 'string');
         $prop3 = $this->_getProperty('modifiedOn', 'timestamp', false, false, true);
         
-        $this->em->expects($this->once())
+        $this->em->expects($this->any())
             ->method('getProperties')
             ->will($this->returnValue(array($prop1, $prop2, $prop3)));
         $object = $this->_getFixture();
@@ -145,7 +145,7 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
         $prop2 = $this->_getProperty('username');
         $prop3 = $this->_getProperty('modifiedOn');
         
-        $this->em->expects($this->once())
+        $this->em->expects($this->any())
             ->method('getProperties')
             ->will($this->returnValue(array($prop1, $prop2, $prop3)));
         $object = $this->_getFixture();
@@ -165,7 +165,7 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
         $prop2 = $this->_getProperty('username', 'string', true, true);
         $prop3 = $this->_getProperty('modifiedOn');
         
-        $this->em->expects($this->once())
+        $this->em->expects($this->any())
             ->method('getProperties')
             ->will($this->returnValue(array($prop1, $prop2, $prop3)));
         $object = $this->_getFixture();
@@ -182,7 +182,7 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
         $prop2 = $this->_getProperty('username');
         $prop3 = $this->_getProperty('modifiedOn');
         
-        $this->em->expects($this->once())
+        $this->em->expects($this->any())
             ->method('getProperties')
             ->will($this->returnValue(array($prop1, $prop2, $prop3)));
         $object = $this->_getFixture();
@@ -199,7 +199,7 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
         $prop2 = $this->_getProperty('username', 'string', false);
         $prop3 = $this->_getProperty('modifiedOn', 'timestamp', false);
         
-        $this->em->expects($this->once())
+        $this->em->expects($this->any())
             ->method('getProperties')
             ->will($this->returnValue(array($prop1, $prop2, $prop3)));
         $object = $this->_getFixture();
@@ -216,7 +216,7 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
         $prop2 = $this->_getProperty('username');
         $prop3 = $this->_getProperty('modifiedOn');
         
-        $this->em->expects($this->once())
+        $this->em->expects($this->any())
             ->method('getProperties')
             ->will($this->returnValue(array($prop1, $prop2, $prop3)));
         $object = $this->_getFixture();
@@ -233,7 +233,7 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
         $prop2 = $this->_getProperty('username');
         $prop3 = $this->_getProperty('modifiedOn', 'timestamp');
         
-        $this->em->expects($this->once())
+        $this->em->expects($this->any())
             ->method('getProperties')
             ->will($this->returnValue(array($prop1, $prop2, $prop3)));
         $object = $this->_getFixture();
@@ -255,7 +255,7 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
         $prop2 = $this->_getProperty('username');
         $prop3 = $this->_getProperty('modifiedOn', 'timestamp', false, false, true);
         
-        $this->em->expects($this->once())
+        $this->em->expects($this->any())
             ->method('getProperties')
             ->will($this->returnValue(array($prop1, $prop2, $prop3)));
          $this->em->expects($this->any())
@@ -294,7 +294,7 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
         $prop2 = $this->_getProperty('username');
         $prop3 = $this->_getProperty('modifiedOn', 'timestamp', false, false, true);
         
-        $this->em->expects($this->once())
+        $this->em->expects($this->any())
             ->method('getProperties')
             ->will($this->returnValue(array($prop1, $prop2, $prop3)));
         $this->em->expects($this->any())
@@ -332,7 +332,7 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
         $prop2 = $this->_getProperty('username');
         $prop3 = $this->_getProperty('modifiedOn')->setGeneration(Xyster_Orm_Mapping_Generation::Insert());
               
-        $this->em->expects($this->once())
+        $this->em->expects($this->any())
             ->method('getProperties')
             ->will($this->returnValue(array($prop1, $prop2, $prop3)));
         $object = $this->_getFixture();
@@ -349,7 +349,7 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
         $prop2 = $this->_getProperty('username');
         $prop3 = $this->_getProperty('modifiedOn', 'timestamp');
         
-        $this->em->expects($this->once())
+        $this->em->expects($this->any())
             ->method('getProperties')
             ->will($this->returnValue(array($prop1, $prop2, $prop3)));
         $object = $this->_getFixture();
@@ -366,7 +366,7 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
         $prop2 = $this->_getProperty('username');
         $prop3 = $this->_getProperty('modifiedOn');
         
-        $this->em->expects($this->once())
+        $this->em->expects($this->any())
             ->method('getProperties')
             ->will($this->returnValue(array($prop1, $prop2, $prop3)));
         $object = $this->_getFixture();
@@ -383,7 +383,7 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
         $prop2 = $this->_getProperty('username');
         $prop3 = $this->_getProperty('modifiedOn')->setGeneration(Xyster_Orm_Mapping_Generation::Always());
         
-        $this->em->expects($this->once())
+        $this->em->expects($this->any())
             ->method('getProperties')
             ->will($this->returnValue(array($prop1, $prop2, $prop3)));
         $object = $this->_getFixture();
@@ -400,7 +400,7 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
         $prop2 = $this->_getProperty('username');
         $prop3 = $this->_getProperty('modifiedOn');
         
-        $this->em->expects($this->once())
+        $this->em->expects($this->any())
             ->method('getProperties')
             ->will($this->returnValue(array($prop1, $prop2, $prop3)));
         $object = $this->_getFixture();
@@ -418,10 +418,10 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
         $prop2 = $this->_getProperty('username');
         $prop3 = $this->_getProperty('modifiedOn', 'timestamp', false, true);
         
-        $this->em->expects($this->once())
+        $this->em->expects($this->any())
             ->method('getProperties')
             ->will($this->returnValue(array($prop1, $prop2, $prop3)));
-        $this->em->expects($this->once())
+        $this->em->expects($this->any())
             ->method('isLazy')
             ->will($this->returnValue(true));
         $object = $this->_getFixture();
@@ -449,7 +449,7 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
      */
     public function testIsMutable()
     {
-        $this->em->expects($this->once())
+        $this->em->expects($this->any())
             ->method('isMutable')
             ->will($this->returnValue(true));
         $object = $this->_getFixture();
@@ -462,7 +462,7 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
      */
     public function testIsSelectBeforeUpdate()
     {
-        $this->em->expects($this->once())
+        $this->em->expects($this->any())
             ->method('isSelectBeforeUpdate')
             ->will($this->returnValue(true));
         $object = $this->_getFixture();
@@ -475,7 +475,7 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
      */
     public function testIsVersioned()
     {
-        $this->em->expects($this->once())
+        $this->em->expects($this->any())
             ->method('isVersioned')
             ->will($this->returnValue(true));
         $object = $this->_getFixture();
@@ -488,7 +488,7 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
      */
     public function testIsVersionedFalse()
     {
-        $this->em->expects($this->once())
+        $this->em->expects($this->any())
             ->method('isVersioned')
             ->will($this->returnValue(false));
         $object = $this->_getFixture();
@@ -501,7 +501,7 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
      */
     public function test__toString()
     {
-        $this->em->expects($this->once())
+        $this->em->expects($this->any())
             ->method('getClassName')
             ->will($this->returnValue('Foobar'));
         $object = $this->_getFixture();

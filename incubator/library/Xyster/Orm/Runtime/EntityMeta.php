@@ -34,6 +34,10 @@ require_once 'Xyster/Orm/Runtime/Property/Identifier.php';
  */
 require_once 'Xyster/Orm/Runtime/Property/Version.php';
 /**
+ * @see Xyster_Orm_Tuplizer_Entity
+ */
+require_once 'Xyster/Orm/Tuplizer/Entity.php';
+/**
  * Runtime metamodel entity information
  *
  * @category  Xyster
@@ -171,8 +175,6 @@ class Xyster_Orm_Runtime_EntityMeta
         $props = array_values((array)$em->getProperties());
         $this->_propertySpan = count($props);
         $foundCollection = false;
-        $foundInsertGenerated = false;
-        $foundUpdateGenerated = false;
         foreach( $props as $i => $prop ) {
             /* @var $prop Xyster_Orm_Mapping_Property */
             if ( $prop === $em->getVersion() ) {
@@ -198,7 +200,18 @@ class Xyster_Orm_Runtime_EntityMeta
                 $this->_hasMutableProperties = true;
             }
             $this->_propertyIndexes[$prop->getName()] = $i;
+            $this->_insertInclusions[$i] = $this->_getInsertValueGeneration($prop,
+                $this->_properties[$i]);
+            $this->_updateInclusions[$i] = $this->_getUpdateValueGeneration($prop,
+                $this->_properties[$i]);
         }
+        if ( count($this->_insertInclusions) ) {
+            $this->_hasInsertGeneratedValues = true;
+        }
+        if ( count($this->_updateInclusions) ) {
+            $this->_hasUpdateGeneratedValues = true;
+        }
+        $this->_tuplizer = new Xyster_Orm_Tuplizer_Entity($this, $em);
     }
     
     /**
@@ -498,9 +511,32 @@ class Xyster_Orm_Runtime_EntityMeta
         if ( $runtimeProp->isInsertGenerated() ) {
             return Xyster_Orm_Engine_ValueInclusion::Full();
         } else if ( $prop->getValue() instanceof Xyster_Orm_Mapping_Component ) {
-            // @todo component stuff
+            if ( $this->_getInsertComponentGeneration($prop->getValue()) ) {
+                return Xyster_Orm_Engine_ValueInclusion::Partial();
+            }
         }
         return Xyster_Orm_Engine_ValueInclusion::None(); 
+    }
+    
+    /**
+     * Determines the type of valueinclusion for a component on insert
+     * @param Xyster_Orm_Mapping_Component $component
+     * @return boolean
+     */
+    protected function _getInsertComponentGeneration(Xyster_Orm_Mapping_Component $component)
+    {
+        $props = $component->getProperties();
+        foreach( $props as $prop ) {
+            if ( $prop->getGeneration() === Xyster_Orm_Mapping_Generation::Always() || 
+                $prop->getGeneration() === Xyster_Orm_Mapping_Generation::Insert() ) {
+                return true;
+            } else if ( $prop->getValue() instanceof Xyster_Orm_Mapping_Component ) {
+                if ( $this->_getInsertComponentGeneration($prop->getValue())) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
     
     /**
@@ -515,9 +551,32 @@ class Xyster_Orm_Runtime_EntityMeta
         if ( $runtimeProp->isUpdateGenerated() ) {
             return Xyster_Orm_Engine_ValueInclusion::Full();
         } else if ( $prop->getValue() instanceof Xyster_Orm_Mapping_Component ) {
-            // @todo component stuff
+            if ( $this->_getUpdateComponentGeneration($prop->getValue()) ) {
+                return Xyster_Orm_Engine_ValueInclusion::Partial();
+            }
         } 
         return Xyster_Orm_Engine_ValueInclusion::None();
+    }
+    
+    /**
+     * Determines the type of valueinclusion for a component on update
+     * 
+     * @param Xyster_Orm_Mapping_Component $component
+     * @return boolean
+     */
+    protected function _getUpdateComponentGeneration(Xyster_Orm_Mapping_Component $component)
+    {
+        $props = $component->getProperties();
+        foreach( $props as $prop ) {
+            if ( $prop->getGeneration() === Xyster_Orm_Mapping_Generation::Always() ) {
+                return true;
+            } else if ( $prop->getValue() instanceof Xyster_Orm_Mapping_Component ) {
+                if ( $this->_getUpdateComponentGeneration($prop->getValue()) ) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
     
     /**
