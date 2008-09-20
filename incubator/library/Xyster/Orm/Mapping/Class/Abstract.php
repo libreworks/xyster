@@ -38,12 +38,7 @@ require_once 'Xyster/Type.php';
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 abstract class Xyster_Orm_Mapping_Class_Abstract
-{
-    /**
-     * @var Xyster_Orm_Mapping_Property
-     */
-    protected $_identifier;
-    
+{    
     /**
      * @var boolean
      */
@@ -55,11 +50,6 @@ abstract class Xyster_Orm_Mapping_Class_Abstract
     protected $_loaderType;
     
     /**
-     * @var boolean
-     */
-    protected $_mutable = true;
-    
-    /**
      * @var string
      */
     protected $_name;
@@ -67,12 +57,7 @@ abstract class Xyster_Orm_Mapping_Class_Abstract
     /**
      * @var Xyster_Orm_Engine_Versioning
      */
-    protected $_optimisticLock;
-    
-    /**
-     * @var Xyster_Type
-     */
-    protected $_persisterType;
+    protected $_optimisticLock;    
     
     /**
      * @var array
@@ -85,30 +70,42 @@ abstract class Xyster_Orm_Mapping_Class_Abstract
     protected $_selectBeforeUpdate = false;
     
     /**
-     * @var Xyster_Db_Table
-     */
-    protected $_table;
-    
-    /**
      * @var Xyster_Type
      */
     protected $_tuplizerType;
-    
+        
     /**
-     * @var Xyster_Orm_Mapping_Property
+     * Adds a join to the class
+     * 
+     * @param Xyster_Orm_Mapping_Join $join
+     * @return Xyster_Orm_Mapping_Class_Abstract provides a fluent interface
      */
-    protected $_version;
+    public function addJoin( Xyster_Orm_Mapping_Join $join )
+    {
+        // @todo
+    }
     
     /**
      * Adds a property to the class
      *
      * @param Xyster_Orm_Mapping_Property $prop
-     * @return Xyster_Orm_Mapping_Entity provides a fluent interface
+     * @return Xyster_Orm_Mapping_Class_Abstract provides a fluent interface
      */
     public function addProperty( Xyster_Orm_Mapping_Property $prop )
     {
         $this->_properties[$prop->getName()] = $prop;
         return $this;
+    }
+    
+    /**
+     * Adds a subclass to this one
+     * 
+     * @param Xyster_Orm_Mapping_Subclass $subclass
+     * @return Xyster_Orm_Mapping_Class_Abstract provides a fluent interface
+     */
+    public function addSubclass( Xyster_Orm_Mapping_Subclass $subclass )
+    {
+        // @todo
     }
     
     /**
@@ -122,13 +119,97 @@ abstract class Xyster_Orm_Mapping_Class_Abstract
     }
     
     /**
+     * Gets the immediate subclasses of this entity
+     * 
+     * @return array
+     */
+    public function getDirectSubclasses()
+    {
+        // @todo
+    }
+    
+    /**
+     * Gets the discriminator
+     * 
+     * @return Xyster_Orm_Mapping_Value
+     */
+    abstract public function getDiscriminator();
+    
+    /**
+     * Gets the discriminator value
+     * 
+     * @return string
+     */
+    public function getDiscriminatorValue()
+    {
+        
+    }
+    
+    /**
+     * Gets the identifier mapper (a component)
+     * 
+     * @return Xyster_Orm_Mapping_Component
+     */
+    public function getIdMapper()
+    {
+        // @todo
+    }
+    
+    /**
      * Gets the identifier property for this entity
      *
      * @return Xyster_Orm_Mapping_Property
      */
-    public function getIdentifier()
+    abstract public function getIdProperty();
+    
+    /**
+     * Gets the identifying table
+     *  
+     * @return Xyster_Db_Table
+     */
+    public function getIdTable()
     {
-        return $this->_identifier;
+        // @todo
+    }
+    
+    /**
+     * Gets the join closure
+     * 
+     * @return array
+     */
+    public function getJoinClosure()
+    {
+        // @todo
+    }
+    
+    /**
+     * Gets the join closure span
+     * 
+     * @return integer
+     */
+    public function getJoinClosureSpan()
+    {
+        // @todo
+    }
+    
+    /**
+     * Gets the joins
+     * 
+     * @return array
+     */
+    public function getJoins()
+    {
+        // @todo
+    }
+    
+    /**
+     * Gets the number of the join
+     * @param Xyster_Orm_Mapping_Property $prop
+     * @return integer
+     */
+    public function getJoinNumber( Xyster_Orm_Mapping_Property $prop )
+    {
+        // @todo
     }
     
     /**
@@ -156,10 +237,7 @@ abstract class Xyster_Orm_Mapping_Class_Abstract
      *
      * @return Xyster_Orm_Engine_Versioning
      */
-    public function getOptimisticLockMode()
-    {
-        return $this->_optimisticLock;
-    }
+    abstract public function getOptimisticLockMode();
     
     /**
      * Gets the type of persister for this entity type
@@ -198,14 +276,154 @@ abstract class Xyster_Orm_Mapping_Class_Abstract
     }
     
     /**
+     * Gets the property closure
+     * 
+     * @return array
+     */
+    abstract public function getPropertyClosure();
+    
+    /**
+     * Gets the property closure span
+     * 
+     * @return integer
+     */
+    public function getPropertyClosureSpan()
+    {
+        // @todo
+    }
+    
+    /**
+     * Gets the type used for proxying
+     * 
+     * @return Xyster_Type
+     */
+    public function getProxyInterfaceType()
+    {
+        // @todo
+    }
+    
+    /**
+     * Gets the properties which are referencable
+     * 
+     * @return array
+     */
+    public function getReferencedProperties()
+    {
+        // @todo
+    }
+    
+    /**
+     * Gets the property given the specified path
+     * 
+     * @param string $propertyPath
+     * @return Xyster_Orm_Mapping_Property
+     */
+    public function getReferencedProperty( $propertyPath )
+    {
+        // @todo
+    }
+    
+    /**
+     * Gets the top-level class
+     * 
+     * @return Xyster_Orm_Mapping_Class
+     */
+    abstract public function getRootClass();
+    
+    /**
+     * Gets the top-level table
+     * 
+     * @return Xyster_Db_Table
+     */
+    abstract public function getRootTable();
+    
+    /**
+     * Gets the subclass closure
+     * 
+     * @return array
+     */
+    public function getSubclassClosure()
+    {
+        // @todo
+    }
+    
+    /**
+     * Gets the subclass id
+     *  
+     * @return integer
+     */
+    abstract public function getSubclassId();
+    
+    /**
+     * Gets the subclasses
+     * 
+     * @return array of {@link Xyster_Orm_Mapping_Class_Abstract} objects
+     */
+    public function getSubclasses()
+    {
+        // @todo
+    }
+    
+    /**
+     * Gets the subclass joins
+     * 
+     * @return array
+     */
+    public function getSubclassJoinClosure()
+    {
+        // @todo 
+    }
+
+    /**
+     * Gets the subclass properties
+     *
+     * @return array
+     */
+    public function getSubclassPropertyClosure()
+    {
+        // @todo
+    }
+    
+    /**
+     * Gets the number of subclasses
+     * 
+     * @return integer
+     */
+    public function getSubclassSpan()
+    {
+        // @todo
+    }
+    
+    /**
+     * Gets the subclass table closure
+     * 
+     * @return array of {@link Xyster_Db_Table} objects
+     */
+    public function getSubclassTableClosure()
+    {
+        // @todo
+    }
+    
+    /**
+     * Gets the parent class in the hierarchy
+     * 
+     * @return Xyster_Orm_Mapping_Class_Abstract
+     */
+    abstract public function getParentclass();
+    
+    /**
      * Gets the table that corresponds to this type
      *
      * @return Xyster_Db_Table
      */
-    public function getTable()
-    {
-        return $this->_table;
-    }
+    abstract public function getTable();
+    
+    /**
+     * Gets the table closure
+     * 
+     * @return array of {@link Xyster_Db_Table} objects
+     */
+    abstract public function getTableClosure();
     
     /**
      * Gets the type of tuplizer for this entity type
@@ -222,9 +440,23 @@ abstract class Xyster_Orm_Mapping_Class_Abstract
      *
      * @return Xyster_Orm_Mapping_Property
      */
-    public function getVersion()
+    abstract public function getVersion();
+
+    /**
+     * Gets the 'WHERE' SQL filter
+     * 
+     * @return string
+     */
+    abstract public function getWhere();
+    
+    /**
+     * Whether this entity has an identifier mapper (a component)
+     * 
+     * @return boolean
+     */
+    public function hasIdMapper()
     {
-        return $this->_version;
+        // @todo hasIdMapper
     }
     
     /**
@@ -232,10 +464,70 @@ abstract class Xyster_Orm_Mapping_Class_Abstract
      * 
      * @return boolean
      */
-    public function hasIdentifier()
+    abstract public function hasIdProperty();
+    
+    /**
+     * Whether this entity has subclasses
+     * 
+     * @return boolean
+     */
+    public function hasSubclasses()
     {
-        return $this->_identifier !== null;
+        // @todo hasSubclasses
     }
+    
+    /**
+     * Gets whether the join specified is part of the entity or its parents
+     * 
+     * @param Xyster_Orm_Mapping_Join $join
+     * @return boolean
+     */
+    public function isClassJoin(Xyster_Orm_Mapping_Join $join)
+    {
+        // @todo
+    }
+
+    /**
+     * Gets whether the table specified is part of the entity or its parents
+     * 
+     * @param Xyster_Db_Table $table
+     * @return boolean
+     */
+    public function isClassTable(Xyster_Db_Table $table)
+    {
+        // @todo
+    }
+    
+    /**
+     * Whether the discriminator column is insertable
+     * 
+     * @return boolean
+     */
+    abstract public function isDiscriminatorInsertable();
+    
+    /**
+     * Whether the discriminator value allows null
+     * 
+     * @return boolean
+     */
+    public function isDiscriminatorValueNull()
+    {
+        // @todo
+    }
+    
+    /**
+     * Whether this type is inherited
+     * 
+     * @return boolean
+     */
+    abstract public function isInherited();
+    
+    /**
+     * Whether this entity is a joined subclass
+     *  
+     * @return boolean
+     */
+    abstract public function isJoinedSubclass();
     
     /**
      * Gets whether this type has lazy loaded parts
@@ -252,10 +544,7 @@ abstract class Xyster_Orm_Mapping_Class_Abstract
      *
      * @return boolean
      */
-    public function isMutable()
-    {
-        return $this->_mutable;
-    }
+    abstract public function isMutable();
  
     /**
      * Whether this type should be selected before it's updated
@@ -272,16 +561,13 @@ abstract class Xyster_Orm_Mapping_Class_Abstract
      *
      * @return boolean
      */
-    public function isVersioned()
-    {
-        return $this->_version !== null;
-    }
+    abstract public function isVersioned();
     
     /**
      * Sets the class name of the entity supported
      *
      * @param string $name The entity class name
-     * @return Xyster_Orm_Mapping_Entity provides a fluent interface
+     * @return Xyster_Orm_Mapping_Class_Abstract provides a fluent interface
      */
     public function setClassName( $name )
     {
@@ -290,22 +576,32 @@ abstract class Xyster_Orm_Mapping_Class_Abstract
     }
     
     /**
-     * Sets the identifier property
-     *
-     * @param Xyster_Orm_Mapping_Property $prop
-     * @return Xyster_Orm_Mapping_Entity provides a fluent interface
+     * Sets the discriminator value
+     * 
+     * @param string $value
+     * @return Xyster_Orm_Mapping_Class_Abstract provides a fluent interface
      */
-    public function setIdentifier( Xyster_Orm_Mapping_Property $prop )
+    public function setDiscriminatorValue( $value )
     {
-        $this->_identifier = $prop;
-        return $this;
+        // @todo
+    }
+    
+    /**
+     * Sets the identifier mapper
+     * 
+     * @param Xyster_Orm_Mapping_Component $handle
+     * @return Xyster_Orm_Mapping_Class_Abstract provides a fluent interface
+     */
+    public function setIdMapper( Xyster_Orm_Mapping_Component $handle )
+    {
+        // @todo 
     }
     
     /**
      * Sets whether this type has lazy loaded parts or not
      *
      * @param boolean $lazy
-     * @return Xyster_Orm_Mapping_Entity provides a fluent interface
+     * @return Xyster_Orm_Mapping_Class_Abstract provides a fluent interface
      */
     public function setLazy( $lazy = true )
     {
@@ -317,31 +613,19 @@ abstract class Xyster_Orm_Mapping_Class_Abstract
      * Sets the loader for this entity type
      *
      * @param Xyster_Type $type
-     * @return Xyster_Orm_Mapping_Entity provides a fluent interface
+     * @return Xyster_Orm_Mapping_Class_Abstract provides a fluent interface
      */
     public function setLoaderType( Xyster_Type $type )
     {
         $this->_loaderType = $type;
         return $this;
     }
-    
-    /**
-     * Sets whether this type is mutable or not
-     *
-     * @param boolean $mutable
-     * @return Xyster_Orm_Mapping_Entity provides a fluent interface
-     */
-    public function setMutable( $mutable = true )
-    {
-        $this->_mutable = $mutable;
-        return $this;
-    }
-    
+
     /**
      * Sets the mode of optimistic locking 
      *
      * @param Xyster_Orm_Engine_Versioning $mode
-     * @return Xyster_Orm_Mapping_Entity provides a fluent interface
+     * @return Xyster_Orm_Mapping_Class_Abstract provides a fluent interface
      */
     public function setOptimisticLockMode( Xyster_Orm_Engine_Versioning $mode )
     {
@@ -353,19 +637,26 @@ abstract class Xyster_Orm_Mapping_Class_Abstract
      * Sets the persister for this entity type
      *
      * @param Xyster_Type $type
-     * @return Xyster_Orm_Mapping_Entity provides a fluent interface
+     * @return Xyster_Orm_Mapping_Class_Abstract provides a fluent interface
      */
-    public function setPersisterType( Xyster_Type $type )
+    abstract public function setPersisterType( Xyster_Type $type );
+    
+    /**
+     * Sets the proxy interface type
+     * 
+     * @param Xyster_Type $type
+     * @return Xyster_Orm_Mapping_Class_Abstract provides a fluent interface
+     */
+    public function setProxyInterfaceType( Xyster_Type $type)
     {
-        $this->_persisterType = $type;
-        return $this;
+        // @todo
     }
     
     /**
      * Sets that a select must be performed before an update occurs
      *
      * @param boolean $flag
-     * @return Xyster_Orm_Mapping_Entity provides a fluent interface
+     * @return Xyster_Orm_Mapping_Class_Abstract provides a fluent interface
      */
     public function setSelectBeforeUpdate( $flag = true )
     {
@@ -374,38 +665,53 @@ abstract class Xyster_Orm_Mapping_Class_Abstract
     }
     
     /**
-     * Sets the table for this type
-     *
-     * @param Xyster_Db_Table $table The table
-     * @return Xyster_Orm_Mapping_Entity provides a fluent interface
-     */
-    public function setTable( Xyster_Db_Table $table )
-    {
-        $this->_table = $table;
-        return $this;
-    }
-    
-    /**
      * Sets the type of tuplizer for this entity type
      *
      * @param Xyster_Type $type
-     * @return Xyster_Orm_Mapping_Entity provides a fluent interface
+     * @return Xyster_Orm_Mapping_Class_Abstract provides a fluent interface
      */
     public function setTuplizerType( Xyster_Type $type )
     {
         $this->_tuplizerType = $type;
         return $this;
     }
+
+    /**
+     * Adds a subclass join
+     * 
+     * @param Xyster_Orm_Mapping_Join $j
+     */
+    protected function _addSubclassJoin(Xyster_Orm_Mapping_Join $j)
+    {
+        // @todo
+    }
     
     /**
-     * Sets the version property for this type
-     *
-     * @param Xyster_Orm_Mapping_Property $prop The property
-     * @return Xyster_Orm_Mapping_Entity provides a fluent interface
+     * Adds a subclass property
+     * @param Xyster_Orm_Mapping_Property $p
      */
-    public function setVersion( Xyster_Orm_Mapping_Property $prop )
+    protected function _addSubclassProperty(Xyster_Orm_Mapping_Property $p)
     {
-        $this->_version = $prop;
-        return $this;
+        // @todo
+    }
+
+    /**
+     * Adds a subclass table
+     * 
+     * @param Xyster_Db_Table $table
+     */
+    protected function _addSubclassTable(Xyster_Db_Table $table)
+    {
+        // @todo
+    }
+    
+    /**
+     * Gets the discriminator columns
+     * 
+     * @return array
+     */
+    protected function _getDiscriminatorColumns()
+    {
+        // @todo
     }
 }

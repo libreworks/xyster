@@ -155,10 +155,10 @@ class Xyster_Orm_Runtime_EntityMeta
     /**
      * Creates a new runtime entity meta object
      *
-     * @param Xyster_Orm_Mapping_Entity $em
+     * @param Xyster_Orm_Mapping_Class_Abstract $em
      * @param Xyster_Orm_Session_Factory_Interface $sessionFactory
      */
-    public function __construct( Xyster_Orm_Mapping_Entity $em, Xyster_Orm_Session_Factory_Interface $sessionFactory )
+    public function __construct( Xyster_Orm_Mapping_Class_Abstract $em, Xyster_Orm_Session_Factory_Interface $sessionFactory )
     {
         $this->_sessionFactory = $sessionFactory;
         $this->_name = $em->getClassName();
@@ -582,13 +582,13 @@ class Xyster_Orm_Runtime_EntityMeta
     /**
      * Generates an identifierproperty for an entity mapping
      *
-     * @param Xyster_Orm_Mapping_Entity $em
+     * @param Xyster_Orm_Mapping_Class_Abstract $em
      * @param Xyster_Orm_Engine_IdGenerator_Interface $generator
      * @return Xyster_Orm_Runtime_Property_Identifier
      */
-    protected static function _buildIdentifierProperty(Xyster_Orm_Mapping_Entity $em, Xyster_Orm_Engine_IdGenerator_Interface $generator = null)
+    protected static function _buildIdentifierProperty(Xyster_Orm_Mapping_Class_Abstract $em, Xyster_Orm_Engine_IdGenerator_Interface $generator = null)
     {
-        $prop = $em->getIdentifier();
+        $prop = $em->getIdProperty();
         if ( $prop ) {
             $mappedUnsaved = $prop->getValue()->getNullValue();
             $unsavedValue = Xyster_Orm_Engine_IdentifierValue::factory($mappedUnsaved);

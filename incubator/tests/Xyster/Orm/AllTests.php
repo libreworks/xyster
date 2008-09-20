@@ -28,7 +28,6 @@ require_once 'Xyster/Orm/Engine/ValueInclusionTest.php';
 require_once 'Xyster/Orm/Engine/VersioningTest.php';
 require_once 'Xyster/Orm/Engine/VersionValueTest.php';
 require_once 'Xyster/Orm/Mapping/ComponentTest.php';
-require_once 'Xyster/Orm/Mapping/EntityTest.php';
 require_once 'Xyster/Orm/Mapping/GenerationTest.php';
 require_once 'Xyster/Orm/Mapping/PropertyTest.php';
 require_once 'Xyster/Orm/Mapping/ValueTest.php';
@@ -70,7 +69,6 @@ class Xyster_Orm_AllTests
         $suite->addTestSuite('Xyster_Orm_Engine_VersioningTest');
         $suite->addTestSuite('Xyster_Orm_Engine_VersionValueTest');
         $suite->addTestSuite('Xyster_Orm_Mapping_ComponentTest');
-        $suite->addTestSuite('Xyster_Orm_Mapping_EntityTest');
         $suite->addTestSuite('Xyster_Orm_Mapping_GenerationTest');
         $suite->addTestSuite('Xyster_Orm_Mapping_PropertyTest');
         $suite->addTestSuite('Xyster_Orm_Mapping_ValueTest');

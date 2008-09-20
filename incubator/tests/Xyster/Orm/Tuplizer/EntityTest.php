@@ -22,7 +22,7 @@ require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR 
 require_once 'Xyster/Orm/Tuplizer/Entity.php';
 require_once 'Xyster/Orm/Session/Factory/Interface.php';
 require_once 'Xyster/Orm/Runtime/EntityMeta.php';
-require_once 'Xyster/Orm/Mapping/Entity.php';
+require_once 'Xyster/Orm/Mapping/Class.php';
 require_once 'Xyster/Orm/Mapping/Component.php';
 require_once 'Xyster/Orm/Mapping/Property.php';
 require_once 'Xyster/Orm/Mapping/Value.php';
@@ -44,7 +44,7 @@ class Xyster_Orm_Tuplizer_EntityTest extends PHPUnit_Framework_TestCase
     protected $object;
     
     /**
-     * @var Xyster_Orm_Mapping_Entity
+     * @var Xyster_Orm_Mapping_Class
      */
     protected $mapping;
     
@@ -74,7 +74,7 @@ class Xyster_Orm_Tuplizer_EntityTest extends PHPUnit_Framework_TestCase
     {
         $factory = $this->getMock('Xyster_Orm_Session_Factory_Interface');
         $this->factory = $factory;
-        $this->mapping = new Xyster_Orm_Mapping_Entity();
+        $this->mapping = new Xyster_Orm_Mapping_Class();
         $this->mapping->setClassName('TuplizerTestExample');
         
         $integer = new Xyster_Orm_Type_Integer;
@@ -131,7 +131,7 @@ class Xyster_Orm_Tuplizer_EntityTest extends PHPUnit_Framework_TestCase
         $component->setValue($componentVal)->setName('component')
             ->setMapper(new Xyster_Data_Field_Mapper_Method('component'));
         
-        $this->mapping->setIdentifier($id)->addProperty($name)
+        $this->mapping->setIdProperty($id)->addProperty($name)
             ->addProperty($age)->addProperty($gender)->addProperty($version)
             ->addProperty($component)->setVersion($version)->setLazy(true);
         

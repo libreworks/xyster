@@ -18,6 +18,10 @@
  */
 require_once 'Xyster/Orm/Meta/Entity.php';
 /**
+ * @see Xyster_Orm_Cache_Source_Interface
+ */
+require_once 'Xyster/Orm/Cache/Source/Interface.php';
+/**
  * Persisters are aware of mapping and persistence information for an entity
  *
  * @category  Xyster
@@ -25,7 +29,7 @@ require_once 'Xyster/Orm/Meta/Entity.php';
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-interface Xyster_Orm_Persister_Entity_Interface extends Xyster_Orm_Meta_Entity
+interface Xyster_Orm_Persister_Entity_Interface extends Xyster_Orm_Meta_Entity, Xyster_Orm_Cache_Source_Interface
 {
     /**
      * Delete the persistent instance
@@ -77,7 +81,7 @@ interface Xyster_Orm_Persister_Entity_Interface extends Xyster_Orm_Meta_Entity
     /**
      * Return the type of the version property if the entity is indexed
      *
-     * @return Xyster_Orm_Type
+     * @return Xyster_Orm_Type_Interface
      */
     function getVersionType();
     
@@ -139,7 +143,8 @@ interface Xyster_Orm_Persister_Entity_Interface extends Xyster_Orm_Meta_Entity
     /**
      * Whether the supplied object is an instance of the entity type
      *
-     * @param boolean $object
+     * @param mixed $object
+     * @return boolean
      */
     function isInstance( $object );
         

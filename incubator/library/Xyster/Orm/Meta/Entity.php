@@ -165,7 +165,7 @@ interface Xyster_Orm_Meta_Entity
      *
      * @return boolean
      */
-    function isVersioned();
+    function isOptimisticLocked();
     
     /**
      * Sets the entity's identifier

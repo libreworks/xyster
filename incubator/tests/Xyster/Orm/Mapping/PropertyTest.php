@@ -110,8 +110,8 @@ class Xyster_Orm_Mapping_PropertyTest extends PHPUnit_Framework_TestCase
      */
     public function testGetAndSetPersistentClass()
     {
-        require_once 'Xyster/Orm/Mapping/Entity.php';
-        $pc = new Xyster_Orm_Mapping_Entity;
+        require_once 'Xyster/Orm/Mapping/Class.php';
+        $pc = new Xyster_Orm_Mapping_Class;
         $this->assertSame($this->object, $this->object->setEntityMapping($pc));
         $this->assertSame($pc, $this->object->getEntityMapping());
     }

@@ -21,7 +21,10 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 require_once 'Xyster/Orm/Runtime/EntityMeta.php';
 require_once 'Xyster/Orm/Session/Factory/Interface.php';
-require_once 'Xyster/Orm/Mapping/Entity.php';
+require_once 'Xyster/Orm/Mapping/Component.php';
+require_once 'Xyster/Orm/Mapping/Class.php';
+require_once 'Xyster/Orm/Mapping/Join.php';
+require_once 'Xyster/Orm/Mapping/Subclass.php';
 require_once 'Xyster/Orm/Mapping/Value.php';
 require_once 'Xyster/Orm/Type/Integer.php';
 require_once 'Xyster/Orm/Runtime/Property/Identifier.php';
@@ -59,7 +62,7 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->sessionFactory = $this->getMock('Xyster_Orm_Session_Factory_Interface');
-        $this->em = $this->getMock('Xyster_Orm_Mapping_Entity');
+        $this->em = $this->getMock('Xyster_Orm_Mapping_Class_Abstract');
     }
 
     /**

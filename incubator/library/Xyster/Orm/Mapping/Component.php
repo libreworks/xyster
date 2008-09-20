@@ -18,10 +18,6 @@
  */
 require_once 'Xyster/Orm/Mapping/Value.php';
 /**
- * @see Xyster_Orm_Mapping_Entity
- */
-require_once 'Xyster/Orm/Mapping/Entity.php';
-/**
  * @see Xyster_Orm_Type_Component
  */
 require_once 'Xyster/Orm/Type/Component.php';
@@ -41,7 +37,7 @@ class Xyster_Orm_Mapping_Component extends Xyster_Orm_Mapping_Value
     protected $_componentType;
     protected $_isKey = false;
     /**
-     * @var Xyster_Orm_Mapping_Entity
+     * @var Xyster_Orm_Mapping_Class_Abstract
      */
     protected $_owner;
     protected $_parentProperty;
@@ -124,7 +120,7 @@ class Xyster_Orm_Mapping_Component extends Xyster_Orm_Mapping_Value
     /**
      * Gets the owning entity class
      *
-     * @return Xyster_Orm_Mapping_Entity
+     * @return Xyster_Orm_Mapping_Class_Abstract
      */
     public function getOwner()
     {
@@ -249,10 +245,10 @@ class Xyster_Orm_Mapping_Component extends Xyster_Orm_Mapping_Value
     /**
      * Sets the type of owning entity
      *
-     * @param Xyster_Orm_Mapping_Entity $owner
+     * @param Xyster_Orm_Mapping_Class_Abstract $owner
      * @return Xyster_Orm_Mapping_Component provides a fluent interface
      */
-    public function setOwner( Xyster_Orm_Mapping_Entity $owner )
+    public function setOwner( Xyster_Orm_Mapping_Class_Abstract $owner )
     {
         $this->_owner = $owner;
         return $this;

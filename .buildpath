@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<buildpath>
+	<buildpathentry excluding="documentation" kind="src" path=""/>
+	<buildpathentry kind="con" path="org.eclipse.php.core.LANGUAGE"/>
+	<buildpathentry external="true" kind="lib" path="/usr/share/php/PHPUnit"/>
+	<buildpathentry external="true" kind="lib" path="/usr/share/php/ZendFramework-1.6.0/library/Zend"/>
+</buildpath>

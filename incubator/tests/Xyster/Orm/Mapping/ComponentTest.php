@@ -20,6 +20,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 }
 require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 require_once 'Xyster/Orm/Mapping/Component.php';
+require_once 'Xyster/Orm/Mapping/Class.php';
 
 /**
  * Test class for Xyster_Orm_Mapping_Component.
@@ -139,7 +140,7 @@ class Xyster_Orm_Mapping_ComponentTest extends PHPUnit_Framework_TestCase
      */
     public function testGetAndSetOwner()
     {
-        $owner = new Xyster_Orm_Mapping_Entity;
+        $owner = new Xyster_Orm_Mapping_Class;
         $this->assertNull($this->object->getOwner());
         $this->assertSame($this->object, $this->object->setOwner($owner));
         $this->assertSame($owner, $this->object->getOwner());

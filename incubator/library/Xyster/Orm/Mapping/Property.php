@@ -52,7 +52,7 @@ class Xyster_Orm_Mapping_Property
      */
     protected $_optional = false;
     /**
-     * @var Xyster_Orm_Mapping_Entity
+     * @var Xyster_Orm_Mapping_Class_Abstract
      */
     protected $_pc;
     /**
@@ -121,7 +121,7 @@ class Xyster_Orm_Mapping_Property
     /**
      * Gets the entity class information
      *
-     * @return Xyster_Orm_Mapping_Entity
+     * @return Xyster_Orm_Mapping_Class_Abstract
      */
     public function getEntityMapping()
     {
@@ -273,10 +273,10 @@ class Xyster_Orm_Mapping_Property
     /**
      * Sets the entity class information
      *
-     * @param Xyster_Orm_Mapping_Entity $entity
+     * @param Xyster_Orm_Mapping_Class_Abstract $entity
      * @return Xyster_Orm_Mapping_Property provides a fluent interface
      */
-    public function setEntityMapping( Xyster_Orm_Mapping_Entity $entity )
+    public function setEntityMapping( Xyster_Orm_Mapping_Class_Abstract $entity )
     {
         $this->_pc = $entity;
         return $this;

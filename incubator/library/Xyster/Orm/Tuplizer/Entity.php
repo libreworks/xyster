@@ -65,13 +65,13 @@ class Xyster_Orm_Tuplizer_Entity implements Xyster_Orm_Tuplizer_Entity_Interface
      * Creates a new entity tuplizer
      *
      * @param Xyster_Orm_Runtime_EntityMeta $entityMeta
-     * @param Xyster_Orm_Mapping_Entity $mappedEntity
+     * @param Xyster_Orm_Mapping_Class_Abstract $mappedEntity
      */
-    public function __construct( Xyster_Orm_Runtime_EntityMeta $entityMeta, Xyster_Orm_Mapping_Entity $mappedEntity )
+    public function __construct( Xyster_Orm_Runtime_EntityMeta $entityMeta, Xyster_Orm_Mapping_Class_Abstract $mappedEntity )
     {
         $this->_entityMeta = $entityMeta;
         if ( $entityMeta->getIdentifier() ) {
-            $this->_idMapper = $mappedEntity->getIdentifier()->getMapper();
+            $this->_idMapper = $mappedEntity->getIdProperty()->getMapper();
         }
         $this->_propertySpan = $entityMeta->getPropertySpan();
         $props = (array)$mappedEntity->getProperties();
