@@ -37,7 +37,7 @@ require_once 'Xyster/Type.php';
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Orm_Mapping_Entity
+abstract class Xyster_Orm_Mapping_Class_Abstract
 {
     /**
      * @var Xyster_Orm_Mapping_Property
