@@ -26,6 +26,7 @@ error_reporting(E_ALL | E_STRICT);
 require_once 'Xyster/Type/Property/DirectTest.php';
 require_once 'Xyster/Type/Property/MapTest.php';
 require_once 'Xyster/Type/Property/MethodTest.php';
+require_once 'Xyster/Type/Proxy/BuilderTest.php';
 
 class Xyster_Type_AllTests
 {
@@ -40,6 +41,7 @@ class Xyster_Type_AllTests
         $suite->addTestSuite('Xyster_Type_Property_DirectTest');
         $suite->addTestSuite('Xyster_Type_Property_MapTest');
         $suite->addTestSuite('Xyster_Type_Property_MethodTest');
+        $suite->addTestSuite('Xyster_Type_Proxy_BuilderTest');
         return $suite;
     }
 }
