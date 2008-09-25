@@ -27,7 +27,7 @@ interface Xyster_Orm_Session_Factory_Interface
      * Gets the identifier generator
      *
      * @param string $className
-     * @return Xyster_Orm_Engine_IdGenerator_Interface
+     * @return Xyster_Orm_Id_Generator_Interface
      */
     function getIdentifierGenerator( $className );
 }

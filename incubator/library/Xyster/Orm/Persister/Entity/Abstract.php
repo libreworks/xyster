@@ -196,7 +196,7 @@ abstract class Xyster_Orm_Persister_Entity_Abstract implements Xyster_Orm_Persis
     /**
      * Gets the identifier strategy
      *
-     * @return Xyster_Orm_Engine_IdGenerator_Interface
+     * @return Xyster_Orm_Id_Generator_Interface
      */
     public function getIdGenerator()
     {

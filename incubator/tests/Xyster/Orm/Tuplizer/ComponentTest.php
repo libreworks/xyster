@@ -22,7 +22,7 @@ require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR 
 require_once 'Xyster/Orm/Tuplizer/Component.php';
 require_once 'Xyster/Orm/Mapping/Component.php';
 require_once 'Xyster/Orm/Mapping/Property.php';
-require_once 'Xyster/Data/Field/Mapper/Method.php';
+require_once 'Xyster/Type/Property/Method.php';
 require_once '_files/TuplizerTestExample.php';
 
 /**
@@ -57,11 +57,11 @@ class Xyster_Orm_Tuplizer_ComponentTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $name= new Xyster_Orm_Mapping_Property;
-        $name->setName('name')->setMapper(new Xyster_Data_Field_Mapper_Method('name'));
+        $name->setName('name')->setWrapper(new Xyster_Type_Property_Method('name'));
         $age = new Xyster_Orm_Mapping_Property;
-        $age->setName('age')->setMapper(new Xyster_Data_Field_Mapper_Method('age'));
+        $age->setName('age')->setWrapper(new Xyster_Type_Property_Method('age'));
         $gender = new Xyster_Orm_Mapping_Property;
-        $gender->setName('gender')->setMapper(new Xyster_Data_Field_Mapper_Method('gender'));
+        $gender->setName('gender')->setWrapper(new Xyster_Type_Property_Method('gender'));
         $component = new Xyster_Orm_Mapping_Component;
         $component->setComponentType(new Xyster_Type('TuplizerTestExample'));
         $component->addProperty($name)->addProperty($age)->addProperty($gender);

@@ -33,9 +33,9 @@ class Xyster_Orm_Tuplizer_Entity implements Xyster_Orm_Tuplizer_Entity_Interface
     protected $_entityMeta;
     
     /**
-     * @var Xyster_Data_Field_Mapper_Interface
+     * @var Xyster_Type_Property_Interface
      */
-    protected $_idMapper;
+    protected $_idWrapper;
     
     /**
      * @var Xyster_Orm_Type_Component
@@ -45,7 +45,7 @@ class Xyster_Orm_Tuplizer_Entity implements Xyster_Orm_Tuplizer_Entity_Interface
     protected $_lazyPropertyNames = array();
     
     /**
-     * @var Xyster_Data_Field_Mapper_Interface[]
+     * @var Xyster_Type_Property_Interface[]
      */
     protected $_mappers = array();
     
@@ -71,13 +71,13 @@ class Xyster_Orm_Tuplizer_Entity implements Xyster_Orm_Tuplizer_Entity_Interface
     {
         $this->_entityMeta = $entityMeta;
         if ( $entityMeta->getIdentifier() ) {
-            $this->_idMapper = $mappedEntity->getIdProperty()->getMapper();
+            $this->_idWrapper = $mappedEntity->getIdProperty()->getWrapper();
         }
         $this->_propertySpan = $entityMeta->getPropertySpan();
         $props = (array)$mappedEntity->getProperties();
         foreach( $props as $prop ) {
             /* @var $prop Xyster_Orm_Mapping_Property */
-            $this->_mappers[] = $prop->getMapper();
+            $this->_mappers[] = $prop->getWrapper();
             if ( $prop->isLazy() ) {
                 $this->_lazyPropertyNames[] = $prop->getName();
             }
@@ -160,7 +160,7 @@ class Xyster_Orm_Tuplizer_Entity implements Xyster_Orm_Tuplizer_Entity_Interface
     public function getIdentifier( $entity )
     {
         $id = null;
-        if ( $this->_idMapper === null ) {
+        if ( $this->_idWrapper === null ) {
             if ( $this->_idMapperType == null ) { 
                 require_once 'Xyster/Orm/Exception.php';
                 throw new Xyster_Orm_Exception('No identifier property: ' . $this->getEntityName());
@@ -170,7 +170,7 @@ class Xyster_Orm_Tuplizer_Entity implements Xyster_Orm_Tuplizer_Entity_Interface
                 $copier->setPropertyValues($id, $this->_idMapperType->getPropertyValues($entity));
             }
         } else {
-            $id = $this->_idMapper->get($entity);
+            $id = $this->_idWrapper->get($entity);
         }
         return $id;
     }
@@ -308,8 +308,8 @@ class Xyster_Orm_Tuplizer_Entity implements Xyster_Orm_Tuplizer_Entity_Interface
      */
     public function setIdentifier( $entity, $id )
     {
-        if ( $this->_idMapper != null ) {
-            $this->_idMapper->set($entity, $id);
+        if ( $this->_idWrapper != null ) {
+            $this->_idWrapper->set($entity, $id);
         }
     }
     

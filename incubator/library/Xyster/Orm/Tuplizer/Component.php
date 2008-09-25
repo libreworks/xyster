@@ -35,7 +35,7 @@ class Xyster_Orm_Tuplizer_Component implements Xyster_Orm_Tuplizer_Component_Int
     protected $_accessors = array();
 
     /**
-     * @var Xyster_Data_Field_Mapper_Interface
+     * @var Xyster_Type_Property_Interface
      */
     protected $_parentAccessor;
     
@@ -51,13 +51,13 @@ class Xyster_Orm_Tuplizer_Component implements Xyster_Orm_Tuplizer_Component_Int
         $this->_propertySpan = $component->getPropertySpan();
         foreach( $component->getProperties() as $prop ) {
             /* @var $prop Xyster_Orm_Mapping_Property */
-            $this->_accessors[] = $prop->getMapper();
+            $this->_accessors[] = $prop->getWrapper();
         }
         
         $this->_componentType = $component->getComponentType();
         $parentPropertyName = $component->getParentProperty();
         if ( $parentPropertyName !== null ) {
-            $this->_parentAccessor = new Xyster_Data_Field_Mapper_Method($parentPropertyName);
+            $this->_parentAccessor = new Xyster_Type_Property_Method($parentPropertyName);
         }
     }
     
@@ -103,9 +103,9 @@ class Xyster_Orm_Tuplizer_Component implements Xyster_Orm_Tuplizer_Component_Int
     public function getPropertyValues( $component )
     {
         $values = array();
-        foreach( $this->_accessors as $i=>$mapper ) {
-            /* @var $mapper Xyster_Data_Field_Mapper_Interface */
-            $values[$i] = $mapper->get($component);
+        foreach( $this->_accessors as $i=>$wrapper ) {
+            /* @var $wrapper Xyster_Type_Property_Interface */
+            $values[$i] = $wrapper->get($component);
         }
         return $values;
     }
@@ -159,9 +159,9 @@ class Xyster_Orm_Tuplizer_Component implements Xyster_Orm_Tuplizer_Component_Int
      */
     public function setPropertyValues( $component, array $values )
     {
-        foreach( $this->_accessors as $i=>$mapper ) {
-            /* @var $mapper Xyster_Data_Field_Mapper_Interface */
-            $mapper->set($component, $values[$i]);
+        foreach( $this->_accessors as $i=>$wrapper ) {
+            /* @var $wrapper Xyster_Type_Property_Interface */
+            $wrapper->set($component, $values[$i]);
         }
     }
 }

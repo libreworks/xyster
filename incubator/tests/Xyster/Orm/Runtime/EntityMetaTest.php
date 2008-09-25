@@ -70,13 +70,13 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
      */
     public function testGetIdentifier()
     {
-        $gen = $this->getMock('Xyster_Orm_Engine_IdGenerator_Interface');
+        $gen = $this->getMock('Xyster_Orm_Id_Generator_Interface');
         $this->sessionFactory->expects($this->any())
             ->method('getIdentifierGenerator')
             ->will($this->returnValue($gen));
         $prop = $this->_getProperty('foobarId', 'Integer');
         $this->em->expects($this->any())
-            ->method('getIdentifier')
+            ->method('getIdProperty')
             ->will($this->returnValue($prop));
         $object = $this->_getFixture();
         

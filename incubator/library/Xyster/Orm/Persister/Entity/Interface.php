@@ -67,7 +67,7 @@ interface Xyster_Orm_Persister_Entity_Interface extends Xyster_Orm_Meta_Entity, 
     /**
      * Gets the identifier strategy
      *
-     * @return Xyster_Orm_Engine_IdGenerator_Interface
+     * @return Xyster_Orm_Id_Generator_Interface
      */
     function getIdGenerator();
         

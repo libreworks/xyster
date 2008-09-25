@@ -59,19 +59,19 @@ class Xyster_Orm_Type_ComponentTest extends PHPUnit_Framework_TestCase
         $titleVal = new Xyster_Orm_Mapping_Value;
         $titleVal->setType(new Xyster_Orm_Type_String)->addColumn(new Xyster_Db_Column);
         $title = new Xyster_Orm_Mapping_Property;
-        $title->setName('title')->setValue($titleVal)->setMapper(new Xyster_Data_Field_Mapper_Method('title'));
+        $title->setName('title')->setValue($titleVal)->setMapper(new Xyster_Type_Property_Method('title'));
         
         $userVal = new Xyster_Orm_Mapping_Value;
         $userCol = new Xyster_Db_Column;
         $userCol->setNullable(false);
         $userVal->setType(new Xyster_Orm_Type_Integer)->addColumn($userCol);
         $userId = new Xyster_Orm_Mapping_Property;
-        $userId->setName('userId')->setValue($userVal)->setMapper(new Xyster_Data_Field_Mapper_Method('userId'));
+        $userId->setName('userId')->setValue($userVal)->setMapper(new Xyster_Type_Property_Method('userId'));
         
         $createdVal = new Xyster_Orm_Mapping_Value;
         $createdVal->setType(new Xyster_Orm_Type_Timestamp)->addColumn(new Xyster_Db_Column);
         $created = new Xyster_Orm_Mapping_Property;
-        $created->setName('created')->setValue($createdVal)->setMapper(new Xyster_Data_Field_Mapper_Method('created'));
+        $created->setName('created')->setValue($createdVal)->setMapper(new Xyster_Type_Property_Method('created'));
         
         $component = new Xyster_Orm_Mapping_Component;
         $component->setComponentType(new Xyster_Type('Xyster_Orm_Type_ComponentTest_Example'));

@@ -583,10 +583,10 @@ class Xyster_Orm_Runtime_EntityMeta
      * Generates an identifierproperty for an entity mapping
      *
      * @param Xyster_Orm_Mapping_Class_Abstract $em
-     * @param Xyster_Orm_Engine_IdGenerator_Interface $generator
+     * @param Xyster_Orm_Id_Generator_Interface $generator
      * @return Xyster_Orm_Runtime_Property_Identifier
      */
-    protected static function _buildIdentifierProperty(Xyster_Orm_Mapping_Class_Abstract $em, Xyster_Orm_Engine_IdGenerator_Interface $generator = null)
+    protected static function _buildIdentifierProperty(Xyster_Orm_Mapping_Class_Abstract $em, Xyster_Orm_Id_Generator_Interface $generator = null)
     {
         $prop = $em->getIdProperty();
         if ( $prop ) {

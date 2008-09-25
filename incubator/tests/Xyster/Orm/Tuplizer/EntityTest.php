@@ -29,7 +29,7 @@ require_once 'Xyster/Orm/Mapping/Value.php';
 require_once 'Xyster/Orm/Tuplizer/Component.php';
 require_once 'Xyster/Orm/Type/String.php';
 require_once 'Xyster/Orm/Type/Integer.php';
-require_once 'Xyster/Data/Field/Mapper/Method.php';
+require_once 'Xyster/Type/Property/Method.php';
 require_once '_files/TuplizerTestExample.php';
 
 /**
@@ -84,43 +84,43 @@ class Xyster_Orm_Tuplizer_EntityTest extends PHPUnit_Framework_TestCase
         $idVal->setType($integer);
         $id = new Xyster_Orm_Mapping_Property();
         $id->setName('id')->setValue($idVal)
-            ->setMapper(new Xyster_Data_Field_Mapper_Method('id'));
+            ->setWrapper(new Xyster_Type_Property_Method('id'));
         $nameVal = new Xyster_Orm_Mapping_Value();
         $nameVal->setType($string);
         $name= new Xyster_Orm_Mapping_Property;
         $name->setName('name')->setValue($nameVal)
-            ->setMapper(new Xyster_Data_Field_Mapper_Method('name'));
+            ->setWrapper(new Xyster_Type_Property_Method('name'));
         $ageVal = new Xyster_Orm_Mapping_Value();
         $ageVal->setType($integer);
         $age = new Xyster_Orm_Mapping_Property;
         $age->setName('age')->setValue($ageVal)
-            ->setMapper(new Xyster_Data_Field_Mapper_Method('age'));
+            ->setWrapper(new Xyster_Type_Property_Method('age'));
         $genderVal = new Xyster_Orm_Mapping_Value();
         $genderVal->setType($string);
         $gender = new Xyster_Orm_Mapping_Property;
         $gender->setName('gender')->setValue($genderVal)
-            ->setMapper(new Xyster_Data_Field_Mapper_Method('gender'));
+            ->setWrapper(new Xyster_Type_Property_Method('gender'));
         $versionVal = new Xyster_Orm_Mapping_Value();
         $versionVal->setType($integer);
         $version = new Xyster_Orm_Mapping_Property();
         $version->setName('version')->setValue($versionVal)
-            ->setMapper(new Xyster_Data_Field_Mapper_Method('version'));
+            ->setWrapper(new Xyster_Type_Property_Method('version'));
             
         $addressVal = new Xyster_Orm_Mapping_Value();
         $addressVal->setType($string);
         $address = new Xyster_Orm_Mapping_Property();
         $address->setName('address')->setValue($addressVal)
-            ->setMapper(new Xyster_Data_Field_Mapper_Method('address'));
+            ->setWrapper(new Xyster_Type_Property_Method('address'));
         $cityVal = new Xyster_Orm_Mapping_Value();
         $cityVal->setType($string);
         $city = new Xyster_Orm_Mapping_Property();
         $city->setName('city')->setValue($cityVal)
-            ->setMapper(new Xyster_Data_Field_Mapper_Method('city'));
+            ->setWrapper(new Xyster_Type_Property_Method('city'));
         $zipVal = new Xyster_Orm_Mapping_Value();
         $zipVal->setType($integer);
         $zip = new Xyster_Orm_Mapping_Property();
         $zip->setName('zip')->setValue($zipVal)
-            ->setMapper(new Xyster_Data_Field_Mapper_Method('zip'));            
+            ->setWrapper(new Xyster_Type_Property_Method('zip'));            
         $componentVal = new Xyster_Orm_Mapping_Component();
         $componentVal->addProperty($address)->addProperty($city)
             ->addProperty($zip)
@@ -129,7 +129,7 @@ class Xyster_Orm_Tuplizer_EntityTest extends PHPUnit_Framework_TestCase
         $this->componentType = $componentVal;
         $component = new Xyster_Orm_Mapping_Property();
         $component->setValue($componentVal)->setName('component')
-            ->setMapper(new Xyster_Data_Field_Mapper_Method('component'));
+            ->setWrapper(new Xyster_Type_Property_Method('component'));
         
         $this->mapping->setIdProperty($id)->addProperty($name)
             ->addProperty($age)->addProperty($gender)->addProperty($version)

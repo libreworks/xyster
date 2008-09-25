@@ -85,15 +85,15 @@ class Xyster_Orm_Mapping_PropertyTest extends PHPUnit_Framework_TestCase
     }
     
     /**
-     * Tests the 'getMapper' and 'setMapper' methods
+     * Tests the 'getWrapper' and 'setWrapper' methods
      */
-    public function testGetAndSetMapper()
+    public function testGetAndSetWrapper()
     {
-        require_once 'Xyster/Data/Field/Mapper/Direct.php';
-        $mapper = new Xyster_Data_Field_Mapper_Direct('foobar');
-        $return = $this->object->setMapper($mapper);
+        require_once 'Xyster/Type/Property/Direct.php';
+        $mapper = new Xyster_Type_Property_Direct('foobar');
+        $return = $this->object->setWrapper($mapper);
         $this->assertSame($this->object, $return);
-        $this->assertSame($mapper, $this->object->getMapper());
+        $this->assertSame($mapper, $this->object->getWrapper());
     }
 
     /**

@@ -36,9 +36,9 @@ class Xyster_Orm_Mapping_Property
      */
     protected $_lazy = false;
     /**
-     * @var Xyster_Data_Field_Mapper_Interface
+     * @var Xyster_Type_Property_Interface
      */
-    protected $_mapper;
+    protected $_wrapper;
     /**
      * @var string
      */
@@ -99,13 +99,13 @@ class Xyster_Orm_Mapping_Property
     }
     
     /**
-     * Gets a mapper for this property
+     * Gets a getter/setter for this property
      *
-     * @return Xyster_Data_Field_Mapper_Interface
+     * @return Xyster_Type_Property_Interface
      */
-    public function getMapper()
+    public function getWrapper()
     {
-        return $this->_mapper;
+        return $this->_wrapper;
     }
     
     /**
@@ -223,14 +223,14 @@ class Xyster_Orm_Mapping_Property
     }
     
     /**
-     * Sets the mapper for this property
+     * Sets the getter/setter for this property
      *
-     * @param Xyster_Data_Field_Mapper_Interface $mapper
+     * @param Xyster_Type_Property_Interface $mapper
      * @return Xyster_Orm_Mapping_Property provides a fluent interface
      */
-    public function setMapper( Xyster_Data_Field_Mapper_Interface $mapper )
+    public function setWrapper( Xyster_Type_Property_Interface $wrapper )
     {
-        $this->_mapper = $mapper;
+        $this->_wrapper = $wrapper;
         return $this;
     }
     

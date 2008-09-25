@@ -20,7 +20,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 }
 require_once dirname(dirname(dirname(dirname(dirname(__FILE__))))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 require_once 'Xyster/Orm/Runtime/Property/Identifier.php';
-require_once 'Xyster/Orm/Engine/IdGenerator/Interface.php';
+require_once 'Xyster/Orm/Id/Generator/Interface.php';
 require_once 'Xyster/Orm/Session/Interface.php';
 
 /**
@@ -44,7 +44,7 @@ class Xyster_Orm_Runtime_Property_IdentifierTest extends PHPUnit_Framework_TestC
      */
     public function testBasic()
     {
-        $idGen = $this->getMock('Xyster_Orm_Engine_IdGenerator_Interface');
+        $idGen = $this->getMock('Xyster_Orm_Id_Generator_Interface');
         require_once 'Xyster/Orm/Type/String.php';
         $type = new Xyster_Orm_Type_String;
         require_once 'Xyster/Orm/Engine/IdentifierValue.php';
