@@ -28,7 +28,6 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once 'Xyster/Data/AggregateTest.php';
 require_once 'Xyster/Data/BinderTest.php';
-require_once 'Xyster/Data/Binder/SetterTest.php';
 require_once 'Xyster/Data/JunctionTest.php';
 require_once 'Xyster/Data/ExpressionTest.php';
 require_once 'Xyster/Data/CriterionTest.php';
@@ -55,7 +54,6 @@ class Xyster_Data_AllTests
         $suite = new PHPUnit_Framework_TestSuite('Xyster Framework - Xyster_Data');
         $suite->addTestSuite('Xyster_Data_AggregateTest');
         $suite->addTestSuite('Xyster_Data_BinderTest');
-        $suite->addTestSuite('Xyster_Data_Binder_SetterTest');
         $suite->addTestSuite('Xyster_Data_JunctionTest');
         $suite->addTestSuite('Xyster_Data_ExpressionTest');
         $suite->addTestSuite('Xyster_Data_CriterionTest');

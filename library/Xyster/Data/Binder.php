@@ -14,9 +14,13 @@
  * @version   $Id$
  */
 /**
- * @see Xyster_Data_Binder_Setter
+ * @see Xyster_Type_Property_Factory
  */
-require_once 'Xyster/Data/Binder/Setter.php';
+require_once 'Xyster/Type/Property/Factory.php';
+/**
+ * @see Xyster_Type_Property_Interface
+ */
+require_once 'Xyster/Type/Property/Interface.php';
 /**
  * A mediator that applies values to a target object
  *
@@ -36,41 +40,38 @@ class Xyster_Data_Binder
     protected $_setters = array();
     
     /**
-     * @var Xyster_Data_Binder_Setter
+     * @var Xyster_Type
      */
-    protected $_defaultSetter;
+    protected $_default;
     
     /**
      * Creates a new binder
      *
-     * @param object $target
+     * @param stdClass $target
+     * @param Xyster_Type $defaultSetter  Optional. Must inherit from Xyster_Type_Property_Interface 
      */
-    public function __construct( $target )
+    public function __construct( stdClass $target, Xyster_Type $defaultSetter = null )
     {
-        if ( !is_object($target) ) {
-            require_once 'Xyster/Data/Binder/Exception.php';
-            throw new Xyster_Data_Binder_Exception('Only objects can be supplied as a target');
-        }
         $this->_target = $target;
-        $this->_defaultSetter = new Xyster_Data_Binder_Setter;
+        if ( $defaultSetter ) {
+            if ( !$defaultSetter->isAssignableFrom('Xyster_Type_Property_Interface') ) {
+                require_once 'Xyster/Data/Binder/Exception.php';
+                throw new Xyster_Data_Binder_Exception('The type provided must inherit from Xyster_Type_Property_Interface');
+            }
+            $this->_default = $defaultSetter;
+        }
     }
         
     /**
-     * Adds a setter to handle a type and property
+     * Adds a setter to handle a type and property 
      * 
-     * Setting the property argument to null will apply the setter to all fields 
-     * 
-     * @param Xyster_Data_Binder_Setter_Interface $setter The setter to add
+     * @param Xyster_Type_Property_Interface $setter The setter to add
      * @param mixed $property Optional. A property name to which the setter applies.
      * @return Xyster_Data_Binder provides a fluent interface
      */
-    public function addSetter( Xyster_Data_Binder_Setter_Interface $setter, $property = null )
+    public function addSetter( Xyster_Type_Property_Interface $setter, $property )
     {
-        if ( $property === null ) {
-            $this->_defaultSetter = $setter;
-        } else {
-            $this->_setters[$property] = $setter;
-        } 
+        $this->_setters[$property] = $setter;
         return $this;
     }
     
@@ -84,7 +85,7 @@ class Xyster_Data_Binder
         foreach( $values as $name => $value ) {
             if ( $this->isAllowed($name) ) {
                 $setter = $this->_getSetter($name);
-                $setter->set($this->_target, $name, $value);
+                $setter->set($this->_target, $value);
             }
         }
     }
@@ -163,11 +164,16 @@ class Xyster_Data_Binder
      * Gets a setter for the field supplied
      *
      * @param string $field The field name
-     * @return Xyster_Data_Binder_Setter_Interface
+     * @return Xyster_Type_Property_Interface
      */
     protected function _getSetter( $field )
     {
-        return isset($this->_setters[$field]) ? $this->_setters[$field] : 
-            $this->_defaultSetter;
+        if ( !isset($this->_setters[$field]) ) {
+            return ( $this->_default ) ?
+                $this->_default->getClass()->newInstance($field) :
+                Xyster_Type_Property_Factory::get($this->_target, $field);
+        } else {
+            return $this->_setters[$field];
+        }
     }
 }

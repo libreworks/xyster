@@ -15,6 +15,9 @@
  */
 /**
  * A mediator for setting and getting values from a named field
+ * 
+ * Implementors of this interface should specify a constructor that takes the
+ * field name as an argument.
  *
  * @category  Xyster
  * @package   Xyster_Type
