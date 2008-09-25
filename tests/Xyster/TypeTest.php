@@ -63,7 +63,7 @@ class Xyster_TypeTest extends PHPUnit_Framework_TestCase
      */
     public function testBadConstruct()
     {
-        $this->setExpectedException('Zend_Exception');
+        $this->setExpectedException('Xyster_Type_Exception');
         $object = new Xyster_Type('aoeuhtns');
     }
     

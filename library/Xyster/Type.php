@@ -51,8 +51,8 @@ class Xyster_Type
             $type = $type->getName();
         }
         if ( !in_array($type, self::$_types) && !class_exists($type, false) && !interface_exists($type, false) ) {
-            require_once 'Zend/Exception.php';
-            throw new Zend_Exception('Invalid type: ' . $type);
+            require_once 'Xyster/Type/Exception.php';
+            throw new Xyster_Type_Exception('Invalid type: ' . $type);
         }
         $this->_type = $type;
         if ( class_exists($type, false) || interface_exists($type, false) ) {
