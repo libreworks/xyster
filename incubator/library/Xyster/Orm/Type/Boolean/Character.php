@@ -63,7 +63,19 @@ abstract class Xyster_Orm_Type_Boolean_Character extends Xyster_Orm_Type_Boolean
     public function set(Zend_Db_Statement_Interface $stmt, $value, $index, Xyster_Orm_Session_Interface $sess, array $settable = array() )
     {
         if ( !count($settable) || $settable[0] ) {
-            $stmt->bindValue($index, $value, Zend_Db::PARAM_STR);
+            $stmt->bindValue($index, $this->_toCharacter($value),
+                Zend_Db::PARAM_STR);
         }
-    }   
+    }
+
+    /**
+     * Gets the right string for the boolean value
+     * 
+     * @param boolean $value
+     * @return string
+     */
+    private function _toCharacter( $value )
+    {
+        return $value ? $this->_getTrueString() : $this->_getFalseString();
+    }
 }

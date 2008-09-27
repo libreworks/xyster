@@ -41,6 +41,8 @@ require_once 'Xyster/Orm/Tuplizer/EntityTest.php';
 require_once 'Xyster/Orm/Type/AbstractTest.php';
 require_once 'Xyster/Orm/Type/BigIntegerTest.php';
 require_once 'Xyster/Orm/Type/BooleanTest.php';
+require_once 'Xyster/Orm/Type/Boolean/TrueFalseTest.php';
+require_once 'Xyster/Orm/Type/Boolean/YesNoTest.php';
 require_once 'Xyster/Orm/Type/DateTest.php';
 require_once 'Xyster/Orm/Type/DecimalTest.php';
 require_once 'Xyster/Orm/Type/FloatTest.php';

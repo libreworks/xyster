@@ -14,9 +14,9 @@
  * @version   $Id$
  */
 /**
- * @see Xyster_Orm_Type_Boolean
+ * @see Xyster_Orm_Type_Boolean_Character
  */
-require_once 'Xyster/Orm/Type/Boolean.php';
+require_once 'Xyster/Orm/Type/Boolean/Character.php';
 /**
  * The boolean type
  *
@@ -25,7 +25,7 @@ require_once 'Xyster/Orm/Type/Boolean.php';
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-abstract class Xyster_Orm_Type_Boolean_TrueFalse extends Xyster_Orm_Type_Boolean_Character
+class Xyster_Orm_Type_Boolean_TrueFalse extends Xyster_Orm_Type_Boolean_Character
 {
     /**
      * Returns the abbreviated name of the type.
@@ -44,7 +44,7 @@ abstract class Xyster_Orm_Type_Boolean_TrueFalse extends Xyster_Orm_Type_Boolean
      */
     protected function _getFalseString()
     {
-        return 'false';
+        return 'F';
     }
 
     /**
@@ -54,6 +54,6 @@ abstract class Xyster_Orm_Type_Boolean_TrueFalse extends Xyster_Orm_Type_Boolean
      */
     protected function _getTrueString()
     {
-        return 'true';
+        return 'T';
     }
 }
