@@ -62,6 +62,10 @@ class Xyster_Orm_Type_Boolean_YesNoTest extends Xyster_Orm_Type_Boolean_Abstract
     {
         return 'Y';
     }
+    protected function _getFalseString()
+    {
+        return 'N';
+    }
 }
 
 // Call Xyster_Orm_Type_Boolean_YesNoTest::main() if this source file is executed directly.

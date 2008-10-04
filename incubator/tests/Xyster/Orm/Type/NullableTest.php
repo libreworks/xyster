@@ -146,6 +146,20 @@ class Xyster_Orm_Type_NullableImpl extends Xyster_Orm_Type_Nullable
     }
     
     /**
+     * Replace the target value we are merging with the original from the detached
+     * 
+     * @param object $original
+     * @param object $target
+     * @param object $owner
+     * @param Xyster_Orm_Session_Interface $session
+     * @param Xyster_Collection_Map_Interface $copyCache
+     * @return object
+     */
+    function replace( $original, $target, $owner, Xyster_Orm_Session_Interface $session, Xyster_Collection_Map_Interface $copyCache )
+    {
+    }
+    
+    /**
      * Sets the value to the prepared statement
      * 
      * A multi-column type will write parameters starting from the index.

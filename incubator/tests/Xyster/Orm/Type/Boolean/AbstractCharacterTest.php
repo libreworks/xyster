@@ -38,14 +38,37 @@ abstract class Xyster_Orm_Type_Boolean_AbstractCharacterTest extends PHPUnit_Fra
     }
 
     /**
+     * Tests the 'get' method
+     */
+    public function testGet()
+    {
+        $sess = $this->getMock('Xyster_Orm_Session_Interface');
+        $this->assertTrue($this->object->get(array($this->_getTrueString()), 0, $sess));
+        $this->assertFalse($this->object->get(array($this->_getFalseString()), 0, $sess));
+        $this->assertNull($this->object->get(array(null), 0, $sess));
+    }
+    
+    /**
+     * Tests the 'hasResolve' method
+     */
+    public function testHasResolve()
+    {
+        $this->assertTrue($this->object->hasResolve());
+    }
+    
+    /**
      * Tests the 'set' method
      */
     public function testSet()
     {
         $stmt = new Xyster_Db_Statement_Stub;
         $sess = $this->getMock('Xyster_Orm_Session_Interface');
+        
         $this->object->set($stmt, true, 0, $sess, array(true));
         $this->assertEquals($this->_getTrueString(), $stmt->values[0]);
+        
+        $this->object->set($stmt, false, 0, $sess, array(true));
+        $this->assertEquals($this->_getFalseString(), $stmt->values[0]);
     }
     
     /**
@@ -53,4 +76,10 @@ abstract class Xyster_Orm_Type_Boolean_AbstractCharacterTest extends PHPUnit_Fra
      * @return string
      */
     protected abstract function _getTrueString();
+    
+    /**
+     * Gets the false value
+     * @return string
+     */
+    protected abstract function _getFalseString();
 }

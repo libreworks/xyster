@@ -62,6 +62,10 @@ class Xyster_Orm_Type_Boolean_TrueFalseTest extends Xyster_Orm_Type_Boolean_Abst
     {
         return 'T';
     }
+    protected function _getFalseString()
+    {
+        return 'F';
+    }
 }
 
 // Call Xyster_Orm_Type_Boolean_TrueFalseTest::main() if this source file is executed directly.

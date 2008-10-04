@@ -28,7 +28,7 @@ require_once 'Xyster/Orm/Type/String.php';
 require_once 'Xyster/Orm/Type/Integer.php';
 require_once 'Xyster/Orm/Type/Timestamp.php';
 require_once 'Xyster/Orm/Tuplizer/Component.php';
-require_once 'Xyster/Data/Field/Mapper/Method.php';
+require_once 'Xyster/Type/Property/Method.php';
 
 /**
  * Test class for Xyster_Orm_Type_Component.
@@ -59,19 +59,19 @@ class Xyster_Orm_Type_ComponentTest extends PHPUnit_Framework_TestCase
         $titleVal = new Xyster_Orm_Mapping_Value;
         $titleVal->setType(new Xyster_Orm_Type_String)->addColumn(new Xyster_Db_Column);
         $title = new Xyster_Orm_Mapping_Property;
-        $title->setName('title')->setValue($titleVal)->setMapper(new Xyster_Type_Property_Method('title'));
+        $title->setName('title')->setValue($titleVal)->setWrapper(new Xyster_Type_Property_Method('title'));
         
         $userVal = new Xyster_Orm_Mapping_Value;
         $userCol = new Xyster_Db_Column;
         $userCol->setNullable(false);
         $userVal->setType(new Xyster_Orm_Type_Integer)->addColumn($userCol);
         $userId = new Xyster_Orm_Mapping_Property;
-        $userId->setName('userId')->setValue($userVal)->setMapper(new Xyster_Type_Property_Method('userId'));
+        $userId->setName('userId')->setValue($userVal)->setWrapper(new Xyster_Type_Property_Method('userId'));
         
         $createdVal = new Xyster_Orm_Mapping_Value;
         $createdVal->setType(new Xyster_Orm_Type_Timestamp)->addColumn(new Xyster_Db_Column);
         $created = new Xyster_Orm_Mapping_Property;
-        $created->setName('created')->setValue($createdVal)->setMapper(new Xyster_Type_Property_Method('created'));
+        $created->setName('created')->setValue($createdVal)->setWrapper(new Xyster_Type_Property_Method('created'));
         
         $component = new Xyster_Orm_Mapping_Component;
         $component->setComponentType(new Xyster_Type('Xyster_Orm_Type_ComponentTest_Example'));
@@ -88,7 +88,7 @@ class Xyster_Orm_Type_ComponentTest extends PHPUnit_Framework_TestCase
      */
     public function testCachePack()
     {
-        var_dump($this->object);
+        //var_dump($this->object);
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
           'This test has not been implemented yet.'
@@ -308,6 +308,28 @@ class Xyster_Orm_Type_ComponentTest extends PHPUnit_Framework_TestCase
      * @todo Implement testIsSame().
      */
     public function testIsSame()
+    {
+        // Remove the following lines when you implement this test.
+        $this->markTestIncomplete(
+          'This test has not been implemented yet.'
+        );
+    }
+    
+    /**
+     * @todo Implement testReplace().
+     */
+    public function testReplace()
+    {
+        // Remove the following lines when you implement this test.
+        $this->markTestIncomplete(
+          'This test has not been implemented yet.'
+        );
+    }
+    
+    /**
+     * @todo Implement testReplaceWithDirection().
+     */
+    public function testReplaceWithDirection()
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(

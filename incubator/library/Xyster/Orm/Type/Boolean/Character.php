@@ -28,6 +28,23 @@ require_once 'Xyster/Orm/Type/Boolean.php';
 abstract class Xyster_Orm_Type_Boolean_Character extends Xyster_Orm_Type_Boolean
 {
     /**
+     * Gets the type out of a result set statement
+     *
+     * @param array $values The values returned from the result fetch
+     * @param object $owner The owning entity
+     * @param Xyster_Orm_Session_Interface $sess The ORM session
+     */
+    public function get(array $values, $owner, Xyster_Orm_Session_Interface $sess )
+    {
+        $code = trim($values[0]);
+        if ( $code == null || !strlen($code) ) {
+            return null;
+        } else {
+            return !strcasecmp($code, $this->_getTrueString());
+        }
+    }
+    
+    /**
      * Gets the underlying database type
      *
      * @return Xyster_Db_DataType
@@ -37,6 +54,16 @@ abstract class Xyster_Orm_Type_Boolean_Character extends Xyster_Orm_Type_Boolean
         return Xyster_Db_DataType::Char();
     }
 
+    /**
+     * Whether this type needs to have {@link get}() called
+     *
+     * @return boolean
+     */
+    public function hasResolve()
+    {
+        return true;
+    }
+    
     /**
      * Returns the string representing a false value.
      *

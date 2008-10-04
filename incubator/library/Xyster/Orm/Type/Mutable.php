@@ -36,4 +36,23 @@ abstract class Xyster_Orm_Type_Mutable extends Xyster_Orm_Type_Nullable
     {
         return true;
     }
+    
+    /**
+     * Replace the target value we are merging with the original from the detached 
+     * 
+     * @param object $original
+     * @param object $target
+     * @param object $owner
+     * @param Xyster_Orm_Session_Interface $session
+     * @param Xyster_Collection_Map_Interface $copyCache
+     * @return object
+     */
+    public function replace( $original, $target, $owner, Xyster_Orm_Session_Interface $session, Xyster_Collection_Map_Interface $copyCache )
+    {
+        if ( $this->isEqual($original, $target) ) {
+            return $original;
+        }
+        return $this->deepCopy($original);
+    }
+    
 }

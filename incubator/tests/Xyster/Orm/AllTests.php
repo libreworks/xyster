@@ -23,6 +23,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
  */
 require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
+require_once 'Xyster/Orm/Engine/ForeignKeyDirectionTest.php';
 require_once 'Xyster/Orm/Engine/IdentifierValueTest.php';
 require_once 'Xyster/Orm/Engine/ValueInclusionTest.php';
 require_once 'Xyster/Orm/Engine/VersioningTest.php';
@@ -43,6 +44,7 @@ require_once 'Xyster/Orm/Type/BigIntegerTest.php';
 require_once 'Xyster/Orm/Type/BooleanTest.php';
 require_once 'Xyster/Orm/Type/Boolean/TrueFalseTest.php';
 require_once 'Xyster/Orm/Type/Boolean/YesNoTest.php';
+require_once 'Xyster/Orm/Type/ComponentTest.php';
 require_once 'Xyster/Orm/Type/DateTest.php';
 require_once 'Xyster/Orm/Type/DecimalTest.php';
 require_once 'Xyster/Orm/Type/FloatTest.php';
@@ -66,6 +68,7 @@ class Xyster_Orm_AllTests
     public static function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('Xyster Framework - Xyster_Orm');
+        $suite->addTestSuite('Xyster_Orm_Engine_ForeignKeyDirectionTest');
         $suite->addTestSuite('Xyster_Orm_Engine_IdentifierValueTest');
         $suite->addTestSuite('Xyster_Orm_Engine_ValueInclusionTest');
         $suite->addTestSuite('Xyster_Orm_Engine_VersioningTest');
@@ -84,6 +87,9 @@ class Xyster_Orm_AllTests
         $suite->addTestSuite('Xyster_Orm_Type_AbstractTest');
         $suite->addTestSuite('Xyster_Orm_Type_BigIntegerTest');
         $suite->addTestSuite('Xyster_Orm_Type_BooleanTest');
+        $suite->addTestSuite('Xyster_Orm_Type_Boolean_TrueFalseTest');
+        $suite->addTestSuite('Xyster_Orm_Type_Boolean_YesNoTest');
+        $suite->addTestSuite('Xyster_Orm_Type_ComponentTest');
         $suite->addTestSuite('Xyster_Orm_Type_DateTest');
         $suite->addTestSuite('Xyster_Orm_Type_DecimalTest');
         $suite->addTestSuite('Xyster_Orm_Type_FloatTest');

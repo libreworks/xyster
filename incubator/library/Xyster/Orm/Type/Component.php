@@ -467,6 +467,58 @@ class Xyster_Orm_Type_Component extends Xyster_Orm_Type_Abstract
         }
         return true;
     }
+    /**
+     * Replace the target value we are merging with the original from the detached
+     * 
+     * @param object $original
+     * @param object $target
+     * @param object $owner
+     * @param Xyster_Orm_Session_Interface $session
+     * @param Xyster_Collection_Map_Interface $copyCache
+     * @return object
+     */
+    public function replace( $original, $target, $owner, Xyster_Orm_Session_Interface $session, Xyster_Collection_Map_Interface $copyCache )
+    {
+        if ( $original === null ) {
+            return null;
+        }
+        $result = $target === null ?
+            $this->instantiate($owner, $session) : $target;
+        
+        $values = Xyster_Orm_Type_Factory::replace(
+            $this->getPropertyValues($original),
+            $this->getPropertyValues($result), $this->_propertyTypes, $owner,
+            $session, $copyCache);
+        $this->setPropertyValues($result, $values);
+        return $result;
+    }
+    
+    /**
+     * Replace the target value we are merging with the original from the detached
+     * 
+     * @param object $original
+     * @param object $target
+     * @param object $owner
+     * @param Xyster_Orm_Session_Interface $session
+     * @param Xyster_Collection_Map_Interface $copyCache
+     * @param Xyster_Orm_Engine_ForeignKeyDirection $fkDir
+     * @return object
+     */
+    public function replaceWithDirection( $original, $target, $owner, Xyster_Orm_Session_Interface $session, Xyster_Collection_Map_Interface $copyCache, Xyster_Orm_Engine_ForeignKeyDirection $fkDir )
+    {
+        if ( $original === null ) {
+            return null;
+        }
+        $result = $target === null ?
+            $this->instantiate($owner, $session) : $target;
+        
+        $values = Xyster_Orm_Type_Factory::replaceWithDirection(
+            $this->getPropertyValues($original),
+            $this->getPropertyValues($result), $this->_propertyTypes, $owner,
+            $session, $copyCache, $fkDir);
+        $this->setPropertyValues($result, $values);
+        return $result;
+    }
     
     /**
      * Sets the value to the prepared statement

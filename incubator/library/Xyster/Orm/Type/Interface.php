@@ -14,6 +14,14 @@
  * @version   $Id$
  */
 /**
+ * @see Xyster_Orm_Engine_ForeignKeyDirection
+ */
+require_once 'Xyster/Orm/Engine/ForeignKeyDirection.php';
+/**
+ * @see Xyster_Collection_Map_Interface
+ */
+require_once 'Xyster/Collection/Map/Interface.php';
+/**
  * @see Xyster_Orm_Session_Interface
  */
 require_once 'Xyster/Orm/Session/Interface.php';
@@ -125,6 +133,13 @@ interface Xyster_Orm_Type_Interface extends Xyster_Collection_Comparator_Interfa
     function hasResolve();
     
     /**
+     * Whether this type is an association
+     * 
+     * @return boolean
+     */
+    function isAssociation();
+    
+    /**
      * Whether this type is a collection
      *
      * @return boolean
@@ -181,6 +196,41 @@ interface Xyster_Orm_Type_Interface extends Xyster_Collection_Comparator_Interfa
      * @return boolean
      */
     function isSame($a, $b);
+    
+    /**
+     * Replace the target value we are merging with the original from the detached
+     * 
+     * For immutable objects or null values, it is safe to return the original.
+     * For mutable objects, it is safe to return a copy of the first parameter.
+     * For objects with component values, it might make sense to recursively
+     * replace component values. 
+     * 
+     * @param object $original
+     * @param object $target
+     * @param object $owner
+     * @param Xyster_Orm_Session_Interface $session
+     * @param Xyster_Collection_Map_Interface $copyCache
+     * @return object
+     */
+    function replace( $original, $target, $owner, Xyster_Orm_Session_Interface $session, Xyster_Collection_Map_Interface $copyCache );
+    
+    /**
+     * Replace the target value we are merging with the original from the detached
+     * 
+     * For immutable objects or null values, it is safe to return the original.
+     * For mutable objects, it is safe to return a copy of the first parameter.
+     * For objects with component values, it might make sense to recursively
+     * replace component values. 
+     * 
+     * @param object $original
+     * @param object $target
+     * @param object $owner
+     * @param Xyster_Orm_Session_Interface $session
+     * @param Xyster_Collection_Map_Interface $copyCache
+     * @param Xyster_Orm_Engine_ForeignKeyDirection $fkDir
+     * @return object
+     */
+    function replaceWithDirection( $original, $target, $owner, Xyster_Orm_Session_Interface $session, Xyster_Collection_Map_Interface $copyCache, Xyster_Orm_Engine_ForeignKeyDirection $fkDir );
     
     /**
      * Sets the value to the prepared statement

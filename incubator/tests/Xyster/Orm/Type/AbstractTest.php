@@ -144,10 +144,34 @@ class Xyster_Orm_Type_AbstractTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($this->object->isEqual(1, 1));
         $this->assertFalse($this->object->isEqual(1, 2));
     }
+    
+    /**
+     * Tests the 'replaceWithDirection' method
+     */
+    public function testReplaceWithDirection()
+    {
+        $orig = new stdClass();
+        $target = new stdClass();
+        $sess = $this->getMock('Xyster_Orm_Session_Interface');
+        require_once 'Xyster/Collection/Map.php';
+        $map = new Xyster_Collection_Map();
+        
+        $result = $this->object->replaceWithDirection($orig, $target, null,
+            $sess, $map, Xyster_Orm_Engine_ForeignKeyDirection::ToParent());
+        $this->assertSame($target, $result);
+        
+        $this->assertFalse($this->object->replaceCalled);
+        $result2 = $this->object->replaceWithDirection($orig, $target, null,
+            $sess, $map, Xyster_Orm_Engine_ForeignKeyDirection::FromParent());
+        $this->assertNull($result2);
+        $this->assertTrue($this->object->replaceCalled);
+    }
 }
 
 class Xyster_Orm_Type_AbstractImpl extends Xyster_Orm_Type_Abstract
 {    
+    public $replaceCalled = false;
+    
     function deepCopy($value)
     {
         return $value;
@@ -200,6 +224,21 @@ class Xyster_Orm_Type_AbstractImpl extends Xyster_Orm_Type_Abstract
      */
     function isMutable()
     {
+    }
+    
+    /**
+     * Replace the target value we are merging with the original from the detached
+     * 
+     * @param object $original
+     * @param object $target
+     * @param object $owner
+     * @param Xyster_Orm_Session_Interface $session
+     * @param Xyster_Collection_Map_Interface $copyCache
+     * @return object
+     */
+    public function replace( $original, $target, $owner, Xyster_Orm_Session_Interface $session, Xyster_Collection_Map_Interface $copyCache )
+    {
+        $this->replaceCalled = true;
     }
     
     /**

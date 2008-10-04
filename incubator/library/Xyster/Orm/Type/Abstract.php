@@ -101,7 +101,17 @@ abstract class Xyster_Orm_Type_Abstract implements Xyster_Orm_Type_Interface
     {
         return false;
     }
-            
+
+    /**
+     * Whether this type is an association type
+     * 
+     * @return boolean
+     */
+    public function isAssociation()
+    {
+        return false;
+    }
+    
     /**
      * Whether this type is a collection
      *
@@ -169,5 +179,26 @@ abstract class Xyster_Orm_Type_Abstract implements Xyster_Orm_Type_Interface
     public function isSame($a, $b)
     {
         return $this->isEqual($a, $b);
+    }
+    
+    /**
+     * Replace the target value we are merging with the original from the detached 
+     * 
+     * @param object $original
+     * @param object $target
+     * @param object $owner
+     * @param Xyster_Orm_Session_Interface $session
+     * @param Xyster_Collection_Map_Interface $copyCache
+     * @param Xyster_Orm_Engine_ForeignKeyDirection $fkDir
+     * @return object
+     */
+    public function replaceWithDirection( $original, $target, $owner, Xyster_Orm_Session_Interface $session, Xyster_Collection_Map_Interface $copyCache, Xyster_Orm_Engine_ForeignKeyDirection $fkDir )
+    {
+        $direction = $this->isAssociation() ? $this->getForeignKeyDirection() :
+            Xyster_Orm_Engine_ForeignKeyDirection::FromParent();
+        
+        return $direction === $fkDir ?
+            $this->replace($original, $target, $owner, $session, $copyCache) :
+            $target;
     }
 }
