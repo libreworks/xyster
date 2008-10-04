@@ -17,10 +17,6 @@
  */
 require_once 'Xyster/Collection/Interface.php';
 /**
- * Xyster_Collection_Iterator
- */
-require_once 'Xyster/Collection/Iterator.php';
-/**
  * Abstract class for collections
  *
  * @category  Xyster
@@ -124,8 +120,7 @@ class Xyster_Collection_Abstract implements Xyster_Collection_Interface
 	public function getIterator()
 	{
 		return count($this->_items) ?
-			new Xyster_Collection_Iterator(array_values($this->_items)) :
-			new EmptyIterator();
+			new ArrayIterator(array_values($this->_items)) : new EmptyIterator;
 	}
 	
 	/**

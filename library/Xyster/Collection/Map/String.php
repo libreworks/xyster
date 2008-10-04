@@ -85,8 +85,8 @@ class Xyster_Collection_Map_String extends Xyster_Collection_Map_Abstract
 	 */
 	public function getIterator()
 	{
-		return ( $this->count() ) ? 
-			new Xyster_Collection_Iterator($this->_items) : new EmptyIterator();
+		return $this->count() ?
+            new ArrayIterator($this->_items) : new EmptyIterator;
 	}
 	
 	/**

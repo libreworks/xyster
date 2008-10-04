@@ -4,7 +4,9 @@ Xyster Framework                                                             NEW
 =BUILD 7 / ??-???-2008 / basen on revision ??? =
 - Xyster_Collection
     * Rework to allow for delegates.  New fixed classes removing immutable logic
-      from existing ones.  Unit test improvement.
+      from existing ones.
+    * Unit test improvement
+    * Removal of Xyster_Collection_Iterator (much slower than ArrayIterator)
 - Xyster_Type
     * Speed improvements with hashing math using bit shifting
 - Xyster_Orm/Xyster_Validate

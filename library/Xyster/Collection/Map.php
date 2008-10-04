@@ -30,10 +30,6 @@ require_once 'Xyster/Collection/Map/Entry.php';
  */
 require_once 'Xyster/Type.php';
 /**
- * @see Xyster_Collection_Iterator
- */
-require_once 'Xyster/Collection/Iterator.php';
-/**
  * Implementation of a key-based collection
  *
  * @category  Xyster
@@ -87,8 +83,8 @@ class Xyster_Collection_Map extends Xyster_Collection_Map_Abstract
 	 */
 	public function getIterator()
 	{
-	    return ( !$this->isEmpty() ) ? 
-			new Xyster_Collection_Iterator($this->_items) : new EmptyIterator();
+	    return $this->count() ? 
+			new ArrayIterator($this->_items) : new EmptyIterator();
 	}
 	
 	/**

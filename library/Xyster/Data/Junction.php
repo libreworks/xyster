@@ -151,8 +151,7 @@ class Xyster_Data_Junction extends Xyster_Data_Criterion implements Xyster_Data_
     public function getIterator()
     {
     	// no need to return an emptyIterator -- at least 2 items always
-    	require_once 'Xyster/Collection/Iterator.php';
-    	return new Xyster_Collection_Iterator($this->_criteria);
+    	return new ArrayIterator($this->_criteria);
     }
     
     /**

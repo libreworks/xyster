@@ -97,14 +97,8 @@ abstract class Xyster_Data_Clause implements Xyster_Data_Clause_Interface
      */
     public function getIterator()
     {
-        $iterator = null;
-        if ( count($this->_items) ) {
-            require_once 'Xyster/Collection/Iterator.php';
-            $iterator = new Xyster_Collection_Iterator($this->_items);
-        } else {
-            $iterator = new EmptyIterator;
-        }
-        return $iterator;
+        return count($this->_items) ?
+            new ArrayIterator($this->_items) : new EmptyIterator;
     }
     
     /**

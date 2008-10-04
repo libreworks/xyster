@@ -82,7 +82,7 @@ abstract class Xyster_Data_ClauseTest extends PHPUnit_Framework_TestCase
      */
     public function testGetIterator()
     {
-        $this->assertType('Xyster_Collection_Iterator', $this->object->getIterator());
+        $this->assertType('ArrayIterator', $this->object->getIterator());
         $this->assertType('EmptyIterator', $this->_makeNew()->getIterator());        
     }
 

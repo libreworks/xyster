@@ -38,7 +38,6 @@ require_once 'Xyster/Collection/MapTest.php';
 require_once 'Xyster/Collection/Map/DelegateTest.php';
 require_once 'Xyster/Collection/Map/FixedTest.php';
 require_once 'Xyster/Collection/Map/StringTest.php';
-require_once 'Xyster/Collection/IteratorTest.php';
 
 error_reporting(E_ALL | E_STRICT);
 
@@ -64,7 +63,6 @@ class Xyster_Collection_AllTests
         $suite->addTestSuite('Xyster_Collection_Map_DelegateTest');
         $suite->addTestSuite('Xyster_Collection_Map_FixedTest');
         $suite->addTestSuite('Xyster_Collection_Map_StringTest');
-        $suite->addTestSuite('Xyster_Collection_IteratorTest');
         return $suite;
     }
 }
