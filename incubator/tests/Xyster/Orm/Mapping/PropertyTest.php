@@ -173,6 +173,14 @@ class Xyster_Orm_Mapping_PropertyTest extends PHPUnit_Framework_TestCase
         $col->setNullable(false);
         $this->assertFalse($this->object->isOptional());
     }
+    
+    /**
+     * Tests the 'isBackRef' method
+     */
+    public function testIsBackRef()
+    {
+        $this->assertFalse($this->object->isBackRef());
+    }
 }
 
 // Call Xyster_Orm_Mapping_PropertyTest::main() if this source file is executed directly.

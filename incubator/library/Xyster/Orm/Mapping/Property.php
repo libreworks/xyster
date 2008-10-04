@@ -149,6 +149,16 @@ class Xyster_Orm_Mapping_Property
     }
     
     /**
+     * Gets whether this property is a back reference
+     * 
+     * @return boolean
+     */
+    public function isBackRef()
+    {
+        return false;
+    }
+    
+    /**
      * Gets whether this property is a composite type
      *
      * @return boolean
