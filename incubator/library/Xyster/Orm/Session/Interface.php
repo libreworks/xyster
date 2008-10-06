@@ -23,5 +23,10 @@
  */
 interface Xyster_Orm_Session_Interface
 {
-    
+    /**
+     * Gets the session factory that created this session
+     * 
+     * @return Xyster_Orm_Session_Factory_Interface
+     */
+    function getFactory();
 }

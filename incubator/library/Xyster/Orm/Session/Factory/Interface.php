@@ -24,6 +24,14 @@
 interface Xyster_Orm_Session_Factory_Interface
 {
     /**
+     * Gets the persister for the collection role given
+     * 
+     * @param string $role
+     * @return Xyster_Orm_Persister_Collection_Interface
+     */
+    function getCollectionPersister( $role );
+    
+    /**
      * Gets the identifier generator
      *
      * @param string $className

@@ -18,9 +18,9 @@
  */
 require_once 'Xyster/Orm/Persister/Entity/Loadable/Interface.php';
 /**
- * @see Xyster_Orm_Persister_Joinable_Interface
+ * @see Xyster_Orm_Persister_IJoinable
  */
-require_once 'Xyster/Orm/Persister/Joinable/Interface.php';
+require_once 'Xyster/Orm/Persister/IJoinable.php';
 /**
  * A persister that can be loaded by outer join using the Loader package
  *
@@ -29,7 +29,7 @@ require_once 'Xyster/Orm/Persister/Joinable/Interface.php';
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-interface Xyster_Orm_Persister_Entity_Loadable_OuterJoin_Interface extends Xyster_Orm_Persister_Entity_Loadable_Interface, Xyster_Orm_Persister_Joinable_Interface
+interface Xyster_Orm_Persister_Entity_Loadable_OuterJoin_Interface extends Xyster_Orm_Persister_Entity_Loadable_Interface, Xyster_Orm_Persister_IJoinable
 {
     /**
      * Gets the table name for the specified property

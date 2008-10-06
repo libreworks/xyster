@@ -38,7 +38,7 @@ interface Xyster_Orm_Type_Association extends Xyster_Orm_Type_Interface
      * Gets the persister for this association; class or collection
      * 
      * @param Xyster_Orm_Session_Factory_Interface $factory
-     * @return Xyster_Orm_Persister_Joinable_Interface
+     * @return Xyster_Orm_Persister_IJoinable
      */
     function getAssociatedJoinable( Xyster_Orm_Session_Factory_Interface $factory );
     
