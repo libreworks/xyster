@@ -21,7 +21,7 @@
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-interface Xyster_Orm_Persister_Collection_Interface
+interface Xyster_Orm_Persister_Collection_Interface 
 {
     /**
      * Deletes the state of any elements that were removed
