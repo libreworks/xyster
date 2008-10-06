@@ -22,6 +22,10 @@ require_once 'Xyster/Orm/Meta/Entity.php';
  */
 require_once 'Xyster/Orm/Cache/Source/Interface.php';
 /**
+ * @see Xyster_Orm_Session_Interface
+ */
+require_once 'Xyster/Orm/Session/Interface.php';
+/**
  * Persisters are aware of mapping and persistence information for an entity
  *
  * @category  Xyster
