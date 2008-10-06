@@ -14,13 +14,13 @@
  * @version   $Id$
  */
 /**
- * @see Xyster_Orm_Persister_Entity_Loadable_OuterJoin_Interface
+ * @see Xyster_Orm_Persister_Entity_IOuterJoinLoadable
  */
-require_once 'Xyster/Orm/Persister/Entity/Loadable/OuterJoin/Interface.php';
+require_once 'Xyster/Orm/Persister/Entity/IOuterJoinLoadable.php';
 /**
- * @see Xyster_Orm_Persister_Entity_Queryable_Interface
+ * @see Xyster_Orm_Persister_Entity_IQueryable
  */
-require_once 'Xyster/Orm/Persister/Entity/Queryable/Interface.php';
+require_once 'Xyster/Orm/Persister/Entity/IQueryable.php';
 /**
  * Basic behavior for persisting an entity
  *
@@ -29,7 +29,7 @@ require_once 'Xyster/Orm/Persister/Entity/Queryable/Interface.php';
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-abstract class Xyster_Orm_Persister_Entity_Abstract implements Xyster_Orm_Persister_Entity_Loadable_OuterJoin_Interface, Xyster_Orm_Persister_Entity_Queryable_Interface
+abstract class Xyster_Orm_Persister_Entity_Abstract implements Xyster_Orm_Persister_Entity_IOuterJoinLoadable, Xyster_Orm_Persister_Entity_IQueryable
 {
     /**
      * @var Xyster_Orm_Runtime_EntityMeta

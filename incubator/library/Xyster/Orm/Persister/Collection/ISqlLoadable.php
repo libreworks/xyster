@@ -14,34 +14,32 @@
  * @version   $Id$
  */
 /**
- * @see Xyster_Orm_Persister_Entity_Interface
+ * @see Xyster_Orm_Persister_Collection_IQueryable
  */
-require_once 'Xyster/Orm/Persister/Entity/Interface.php';
+require_once 'Xyster/Orm/Persister/Collection/IQueryable.php';
 /**
- * A persister that can be loaded using the Loader package
+ * A collection that can be queried or loaded by outer join
  *
  * @category  Xyster
  * @package   Xyster_Orm
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-interface Xyster_Orm_Persister_Entity_ILoadable extends Xyster_Orm_Persister_Entity_Interface
+interface Xyster_Orm_Persister_Collection_ISqlLoadable extends Xyster_Orm_Persister_Collection_IQueryable 
 {
     /**
-     * Gets the identifier columns names
+     * Gets the column aliases for the collection properties
      * 
+     * @param string $name
+     * @param string $string
      * @return array
      */
-    function getIdColumnNames();
+    function getCollectionPropertyColumnAliases($name, $string);
     
     /**
-     * Gets the column names for this property
-     *
-     * The name parameter can either be an integer (the numeric offset) or a
-     * string property name.
-     *
-     * @param mixed $name
-     * @return array
+     * Gets the identifier column name
+     *  
+     * @return string
      */
-    function getPropertyColumnNames( $name );
+    function getIdColumnName();
 }

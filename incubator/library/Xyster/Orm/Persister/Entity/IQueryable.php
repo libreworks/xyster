@@ -14,9 +14,9 @@
  * @version   $Id$
  */
 /**
- * @see Xyster_Orm_Persister_Entity_Loadable_Interface
+ * @see Xyster_Orm_Persister_Entity_ILoadable
  */
-require_once 'Xyster/Orm/Persister/Entity/Loadable/Interface.php';
+require_once 'Xyster/Orm/Persister/Entity/ILoadable.php';
 /**
  * @see Xyster_Orm_Persister_IJoinable
  */
@@ -33,7 +33,7 @@ require_once 'Xyster/Orm/Persister/IPropertyMapping.php';
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-interface Xyster_Orm_Persister_Entity_Queryable_Interface extends Xyster_Orm_Persister_Entity_Loadable_Interface, Xyster_Orm_Persister_IJoinable, Xyster_Orm_Persister_IPropertyMapping
+interface Xyster_Orm_Persister_Entity_IQueryable extends Xyster_Orm_Persister_Entity_ILoadable, Xyster_Orm_Persister_IJoinable, Xyster_Orm_Persister_IPropertyMapping
 {
     /**
      * Whether the version property should be added to insert statements
