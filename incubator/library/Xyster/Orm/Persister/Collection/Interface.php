@@ -14,6 +14,14 @@
  * @version   $Id$
  */
 /**
+ * @see Xyster_Orm_Collection_Interface
+ */
+require_once 'Xyster/Orm/Collection/Interface.php';
+/**
+ * @see Xyster_Orm_Session_Interface
+ */
+require_once 'Xyster/Orm/Session/Interface.php';
+/**
  * Persists a collection role
  *
  * @category  Xyster

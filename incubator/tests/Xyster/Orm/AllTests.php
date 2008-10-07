@@ -23,7 +23,10 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
  */
 require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
+require_once 'Xyster/Orm/Engine/CollectionKeyTest.php';
 require_once 'Xyster/Orm/Engine/EntityEntryTest.php';
+require_once 'Xyster/Orm/Engine/EntityKeyTest.php';
+require_once 'Xyster/Orm/Engine/EntityUniqueKeyTest.php';
 require_once 'Xyster/Orm/Engine/ForeignKeyDirectionTest.php';
 require_once 'Xyster/Orm/Engine/IdentifierValueTest.php';
 require_once 'Xyster/Orm/Engine/StatusTest.php';
@@ -70,7 +73,10 @@ class Xyster_Orm_AllTests
     public static function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('Xyster Framework - Xyster_Orm');
+        $suite->addTestSuite('Xyster_Orm_Engine_CollectionKeyTest');
         $suite->addTestSuite('Xyster_Orm_Engine_EntityEntryTest');
+        $suite->addTestSuite('Xyster_Orm_Engine_EntityKeyTest');
+        $suite->addTestSuite('Xyster_Orm_Engine_EntityUniqueKeyTest');
         $suite->addTestSuite('Xyster_Orm_Engine_ForeignKeyDirectionTest');
         $suite->addTestSuite('Xyster_Orm_Engine_IdentifierValueTest');
         $suite->addTestSuite('Xyster_Orm_Engine_ValueInclusionTest');
