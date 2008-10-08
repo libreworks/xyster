@@ -28,7 +28,6 @@ interface Xyster_Orm_Engine_Context_Interface
      *  
      * @param Xyster_Orm_Engine_EntityKey $key
      * @param object $entity
-     * @return Xyster_Orm_Engine_Context_Interface provides a fluent interface
      */
     function addEntity(Xyster_Orm_Engine_EntityKey $key, $entity);
     
@@ -37,7 +36,6 @@ interface Xyster_Orm_Engine_Context_Interface
      * 
      * @param Xyster_Orm_Engine_EntityUniqueKey $key
      * @param object $entity
-     * @return Xyster_Orm_Engine_Context_Interface provides a fluent interface
      */
     function addEntityUnique(Xyster_Orm_Engine_EntityUniqueKey $key, $entity);
 
@@ -402,8 +400,19 @@ interface Xyster_Orm_Engine_Context_Interface
      * @return boolean
      */
     function isStateless();
-    
-    // @todo finish methods tomorrow
+
+    /**
+     * Instantiate a new proxy and overwrite the old if the existing proxy is too derived
+     *  
+     * @todo what does this do??
+     *  
+     * @param object $proxy
+     * @param Xyster_Orm_Persister_Entity_Interface $persister
+     * @param Xyster_Orm_Engine_EntityKey $key
+     * @param object $object
+     * @return object
+     */
+    function narrowProxy($proxy, Xyster_Orm_Persister_Entity_Interface $persister, Xyster_Orm_Engine_EntityKey $key, $object);
     
     /**
      * Called after a two-phase load
@@ -419,4 +428,118 @@ interface Xyster_Orm_Engine_Context_Interface
      * Called before a two-phase load
      */
     function preLoad();
+    
+    /**
+     * Gets the proxy tied to the entity or the third argument if none exists
+     * 
+     * @param Xyster_Orm_Persister_Entity_Interface $persister
+     * @param Xyster_Orm_Engine_EntityKey $key
+     * @param object $impl
+     * @return unknown_type
+     */
+    function proxyFor(Xyster_Orm_Persister_Entity_Interface $persister, Xyster_Orm_Engine_EntityKey $key, $impl);
+    
+    /**
+     * Gets the proxy tied to the entity or the same object if none exists
+     * 
+     * @param object $impl
+     * @return object
+     */
+    function proxyForEntity($impl);
+    
+    /**
+     * Reset the id of the proxy if the deleted entity is re-saved
+     * 
+     * @param object $value
+     * @param mixed $id
+     */
+    function reassociateProxy($value, $id);
+    
+    /**
+     * Reassociates it with the even source if the object is represents proxy
+     * 
+     * @param object $value
+     * @return boolean
+     */
+    function reassociateProxyIfUninitialized($value);
+    
+    /**
+     * Removes an entity from the cache
+     * 
+     * @param Xyster_Orm_Engine_EntityKey $key
+     * @return object
+     */
+    function removeEntity(Xyster_Orm_Engine_EntityKey $key);
+    
+    /**
+     * Removes an entity entry from the session
+     * 
+     * @param object $entity
+     * @return Xyster_Orm_Engine_EntityEntry
+     */
+    function removeEntry($entity);
+    
+    /**
+     * Removes a proxy from the cache
+     * 
+     * @param Xyster_Orm_Engine_EntityKey $key
+     * @return object
+     */
+    function removeProxy(Xyster_Orm_Engine_EntityKey $key);
+    
+    /**
+     * Replaces an old key with a new one if it's delayed
+     * 
+     * @param Xyster_Orm_Engine_EntityKey $key
+     * @param mixed $generatedId
+     */
+    function replaceDelayedId(Xyster_Orm_Engine_EntityKey $key, $generatedId);
+    
+    /**
+     * Sets an entry status
+     * 
+     * @param Xyster_Orm_Engine_EntityEntry $entry
+     * @param Xyster_Orm_Engine_Status $status
+     */
+    function setEntryStatus(Xyster_Orm_Engine_EntityEntry $entry, Xyster_Orm_Engine_Status $status);
+    
+    /**
+     * Called before and after the flush process
+     * 
+     * @param boolean $flag
+     */
+    function setFlushing( $flag );
+    
+    /**
+     * Sets an object to read-only and remove its snapshot
+     * 
+     * @param object $entity
+     * @param boolean $flag
+     */
+    function setReadOnly($entity, $flag);
+    
+    /**
+     * Gets the entity instance underlying the proxy
+     * 
+     * @param object $proxy
+     * @return object
+     * @throws Xyster_Orm_Exception if the proxy is uninitialized
+     */
+    function unproxy($proxy);
+    
+    /**
+     * Unproxy the reference and reassociate it with the session
+     * 
+     * @param object $proxy
+     * @return object
+     */
+    function unproxyAndReassociate($proxy);
+    
+    /**
+     * Get/remove a collection whose owner is not yet loaded or is loading
+     * 
+     * @param Xyster_Orm_Engine_CollectionKey $key
+     * @return Xyster_Orm_Collection_Interface
+     */
+    function useUnownedCollection(Xyster_Orm_Engine_CollectionKey $key);
 }
