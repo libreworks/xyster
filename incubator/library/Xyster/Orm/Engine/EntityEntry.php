@@ -127,6 +127,18 @@ class Xyster_Orm_Engine_EntityEntry
     }
     
     /**
+     * Loads the value for the property given
+     * 
+     * @param string $propertyName
+     * @return mixed
+     */
+    public function getLoadedValue($propertyName)
+    {
+        $index = $this->_persister->getPropertyIndex($propertyName);
+        return $this->_loadedState[$index];
+    }
+    
+    /**
      * Gets the entity persister
      * 
      * @return Xyster_Orm_Persister_Entity_Interface

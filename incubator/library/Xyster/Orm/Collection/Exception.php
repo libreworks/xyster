@@ -14,26 +14,17 @@
  * @version   $Id$
  */
 /**
- * A session with the ORM layer
+ * @see Xyster_Orm_Exception
+ */
+require_once 'Xyster/Orm/Exception.php';
+/**
+ * Exception for ORM Collection classes
  *
  * @category  Xyster
- * @package   Xyster_Orm
+ * @package   Xyster_Application
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-interface Xyster_Orm_Session_Interface
+class Xyster_Orm_Collection_Exception extends Xyster_Orm_Exception
 {
-    /**
-     * Gets the context associated with the session
-     * 
-     * @return Xyster_Orm_Engine_Context_Interface
-     */
-    function getContext();
-    
-    /**
-     * Gets the session factory that created this session
-     * 
-     * @return Xyster_Orm_Session_Factory_Interface
-     */
-    function getFactory();
 }

@@ -309,6 +309,13 @@ interface Xyster_Orm_Engine_Context_Interface
     function getIndexInOwner($entity, $property, $childObject, Xyster_Collection_Map_Interface $mergeMap);
 
     /**
+     * Gets the context's load context
+     * 
+     * @return Xyster_Orm_Engine_Load_Contexts
+     */
+    function getLoadContexts();
+    
+    /**
      * Gets a snapshot of the natural id
      * 
      * @param mixed $id

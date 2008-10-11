@@ -256,6 +256,8 @@ interface Xyster_Orm_Collection_Interface
 
     /**
      * Called after reading all rows
+     * 
+     * @return boolean
      */
     function postRead();
     

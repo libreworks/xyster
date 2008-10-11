@@ -120,6 +120,18 @@ class Xyster_Orm_Engine_CollectionEntry
     }
     
     /**
+     * Whether the collection can be ignored
+     * 
+     * A collection can be ignored if it was created during the flush process
+     * 
+     * @return boolean
+     */
+    public function canIgnore()
+    {
+        return $this->_ignore;
+    }
+    
+    /**
      * Gets the persister
      * 
      * @return Xyster_Orm_Persister_Collection_Interface
@@ -202,48 +214,6 @@ class Xyster_Orm_Engine_CollectionEntry
     public function isDereferenced()
     {
         return $this->getLoadedKey() === null;
-    }
-    
-    /**
-     * Whether the collection should 
-     * 
-     * @return boolean
-     */
-    public function shouldRecreate()
-    {
-        return $this->_recreate;
-    }
-    
-    /**
-     * Whether the collection should remove
-     * 
-     * @return boolean
-     */
-    public function shouldRemove()
-    {
-        return $this->_remove;
-    }
-    
-    /**
-     * Whether the collection should update
-     * 
-     * @return boolean
-     */
-    public function shouldUpdate()
-    {
-        return $this->_update;
-    }
-    
-    /**
-     * Whether the collection can be ignored
-     * 
-     * A collection can be ignored if it was created during the flush process
-     * 
-     * @return boolean
-     */
-    public function canIgnore()
-    {
-        return $this->_ignore;
     }
     
     /**
@@ -440,6 +410,36 @@ class Xyster_Orm_Engine_CollectionEntry
     {
         $this->_role = $role;
         return $this;
+    }
+    
+    /**
+     * Whether the collection should 
+     * 
+     * @return boolean
+     */
+    public function shouldRecreate()
+    {
+        return $this->_recreate;
+    }
+    
+    /**
+     * Whether the collection should remove
+     * 
+     * @return boolean
+     */
+    public function shouldRemove()
+    {
+        return $this->_remove;
+    }
+    
+    /**
+     * Whether the collection should update
+     * 
+     * @return boolean
+     */
+    public function shouldUpdate()
+    {
+        return $this->_update;
     }
     
     /**
