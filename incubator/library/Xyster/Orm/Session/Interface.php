@@ -31,9 +31,25 @@ interface Xyster_Orm_Session_Interface
     function getContext();
     
     /**
+     * Gets the entity persister for the entity name given
+     * 
+     * @param string $entityName
+     * @param object $entity
+     * @return Xyster_Orm_Persister_Entity_Interface
+     */
+    function getEntityPersister($entityName, $entity);
+    
+    /**
      * Gets the session factory that created this session
      * 
      * @return Xyster_Orm_Session_Factory_Interface
      */
     function getFactory();
+    
+    /**
+     * Gets the interceptor in use by the session
+     * 
+     * @return Xyster_Orm_Session_Interceptor_Interface
+     */
+    function getInterceptor();
 }
