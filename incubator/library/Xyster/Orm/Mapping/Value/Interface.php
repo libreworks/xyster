@@ -26,9 +26,9 @@ interface Xyster_Orm_Mapping_Value_Interface
     /**
      * Gets the columns in the type
      *
-     * @return array containing {@link Xyster_Db_Column} objects
+     * @return Iterator containing {@link Xyster_Db_Column} objects
      */
-    function getColumns();
+    function getColumnIterator();
     
     /**
      * Gets the number of columns in the value

@@ -68,7 +68,8 @@ class Xyster_Orm_Mapping_ComponentTest extends PHPUnit_Framework_TestCase
     {
         $prop = new Xyster_Orm_Mapping_Property;
         $this->assertSame($this->object, $this->object->addProperty($prop));
-        $props = $this->object->getProperties();
+        $propIt = $this->object->getPropertyIterator();
+        $props = iterator_to_array($propIt);
         $this->assertTrue(in_array($prop, $props));
     }
 
@@ -93,11 +94,13 @@ class Xyster_Orm_Mapping_ComponentTest extends PHPUnit_Framework_TestCase
         $property3->setValue($value3)->setName('prop3');
         
         $this->object->addProperty($property)->addProperty($property2)->addProperty($property3);
-        $columns = $this->object->getColumns();
-        $this->assertEquals(6, count($columns));
+        $columns = $this->object->getColumnIterator();
+        $i = 0;
         foreach( $columns as $column ) {
+            ++$i;
             $this->assertType('Xyster_Db_Column', $column);
         }
+        $this->assertEquals(6, $i);
     }
 
     /**

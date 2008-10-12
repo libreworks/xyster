@@ -69,7 +69,7 @@ class Xyster_Orm_Mapping_PropertyTest extends PHPUnit_Framework_TestCase
         $this->assertSame($val, $this->object->getValue());
         $this->assertSame($type, $this->object->getType());
         $this->assertEquals(1, $this->object->getColumnSpan());
-        $this->assertEquals(array($col), $this->object->getColumns());
+        $this->assertEquals(new ArrayIterator(array($col)), $this->object->getColumnIterator());
     }
 
     /**

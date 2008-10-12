@@ -49,7 +49,7 @@ class Xyster_Orm_Tuplizer_Component implements Xyster_Orm_Tuplizer_Component_Int
     public function __construct( Xyster_Orm_Mapping_Component $component )
     {
         $this->_propertySpan = $component->getPropertySpan();
-        foreach( $component->getProperties() as $prop ) {
+        foreach( $component->getPropertyIterator() as $prop ) {
             /* @var $prop Xyster_Orm_Mapping_Property */
             $this->_accessors[] = $prop->getWrapper();
         }

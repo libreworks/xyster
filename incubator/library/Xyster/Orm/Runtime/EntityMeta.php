@@ -172,10 +172,11 @@ class Xyster_Orm_Runtime_EntityMeta
         $this->_selectBeforeUpdate = (boolean)$em->isSelectBeforeUpdate();
         $this->_lazy = (boolean)$em->isLazy();
         
-        $props = array_values((array)$em->getProperties());
+        $props = $em->getPropertyIterator();
         $this->_propertySpan = count($props);
         $foundCollection = false;
-        foreach( $props as $i => $prop ) {
+        $i = 0;
+        foreach( $props as $prop ) {
             /* @var $prop Xyster_Orm_Mapping_Property */
             if ( $prop === $em->getVersion() ) {
                 $this->_versionPropertyIndex = $i;
@@ -204,6 +205,7 @@ class Xyster_Orm_Runtime_EntityMeta
                 $this->_properties[$i]);
             $this->_updateInclusions[$i] = $this->_getUpdateValueGeneration($prop,
                 $this->_properties[$i]);
+            ++$i;
         }
         if ( count($this->_insertInclusions) ) {
             $this->_hasInsertGeneratedValues = true;
@@ -525,7 +527,7 @@ class Xyster_Orm_Runtime_EntityMeta
      */
     protected function _getInsertComponentGeneration(Xyster_Orm_Mapping_Component $component)
     {
-        $props = $component->getProperties();
+        $props = $component->getPropertyIterator();
         foreach( $props as $prop ) {
             if ( $prop->getGeneration() === Xyster_Orm_Mapping_Generation::Always() || 
                 $prop->getGeneration() === Xyster_Orm_Mapping_Generation::Insert() ) {
@@ -566,7 +568,7 @@ class Xyster_Orm_Runtime_EntityMeta
      */
     protected function _getUpdateComponentGeneration(Xyster_Orm_Mapping_Component $component)
     {
-        $props = $component->getProperties();
+        $props = $component->getPropertyIterator();
         foreach( $props as $prop ) {
             if ( $prop->getGeneration() === Xyster_Orm_Mapping_Generation::Always() ) {
                 return true;

@@ -38,7 +38,22 @@ require_once 'Xyster/Type.php';
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 abstract class Xyster_Orm_Mapping_Class_Abstract
-{    
+{
+    /**
+     * @var string
+     */
+    protected $_discriminatorValue;
+    
+    /**
+     * @var Xyster_Orm_Mapping_Component
+     */
+    protected $_idComponent;
+    
+    /**
+     * @var array
+     */
+    protected $_joins = array();
+    
     /**
      * @var boolean
      */
@@ -65,9 +80,25 @@ abstract class Xyster_Orm_Mapping_Class_Abstract
     protected $_properties = array();
     
     /**
+     * @var Xyster_Type
+     */
+    protected $_proxyInterface;
+    
+    /**
      * @var boolean
      */
     protected $_selectBeforeUpdate = false;
+    
+    /**
+     * @var array
+     */
+    protected $_subclasses = array();
+    
+    protected $_subclassJoins = array();
+    
+    protected $_subclassProperties = array();
+    
+    protected $_subclassTables = array();
     
     /**
      * @var Xyster_Type
@@ -82,7 +113,9 @@ abstract class Xyster_Orm_Mapping_Class_Abstract
      */
     public function addJoin( Xyster_Orm_Mapping_Join $join )
     {
-        // @todo
+        $this->_joins[] = $join;
+        $join->setMappedClass($this);
+        return $this;
     }
     
     /**
@@ -105,7 +138,8 @@ abstract class Xyster_Orm_Mapping_Class_Abstract
      */
     public function addSubclass( Xyster_Orm_Mapping_Subclass $subclass )
     {
-        // @todo
+        $this->_subclasses[] = $subclass;
+        return $this;
     }
     
     /**
@@ -121,11 +155,11 @@ abstract class Xyster_Orm_Mapping_Class_Abstract
     /**
      * Gets the immediate subclasses of this entity
      * 
-     * @return array
+     * @return Iterator
      */
     public function getDirectSubclasses()
     {
-        // @todo
+        return new ArrayIterator($this->_subclasses);
     }
     
     /**
@@ -142,17 +176,17 @@ abstract class Xyster_Orm_Mapping_Class_Abstract
      */
     public function getDiscriminatorValue()
     {
-        
+        return $this->_discriminatorValue;
     }
     
     /**
-     * Gets the identifier mapper (a component)
+     * Gets the identifier component
      * 
      * @return Xyster_Orm_Mapping_Component
      */
-    public function getIdMapper()
+    public function getIdComponent()
     {
-        // @todo
+        return $this->_idComponent;
     }
     
     /**
@@ -169,17 +203,17 @@ abstract class Xyster_Orm_Mapping_Class_Abstract
      */
     public function getIdTable()
     {
-        // @todo
+        return $this->getRootTable();
     }
     
     /**
      * Gets the join closure
      * 
-     * @return array
+     * @return Iterator
      */
-    public function getJoinClosure()
+    public function getJoinClosureIterator()
     {
-        // @todo
+        return new ArrayIterator($this->_joins);
     }
     
     /**
@@ -189,17 +223,17 @@ abstract class Xyster_Orm_Mapping_Class_Abstract
      */
     public function getJoinClosureSpan()
     {
-        // @todo
+        return count($this->_joins);
     }
     
     /**
      * Gets the joins
      * 
-     * @return array
+     * @return Iterator
      */
-    public function getJoins()
+    public function getJoinIterator()
     {
-        // @todo
+        return new ArrayIterator($this->_joins);
     }
     
     /**
@@ -209,8 +243,29 @@ abstract class Xyster_Orm_Mapping_Class_Abstract
      */
     public function getJoinNumber( Xyster_Orm_Mapping_Property $prop )
     {
-        // @todo
+        $result = 1;
+        foreach( $this->getSubclassJoinClosure() as $join ) {
+            if ( $join->containsProperty($prop) ) {
+                return $result;
+            }
+            $result++;
+        }
+        return 0;
     }
+    
+    /**
+     * Gets the class key (used for joins)
+     * 
+     * @return Xyster_Orm_Mapping_Value
+     */
+    public abstract function getKey();
+    
+    /**
+     * Gets the key closure
+     * 
+     * @return Iterator
+     */
+    public abstract function getKeyClosureIterator();
     
     /**
      * Gets the type of loader for this entity type
@@ -252,18 +307,24 @@ abstract class Xyster_Orm_Mapping_Class_Abstract
     /**
      * Gets the properties in the class
      *
-     * @return array of {@link Xyster_Orm_Mapping_Property} objects
+     * @return Iterator of {@link Xyster_Orm_Mapping_Property} objects
      */
-    public function getProperties()
+    public function getPropertyIterator()
     {
-        return array_values($this->_properties);
+        $iters = new AppendIterator();
+        $iters->append(new ArrayIterator($this->_properties));
+        foreach( $this->_joins as $join ) {
+            /* @var $join Xyster_Orm_Mapping_Join */
+            $iters->append($join->getPropertyIterator());
+        }
+        return $iters;
     }
     
     /**
      * Gets a property by name
      *
      * @param string $name
-     * @throws Xyster_Orm_Exception if the property isn't found
+     * @throws Xyster_Orm_Mapping_Exception if the property isn't found
      * @return Xyster_Orm_Mapping_Property
      */
     public function getProperty( $name )
@@ -278,9 +339,9 @@ abstract class Xyster_Orm_Mapping_Class_Abstract
     /**
      * Gets the property closure
      * 
-     * @return array
+     * @return Iterator
      */
-    abstract public function getPropertyClosure();
+    abstract public function getPropertyClosureIterator();
     
     /**
      * Gets the property closure span
@@ -289,7 +350,11 @@ abstract class Xyster_Orm_Mapping_Class_Abstract
      */
     public function getPropertyClosureSpan()
     {
-        // @todo
+        $span = count($this->_properties);
+        foreach( $this->_joins as $join ) {
+            $span += $join->getPropertySpan();
+        }
+        return $span;
     }
     
     /**
@@ -299,17 +364,29 @@ abstract class Xyster_Orm_Mapping_Class_Abstract
      */
     public function getProxyInterfaceType()
     {
+        return $this->_proxyInterface;
+    }
+    
+    /**
+     * Gets a property by name
+     * 
+     * @param string $propertyPath
+     * @return Xyster_Orm_Mapping_Property
+     * @throws Xyster_Orm_Mapping_Exception if the property is not found
+     */
+    public function getRecursiveProperty($propertyPath)
+    {
         // @todo
     }
     
     /**
      * Gets the properties which are referencable
      * 
-     * @return array
+     * @return Iterator
      */
-    public function getReferencedProperties()
+    public function getReferencedPropertyIterator()
     {
-        // @todo
+        return $this->getPropertyClosureIterator();
     }
     
     /**
@@ -317,6 +394,7 @@ abstract class Xyster_Orm_Mapping_Class_Abstract
      * 
      * @param string $propertyPath
      * @return Xyster_Orm_Mapping_Property
+     * @throws Xyster_Orm_Mapping_Exception if the property is not found
      */
     public function getReferencedProperty( $propertyPath )
     {
@@ -340,11 +418,17 @@ abstract class Xyster_Orm_Mapping_Class_Abstract
     /**
      * Gets the subclass closure
      * 
-     * @return array
+     * @return Iterator
      */
-    public function getSubclassClosure()
+    public function getSubclassClosureIterator()
     {
-        // @todo
+        $iters = new AppendIterator();
+        $iters->append(new ArrayIterator(array($this)));
+        foreach( $this->getSubclassIterator() as $subclass ) {
+            /* @var $subclass Xyster_Orm_Mapping_Subclass */
+            $iters->append($subclass->getSubclassClosureIterator());
+        }
+        return $iters;
     }
     
     /**
@@ -357,31 +441,47 @@ abstract class Xyster_Orm_Mapping_Class_Abstract
     /**
      * Gets the subclasses
      * 
-     * @return array of {@link Xyster_Orm_Mapping_Class_Abstract} objects
+     * @return Iterator of {@link Xyster_Orm_Mapping_Class_Abstract} objects
      */
-    public function getSubclasses()
+    public function getSubclassIterator()
     {
-        // @todo
+        $iters = new AppendIterator();
+        foreach( $this->_subclasses as $subclass ) {
+            /* @var $subclass Xyster_Orm_Mapping_Subclass */
+            $iters->append($subclass->getSubclassIterator());
+        }
+        $iters->append(new ArrayIterator($this->_subclasses));
+        return $iters;
     }
     
     /**
      * Gets the subclass joins
      * 
-     * @return array
+     * @return Iterator
      */
-    public function getSubclassJoinClosure()
+    public function getSubclassJoinClosureIterator()
     {
-        // @todo 
+        $iters = new AppendIterator();
+        $iters->append($this->getJoinClosureIterator(),
+            new ArrayIterator($this->_subclassJoins));
+        return $iters;
     }
 
     /**
      * Gets the subclass properties
      *
-     * @return array
+     * @return Iterator
      */
-    public function getSubclassPropertyClosure()
+    public function getSubclassPropertyClosureIterator()
     {
-        // @todo
+        $iters = new AppendIterator();
+        $iters->append($this->getPropertyClosureIterator());
+        $iters->append(new ArrayIterator($this->_subclassProperties));
+        foreach( $this->_subclassJoins as $join ) {
+            /* @var $join Xyster_Orm_Mapping_Join */
+            $iters->append($join->getPropertyIterator());
+        }
+        return $iters;
     }
     
     /**
@@ -391,7 +491,11 @@ abstract class Xyster_Orm_Mapping_Class_Abstract
      */
     public function getSubclassSpan()
     {
-        // @todo
+        $span = count($this->_subclasses);
+        foreach( $this->_subclasses as $sub ) {
+            $span += $sub->getSubclassSpan();
+        }
+        return $span;
     }
     
     /**
@@ -399,9 +503,11 @@ abstract class Xyster_Orm_Mapping_Class_Abstract
      * 
      * @return array of {@link Xyster_Db_Table} objects
      */
-    public function getSubclassTableClosure()
+    public function getSubclassTableClosureIterator()
     {
-        // @todo
+        $iters = new AppendIterator();
+        $iters->append($this->getTableClosureIterator(),
+            new ArrayIterator($this->_subclassTables));
     }
     
     /**
@@ -421,9 +527,9 @@ abstract class Xyster_Orm_Mapping_Class_Abstract
     /**
      * Gets the table closure
      * 
-     * @return array of {@link Xyster_Db_Table} objects
+     * @return Iterator of {@link Xyster_Db_Table} objects
      */
-    abstract public function getTableClosure();
+    abstract public function getTableClosureIterator();
     
     /**
      * Gets the type of tuplizer for this entity type
@@ -433,6 +539,16 @@ abstract class Xyster_Orm_Mapping_Class_Abstract
     public function getTuplizerType()
     {
         return $this->_tuplizerType;
+    }
+    
+    /**
+     * Gets an iterator for properties defined on this class not part of a join
+     * 
+     * @return Iterator
+     */
+    public function getUnjoinedPropertyIterator()
+    {
+        return new ArrayIterator($this->_properties);
     }
     
     /**
@@ -450,13 +566,13 @@ abstract class Xyster_Orm_Mapping_Class_Abstract
     abstract public function getWhere();
     
     /**
-     * Whether this entity has an identifier mapper (a component)
+     * Whether this entity has an identifier component
      * 
      * @return boolean
      */
-    public function hasIdMapper()
+    public function hasIdComponent()
     {
-        // @todo hasIdMapper
+        $this->_idComponent != null;
     }
     
     /**
@@ -467,13 +583,29 @@ abstract class Xyster_Orm_Mapping_Class_Abstract
     abstract public function hasIdProperty();
     
     /**
+     * Whether this class has a natural identifier
+     * 
+     * @return boolean
+     */
+    public function hasNaturalId()
+    {
+        $props = $this->getRootClass()->getPropertyIterator();
+        foreach( $props as $prop ) {
+            if ( $prop->isNaturalId() ) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    /**
      * Whether this entity has subclasses
      * 
      * @return boolean
      */
     public function hasSubclasses()
     {
-        // @todo hasSubclasses
+        return count($this->_subclasses) > 0;
     }
     
     /**
@@ -484,7 +616,7 @@ abstract class Xyster_Orm_Mapping_Class_Abstract
      */
     public function isClassJoin(Xyster_Orm_Mapping_Join $join)
     {
-        // @todo
+        return in_array($join, $this->_joins, true);
     }
 
     /**
@@ -495,7 +627,7 @@ abstract class Xyster_Orm_Mapping_Class_Abstract
      */
     public function isClassTable(Xyster_Db_Table $table)
     {
-        // @todo
+        return $this->getTable() === $table;
     }
     
     /**
@@ -512,7 +644,7 @@ abstract class Xyster_Orm_Mapping_Class_Abstract
      */
     public function isDiscriminatorValueNull()
     {
-        // @todo
+        return $this->getDiscriminatorValue() == 'null';
     }
     
     /**
@@ -538,6 +670,13 @@ abstract class Xyster_Orm_Mapping_Class_Abstract
     {
         return $this->_lazy;
     }
+    
+    /**
+     * Whether the lazy properties are cacheable
+     * 
+     * @return boolean
+     */
+    abstract public function isLazyPropertiesCacheable();
     
     /**
      * Whether the mapped type is mutable
@@ -583,18 +722,20 @@ abstract class Xyster_Orm_Mapping_Class_Abstract
      */
     public function setDiscriminatorValue( $value )
     {
-        // @todo
+        $this->_discriminatorValue = $value;
+        return $this;
     }
     
     /**
-     * Sets the identifier mapper
+     * Sets the identifier component
      * 
      * @param Xyster_Orm_Mapping_Component $handle
      * @return Xyster_Orm_Mapping_Class_Abstract provides a fluent interface
      */
-    public function setIdMapper( Xyster_Orm_Mapping_Component $handle )
+    public function setIdComponent( Xyster_Orm_Mapping_Component $handle )
     {
-        // @todo 
+        $this->_idComponent = $handle;
+        return $this;
     }
     
     /**
@@ -647,9 +788,10 @@ abstract class Xyster_Orm_Mapping_Class_Abstract
      * @param Xyster_Type $type
      * @return Xyster_Orm_Mapping_Class_Abstract provides a fluent interface
      */
-    public function setProxyInterfaceType( Xyster_Type $type)
+    public function setProxyInterfaceType( Xyster_Type $type )
     {
-        // @todo
+        $this->_proxyInterface = $type;
+        return $this;
     }
     
     /**
@@ -683,7 +825,7 @@ abstract class Xyster_Orm_Mapping_Class_Abstract
      */
     protected function _addSubclassJoin(Xyster_Orm_Mapping_Join $j)
     {
-        // @todo
+        $this->_subclassJoins[] = $j;
     }
     
     /**
@@ -692,7 +834,7 @@ abstract class Xyster_Orm_Mapping_Class_Abstract
      */
     protected function _addSubclassProperty(Xyster_Orm_Mapping_Property $p)
     {
-        // @todo
+        $this->_subclassProperties[] = $p;
     }
 
     /**
@@ -702,15 +844,48 @@ abstract class Xyster_Orm_Mapping_Class_Abstract
      */
     protected function _addSubclassTable(Xyster_Db_Table $table)
     {
-        // @todo
+        $this->_subclassTables[] = $table;
     }
     
     /**
      * Gets the discriminator columns
      * 
-     * @return array
+     * @return Iterator
      */
-    protected function _getDiscriminatorColumns()
+    protected function _getDiscriminatorColumnIterator()
+    {
+        return new EmptyIterator();
+    }
+    
+    /**
+     * Gets the unique properties
+     * 
+     * @return Iterator
+     */
+    protected function _getNonDuplicatedPropertyIterator()
+    {
+        return $this->getUnjoinedPropertyIterator();
+    }
+    
+    private function _checkPropertyDuplication()
+    {
+        $names = array();
+        foreach( $this->getPropertyIterator() as $prop ) {
+            if ( in_array($prop->getName(), $names) ) {
+                require_once 'Xyster/Orm/Mapping/Exception.php';
+                throw new Xyster_Orm_Mapping_Exception('Duplicate property mapping: '
+                    . $this->_name . '.' . $prop->getName());
+            }
+            $names[] = $prop->getName();
+        }
+    }
+    
+    private function _getRecursiveProperty($propertyPath, Iterator $iter)
+    {
+        // @todo
+    }
+    
+    private function _getProperty($propertyName, Iterator $iter)
     {
         // @todo
     }

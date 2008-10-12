@@ -76,11 +76,11 @@ class Xyster_Orm_Mapping_Value implements Xyster_Orm_Mapping_Value_Interface
     /**
      * Gets the columns in the type
      *
-     * @return array containing {@link Xyster_Db_Column} objects
+     * @return Iterator containing {@link Xyster_Db_Column} objects
      */
-    public function getColumns()
+    public function getColumnIterator()
     {
-        return array() + $this->_columns;
+        return new ArrayIterator($this->_columns);
     }
     
     /**

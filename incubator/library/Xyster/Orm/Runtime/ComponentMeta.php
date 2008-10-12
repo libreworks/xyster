@@ -47,7 +47,7 @@ class Xyster_Orm_Runtime_ComponentMeta
         $this->_role = $value->getRoleName();
         $this->_isKey = $value->isKey();
         $this->_propertySpan = $value->getPropertySpan();
-        foreach( $value->getProperties() as $prop ) {
+        foreach( $value->getPropertyIterator() as $prop ) {
             $this->_properties[] = Xyster_Orm_Runtime_Property_Standard::build($prop);
             $this->_propertyIndexes[$prop->getName()] = count($this->_propertyIndexes);
         }

@@ -78,6 +78,9 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
         $this->em->expects($this->any())
             ->method('getIdProperty')
             ->will($this->returnValue($prop));
+        $this->em->expects($this->any())
+            ->method('getPropertyIterator')
+            ->will($this->returnValue(new EmptyIterator()));
         $object = $this->_getFixture();
         
         $id = $object->getIdentifier();
@@ -94,6 +97,9 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
         $this->em->expects($this->any())
             ->method('getClassName')
             ->will($this->returnValue('foobar'));
+        $this->em->expects($this->any())
+            ->method('getPropertyIterator')
+            ->will($this->returnValue(new EmptyIterator()));
         $object = $this->_getFixture();
         
         $this->assertEquals('foobar', $object->getName());
@@ -107,6 +113,9 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
         $this->em->expects($this->any())
             ->method('getOptimisticLockMode')
             ->will($this->returnValue(Xyster_Orm_Engine_Versioning::Dirty()));
+        $this->em->expects($this->any())
+            ->method('getPropertyIterator')
+            ->will($this->returnValue(new EmptyIterator()));
         $object = $this->_getFixture();
         
         $this->assertSame(Xyster_Orm_Engine_Versioning::Dirty(), $object->getOptimisticLockMode());
@@ -122,8 +131,8 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
         $prop3 = $this->_getProperty('modifiedOn', 'timestamp', false, false, true);
         
         $this->em->expects($this->any())
-            ->method('getProperties')
-            ->will($this->returnValue(array($prop1, $prop2, $prop3)));
+            ->method('getPropertyIterator')
+            ->will($this->returnValue(new ArrayIterator(array($prop1, $prop2, $prop3))));
         $object = $this->_getFixture();
         
         $props = $object->getProperties();
@@ -149,8 +158,8 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
         $prop3 = $this->_getProperty('modifiedOn');
         
         $this->em->expects($this->any())
-            ->method('getProperties')
-            ->will($this->returnValue(array($prop1, $prop2, $prop3)));
+            ->method('getPropertyIterator')
+            ->will($this->returnValue(new ArrayIterator(array($prop1, $prop2, $prop3))));
         $object = $this->_getFixture();
         
         $this->assertEquals(2, $object->getPropertyIndex('modifiedOn'));
@@ -169,8 +178,8 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
         $prop3 = $this->_getProperty('modifiedOn');
         
         $this->em->expects($this->any())
-            ->method('getProperties')
-            ->will($this->returnValue(array($prop1, $prop2, $prop3)));
+            ->method('getPropertyIterator')
+            ->will($this->returnValue(new ArrayIterator(array($prop1, $prop2, $prop3))));
         $object = $this->_getFixture();
         
         $this->assertEquals(array(false, true, false), $object->getPropertyLaziness());
@@ -186,8 +195,8 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
         $prop3 = $this->_getProperty('modifiedOn');
         
         $this->em->expects($this->any())
-            ->method('getProperties')
-            ->will($this->returnValue(array($prop1, $prop2, $prop3)));
+            ->method('getPropertyIterator')
+            ->will($this->returnValue(new ArrayIterator(array($prop1, $prop2, $prop3))));
         $object = $this->_getFixture();
         
         $this->assertEquals(array('title', 'username', 'modifiedOn'), $object->getPropertyNames());
@@ -203,8 +212,8 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
         $prop3 = $this->_getProperty('modifiedOn', 'timestamp', false);
         
         $this->em->expects($this->any())
-            ->method('getProperties')
-            ->will($this->returnValue(array($prop1, $prop2, $prop3)));
+            ->method('getPropertyIterator')
+            ->will($this->returnValue(new ArrayIterator(array($prop1, $prop2, $prop3))));
         $object = $this->_getFixture();
         
         $this->assertEquals(array(true, false, false), $object->getPropertyNullability());
@@ -220,8 +229,8 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
         $prop3 = $this->_getProperty('modifiedOn');
         
         $this->em->expects($this->any())
-            ->method('getProperties')
-            ->will($this->returnValue(array($prop1, $prop2, $prop3)));
+            ->method('getPropertyIterator')
+            ->will($this->returnValue(new ArrayIterator(array($prop1, $prop2, $prop3))));
         $object = $this->_getFixture();
         
         $this->assertEquals(3, $object->getPropertySpan());
@@ -237,8 +246,8 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
         $prop3 = $this->_getProperty('modifiedOn', 'timestamp');
         
         $this->em->expects($this->any())
-            ->method('getProperties')
-            ->will($this->returnValue(array($prop1, $prop2, $prop3)));
+            ->method('getPropertyIterator')
+            ->will($this->returnValue(new ArrayIterator(array($prop1, $prop2, $prop3))));
         $object = $this->_getFixture();
         
         $types = $object->getPropertyTypes();
@@ -259,9 +268,9 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
         $prop3 = $this->_getProperty('modifiedOn', 'timestamp', false, false, true);
         
         $this->em->expects($this->any())
-            ->method('getProperties')
-            ->will($this->returnValue(array($prop1, $prop2, $prop3)));
-         $this->em->expects($this->any())
+            ->method('getPropertyIterator')
+            ->will($this->returnValue(new ArrayIterator(array($prop1, $prop2, $prop3))));
+        $this->em->expects($this->any())
             ->method('getVersion')
             ->will($this->returnValue($prop3));
         $object = $this->_getFixture();
@@ -274,6 +283,10 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
      */
     public function testGetSessionFactory()
     {
+        $this->em->expects($this->any())
+            ->method('getPropertyIterator')
+            ->will($this->returnValue(new EmptyIterator()));
+        
         $object = $this->_getFixture();
         $this->assertSame($this->sessionFactory, $object->getSessionFactory());
     }
@@ -283,6 +296,10 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
      */
     public function testGetTuplizer()
     {
+        $this->em->expects($this->any())
+            ->method('getPropertyIterator')
+            ->will($this->returnValue(new EmptyIterator()));
+        
         $object = $this->_getFixture();
         $tuplizer = $object->getTuplizer();
         $this->assertType('Xyster_Orm_Tuplizer_Entity_Interface', $tuplizer);
@@ -298,8 +315,8 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
         $prop3 = $this->_getProperty('modifiedOn', 'timestamp', false, false, true);
         
         $this->em->expects($this->any())
-            ->method('getProperties')
-            ->will($this->returnValue(array($prop1, $prop2, $prop3)));
+            ->method('getPropertyIterator')
+            ->will($this->returnValue(new ArrayIterator(array($prop1, $prop2, $prop3))));
         $this->em->expects($this->any())
             ->method('isVersioned')
             ->will($this->returnValue(true));
@@ -336,8 +353,8 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
         $prop3 = $this->_getProperty('modifiedOn')->setGeneration(Xyster_Orm_Mapping_Generation::Insert());
               
         $this->em->expects($this->any())
-            ->method('getProperties')
-            ->will($this->returnValue(array($prop1, $prop2, $prop3)));
+            ->method('getPropertyIterator')
+            ->will($this->returnValue(new ArrayIterator(array($prop1, $prop2, $prop3))));
         $object = $this->_getFixture();
         
         $this->assertTrue($object->hasUpdateGeneratedValues());
@@ -353,8 +370,8 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
         $prop3 = $this->_getProperty('modifiedOn', 'timestamp');
         
         $this->em->expects($this->any())
-            ->method('getProperties')
-            ->will($this->returnValue(array($prop1, $prop2, $prop3)));
+            ->method('getPropertyIterator')
+            ->will($this->returnValue(new ArrayIterator(array($prop1, $prop2, $prop3))));
         $object = $this->_getFixture();
         
         $this->assertTrue($object->hasMutableProperties());
@@ -370,8 +387,8 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
         $prop3 = $this->_getProperty('modifiedOn');
         
         $this->em->expects($this->any())
-            ->method('getProperties')
-            ->will($this->returnValue(array($prop1, $prop2, $prop3)));
+            ->method('getPropertyIterator')
+            ->will($this->returnValue(new ArrayIterator(array($prop1, $prop2, $prop3))));
         $object = $this->_getFixture();
         
         $this->assertTrue($object->hasNonIdentifierPropertyNamedId());
@@ -387,8 +404,8 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
         $prop3 = $this->_getProperty('modifiedOn')->setGeneration(Xyster_Orm_Mapping_Generation::Always());
         
         $this->em->expects($this->any())
-            ->method('getProperties')
-            ->will($this->returnValue(array($prop1, $prop2, $prop3)));
+            ->method('getPropertyIterator')
+            ->will($this->returnValue(new ArrayIterator(array($prop1, $prop2, $prop3))));
         $object = $this->_getFixture();
         
         $this->assertTrue($object->hasUpdateGeneratedValues());
@@ -404,8 +421,8 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
         $prop3 = $this->_getProperty('modifiedOn');
         
         $this->em->expects($this->any())
-            ->method('getProperties')
-            ->will($this->returnValue(array($prop1, $prop2, $prop3)));
+            ->method('getPropertyIterator')
+            ->will($this->returnValue(new ArrayIterator(array($prop1, $prop2, $prop3))));
         $object = $this->_getFixture();
         
         $this->assertFalse($object->isLazy());
@@ -422,8 +439,8 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
         $prop3 = $this->_getProperty('modifiedOn', 'timestamp', false, true);
         
         $this->em->expects($this->any())
-            ->method('getProperties')
-            ->will($this->returnValue(array($prop1, $prop2, $prop3)));
+            ->method('getPropertyIterator')
+            ->will($this->returnValue(new ArrayIterator(array($prop1, $prop2, $prop3))));
         $this->em->expects($this->any())
             ->method('isLazy')
             ->will($this->returnValue(true));
@@ -438,6 +455,10 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
      */
     public function testIsAndSetLazy()
     {
+        $this->em->expects($this->any())
+            ->method('getPropertyIterator')
+            ->will($this->returnValue(new EmptyIterator()));
+        
         $object = $this->_getFixture();
         
         $this->assertFalse($object->isLazy());
@@ -455,6 +476,9 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
         $this->em->expects($this->any())
             ->method('isMutable')
             ->will($this->returnValue(true));
+        $this->em->expects($this->any())
+            ->method('getPropertyIterator')
+            ->will($this->returnValue(new EmptyIterator()));
         $object = $this->_getFixture();
         
         $this->assertTrue($object->isMutable());
@@ -468,6 +492,9 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
         $this->em->expects($this->any())
             ->method('isSelectBeforeUpdate')
             ->will($this->returnValue(true));
+        $this->em->expects($this->any())
+            ->method('getPropertyIterator')
+            ->will($this->returnValue(new EmptyIterator()));
         $object = $this->_getFixture();
         
         $this->assertTrue($object->isSelectBeforeUpdate());
@@ -481,6 +508,9 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
         $this->em->expects($this->any())
             ->method('isVersioned')
             ->will($this->returnValue(true));
+        $this->em->expects($this->any())
+            ->method('getPropertyIterator')
+            ->will($this->returnValue(new EmptyIterator()));
         $object = $this->_getFixture();
         
         $this->assertTrue($object->isVersioned());
@@ -494,6 +524,9 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
         $this->em->expects($this->any())
             ->method('isVersioned')
             ->will($this->returnValue(false));
+        $this->em->expects($this->any())
+            ->method('getPropertyIterator')
+            ->will($this->returnValue(new EmptyIterator()));
         $object = $this->_getFixture();
         
         $this->assertFalse($object->isVersioned());
@@ -507,6 +540,9 @@ class Xyster_Orm_Runtime_EntityMetaTest extends PHPUnit_Framework_TestCase
         $this->em->expects($this->any())
             ->method('getClassName')
             ->will($this->returnValue('Foobar'));
+        $this->em->expects($this->any())
+            ->method('getPropertyIterator')
+            ->will($this->returnValue(new EmptyIterator()));
         $object = $this->_getFixture();
         
         $this->assertEquals('EntityMeta(Foobar)', $object->__toString());

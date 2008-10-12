@@ -44,7 +44,7 @@ class Xyster_Orm_Tuplizer_Entity implements Xyster_Orm_Tuplizer_Entity_Interface
     /**
      * @var Xyster_Orm_Type_Component
      */
-    protected $_idMapperType;
+    protected $_idComponentType;
     
     protected $_lazyPropertyNames = array();
     
@@ -78,8 +78,7 @@ class Xyster_Orm_Tuplizer_Entity implements Xyster_Orm_Tuplizer_Entity_Interface
             $this->_idWrapper = $mappedEntity->getIdProperty()->getWrapper();
         }
         $this->_propertySpan = $entityMeta->getPropertySpan();
-        $props = (array)$mappedEntity->getProperties();
-        foreach( $props as $prop ) {
+        foreach( $mappedEntity->getPropertyIterator() as $prop ) {
             /* @var $prop Xyster_Orm_Mapping_Property */
             $this->_wrappers[] = $prop->getWrapper();
             if ( $prop->isLazy() ) {
@@ -89,8 +88,8 @@ class Xyster_Orm_Tuplizer_Entity implements Xyster_Orm_Tuplizer_Entity_Interface
         if ( $entityMeta->isLazy() ) {
             // @todo build proxy factory
         }
-        $mapper = $mappedEntity->getIdMapper();
-        $this->_idMapperType = $mapper === null ? null : $mapper->getType();
+        $mapper = $mappedEntity->getIdComponent();
+        $this->_idComponentType = $mapper === null ? null : $mapper->getType();
         $this->_mappedType = $mappedEntity->getMappedType();
         $this->_proxyInterface = $mappedEntity->getProxyInterfaceType();
     }
@@ -166,13 +165,13 @@ class Xyster_Orm_Tuplizer_Entity implements Xyster_Orm_Tuplizer_Entity_Interface
     {
         $id = null;
         if ( $this->_idWrapper === null ) {
-            if ( $this->_idMapperType == null ) { 
+            if ( $this->_idComponentType == null ) { 
                 require_once 'Xyster/Orm/Exception.php';
                 throw new Xyster_Orm_Exception('No identifier property: ' . $this->getEntityName());
             } else {
                 $copier = $this->_entityMeta->getIdentifier()->getType();
                 $id = $copier->instantiate();
-                $copier->setPropertyValues($id, $this->_idMapperType->getPropertyValues($entity));
+                $copier->setPropertyValues($id, $this->_idComponentType->getPropertyValues($entity));
             }
         } else {
             $id = $this->_idWrapper->get($entity);

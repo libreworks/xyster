@@ -23,5 +23,17 @@
  */
 class Xyster_Orm_Mapping_Join
 {
+    protected $_entity;
     
+    /**
+     * Sets the mapped class 
+     * 
+     * @param Xyster_Orm_Mapping_Class_Abstract $class
+     * @return Xyster_Orm_Mapping_Join provides a fluent interface
+     */
+    public function setMappedClass( Xyster_Orm_Mapping_Class_Abstract $class )
+    {
+        $this->_entity = $class;
+        return $this;
+    }
 }

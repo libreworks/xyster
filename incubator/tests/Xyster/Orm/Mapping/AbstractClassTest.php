@@ -30,7 +30,8 @@ abstract class Xyster_Orm_Mapping_AbstractClassTest extends PHPUnit_Framework_Te
         $property = new Xyster_Orm_Mapping_Property;
         $return = $this->object->addProperty($property);
         $this->assertSame($this->object, $return);
-        $props = $this->object->getProperties();
+        $propIt = $this->object->getPropertyIterator();
+        $props = iterator_to_array($propIt);
         $this->assertTrue(in_array($property, $props, true));
     }
 

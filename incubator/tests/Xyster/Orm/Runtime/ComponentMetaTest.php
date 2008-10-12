@@ -20,6 +20,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 }
 require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 require_once 'Xyster/Orm/Runtime/ComponentMeta.php';
+require_once 'Xyster/Orm/Mapping/Property.php';
 require_once 'Xyster/Orm/Mapping/Component.php';
 require_once 'Xyster/Orm/Type/String.php';
 

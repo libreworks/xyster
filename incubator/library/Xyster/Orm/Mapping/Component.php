@@ -80,16 +80,16 @@ class Xyster_Orm_Mapping_Component extends Xyster_Orm_Mapping_Value
     /**
      * Gets the columns in the type
      *
-     * @return array containing {@link Xyster_Db_Column} objects
+     * @return Iterator containing {@link Xyster_Db_Column} objects
      */
-    public function getColumns()
+    public function getColumnIterator()
     {
-        $cols = array();
+        $iters = new AppendIterator();
         foreach( $this->_properties as $prop ) {
             /* @var $prop Xyster_Orm_Mapping_Property */
-            $cols = array_merge($cols, $prop->getColumns());
+            $iters->append($prop->getColumnIterator());
         }
-        return $cols;
+        return $iters;
     }
     
     /**
@@ -140,11 +140,11 @@ class Xyster_Orm_Mapping_Component extends Xyster_Orm_Mapping_Value
     /**
      * Gets the properties in the class
      *
-     * @return array of {@link Xyster_Orm_Mapping_Property} objects
+     * @return Iterator of {@link Xyster_Orm_Mapping_Property} objects
      */
-    public function getProperties()
+    public function getPropertyIterator()
     {
-        return array() + $this->_properties;
+        return new ArrayIterator($this->_properties);
     }
     
     /**

@@ -71,16 +71,6 @@ class Xyster_Orm_Mapping_Class extends Xyster_Orm_Mapping_Class_Abstract
      * @var string
      */
     protected $_where;
-    
-    /**
-     * Adds a subclass to the hierarchy
-     * 
-     * @param Xyster_Orm_Mapping_Subclass $subclass
-     */
-    public function addSubclass( Xyster_Orm_Mapping_Subclass $subclass )
-    {
-        // @todo
-    }
 
     /**
      * Gets the discriminator
@@ -89,7 +79,7 @@ class Xyster_Orm_Mapping_Class extends Xyster_Orm_Mapping_Class_Abstract
      */
     public function getDiscriminator()
     {
-        // @todo
+        return $this->_discriminator;
     }
     
     /**
@@ -109,7 +99,11 @@ class Xyster_Orm_Mapping_Class extends Xyster_Orm_Mapping_Class_Abstract
      */
     public function getIdTables()
     {
-        // @todo
+        $tables = array();
+        foreach( $this->getSubclassClosure() as $sub ) {
+            $tables[] = $sub->getIdTable();
+        }
+        return $tables;
     }
     
     /**
@@ -129,7 +123,7 @@ class Xyster_Orm_Mapping_Class extends Xyster_Orm_Mapping_Class_Abstract
      */
     public function getParentclass()
     {
-        // @todo
+        return null;
     }
     
     /**
@@ -145,11 +139,11 @@ class Xyster_Orm_Mapping_Class extends Xyster_Orm_Mapping_Class_Abstract
     /**
      * Gets the property closure
      * 
-     * @return array
+     * @return Iterator
      */
-    public function getPropertyClosure()
+    public function getPropertyClosureIterator()
     {
-        // @todo
+        return $this->getPropertyIterator();
     }
     
     /**
@@ -159,7 +153,7 @@ class Xyster_Orm_Mapping_Class extends Xyster_Orm_Mapping_Class_Abstract
      */
     public function getRootClass()
     {
-        // @todo
+        return $this;
     }
     
     /**
@@ -169,7 +163,7 @@ class Xyster_Orm_Mapping_Class extends Xyster_Orm_Mapping_Class_Abstract
      */
     public function getRootTable()
     {
-        // @todo
+        return $this->getTable();
     }
     
     /**
@@ -179,7 +173,7 @@ class Xyster_Orm_Mapping_Class extends Xyster_Orm_Mapping_Class_Abstract
      */
     public function getSubclassId()
     {
-        // @todo
+        return 0;
     }
     
     /**
@@ -195,11 +189,11 @@ class Xyster_Orm_Mapping_Class extends Xyster_Orm_Mapping_Class_Abstract
     /**
      * Gets the table closure
      * 
-     * @return array of {@link Xyster_Db_Table} objects
+     * @return Iterator of {@link Xyster_Db_Table} objects
      */
-    public function getTableClosure()
+    public function getTableClosureIterator()
     {
-        // @todo
+        return new ArrayIterator(array($this->getTable()));
     }
     
     /**
@@ -219,7 +213,7 @@ class Xyster_Orm_Mapping_Class extends Xyster_Orm_Mapping_Class_Abstract
      */
     public function getWhere()
     {
-        // @todo
+        return $this->_where;
     }
     
     /**
@@ -239,7 +233,7 @@ class Xyster_Orm_Mapping_Class extends Xyster_Orm_Mapping_Class_Abstract
      */
     public function isDiscriminatorInsertable()
     {
-        // @todo
+        return $this->_discriminatorInsertable;
     }
     
     /**
@@ -249,7 +243,7 @@ class Xyster_Orm_Mapping_Class extends Xyster_Orm_Mapping_Class_Abstract
      */
     public function isInherited()
     {
-        // @todo
+        return false;
     }
     
     /**
@@ -259,7 +253,7 @@ class Xyster_Orm_Mapping_Class extends Xyster_Orm_Mapping_Class_Abstract
      */
     public function isJoinedSubclass()
     {
-        // @todo
+        return false;
     }
     
     /**
@@ -290,7 +284,8 @@ class Xyster_Orm_Mapping_Class extends Xyster_Orm_Mapping_Class_Abstract
      */
     public function setDiscriminator( Xyster_Orm_Mapping_Value $value )
     {
-        // @todo
+        $this->_discriminator = $value;
+        return $this;
     }
     
     /**
@@ -301,7 +296,8 @@ class Xyster_Orm_Mapping_Class extends Xyster_Orm_Mapping_Class_Abstract
      */
     public function setDiscriminatorInsertable( $insertable = true )
     {
-        // @todo
+        $this->_discriminatorInsertable = $insertable;
+        return $this;
     }
     
     /**
@@ -372,6 +368,7 @@ class Xyster_Orm_Mapping_Class extends Xyster_Orm_Mapping_Class_Abstract
      */
     public function setWhere( $where )
     {
-        // @todo
+        $this->_where = $where;
+        return $this;
     }
 }

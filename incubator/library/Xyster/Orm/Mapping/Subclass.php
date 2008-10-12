@@ -27,6 +27,20 @@ require_once 'Xyster/Orm/Mapping/Class/Abstract.php';
  */
 class Xyster_Orm_Mapping_Subclass extends Xyster_Orm_Mapping_Class_Abstract
 {
+    private $_parentClass;
+    
+    private $_classPersisterType;
+    
+    /**
+     * Creates a new subclass
+     * 
+     * @param Xyster_Orm_Mapping_Class_Abstract $parent
+     */
+    public function __construct( Xyster_Orm_Mapping_Class_Abstract $parent )
+    {
+        $this->_parentClass = $parent;
+    }
+    
     /**
      * 
      */
@@ -85,11 +99,14 @@ class Xyster_Orm_Mapping_Subclass extends Xyster_Orm_Mapping_Class_Abstract
     /**
      * Gets the join closure
      * 
-     * @return array
+     * @return Iterator
      */
-    public function getJoinClosure()
+    public function getJoinClosureIterator()
     {
-        // @todo
+        $iters = new AppendIterator();
+        $iters->append($this->getParentclass()->getJoinClosureIterator());
+        $iters->append(parent::getJoinClosureIterator());
+        return $iters;
     }
     
     /**
@@ -119,7 +136,7 @@ class Xyster_Orm_Mapping_Subclass extends Xyster_Orm_Mapping_Class_Abstract
      */
     public function getParentclass()
     {
-        // @todo
+        return $this->_parentClass;
     }
     
     /**
@@ -137,9 +154,12 @@ class Xyster_Orm_Mapping_Subclass extends Xyster_Orm_Mapping_Class_Abstract
      * 
      * @return array
      */
-    public function getPropertyClosure()
+    public function getPropertyClosureIterator()
     {
-        // @todo
+        $iters = new AppendIterator();
+        $iters->append($this->getParentclass()->getPropertyClosureIterator());
+        $iters->append($this->getPropertyIterator());
+        return $iters;
     }
 
     /**
@@ -159,7 +179,7 @@ class Xyster_Orm_Mapping_Subclass extends Xyster_Orm_Mapping_Class_Abstract
      */
     public function getRootClass()
     {
-        // @todo
+        return $this->getParentclass()->getRootClass();
     }
     
     /**
@@ -195,11 +215,14 @@ class Xyster_Orm_Mapping_Subclass extends Xyster_Orm_Mapping_Class_Abstract
     /**
      * Gets the table closure
      * 
-     * @return array of {@link Xyster_Db_Table} objects
+     * @return Iterator of {@link Xyster_Db_Table} objects
      */
-    public function getTableClosure()
+    public function getTableClosureIterator()
     {
-        // @todo
+        $iters = new AppendIterator();
+        $iters->append($this->getParentclass()->getTableClosureIterator());
+        $iters->append(new ArrayIterator(array($this->getTable())));
+        return $iters;
     }
 
     /**
@@ -239,7 +262,7 @@ class Xyster_Orm_Mapping_Subclass extends Xyster_Orm_Mapping_Class_Abstract
      */
     public function hasIdProperty()
     {
-        return $this->_identifier !== null;
+        return $this->getParentclass()->hasIdProperty();
     }
     
     /**
@@ -281,7 +304,7 @@ class Xyster_Orm_Mapping_Subclass extends Xyster_Orm_Mapping_Class_Abstract
      */
     public function isInherited()
     {
-        // @todo
+        return true;
     }
     
     /**

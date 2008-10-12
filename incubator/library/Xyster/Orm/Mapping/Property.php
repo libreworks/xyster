@@ -46,6 +46,10 @@ class Xyster_Orm_Mapping_Property
     /**
      * @var boolean
      */
+    protected $_natId = false;
+    /**
+     * @var boolean
+     */
     protected $_optimisticLocked = false;
     /**
      * @var boolean
@@ -71,11 +75,11 @@ class Xyster_Orm_Mapping_Property
     /**
      * Gets the columns in the property
      *
-     * @return array of {@link Xyster_Db_Column} objects
+     * @return Iterator of {@link Xyster_Db_Column} objects
      */
-    public function getColumns()
+    public function getColumnIterator()
     {
-        return $this->_value->getColumns();
+        return $this->_value->getColumnIterator();
     }
     
     /**
@@ -179,6 +183,16 @@ class Xyster_Orm_Mapping_Property
     }
 
     /**
+     * Whether the property is a natural identifier
+     * 
+     * @return boolean
+     */
+    public function isNaturalId()
+    {
+        return $this->_natId;
+    }
+    
+    /**
      * Whether this property is nullable
      *
      * @return boolean
@@ -229,6 +243,18 @@ class Xyster_Orm_Mapping_Property
     public function setLazy( $flag = true )
     {
         $this->_lazy = $flag;
+        return $this;
+    }
+    
+    /**
+     * Sets that this property is a natural identifier
+     * 
+     * @param boolean $flag
+     * @return Xyster_Orm_Mapping_Property provides a fluent interface
+     */
+    public function setNaturalId($flag = true)
+    {
+        $this->_natId = $flag;
         return $this;
     }
     
