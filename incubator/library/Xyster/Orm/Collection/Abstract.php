@@ -441,8 +441,8 @@ abstract class Xyster_Orm_Collection_Abstract implements Xyster_Orm_Collection_I
         $ids = array();
         foreach( $current as $v ) {
             if ( $v != null &&
-                Xyster_Orm_Engine_Transience::isNotTransient($entityName, $v, null, $session) ) {
-                $currentId = Xyster_Orm_Engine_Transience::getEntityIdIfSaved($entityName, $v, $session);
+                Xyster_Orm_Helper::isNotTransient($entityName, $v, null, $session) ) {
+                $currentId = Xyster_Orm_Helper::getEntityIdIfSaved($entityName, $v, $session);
                 // $ids[] = 
             }
         }
@@ -470,11 +470,11 @@ abstract class Xyster_Orm_Collection_Abstract implements Xyster_Orm_Collection_I
     protected static function _idRemove(Xyster_Collection_Interface $list, $object, $entityName, Xyster_Orm_Session_Interface $session)
     {
         if ( $object !== null &&
-            Xyster_Orm_Engine_Transience::isNotTransient($entityName, $object, null, $session) ) {
+            Xyster_Orm_Helper::isNotTransient($entityName, $object, null, $session) ) {
             $idType = $session->getFactory()->getEntityPersister($entityName)->getIdType();
-            $id = Xyster_Orm_Engine_Transience::getEntityIdIfSaved($entityName, $object, $session);
+            $id = Xyster_Orm_Helper::getEntityIdIfSaved($entityName, $object, $session);
             foreach( $list as $v ) {
-                $oldId = Xyster_Orm_Engine_Transience::getEntityIdIfSaved($entityName, $v, $session);
+                $oldId = Xyster_Orm_Helper::getEntityIdIfSaved($entityName, $v, $session);
                 if ( $idType->isEqual($id, $oldId) ) {
                     $list->remove($v);
                     break;

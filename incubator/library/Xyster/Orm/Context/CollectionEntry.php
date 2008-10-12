@@ -180,8 +180,8 @@ class Xyster_Orm_Context_CollectionEntry
     public function getOrphans($entityName, Xyster_Orm_Collection_Interface $collection)
     {
         if ( $this->_snapshot === null ) {
-            require_once 'Xyster/Orm/Exception.php';
-            throw new Xyster_Orm_Exception('No collection snapshot to determine orphans');
+            require_once 'Xyster/Orm/Context/Exception.php';
+            throw new Xyster_Orm_Context_Exception('No collection snapshot to determine orphans');
         }
         return $collection->getOrphans($this->_snapshot, $entityName);
     }
@@ -271,8 +271,8 @@ class Xyster_Orm_Context_CollectionEntry
         if ( $this->_ignore ) {
             $this->_ignore = false;
         } else if ( !$this->_processed ) {
-            require_once 'Xyster/Orm/Exception.php';
-            throw new Xyster_Orm_Exception('Collection not processed during flush');
+            require_once 'Xyster/Orm/Context/Exception.php';
+            throw new Xyster_Orm_Context_Exception('Collection not processed during flush');
         }
         $collection->setSnapshot($this->_loadedKey, $this->_role,
             $this->_snapshot);
@@ -305,8 +305,8 @@ class Xyster_Orm_Context_CollectionEntry
         $nonMutable = $collection->isDirty() && $persister != null &&
             !$persister->isMutable();
         if ( $nonMutable ) {
-            require_once 'Xyster/Orm/Exception.php';
-            throw new Xyster_Orm_Exception('Changed an immutable collection');
+            require_once 'Xyster/Orm/Context/Exception.php';
+            throw new Xyster_Orm_Context_Exception('Changed an immutable collection');
         }
         $this->_setDirty($collection);
         $this->setUpdate(false)

@@ -207,13 +207,21 @@ class Xyster_Orm_Context_EntityEntry
      */
     public function isNullifiable($earlyInsert, Xyster_Orm_Session_Interface $session)
     {
-        return $this->_status === Xyster_Orm_Engine_Status::Saving() ||
-            ($earlyInsert ? !$this->_inDatabase : false);
-            // @todo insert this later
-            /*
-               $session->getContext()->getNullifiableEntityKeys()
-                   ->contains(new EntityKey($this->getId(), $this->getPersister()));
-             */
+        if ( $this->_status === Xyster_Orm_Engine_Status::Saving() ) {
+            return true;
+        } else if ( $earlyInsert ) {
+            return !$this->_inDatabase;
+        } else {
+            $keys = $session->getContext()->getNullifiableEntityKeys();
+            $expect = new Xyster_Orm_Context_EntityKey($this->getId(),
+                    $this->getPersister());
+            foreach( $keys as $key ) {
+                 if ( $expect->equals($key) ) {
+                     return true;
+                 }
+            }
+            return false;
+        }
     }
     
     /**
@@ -288,8 +296,8 @@ class Xyster_Orm_Context_EntityEntry
     {
         if ( $this->_status !== Xyster_Orm_Engine_Status::Managed() && 
             $this->_status !== Xyster_Orm_Engine_Status::ReadOnly() ) {
-            require_once 'Xyster/Orm/Exception.php';
-            throw new Xyster_Orm_Exception('Cannot set read-only for this state: ' . $this->_status->getName());
+            require_once 'Xyster/Orm/Context/Exception.php';
+            throw new Xyster_Orm_Context_Exception('Cannot set read-only for this state: ' . $this->_status->getName());
         }
         if ( $readOnly ) {
             $this->setStatus(Xyster_Orm_Engine_Status::ReadOnly());

@@ -26,7 +26,7 @@ interface Xyster_Orm_Session_Interface
     /**
      * Gets the context associated with the session
      * 
-     * @return Xyster_Orm_Engine_Context_Interface
+     * @return Xyster_Orm_Context_Interface
      */
     function getContext();
     

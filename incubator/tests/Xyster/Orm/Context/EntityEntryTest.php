@@ -231,7 +231,7 @@ class Xyster_Orm_Context_EntityEntryTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(array(111), $entry->getLoadedState());
         
         $entry->setStatus(Xyster_Orm_Engine_Status::Loading());
-        $this->setExpectedException('Xyster_Orm_Exception', 'Cannot set read-only for this state: Loading');
+        $this->setExpectedException('Xyster_Orm_Context_Exception', 'Cannot set read-only for this state: Loading');
         $entry->setReadOnly(true, $entity);
     }
 
