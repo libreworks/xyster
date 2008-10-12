@@ -14,17 +14,40 @@
  * @version   $Id$
  */
 /**
- * @see Xyster_Orm_Exception
- */
-require_once 'Xyster/Orm/Exception.php';
-/**
- * Exception for ORM Collection classes
+ * A helper for the ORM system
  *
  * @category  Xyster
  * @package   Xyster_Orm
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Orm_Collection_Exception extends Xyster_Orm_Exception
+class Xyster_Orm_Helper
 {
+    static private $_unfetchedProperty;
+
+    /** 
+     * Whether the object given is an unfetched property
+     * 
+     * @param mixed $object
+     * @return boolean
+     */
+    public static function isUnfetchedProperty($object)
+    {
+        return $object == self::getUnfetchedProperty();
+    }
+    
+    /**
+     * Gets the unfetched property
+     * 
+     * @return object
+     */
+    static function getUnfetchedProperty()
+    {
+         if ( self::$_unfetchedProperty === null ) {
+             $prop = new stdClass;
+             $prop->value = 0x100000000;
+             self::$_unfetchedProperty = $prop;
+         }
+         return self::$_unfetchedProperty;
+    }
 }

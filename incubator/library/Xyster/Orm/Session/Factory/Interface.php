@@ -29,7 +29,15 @@ interface Xyster_Orm_Session_Factory_Interface
      * @param string $role
      * @return Xyster_Orm_Persister_Collection_Interface
      */
-    function getCollectionPersister( $role );
+    function getCollectionPersister($role);
+    
+    /**
+     * Gets the persister for the entity name given
+     * 
+     * @param string $entityName
+     * @return Xyster_Orm_Persister_Entity_Interface
+     */
+    function getEntityPersister($entityName);
     
     /**
      * Gets the identifier generator
@@ -37,5 +45,5 @@ interface Xyster_Orm_Session_Factory_Interface
      * @param string $className
      * @return Xyster_Orm_Id_Generator_Interface
      */
-    function getIdentifierGenerator( $className );
+    function getIdentifierGenerator($className);
 }

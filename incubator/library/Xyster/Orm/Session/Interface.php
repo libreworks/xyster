@@ -31,6 +31,14 @@ interface Xyster_Orm_Session_Interface
     function getContext();
     
     /**
+     * Gets the identifier of the entity or null if not associated
+     * 
+     * @param object $entity
+     * @return mixed
+     */
+    function getContextEntityId($entity);
+    
+    /**
      * Gets the entity persister for the entity name given
      * 
      * @param string $entityName
@@ -52,4 +60,12 @@ interface Xyster_Orm_Session_Interface
      * @return Xyster_Orm_Session_Interceptor_Interface
      */
     function getInterceptor();
+
+    /**
+     * Initialize the collection (if not initialized)
+     * 
+     * @param Xyster_Orm_Collection_Interface $collection
+     * @param boolean $writing
+     */
+    function initCollection(Xyster_Orm_Collection_Interface $collection, $writing);
 }

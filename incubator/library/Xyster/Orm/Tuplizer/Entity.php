@@ -18,6 +18,10 @@
  */
 require_once 'Xyster/Orm/Tuplizer/Entity/Interface.php';
 /**
+ * @see Xyster_Orm_Helper
+ */
+require_once 'Xyster/Orm/Helper.php';
+/**
  * A tuplizer manages how to get/set and create a type of data
  *
  * @category  Xyster
@@ -47,7 +51,7 @@ class Xyster_Orm_Tuplizer_Entity implements Xyster_Orm_Tuplizer_Entity_Interface
     /**
      * @var Xyster_Type_Property_Interface[]
      */
-    protected $_mappers = array();
+    protected $_wrappers = array();
     
     /**
      * @var Xyster_Type
@@ -77,7 +81,7 @@ class Xyster_Orm_Tuplizer_Entity implements Xyster_Orm_Tuplizer_Entity_Interface
         $props = (array)$mappedEntity->getProperties();
         foreach( $props as $prop ) {
             /* @var $prop Xyster_Orm_Mapping_Property */
-            $this->_mappers[] = $prop->getWrapper();
+            $this->_wrappers[] = $prop->getWrapper();
             if ( $prop->isLazy() ) {
                 $this->_lazyPropertyNames[] = $prop->getName();
             }
@@ -85,9 +89,10 @@ class Xyster_Orm_Tuplizer_Entity implements Xyster_Orm_Tuplizer_Entity_Interface
         if ( $entityMeta->isLazy() ) {
             // @todo build proxy factory
         }
-        // @todo identifier mapper (component stuff?)
+        $mapper = $mappedEntity->getIdMapper();
+        $this->_idMapperType = $mapper === null ? null : $mapper->getType();
         $this->_mappedType = $mappedEntity->getMappedType();
-        // @todo $this->_proxyInterface = $mappedEntity->getProxyInterface();
+        $this->_proxyInterface = $mappedEntity->getProxyInterfaceType();
     }
     
     /**
@@ -195,7 +200,7 @@ class Xyster_Orm_Tuplizer_Entity implements Xyster_Orm_Tuplizer_Entity_Interface
     public function getPropertyValue( $entity, $i )
     {
         if ( is_numeric($i) ) {
-            return $this->_mappers[$i]->get($entity);
+            return $this->_wrappers[$i]->get($entity);
         } else {
             $dot = strpos($i, '.');
             $basePropertyName = ($dot !== false) ? substr($i, 0, $dot) : $i;
@@ -220,12 +225,13 @@ class Xyster_Orm_Tuplizer_Entity implements Xyster_Orm_Tuplizer_Entity_Interface
     {
         $all = !$this->hasUninitializedLazyProperties($entity);
         $result = array();
+        $unfetchedProp = Xyster_Orm_Helper::getUnfetchedProperty();
         foreach( $this->_entityMeta->getProperties() as $i=>$prop ) {
             /* @var $prop Xyster_Orm_Runtime_Property_Standard */
             if ( $all || !$prop->isLazy() ) {
-                $result[] = $this->_mappers[$i]->get($entity);
+                $result[] = $this->_wrappers[$i]->get($entity);
             } else {
-                $result[] = null; // @todo lazy initializer unfetched prop const  
+                $result[] = $unfetchedProp;
             }
         }
         return $result;
@@ -240,7 +246,7 @@ class Xyster_Orm_Tuplizer_Entity implements Xyster_Orm_Tuplizer_Entity_Interface
     public function getVersion( $entity )
     {
         return ( $this->_entityMeta->isVersioned() ) ? 
-            $this->_mappers[$this->_entityMeta->getVersionIndex()]->get($entity) : 
+            $this->_wrappers[$this->_entityMeta->getVersionIndex()]->get($entity) : 
             null;
     }
     
@@ -262,7 +268,11 @@ class Xyster_Orm_Tuplizer_Entity implements Xyster_Orm_Tuplizer_Entity_Interface
      */
     public function hasUninitializedLazyProperties( $entity )
     {
-        // @todo proxy stuff
+        if ( $this->_entityMeta->hasLazyProperties() ) {
+            // @todo proxy stuff
+        } else {
+            return false;
+        }
     }
     
     /**
@@ -327,7 +337,7 @@ class Xyster_Orm_Tuplizer_Entity implements Xyster_Orm_Tuplizer_Entity_Interface
     {
         $i = is_numeric($name) ?
             $name : $this->_entityMeta->getPropertyIndex($name);
-        $this->_mappers[$i]->set($entity, $value);
+        $this->_wrappers[$i]->set($entity, $value);
     }
         
     /**
@@ -339,9 +349,10 @@ class Xyster_Orm_Tuplizer_Entity implements Xyster_Orm_Tuplizer_Entity_Interface
     public function setPropertyValues( $entity, array $values )
     {
         $all = !$this->_entityMeta->hasLazyProperties();
-        foreach( $this->_mappers as $i=>$mapper ) {
-            if ( $all ) { // @todo || $values[$i] != lazy initializer
-                $mapper->set($entity, $values[$i]);
+        $unfetchedProp = Xyster_Orm_Helper::getUnfetchedProperty();
+        foreach( $this->_wrappers as $i=>$wrapper ) {
+            if ( $all || $values[$i] != $unfetchedProp ) {
+                $wrapper->set($entity, $values[$i]);
             }
         }
     }

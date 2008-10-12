@@ -172,7 +172,16 @@ interface Xyster_Orm_Persister_Entity_Interface extends Xyster_Orm_Meta_Entity, 
      * @return boolean
      */
     function isSelectBeforeUpdate();
-        
+    
+    /**
+     * Whether the entity is transient
+     * 
+     * @param object $entity
+     * @param Xyster_Orm_Session_Interface $session
+     * @return boolean
+     */
+    function isTransient($entity, Xyster_Orm_Session_Interface $session);
+    
     /**
      * Loads the object
      *
