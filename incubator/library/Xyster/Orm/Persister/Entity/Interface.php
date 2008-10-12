@@ -14,9 +14,9 @@
  * @version   $Id$
  */
 /**
- * @see Xyster_Orm_Meta_Entity
+ * @see Xyster_Orm_IEntityMeta
  */
-require_once 'Xyster/Orm/Meta/Entity.php';
+require_once 'Xyster/Orm/IEntityMeta.php';
 /**
  * @see Xyster_Orm_Cache_Source_Interface
  */
@@ -33,7 +33,7 @@ require_once 'Xyster/Orm/Session/Interface.php';
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-interface Xyster_Orm_Persister_Entity_Interface extends Xyster_Orm_Meta_Entity, Xyster_Orm_Cache_Source_Interface
+interface Xyster_Orm_Persister_Entity_Interface extends Xyster_Orm_IEntityMeta, Xyster_Orm_Cache_Source_Interface
 {
     /**
      * Delete the persistent instance

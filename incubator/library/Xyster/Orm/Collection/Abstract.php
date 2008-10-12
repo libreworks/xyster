@@ -209,7 +209,7 @@ abstract class Xyster_Orm_Collection_Abstract implements Xyster_Orm_Collection_I
      */
     final public function hasQueuedActions()
     {
-        return !$this->_queue;
+        return $this->_queue;
     }
     
     /**
