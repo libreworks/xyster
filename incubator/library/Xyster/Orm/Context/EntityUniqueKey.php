@@ -25,7 +25,7 @@ require_once 'Xyster/Type.php';
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Orm_Engine_EntityUniqueKey
+class Xyster_Orm_Context_EntityUniqueKey
 {
     private $_hashCode;
     private $_key;
@@ -63,7 +63,7 @@ class Xyster_Orm_Engine_EntityUniqueKey
     public function equals($object)
     {
         return $this === $object ||
-            ($object instanceof Xyster_Orm_Engine_EntityUniqueKey &&
+            ($object instanceof Xyster_Orm_Context_EntityUniqueKey &&
                 $this->_name == $object->_name &&
                 $this->_uniqueKeyName == $object->_uniqueKeyName &&
                 $this->_keyType->isEqual($this->_key, $object->_key));

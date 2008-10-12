@@ -52,7 +52,7 @@ interface Xyster_Orm_Persister_Collection_Interface
     /**
      * Gets the meta information
      * 
-     * @return Xyster_Orm_Meta_Collection
+     * @return Xyster_Orm_ICollectionMeta
      */
     function getCollectionMeta();
     

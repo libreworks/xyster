@@ -23,7 +23,7 @@
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Orm_Engine_CollectionEntry
+class Xyster_Orm_Context_CollectionEntry
 {
     private $_snapshot;
     
@@ -71,7 +71,7 @@ class Xyster_Orm_Engine_CollectionEntry
      * Creates an entry for a newly wrapped collection or a dereferenced wrapper
      * @param Xyster_Orm_Persister_Collection_Interface $persister
      * @param Xyster_Orm_Collection_Interface $collection
-     * @return Xyster_Orm_Engine_CollectionEntry
+     * @return Xyster_Orm_Context_CollectionEntry
      */
     public static function createForWrapped(Xyster_Orm_Persister_Collection_Interface $persister, Xyster_Orm_Collection_Interface $collection)
     {
@@ -91,7 +91,7 @@ class Xyster_Orm_Engine_CollectionEntry
      * @param Xyster_Orm_Collection_Interface $collection
      * @param mixed $key
      * @param boolean $ignore
-     * @return Xyster_Orm_Engine_CollectionEntry
+     * @return Xyster_Orm_Context_CollectionEntry
      */
     public static function createForLoaded(Xyster_Orm_Persister_Collection_Interface $persister, Xyster_Orm_Collection_Interface $collection, $key, $ignore)
     {
@@ -108,7 +108,7 @@ class Xyster_Orm_Engine_CollectionEntry
      * 
      * @param Xyster_Orm_Persister_Collection_Interface $persister
      * @param mixed $key
-     * @return Xyster_Orm_Engine_CollectionEntry
+     * @return Xyster_Orm_Context_CollectionEntry
      */
     public static function createForUninitializedDetached(Xyster_Orm_Persister_Collection_Interface $persister, $key)
     {
@@ -264,7 +264,7 @@ class Xyster_Orm_Engine_CollectionEntry
      * Called after the flush
      * 
      * @param Xyster_Orm_Collection_Interface $collection
-     * @return Xyster_Orm_Engine_CollectionEntry provides a fluent interface
+     * @return Xyster_Orm_Context_CollectionEntry provides a fluent interface
      */
     public function postFlush(Xyster_Orm_Collection_Interface $collection)
     {
@@ -282,7 +282,7 @@ class Xyster_Orm_Engine_CollectionEntry
      * Called after initialization
      * 
      * @param Xyster_Orm_Collection_Interface $collection
-     * @return Xyster_Orm_Engine_CollectionEntry provides a fluent interface
+     * @return Xyster_Orm_Context_CollectionEntry provides a fluent interface
      */
     public function postInit(Xyster_Orm_Collection_Interface $collection)
     {
@@ -297,7 +297,7 @@ class Xyster_Orm_Engine_CollectionEntry
      * Called before flush
      * 
      * @param Xyster_Orm_Collection_Interface $collection
-     * @return Xyster_Orm_Engine_CollectionEntry provides a fluent interface
+     * @return Xyster_Orm_Context_CollectionEntry provides a fluent interface
      */
     public function preFlush(Xyster_Orm_Collection_Interface $collection)
     {
@@ -320,7 +320,7 @@ class Xyster_Orm_Engine_CollectionEntry
      * Sets the key
      * 
      * @param mixed $key
-     * @return Xyster_Orm_Engine_CollectionEntry provides a fluent interface
+     * @return Xyster_Orm_Context_CollectionEntry provides a fluent interface
      */
     public function setKey( $key )
     {
@@ -332,7 +332,7 @@ class Xyster_Orm_Engine_CollectionEntry
      * Sets the persister 
      * 
      * @param Xyster_Orm_Persister_Collection_Interface $persister
-     * @return Xyster_Orm_Engine_CollectionEntry provides a fluent interface
+     * @return Xyster_Orm_Context_CollectionEntry provides a fluent interface
      */
     public function setPersister( Xyster_Orm_Persister_Collection_Interface $persister )
     {
@@ -344,7 +344,7 @@ class Xyster_Orm_Engine_CollectionEntry
      * Sets that the collection should recreate itself
      * 
      * @param boolean $flag
-     * @return Xyster_Orm_Engine_CollectionEntry provides a fluent interface
+     * @return Xyster_Orm_Context_CollectionEntry provides a fluent interface
      */
     public function setRecreate( $flag = true )
     {
@@ -356,7 +356,7 @@ class Xyster_Orm_Engine_CollectionEntry
      * Sets that the collection should remove
      * 
      * @param boolean $flag
-     * @return Xyster_Orm_Engine_CollectionEntry provides a fluent interface
+     * @return Xyster_Orm_Context_CollectionEntry provides a fluent interface
      */
     public function setRemove( $flag = true )
     {
@@ -368,7 +368,7 @@ class Xyster_Orm_Engine_CollectionEntry
      * Sets that the collection should update
      * 
      * @param boolean $flag
-     * @return Xyster_Orm_Engine_CollectionEntry provides a fluent interface
+     * @return Xyster_Orm_Context_CollectionEntry provides a fluent interface
      */
     public function setUpdate( $flag = true )
     {
@@ -380,7 +380,7 @@ class Xyster_Orm_Engine_CollectionEntry
      * Sets whether the collection has been processed
      * 
      * @param boolean $flag
-     * @return Xyster_Orm_Engine_CollectionEntry provides a fluent interface
+     * @return Xyster_Orm_Context_CollectionEntry provides a fluent interface
      */
     public function setProcessed( $flag = true )
     {
@@ -392,7 +392,7 @@ class Xyster_Orm_Engine_CollectionEntry
      * Sets whether the collection has been reached
      * 
      * @param boolean $flag
-     * @return Xyster_Orm_Engine_CollectionEntry provides a fluent interface
+     * @return Xyster_Orm_Context_CollectionEntry provides a fluent interface
      */
     public function setReached( $flag = true )
     {
@@ -404,7 +404,7 @@ class Xyster_Orm_Engine_CollectionEntry
      * Sets the collection role 
      * 
      * @param string $role
-     * @return Xyster_Orm_Engine_CollectionEntry provides a fluent interface
+     * @return Xyster_Orm_Context_CollectionEntry provides a fluent interface
      */
     public function setRole( $role )
     {

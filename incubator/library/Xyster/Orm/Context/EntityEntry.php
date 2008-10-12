@@ -25,7 +25,7 @@ require_once 'Xyster/Orm/Engine/Status.php';
  * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Orm_Engine_EntityEntry
+class Xyster_Orm_Context_EntityEntry
 {
     /**
      * @var array
@@ -269,7 +269,7 @@ class Xyster_Orm_Engine_EntityEntry
      * Sets the deleted state
      * 
      * @param array $state
-     * @return Xyster_Orm_Engine_EntityEntry provides a fluent interface
+     * @return Xyster_Orm_Context_EntityEntry provides a fluent interface
      */
     public function setDeletedState(array $state)
     {
@@ -282,7 +282,7 @@ class Xyster_Orm_Engine_EntityEntry
      * 
      * @param boolean $readOnly
      * @param object $entity
-     * @return Xyster_Orm_Engine_EntityEntry provides a fluent interface
+     * @return Xyster_Orm_Context_EntityEntry provides a fluent interface
      */
     public function setReadOnly($readOnly, $entity)
     {
@@ -305,7 +305,7 @@ class Xyster_Orm_Engine_EntityEntry
      * Sets the entity status
      * 
      * @param Xyster_Orm_Engine_Status $status
-     * @return Xyster_Orm_Engine_EntityEntry provides a fluent interface
+     * @return Xyster_Orm_Context_EntityEntry provides a fluent interface
      */
     public function setStatus( Xyster_Orm_Engine_Status $status )
     {
