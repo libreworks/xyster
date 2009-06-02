@@ -112,6 +112,11 @@ class Xyster_Db_Adapter_Stub extends Zend_Db_Adapter_Abstract
         $this->_connection = $this;
     }
 
+    public function isConnected()
+    {
+        return true;
+    }
+    
     /**
      * Force the connection to close.
      *
@@ -224,5 +229,10 @@ class Xyster_Db_Adapter_Stub extends Zend_Db_Adapter_Abstract
             throw new Zend_Db_Adapter_Exception("Configuration must have a key for 'dbname' that names the database instance");
         }
         $this->config = $config;
+    }
+    
+    public function getServerVersion()
+    {
+        return 0;
     }
 }

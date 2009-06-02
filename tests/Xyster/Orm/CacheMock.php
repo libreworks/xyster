@@ -16,15 +16,15 @@
  */
 
 /**
- * Zend_Cache_Backend_Interface
+ * Zend_Cache_Backend
  */
-require_once 'Zend/Cache/Backend/Interface.php';
+require_once 'Zend/Cache/Backend.php';
 
 /**
  * A mock cache
  *
  */
-class Xyster_Orm_CacheMock implements Zend_Cache_Backend_Interface
+class Xyster_Orm_CacheMock extends Zend_Cache_Backend
 {
     /**
      * @var Xyster_Collection_Map_String

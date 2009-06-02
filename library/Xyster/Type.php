@@ -40,6 +40,8 @@ class Xyster_Type
      */
     protected $_class;
     
+    const INT_MAX_32 = 2147483647;
+    
     /**
      * Creates a new type representation
      *
@@ -278,8 +280,8 @@ class Xyster_Type
         
         if ( is_string($value) ) {
             
-            $max = (float)PHP_INT_MAX;
-            $min = (float)(~PHP_INT_MAX + 1);
+            $max = (float)self::INT_MAX_32;
+            $min = (float)(~self::INT_MAX_32 + 1);
             $h = 0.0;
             // mmm... modular arithmetic...
             for( $i=0; $i<strlen($value); $i++ ) {
@@ -312,8 +314,8 @@ class Xyster_Type
                 $value = array_map('hexdec', $hex);
             }
             
-            $max = (float)PHP_INT_MAX;
-            $min = (float)(~PHP_INT_MAX + 1);
+            $max = (float)self::INT_MAX_32;
+            $min = (float)(~self::INT_MAX_32 + 1);
             $h = 0.0;
             foreach( $value as $v ) {
                 $result = 31 * $h + self::hash($v);
