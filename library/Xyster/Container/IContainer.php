@@ -40,6 +40,31 @@ interface Xyster_Container_IContainer
     function get($name);
     
     /**
+	 * Gets the components in the contanier for the given type.
+	 * 
+	 * @param mixed $type Optional. A Xyster_Type or string class name
+	 * @return array Keys are component names, values are components themselves
+     */
+    function getForType($type);
+    
+    /**
+	 * Gets the component names given a type.
+	 * 
+	 * If the type argument is omitted, this will return all component names.
+	 * 
+	 * @param mixed $type Optional. A Xyster_Type or string class name
+	 * @return array of strings
+     */
+    function getNames($type = null);
+    
+    /**
+     * Gets the parent container.
+     * 
+     * @return Xyster_Container_IContainer
+     */
+    function getParent();
+    
+    /**
      * Gets the type of component with the given name.
      * 
      * @param string $name The component name
