@@ -62,6 +62,56 @@ class Xyster_Container_Definition
     }
     
     /**
+     * Gets the constructor arguments 
+     * 
+     * @return array
+     */
+    public function getConstructorArgs()
+    {
+        return $this->_constructorArguments;
+    }
+    
+    /**
+     * Gets the initialization method
+     * 
+     * @return string
+     */
+    public function getInitMethod()
+    {
+        return $this->_initMethod;
+    }
+    
+    /**
+     * Gets the name
+     * 
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->_name;
+    }
+    
+    /**
+     * Gets the properties
+
+     * @return array
+     */
+    public function getProperties()
+    {
+        return $this->_properties;
+    }
+    
+    /**
+     * Gets the type
+     * 
+     * @return Xyster_Type
+     */
+    public function getType()
+    {
+        return $this->_type;
+    }
+    
+    /**
 	 * Sets the name of the method to be invoked when an object has been created
 	 * 
 	 * @param string $name The method name

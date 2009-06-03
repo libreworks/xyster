@@ -13,7 +13,10 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
-require_once 'Xyster/Container/IDetails.php';
+/**
+ * @see Xyster_Container_IProvider
+ */
+require_once 'Xyster/Container/IProvider';
 /**
  * Abstract object creation class
  *
@@ -22,8 +25,31 @@ require_once 'Xyster/Container/IDetails.php';
  * @copyright Copyright (c) Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-abstract class Xyster_Container_AbstractProvider
-{    
+abstract class Xyster_Container_Provider_AbstractProvider implements Xyster_Container_IProvider
+{
+    protected $_name;
+    /**
+     * @var Xyster_Type
+     */
+    protected $_type;
+    protected $_initMethod;
+    protected $_constructorArguments = array();
+    protected $_properties = array();
+    
+    /**
+     * Creates a new provider
+     * 
+     * @param Xyster_Container_Definition $def The component definintion
+     */
+    public function __construct(Xyster_Container_Definition $def)
+    {
+        $this->_name = $def->getName();
+        $this->_type = $def->getType();
+        $this->_initMethod = $def->getInitMethod();
+        $this->_constructorArguments = $def->getConstructorArgs();
+        $this->_properties = $def->getProperties();
+    }
+    
     /**
 	 * Gets the name of the component.
 	 * 
@@ -42,5 +68,16 @@ abstract class Xyster_Container_AbstractProvider
     public function getType()
     {
         return $this->_type;
+    }
+    
+    /**
+     * Converts the object into a string value
+     * 
+     * @magic
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getLabel() . ':' . $this->_name;
     }
 } 

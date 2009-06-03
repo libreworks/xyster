@@ -9,7 +9,7 @@
  *
  * @category  Xyster
  * @package   Xyster_Container
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright (c) Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
@@ -18,7 +18,7 @@
  *
  * @category  Xyster
  * @package   Xyster_Container
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright (c) Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 interface Xyster_Container_IContainer
@@ -32,6 +32,14 @@ interface Xyster_Container_IContainer
     function contains($name);
     
     /**
+     * Whether this container contains a component with the given type.
+     * 
+     * @param mixed $type A Xyster_Type or the name of a class
+     * @return boolean
+     */
+    function containsType($type);
+        
+    /**
 	 * Gets the component by name.
 	 * 
 	 * @param string $name The component name
@@ -42,7 +50,7 @@ interface Xyster_Container_IContainer
     /**
 	 * Gets the components in the contanier for the given type.
 	 * 
-	 * @param mixed $type Optional. A Xyster_Type or string class name
+	 * @param mixed $type A Xyster_Type or string class name
 	 * @return array Keys are component names, values are components themselves
      */
     function getForType($type);
