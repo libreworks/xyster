@@ -56,29 +56,50 @@ abstract class Xyster_Container_Injector_AbstractInjector extends Xyster_Contain
      *
      * @param Xyster_Container_IContainer $container
      * @param ReflectionMethod $member
-     * @param array $parameterTypes an array of {@link Xyster_Type} objects
      * @return array
      */
     protected function _getMemberArguments( Xyster_Container_IContainer $container, ReflectionMethod $member = null )
     {
-        if ( $member === null ) {
+        if ( $member === null || !$member->getNumberOfParameters() ) {
             return array();
         }
         $result = array();
         $types = Xyster_Type::getForParameters($member);
+        $numOfArgs = count($this->_constructorArguments);
+        if ( $numOfArgs != $member->getNumberOfRequiredParameters() ) {
+            require_once 'Xyster/Container/Injector/Exception.php';
+            throw new Xyster_Container_Injector_Exception('The number of required method parameters must equal the number of arguments provided');
+        }
         foreach( $member->getParameters() as $k => $reflectionParameter ) {
             /* @var $reflectionParameter ReflectionParameter */
             $instance = null;
-            // @todo some lookup thing
             $paramType = $types[$k];
-            
-            $names = $container->getNames($paramType);
-            if ( count($names) > 1 && !in_array($reflectionParameter->getName(), $names) ) {
-                require_once 'Xyster/Container/Injector/Exception.php';
-                throw new Xyster_Container_Injector_Exception('');
-            }
-            if ( $instance === null && $reflectionParameter->isDefaultValueAvailable() ) {
-                $instance = $reflectionParameter->getDefaultValue();
+            $argument = $this->_constructorArguments[$k];
+            /* @var $paramType Xyster_Type */
+            if ( $paramType->isInstance($argument) ||
+                ($argument === null && $reflectionParameter->allowsNull()) ) {
+                $instance = $argument;
+            } else {
+                $names = $container->getNames($paramType);
+                if ( count($names) == 1 ) {
+                    $instance = $container->get($names[0]);
+                } else if ( count($names) > 1 && in_array($reflectionParameter->getName(), $names) ) {
+                    $instance = $container->get($reflectionParameter->getName());
+                } else if ( $reflectionParameter->isDefaultValueAvailable() ) {
+                    $instance = $reflectionParameter->getDefaultValue();
+                } else if ( !count($names) ) {
+                    require_once 'Xyster/Container/Injector/Exception.php';
+                    throw new Xyster_Container_Injector_Exception(
+                    	'Cannot inject method argument ' .
+                        $reflectionParameter->getName() .
+                        ': key not found in the container: ' . $argument);
+                } else if ( count($names) > 1 ) {
+                    require_once 'Xyster/Container/Injector/Exception.php';
+                    throw new Xyster_Container_Injector_Exception(
+                    	'Cannot inject method argument ' .
+                        $reflectionParameter->getName() .
+                        ': more than one value is available in the container');
+                }
             }
             $result[] = $instance;
         }
