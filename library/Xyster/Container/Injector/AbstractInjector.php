@@ -79,6 +79,8 @@ abstract class Xyster_Container_Injector_AbstractInjector extends Xyster_Contain
             if ( $paramType->isInstance($argument) ||
                 ($argument === null && $reflectionParameter->allowsNull()) ) {
                 $instance = $argument;
+            } else if ( $container->contains($argument) ) {
+                $instance = $container->get($argument);
             } else {
                 $names = $container->getNames($paramType);
                 if ( count($names) == 1 ) {
@@ -92,12 +94,14 @@ abstract class Xyster_Container_Injector_AbstractInjector extends Xyster_Contain
                     throw new Xyster_Container_Injector_Exception(
                     	'Cannot inject method argument ' .
                         $reflectionParameter->getName() .
-                        ': key not found in the container: ' . $argument);
+                        ' into ' . $member->getDeclaringClass()->getName() .
+                        ' : key not found in the container: ' . $argument);
                 } else if ( count($names) > 1 ) {
                     require_once 'Xyster/Container/Injector/Exception.php';
                     throw new Xyster_Container_Injector_Exception(
                     	'Cannot inject method argument ' .
                         $reflectionParameter->getName() .
+                        ' into ' . $member->getDeclaringClass()->getName() .
                         ': more than one value is available in the container');
                 }
             }
@@ -105,7 +109,41 @@ abstract class Xyster_Container_Injector_AbstractInjector extends Xyster_Contain
         }
         return $result;
     }
-            
+
+    protected function _injectProperties(stdClass $instance, Xyster_Container_IContainer $container)
+    {
+        if ( !count($this->_properties) ) {
+            return;
+        }
+        $class = $this->getType()->getClass();
+        require_once 'Xyster/Type/Property/Factory.php';
+        foreach( $this->_properties as $propertyName => $propertyValue ) {
+            if ( $class->hasMethod('set' . ucfirst($propertyName)) ) {
+                $method = $class->getMethod('set' . ucfirst($propertyName));
+                /* @var $method ReflectionMethod */
+                if ( $method->getNumberOfParameters() > 0 ) {
+                    $types = Xyster_Type::getForParameters($method);
+                    $type = $types[0];
+                    /* @var $type Xyster_Type */
+                    if ( !$type->isInstance($propertyValue) ) {
+                        if ( $container->contains($propertyValue) ) {
+                            $propertyValue = $container->get($propertyValue);
+                        } else {
+                            require_once 'Xyster/Container/Injector/Exception.php';
+                            throw new Xyster_Container_Injector_Exception(
+                            	'Cannot inject property' . $propertyName .
+                                ' into ' . $member->getDeclaringClass()->getName() .
+                                ' : key not found in the container: ' . $propertyValue);
+                        }
+                    }
+                }
+            }
+            $prop = Xyster_Type_Property_Factory::get($instance, $propertyName);
+            // @todo wrap this exception if it occurs?
+            $prop->set($instance, $propertyValue);
+        }
+    }
+    
     /**
      * Instantiate an object with given parameters and respect the accessible flag
      * 

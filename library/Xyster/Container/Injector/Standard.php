@@ -42,7 +42,9 @@ class Xyster_Container_Injector_Standard extends Xyster_Container_Injector_Abstr
         
         try {
             $parameters = $this->_getMemberArguments($container, $constructor);
-            return $this->_newInstance($type, $parameters);
+            $instance = $this->_newInstance($type, $parameters);
+            $this->_injectProperties($instance, $container);
+            return $instance;
         } catch ( ReflectionException $e ) {
             require_once 'Xyster/Container/Injector/Exception.php';
             throw new Xyster_Container_Injector_Exception($e->getMessage());

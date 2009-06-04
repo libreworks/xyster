@@ -39,8 +39,7 @@ class Xyster_Type_Property_Factory
             $magicSetGet = method_exists($target, '__get') &&
                 method_exists($target, '__set');
             $magicCall = method_exists($target, '__call');
-            $methodName = 'set' . ucfirst($property);
-            $methodExists = method_exists($target, $methodName);
+            $methodExists = method_exists($target, 'set' . ucfirst($property));
             $propertyExists = property_exists($target, $property);
             
             if ( $target instanceof ArrayAccess && !$propertyExists && !$methodExists ) {
