@@ -39,15 +39,40 @@ class Xyster_Container_Injector_Standard extends Xyster_Container_Injector_Abstr
         $type = $this->getType();
         $reflectionClass = $type->getClass();
         $constructor = ($reflectionClass) ? $reflectionClass->getConstructor() : null;
-        
-        try {
-            $parameters = $this->_getMemberArguments($container, $constructor);
-            $instance = $this->_newInstance($type, $parameters);
-            $this->_injectProperties($instance, $container);
-            return $instance;
-        } catch ( ReflectionException $e ) {
-            require_once 'Xyster/Container/Injector/Exception.php';
-            throw new Xyster_Container_Injector_Exception($e->getMessage());
+        // get constructor args and instantiate
+        $parameters = $this->_getMemberArguments($container, $constructor);
+        $instance = $this->_newInstance($type, $parameters);
+        // inject literal and referenced properties
+        $this->_injectProperties($instance, $container);
+        // inject container if necessary
+        if ( $instance instanceof Xyster_Container_IContainerAware ) {
+            $instance->setContainer($container);
         }
+        // call init method if necessary
+        if ( $method = $this->_initMethod ) {
+            $instance->$method();
+        }
+        return $instance;
+    }
+    
+    /**
+     * Gets the label for the type of provider.
+     * 
+     * @return string The provider label
+     */
+    public function getLabel()
+    {
+        return 'Injector';
+    }
+    
+    /**
+     * Verify that all dependencies for this component can be satisifed.
+     * 
+     * @param Xyster_Container_IContainer $container The container
+     * @throws Xyster_Container_Exception if one or more required dependencies aren't met
+     */
+    public function validate(Xyster_Container_IContainer $container)
+    {
+        // @todo implement the validate method
     }
 }

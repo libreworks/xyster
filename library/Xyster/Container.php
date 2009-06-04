@@ -22,6 +22,18 @@ require_once 'Xyster/Type.php';
  */
 require_once 'Xyster/Container/IMutable.php';
 /**
+ * @see Xyster_Container_Injector_Standard
+ */
+require_once 'Xyster/Container/Injector/Standard.php';
+/**
+ * @see Xyster_Container_Injector_Autowiring
+ */
+require_once 'Xyster/Container/Injector/Autowiring.php';
+/**
+ * @see Xyster_Container_Autowire
+ */
+require_once 'Xyster/Container/Autowire.php';
+/**
  * Mutable container interface
  *
  * @category  Xyster
@@ -62,7 +74,10 @@ class Xyster_Container implements Xyster_Container_IMutable
      */
     public function autowire($type, $name = null)
     {
-        return $this;
+        return $this->addProvider(
+            new Xyster_Container_Injector_Autowiring(
+                new Xyster_Container_Definition($type, $name),
+                Xyster_Container_Autowire::Constructor()));
     }
     
     /**
@@ -75,7 +90,10 @@ class Xyster_Container implements Xyster_Container_IMutable
      */
     public function autowireByName($type, $name = null, array $except = array())
     {
-        return $this;
+        return $this->addProvider(
+            new Xyster_Container_Injector_Autowiring(
+                new Xyster_Container_Definition($type, $name),
+                Xyster_Container_Autowire::ByName(), $except));
     }   
     
     /**
@@ -88,7 +106,10 @@ class Xyster_Container implements Xyster_Container_IMutable
      */
     public function autowireByType($type, $name = null, array $except = array())
     {
-        return $this;
+        return $this->addProvider(
+            new Xyster_Container_Injector_Autowiring(
+                new Xyster_Container_Definition($type, $name),
+                Xyster_Container_Autowire::ByType(), $except));
     }
     
     /**
@@ -99,7 +120,8 @@ class Xyster_Container implements Xyster_Container_IMutable
      */
     public function add(Xyster_Container_Definition $definition)
     {
-        return $this;
+        return $this->addProvider(
+            new Xyster_Container_Injector_Standard($definition));
     }
     
     /**
@@ -110,6 +132,13 @@ class Xyster_Container implements Xyster_Container_IMutable
      */
     public function addProvider(Xyster_Container_IProvider $provider)
     {
+        if ( in_array($provider, $this->_providers, true) ||
+            array_key_exists($provider->getName(), $this->_providers) ) {
+            require_once 'Xyster/Container/Exception.php';
+            throw new Xyster_Container_Exception('A component with the name "' . $provider->getName() . '" is already registered');
+        }
+        $this->_types[] = $provider->getType()->getName();
+        $this->_providers[$provider->getName()] = $provider;
         return $this;
     }
     
@@ -140,11 +169,17 @@ class Xyster_Container implements Xyster_Container_IMutable
      * Gets the component by name.
      * 
      * @param string $name The component name
+     * @param Xyster_Type $into Optional. The type into which the component is being injected
      * @return object The component
      */
-    public function get($name)
+    public function get($name, Xyster_Type $into = null)
     {
-        
+        if ( !$this->contains($name) ) {
+            return ( $this->_parent !== null ) ?
+                $this->_parent->get($name, $into) : null;
+        } else {
+            return $this->_providers[$name]->get($this);            
+        }
     }
     
     /**
@@ -155,7 +190,15 @@ class Xyster_Container implements Xyster_Container_IMutable
      */
     public function getForType($type)
     {
-        
+        $type = $type instanceof Xyster_Type ? $type : new Xyster_Type($type);
+        $components = array();
+        foreach( $this->_providers as $name => $provider ) {
+            /* @var $provider Xyster_Container_IProvider */
+            if ( $type->isAssignableFrom($provider->getType()) ) {
+                $components[$name] = $provider->get($this); 
+            }
+        }
+        return $components;
     }
     
     /**
@@ -171,7 +214,15 @@ class Xyster_Container implements Xyster_Container_IMutable
         if ( $type === null ) {
             return array_keys($this->_providers);
         } else {
-            // @todo Implement
+            $type = $type instanceof Xyster_Type ? $type : new Xyster_Type($type);
+            $names = array();
+            foreach( $this->_providers as $name => $provider ) {
+                /* @var $provider Xyster_Container_IProvider */
+                if ( $type->isAssignableFrom($provider->getType()) ) {
+                    $names[] = $provider->getName();
+                }
+            }
+            return $names;
         }
     }
     

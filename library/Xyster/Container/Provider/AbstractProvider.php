@@ -16,7 +16,7 @@
 /**
  * @see Xyster_Container_IProvider
  */
-require_once 'Xyster/Container/IProvider';
+require_once 'Xyster/Container/IProvider.php';
 /**
  * Abstract object creation class
  *
@@ -35,6 +35,7 @@ abstract class Xyster_Container_Provider_AbstractProvider implements Xyster_Cont
     protected $_initMethod;
     protected $_constructorArguments = array();
     protected $_properties = array();
+    protected $_dependsOn = array();
     
     /**
      * Creates a new provider
@@ -48,6 +49,7 @@ abstract class Xyster_Container_Provider_AbstractProvider implements Xyster_Cont
         $this->_initMethod = $def->getInitMethod();
         $this->_constructorArguments = $def->getConstructorArgs();
         $this->_properties = $def->getProperties();
+        $this->_dependsOn = $def->getDependsOn();
     }
     
     /**

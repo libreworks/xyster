@@ -40,13 +40,14 @@ interface Xyster_Container_IContainer
     function containsType($type);
         
     /**
-	 * Gets the component by name.
-	 * 
-	 * @param string $name The component name
-	 * @return object The component
+     * Gets the component by name.
+     * 
+     * @param string $name The component name
+     * @param Xyster_Type $into Optional. The type into which the component is being injected
+     * @return object The component
      */
-    function get($name);
-    
+    function get($name, Xyster_Type $into = null);
+        
     /**
 	 * Gets the components in the contanier for the given type.
 	 * 

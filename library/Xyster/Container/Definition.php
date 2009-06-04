@@ -31,6 +31,7 @@ class Xyster_Container_Definition
     protected $_type;
     protected $_initMethod;
     protected $_constructorArguments = array();
+    protected $_depends = array();
     protected $_properties = array();
 
     /**
@@ -54,10 +55,27 @@ class Xyster_Container_Definition
 	 * component in the container.
 	 * 
 	 * @param mixed $value The argument value
+     * @return Xyster_Container_Definition provides a fluent interface
      */
     public function constructorArg($value)
     {
         $this->_constructorArguments[] = $value;
+        return $this;
+    }
+    
+    /**
+     * Adds a property dependency to be injected.
+     * 
+     * As opposed to {@link property()}, this method is used for class
+     * properties that should be resolved from the container.
+     * 
+     * @param string $name The property name
+     * @param string $value The name of the referenced component in the container
+     * @return Xyster_Container_Definition provides a fluent interface
+     */
+    public function dependsOn($name, $value)
+    {
+        $this->_depends[$name] = $value;
         return $this;
     }
     
@@ -69,6 +87,16 @@ class Xyster_Container_Definition
     public function getConstructorArgs()
     {
         return $this->_constructorArguments;
+    }
+    
+    /**
+     * Gets the referenced properties
+     * 
+     * @return array
+     */
+    public function getDependsOn()
+    {
+        return $this->_dependsOn;
     }
     
     /**
@@ -92,7 +120,7 @@ class Xyster_Container_Definition
     }
     
     /**
-     * Gets the properties
+     * Gets the literal properties
 
      * @return array
      */
@@ -131,13 +159,12 @@ class Xyster_Container_Definition
     }
     
     /**
-	 * Adds a property to be injected.
+	 * Adds a literal property to be injected.
 	 * 
-	 * The value argument can either be a literal value or the name of another
-	 * component in the container.
+	 * The value argument must be a literal value (string, boolean, array, etc.)
 	 * 
 	 * @param string $name The property name
-	 * @param mixed $value The property value or reference
+	 * @param mixed $value The property value
 	 * @return Xyster_Container_Definition provides a fluent interface
      */
     public function property($name, $value)
