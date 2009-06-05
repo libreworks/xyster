@@ -96,7 +96,7 @@ class Xyster_Container_Definition
      */
     public function getDependsOn()
     {
-        return $this->_dependsOn;
+        return $this->_depends;
     }
     
     /**

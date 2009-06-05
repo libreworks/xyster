@@ -27,10 +27,10 @@ require_once 'Xyster/Enum.php';
  */
 class Xyster_Container_Autowire extends Xyster_Enum
 {
-    const NONE = 0;
-    const BY_NAME = 1;
-    const BY_TYPE = 2;
-    const CONSTRUCTOR = 3;
+    const None = 0;
+    const ByName = 1;
+    const ByType = 2;
+    const Constructor = 3;
     
 	/**
 	 * No autowiring
