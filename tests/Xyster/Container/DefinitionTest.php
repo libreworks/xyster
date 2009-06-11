@@ -67,6 +67,12 @@ class Xyster_Container_DefinitionTest extends PHPUnit_Framework_TestCase
         self::assertSame($this->object, $this->object->initMethod("getName"));
         self::assertEquals("getName", $this->object->getInitMethod());
     }
+    
+    public function testInitMethodBad()
+    {
+        $this->setExpectedException('Xyster_Container_Exception', 'Method not found: Xyster_Container_Definition::nothing');
+        $this->object->initMethod('nothing');
+    }
 
     public function testProperty()
     {

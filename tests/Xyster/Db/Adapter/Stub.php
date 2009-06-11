@@ -214,7 +214,7 @@ class Xyster_Db_Adapter_Stub extends Zend_Db_Adapter_Abstract
     {
         return true;
     }
-
+    
     /**
      * Check for config options that are mandatory.
      * Throw exceptions if any are missing.

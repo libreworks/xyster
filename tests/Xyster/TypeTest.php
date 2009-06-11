@@ -255,8 +255,8 @@ class Xyster_TypeTest extends PHPUnit_Framework_TestCase
     {
         $test = $this->object->getClass();
         
-        $max = (float)PHP_INT_MAX;
-        $min = (float)(0 - PHP_INT_MAX);
+        $max = (float)Xyster_Type::INT_MAX_32;
+        $min = (float)(0 - Xyster_Type::INT_MAX_32);
         $h = 0;
         $hexArray = str_split(spl_object_hash($test), 2);
         foreach( $hexArray as $v ) {
@@ -286,8 +286,8 @@ class Xyster_TypeTest extends PHPUnit_Framework_TestCase
                 array(99162322, 'hello'),
                 array(-1220935217, 'helloa'),
                 array(-1821194164, 'hello to the world'),
-                array(1333788668, 4294966296),
-                array(1345844999, 12345678910),
+                array(1333788668, (float)4294966296),
+                array(1345844999, (float)12345678910),
                 array(1123434234, 123.123),
                 array(1231, true),
                 array(1237, false),

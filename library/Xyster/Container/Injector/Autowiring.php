@@ -109,10 +109,10 @@ class Xyster_Container_Injector_Autowiring extends Xyster_Container_Injector_Sta
     /**
      * Injects properties into an instance
      * 
-     * @param stdClass $instance
+     * @param object $instance
      * @param Xyster_Container_IContainer $container
      */
-    protected function _injectProperties(stdClass $instance, Xyster_Container_IContainer $container)
+    protected function _injectProperties($instance, Xyster_Container_IContainer $container)
     {
         if ( $this->_autowire !== Xyster_Container_Autowire::None() ) {
             // @todo autowire properties

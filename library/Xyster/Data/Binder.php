@@ -47,10 +47,10 @@ class Xyster_Data_Binder
     /**
      * Creates a new binder
      *
-     * @param stdClass $target
+     * @param object $target
      * @param Xyster_Type $defaultSetter  Optional. Must inherit from Xyster_Type_Property_Interface 
      */
-    public function __construct( stdClass $target, Xyster_Type $defaultSetter = null )
+    public function __construct( $target, Xyster_Type $defaultSetter = null )
     {
         $this->_target = $target;
         if ( $defaultSetter ) {

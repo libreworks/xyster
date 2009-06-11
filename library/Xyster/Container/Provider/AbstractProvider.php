@@ -44,8 +44,8 @@ abstract class Xyster_Container_Provider_AbstractProvider implements Xyster_Cont
      */
     public function __construct(Xyster_Container_Definition $def)
     {
-        $this->_name = $def->getName();
         $this->_type = $def->getType();
+        $this->_name = $def->getName();
         $this->_initMethod = $def->getInitMethod();
         $this->_constructorArguments = $def->getConstructorArgs();
         $this->_properties = $def->getProperties();

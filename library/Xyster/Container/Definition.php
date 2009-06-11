@@ -44,7 +44,7 @@ class Xyster_Container_Definition
     {
         $this->_type = ( $type instanceof Xyster_Type ) ?
             $type : new Xyster_Type($type);
-        $this->_name = $name;
+        $this->_name = !$name ? $this->_type->getName() : $name;
     }
     
     /**

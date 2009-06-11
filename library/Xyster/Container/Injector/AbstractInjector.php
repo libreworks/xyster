@@ -71,7 +71,7 @@ abstract class Xyster_Container_Injector_AbstractInjector extends Xyster_Contain
         $result = array();
         $types = Xyster_Type::getForParameters($member);
         $numOfArgs = count($this->_constructorArguments);
-        if ( $numOfArgs != $member->getNumberOfRequiredParameters() ) {
+        if ( $numOfArgs < $member->getNumberOfRequiredParameters() ) {
             require_once 'Xyster/Container/Injector/Exception.php';
             throw new Xyster_Container_Injector_Exception('The number of required method parameters must equal the number of arguments provided');
         }
@@ -80,20 +80,21 @@ abstract class Xyster_Container_Injector_AbstractInjector extends Xyster_Contain
             $instance = null;
             $paramType = $types[$k];
             /* @var $paramType Xyster_Type */
-            $argument = $this->_constructorArguments[$k];
+            $argument = isset($this->_constructorArguments[$k]) ?
+                $this->_constructorArguments[$k] : null;
             if ( $paramType->isInstance($argument) ) {
                 $instance = $argument;
             } else if ( $container->contains($argument) ) {
                 $instance = $container->get($argument);
-            } else if ( $reflectionParameter->allowsNull() ) {
-                $instance = null;
+            } else if ( $reflectionParameter->isOptional() ) {
+                $instance = $reflectionParameter->getDefaultValue();
             } else {
                 require_once 'Xyster/Container/Injector/Exception.php';
                 throw new Xyster_Container_Injector_Exception(
                     'Cannot inject method argument ' .
                     $reflectionParameter->getName() .
                     ' into ' . $member->getDeclaringClass()->getName() .
-                    ' : key not found in the container: ' . $argument);
+                    ': key not found in the container: ' . $argument);
             }
             $result[] = $instance;
         }
@@ -103,10 +104,10 @@ abstract class Xyster_Container_Injector_AbstractInjector extends Xyster_Contain
     /**
      * Injects properties into an instance
      * 
-     * @param stdClass $instance
+     * @param object $instance
      * @param Xyster_Container_IContainer $container
      */
-    protected function _injectProperties(stdClass $instance, Xyster_Container_IContainer $container)
+    protected function _injectProperties($instance, Xyster_Container_IContainer $container)
     {
         foreach( $this->_properties as $name => $propertyValue ) {
             $prop = Xyster_Type_Property_Factory::get($instance, $name);

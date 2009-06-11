@@ -52,7 +52,7 @@ class Xyster_Orm_Binder_SetterTest extends Xyster_Orm_TestSetup
     public function setUp()
     {
         $mf = $this->_mockFactory();
-        $this->object = new Xyster_Orm_Binder_Setter($mf->getEntityType('MockBug'));
+        $this->object = new Xyster_Orm_Binder_Setter($mf->getEntityType('MockBug'), 'bugDescription');
     }
 
     /**
@@ -64,7 +64,7 @@ class Xyster_Orm_Binder_SetterTest extends Xyster_Orm_TestSetup
         $name = 'bugDescription';
         $value = 'This is the new description';
         $this->assertNotEquals($value, $entity->$name);
-        $this->object->set($entity, $name, $value);
+        $this->object->set($entity, $value);
         $this->assertEquals($value, $entity->$name);
     }
     
@@ -74,9 +74,9 @@ class Xyster_Orm_Binder_SetterTest extends Xyster_Orm_TestSetup
      */
     public function testSetInvalid()
     {
-        $this->setExpectedException('Xyster_Data_Binder_Setter_Exception');
+        $this->setExpectedException('Xyster_Data_Binder_Exception');
         $this->_mockFactory()->get('MockAccount');
-        $this->object->set(new MockAccount(), 'field', 'value');
+        $this->object->set(new MockAccount(), 'value');
     }
 }
 

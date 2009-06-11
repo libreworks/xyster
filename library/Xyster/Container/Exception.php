@@ -14,6 +14,10 @@
  * @version   $Id$
  */
 /**
+ * Zend_Exception
+ */
+require_once 'Zend/Exception.php';
+/**
  * Xyster_Container exception
  *
  * @category  Xyster

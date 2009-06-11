@@ -25,6 +25,7 @@ require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHe
 
 require_once 'Xyster/Container/AutowireTest.php';
 require_once 'Xyster/Container/DefinitionTest.php';
+require_once 'Xyster/Container/Injector/StandardTest.php';
 
 class Xyster_Container_AllTests
 {
@@ -39,6 +40,7 @@ class Xyster_Container_AllTests
 
         $suite->addTestSuite('Xyster_Container_AutowireTest');
         $suite->addTestSuite('Xyster_Container_DefinitionTest');
+        $suite->addTestSuite('Xyster_Container_Injector_StandardTest');
 
         return $suite;
     }

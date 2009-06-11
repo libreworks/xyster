@@ -26,7 +26,7 @@ interface Xyster_Type_Proxy_Handler_Interface
     /**
      * Called when a method is invoked on the proxy
      * 
-     * @param stdClass $object The object being called
+     * @param object $object The object being called
      * @param ReflectionMethod $called The method in the proxy class
      * @param array $args The arguments passed to the method
      * @param ReflectionMethod $parent The method in the parent class (null if interface or abstract method)

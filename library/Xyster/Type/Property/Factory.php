@@ -28,11 +28,11 @@ class Xyster_Type_Property_Factory
     /**
      * Gets the property wrapper appropriate for the object
      *
-     * @param stdClass $target
+     * @param object $target
      * @param string $property
      * @return Xyster_Type_Property_Interface
      */
-    public static function get( stdClass $target, $property )
+    public static function get( $target, $property )
     {
         $className = get_class($target);
         if ( !array_key_exists($className, self::$_props) ) {
