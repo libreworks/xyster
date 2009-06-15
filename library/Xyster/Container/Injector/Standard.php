@@ -37,11 +37,8 @@ class Xyster_Container_Injector_Standard extends Xyster_Container_Injector_Abstr
     public function get(Xyster_Container_IContainer $container, Xyster_Type $into = null)
     {
         $type = $this->getType();
-        $reflectionClass = $type->getClass();
-        $constructor = ($reflectionClass) ? $reflectionClass->getConstructor() : null;
-        // get constructor args and instantiate
-        $parameters = $this->getMemberArguments($container, $constructor);
-        $instance = $this->_newInstance($type, $parameters);
+        // instantiate a copy of the type
+        $instance = $this->_newInstance($type, $container);
         // inject literal and referenced properties
         $this->injectProperties($instance, $container);
         // inject container if necessary

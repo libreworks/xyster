@@ -10,19 +10,14 @@
  * @category  Xyster
  * @package   UnitTests
  * @subpackage Xyster_Controller
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright (c) Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
-// Call Xyster_Controller_Dispatcher_ContainerTest::main() if this source file is executed directly.
-if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'Xyster_Controller_Dispatcher_ContainerTest::main');
-}
-
 require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
-require_once 'PHPUnit/Framework.php';
 require_once 'Xyster/Container.php';
 require_once 'Xyster/Controller/Dispatcher/Container.php';
+require_once dirname(dirname(__FILE__)) . '/_files/BarController.php';
 
 /**
  * Test class for Xyster_Controller_Dispatcher_Container.
@@ -44,16 +39,6 @@ class Xyster_Controller_Dispatcher_ContainerTest extends PHPUnit_Framework_TestC
      * @var array
      */
     protected $params = array('foo' => 'bar', 'abc' => 123);
-
-    /**
-     * Runs the test methods of this class.
-     */
-    public static function main()
-    {
-        require_once 'PHPUnit/TextUI/TestRunner.php';
-        $suite  = new PHPUnit_Framework_TestSuite('Xyster_Controller_Dispatcher_ContainerTest');
-        $result = PHPUnit_TextUI_TestRunner::run($suite);
-    }
 
     /**
      * Sets up the fixture
@@ -78,7 +63,7 @@ class Xyster_Controller_Dispatcher_ContainerTest extends PHPUnit_Framework_TestC
         $request = new Zend_Controller_Request_Simple('baz', 'bar', null, $this->params);
         require_once 'Zend/Controller/Response/Cli.php';
         $response = new Zend_Controller_Response_Cli;
-        $this->container->addComponent('SplObjectStorage');
+        $this->container->autowire('SplObjectStorage');
         $this->object->dispatch($request, $response);
         $this->object->dispatch($request, $response);
         $this->assertEquals(1, BarController::$called['baz']);
@@ -93,9 +78,4 @@ class Xyster_Controller_Dispatcher_ContainerTest extends PHPUnit_Framework_TestC
     {
         $this->assertSame($this->container, $this->object->getContainer());
     }
-}
-
-// Call Xyster_Controller_Dispatcher_ContainerTest::main() if this source file is executed directly.
-if (PHPUnit_MAIN_METHOD == 'Xyster_Controller_Dispatcher_ContainerTest::main') {
-    Xyster_Controller_Dispatcher_ContainerTest::main();
 }

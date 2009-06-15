@@ -145,16 +145,18 @@ abstract class Xyster_Container_Injector_AbstractInjector extends Xyster_Contain
     }
     
     /**
-     * Instantiate an object with given parameters and respect the accessible flag
+     * Instantiate an object with given parameters
      * 
      * @param Xyster_Type $type the class to construct
-     * @param array $parameters the parameters for the constructor 
+     * @param Xyster_Container_IContainer the container
      * @return object the new object
      */
-    protected function _newInstance(Xyster_Type $type, array $parameters = array())
+    protected function _newInstance(Xyster_Type $type, Xyster_Container_IContainer $container)
     {
         $class = $type->getClass();
-        return ( $class->getConstructor() ) ?
+        $constructor = $class ? $class->getConstructor() : null;
+        $parameters = $this->getMemberArguments($container, $constructor);
+        return $constructor ?
             $class->newInstanceArgs($parameters) : $class->newInstance();
     }
 }

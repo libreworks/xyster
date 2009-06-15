@@ -9,41 +9,59 @@
  *
  * @category  Xyster
  * @package   Xyster_Controller
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright (c) Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
 /**
- * @see Xyster_Container_Injection_Setter
+ * @see Xyster_Container_Injector_Autowiring
  */
-require_once 'Xyster/Container/Injection/Setter.php';
+require_once 'Xyster/Container/Injector/Autowiring.php';
 /**
  * An injector that can be used for setter injection with a front controller
  *
  * @category  Xyster
  * @package   Xyster_Controller
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright (c) Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Controller_Action_Injector extends Xyster_Container_Injection_Setter
+class Xyster_Controller_Action_Injector extends Xyster_Container_Injector_Autowiring
 {
+    protected $_request;
+    protected $_response;
+    protected $_params;
+    
+    protected static $_ignoreFields = array('frontController', 'request', 'response');
+    
     /**
-     * The methods to ignore
-     *
-     * @var array
+     * Creates a new action controller injector
+     * 
+	 * @param Xyster_Container_Definition the definition
+	 * @param Zend_Controller_Request_Abstract the request object
+	 * @param Zend_Controller_Response_Abstract the response object
+	 * @param array The invocation parameters
      */
-    protected static $_ignore = array('setFrontController', 'setRequest', 'setResponse');
-     
-    /**
-     * {@inherit}
-     *
-     * @param ReflectionMethod $method
-     * @return boolean
-     */
-    protected function _isInjectorMethod( ReflectionMethod $method )
+    public function __construct(Xyster_Container_Definition $def, Zend_Controller_Request_Abstract $request, Zend_Controller_Response_Abstract $response, array $params = array())
     {
-        $methodName = $method->getName();
-        return !in_array($methodName, self::$_ignore) &&
-            parent::_isInjectorMethod($method);
+        parent::__construct($def, Xyster_Container_Autowire::ByType(), self::$_ignoreFields);
+        $this->_request = $request;
+        $this->_response = $response;
+        $this->_params = $params;
     }
+    
+	/**
+     * Instantiate an object with given parameters
+     * 
+     * @param Xyster_Type $type the class to construct
+     * @return object the new object
+     */
+    protected function _newInstance(Xyster_Type $type, Xyster_Container_IContainer $container)
+    {
+        $class = $type->getClass();
+        $constructor = $class ? $class->getConstructor() : null;
+        return $constructor ?
+            $class->newInstanceArgs(
+                array($this->_request, $this->_response, $this->_params)) :
+            $class->newInstance();
+    }    
 }

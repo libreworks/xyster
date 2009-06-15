@@ -22,6 +22,10 @@ require_once 'Zend/Controller/Dispatcher/Standard.php';
  */
 require_once 'Xyster/Controller/Action/Injector.php';
 /**
+ * @see Xyster_Container
+ */
+require_once 'Xyster/Container.php';
+/**
  * @see Xyster_Type
  */
 require_once 'Xyster/Type.php';
@@ -39,8 +43,6 @@ class Xyster_Controller_Dispatcher_Container extends Zend_Controller_Dispatcher_
      * @var Xyster_Container_IContainer
      */
     protected $_container;
-    
-    protected static $_ignore = array('frontController', 'request', 'response');
     
     /**
      * Constructor: Set current module to default value
@@ -97,7 +99,10 @@ class Xyster_Controller_Dispatcher_Container extends Zend_Controller_Dispatcher_
          * Instantiate controller with request, response, and invocation
          * arguments; throw exception if it's not an action controller
          */
-        $controller = new $className($request, $this->getResponse(), $this->getParams());
+        $injector = new Xyster_Controller_Action_Injector(
+            Xyster_Container::definition($className), $request,
+            $this->getResponse(), $this->getParams());
+        $controller = $injector->get($this->_container);
         if (!($controller instanceof Zend_Controller_Action_Interface) && 
             !($controller instanceof Zend_Controller_Action)) {
             require_once 'Zend/Controller/Dispatcher/Exception.php';
@@ -105,13 +110,6 @@ class Xyster_Controller_Dispatcher_Container extends Zend_Controller_Dispatcher_
                 'Controller "' . $className . '" is not an instance of Zend_Controller_Action_Interface'
             );
         }
-        /**
-         * Inject dependencies
-         */
-        $injector = new Xyster_Container_Injector_Autowiring(
-            Xyster_Container::definition($className),
-            Xyster_Container_Autowire::ByType(), self::$_ignore);
-        $injector->injectProperties($controller, $this->_container);
         
         /**
          * Retrieve the action name
