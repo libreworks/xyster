@@ -63,22 +63,40 @@ class Xyster_Container_Injector_Autowiring extends Xyster_Container_Injector_Sta
     }
     
     /**
-     * Gets the member arguments
+     * Gets the member arguments.
+     * 
+     * This method handles Constructor autowiring.  It will look in the
+     * container for a component matching the type, if more than one is found,
+     * it will try to use the parameter name to select the correct one.   If no
+     * component is found and the method parameter has a default value available
+     * it will be used.  If all else fails, an exception is thrown.
      *
      * @param Xyster_Container_IContainer $container
      * @param ReflectionMethod $member
      * @return array
+     * @throws Xyster_Container_Injector_Exception if a parameter could not be autowired
      */
     protected function _getMemberArguments( Xyster_Container_IContainer $container, ReflectionMethod $member = null )
     {
-        if ( $member === null || !$member->getNumberOfParameters() ) {
+        if ( $member === null || !$member->getNumberOfParameters()
+            || $this->_autowire !== Xyster_Container_Autowire::Constructor() ) {
             return array();
         }
         $result = array();
         $types = Xyster_Type::getForParameters($member);
-        if ( $this->_autowire !== Xyster_Container_Autowire::None() ) {
-            /*
-            @todo autowiring injection
+        foreach( $member->getParameters() as $k => $reflectionParameter ) {
+            /* @var $reflectionParameter ReflectionParameter */
+            $instance = null;
+            $paramType = $types[$k];
+            /* @var $paramType Xyster_Type */
+            if ( !$paramType->isObject() && !$reflectionParameter->isOptional() ) {
+                require_once 'Xyster/Container/Injector/Exception.php';
+                throw new Xyster_Container_Injector_Exception(
+                    'Cannot inject method argument ' .
+                    $reflectionParameter->getName() .
+                    ' into ' . $member->getDeclaringClass()->getName() .
+                    ': non-object parameters cannot be autowired');
+            }
             $names = $container->getNames($paramType);
             if ( count($names) == 1 ) {
                 $instance = $container->get($names[0]);
@@ -92,7 +110,7 @@ class Xyster_Container_Injector_Autowiring extends Xyster_Container_Injector_Sta
                     'Cannot inject method argument ' .
                     $reflectionParameter->getName() .
                     ' into ' . $member->getDeclaringClass()->getName() .
-                    ' : key not found in the container: ' . $argument);
+                    ': no matching types were found in the container');
             } else if ( count($names) > 1 ) {
                 require_once 'Xyster/Container/Injector/Exception.php';
                 throw new Xyster_Container_Injector_Exception(
@@ -101,7 +119,7 @@ class Xyster_Container_Injector_Autowiring extends Xyster_Container_Injector_Sta
                     ' into ' . $member->getDeclaringClass()->getName() .
                     ': more than one value is available in the container');
             }
-             */
+            $result[] = $instance;
         }
         return $result;
     }
@@ -114,8 +132,55 @@ class Xyster_Container_Injector_Autowiring extends Xyster_Container_Injector_Sta
      */
     protected function _injectProperties($instance, Xyster_Container_IContainer $container)
     {
-        if ( $this->_autowire !== Xyster_Container_Autowire::None() ) {
-            // @todo autowire properties
+        if ( $this->_autowire === Xyster_Container_Autowire::ByType() ) {
+            foreach( $this->_type->getClass()->getMethods() as $k => $method ) {
+                /* @var $method ReflectionMethod */
+                if ( $method->getNumberOfParameters() == 1 &&
+                    substr($method->getName(), 0, 3) == 'set' ) {
+                    $types = Xyster_Type::getForParameters($method);
+                    $propertyType = $types[0];
+                    /* @var $propertyType Xyster_Type */
+                    $name = strtolower(substr($method->getName(),3,1)) . substr($method->getName(),4);
+                    if ( in_array($name, $this->_ignore) || !$propertyType->isObject() ) {
+                        continue;
+                    }
+                    if ( $container->containsType($propertyType) ) {
+                        $propertyValues = $container->getForType($propertyType);
+                        if ( count($propertyValues) == 1 ) {
+                            // @todo wrap this exception if it occurs?
+                            Xyster_Type_Property_Factory::get($instance, $name)
+                                ->set($instance, array_pop($propertyValues));
+                        } else {
+                            require_once 'Xyster/Container/Injector/Exception.php';
+                            throw new Xyster_Container_Injector_Exception(
+                                'Cannot inject property ' . $name .
+                                ' into ' . $method->getDeclaringClass()->getName() .
+                                ': more than one value is available in the container');
+                        }
+                    } else {
+                        require_once 'Xyster/Container/Injector/Exception.php';
+                        throw new Xyster_Container_Injector_Exception(
+                            'Cannot inject property ' . $name . ' into ' .
+                            $method->getDeclaringClass()->getName() .
+                            ': type not found in the container: ' . $propertyType);
+                    }
+                }
+            }
+        } else if ( $this->_autowire === Xyster_Container_Autowire::ByName() ) {
+            foreach( $this->_type->getClass()->getMethods() as $k => $method ) {
+                /* @var $method ReflectionMethod */
+                if ( $method->getNumberOfParameters() == 1 &&
+                    substr($method->getName(), 0, 3) == 'set' ) {
+                    $name = strtolower(substr($method->getName(),3,1)) . substr($method->getName(),4);
+                    $types = Xyster_Type::getForParameters($method);
+                    $propertyType = $types[0];
+                    /* @var $propertyType Xyster_Type */                    
+                    if ( in_array($name, $this->_ignore) || !$propertyType->isObject() ) {
+                        continue;
+                    }
+                    $this->_injectByNameFromContainer($container, $instance, $name, $name);
+                }
+            }
         }
     }
 }

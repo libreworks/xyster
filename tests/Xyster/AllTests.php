@@ -23,6 +23,8 @@ require_once dirname(dirname(__FILE__)).'/TestHelper.php';
 require_once 'Xyster/AclTest.php';
 require_once 'Xyster/Acl/AllTests.php';
 require_once 'Xyster/Collection/AllTests.php';
+require_once 'Xyster/ContainerTest.php';
+require_once 'Xyster/Container/AllTests.php';
 require_once 'Xyster/Controller/AllTests.php';
 require_once 'Xyster/Data/AllTests.php';
 require_once 'Xyster/Date/RangeTest.php';
@@ -49,6 +51,8 @@ class Xyster_AllTests
         $suite->addTestSuite('Xyster_AclTest');
         $suite->addTest( Xyster_Acl_AllTests::suite() );
         $suite->addTest( Xyster_Collection_AllTests::suite() );
+        $suite->addTestSuite('Xyster_ContainerTest');
+        $suite->addTest( Xyster_Container_AllTests::suite() );
         $suite->addTest( Xyster_Controller_AllTests::suite() );
         $suite->addTestSuite('Xyster_EnumTest');
         $suite->addTestSuite('Xyster_Date_RangeTest');

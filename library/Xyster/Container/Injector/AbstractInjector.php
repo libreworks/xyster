@@ -114,20 +114,33 @@ abstract class Xyster_Container_Injector_AbstractInjector extends Xyster_Contain
             // @todo wrap this exception if it occurs?
             $prop->set($instance, $propertyValue);
         }
-        $class = $this->getType()->getClass();
         foreach( $this->_dependsOn as $name => $component ) {
-            if ( $container->contains($component) ) {
-                $propertyValue = $container->get($component);
-                $prop = Xyster_Type_Property_Factory::get($instance, $propertyName);
-                // @todo wrap this exception if it occurs?
-                $prop->set($instance, $propertyValue);                    
-            } else {
-                require_once 'Xyster/Container/Injector/Exception.php';
-                throw new Xyster_Container_Injector_Exception(
-                    'Cannot inject property' . $name . ' into ' .
-                    $class->getName() .
-                    ' : key not found in the container: ' . $component);
-            }
+            $this->_injectByNameFromContainer($container, $instance, $name, $component);
+        }
+    }
+    
+    /**
+     * Injects a component from the container into the instance by name.
+     *  
+     * @param $container The container
+     * @param $instance The object instance
+     * @param $name The property name on the object
+     * @param $component The name of the component in the container
+     */
+    protected function _injectByNameFromContainer(Xyster_Container_IContainer $container, $instance, $name, $component)
+    {
+        if ( $container->contains($component) ) {
+            $propertyValue = $container->get($component);
+            $prop = Xyster_Type_Property_Factory::get($instance, $name);
+            //var_dump($prop);
+            // @todo wrap this exception if it occurs?
+            $prop->set($instance, $propertyValue);
+        } else {
+            require_once 'Xyster/Container/Injector/Exception.php';
+            throw new Xyster_Container_Injector_Exception(
+                'Cannot inject property ' . $name . ' into ' .
+                get_class($instance) .
+                ': key not found in the container: ' . $component);
         }
     }
     

@@ -84,6 +84,6 @@ abstract class Xyster_Container_Provider_Delegate implements Xyster_Container_IP
      */
     public function __toString()
     {
-        return $this->getLabel() . ':' . $this->_name;
+        return $this->getLabel() . ':' . $this->_delegate->__toString();
     }
 } 

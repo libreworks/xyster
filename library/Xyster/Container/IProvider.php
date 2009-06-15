@@ -67,4 +67,12 @@ interface Xyster_Container_IProvider
      * @throws Xyster_Container_Exception if one or more required dependencies aren't met
      */
     function validate(Xyster_Container_IContainer $container);
+    
+    /**
+     * Converts the object into a string value
+     * 
+     * @magic
+     * @return string
+     */
+    function __toString();
 }

@@ -73,6 +73,30 @@ class Xyster_Container_Injector_Standard extends Xyster_Container_Injector_Abstr
      */
     public function validate(Xyster_Container_IContainer $container)
     {
-        // @todo implement the validate method
+        $reflectionClass = $this->getType()->getClass();
+        $member = ($reflectionClass) ? $reflectionClass->getConstructor() : null;
+        if ( $member != null ) {
+            $types = Xyster_Type::getForParameters($member);
+            foreach( $member->getParameters() as $k => $reflectionParameter ) {
+                /* @var $reflectionParameter ReflectionParameter */
+                $paramType = $types[$k];
+                /* @var $paramType Xyster_Type */
+                $argument = isset($this->_constructorArguments[$k]) ?
+                    $this->_constructorArguments[$k] : null;
+                if ( !$paramType->isInstance($argument) &&
+                    !$container->contains($argument) &&
+                    !$reflectionParameter->isOptional() ) {
+                    require_once 'Xyster/Container/Injector/Exception.php';
+                    throw new Xyster_Container_Injector_Exception(
+                        'Component not found in the container: ' . $argument);
+                }
+            }
+        }
+        foreach( $this->_dependsOn as $k => $v ) {
+            if ( !$container->contains($v) ) {
+                require_once 'Xyster/Container/Injector/Exception.php';
+                throw new Xyster_Container_Injector_Exception('Component not found in the container: ' . $v);
+            }
+        }
     }
 }

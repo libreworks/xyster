@@ -50,6 +50,7 @@ class Xyster_Container_Injector_StandardTest extends PHPUnit_Framework_TestCase
     {
         $def = new Xyster_Container_Definition('SubmarineCaptain');
         $def->constructorArg('ScubaGear');
+        $def->initMethod('navigate');
         $container = new Xyster_Container();
         $container->add($def)
             ->add(new Xyster_Container_Definition('SubFuel'))
@@ -61,6 +62,25 @@ class Xyster_Container_Injector_StandardTest extends PHPUnit_Framework_TestCase
         self::assertAttributeEquals('USS Enterprise', '_name', $object);
         self::assertAttributeEquals('Somewhere', '_location', $object);
         self::assertAttributeEquals($container, '_container', $object->getCaptain());
+        self::assertAttributeEquals(true, '_navigated', $object->getCaptain());
+        $object2 = $this->object->get($container);
+        self::assertNotSame($object2, $object);
+        self::assertEquals($object2, $object);
+    }
+    
+    public function testGetBad()
+    {
+        $this->setExpectedException('Xyster_Container_Injector_Exception', 'Cannot inject method argument capn into Submarine: key not found in the container: SubmarineCaptain');
+        $this->object->get(new Xyster_Container());
+    }
+    
+    public function testGetBad2()
+    {
+        $this->setExpectedException('Xyster_Container_Injector_Exception', 'The number of required method parameters must equal the number of arguments provided');
+        $def = new Xyster_Container_Definition('Submarine');
+        $def->constructorArg('SubmarineCaptain');
+        $object = new Xyster_Container_Injector_Standard($def);
+        $object->get(new Xyster_Container());
     }
     
     public function testGetName()
@@ -77,17 +97,6 @@ class Xyster_Container_Injector_StandardTest extends PHPUnit_Framework_TestCase
     {
         self::assertEquals('Injector', $this->object->getLabel());
     }
-    
-    /**
-     * @todo Implement testValidate().
-     */
-    public function testValidate()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
-    }
 
     public function testConstructAbstract()
     {
@@ -99,5 +108,22 @@ class Xyster_Container_Injector_StandardTest extends PHPUnit_Framework_TestCase
     public function testToString()
     {
         self::assertEquals('Injector:Submarine', $this->object->__toString());
+    }
+    
+    public function testValidateError1()
+    {
+        $this->setExpectedException('Xyster_Container_Injector_Exception');
+        $this->object->validate(new Xyster_Container());
+    }
+    
+    public function testValidate()
+    {
+        $def = new Xyster_Container_Definition('SubmarineCaptain');
+        $def->constructorArg('ScubaGear');
+        $container = new Xyster_Container();
+        $container->add($def)
+            ->add(new Xyster_Container_Definition('SubFuel'))
+            ->add(new Xyster_Container_Definition('ScubaGear'));
+        $this->object->validate($container);
     }
 }

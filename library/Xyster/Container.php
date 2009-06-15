@@ -34,6 +34,10 @@ require_once 'Xyster/Container/Injector/Autowiring.php';
  */
 require_once 'Xyster/Container/Autowire.php';
 /**
+ * @see Xyster_Container_Definition
+ */
+require_once 'Xyster/Container/Definition.php';
+/**
  * Mutable container interface
  *
  * @category  Xyster
@@ -162,7 +166,27 @@ class Xyster_Container implements Xyster_Container_IMutable
     public function containsType($type)
     {
         $realType = $type instanceof Xyster_Type ? $type : new Xyster_Type($type);
-        return in_array($realType->getName(), $this->_types); 
+        /* @var $realType Xyster_Type */
+        foreach( $this->_types as $ctype ) {
+            if ( $realType->isAssignableFrom($ctype) ) {
+                return true;
+            }
+        } 
+    }
+    
+    /**
+	 * Creates a new definition.
+	 * 
+	 * This method is just for convenience.  Prevents having to create a new
+	 * definition and then populating it, then passing it to the add method.
+	 * 
+	 * @param mixed $type A Xyster_Type or the name of a class
+	 * @param string $name Optional. The component name.
+	 * @return Xyster_Container_Definition the definition created
+     */
+    static public function definition($type, $name = null)
+    {
+        return new Xyster_Container_Definition($type, $name);
     }
     
     /**

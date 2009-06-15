@@ -56,6 +56,7 @@ class SubmarineCaptain implements Sailor, Xyster_Container_IContainerAware
     protected $_suit;
     protected $_name;
     protected $_container;
+    protected $_navigated = false;
     
     public function __construct( ScubaGear $suit, $name = 'Capn' )
     {
@@ -64,6 +65,7 @@ class SubmarineCaptain implements Sailor, Xyster_Container_IContainerAware
     
     public function navigate()
     {
+        $this->_navigated = true;
     }
     
     public function setContainer(Xyster_Container_IContainer $container)

@@ -25,7 +25,12 @@ require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHe
 
 require_once 'Xyster/Container/AutowireTest.php';
 require_once 'Xyster/Container/DefinitionTest.php';
+require_once 'Xyster/Container/Injector/AutowiringCdiTest.php';
+require_once 'Xyster/Container/Injector/AutowiringSdiTest.php';
 require_once 'Xyster/Container/Injector/StandardTest.php';
+require_once 'Xyster/Container/Injector/StandardSdiTest.php';
+require_once 'Xyster/Container/Provider/CachingTest.php';
+require_once 'Xyster/Container/Provider/DelegateTest.php';
 
 class Xyster_Container_AllTests
 {
@@ -40,8 +45,13 @@ class Xyster_Container_AllTests
 
         $suite->addTestSuite('Xyster_Container_AutowireTest');
         $suite->addTestSuite('Xyster_Container_DefinitionTest');
+        $suite->addTestSuite('Xyster_Container_Injector_AutowiringCdiTest');
+        $suite->addTestSuite('Xyster_Container_Injector_AutowiringSdiTest');
         $suite->addTestSuite('Xyster_Container_Injector_StandardTest');
-
+        $suite->addTestSuite('Xyster_Container_Injector_StandardSdiTest');
+        $suite->addTestSuite('Xyster_Container_Provider_CachingTest');
+        $suite->addTestSuite('Xyster_Container_Provider_DelegateTest');
+    
         return $suite;
     }
 }
