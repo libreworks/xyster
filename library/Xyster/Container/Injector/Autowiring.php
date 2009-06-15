@@ -76,7 +76,7 @@ class Xyster_Container_Injector_Autowiring extends Xyster_Container_Injector_Sta
      * @return array
      * @throws Xyster_Container_Injector_Exception if a parameter could not be autowired
      */
-    protected function _getMemberArguments( Xyster_Container_IContainer $container, ReflectionMethod $member = null )
+    public function getMemberArguments( Xyster_Container_IContainer $container, ReflectionMethod $member = null )
     {
         if ( $member === null || !$member->getNumberOfParameters()
             || $this->_autowire !== Xyster_Container_Autowire::Constructor() ) {
@@ -130,7 +130,7 @@ class Xyster_Container_Injector_Autowiring extends Xyster_Container_Injector_Sta
      * @param object $instance
      * @param Xyster_Container_IContainer $container
      */
-    protected function _injectProperties($instance, Xyster_Container_IContainer $container)
+    public function injectProperties($instance, Xyster_Container_IContainer $container)
     {
         if ( $this->_autowire === Xyster_Container_Autowire::ByType() ) {
             foreach( $this->_type->getClass()->getMethods() as $k => $method ) {

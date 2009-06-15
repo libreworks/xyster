@@ -63,7 +63,7 @@ abstract class Xyster_Container_Injector_AbstractInjector extends Xyster_Contain
      * @param ReflectionMethod $member
      * @return array
      */
-    protected function _getMemberArguments( Xyster_Container_IContainer $container, ReflectionMethod $member = null )
+    public function getMemberArguments( Xyster_Container_IContainer $container, ReflectionMethod $member = null )
     {
         if ( $member === null || !$member->getNumberOfParameters() ) {
             return array();
@@ -107,7 +107,7 @@ abstract class Xyster_Container_Injector_AbstractInjector extends Xyster_Contain
      * @param object $instance
      * @param Xyster_Container_IContainer $container
      */
-    protected function _injectProperties($instance, Xyster_Container_IContainer $container)
+    public function injectProperties($instance, Xyster_Container_IContainer $container)
     {
         foreach( $this->_properties as $name => $propertyValue ) {
             $prop = Xyster_Type_Property_Factory::get($instance, $name);
