@@ -30,7 +30,11 @@ require_once 'Xyster/Container.php';
  */
 require_once 'Xyster/Type.php';
 /**
- * A dispatcher that creates action controllers out of a Xyster_Container
+ * A dispatcher that creates action controllers out of a Xyster_Container.
+ * 
+ * Controllers are injected using autowiring by type.  Any setter method that
+ * accepts a non-scalar or non-array value will be autowired (except for the
+ * 'setResponse', 'setRequest', and 'setFrontController' methods).
  *
  * @category  Xyster
  * @package   Xyster_Controller

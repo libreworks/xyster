@@ -38,7 +38,7 @@ require_once 'Xyster/Container/Autowire.php';
  */
 require_once 'Xyster/Container/Definition.php';
 /**
- * Mutable container interface
+ * The standard implementation of the dependency injection container.
  *
  * @category  Xyster
  * @package   Xyster_Container
