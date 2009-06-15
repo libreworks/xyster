@@ -9,7 +9,7 @@
  *
  * @category  Xyster
  * @package   Xyster_View
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright (c) Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
@@ -18,18 +18,18 @@
  */
 require_once 'Zend/Service/Gravatar.php';
 /**
- * @see Xyster_View_Helper_XhtmlElement
+ * Zend_View_Helper_HtmlElement
  */
-require_once 'Xyster/View/Helper/XhtmlElement.php';
+require_once 'Zend/View/Helper/HtmlElement.php';
 /**
  * View helper for generating Gravatar images 
  *
  * @category  Xyster
  * @package   Xyster_View
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright (c) Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_View_Helper_Gravatar extends Xyster_View_Helper_XhtmlElement 
+class Xyster_View_Helper_Gravatar extends Zend_View_Helper_HtmlElement 
 {
     /**
      * Creates a gravatar XHTML image tag
@@ -44,10 +44,11 @@ class Xyster_View_Helper_Gravatar extends Xyster_View_Helper_XhtmlElement
         $gravatar = new Zend_Service_Gravatar($email, $options);
         $uri = $gravatar->getUri();
 
-        // Gravatar defaults to an image size of 80 x 80 pixels
+        // Gravatar defaults to an image size of 80 by 80 pixels
         $size = isset($options['size']) ? $options['size'] : 80;
-
-        return '<img src="' . $uri . '" width="' . $size . '" height="'
-            . $size . '"' . $this->_htmlAttribs($attribs) . ' />';
+        $hattribs = $attribs ? $this->_htmlAttribs($attribs) : '';
+        
+        return '<img src="' . $uri . '" width="' . $size . '" height="' .
+            $size . '"' . $hattribs . ' />';
     }
 }

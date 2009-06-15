@@ -20,10 +20,6 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 
 require_once dirname(dirname(__FILE__)).'/TestHelper.php';
                
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
-require_once 'Xyster/ApplicationTest.php';
-require_once 'Xyster/Application/AllTests.php';
 require_once 'Xyster/Controller/AllTests.php';
 require_once 'Xyster/Db/AllTests.php';
 require_once 'Xyster/Form/AllTests.php';
@@ -38,8 +34,6 @@ class Xyster_AllTests
     public static function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('Xyster Framework - Xyster');
-        $suite->addTestSuite('Xyster_ApplicationTest');
-        $suite->addTest( Xyster_Application_AllTests::suite() );
         $suite->addTest( Xyster_Controller_AllTests::suite() );
         $suite->addTest( Xyster_Db_AllTests::suite() );
         $suite->addTest( Xyster_Form_AllTests::suite() );
