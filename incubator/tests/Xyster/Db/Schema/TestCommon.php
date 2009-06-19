@@ -451,6 +451,7 @@ abstract class Xyster_Db_Schema_TestCommon extends PHPUnit_Framework_TestCase
         $this->_setupTestTable();
         
         $pk = $this->object->getPrimaryKey('forum');
+        self::assertNotNull($pk);
         $col = $pk->getColumn(0);
         
         if ( $pk->getName() ) { // MySQL doesn't keep names for primary keys

@@ -25,7 +25,7 @@ require_once 'Xyster/Db/Schema/Abstract.php';
  * @copyright Copyright (c) Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Db_Schema_Pdo_Pgsql extends Xyster_Db_Schema_Abstract
+class Xyster_Db_Schema_Pdo_Mssql extends Xyster_Db_Schema_Abstract
 {
     /**
      * Creates a new SQL Server schema adapter
@@ -47,6 +47,21 @@ class Xyster_Db_Schema_Pdo_Pgsql extends Xyster_Db_Schema_Abstract
         $this->_setAdapter($db);
     }
     
+	/**
+     * Adds a column to a table
+     *
+     * @param Xyster_Db_Column $column The column to add
+     * @param Xyster_Db_Table $table The table 
+     * @throws Zend_Db_Exception if a database error occurs
+     */
+    public function addColumn( Xyster_Db_Column $column, Xyster_Db_Table $table )
+    {
+        $sql = "ALTER TABLE " . $this->_tableName($table) . " ADD " .
+            $this->getAdapter()->quoteIdentifier($column->getName()) .
+            $this->toSqlType($column);
+        $this->getAdapter()->query($sql);
+    }
+    
     /**
      * Creates a new index
      *
@@ -56,7 +71,8 @@ class Xyster_Db_Schema_Pdo_Pgsql extends Xyster_Db_Schema_Abstract
     public function createIndex( Xyster_Db_Index $index )
     {
         // They added the DDL for a fulltext index starting in SQL Server 9 (aka 2005)
-        $fulltext = intval(substr($this->_getVersion(),0,1)) > 8;
+        $version = $this->_getVersion();
+        $fulltext = intval(substr($version,0,strpos($version,'.'))) > 8;
         if ( $index->isFulltext() ) {
             throw new Zend_Db_Exception('Fulltext index not yet implemented');
             // $sql = 'CREATE FULLTEXT INDEX ON ';
@@ -84,7 +100,8 @@ class Xyster_Db_Schema_Pdo_Pgsql extends Xyster_Db_Schema_Abstract
     public function dropIndex( Xyster_Db_Index $index )
     {
         // DROP INDEX changed in in SQL Server 9 (aka 2005)
-        $oldSyntax = intval(substr($this->_getVersion(),0,1)) < 9;
+        $version = $this->_getVersion();
+        $oldSyntax = intval(substr($version,0,strpos($version,'.'))) < 9;
         $sql = "DROP INDEX ";
         if ( $oldSyntax ) {
             // also, no schemas prior to 2000
@@ -121,26 +138,29 @@ class Xyster_Db_Schema_Pdo_Pgsql extends Xyster_Db_Schema_Abstract
     public function getForeignKeys( $table = null, $schema = null )
     {
         $config = $this->getAdapter()->getConfig();
-        
-        $sql = "SELECT c.constraint_name as keyname, " .
-                "c.table_name as tablename, k.column_name as colname, " . 
-                "k.referenced_table_name as reftablename, " .
-                "k.referenced_column_name as refcolname ".
-            	", c.update_rule as onupdate, c.delete_rule as ondelete ";
-        $sql .= ' FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS c ' .
-            ' INNER JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE k ON ' . 
-            'c.constraint_schema = k.constraint_schema ' .
-            'AND c.constraint_name = k.constraint_name ' .
-            'AND c.table_name = k.table_name ';
-        $sql .= " and c.constraint_type = 'FOREIGN KEY'";
+
+        $sql = 'SELECT c.constraint_schema, c.constraint_name as keyname,' .
+                " update_rule as onupdate, delete_rule as ondelete, " .
+                " k.table_schema as schemaname, k.table_name as tablename, k.column_name as colname," .
+        		" rk.table_name AS reftablename, rk.column_name AS refcolname";
+        $sql .= " FROM information_schema.referential_constraints c INNER JOIN" .
+                " information_schema.key_column_usage k ON" .
+                " c.constraint_name = k.constraint_name AND" .
+                " c.constraint_schema = k.constraint_schema INNER JOIN" .
+                " information_schema.key_column_usage rk ON" .
+                " c.unique_constraint_name = rk.constraint_name AND" .
+                " c.constraint_schema = rk.constraint_schema";
+        if ( $schema !== null ) {
+            $sql .= " and c.constraint_schema = '" . $schema . "'";
+        }
         if ( $table !== null ) {
-            $sql .= " AND c.table_name = '" . $table . "'";
+            $sql .= " and c.table_name = '" . $table . "'";
         }
         $statement = $this->getAdapter()->fetchAll($sql);
         
         $fks = array();
         foreach( $statement as $row ) {
-            $table = $this->_getLazyTable($row['tablename']);
+            $table = $this->_getLazyTable($row['tablename'], $row['schemaname']);
             $refTable = $this->_getLazyTable($row['reftablename']);
             
             $name = $row['keyname'];
@@ -197,7 +217,64 @@ class Xyster_Db_Schema_Pdo_Pgsql extends Xyster_Db_Schema_Abstract
      */
     public function getIndexes( $table = null, $schema = null )
     {
+    	$version = $this->_getVersion();
+    	$oldSyntax = intval(substr($version,0,strpos($version,'.'))) < 9;
+    	if ( $oldSyntax ) {
+    		$sql = "select i.name as indexname, o.name as tablename, k.keyno," .
+    		      " c.name as colname FROM sysindexes i INNER JOIN" .
+    		      " sysobjects o on i.id = o.id inner join sysindexkeys k" .
+    		      " on i.indid = k.indid and i.id = k.id inner join" .
+    		      " syscolumns c on k.colid = c.colid and k.id = c.id" .
+    		      " where i.indid not in (0,255) and o.xtype = 'U' and" .
+    		      " (i.status & 2 = 0) and (i.status & 8388608 = 0)";
+	        if ( $table !== null ) {
+	            $sql .= " and o.name= '" . $table . "' ";
+	        }
+	        $sql .= " order by o.name, i.name, k.keyno";
+    	} else {
+    		$sql = "select i.name as indexname, o.name as tablename, k.key_ordinal," .
+    		      " c.name as colname, s.name as schemaname FROM sys.indexes i INNER JOIN" .
+    		      " sys.objects o on i.object_id = o.object_id inner join" .
+    		      " sys.index_columns k on i.index_id = k.index_id and" .
+    		      " i.object_id = k.object_id inner join sys.columns c on" .
+    		      " k.column_id = c.column_id and k.object_id = c.object_id" .
+    		      " inner join sys.schemas s on o.schema_id = s.schema_id" .
+    		      " where i.is_unique = 0 and o.type = 'U'";
+    		if ( $table !== null ) {
+    			$sql .= " and o.name = '" . $table . "'";
+    		}
+    		$sql .= " order by o.name, i.name, k.key_ordinal";
+    	}
+        $statement = $this->getAdapter()->fetchAll($sql);
         
+        $indexes = array();
+        
+        foreach( $statement as $row ) {
+            $table = $this->_getLazyTable($row['tablename'], $oldSyntax?null:$row['schemaname']);
+     
+            $key = $oldSyntax ?
+                $row['indexname'] : $row['schemaname'] . '.' . $row['indexname'];
+            
+            $column = null;
+            foreach( $table->getColumns() as $tcolumn ) {
+                if ( $tcolumn->getName() == $row['colname'] ) {
+                    $column = $tcolumn;
+                    break;
+                }
+            }
+
+            if ( array_key_exists($key, $indexes) ) {
+                $indexes[$key]->addColumn($column);
+            } else {
+                $index = new Xyster_Db_Index;
+                $index->setTable($table)
+                    ->setName($row['indexname'])
+                    ->addColumn($column);
+                $indexes[$key] = $index;
+            }
+        }
+        
+        return $indexes;
     }
     
     /**
@@ -209,7 +286,36 @@ class Xyster_Db_Schema_Pdo_Pgsql extends Xyster_Db_Schema_Abstract
      */
     public function getPrimaryKey( $table, $schema = null )
     {
+        $args = array($table);
+        $sql = "select t.constraint_name, t.table_name, t.table_schema," .
+                " c.column_name from" .
+                " information_schema.table_constraints t inner join" .
+                " information_schema.constraint_column_usage c on" .
+                " t.constraint_schema = c.constraint_schema and" .
+                " t.table_name = c.table_name and " .
+                " t.constraint_name = c.constraint_name where" .
+                " t.constraint_type = 'PRIMARY KEY' and" .
+                " t.table_name = ?";
+        if ( $schema !== null ) {
+            $sql .= " and t.table_schema = ?";
+            $args[] = $schema;
+        }
+        $statement = $this->getAdapter()->fetchAll($sql, $args);
+
+        $primary = new Xyster_Db_PrimaryKey;
+        $table = $this->_getLazyTable($table, $schema);
+        $primary->setTable($table);
         
+        foreach( $statement as $row ) {
+            $primary->setName($row['constraint_name']);
+            foreach( $table->getColumns() as $tcolumn ) {
+                if ( $tcolumn->getName() == $row['column_name'] ) {
+                    $primary->addColumn($tcolumn);
+                }
+            }
+        }
+        
+        return $primary;
     }
     
     /**
@@ -221,7 +327,49 @@ class Xyster_Db_Schema_Pdo_Pgsql extends Xyster_Db_Schema_Abstract
      */
     public function getUniqueKeys( $table, $schema = null )
     {
+    	$args = array($table);
+        $sql = "select t.constraint_name, t.table_name, t.table_schema," .
+                " c.column_name from" .
+                " information_schema.table_constraints t inner join" .
+                " information_schema.constraint_column_usage c on" .
+                " t.constraint_schema = c.constraint_schema and" .
+                " t.table_name = c.table_name and " .
+                " t.constraint_name = c.constraint_name where" .
+                " t.constraint_type = 'UNIQUE' and" .
+                " t.table_name = ?";
+        if ( $schema !== null ) {
+        	$sql .= " and t.table_schema = ?";
+        	$args[] = $schema;
+        }
         
+        $statement = $this->getAdapter()->fetchAll($sql, $args);
+
+        $table = $this->_getLazyTable($table, $schema);
+        $uniques = array();
+        
+        foreach( $statement as $row ) {
+            $key = $row['table_schema'] . '.' . $row['constraint_name'];
+            
+            $column = null;
+            foreach( $table->getColumns() as $tcolumn ) {
+                if ( $tcolumn->getName() == $row['column_name'] ) {
+                    $column = $tcolumn;
+                    break;
+                }
+            }
+
+            if ( array_key_exists($key, $uniques) ) {
+                $uniques[$key]->addColumn($column);
+            } else {
+                $unique = new Xyster_Db_UniqueKey;
+                $unique->setTable($table)
+                    ->setName($row['constraint_name'])
+                    ->addColumn($column);
+                $uniques[$key] = $unique;
+            }
+        }
+        
+        return $uniques;
     }
     
     /**
@@ -259,7 +407,7 @@ class Xyster_Db_Schema_Pdo_Pgsql extends Xyster_Db_Schema_Abstract
     public function renameIndex( Xyster_Db_Index $index, $newName )
     {
         $sql = "EXEC sp_rename ?, ?, ?";
-        $indexName = $table->getName() . '.' . $index->getName();
+        $indexName = $index->getTable()->getName() . '.' . $index->getName();
         if ( $index->getTable()->getSchema() ) {
             $indexName = $index->getTable()->getSchema() . '.' . $indexName;
         }
@@ -289,6 +437,27 @@ class Xyster_Db_Schema_Pdo_Pgsql extends Xyster_Db_Schema_Abstract
     }
     
     /**
+     * Sets the default value for a column
+     * 
+     * This method will call the {@link Xyster_Db_Column::setDefaultValue}
+     * method.  There is no need to call this method separately.
+     *
+     * @param Xyster_Db_Column $column
+     * @param mixed $default The new default value
+     * @param Xyster_Db_Table $table The table
+     * @throws Zend_Db_Exception if an error occurs
+     */
+    public function setDefaultValue( Xyster_Db_Column $column, $default, Xyster_Db_Table $table )
+    {
+    	$sql = "ALTER TABLE " . $this->_tableName($table);
+        $sql .= " ADD CONSTRAINT df_" . $table->getName() . '_' .
+            $column->getName() . " DEFAULT " . $this->getAdapter()->quote($default);
+        $sql .= " FOR " . $this->_quote($column->getName());
+        $this->getAdapter()->query($sql);
+        $column->setDefaultValue($default);        
+    }
+    
+    /**
      * Sets whether or not the column will accept null
      * 
      * This method will call the {@link Xyster_Db_Column::setNull} method.
@@ -301,7 +470,23 @@ class Xyster_Db_Schema_Pdo_Pgsql extends Xyster_Db_Schema_Abstract
      */
     public function setNull( Xyster_Db_Column $column, Xyster_Db_Table $table, $null = true )
     {
-        
+        $sql = "ALTER TABLE " . $this->_tableName($table) . " ALTER COLUMN " . 
+           $this->_quote($column->getName()) . ' ';
+        $tableInfo = $this->getAdapter()->describeTable($table->getName(), $table->getSchema());
+        $columnInfo = $tableInfo[$column->getName()];
+        $sql .= $columnInfo['DATA_TYPE'];
+        if ( $column->getType()->getName() == 'Varchar' ||
+            $column->getType()->getName() == 'Char' || $column->getType()->getName() ) {
+            $columnInfo['LENGTH'] = $columnInfo['LENGTH']/2;
+        }
+        if ( $columnInfo['LENGTH'] ) {
+            $sql .= "(" . $columnInfo['LENGTH'] . ")"; 
+        } else if ( $columnInfo['PRECISION'] ) {
+            $sql .= "(" . $columnInfo['PRECISION'] . ',' . $columnInfo['SCALE'] . ')';
+        }        
+        $sql .= ( $null ) ? ' NULL' : ' NOT NULL';
+        $this->getAdapter()->query($sql);
+        $column->setNullable($null);
     }
     
     /**
@@ -321,7 +506,17 @@ class Xyster_Db_Schema_Pdo_Pgsql extends Xyster_Db_Schema_Abstract
      */
     public function setType( Xyster_Db_Column $column, Xyster_Db_Table $table, Xyster_Db_DataType $type, $length=null, $precision=null, $scale=null )
     {
-        
+        $newcol = new Xyster_Db_Column($column->getName());
+        $newcol->setLength($length)->setPrecision($precision)->setScale($scale)
+            ->setType($type);
+            
+        $sql = "ALTER TABLE " . $this->_tableName($table) . " ALTER COLUMN " . 
+            $this->_quote($column->getName()) . " " . $this->toSqlType($newcol);
+        $tableInfo = $this->getAdapter()->describeTable($table->getName());
+        $columnInfo = $tableInfo[$column->getName()]; 
+        $sql .= ( $columnInfo['NULLABLE'] ) ? ' NULL' : ' NOT NULL';
+        $this->getAdapter()->query($sql);
+        $column->setType($type)->setLength($length)->setPrecision($precision)->setScale($scale);
     }
     
     /**

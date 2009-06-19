@@ -393,7 +393,7 @@ abstract class Xyster_Db_Schema_Abstract
             return Xyster_Db_DataType::Date();
         } else if ( $sqlType == 'TIME' ) {
             return Xyster_Db_DataType::Time();
-        } else if ( strpos($sqlType, 'DATETIME') || $sqlType == 'TIMESTAMP' ) {
+        } else if ( strpos($sqlType, 'DATETIME') !== false || $sqlType == 'TIMESTAMP' ) {
             return Xyster_Db_DataType::Timestamp();
         } else if ( $sqlType == 'SERIAL' ) {
             return Xyster_Db_DataType::Identity();
