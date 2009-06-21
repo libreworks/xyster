@@ -55,8 +55,69 @@ class Xyster_Db_Schema_Pdo_Pgsql extends Xyster_Db_Schema_Abstract
      */
     public function createIndex( Xyster_Db_Index $index )
     {
+        $tableName = $this->_tableName($index->getTable());
+        $sql = "CREATE INDEX " . $this->_quote($index->getName()) . " ON " .
+            $tableName . " ";
+        $columns = array();
+        if ( $index->isFulltext() ) {
+            /* @todo Fulltext indexing */
+        } else {
+            foreach( $index->getSortedColumns() as $sort ) {
+                /* @var $sort Xyster_Data_Sort */
+                $columns[] = $this->_quote($sort->getField()->getName()) .
+                	' ' . $sort->getDirection();
+            }
+            $sql .= "( " . implode(', ', $columns) . " )";
+        }
+        $this->getAdapter()->query($sql);
     }
 
+    /**
+     * Creates a table
+     *
+     * @param Xyster_Db_Table $table
+     * @throws Xyster_Db_Schema_Exception if the table is invalid for creation.
+     * @throws Zend_Db_Exception if a database error occurs
+     */
+    public function createTable( Xyster_Db_Table $table )
+    {
+        $this->getAdapter()->query($this->_getSqlForCreateTable($table));
+        
+        // create the indexes
+        foreach( $table->getIndexes() as $index ) {
+            /* @var $index Xyster_Db_Index */
+            $this->createIndex($index);
+        }
+        
+        $seqName = null;
+        $colName = null;
+        foreach( $table->getColumns() as $col ) {
+            /* @var $col Xyster_Db_Column */
+            if ( $col->getType() === Xyster_Db_DataType::Identity() ) {
+                $colName = $col->getName();
+                $seqName = $table->getName() . '_' . $colName . '_seq';
+                $this->createSequence($seqName, $table->getSchema());
+                break;
+            }
+        }
+        // create the insert trigger
+        if ( $seqName != null ) {
+            $schSeqName = $this->_quote($seqName);
+            $tname = $this->_quote($seqName . '_tr');
+            if ( $table->getSchema() ) {
+                $schSeqName = $this->_quote($table->getSchema()) . '.' . $schSeqName;
+                $tname = $this->_quote($table->getSchema()) . '.' . $tname;
+            }
+            $this->getAdapter()->query('CREATE OR REPLACE TRIGGER ' . $tname . 
+            	' BEFORE INSERT ON  ' . $this->_tableName($table) .
+                " FOR EACH ROW WHEN (new." . $this->_quote($colName) . " IS NULL)\n" .
+                "BEGIN\n" .
+                "    SELECT " . $schSeqName . ".nextval INTO :new." .
+                $this->_quote($colName) . " FROM dual;\n" .
+                "END;");
+        }
+    }
+    
     /**
      * Drops an index
      *
@@ -144,6 +205,34 @@ class Xyster_Db_Schema_Pdo_Pgsql extends Xyster_Db_Schema_Abstract
         
     }
     
+	/**
+     * Lists the sequence names in the given database (or schema)
+     *
+     * @param string $schema Optional. The schema used to locate sequences.
+     * @return array of sequence names
+     */
+    public function listSequences( $schema = null )
+    {
+        $this->_checkSequenceSupport();
+    }
+        
+    /**
+     * Renames a sequence
+     * 
+     * The SQL-2003 standard doesn't allow for renaming sequences, not all
+     * databases support this capability.
+     *
+     * @param string $old The current sequence name
+     * @param string $new The new sequence name
+     * @param string $schema The schema name
+     * @throws Xyster_Db_Schema_Exception if the database doesn't support sequences
+     * @throws Zend_Db_Exception if a database error occurs
+     */
+    public function renameSequence( $old, $new, $schema = null )
+    {
+        $this->_checkSequenceSupport();
+    }
+        
     /**
      * Renames a column
      * 
@@ -223,6 +312,16 @@ class Xyster_Db_Schema_Pdo_Pgsql extends Xyster_Db_Schema_Abstract
         
     }
     
+	/**
+     * Whether the database supports sequences
+     *
+     * @return boolean
+     */
+    public function supportsSequences()
+    {
+        return true;
+    }
+    
     /**
      * Converts the database-reported data type into a DataType enum
      *
@@ -231,9 +330,9 @@ class Xyster_Db_Schema_Pdo_Pgsql extends Xyster_Db_Schema_Abstract
      */
     public function toDataType( $sqlType )
     {
-        if ( !strcasecmp($sqlType, 'BIT') ) {
+        /*if ( !strcasecmp($sqlType, 'BIT') ) {
             return Xyster_Db_DataType::Boolean();
-        }
+        }*/
         return parent::toDataType($sqlType);
     }
     
@@ -250,10 +349,17 @@ class Xyster_Db_Schema_Pdo_Pgsql extends Xyster_Db_Schema_Abstract
     {
         $type = $column->getType();
         $sql = '';
-        if ( $type === Xyster_Db_DataType::Blob() ) {
+        if ( $type === Xyster_Db_DataType::Boolean() ) {
+            $sql = 'NUMBER(1,0)';
+        } else if ( $type === Xyster_Db_DataType::Bigint() ) {
+            $sql = 'NUMBER(19,0)';
+        } else if ( $type === Xyster_Db_DataType::Varchar() ) {
+            $sql = 'VARCHAR2(' . $column->getLength() . ')';
+        } else if ( $type === Xyster_Db_DataType::Identity() ) {
+            $sql = 'INTEGER NOT NULL PRIMARY KEY';
         } else {
-            $sql = parent::toSqlType($column); 
+            $sql = parent::toSqlType($column);
         }
-        return $sql;        
+        return $sql;
     }
 }
