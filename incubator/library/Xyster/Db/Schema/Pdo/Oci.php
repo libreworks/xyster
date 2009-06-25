@@ -18,6 +18,10 @@
  */
 require_once 'Xyster/Db/Schema/Abstract.php';
 /**
+ * Zend_Db_Expr
+ */
+require_once 'Zend/Db/Expr.php';
+/**
  * An abstraction layer for schema manipulation in Oracle Database Server 
  *
  * @category  Xyster
@@ -25,7 +29,7 @@ require_once 'Xyster/Db/Schema/Abstract.php';
  * @copyright Copyright (c) Irrational Logic (http://irrationallogic.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Db_Schema_Pdo_Pgsql extends Xyster_Db_Schema_Abstract
+class Xyster_Db_Schema_Pdo_Oci extends Xyster_Db_Schema_Abstract
 {
     /**
      * Creates a new SQL Server schema adapter
@@ -47,6 +51,40 @@ class Xyster_Db_Schema_Pdo_Pgsql extends Xyster_Db_Schema_Abstract
         $this->_setAdapter($db);
     }
     
+    /**
+     * Adds a column to a table
+     *
+     * @param Xyster_Db_Column $column The column to add
+     * @param Xyster_Db_Table $table The table 
+     * @throws Zend_Db_Exception if a database error occurs
+     */
+    public function addColumn( Xyster_Db_Column $column, Xyster_Db_Table $table )
+    {
+        $sql = "ALTER TABLE " . $this->_tableName($table) . " ADD " .
+            $this->getAdapter()->quoteIdentifier($column->getName()) . ' ' .
+            $this->toSqlType($column);
+        $this->getAdapter()->query($sql);
+    }
+
+    /**
+     * Creates a foreign key
+     *
+     * @param Xyster_Db_ForeignKey $fk The foreign key to create
+     * @throws Zend_Db_Exception if a database error occurs
+     */
+    public function addForeignKey( Xyster_Db_ForeignKey $fk )
+    {
+        $sql = "ALTER TABLE " . $this->_tableName($fk->getTable()) .
+            " ADD " . $this->_constraintName($fk) . ' FOREIGN KEY ' .
+            $this->_quote($fk->getColumns()) . " REFERENCES " . 
+            $this->_quote($fk->getReferencedTable()->getName()) . " " .
+            $this->_quote($fk->getReferencedColumns());
+        if ( $fk->getOnDelete() !== null ) {
+            $sql .= ' ON DELETE ' . $fk->getOnDelete()->getSql();
+        }
+        $this->getAdapter()->query($sql);
+    }
+            
     /**
      * Creates a new index
      *
@@ -81,6 +119,16 @@ class Xyster_Db_Schema_Pdo_Pgsql extends Xyster_Db_Schema_Abstract
      */
     public function createTable( Xyster_Db_Table $table )
     {
+        foreach( $table->getColumns() as $col ) {
+            /* @var $col Xyster_Db_Column */
+            if ( $col->getType() === Xyster_Db_DataType::Timestamp() &&
+                $col->getDefaultValue() !== null ) {
+                $col->setDefaultValue(new Zend_Db_Expr("TO_TIMESTAMP(" . $this->getAdapter()->quote($col->getDefaultValue()) . ", 'YYYY-MM-DD HH24:MI:SS')"));
+            } else if ( $col->getType() == Xyster_Db_DataType::Date() &&
+                $col->getDefaultValue() !== null ) {
+                $col->setDefaultValue(new Zend_Db_Expr('TO_DATE(' . $this->getAdapter()->quote($col->getDefaultValue()) . ", 'YYYY-MM-DD')"));
+            }
+        }
         $this->getAdapter()->query($this->_getSqlForCreateTable($table));
         
         // create the indexes
@@ -125,7 +173,13 @@ class Xyster_Db_Schema_Pdo_Pgsql extends Xyster_Db_Schema_Abstract
      * @throws Zend_Db_Exception if a database error occurs
      */
     public function dropIndex( Xyster_Db_Index $index )
-    {    
+    {
+    	$sql = "DROP INDEX ";
+        if ( $index->getTable()->getSchema() ) {
+            $sql .= $this->_quote($index->getTable()->getSchema()) . '.';
+        }
+        $sql .= $this->_quote($index->getName());
+        $this->getAdapter()->query($sql);
     }
     
     /**
@@ -151,6 +205,56 @@ class Xyster_Db_Schema_Pdo_Pgsql extends Xyster_Db_Schema_Abstract
      */
     public function getForeignKeys( $table = null, $schema = null )
     {
+    	$sql = 'select c.owner "constraint_schema", c.constraint_name' .
+    	   ' "constraint_name", c.table_name "table_name", c.delete_rule "delete_rule",' .
+    	   ' k.column_name "column_name", u.table_name' .
+    	   ' "referenced_table_name", rc.column_name "referenced_column_name"' .
+    	   ' from all_constraints c inner join all_cons_columns k on ' .
+    	   ' c.owner = k.owner and c.constraint_name = k.constraint_name' .
+    	   ' inner join all_constraints u on c.r_constraint_name = ' .
+    	   ' u.constraint_name and c.r_owner = u.owner inner join ' .
+    	   ' all_cons_columns rc on u.owner = rc.owner and u.constraint_name =' .
+    	   " rc.constraint_name inner join all_tables t on c.table_name = t.table_name and " .
+    	   " c.owner = t.owner where c.constraint_type = 'R' and" .
+    	   " c.constraint_name not like 'BIN$%' and t.tablespace_name not in ('SYSTEM','SYSAUX')";
+        if ( $schema !== null ) {
+            $sql .= " and c.owner = '" . $schema . "'";
+        }
+        if ( $table !== null ) {
+            $sql .= " and c.table_name = '" . $table . "'";
+        }
+    	$statement = $this->getAdapter()->fetchAll($sql);
+        
+        $fks = array();
+        
+        foreach( $statement as $row ) {
+            $table = $this->_getLazyTable($row['table_name'], $row['constraint_schema']);
+            $refTable = $this->_getLazyTable($row['referenced_table_name'], $row['constraint_schema']);
+            
+            $name = $row['constraint_schema'] . '.' . $row['constraint_name'];
+            if ( !array_key_exists($name, $fks) ) {
+                $fk = new Xyster_Db_ForeignKey;
+                $fk->setReferencedTable($refTable)
+                    ->setTable($table)
+                    ->setName($row['constraint_name']);
+                if ( $row['delete_rule'] ) {
+                    $fk->setOnDelete(Xyster_Db_ReferentialAction::fromSql($row['delete_rule']));
+                }
+                $fks[$name] = $fk;
+            }
+            foreach( $table->getColumns() as $column ) {
+                if ( $column->getName() == $row['column_name'] ) {
+                    $fks[$name]->addColumn($column);
+                }
+            }
+            foreach( $refTable->getColumns() as $column ) {
+                if ( $column->getName() == $row['referenced_column_name'] ) {
+                    $fks[$name]->addReferencedColumn($column);
+                }
+            }
+        }
+        
+        return $fks;
     }
     
     /**
@@ -178,7 +282,48 @@ class Xyster_Db_Schema_Pdo_Pgsql extends Xyster_Db_Schema_Abstract
      */
     public function getIndexes( $table = null, $schema = null )
     {
+        $sql = 'SELECT i.index_name "indname", i.table_owner "schemaname", i.table_name "tablename",' .
+            ' c.column_name "colname", c.column_position "colpos", c.descend "coldir" FROM user_indexes i' .
+            " INNER JOIN user_ind_columns c ON i.index_name = c.index_name" .
+            " AND i.table_name = c.table_name WHERE i.uniqueness = 'NONUNIQUE'";
+    	if ( $table != null ) {
+    		$sql .= " AND i.table_name = '" . $table . "'";
+    	}
+    	if ( $schema != null ) {
+    		$sql .= " AND i.table_owner = '" . $schema . "'";
+    	}
+    	$sql .= ' ORDER BY i.table_name, c.column_position';
+    	$statement = $this->getAdapter()->fetchAll($sql);
         
+        $indexes = array();
+        
+        foreach( $statement as $row ) {
+            $table = $this->_getLazyTable($row['tablename'], $row['schemaname']);
+     
+            $key = $row['schemaname'] . '.' . $row['indname'];
+            
+            $column = null;
+            /* @var $column Xyster_Db_Column */
+            foreach( $table->getColumns() as $tcolumn ) {
+                if ( $tcolumn->getName() == $row['colname'] ) {
+                    $column = $tcolumn;
+                    break;
+                }
+            }
+
+            $sortCol = $row['coldir'] == 'DESC' ? $column->desc() : $column->asc();
+            if ( array_key_exists($key, $indexes) ) {
+                $indexes[$key]->addSortedColumn($sortCol);
+            } else {
+                $index = new Xyster_Db_Index;
+                $index->setTable($table)
+                    ->setName($row['indname'])
+                    ->addSortedColumn($sortCol);
+                $indexes[$key] = $index;
+            }
+        }
+        
+        return $indexes;
     }
     
     /**
@@ -190,7 +335,31 @@ class Xyster_Db_Schema_Pdo_Pgsql extends Xyster_Db_Schema_Abstract
      */
     public function getPrimaryKey( $table, $schema = null )
     {
+        $sql = 'select c.owner "schemaname", c.constraint_name "indexname",' .
+            ' k.column_name "colname", k.position "position" FROM' .
+            ' all_constraints c INNER JOIN all_cons_columns k ON ' .
+            ' c.owner = k.owner AND c.constraint_name = k.constraint_name' .
+            " WHERE c.constraint_type = 'P' and c.constraint_name not like 'BIN$%'";
+        if ( $schema != null ) {
+            $sql .= " AND c.owner = '" . $schema . "'";
+        }
+        $sql .= " AND c.table_name = '" . $table . "' ORDER BY k.position";
+        $statement = $this->getAdapter()->fetchAll($sql);
+
+        $primary = new Xyster_Db_PrimaryKey;
+        $table = $this->_getLazyTable($table, $schema);
+        $primary->setTable($table);
         
+        foreach( $statement as $row ) {
+            $primary->setName($row['indexname']);
+            foreach( $table->getColumns() as $tcolumn ) {
+                if ( $tcolumn->getName() == $row['colname'] ) {
+                    $primary->addColumn($tcolumn);
+                }
+            }
+        }
+        
+        return $primary;
     }
     
     /**
@@ -202,7 +371,43 @@ class Xyster_Db_Schema_Pdo_Pgsql extends Xyster_Db_Schema_Abstract
      */
     public function getUniqueKeys( $table, $schema = null )
     {
+        $sql = 'SELECT c.owner "schemaname", c.constraint_name "indexname",' .
+            ' k.column_name "colname", k.position "position" FROM' .
+            ' all_constraints c INNER JOIN all_cons_columns k ON' .
+            ' c.owner = k.owner AND c.constraint_name = k.constraint_name' .
+            " WHERE c.constraint_type = 'U' AND c.constraint_name NOT LIKE 'BIN$%'";
+        if ( $schema != null ) {
+        	$sql .= " AND c.owner = '" . $schema . "'";
+        }
+        $sql .= " AND c.table_name = '" . $table . "'";
+        $statement = $this->getAdapter()->fetchAll($sql);
+
+        $table = $this->_getLazyTable($table, $schema);
+        $uniques = array();
         
+        foreach( $statement as $row ) {
+            $key = $row['schemaname'] . '.' . $row['indexname'];
+            
+            $column = null;
+            foreach( $table->getColumns() as $tcolumn ) {
+                if ( $tcolumn->getName() == $row['colname'] ) {
+                    $column = $tcolumn;
+                    break;
+                }
+            }
+
+            if ( array_key_exists($key, $uniques) ) {
+                $uniques[$key]->addColumn($column);
+            } else {
+                $unique = new Xyster_Db_UniqueKey;
+                $unique->setTable($table)
+                    ->setName($row['indexname'])
+                    ->addColumn($column);
+                $uniques[$key] = $unique;
+            }
+        }
+        
+        return $uniques;
     }
     
 	/**
@@ -213,14 +418,17 @@ class Xyster_Db_Schema_Pdo_Pgsql extends Xyster_Db_Schema_Abstract
      */
     public function listSequences( $schema = null )
     {
-        $this->_checkSequenceSupport();
+        $sql = "SELECT " . $this->_quote('SEQUENCE_NAME') . ' FROM all_sequences';
+        if ( $schema !== null ) {
+            $sql .= " WHERE sequence_owner = '" . $schema . "'"; 
+        }
+        return $this->getAdapter()->fetchCol($sql);
     }
         
     /**
      * Renames a sequence
      * 
-     * The SQL-2003 standard doesn't allow for renaming sequences, not all
-     * databases support this capability.
+     * Oracle stipulates that the sequence must be in your own schema.
      *
      * @param string $old The current sequence name
      * @param string $new The new sequence name
@@ -230,7 +438,9 @@ class Xyster_Db_Schema_Pdo_Pgsql extends Xyster_Db_Schema_Abstract
      */
     public function renameSequence( $old, $new, $schema = null )
     {
-        $this->_checkSequenceSupport();
+        $sql = "RENAME ";
+        $sql .= $this->_quote($old) . " TO " . $this->_quote($new);
+        $this->getAdapter()->query($sql);
     }
         
     /**
@@ -246,6 +456,10 @@ class Xyster_Db_Schema_Pdo_Pgsql extends Xyster_Db_Schema_Abstract
      */
     public function renameColumn( Xyster_Db_Column $column, $newName, Xyster_Db_Table $table )
     {
+    	$sql = "ALTER TABLE " . $this->_tableName($table) . " RENAME COLUMN " . 
+           $this->_quote($column->getName()) . ' TO ' . $this->_quote($newName);
+        $this->getAdapter()->query($sql);
+        $column->setName($newName);
     }
     
     /**
@@ -260,6 +474,14 @@ class Xyster_Db_Schema_Pdo_Pgsql extends Xyster_Db_Schema_Abstract
      */
     public function renameIndex( Xyster_Db_Index $index, $newName )
     {
+    	$sql = "ALTER INDEX ";
+        if ( $index->getTable()->getSchema() ) {
+            $sql .= $this->_quote($index->getTable()->getSchema()) . '.';
+        }
+        $sql .= $this->_quote($index->getName()) . ' RENAME TO ' .
+            $this->_quote($newName);
+        $this->getAdapter()->query($sql);
+        $index->setName($newName);
     }
     
     /**
@@ -274,8 +496,32 @@ class Xyster_Db_Schema_Pdo_Pgsql extends Xyster_Db_Schema_Abstract
      */
     public function renameTable( Xyster_Db_Table $table, $newName )
     {
+    	$sql = "ALTER TABLE " . $this->_tableName($table) .
+            " RENAME TO " . $this->_quote($newName);
+        $this->getAdapter()->query($sql);
+        $table->setName($newName);
     }
     
+    /**
+     * Sets the default value for a column
+     * 
+     * This method will call the {@link Xyster_Db_Column::setDefaultValue}
+     * method.  There is no need to call this method separately.
+     *
+     * @param Xyster_Db_Column $column
+     * @param mixed $default The new default value
+     * @param Xyster_Db_Table $table The table
+     * @throws Zend_Db_Exception if an error occurs
+     */
+    public function setDefaultValue( Xyster_Db_Column $column, $default, Xyster_Db_Table $table )
+    {
+        $sql = "ALTER TABLE " . $this->_tableName($table) . " MODIFY " .
+            $this->_quote($column->getName()) . " DEFAULT " .
+            $this->getAdapter()->quote($default);
+        $this->getAdapter()->query($sql);
+        $column->setDefaultValue($default);
+    }
+        
     /**
      * Sets whether or not the column will accept null
      * 
@@ -289,7 +535,11 @@ class Xyster_Db_Schema_Pdo_Pgsql extends Xyster_Db_Schema_Abstract
      */
     public function setNull( Xyster_Db_Column $column, Xyster_Db_Table $table, $null = true )
     {
-        
+        $sql = "ALTER TABLE " . $this->_tableName($table) . " MODIFY " . 
+           $this->_quote($column->getName()) . ' ';
+        $sql .= ( $null ) ? ' NULL' : ' NOT NULL';
+        $this->getAdapter()->query($sql);
+        $column->setNullable($null);
     }
     
     /**
@@ -309,7 +559,14 @@ class Xyster_Db_Schema_Pdo_Pgsql extends Xyster_Db_Schema_Abstract
      */
     public function setType( Xyster_Db_Column $column, Xyster_Db_Table $table, Xyster_Db_DataType $type, $length=null, $precision=null, $scale=null )
     {
-        
+        $newcol = new Xyster_Db_Column($column->getName());
+        $newcol->setLength($length)->setPrecision($precision)->setScale($scale)
+            ->setType($type);
+        $sql = "ALTER TABLE " . $this->_tableName($table) . " MODIFY " . 
+            $this->_quote($column->getName()) . " " .
+            $this->toSqlType($newcol);
+        $this->getAdapter()->query($sql);
+        $column->setType($type)->setLength($length)->setPrecision($precision)->setScale($scale);
     }
     
 	/**
@@ -330,9 +587,11 @@ class Xyster_Db_Schema_Pdo_Pgsql extends Xyster_Db_Schema_Abstract
      */
     public function toDataType( $sqlType )
     {
-        /*if ( !strcasecmp($sqlType, 'BIT') ) {
-            return Xyster_Db_DataType::Boolean();
-        }*/
+        if ( $sqlType == 'ROWID' ) {
+            return Xyster_Db_DataType::Varchar();
+        } else if ( strpos($sqlType, 'INTERVAL') === 0 ) {
+        	return Xyster_Db_DataType::Decimal();
+        }
         return parent::toDataType($sqlType);
     }
     

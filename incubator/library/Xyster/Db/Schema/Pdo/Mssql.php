@@ -57,7 +57,7 @@ class Xyster_Db_Schema_Pdo_Mssql extends Xyster_Db_Schema_Abstract
     public function addColumn( Xyster_Db_Column $column, Xyster_Db_Table $table )
     {
         $sql = "ALTER TABLE " . $this->_tableName($table) . " ADD " .
-            $this->getAdapter()->quoteIdentifier($column->getName()) .
+            $this->getAdapter()->quoteIdentifier($column->getName()) . ' ' .
             $this->toSqlType($column);
         $this->getAdapter()->query($sql);
     }

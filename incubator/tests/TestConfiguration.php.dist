@@ -60,6 +60,24 @@ define('TESTS_ZEND_DB_ADAPTER_PDO_PGSQL_PASSWORD', null);
 define('TESTS_ZEND_DB_ADAPTER_PDO_PGSQL_DATABASE', 'postgres');
 
 /**
+ * Zend_Db_Adapter_Pdo_Mssql
+ */
+define('TESTS_XYSTER_ORM_ADAPTER_PDO_MSSQL_ENABLED',  false);
+define('TESTS_ZEND_DB_ADAPTER_PDO_MSSQL_HOSTNAME', 'localhost,1433');
+define('TESTS_ZEND_DB_ADAPTER_PDO_MSSQL_USERNAME', null);
+define('TESTS_ZEND_DB_ADAPTER_PDO_MSSQL_PASSWORD', null);
+define('TESTS_ZEND_DB_ADAPTER_PDO_MSSQL_DATABASE', 'test');
+
+/**
+ * Zend_Db_Adapter_Oracle and Zend_Db_Adapter_Pdo_Oci
+ */
+define('TESTS_XYSTER_ORM_ADAPTER_PDO_OCI_ENABLED',  false);
+define('TESTS_ZEND_DB_ADAPTER_ORACLE_HOSTNAME', '127.0.0.1');
+define('TESTS_ZEND_DB_ADAPTER_ORACLE_USERNAME', null);
+define('TESTS_ZEND_DB_ADAPTER_ORACLE_PASSWORD', null);
+define('TESTS_ZEND_DB_ADAPTER_ORACLE_SID',      'xe');
+
+/**
  * PHPUnit Code Coverage / Test Report
  */
 define('TESTS_GENERATE_REPORT', false);

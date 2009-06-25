@@ -60,7 +60,7 @@ abstract class Xyster_Db_Schema_TestCommon extends PHPUnit_Framework_TestCase
         $drop = array('forum', 'message_board', 'forum_user');
         foreach( $tables as $table ) {
             if ( in_array($table, $drop) ) {
-                $this->_db->query('DROP TABLE ' . $table);
+                $this->_db->query('DROP TABLE ' . $this->_db->quoteIdentifier($table));
             }
         }
         
@@ -76,9 +76,9 @@ abstract class Xyster_Db_Schema_TestCommon extends PHPUnit_Framework_TestCase
             }
         }
         if ( $this->object->supportsSequences() ) {
-            foreach( array('my_sequence', 'my_sequence_awesome') as $name ) {
+            foreach( array('my_sequence', 'my_sequence_awesome', 'forum_forum_id_seq') as $name ) {
                 try {
-                    $this->_db->query('DROP SEQUENCE ' . $name);
+                    $this->_db->query('DROP SEQUENCE ' . $this->_db->quoteIdentifier($name));
                 } catch ( Exception $thrown ) {
                 }
             }
@@ -213,7 +213,7 @@ abstract class Xyster_Db_Schema_TestCommon extends PHPUnit_Framework_TestCase
         $indexes = $this->object->getUniqueKeys('forum');
         $found = false;
         foreach( $indexes as $index ) {
-            if ( $index->getColumn(0)->getName() == 'title' ) {
+            if ( $index->getColumn(0)->getName() == 'created_on' ) {
                 $found = true;
                 break;
             }
@@ -225,16 +225,16 @@ abstract class Xyster_Db_Schema_TestCommon extends PHPUnit_Framework_TestCase
         $this->_setupTestTable();
         
         $table = new Xyster_Db_Table('forum');
-        $col = new Xyster_Db_Column('title');
+        $col = new Xyster_Db_Column('created_on');
         $uk = new Xyster_Db_UniqueKey;
-        $uk->setTable($table)->setName('forum_title_idx')->addColumn($col);
+        $uk->setTable($table)->setName('forum_created_on_idx')->addColumn($col);
         
         $this->object->addUniqueKey($uk);
         
         $indexes2 = $this->object->getUniqueKeys('forum');
         $found = false;
         foreach( $indexes2 as $index ) {
-            if ( $index->getColumn(0)->getName() == 'title' ) {
+            if ( $index->getColumn(0)->getName() == 'created_on' ) {
                 $found = true;
                 break;
             }

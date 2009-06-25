@@ -62,7 +62,7 @@ abstract class Xyster_Db_Schema_Abstract
     public function addColumn( Xyster_Db_Column $column, Xyster_Db_Table $table )
     {
         $sql = "ALTER TABLE " . $this->_tableName($table) . " ADD COLUMN " .
-            $this->getAdapter()->quoteIdentifier($column->getName()) .
+            $this->getAdapter()->quoteIdentifier($column->getName()) . ' ' .
             $this->toSqlType($column);
         $this->getAdapter()->query($sql);
     }
@@ -393,7 +393,8 @@ abstract class Xyster_Db_Schema_Abstract
             return Xyster_Db_DataType::Date();
         } else if ( $sqlType == 'TIME' ) {
             return Xyster_Db_DataType::Time();
-        } else if ( strpos($sqlType, 'DATETIME') !== false || $sqlType == 'TIMESTAMP' ) {
+        } else if ( strpos($sqlType, 'DATETIME') !== false ||
+            strpos($sqlType, 'TIMESTAMP') !== false ) {
             return Xyster_Db_DataType::Timestamp();
         } else if ( $sqlType == 'SERIAL' ) {
             return Xyster_Db_DataType::Identity();
