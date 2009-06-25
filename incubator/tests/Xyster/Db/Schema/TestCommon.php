@@ -110,6 +110,40 @@ abstract class Xyster_Db_Schema_TestCommon extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Tests creating a table with an Identity column
+     */
+    public function testCreateTableIdentity()
+    {
+        $table = new Xyster_Db_Table('forum');
+        foreach( $this->getOptions() as $name => $value ) {
+            $table->setOption($name, $value);
+        }
+        $id = new Xyster_Db_Column('forum_id');
+        $id->setType(Xyster_Db_DataType::Identity());
+        
+        $user = new Xyster_Db_Column('username');
+        $user->setType(Xyster_Db_DataType::Varchar())->setLength(50);
+        
+        $title = new Xyster_Db_Column('title');
+        $title->setLength(255)->setType(Xyster_Db_DataType::Varchar())->setNullable(false)->setUnique();
+        
+        $message = new Xyster_Db_Column('message');
+        $message->setType(Xyster_Db_DataType::Clob());
+        
+        $created = new Xyster_Db_Column('created_on');
+        $created->setType(Xyster_Db_DataType::Timestamp())->setDefaultValue('2008-08-01 14:16:21');
+        
+        $table->addColumn($id)
+            ->addColumn($user)
+            ->addColumn($title)
+            ->addColumn($message)
+            ->addColumn($created);
+            
+        $this->object->createTable($table);
+        return $table;
+    }
+    
+    /**
      * Tests the 'addColumn' method
      */
     public function testAddColumn()
