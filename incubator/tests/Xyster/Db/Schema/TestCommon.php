@@ -45,6 +45,7 @@ abstract class Xyster_Db_Schema_TestCommon extends PHPUnit_Framework_TestCase
             $this->object = new $className($this->_db);
         } catch (Zend_Exception $e) {
             $this->_db = null;
+            echo $e;
             $this->assertType('Zend_Db_Adapter_Exception', $e,
                 'Expecting Zend_Db_Adapter_Exception, got ' . get_class($e));
             $this->markTestSkipped($e->getMessage());
@@ -225,16 +226,16 @@ abstract class Xyster_Db_Schema_TestCommon extends PHPUnit_Framework_TestCase
         $this->_setupTestTable();
         
         $table = new Xyster_Db_Table('forum');
-        $col = new Xyster_Db_Column('created_on');
+        $col = new Xyster_Db_Column('username');
         $uk = new Xyster_Db_UniqueKey;
-        $uk->setTable($table)->setName('forum_created_on_idx')->addColumn($col);
+        $uk->setTable($table)->setName('forum_username_idx')->addColumn($col);
         
         $this->object->addUniqueKey($uk);
         
         $indexes2 = $this->object->getUniqueKeys('forum');
         $found = false;
         foreach( $indexes2 as $index ) {
-            if ( $index->getColumn(0)->getName() == 'created_on' ) {
+            if ( $index->getColumn(0)->getName() == 'username' ) {
                 $found = true;
                 break;
             }
@@ -339,7 +340,7 @@ abstract class Xyster_Db_Schema_TestCommon extends PHPUnit_Framework_TestCase
         $fkey->setReferencedTable($table2)
             ->addReferencedColumn($fuser)
             ->setOnDelete(Xyster_Db_ReferentialAction::Cascade())
-            ->setOnUpdate(Xyster_Db_ReferentialAction::Cascade())
+            ->setOnUpdate(Xyster_Db_ReferentialAction::NoAction())
             ->setTable($table)
             ->addColumn($table->getColumn(1))
             ->setName('forum_user_fkey');
@@ -644,16 +645,16 @@ abstract class Xyster_Db_Schema_TestCommon extends PHPUnit_Framework_TestCase
     public function testSetNull()
     {
         $table = $this->_setupTestTable();
-        $col = $table->getColumn(2);
+        $col = $table->getColumn(6);
         
         $describe = $this->_db->describeTable('forum');
-        $this->assertFalse($describe['title']['NULLABLE']);
-        $this->object->setNull($col, $table, true);
+        $this->assertTrue($describe['board_id']['NULLABLE']);
+        $this->object->setNull($col, $table, false);
         $describe2 = $this->_db->describeTable('forum');
-        $this->assertTrue($describe2['title']['NULLABLE']);
-        foreach( $describe2['title'] as $key => $value ) {
+        $this->assertFalse($describe2['board_id']['NULLABLE']);
+        foreach( $describe2['board_id'] as $key => $value ) {
             if ( $key != 'NULLABLE' ) {
-                $this->assertEquals($describe['title'][$key], $value, $key . ' is not the same as the original');
+                $this->assertEquals($describe['board_id'][$key], $value, $key . ' is not the same as the original');
             }
         }
     }
@@ -664,17 +665,17 @@ abstract class Xyster_Db_Schema_TestCommon extends PHPUnit_Framework_TestCase
     public function testSetType()
     {
         $table = $this->_setupTestTable();
-        $col = $table->getColumn(2);
+        $col = $table->getColumn(3);
         
         $describe = $this->_db->describeTable('forum');
         $this->assertNotEquals('varchar', $describe['message']['DATA_TYPE']);
         $this->object->setType($col, $table, Xyster_Db_DataType::Varchar(), 255);
         $describe2 = $this->_db->describeTable('forum');
-        $this->assertEquals('varchar', $describe2['title']['DATA_TYPE']);
-        $this->assertEquals(255, $describe2['title']['LENGTH']);
-        foreach( $describe2['title'] as $key => $value ) {
+        $this->assertEquals('varchar', strtolower($describe2['message']['DATA_TYPE']));
+        $this->assertEquals(255, $describe2['message']['LENGTH']);
+        foreach( $describe2['message'] as $key => $value ) {
             if ( $key != 'DATA_TYPE' && $key != 'LENGTH' ) {
-                $this->assertEquals($describe['title'][$key], $value, $key . ' is not the same as the original');
+                $this->assertEquals($describe['message'][$key], $value, $key . ' is not the same as the original');
             }
         }
     }
@@ -696,10 +697,10 @@ abstract class Xyster_Db_Schema_TestCommon extends PHPUnit_Framework_TestCase
         $pk->addColumn($id)->setTable($table)->setName('forum_pkey');
         
         $user = new Xyster_Db_Column('username');
-        $user->setType(Xyster_Db_DataType::Varchar())->setLength(50);
+        $user->setType(Xyster_Db_DataType::Varchar())->setLength(50)->setNullable(false);
         
         $title = new Xyster_Db_Column('title');
-        $title->setLength(255)->setType(Xyster_Db_DataType::Varchar())->setNullable(false)->setUnique();
+        $title->setLength(254)->setType(Xyster_Db_DataType::Varchar())->setNullable(false)->setUnique();
         
         $message = new Xyster_Db_Column('message');
         $message->setType(Xyster_Db_DataType::Clob());
@@ -707,11 +708,19 @@ abstract class Xyster_Db_Schema_TestCommon extends PHPUnit_Framework_TestCase
         $created = new Xyster_Db_Column('created_on');
         $created->setType(Xyster_Db_DataType::Timestamp())->setDefaultValue('2008-08-01 14:16:21');
         
+        $locked = new Xyster_Db_Column('locked');
+        $locked->setType(Xyster_Db_DataType::Boolean());
+        
+        $boardId = new Xyster_Db_Column('board_id');
+        $boardId->setType(Xyster_Db_DataType::Integer());
+        
         $table->addColumn($id)->setPrimaryKey($pk)
             ->addColumn($user)
             ->addColumn($title)
             ->addColumn($message)
-            ->addColumn($created);
+            ->addColumn($created)
+            ->addColumn($locked)
+            ->addColumn($boardId);
             
         $this->object->createTable($table);
         return $table;
@@ -732,22 +741,29 @@ abstract class Xyster_Db_Schema_TestCommon extends PHPUnit_Framework_TestCase
         $id->setType(Xyster_Db_DataType::Integer())->setNullable(false);
         
         $user = new Xyster_Db_Column('username');
-        $user->setType(Xyster_Db_DataType::Varchar())->setLength(50);
+        $user->setType(Xyster_Db_DataType::Varchar())->setLength(50)->setNullable(false);
         
         $title = new Xyster_Db_Column('title');
-        $title->setLength(255)->setType(Xyster_Db_DataType::Varchar())->setNullable(false)->setUnique();
+        $title->setLength(254)->setType(Xyster_Db_DataType::Varchar())->setNullable(false)->setUnique();
         
         $message = new Xyster_Db_Column('message');
         $message->setType(Xyster_Db_DataType::Clob());
         
         $created = new Xyster_Db_Column('created_on');
         $created->setType(Xyster_Db_DataType::Timestamp())->setDefaultValue('2008-08-01 14:16:21');
+        $locked = new Xyster_Db_Column('locked');
+        $locked->setType(Xyster_Db_DataType::Boolean());
+        
+        $boardId = new Xyster_Db_Column('board_id');
+        $boardId->setType(Xyster_Db_DataType::Integer());
         
         $table->addColumn($id)
             ->addColumn($user)
             ->addColumn($title)
             ->addColumn($message)
-            ->addColumn($created);
+            ->addColumn($created)
+            ->addColumn($locked)
+            ->addColumn($boardId);
             
         $this->object->createTable($table);
         return $table;

@@ -604,8 +604,8 @@ abstract class Xyster_Db_Schema_Abstract
             
             $sql = $this->_quote($column->getName()) . ' ' .
                 $this->toSqlType($column);
-            if ( !$column->isNullable() ) {
-               $sql .= ' NOT NULL ';
+            if ( $column->getType() !== Xyster_Db_DataType::Identity() && !$column->isNullable() ) {
+                $sql .= ' NOT NULL ';
             }
             if ( $column->getDefaultValue() !== null ) {
                 $sql .= ' DEFAULT ' . $this->getAdapter()->quote($column->getDefaultValue());

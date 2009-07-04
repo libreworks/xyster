@@ -35,6 +35,7 @@ require_once 'Xyster/Db/ConstraintTest.php';
 require_once 'Xyster/Db/TableTest.php';
 require_once 'Xyster/Db/Schema/AbstractTest.php';
 require_once 'Xyster/Db/Schema/MysqliTest.php';
+require_once 'Xyster/Db/Schema/Pdo/Ibm/Db2Test.php';
 require_once 'Xyster/Db/Schema/Pdo/OciTest.php';
 require_once 'Xyster/Db/Schema/Pdo/MssqlTest.php';
 require_once 'Xyster/Db/Schema/Pdo/MysqlTest.php';
@@ -62,6 +63,7 @@ class Xyster_Db_AllTests
         $suite->addTestSuite('Xyster_Db_TableTest');
         $suite->addTestSuite('Xyster_Db_Schema_AbstractTest');
         $suite->addTestSuite('Xyster_Db_Schema_MysqliTest');
+        $suite->addTestSuite('Xyster_Db_Schema_Pdo_Ibm_Db2Test');
         $suite->addTestSuite('Xyster_Db_Schema_Pdo_OciTest');
         $suite->addTestSuite('Xyster_Db_Schema_Pdo_MssqlTest');
         $suite->addTestSuite('Xyster_Db_Schema_Pdo_MysqlTest');

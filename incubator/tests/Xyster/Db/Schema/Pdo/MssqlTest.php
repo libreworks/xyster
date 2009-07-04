@@ -93,10 +93,10 @@ class Xyster_Db_Schema_Pdo_MssqlTest extends Xyster_Db_Schema_TestCommon
         
         $describe = $this->_db->describeTable('forum');
         $this->assertNotEquals('nvarchar', $describe['message']['DATA_TYPE']);
-        $this->object->setType($col, $table, Xyster_Db_DataType::Varchar(), 255);
+        $this->object->setType($col, $table, Xyster_Db_DataType::Varchar(), 254);
         $describe2 = $this->_db->describeTable('forum');
         $this->assertEquals('nvarchar', $describe2['title']['DATA_TYPE']);
-        $this->assertEquals(510, $describe2['title']['LENGTH']); // NVARCHAR shows up as 2x bigger
+        $this->assertEquals(508, $describe2['title']['LENGTH']); // NVARCHAR shows up as 2x bigger
         foreach( $describe2['title'] as $key => $value ) {
             if ( $key != 'DATA_TYPE' && $key != 'LENGTH' ) {
                 $this->assertEquals($describe['title'][$key], $value, $key . ' is not the same as the original');

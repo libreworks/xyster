@@ -487,6 +487,10 @@ class Xyster_Db_Schema_Pdo_Pgsql extends Xyster_Db_Schema_Abstract
     {
         if ( !strcasecmp($sqlType, 'BPCHAR') ) {
             return Xyster_Db_DataType::Char();
+        } else if ( !strcasecmp(substr($sqlType,0,8), 'SMALLINT') ) {
+        	return Xyster_Db_DataType::Smallint();
+        } else if ( !strcasecmp(substr($sqlType,0,3), 'INT') ) {
+        	return Xyster_Db_DataType::Integer();
         }
         return parent::toDataType($sqlType);
     }

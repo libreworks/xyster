@@ -78,6 +78,16 @@ define('TESTS_ZEND_DB_ADAPTER_ORACLE_PASSWORD', null);
 define('TESTS_ZEND_DB_ADAPTER_ORACLE_SID',      'xe');
 
 /**
+ * Zend_Db_Adapter_Db2 and Zend_Db_Adapter_Pdo_Ibm
+ */
+define('TESTS_XYSTER_ORM_ADAPTER_PDO_IBM_ENABLED',  false);
+define('TESTS_ZEND_DB_ADAPTER_DB2_HOSTNAME', '127.0.0.1');
+define('TESTS_ZEND_DB_ADAPTER_DB2_PORT', 50000);
+define('TESTS_ZEND_DB_ADAPTER_DB2_USERNAME', null);
+define('TESTS_ZEND_DB_ADAPTER_DB2_PASSWORD', null);
+define('TESTS_ZEND_DB_ADAPTER_DB2_DATABASE', 'sample');
+
+/**
  * PHPUnit Code Coverage / Test Report
  */
 define('TESTS_GENERATE_REPORT', false);

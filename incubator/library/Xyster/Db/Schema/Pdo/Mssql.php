@@ -476,12 +476,13 @@ class Xyster_Db_Schema_Pdo_Mssql extends Xyster_Db_Schema_Abstract
         $columnInfo = $tableInfo[$column->getName()];
         $sql .= $columnInfo['DATA_TYPE'];
         if ( $column->getType()->getName() == 'Varchar' ||
-            $column->getType()->getName() == 'Char' || $column->getType()->getName() ) {
+            $column->getType()->getName() == 'Char' ) {
             $columnInfo['LENGTH'] = $columnInfo['LENGTH']/2;
         }
-        if ( $columnInfo['LENGTH'] ) {
+        if ( ($column->getType()->getName() == 'Varchar' ||
+            $column->getType()->getName() == 'Char') && $columnInfo['LENGTH'] ) {
             $sql .= "(" . $columnInfo['LENGTH'] . ")"; 
-        } else if ( $columnInfo['PRECISION'] ) {
+        } else if ( $column->getType()->getName() == 'Decimal' && $columnInfo['PRECISION'] ) {
             $sql .= "(" . $columnInfo['PRECISION'] . ',' . $columnInfo['SCALE'] . ')';
         }        
         $sql .= ( $null ) ? ' NULL' : ' NOT NULL';
@@ -565,6 +566,73 @@ class Xyster_Db_Schema_Pdo_Mssql extends Xyster_Db_Schema_Abstract
         }
         return $sql;        
     }
+    
+    /**
+     * Gets the SQL syntax for creating a table
+     * 
+     * This method does not process index/fulltext; indexes are not part of the
+     * SQL standard.
+     *
+     * @param Xyster_Db_Table $table
+     */
+    protected function _getSqlForCreateTable( Xyster_Db_Table $table )
+    {
+        if ( !$table->getName() ) {
+            require_once 'Xyster/Db/Schema/Exception.php';
+            throw new Xyster_Db_Schema_Exception('Tables must have a name to be created');
+        }
+        
+        $fullsql = 'CREATE TABLE ' . $this->_quote($table->getName()) . ' (';
+        $tableElements = array();
+        foreach( $table->getColumns() as $column ) {
+            /* @var $column Xyster_Db_Column */
+            if ( !$column->getName() || !$column->getType()  ) {
+                require_once 'Xyster/Db/Schema/Exception.php';
+                throw new Xyster_Db_Schema_Exception('Columns must have both a name and a type defined');
+            }
+            
+            $sql = $this->_quote($column->getName()) . ' ' .
+                $this->toSqlType($column);
+            if ( $column->getType() !== Xyster_Db_DataType::Identity() ) {
+                $sql .= !$column->isNullable() ? ' NOT NULL ' : ' NULL ';
+            }
+            if ( $column->getDefaultValue() !== null ) {
+                $sql .= ' DEFAULT ' . $this->getAdapter()->quote($column->getDefaultValue());
+            }
+            if ( $column->isUnique() ) {
+                $sql .= ' UNIQUE';
+            }
+            $tableElements[] = $sql;
+        }
+        if ( $table->getPrimaryKey() !== null ) {
+            $pk = $table->getPrimaryKey();
+            $sql = $this->_constraintName($pk);
+            $sql .= ' PRIMARY KEY ' . $this->_quote($pk->getColumns());
+            $tableElements[] = $sql;
+        }
+        foreach( $table->getUniqueKeys() as $unique ) {
+            /* @var $unique Xyster_Db_UniqueKey */
+            $sql = $this->_constraintName($unique);
+            $sql .= ' UNIQUE ' .  $this->_quote($unique->getColumns());
+            $tableElements[] = $sql;
+        }
+        foreach( $table->getForeignKeys() as $fk ) {
+            /* @var $fk Xyster_Db_ForeignKey */
+            $sql = $this->_constraintName($fk);
+            $sql .= ' FOREIGN KEY ' . $this->_quote($fk->getColumns()) . 
+                ' REFERENCES ' . $this->_quote($fk->getReferencedTable()) .
+                ' ' . $this->_quote($fk->getReferencedColumns());
+            if ( $fk->getOnDelete() !== null ) {
+                $sql .= ' ON DELETE ' . $fk->getOnDelete()->getSql();
+            }
+            if ( $fk->getOnUpdate() !== null ) {
+                $sql .= ' ON UPDATE ' . $fk->getOnUpdate()->getSql();
+            }
+            $tableElements[] = $sql;
+        }
+        $fullsql .= implode(",\n ", $tableElements) . ')';
+        return $fullsql;
+    }    
     
     /**
      * Gets the version information of SQL Server
