@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <buildpath>
-	<buildpathentry kind="src" path=""/>
+	<buildpathentry kind="src" path="incubator"/>
+	<buildpathentry kind="src" path="library"/>
+	<buildpathentry excluding="Xyster/Container/|Xyster/Controller/|Xyster/Db/|Xyster/Filter/|Xyster/Type/|Xyster/Validate/" kind="src" path="tests"/>
 	<buildpathentry kind="con" path="org.eclipse.php.core.LANGUAGE"/>
-	<buildpathentry external="true" kind="lib" path="/usr/share/php"/>
+	<buildpathentry kind="con" path="org.eclipse.dltk.USER_LIBRARY/Pear"/>
 </buildpath>

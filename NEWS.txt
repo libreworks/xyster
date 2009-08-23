@@ -2,6 +2,8 @@ Xyster Framework                                                             NEW
 |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
 =BUILD 7 / ??-???-2008 / basen on revision ??? =
+- Xyster_Container
+    * Added Xyster_Container to core
 - Xyster_Collection
     * Rework to allow for delegates.  New fixed classes removing immutable logic
       from existing ones.
