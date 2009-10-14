@@ -18,6 +18,18 @@
  */
 require_once 'Xyster/Orm/Type/IType.php';
 /**
+ * @see Xyster_Db_DataType
+ */
+require_once 'Xyster/Db/DataType.php';
+/**
+ * Zend_Db
+ */
+require_once 'Zend/Db.php';
+/**
+ * @see Xyster_Type
+ */
+require_once 'Xyster/Type.php';
+/**
  * An abstract mapping between a database type and an internal PHP type
  *
  * @category  Xyster
@@ -62,7 +74,7 @@ abstract class Xyster_Orm_Type_AbstractType implements Xyster_Orm_Type_IType
      *
      * @return boolean
      */
-    public function isComponentType()
+    public function isComponent()
     {
         return false;
     }
@@ -72,7 +84,6 @@ abstract class Xyster_Orm_Type_AbstractType implements Xyster_Orm_Type_IType
      *
      * @param mixed $old The old value
      * @param mixed $current The current value
-     * @param Xyster_Orm_Session_Interface $sess The ORM session
      * @param array $checkable Boolean for each column's updatability
      */
     public function isDirty($old, $current, array $checkable = array())
@@ -115,11 +126,8 @@ abstract class Xyster_Orm_Type_AbstractType implements Xyster_Orm_Type_IType
     }
 
     /**
-     * Translates the value pulled from the statement into the proper type.
-     *
-     * @param array $values The values returned from the result fetch
-     * @param object $owner The owning entity
-     * @param Xyster_Orm_Session_Interface $sess The ORM session
+     * (non-PHPdoc)
+     * @see Xyster_Orm_Type_IType#translateFrom($values, $owner, $sess)
      */
     public function translateFrom(array $values, $owner, Xyster_Orm_ISession $sess)
     {

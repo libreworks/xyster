@@ -86,14 +86,13 @@ abstract class Xyster_Orm_Type_AbstractScalar extends Xyster_Orm_Type_AbstractTy
      *
      * @param mixed $old The old value
      * @param mixed $current The current value
-     * @param Xyster_Orm_Session_Interface $sess The ORM session
      * @param array $checkable Boolean for each column's updatability
      * @return boolean
      */
     public function isDirty($old, $current, array $checkable = array())
     {
         return (!count($checkable) ||
-            ($checkable[0] && parent::isDirty($old, $current, $sess)));
+            ($checkable[0] && parent::isDirty($old, $current, $checkable)));
     }
     
     /**
