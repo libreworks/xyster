@@ -26,8 +26,17 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 
 require_once 'Xyster/Orm/Meta/PropertyTest.php';
 require_once 'Xyster/Orm/Meta/Value/BasicTest.php';
+require_once 'Xyster/Orm/Type/BigIntegerTest.php';
+require_once 'Xyster/Orm/Type/BooleanTest.php';
+require_once 'Xyster/Orm/Type/DateTest.php';
+require_once 'Xyster/Orm/Type/DecimalTest.php';
+require_once 'Xyster/Orm/Type/FloatTest.php';
+require_once 'Xyster/Orm/Type/IntegerTest.php';
+require_once 'Xyster/Orm/Type/RealTest.php';
 require_once 'Xyster/Orm/Type/StringTest.php';
 require_once 'Xyster/Orm/Type/TextTest.php';
+require_once 'Xyster/Orm/Type/TimeTest.php';
+require_once 'Xyster/Orm/Type/TimestampTest.php';
 
 class Xyster_Orm_AllTests
 {
@@ -41,8 +50,17 @@ class Xyster_Orm_AllTests
         $suite = new PHPUnit_Framework_TestSuite('Xyster Framework - Xyster_Orm');
         $suite->addTestSuite('Xyster_Orm_Meta_PropertyTest');
         $suite->addTestSuite('Xyster_Orm_Meta_Value_BasicTest');
+        $suite->addTestSuite('Xyster_Orm_Type_BigIntegerTest');
+        $suite->addTestSuite('Xyster_Orm_Type_BooleanTest');
+        $suite->addTestSuite('Xyster_Orm_Type_DateTest');
+        $suite->addTestSuite('Xyster_Orm_Type_DecimalTest');
+        $suite->addTestSuite('Xyster_Orm_Type_FloatTest');
+        $suite->addTestSuite('Xyster_Orm_Type_IntegerTest');
+        $suite->addTestSuite('Xyster_Orm_Type_RealTest');
         $suite->addTestSuite('Xyster_Orm_Type_StringTest');
         $suite->addTestSuite('Xyster_Orm_Type_TextTest');
+        $suite->addTestSuite('Xyster_Orm_Type_TimeTest');
+        $suite->addTestSuite('Xyster_Orm_Type_TimestampTest');
         return $suite;
     }
 }

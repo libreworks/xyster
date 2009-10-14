@@ -14,6 +14,7 @@
  * @version   $Id$
  */
 require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+require_once 'Xyster/Orm/ISession.php';
 
 /**
  * Abstract test class for scalar types
@@ -24,6 +25,20 @@ abstract class Xyster_Orm_Type_ScalarTestSupport extends PHPUnit_Framework_TestC
     {
         $object = $this->_getFixture();
         self::assertFalse($object->hasTranslate());
+    }
+    
+    public function testTranslateFrom()
+    {
+        $object = $this->_getFixture();
+        self::assertNull($object->translateFrom(array(null), null,
+            $this->getMock('Xyster_Orm_ISession')));
+    }
+    
+    public function testTranslateTo()
+    {
+        $object = $this->_getFixture();
+        self::assertNull($object->translateTo(null, null,
+            $this->getMock('Xyster_Orm_ISession')));
     }
     
     public function testCommonPolymorphism()
