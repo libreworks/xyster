@@ -24,6 +24,8 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Xyster_Orm_AllTests::main');
 }
 
+require_once 'Xyster/Orm/Meta/EntityBuilderTest.php';
+require_once 'Xyster/Orm/Meta/EntityTest.php';
 require_once 'Xyster/Orm/Meta/PropertyTest.php';
 require_once 'Xyster/Orm/Meta/Value/BasicTest.php';
 require_once 'Xyster/Orm/Type/BigIntegerTest.php';
@@ -48,6 +50,10 @@ class Xyster_Orm_AllTests
     public static function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('Xyster Framework - Xyster_Orm');
+        $suite->setBackupGlobals(false);
+        $suite->setBackupStaticAttributes(false);
+        $suite->addTestSuite('Xyster_Orm_Meta_EntityBuilderTest');
+        $suite->addTestSuite('Xyster_Orm_Meta_EntityTest');
         $suite->addTestSuite('Xyster_Orm_Meta_PropertyTest');
         $suite->addTestSuite('Xyster_Orm_Meta_Value_BasicTest');
         $suite->addTestSuite('Xyster_Orm_Type_BigIntegerTest');
