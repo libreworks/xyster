@@ -26,6 +26,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 
 require_once 'Xyster/Orm/Meta/EntityBuilderTest.php';
 require_once 'Xyster/Orm/Meta/EntityTest.php';
+require_once 'Xyster/Orm/Meta/IdPropertyTest.php';
 require_once 'Xyster/Orm/Meta/PropertyTest.php';
 require_once 'Xyster/Orm/Meta/Value/BasicTest.php';
 require_once 'Xyster/Orm/Type/BigIntegerTest.php';
@@ -54,6 +55,7 @@ class Xyster_Orm_AllTests
         $suite->setBackupStaticAttributes(false);
         $suite->addTestSuite('Xyster_Orm_Meta_EntityBuilderTest');
         $suite->addTestSuite('Xyster_Orm_Meta_EntityTest');
+        $suite->addTestSuite('Xyster_Orm_Meta_IdPropertyTest');
         $suite->addTestSuite('Xyster_Orm_Meta_PropertyTest');
         $suite->addTestSuite('Xyster_Orm_Meta_Value_BasicTest');
         $suite->addTestSuite('Xyster_Orm_Type_BigIntegerTest');

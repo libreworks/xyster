@@ -36,7 +36,7 @@ class Xyster_Orm_Meta_Entity
     protected $_hasNaturalId = false;
     
     /**
-     * @var Xyster_Orm_Meta_Property
+     * @var Xyster_Orm_Meta_IdProperty
      */
     protected $_identifier;
         
@@ -103,7 +103,7 @@ class Xyster_Orm_Meta_Entity
      * @param Xyster_Orm_Meta_Property $version Optional. The version property.
      * @param array $options An array of name-value pairs containing options.
      */
-    public function __construct(Xyster_Type $type, array $properties, Xyster_Db_Table $table, Xyster_Orm_Meta_Property $id = null, Xyster_Orm_Meta_Property $version = null, array $options = array())
+    public function __construct(Xyster_Type $type, array $properties, Xyster_Db_Table $table, Xyster_Orm_Meta_IdProperty $id = null, Xyster_Orm_Meta_Property $version = null, array $options = array())
     {
         $this->_type = $type;
         $this->_table = $table;
@@ -153,7 +153,7 @@ class Xyster_Orm_Meta_Entity
     /**
      * Gets the identifier property for this entity
      *
-     * @return Xyster_Orm_Meta_Property
+     * @return Xyster_Orm_Meta_IdProperty
      */
     public function getIdProperty()
     {

@@ -15,6 +15,8 @@
  */
 require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 require_once 'Xyster/Orm/Meta/Entity.php';
+require_once 'Xyster/Orm/Meta/IdProperty.php';
+require_once 'Xyster/Orm/Id/IGenerator.php';
 require_once 'Xyster/Orm/Meta/Property.php';
 require_once 'Xyster/Orm/Type/String.php';
 require_once 'Xyster/Db/Column.php';
@@ -39,7 +41,8 @@ class Xyster_Orm_Meta_EntityTest extends PHPUnit_Framework_TestCase
         $properties = array($prop);
         $idCol = new Xyster_Db_Column('entity_id');
         $idValue = new Xyster_Orm_Meta_Value_Basic($table, $type, array($idCol));
-        $idProp = new Xyster_Orm_Meta_Property("id", $idValue, new Xyster_Type_Property_Direct('id'), false, false);
+        $idProp = new Xyster_Orm_Meta_IdProperty("id", $idValue, new Xyster_Type_Property_Direct('id'),
+            $this->getMock('Xyster_Orm_Id_IGenerator'));
         $vCol = new Xyster_Db_Column('version');
         $vValue = new Xyster_Orm_Meta_Value_Basic($table, $type, array($vCol));
         $vProp = new Xyster_Orm_Meta_Property('version', $vValue, new Xyster_Type_Property_Direct('version'), false, false);

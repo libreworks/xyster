@@ -127,10 +127,10 @@ class Xyster_Orm_Meta_EntityBuilder
     /**
      * Sets the identifier property
      *
-     * @param Xyster_Orm_Meta_Property $prop
+     * @param Xyster_Orm_Meta_IdProperty $prop
      * @return Xyster_Orm_Meta_EntityBuilder provides a fluent interface
      */
-    public function setIdProperty( Xyster_Orm_Meta_Property $prop )
+    public function setIdProperty( Xyster_Orm_Meta_IdProperty $prop )
     {
         $this->_identifier = $prop;
         return $this;

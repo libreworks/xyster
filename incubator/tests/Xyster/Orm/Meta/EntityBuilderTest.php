@@ -16,6 +16,8 @@
 require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 require_once 'Xyster/Orm/Meta/EntityBuilder.php';
 require_once 'Xyster/Orm/Meta/Property.php';
+require_once 'Xyster/Orm/Meta/IdProperty.php';
+require_once 'Xyster/Orm/Id/IGenerator.php';
 require_once 'Xyster/Orm/Type/String.php';
 require_once 'Xyster/Db/Column.php';
 require_once 'Xyster/Db/Table.php';
@@ -54,7 +56,8 @@ class Xyster_Orm_Meta_EntityBuilderTest extends PHPUnit_Framework_TestCase
         $prop = new Xyster_Orm_Meta_Property("testProperty", $value, $property, true, true);
         $idCol = new Xyster_Db_Column('entity_id');
         $idValue = new Xyster_Orm_Meta_Value_Basic($this->table, $type, array($idCol));
-        $idProp = new Xyster_Orm_Meta_Property("id", $idValue, new Xyster_Type_Property_Direct('id'), false, false);
+        $idProp = new Xyster_Orm_Meta_IdProperty("id", $idValue, new Xyster_Type_Property_Direct('id'),
+            $this->getMock('Xyster_Orm_Id_IGenerator'));
         self::assertSame($this->object, $this->object->setLazy(true));
         self::assertSame($this->object, $this->object->setTuplizerType($tuplizerType));
         self::assertSame($this->object, $this->object->setProxyInterfaceType($proxyType));
@@ -92,7 +95,8 @@ class Xyster_Orm_Meta_EntityBuilderTest extends PHPUnit_Framework_TestCase
         $prop = new Xyster_Orm_Meta_Property("testProperty", $value, $property, false, false);
         $idCol = new Xyster_Db_Column('entity_id');
         $idValue = new Xyster_Orm_Meta_Value_Basic($this->table, $type, array($idCol));
-        $idProp = new Xyster_Orm_Meta_Property("id", $idValue, new Xyster_Type_Property_Direct('id'), false, false);
+        $idProp = new Xyster_Orm_Meta_IdProperty("id", $idValue, new Xyster_Type_Property_Direct('id'),
+            $this->getMock('Xyster_Orm_Id_IGenerator'));
         self::assertSame($this->object, $this->object->setMutable(false));
         self::assertSame($this->object, $this->object->setWhere($where));
         self::assertSame($this->object, $this->object->addProperty($prop));

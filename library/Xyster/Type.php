@@ -33,6 +33,8 @@ class Xyster_Type
     
     private static $_classes = array();
     
+    private static $_scalarTypeInstances = array();
+    
     protected $_type;
     
     /**
@@ -41,6 +43,10 @@ class Xyster_Type
     protected $_class;
     
     const INT_MAX_32 = 2147483647;
+    const BOOLEAN = 'boolean';
+    const DOUBLE = 'double';
+    const INTEGER = 'integer';
+    const STRING = 'string';
     
     /**
      * Creates a new type representation
@@ -262,7 +268,9 @@ class Xyster_Type
      */
     public static function of( $value )
     {
-        return new self(is_object($value) ? get_class($value) : gettype($value));
+        $type = is_object($value) ? get_class($value) : gettype($value);
+        return in_array($type, self::$_scalarTypes) ?
+            self::_staticType($type): new self($type);
     }
     
     /**
@@ -331,6 +339,54 @@ class Xyster_Type
         }
         
         return $hash;
+    }
+    
+    /**
+     * Gets a type for the PHP boolean scalar value
+     * 
+     * @return Xyster_Type
+     */
+    public static function boolean()
+    {
+        return self::_staticType(self::BOOLEAN);
+    }
+
+    /**
+     * Gets a type for the PHP double scalar value
+     * 
+     * @return Xyster_Type
+     */
+    public static function double()
+    {
+        return self::_staticType(self::DOUBLE);
+    }
+    
+    /**
+     * Gets a type for the PHP integer scalar value
+     * 
+     * @return Xyster_Type
+     */
+    public static function integer()
+    {
+        return self::_staticType(self::INTEGER);
+    }
+    
+    /**
+     * Gets a type for the PHP string scalar value
+     * 
+     * @return Xyster_Type
+     */
+    public static function string()
+    {
+        return self::_staticType(self::STRING);
+    }
+
+    private static function _staticType($name)
+    {
+        if ( !array_key_exists($name, self::$_scalarTypeInstances) ) {
+            self::$_scalarTypeInstances[$name] = new Xyster_Type($name);
+        }
+        return self::$_scalarTypeInstances[$name];
     }
     
     /**
