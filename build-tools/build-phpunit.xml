@@ -85,7 +85,7 @@
       </fileset>
     </coverage-setup>
         
-    <phpunit codecoverage="true" printsummary="true">
+    <phpunit codecoverage="true" bootstrap="${zf.export.dir}/tests/Bootstrap.php" printsummary="true">
       <batchtest>
         <fileset dir="${zf.export.dir}/tests">
           <include name="**/*Test.php"/>

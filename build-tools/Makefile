@@ -44,7 +44,7 @@ PHPDOC=phpdoc
 # the release files. ZF_SVN_DIR is the path to the directory in SVN
 # from which the release should be created, relative to the repository
 # location (e.g., trunk, branch/release-1.0).
-ZF_SVN_REVISION=272
+ZF_SVN_REVISION=421
 ZF_SVN_DIR=tags/02-build-01
 
 # ZF_VERSION is the release version string to build.  This is added
