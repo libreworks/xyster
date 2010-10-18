@@ -9,24 +9,21 @@
  *
  * @category  Xyster
  * @package   Xyster_Controller
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
-/**
- * Zend_Controller_Action_Helper_Abstract
- */
-require_once 'Zend/Controller/Action/Helper/Abstract.php';
+namespace Xyster\Controller\Action\Helper;
 /**
  * File response headers action helper
  *
  * @category  Xyster
  * @package   Xyster_Controller
  * @subpackage Helpers
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Controller_Action_Helper_File extends Zend_Controller_Action_Helper_Abstract
+class File extends \Zend_Controller_Action_Helper_Abstract
 {
     /**
      * The default MIME type
@@ -73,5 +70,16 @@ class Xyster_Controller_Action_Helper_File extends Zend_Controller_Action_Helper
             ->setHeader('Accept-Ranges', 'bytes')
             ->setHeader('Content-Type', $mime)
             ->setHeader('Content-Disposition', 'attachment; filename="' . $name . '"');
+    }
+
+    /**
+     * Gets the name of this helper.
+     *
+     * @todo Remove when ZF2 is out
+     * @return string The name of the helper
+     */
+    public function getName()
+    {
+        return "File";
     }
 }

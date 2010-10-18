@@ -9,23 +9,20 @@
  *
  * @category  Xyster
  * @package   Xyster_Validate
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id: Uri.php 190 2008-01-07 22:39:57Z doublecompile $
  */
+namespace Xyster\Validate;
 /**
- * Zend_Validate_Int
- */
-require_once 'Zend/Validate/Int.php';
-/**
- * A URI validator
+ * An integer validator
  *
  * @category  Xyster
  * @package   Xyster_Validate
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Validate_Int extends Zend_Validate_Int
+class Int extends \Zend_Validate_Int
 {
     /**
      * Defined by Zend_Validate_Interface
@@ -47,11 +44,10 @@ class Xyster_Validate_Int extends Zend_Validate_Int
         $valueFiltered = str_replace($locale['thousands_sep'], '', $valueFiltered);
 
         if ( !preg_match( '/^([0-9]+)(\.[0-9]+)?$/', $valueFiltered ) ) {
-            $this->_error();
+            $this->_error(self::NOT_INT);
             return false;
         }
 
         return true;
     }
-
 }

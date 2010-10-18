@@ -9,23 +9,20 @@
  *
  * @category  Xyster
  * @package   Xyster_Container
- * @copyright Copyright (c) Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
-/**
- * @see Xyster_Container_Provider_Delegate
- */
-require_once 'Xyster/Container/Provider/Delegate.php';
+namespace Xyster\Container\Provider;
 /**
  * Abstract provider deletate class
  *
  * @category  Xyster
  * @package   Xyster_Container
- * @copyright Copyright (c) Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Container_Provider_Caching extends Xyster_Container_Provider_Delegate
+class Caching extends Delegate
 {
     protected $_reference;
     
@@ -36,11 +33,11 @@ class Xyster_Container_Provider_Caching extends Xyster_Container_Provider_Delega
      * but that is not required.  For example, a provider could keep a reference
      * to the same object or store it in an external scope.
      * 
-     * @param Xyster_Container_IContainer $container The container (used for dependency resolution)
-     * @param Xyster_Type $into Optional. The type into which this component will be injected
+     * @param \Xyster\Container\IContainer $container The container (used for dependency resolution)
+     * @param \Xyster\Type\Type $into Optional. The type into which this component will be injected
      * @return mixed The component
      */
-    public function get(Xyster_Container_IContainer $container, Xyster_Type $into = null)
+    public function get(\Xyster\Container\IContainer $container, \Xyster\Type\Type $into = null)
     {
         if ( $this->_reference === null ) {
             $this->_reference = $this->_delegate->get($container, $into);

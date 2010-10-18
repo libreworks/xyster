@@ -75,10 +75,10 @@ This build file is customized for the Xyster Framework
   <property name="zf.src.default" value="${project.basedir}/.." />
   <property name="zf.product.name" value="Xyster Framework" />
   <property name="zf.productname" value="xyster" />
-  <property name="zf.version" value="build6" />
-  <property name="svn.url" value="https://xyster.devweblog.org/svn" />
-  <property name="zf.svn.url" value="${svn.url}/tags/build-6" />
-  <property name="zf.svn.tag" value="build6" />
+  <property name="zf.version" value="02build01" />
+  <property name="svn.url" value="https://forge.libreworks.net/svn/xyster" />
+  <property name="zf.svn.url" value="${svn.url}/tags/02-build-01" />
+  <property name="zf.svn.tag" value="02-build-01" />
   <property name="zf.svn.revision" value="272" />
   <property name="zf.export.dir" value="./${zf.productname}-export-${zf.svn.tag}" />
   <property name="stage.home" value="${project.basedir}/stage" />

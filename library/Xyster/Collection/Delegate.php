@@ -9,35 +9,32 @@
  *
  * @category  Xyster
  * @package   Xyster_Collection
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
-/**
- * @see Xyster_Collection_Interface
- */
-require_once 'Xyster/Collection/Interface.php';
+namespace Xyster\Collection;
 /**
  * A collection that delegates its methods to an internal collection
  *
  * @category  Xyster
  * @package   Xyster_Collection
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Collection_Delegate implements Xyster_Collection_Interface
+class Delegate implements ICollection
 {
     /**
-     * @var Xyster_Collection_Interface
+     * @var ICollection
      */
     private $_delegate;
     
     /**
      * Creates a new delegate collection
      *
-     * @param Xyster_Collection_Interface $delegate
+     * @param ICollection $delegate
      */
-    public function __construct( Xyster_Collection_Interface $delegate )
+    public function __construct( ICollection $delegate )
     {
         $this->_delegate = $delegate;
     }
@@ -53,7 +50,7 @@ class Xyster_Collection_Delegate implements Xyster_Collection_Interface
      * @param mixed $item The item to add
      * @return boolean Whether the collection changed as a result of this method
      * @throws InvalidArgumentException if the collection cannot contain the value
-     * @throws Xyster_Collection_Exception if the collection cannot be modified
+     * @throws \Xyster\Collection\Exception if the collection cannot be modified
      */
     function add( $item )
     {
@@ -63,7 +60,7 @@ class Xyster_Collection_Delegate implements Xyster_Collection_Interface
     /**
      * Removes all items from the collection
      *
-     * @throws Xyster_Collection_Exception if the collection cannot be modified
+     * @throws \Xyster\Collection\Exception if the collection cannot be modified
      */
     public function clear()
     {
@@ -107,10 +104,10 @@ class Xyster_Collection_Delegate implements Xyster_Collection_Interface
     /**
      * Tests to see whether the collection contains all of the supplied values
      *
-     * @param Xyster_Collection_Interface $values The values to test
+     * @param ICollection $values The values to test
      * @return boolean Whether the collection contains all of the supplied values
      */
-    public function containsAll( Xyster_Collection_Interface $values )
+    public function containsAll( ICollection $values )
     {
         return $this->_delegate->containsAll($values);
     }
@@ -121,10 +118,10 @@ class Xyster_Collection_Delegate implements Xyster_Collection_Interface
      * Basically, implementations can safely return true on the first item that
      * is found.
      * 
-     * @param Xyster_Collection_Interface $values The values to test
+     * @param ICollection $values The values to test
      * @return boolean Whether the collection contains any of the supplied values
      */
-    public function containsAny( Xyster_Collection_Interface $values )
+    public function containsAny( ICollection $values )
     {
         return $this->_delegate->containsAny($values);
     }
@@ -153,12 +150,12 @@ class Xyster_Collection_Delegate implements Xyster_Collection_Interface
      * If the collection is not allowed to contain the supplied value, an
      * InvalidArgumentException should be thrown.    
      *
-     * @param Xyster_Collection_Interface $values
+     * @param ICollection $values
      * @return boolean Whether the collection changed as a result of this method
      * @throws InvalidArgumentException if the collection cannot contain the value
-     * @throws Xyster_Collection_Exception if the collection cannot be modified
+     * @throws \Xyster\Collection\Exception if the collection cannot be modified
      */
-    public function merge( Xyster_Collection_Interface $values )
+    public function merge( ICollection $values )
     {
         return $this->_delegate->merge($values);
     }
@@ -168,7 +165,7 @@ class Xyster_Collection_Delegate implements Xyster_Collection_Interface
      *
      * @param mixed $item The value to remove
      * @return boolean If the value was in the collection
-     * @throws Xyster_Collection_Exception if the collection cannot be modified
+     * @throws \Xyster\Collection\Exception if the collection cannot be modified
      */
     public function remove( $item )
     {
@@ -178,11 +175,11 @@ class Xyster_Collection_Delegate implements Xyster_Collection_Interface
     /**
      * Removes all of the specified values from the collection
      *
-     * @param Xyster_Collection_Interface $values The values to remove
+     * @param ICollection $values The values to remove
      * @return boolean Whether the collection changed as a result of this method
-     * @throws Xyster_Collection_Exception if the collection cannot be modified
+     * @throws \Xyster\Collection\Exception if the collection cannot be modified
      */
-    public function removeAll( Xyster_Collection_Interface $values )
+    public function removeAll( ICollection $values )
     {
         return $this->_delegate->removeAll($values);
     }
@@ -193,11 +190,11 @@ class Xyster_Collection_Delegate implements Xyster_Collection_Interface
      * If the collection doesn't contain any of the values supplied, it should
      * simply be emptied.
      *
-     * @param Xyster_Collection_Interface $values The values to keep
+     * @param ICollection $values The values to keep
      * @return boolean Whether the collection changed as a result of this method
-     * @throws Xyster_Collection_Exception if the collection cannot be modified
+     * @throws \Xyster\Collection\Exception if the collection cannot be modified
      */
-    public function retainAll( Xyster_Collection_Interface $values )
+    public function retainAll( ICollection $values )
     {
         return $this->_delegate->retainAll($values);
     }
@@ -225,7 +222,7 @@ class Xyster_Collection_Delegate implements Xyster_Collection_Interface
     /**
      * Gets the delegate collection
      *
-     * @return Xyster_Collection_Interface
+     * @return ICollection
      */
     protected function _getDelegate()
     {
@@ -235,9 +232,9 @@ class Xyster_Collection_Delegate implements Xyster_Collection_Interface
     /**
      * Sets the delegate collection
      *
-     * @param Xyster_Collection_Interface $collection
+     * @param ICollection $collection
      */
-    protected function _setDelegate( Xyster_Collection_Interface $collection )
+    protected function _setDelegate( ICollection $collection )
     {
         $this->_delegate = $collection;
     }

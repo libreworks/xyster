@@ -1,4 +1,4 @@
-Copyright (c) 2007-2008, Irrational Logic, Inc.
+Copyright (c) LibreWorks, LLC.
 
 All rights reserved.
 

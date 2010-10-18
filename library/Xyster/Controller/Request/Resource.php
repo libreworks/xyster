@@ -9,23 +9,20 @@
  *
  * @category  Xyster
  * @package   Xyster_Acl
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
-/**
- * Zend_Acl_Resource_Interface
- */
-require_once 'Zend/Acl/Resource/Interface.php';
+namespace Xyster\Controller\Request;
 /**
  * An ACL resource to represent an MVC dispatch location
  *
  * @category  Xyster
  * @package   Xyster_Controller
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Controller_Request_Resource implements Zend_Acl_Resource_Interface
+class Resource implements \Zend_Acl_Resource_Interface
 {
     /**
      * @var string
@@ -59,10 +56,10 @@ class Xyster_Controller_Request_Resource implements Zend_Acl_Resource_Interface
     /**
      * Creates a new request resource based on the values in a request
      *
-     * @param Zend_Controller_Request_Abstract $request
-     * @return Xyster_Controller_Request_Resource
+     * @param \Zend_Controller_Request_Abstract $request
+     * @return \Xyster\Controller\Request\Resource
      */
-    static public function create( Zend_Controller_Request_Abstract $request )
+    static public function create( \Zend_Controller_Request_Abstract $request )
     { 
         return new self($request->getModuleName(),
             $request->getControllerName(), $request->getActionName());

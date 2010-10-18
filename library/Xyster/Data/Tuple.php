@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Xyster Framework
  *
@@ -9,156 +10,147 @@
  *
  * @category  Xyster
  * @package   Xyster_Data
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
-/**
- * @see Xyster_Data_Set
- */
-require_once 'Xyster/Data/Set.php';
-/**
- * @see Xyster_Data_Field_Getter
- */
-require_once 'Xyster/Data/Field/Getter.php';
+namespace Xyster\Data;
 /**
  * A set that holds rows and columns
  *
  * @category  Xyster
  * @package   Xyster_Data
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Data_Tuple extends Xyster_Data_Set
+class Tuple extends Set
 {
     protected $_names = array();
-	protected $_values = array();
-	
-	/**
-	 * Creates a new tuple
-	 *
-	 * @param array $values An associative array of group names and their values
-	 * @param Xyster_Collection_Interface $contents The objects or arrays to add to the tuple
-	 */
-	public function __construct( array $values, Xyster_Collection_Interface $contents = null )
-	{
-	    parent::__construct($contents);
-	    
-	    $this->_values = $values;
-	    $this->_names = array_keys($values);
-	}
-	
-	/**
-	 * Gets the names of the groups
-	 *
-	 * @return array
-	 */
-	public function getNames()
-	{
-		return $this->_names;
-	}
+    protected $_values = array();
 
-	/**
-	 * Gets the value of a group
-	 *
-	 * @param string $name  The group name
-	 * @return string
-	 */
-	public function getValue($name)
-	{
-		return $this->_values[$name];
-	}
+    /**
+     * Creates a new tuple
+     *
+     * @param array $values An associative array of group names and their values
+     * @param \Xyster\Collection\ICollection $contents The objects or arrays to add to the tuple
+     */
+    public function __construct(array $values, \Xyster\Collection\ICollection $contents = null)
+    {
+        parent::__construct($contents);
 
-	/**
-	 * Gets the values for the groups
-	 *
-	 * @return array
-	 */
-	public function getValues()
-	{
-		return $this->_values;
-	}
+        $this->_values = $values;
+        $this->_names = array_keys($values);
+    }
 
-	/**
-	 * Flattens the tuple into a data row
-	 *
-	 * @param Xyster_Data_Field_Clause $fields
-	 * @return array
-	 */
-	public function toRow( Xyster_Data_Field_Clause $fields )
-	{
-		$values = array();
-		foreach( $fields as $field ) {
-			$values[$field->getAlias()] = ( $field instanceof Xyster_Data_Field_Aggregate ) ?
-				$this->aggregate($field) : $this->_values[$field->getAlias()];
-		}
-		return $values;
-	}
-	
-	/**
-	 * Creates the Tuples for a collection
-	 *
-	 * @param Xyster_Data_Set $rs  The dataset to add rows representing the tuples
-	 * @param mixed $collection  The collection of objects/hashtables to use
-	 * @param Xyster_Data_Field_Clause $fields  The field objects to evaluate
-	 * @param array $having  Optional. An array of {@link Xyster_Data_Criterion} objects 
-	 * @param int $limit  Optional. The maximum number of tuples to create
-	 * @param int $offset  Optional.  The number of tuples to skip before adding
-	 * @throws Xyster_Data_Set_Exception if there are no grouped columns in the $fields array
-	 */
-	static public function makeTuples( Xyster_Data_Set $rs, $collection, Xyster_Data_Field_Clause $fields, array $having = null, $limit = 0, $offset = 0 )
-	{
-		$groups = array();
-		foreach( $fields as $v ) {
-			if ( $v instanceof Xyster_Data_Field_Group ) {
-				$groups[] = $v;
-			}
-		}
-		if ( !count($groups) ) {
-			require_once 'Xyster/Data/Set/Exception.php';
-			throw new Xyster_Data_Set_Exception('You must specify at least one grouped field');
-		}
+    /**
+     * Gets the names of the groups
+     *
+     * @return array
+     */
+    public function getNames()
+    {
+        return $this->_names;
+    }
 
-		$tuples = array();
-		$tupleValues = array();
-		foreach( $collection as $v ) {
-			$groupValues = array();
-			$groupHash = '';
-			foreach( $groups as $group ) {
-				$value = Xyster_Data_Field_Getter::get($v, $group);
-				$groupValues[$group->getAlias()] = $value;
-				$groupHash .= "['".$value."']";
-			}
-			$tupleValues[$groupHash] = $groupValues;
-			if ( !isset($tuples[$groupHash]) ) {
-				$tuples[$groupHash] = array();
-			}
-			$tuples[$groupHash][] = $v;
-		}
+    /**
+     * Gets the value of a group
+     *
+     * @param string $name  The group name
+     * @return string
+     */
+    public function getValue($name)
+    {
+        return $this->_values[$name];
+    }
 
-		$loffset = 0;
-		require_once 'Xyster/Collection.php';
-		foreach( $tupleValues as $hash=>$values ) {
-			$tuple = new Xyster_Data_Tuple($values,
-			    Xyster_Collection::using($tuples[$hash]));
-			$ok = true;
-			if ( $having ) {
-				foreach( $having as $crit ) {
-					if ( !$crit->evaluate($tuple) ) {
-						$ok = false;
-					}
-				}
-			}
-			if ( $ok ) {
-				if ( $loffset < $offset ) {
-					$loffset++;
-				} else {
-					$rs->add($tuple->toRow($fields));
-					if ( $limit > 0 && count($rs) == $limit ) {
-						break;
-					}
-				}
-			}
-		}
-	}
+    /**
+     * Gets the values for the groups
+     *
+     * @return array
+     */
+    public function getValues()
+    {
+        return $this->_values;
+    }
+
+    /**
+     * Flattens the tuple into a data row
+     *
+     * @param Symbol\FieldClause $fields
+     * @return array
+     */
+    public function toRow(Symbol\FieldClause $fields)
+    {
+        $values = array();
+        foreach ($fields as $field) {
+            $values[$field->getAlias()] = ( $field instanceof Symbol\AggregateField ) ?
+                    $this->aggregate($field) : $this->_values[$field->getAlias()];
+        }
+        return $values;
+    }
+
+    /**
+     * Creates the Tuples for a collection
+     *
+     * @param Set $rs  The dataset to add rows representing the tuples
+     * @param mixed $collection  The collection of objects/hashtables to use
+     * @param Symbol\FieldClause $fields  The field objects to evaluate
+     * @param array $having  Optional. An array of {@link Symbol\Criterion} objects
+     * @param int $limit  Optional. The maximum number of tuples to create
+     * @param int $offset  Optional.  The number of tuples to skip before adding
+     * @throws \Xyster\Data\DataException if there are no grouped columns in the $fields array
+     */
+    static public function makeTuples(Set $rs, $collection, Symbol\FieldClause $fields, array $having = null, $limit = 0, $offset = 0)
+    {
+        $groups = array();
+        foreach ($fields as $v) {
+            if ($v instanceof Symbol\GroupField) {
+                $groups[] = $v;
+            }
+        }
+        if (!count($groups)) {
+            throw new \Xyster\Data\DataException('You must specify at least one grouped field');
+        }
+
+        $tuples = array();
+        $tupleValues = array();
+        foreach ($collection as $v) {
+            $groupValues = array();
+            $groupHash = '';
+            foreach ($groups as $group) {
+                $value = Symbol\Evaluator::get($v, $group);
+                $groupValues[$group->getAlias()] = $value;
+                $groupHash .= "['" . $value . "']";
+            }
+            $tupleValues[$groupHash] = $groupValues;
+            if (!isset($tuples[$groupHash])) {
+                $tuples[$groupHash] = array();
+            }
+            $tuples[$groupHash][] = $v;
+        }
+
+        $loffset = 0;
+        foreach ($tupleValues as $hash => $values) {
+            $tuple = new self($values,
+                    \Xyster\Collection\Collection::using($tuples[$hash]));
+            $ok = true;
+            if ($having) {
+                foreach ($having as $crit) {
+                    if (!$crit->evaluate($tuple)) {
+                        $ok = false;
+                    }
+                }
+            }
+            if ($ok) {
+                if ($loffset < $offset) {
+                    $loffset++;
+                } else {
+                    $rs->add($tuple->toRow($fields));
+                    if ($limit > 0 && count($rs) == $limit) {
+                        break;
+                    }
+                }
+            }
+        }
+    }
 }

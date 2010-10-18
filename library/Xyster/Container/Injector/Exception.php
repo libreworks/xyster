@@ -9,22 +9,19 @@
  *
  * @category  Xyster
  * @package   Xyster_Container
- * @copyright Copyright (c) Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
-/**
- * @see Xyster_Container_Exception
- */
-require_once 'Xyster/Container/Exception.php';
+namespace Xyster\Container\Injector;
 /**
  * Xyster_Container exception
  *
  * @category  Xyster
  * @package   Xyster_Container
- * @copyright Copyright (c) Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Container_Injector_Exception extends Xyster_Container_Exception
+class Exception extends \Xyster\Container\ContainerException
 {
 }

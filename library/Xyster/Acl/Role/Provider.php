@@ -9,46 +9,39 @@
  *
  * @category  Xyster
  * @package   Xyster_Acl
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
-/**
- * @see Xyster_Acl_RoleProvider_Interface
- */
-require_once 'Xyster/Acl/Role/Provider/Interface.php';
-/**
- * Zend_Acl_Role
- */
-require_once 'Zend/Acl/Role.php';
+namespace Xyster\Acl\Role;
 /**
  * Default provider for authentication to authorization 
  *
  * @category  Xyster
  * @package   Xyster_Acl
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Acl_Role_Provider implements Xyster_Acl_Role_Provider_Interface
+class Provider implements IProvider
 {
     /**
      * Gets a Zend_Acl_Role_Interface based on the identity provided
      *
      * @param mixed $identity An identity as provided by Zend_Auth
-     * @return Zend_Acl_Role_Interface The role to which this identity corresponds
+     * @return \Zend_Acl_Role_Interface The role to which this identity corresponds
      */
     public function getRole( $identity )
     {
-        return new Zend_Acl_Role($identity);
+        return new \Zend_Acl_Role($identity);
     }
     
     /**
      * Gets the parent roles for the provided role
      *
-     * @param Zend_Acl_Role_Interface $role
-     * @return array An array of Zend_Acl_Role_Interface objects
+     * @param \Zend_Acl_Role_Interface $role
+     * @return array An array of \Zend_Acl_Role_Interface objects
      */
-    public function getRoleParents( Zend_Acl_Role_Interface $role )
+    public function getRoleParents( \Zend_Acl_Role_Interface $role )
     {
         return array();
     }

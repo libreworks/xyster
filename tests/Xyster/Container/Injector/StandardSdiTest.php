@@ -10,23 +10,23 @@
  * @category  Xyster
  * @package   UnitTests
  * @subpackage Xyster_Container
- * @copyright Copyright (c) Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
-require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
-require_once 'Xyster/Container/Injector/Standard.php';
-require_once 'Xyster/Container/Definition.php';
-require_once 'Xyster/Container.php';
-require_once 'Xyster/Container/_files/Sdi.php';
+namespace XysterTest\Container\Injector;
+use Xyster\Container\Injector\Standard;
+use Xyster\Container\Definition;
+use Xyster\Container\Container;
+require_once dirname(dirname(__FILE__)) . '/_files/Sdi.php';
 
 /**
  * Only for testing the setter injection
  */
-class Xyster_Container_Injector_StandardSdiTest extends PHPUnit_Framework_TestCase
+class StandardSdiTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var    Xyster_Container_Injector_Standard
+     * @var    Standard
      */
     protected $object;
 
@@ -35,39 +35,42 @@ class Xyster_Container_Injector_StandardSdiTest extends PHPUnit_Framework_TestCa
      */
     protected function setUp()
     {
-        $def = new Xyster_Container_Definition('RocketShip');
-        $def->dependsOn('pilot', 'RocketPilot')
-            ->dependsOn('fuel', 'RocketFuel');
-        $this->object = new Xyster_Container_Injector_Standard($def);
+        $def = new Definition('\XysterTest\Container\RocketShip');
+        $def->dependsOn('pilot', 'XysterTest\Container\RocketPilot')
+            ->dependsOn('fuel', 'XysterTest\Container\RocketFuel');
+        $this->object = new Standard($def);
     }
 
     public function testGet()
     {
-        $container = new Xyster_Container();
-        $container->add(Xyster_Container::definition('RocketPilot')
-            ->dependsOn('suit', 'SpaceSuit'))
-            ->add(new Xyster_Container_Definition('RocketFuel'))
-            ->add(new Xyster_Container_Definition('SpaceSuit'));
+        $container = new Container();
+        $container->add(Container::definition('\XysterTest\Container\RocketPilot')
+            ->dependsOn('suit', 'XysterTest\Container\SpaceSuit'))
+            ->add(new Definition('XysterTest\Container\RocketFuel'))
+            ->add(new Definition('XysterTest\Container\SpaceSuit'));
         $object = $this->object->get($container);
-        self::assertType('RocketShip', $object);
-        self::assertAttributeEquals(new RocketFuel(), '_fuel', $object);
-        self::assertType('RocketPilot', $object->getPilot());
+        self::assertType('\XysterTest\Container\RocketShip', $object);
+        self::assertAttributeEquals(new \XysterTest\Container\RocketFuel(), '_fuel', $object);
+        self::assertType('\XysterTest\Container\RocketPilot', $object->getPilot());
     }
-    
+
+    /**
+     * @expectedException \Xyster\Container\Injector\Exception
+     */
     public function testGetBad()
     {
-        $this->setExpectedException('Xyster_Container_Injector_Exception', 'Cannot inject property pilot into RocketShip: key not found in the container: RocketPilot');
-        $this->object->get(new Xyster_Container());
+        //$this->setExpectedException('Xyster_Container_Injector_Exception', 'Cannot inject property pilot into RocketShip: key not found in the container: RocketPilot');
+        $this->object->get(new Container());
     }
     
     public function testGetName()
     {
-        self::assertEquals('RocketShip', $this->object->getName());
+        self::assertEquals('XysterTest\Container\RocketShip', $this->object->getName());
     }
     
     public function testGetType()
     {
-        self::assertEquals(new Xyster_Type('RocketShip'), $this->object->getType());
+        self::assertEquals(new \Xyster\Type\Type('\XysterTest\Container\RocketShip'), $this->object->getType());
     }
 
     public function testGetLabel()
@@ -77,23 +80,25 @@ class Xyster_Container_Injector_StandardSdiTest extends PHPUnit_Framework_TestCa
     
     public function testToString()
     {
-        self::assertEquals('Injector:RocketShip', $this->object->__toString());
+        self::assertEquals('Injector:XysterTest\Container\RocketShip', $this->object->__toString());
     }
-    
+
+    /**
+     * @expectedException \Xyster\Container\Injector\Exception
+     */
     public function testValidateError1()
     {
-        $this->setExpectedException('Xyster_Container_Injector_Exception');
-        $this->object->validate(new Xyster_Container());
+        $this->object->validate(new Container());
     }
     
     public function testValidate()
     {
-        $def = new Xyster_Container_Definition('RocketPilot');
-        $def->dependsOn('suit', 'SpaceSuit');
-        $container = new Xyster_Container();
+        $def = new Definition('\XysterTest\Container\RocketPilot');
+        $def->dependsOn('suit', 'XysterTest\Container\SpaceSuit');
+        $container = new Container();
         $container->add($def)
-            ->add(new Xyster_Container_Definition('RocketFuel'))
-            ->add(new Xyster_Container_Definition('SpaceSuit'));
+            ->add(new Definition('\XysterTest\Container\RocketFuel'))
+            ->add(new Definition('\XysterTest\Container\SpaceSuit'));
         $this->object->validate($container);
     }
 }

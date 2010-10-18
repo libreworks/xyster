@@ -9,24 +9,21 @@
  *
  * @category  Xyster
  * @package   Xyster_Controller
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
-/**
- * Zend_Controller_Action_Helper_Abstract
- */
-require_once 'Zend/Controller/Action/Helper/Abstract.php';
+namespace Xyster\Controller\Action\Helper;
 /**
  * Cache control action helper
  *
  * @category  Xyster
  * @package   Xyster_Controller
  * @subpackage Helpers
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Controller_Action_Helper_Cache extends Zend_Controller_Action_Helper_Abstract
+class Cache extends \Zend_Controller_Action_Helper_Abstract
 {
     /**
      * The cache-control header to send
@@ -106,11 +103,21 @@ class Xyster_Controller_Action_Helper_Cache extends Zend_Controller_Action_Helpe
                 ->setRawHeader('Status: 304 Not Modified')
                 ->setHeader('Content-Length', 0, true);
             // make sure the view renderer doesn't fire
-            require_once 'Zend/Controller/Front.php';
-            Zend_Controller_Front::getInstance()->setParam('noViewRenderer', true);
+            \Zend_Controller_Front::getInstance()->setParam('noViewRenderer', true);
             return true;
         }
         
         return false;
-    } 
+    }
+
+    /**
+     * Gets the name of this helper.
+     *
+     * @todo Remove when ZF2 is out
+     * @return string The name of the helper
+     */
+    public function getName()
+    {
+        return "Cache";
+    }
 }

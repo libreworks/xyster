@@ -8,7 +8,7 @@ in this directory for a high-level list of changes in this release.
 
 New Xyster releases are made available on a regular basis,
 when improvements and bugfixes are made. Please visit the website
-http://xyster.devweblog.org for more information.
+http://xyster.libreworks.net for more information.
 
 
 DOCUMENTATION
@@ -16,7 +16,7 @@ DOCUMENTATION
 
 Xyster Framework documentation is available on the website:
 
-http://xyster.devweblog.org/docs
+http://xyster.libreworks.net/documentation/
 
 
 CLASSES
@@ -35,4 +35,4 @@ SEE ALSO
 
 The Xyster Framework issue tracker can be found here:
 
-http://xyster.devweblog.org/mantis
+http://forge.libreworks.net/projects/xyster/issues

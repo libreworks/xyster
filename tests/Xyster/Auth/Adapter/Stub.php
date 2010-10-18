@@ -10,23 +10,16 @@
  * @category  Xyster
  * @package   Xyster_Auth
  * @subpackage   UnitTests
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
-/**
- * Zend_Auth_Adapter_Interface
- */
-require_once 'Zend/Auth/Adapter/Interface.php';
-/**
- * Zend_Auth_Result
- */
-require_once 'Zend/Auth/Result.php';
+namespace XysterTest\Auth\Adapter;
 /**
  * Just a simple stub object
  *
  */
-class Xyster_Auth_Adapter_Stub implements Zend_Auth_Adapter_Interface
+class Stub implements \Zend_Auth_Adapter_Interface
 {
     protected $_identity;
     
@@ -43,10 +36,10 @@ class Xyster_Auth_Adapter_Stub implements Zend_Auth_Adapter_Interface
     /**
      * Returns the authenticate result
      *
-     * @return Zend_Auth_Result
+     * @return \Zend_Auth_Result
      */
     public function authenticate()
     {
-        return new Zend_Auth_Result(1, $this->_identity);
+        return new \Zend_Auth_Result(1, $this->_identity);
     }
 }

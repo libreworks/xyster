@@ -9,19 +9,20 @@
  *
  * @category  Xyster
  * @package   Xyster_Db
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
+namespace Xyster\Db;
 /**
  * Token containing a SQL fragment and bind values 
  *
  * @category  Xyster
  * @package   Xyster_Db
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Db_Token
+class Token
 {
     /**
      * The SQL fragment
@@ -74,9 +75,9 @@ class Xyster_Db_Token
      * 
      * If keys are the same, values in this token will be overwritten.
      *
-     * @param Xyster_Db_Token $token
+     * @param Token $token
      */
-    public function addBindValues( Xyster_Db_Token $token )
+    public function addBindValues( Token $token )
     {
         $this->_bind = array_merge($this->_bind, $token->_bind);
     }

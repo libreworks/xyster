@@ -9,19 +9,20 @@
  *
  * @category  Xyster
  * @package   Xyster_Validate
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
+namespace Xyster\Validate;
 /**
  * A simple DTO for errors
  *
  * @category  Xyster
  * @package   Xyster_Validate
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Validate_Error
+class Error
 {
     /**
      * @var string

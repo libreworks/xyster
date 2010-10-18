@@ -9,30 +9,19 @@
  *
  * @category  Xyster
  * @package   Xyster_Data
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-/**
- * @see Xyster_Collection_Set_Sortable
- */
-require_once 'Xyster/Collection/Set/Sortable.php';
-/**
- * @see Xyster_Collection_Set
- */
-require_once 'Xyster/Collection/Set.php';
-/**
- * @see Xyster_Data_Field_Getter
- */
-require_once 'Xyster/Data/Field/Getter.php';
+namespace Xyster\Data;
 /**
  * A set that holds rows and columns
  *
  * @category  Xyster
  * @package   Xyster_Data
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Data_Set extends Xyster_Collection_Set_Sortable
+class Set extends \Xyster\Collection\SortableSet
 {
     /**
      * @var Xyster_Collection_Set
@@ -42,18 +31,16 @@ class Xyster_Data_Set extends Xyster_Collection_Set_Sortable
     /**
      * Creates a new data set
      *
-     * @param Xyster_Collection_Interface $values The values to add
+     * @param \Xyster\Collection\ICollection $values The values to add
      */
-    public function __construct( Xyster_Collection_Interface $values = null )
+    public function __construct( \Xyster\Collection\ICollection $values = null )
     {
-        $this->_columns = new Xyster_Collection_Set();
-
-        if ( $values instanceof Xyster_Collection_Interface ) {
+        $this->_columns = new \Xyster\Collection\Set();
+        if ( $values instanceof \Xyster\Collection\ICollection ) {
             if ( !count($this->_columns) && count($values) ) {
                 $first = $values->getIterator()->current();
                 if ( !is_array($first) && !is_object($first) ) {
-                    require_once 'Xyster/Data/Set/Exception.php';
-                    throw new Xyster_Data_Set_Exception('This set can only contain arrays or objects');
+                    throw new \Xyster\Data\DataException('This set can only contain arrays or objects');
                 }
                 $this->_createColumnsFromItem($first);
             }
@@ -68,17 +55,16 @@ class Xyster_Data_Set extends Xyster_Collection_Set_Sortable
      * if the provided value is already in the collection.
      * 
      * It can only accept arrays or objects as items, otherwise it will throw a 
-     * Xyster_Data_Set_Exception.
+     * \Xyster\Data\DataException.
      *
      * @param mixed $item The item to add
      * @return boolean Whether the set changed as a result of this method
-     * @throws Xyster_Data_Set_Exception if the collection cannot contain the value
+     * @throws \Xyster\Data\DataException if the collection cannot contain the value
      */
     public function add( $item )
     {
         if ( !is_array($item) && !is_object($item) ) {
-            require_once 'Xyster/Data/Set/Exception.php';
-            throw new Xyster_Data_Set_Exception('This set can only contain arrays or objects');
+            throw new \Xyster\Data\DataException('This set can only contain arrays or objects');
         }
         if ( !count($this->_columns) ) {
             $this->_createColumnsFromItem($item);
@@ -89,24 +75,22 @@ class Xyster_Data_Set extends Xyster_Collection_Set_Sortable
      * Adds a column to the set
      *
      * @param string $column The name of the column
-     * @throws Xyster_Data_Set_Exception if the method is called after the set contains items
+     * @throws \Xyster\Data\DataException if the method is called after the set contains items
      */
     public function addColumn( $column )
     {
         if ( count($this->_items) ) {
-            require_once 'Xyster/Data/Set/Exception.php';
-            throw new Xyster_Data_Set_Exception('Columns cannot be added once items have been added');
+            throw new \Xyster\Data\DataException('Columns cannot be added once items have been added');
         }
-        $this->_columns->add(Xyster_Data_Field::named($column));
+        $this->_columns->add(Symbol\Field::named($column));
     }
     /**
      * Perform an aggregate function on a column
      *
-     * @param Xyster_Data_Aggregate $function
-     * @param Xyster_Data_Field|string $field
+     * @param Symbol\AggregateField $field
      * @return mixed
      */
-    public function aggregate( Xyster_Data_Field_Aggregate $field )
+    public function aggregate( Symbol\AggregateField $field )
     {
         $function = $field->getFunction();
         switch( strtoupper($function->getValue()) ) {
@@ -131,12 +115,12 @@ class Xyster_Data_Set extends Xyster_Collection_Set_Sortable
     /**
      * Converts an entire column of values to an array
      *
-     * @param mixed $field A {@link Xyster_Data_Field} or the name of the field to fetch
+     * @param mixed $field A {@link Symbol\Field} or the name of the field to fetch
      * @return array The fetched values from the column
      */
     public function fetchColumn( $field )
     {
-        $getter = new Xyster_Data_Field_Getter($field);
+        $getter = new Symbol\Evaluator($field);
         $values = array();
         foreach( $this->_items as $v ) {
             $values[] = $getter->evaluate($v);
@@ -159,14 +143,14 @@ class Xyster_Data_Set extends Xyster_Collection_Set_Sortable
     /**
      * Converts 2 fields into an associative array
      *
-     * @param mixed $key A {@link Xyster_Data_Field} or the name of the field to fetch
-     * @param mixed $value A {@link Xyster_Data_Field} or the name of the field to fetch
+     * @param mixed $key A {@link Symbol\Field} or the name of the field to fetch
+     * @param mixed $value A {@link Symbol\Field} or the name of the field to fetch
      * @return array The translated fields
      */
     public function fetchPairs( $key, $value )
     {
-        $getter1 = new Xyster_Data_Field_Getter($key);
-        $getter2 = new Xyster_Data_Field_Getter($value);
+        $getter1 = new Symbol\Evaluator($key);
+        $getter2 = new Symbol\Evaluator($value);
         $pairs = array();
         foreach( $this->_items as $v ) {
             $pairs[ $getter1->evaluate($v) ] = $getter2->evaluate($v);
@@ -176,9 +160,9 @@ class Xyster_Data_Set extends Xyster_Collection_Set_Sortable
     /**
      * Removes elements in the collection based on a criteria
      *
-     * @param Xyster_Data_Criterion $criteria The criteria for filtering
+     * @param Symbol\Criterion $criteria The criteria for filtering
      */
-    public function filter( Xyster_Data_Criterion $criteria )
+    public function filter( Symbol\Criterion $criteria )
     {
         $this->_items = array_values(array_filter($this->_items, array($criteria, 'evaluate')));
     }
@@ -189,7 +173,7 @@ class Xyster_Data_Set extends Xyster_Collection_Set_Sortable
      */
     public function getColumns()
     {
-        return Xyster_Collection::fixedSet($this->_columns);
+        return \Xyster\Collection\Collection::fixedSet($this->_columns);
     }
     /**
      * Sorts the collection by one or more columns and directions
@@ -201,10 +185,9 @@ class Xyster_Data_Set extends Xyster_Collection_Set_Sortable
      */
     public function sortBy( $sorts )
     {
-    	$param = ( $sorts instanceof Xyster_Data_Symbol ) ? $sorts : null;
+    	$param = ( $sorts instanceof Symbol\ISymbol ) ? $sorts : null;
     	
-        require_once 'Xyster/Data/Sort/Clause.php';
-        $clause = new Xyster_Data_Sort_Clause($param);
+        $clause = new Symbol\SortClause($param);
         
         if ( $param === null ) {
 	        if ( !is_array($sorts) && ! $sorts instanceof Traversable ) {
@@ -212,17 +195,15 @@ class Xyster_Data_Set extends Xyster_Collection_Set_Sortable
 	        }
 	        if ( is_array($sorts) || $sorts instanceof Traversable ) {
 	        	foreach( $sorts as $sort ) {
-	        		if ( ! $sort instanceof Xyster_Data_Sort ) {
-	        			require_once 'Xyster/Data/Set/Exception.php';
-	        			throw new Xyster_Data_Set_Exception('Only Xyster_Data_Sort objects can be used');
+	        		if ( ! $sort instanceof Symbol\Sort ) {
+	        			throw new \Xyster\Data\DataException('Only Xyster_Data_Sort objects can be used');
 	        		}
 	        		$clause->add($sort);
 	        	}
 	        }
         }
 
-        require_once 'Xyster/Data/Comparator.php';
-        $this->sort(new Xyster_Data_Comparator($clause));
+        $this->sort(new Comparator($clause));
     }
 
     /**

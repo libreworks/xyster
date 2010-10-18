@@ -9,23 +9,21 @@
  *
  * @category  Xyster
  * @package   Xyster_Type
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
-/**
- * @see Xyster_Type_Proxy_Interface
- */
-require_once 'Xyster/Type/Proxy/Interface.php';
+namespace Xyster\Type\Proxy;
+use Xyster\Type\Type;
 /**
  * A mediator for setting and getting values from a named field
  *
  * @category  Xyster
  * @package   Xyster_Type
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Type_Proxy_Builder
+class Builder
 {
     protected static $_types = array();
     protected static $_cache = true;
@@ -40,7 +38,7 @@ class Xyster_Type_Proxy_Builder
      * Creates a proxy class and returns an instance of it
      * 
      * @param array $args Optional. Arguments to pass to the constructor
-     * @return Xyster_Type_Proxy_Interface the proxy object created
+     * @return \Xyster\Type\Proxy\IProxy the proxy object created
      */
     public function create( array $args = null )
     {
@@ -52,7 +50,7 @@ class Xyster_Type_Proxy_Builder
     /**
      * Creates a proxy class
      *  
-     * @return Xyster_Type
+     * @return \Xyster\Type\Type
      */
     public function createType()
     {
@@ -74,7 +72,7 @@ class Xyster_Type_Proxy_Builder
             }
         }
         eval($this->_getClass());
-        $type = new Xyster_Type($this->_className);
+        $type = new \Xyster\Type\Type($this->_className);
         if ( self::usesCache() ) {
             self::$_types[$key] = $type;
         }
@@ -85,7 +83,7 @@ class Xyster_Type_Proxy_Builder
      * Sets whether the parent constructor is called (default is false)
      * 
      * @param boolean $flag
-     * @return Xyster_Type_Proxy_Builder provides a fluent interface
+     * @return \Xyster\Type\Proxy\Builder provides a fluent interface
      */
     public function setCallParentConstructor( $flag = true )
     {
@@ -96,10 +94,10 @@ class Xyster_Type_Proxy_Builder
     /**
      * Sets the handler used for method callbacks
      * 
-     * @param Xyster_Type_Proxy_Handler_Interface $handler
-     * @return Xyster_Type_Proxy_Builder provides a fluent interface
+     * @param \Xyster\Type\Proxy\IHandler $handler
+     * @return \Xyster\Type\Proxy\Builder provides a fluent interface
      */
-    public function setHandler( Xyster_Type_Proxy_Handler_Interface $handler )
+    public function setHandler( IHandler $handler )
     {
         $this->_handler = $handler;
         return $this;
@@ -108,18 +106,17 @@ class Xyster_Type_Proxy_Builder
     /**
      * Sets any interfaces the generated class should implement
      * 
-     * @param array $interfaces An array of Xyster_Type objects
-     * @return Xyster_Type_Proxy_Builder provides a fluent interface
-     * @throws Xyster_Type_Proxy_Exception if any items in array aren't interfaces
+     * @param array $interfaces An array of \Xyster\Type\Type objects
+     * @return \Xyster\Type\Proxy\Builder provides a fluent interface
+     * @throws ProxyException if any items in array aren't interfaces
      */
     public function setInterfaces( array $interfaces )
     {
         foreach( $interfaces as $interface ) {
-            if ( !$interface instanceof Xyster_Type ||
+            if ( !$interface instanceof Type ||
                 !$interface->isObject() ||
                 !$interface->getClass()->isInterface() ) {
-                require_once 'Xyster/Type/Proxy/Exception.php';
-                throw new Xyster_Type_Proxy_Exception('Not an interface: ' . $interface);
+               throw new ProxyException('Not an interface: ' . $interface);
             }
             $this->_interfaces[] = $interface;
         }
@@ -129,15 +126,14 @@ class Xyster_Type_Proxy_Builder
     /**
      * Sets the parent type the generated class should extend
      * 
-     * @param Xyster_Type $parent
-     * @return Xyster_Type_Proxy_Builder provides a fluent interface
-     * @throws Xyster_Type_Proxy_Exception if the type is invalid as a parent
+     * @param Xyster\Type\Type $parent
+     * @return \Xyster\Type\Proxy\Builder provides a fluent interface
+     * @throws ProxyException if the type is invalid as a parent
      */
-    public function setParent( Xyster_Type $parent )
+    public function setParent( Type $parent )
     {
         if ( !$parent->isObject() || $parent->getClass()->isInterface() || $parent->getClass()->isFinal() ) {
-            require_once 'Xyster/Type/Proxy/Exception.php';
-            throw new Xyster_Type_Proxy_Exception('Parent type must be a non-final or abstract class');
+            throw new ProxyException('Parent type must be a non-final or abstract class');
         }
         $this->_parent = $parent;
         return $this;
@@ -203,12 +199,12 @@ class Xyster_Type_Proxy_Builder
         $extends = '';
         $className = 'XysterTypeProxy_';
         if ( $this->_parent ) {
-            $className .= $this->_parent->getName() . '_';
+            $className .= str_replace('\\', '_', $this->_parent->getName()) . '_';
             $extends = ' extends ' . $this->_parent->getName();
         }
         $className .= substr(md5(microtime()), 0, 8);
         $this->_className = $className;
-        $def .= $className . $extends . ' implements Xyster_Type_Proxy_Interface';
+        $def .= $className . $extends . ' implements \Xyster\Type\Proxy\IProxy';
         foreach( $this->_interfaces as $iface ) {
             $def .= ', ' . $iface->getName();
         }
@@ -225,8 +221,8 @@ class Xyster_Type_Proxy_Builder
     {
         $def = '';
         $body = "\$this->_handler = \$handler;\n" . 
-            "\$this->_class = new ReflectionClass(__CLASS__);\n";
-        $decl = "%s function __construct(Xyster_Type_Proxy_Handler_Interface " .
+            "\$this->_class = new \ReflectionClass(__CLASS__);\n";
+        $decl = "%s function __construct(\Xyster\Type\Proxy\IHandler " .
             "\$handler%s) {\n";
         
         if ( $this->_parent && $this->_parent->getClass()->getConstructor() ) {
@@ -266,7 +262,7 @@ class Xyster_Type_Proxy_Builder
      * @param ReflectionMethod $method
      * @return string
      */
-    private function _getMethodDefinitionFromExisting(ReflectionMethod $method)
+    private function _getMethodDefinitionFromExisting(\ReflectionMethod $method)
     {
         /*
          * This method body was taken from PHPUnit_Framework_MockObject_Mock,
@@ -319,7 +315,7 @@ class Xyster_Type_Proxy_Builder
             $class = $parent->getClass();
             if ( $class->hasMethod($methodName) &&
                 !$class->getMethod($methodName)->isAbstract() ) {
-                $parentMethod = 'new ReflectionMethod("'.$class->getName().'", __FUNCTION__)';
+                $parentMethod = 'new \ReflectionMethod("'.$class->getName().'", __FUNCTION__)';
             }
         }
         $handlerSource = '';
@@ -349,7 +345,7 @@ class Xyster_Type_Proxy_Builder
      * @param ReflectionMethod $method
      * @return string
      */
-    private function _getMethodParameters( ReflectionMethod $method )
+    private function _getMethodParameters( \ReflectionMethod $method )
     {
         /*
          * This method body was taken from PHPUnit_Framework_MockObject_Mock,

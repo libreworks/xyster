@@ -9,21 +9,18 @@
  *
  * @category  Xyster
  * @package   Xyster_Data
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-/**
- * Zend_Exception
- */
-require_once 'Zend/Exception.php';
+namespace Xyster\Data;
 /**
  * An exception for Xyster_Data
  *
  * @category  Xyster
  * @package   Xyster_Data
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Data_Exception extends Zend_Exception
+interface Exception
 {
 }

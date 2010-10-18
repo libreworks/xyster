@@ -9,26 +9,11 @@
  *
  * @category  Xyster
  * @package   Xyster_Controller
- * @copyright Copyright (c) Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
-/**
- * Zend_Controller_Dispatcher_Standard
- */
-require_once 'Zend/Controller/Dispatcher/Standard.php';
-/**
- * @see Xyster_Controller_Action_Injector
- */
-require_once 'Xyster/Controller/Action/Injector.php';
-/**
- * @see Xyster_Container
- */
-require_once 'Xyster/Container.php';
-/**
- * @see Xyster_Type
- */
-require_once 'Xyster/Type.php';
+namespace Xyster\Controller\Dispatcher;
 /**
  * A dispatcher that creates action controllers out of a Xyster_Container.
  * 
@@ -38,23 +23,23 @@ require_once 'Xyster/Type.php';
  *
  * @category  Xyster
  * @package   Xyster_Controller
- * @copyright Copyright (c) Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Controller_Dispatcher_Container extends Zend_Controller_Dispatcher_Standard
+class Container extends \Zend_Controller_Dispatcher_Standard
 {
     /**
-     * @var Xyster_Container_IContainer
+     * @var \Xyster\Container\IContainer
      */
     protected $_container;
     
     /**
      * Constructor: Set current module to default value
      *
-     * @param Xyster_Container_IContainer $container
+     * @param \Xyster\Container\IContainer $container
      * @param array $params
      */
-    public function __construct(Xyster_Container_IContainer $container, array $params = array())
+    public function __construct(\Xyster\Container\IContainer $container, array $params = array())
     {
         $this->_container = $container;
         parent::__construct($params);
@@ -72,7 +57,7 @@ class Xyster_Controller_Dispatcher_Container extends Zend_Controller_Dispatcher_
      * @return boolean
      * @throws Zend_Controller_Dispatcher_Exception
      */
-    public function dispatch(Zend_Controller_Request_Abstract $request, Zend_Controller_Response_Abstract $response)
+    public function dispatch(\Zend_Controller_Request_Abstract $request, \Zend_Controller_Response_Abstract $response)
     {
         $this->setResponse($response);
 
@@ -82,8 +67,7 @@ class Xyster_Controller_Dispatcher_Container extends Zend_Controller_Dispatcher_
         if (!$this->isDispatchable($request)) {
             $controller = $request->getControllerName();
             if (!$this->getParam('useDefaultControllerAlways') && !empty($controller)) {
-                require_once 'Zend/Controller/Dispatcher/Exception.php';
-                throw new Zend_Controller_Dispatcher_Exception('Invalid controller specified (' . $request->getControllerName() . ')');
+                throw new \Zend_Controller_Dispatcher_Exception('Invalid controller specified (' . $request->getControllerName() . ')');
             }
 
             $className = $this->getDefaultControllerClass($request);
@@ -103,14 +87,13 @@ class Xyster_Controller_Dispatcher_Container extends Zend_Controller_Dispatcher_
          * Instantiate controller with request, response, and invocation
          * arguments; throw exception if it's not an action controller
          */
-        $injector = new Xyster_Controller_Action_Injector(
-            Xyster_Container::definition($className), $request,
+        $injector = new \Xyster\Controller\Action\Injector(
+            \Xyster\Container\Container::definition($className), $request,
             $this->getResponse(), $this->getParams());
         $controller = $injector->get($this->_container);
-        if (!($controller instanceof Zend_Controller_Action_Interface) && 
-            !($controller instanceof Zend_Controller_Action)) {
-            require_once 'Zend/Controller/Dispatcher/Exception.php';
-            throw new Zend_Controller_Dispatcher_Exception(
+        if (!($controller instanceof \Zend_Controller_Action_Interface) &&
+            !($controller instanceof \Zend_Controller_Action)) {
+            throw new \Zend_Controller_Dispatcher_Exception(
                 'Controller "' . $className . '" is not an instance of Zend_Controller_Action_Interface'
             );
         }
@@ -159,7 +142,7 @@ class Xyster_Controller_Dispatcher_Container extends Zend_Controller_Dispatcher_
     /**
      * Gets the container
      *
-     * @return Xyster_Container_IContainer
+     * @return \Xyster\Container\IContainer
      */
     public function getContainer()
     {

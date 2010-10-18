@@ -9,27 +9,20 @@
  *
  * @category  Xyster
  * @package   Xyster_Validate
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
-/**
- * Zend_Validate_Abstract
- */
-require_once 'Zend/Validate/Abstract.php';
-/**
- * Zend_Uri
- */
-require_once 'Zend/Uri.php';
+namespace Xyster\Validate;
 /**
  * A URI validator
  *
  * @category  Xyster
  * @package   Xyster_Validate
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Validate_Uri extends Zend_Validate_Abstract
+class Uri extends \Zend_Validate_Abstract
 {
     /**
      * Validation failure message key for when the file is not an image
@@ -59,8 +52,8 @@ class Xyster_Validate_Uri extends Zend_Validate_Abstract
     {
         $this->_setValue($value);
         
-        if ( !Zend_Uri::check($value) ) {
-            $this->_error();
+        if ( !\Zend_Uri::check($value) ) {
+            $this->_error(self::NOT_URI);
             return false;
         }
         

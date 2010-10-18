@@ -9,10 +9,10 @@ your PHP include_path.
 SYSTEM REQUIREMENTS
 -------------------
 
-Xyster is built with object-oriented PHP 5 and requires
-PHP 5.2.1 or later. 
+Xyster is built with object-oriented PHP 5 with namespaces and requires
+PHP 5.3 or later.
 
-Xyster requires the availability of the Zend Framework, version 1.0.1 or later.
+Xyster requires the availability of the Zend Framework, version 1.10.
 
 
 USING THE XYSTER FRAMEWORK

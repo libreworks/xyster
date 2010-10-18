@@ -9,23 +9,20 @@
  *
  * @category  Xyster
  * @package   Xyster_Validate
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
-/**
- * Zend_Validate_NotEmpty
- */
-require_once 'Zend/Validate/NotEmpty.php';
+namespace Xyster\Validate;
 /**
  * A null value validator 
  *
  * @category  Xyster
  * @package   Xyster_Validate
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Validate_NotNull extends Zend_Validate_NotEmpty
+class NotNull extends \Zend_Validate_NotEmpty
 {
     /**
      * Defined by Zend_Validate_Interface
@@ -40,7 +37,7 @@ class Xyster_Validate_NotNull extends Zend_Validate_NotEmpty
         $this->_setValue($value);
 
         if ($value === NULL) {
-            $this->_error();
+            $this->_error(self::IS_EMPTY);
             return false;
         }
 

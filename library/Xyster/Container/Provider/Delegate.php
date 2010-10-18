@@ -9,35 +9,32 @@
  *
  * @category  Xyster
  * @package   Xyster_Container
- * @copyright Copyright (c) Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
-/**
- * @see Xyster_Container_IProvider
- */
-require_once 'Xyster/Container/IProvider.php';
+namespace Xyster\Container\Provider;
 /**
  * Abstract provider deletate class
  *
  * @category  Xyster
  * @package   Xyster_Container
- * @copyright Copyright (c) Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-abstract class Xyster_Container_Provider_Delegate implements Xyster_Container_IProvider
+abstract class Delegate implements IProvider
 {
     /**
-     * @var Xyster_Container_IProvider
+     * @var IProvider
      */
     protected $_delegate;
     
     /**
      * Creates a new delegate
      * 
-     * @param Xyster_Container_IProvider $delegate The delegate provider
+     * @param IProvider $delegate The delegate provider
      */
-    public function __construct(Xyster_Container_IProvider $delegate)
+    public function __construct(IProvider $delegate)
     {
         $this->_delegate = $delegate;
     }
@@ -55,7 +52,7 @@ abstract class Xyster_Container_Provider_Delegate implements Xyster_Container_IP
     /**
      * Gets the type of component.
      * 
-     * @return Xyster_Type The component type
+     * @return \Xyster\Type\Type The component type
      */
     public function getType()
     {
@@ -68,10 +65,10 @@ abstract class Xyster_Container_Provider_Delegate implements Xyster_Container_IP
      * Normally, the details should verify this by checking that the associated
      * Container contains all the needed dependnecies.
      * 
-     * @param Xyster_Container_IContainer $container The container
-     * @throws Xyster_Container_Exception if one or more required dependencies aren't met
+     * @param \Xyster\Container\IContainer $container The container
+     * @throws \Xyster\Container\Exception if one or more required dependencies aren't met
      */
-    public function validate(Xyster_Container_IContainer $container)
+    public function validate(\Xyster\Container\IContainer $container)
     {
         $this->_delegate->validate($container);
     }

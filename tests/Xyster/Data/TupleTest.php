@@ -10,20 +10,18 @@
  * @category  Xyster
  * @package   UnitTests
  * @subpackage Xyster_Data
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
-
-require_once 'Xyster/Data/SetTest.php';
-require_once 'Xyster/Data/Tuple.php';
-require_once 'Xyster/Data/Field/Clause.php';
-
+namespace XysterTest\Data;
+use Xyster\Data\Tuple,
+        Xyster\Data\Set;
 /**
- * Test for Xyster_Data_Tuple
+ * Test for Tuple
  *
  */
-class Xyster_Data_TupleTest extends Xyster_Data_SetTest
+class TupleTest extends DataSetTest
 {
     /**
      * Tests creating a tuple
@@ -34,7 +32,7 @@ class Xyster_Data_TupleTest extends Xyster_Data_SetTest
         $groups = array('city'=>'Baltimore', 'state'=>'Maryland', 'country'=>'United States');
         $c = $this->_getNewCollectionWithRandomValues();
         
-        $tuple = new Xyster_Data_Tuple($groups, $c);
+        $tuple = new Tuple($groups, $c);
         $this->assertEquals(array_keys($groups), $tuple->getNames());
         $this->assertEquals($groups, $tuple->getValues());
         $this->assertEquals($groups['city'], $tuple->getValue('city'));
@@ -50,11 +48,11 @@ class Xyster_Data_TupleTest extends Xyster_Data_SetTest
         $c = $this->_getNewCollectionWithRandomValues();
         $count = count($c);
         
-        $tuple = new Xyster_Data_Tuple($groups, $c);
+        $tuple = new Tuple($groups, $c);
         
-        $fields = new Xyster_Data_Field_Clause(Xyster_Data_Field::named('city'));
-        $fields->add(Xyster_Data_Field::named('state'))
-            ->add(Xyster_Data_Field::count('foo'));
+        $fields = new \Xyster\Data\Symbol\FieldClause(\Xyster\Data\Symbol\Field::named('city'));
+        $fields->add(\Xyster\Data\Symbol\Field::named('state'))
+            ->add(\Xyster\Data\Symbol\Field::count('foo'));
         
         $row = array('city'=>'Baltimore', 'state'=>'Maryland', 'foo'=>$count);
         $this->assertEquals($row, $tuple->toRow($fields));
@@ -66,11 +64,11 @@ class Xyster_Data_TupleTest extends Xyster_Data_SetTest
      */
     public function testMakeTuples()
     {
-        $set = new Xyster_Data_Set();
+        $set = new Set();
         
-        $fields = new Xyster_Data_Field_Clause(Xyster_Data_Field::group('city'));
-        $fields->add(Xyster_Data_Field::group('state'))
-            ->add(Xyster_Data_Field::count('foo'));
+        $fields = new \Xyster\Data\Symbol\FieldClause(\Xyster\Data\Symbol\Field::group('city'));
+        $fields->add(\Xyster\Data\Symbol\Field::group('state'))
+            ->add(\Xyster\Data\Symbol\Field::count('foo'));
             
         $collection = array(
             array('city'=>'Baltimore', 'state'=>'Maryland', 'foo'=>'bar'),
@@ -81,21 +79,21 @@ class Xyster_Data_TupleTest extends Xyster_Data_SetTest
             array('city'=>'Frederick', 'state'=>'Maryland', 'foo'=>'lol')
             );
             
-        $having = array(Xyster_Data_Expression::eq('max(state)','Maryland'));
-        Xyster_Data_Tuple::makeTuples($set, $collection, $fields, $having, 2, 1 );
+        $having = array(\Xyster\Data\Symbol\Expression::eq('max(state)','Maryland'));
+        Tuple::makeTuples($set, $collection, $fields, $having, 2, 1 );
         
         $this->assertEquals(2, count($set));
     }
     
     /**
      * Tests the 'makeTuples' static method with no grouped field
-     *
+     * @expectedException \Xyster\Data\DataException
      */
     public function testMakeTuplesNoGroup()
     {
-        $set = new Xyster_Data_Set();
+        $set = new Set();
         
-        $fields = new Xyster_Data_Field_Clause(Xyster_Data_Field::count('city'));
+        $fields = new \Xyster\Data\Symbol\FieldClause(\Xyster\Data\Symbol\Field::count('city'));
             
         $collection = array(
             array('city'=>'Baltimore', 'state'=>'Maryland', 'foo'=>'bar'),
@@ -103,8 +101,6 @@ class Xyster_Data_TupleTest extends Xyster_Data_SetTest
             array('city'=>'Frederick', 'state'=>'Maryland', 'foo'=>'wtf'),
             array('city'=>'Frederick', 'state'=>'Maryland', 'foo'=>'lol')
             );
-        
-        $this->setExpectedException('Xyster_Data_Set_Exception');
-        $tuples = Xyster_Data_Tuple::makeTuples($set, $collection, $fields);
+        $tuples = Tuple::makeTuples($set, $collection, $fields);
     }
 }

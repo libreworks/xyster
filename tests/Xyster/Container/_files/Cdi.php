@@ -2,6 +2,7 @@
 /**
  * This file contains test classes for unit testing setter injection 
  */
+namespace XysterTest\Container;
 
 class Submarine
 {
@@ -49,9 +50,7 @@ interface Sailor
     function navigate();
 }
 
-require_once 'Xyster/Container/IContainerAware.php';
-
-class SubmarineCaptain implements Sailor, Xyster_Container_IContainerAware
+class SubmarineCaptain implements Sailor, \Xyster\Container\IContainerAware
 {
     protected $_suit;
     protected $_name;
@@ -68,7 +67,7 @@ class SubmarineCaptain implements Sailor, Xyster_Container_IContainerAware
         $this->_navigated = true;
     }
     
-    public function setContainer(Xyster_Container_IContainer $container)
+    public function setContainer(\Xyster\Container\IContainer $container)
     {
         $this->_container = $container;
     }

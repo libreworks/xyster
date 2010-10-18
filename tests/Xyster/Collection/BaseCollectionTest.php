@@ -10,20 +10,19 @@
  * @category  Xyster
  * @package   UnitTests
  * @subpackage Xyster_Collection
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
-require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
-require_once 'Xyster/Collection.php';
-
+namespace XysterTest\Collection;
+use Xyster\Collection\Collection;
 /**
  * Common tests for Xyster_Collection
  *
  */
-class Xyster_Collection_BaseCollectionTest extends PHPUnit_Framework_TestCase
+abstract class BaseCollectionTest extends \PHPUnit_Framework_TestCase
 {
-    protected $_className = 'Xyster_Collection';
+    protected $_className = '\Xyster\Collection\Collection';
     
     public function testContains()
     {
@@ -154,7 +153,7 @@ class Xyster_Collection_BaseCollectionTest extends PHPUnit_Framework_TestCase
         $c->add($this->_getNewValue());
         $this->assertArrayHasKey(2, $c->toArray()); // 3 elements in array
     }
-    protected function _addRandomValues( Xyster_Collection_Interface $c )
+    protected function _addRandomValues( \Xyster\Collection\ICollection $c )
     {
         for( $i=0; $i<rand(3,10); $i++ ) {
             $c->add( $this->_getNewValue() );
@@ -162,7 +161,7 @@ class Xyster_Collection_BaseCollectionTest extends PHPUnit_Framework_TestCase
     }
     protected function _getNewValue()
     {
-        return new Xyster_Collection_Test_Value(md5(rand(0,100)));
+        return new TestValue(md5(rand(0,100)));
     }
     /**
      * @return Xyster_Collection
@@ -187,7 +186,7 @@ class Xyster_Collection_BaseCollectionTest extends PHPUnit_Framework_TestCase
  * A simple test class for collection items
  *
  */
-class Xyster_Collection_Test_Value
+class TestValue
 {
     public $foo;
    

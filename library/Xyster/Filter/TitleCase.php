@@ -9,23 +9,20 @@
  *
  * @category  Xyster
  * @package   Xyster_Filter
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
-/**
- * Zend_Filter_Interface
- */
-require_once 'Zend/Filter/Interface.php';
+namespace Xyster\Filter;
 /**
  * A filter for title case
  *
  * @category  Xyster
  * @package   Xyster_Filter
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Filter_TitleCase implements Zend_Filter_Interface
+class TitleCase implements \Zend_Filter_Interface
 {
     /**
      * An array of words that shouldn't be capitalized in title case
@@ -46,14 +43,12 @@ class Xyster_Filter_TitleCase implements Zend_Filter_Interface
     {
         // Split the string into separate words 
         $words = explode(' ', strtolower($value));
-        
         foreach ( $words as $key => $word ) {
             // If this is the first, or it's not a small word, capitalize it
             if ( $key == 0 or !in_array($word, self::$_smallWords) ) {
                 $words[$key] = ucwords($word);
             }
         }
-        
         return implode(' ', $words);
     }
 }

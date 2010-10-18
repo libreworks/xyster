@@ -10,41 +10,26 @@
  * @category  Xyster
  * @package   Xyster_Controller
  * @subpackage Plugins
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
-/**
- * Zend_Controller_Plugin_Abstract
- */
-require_once 'Zend/Controller/Plugin/Abstract.php';
-/**
- * @see Xyster_Controller_Request_Resource
- */
-require_once 'Xyster/Controller/Request/Resource.php';
-/**
- * Zend_Auth
- */
-require_once 'Zend/Auth.php';
-/**
- * Zend_Acl
- */
-require_once 'Zend/Acl.php';
+namespace Xyster\Controller\Plugin;
 /**
  * Authorization plugin
  *
  * @category  Xyster
  * @package   Xyster_Controller
  * @subpackage Plugins
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
+class Acl extends \Zend_Controller_Plugin_Abstract
 {
     /**
      * The acl
      *
-     * @var Zend_Acl
+     * @var \Zend_Acl
      */
     protected $_acl;
     
@@ -94,9 +79,9 @@ class Xyster_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
     /**
      * Creates a new acl plugin
      * 
-     * @param Zend_Acl $acl
+     * @param \Zend_Acl $acl
      */
-    public function __construct( Zend_Acl $acl )
+    public function __construct( \Zend_Acl $acl )
     {
         $this->_acl = $acl;
     }
@@ -113,11 +98,11 @@ class Xyster_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
      * controller but leaving action null will allow access to all actions in
      * the specified controller.
      *
-     * @param Zend_Acl_Role_Interface|string $role
+     * @param \Zend_Acl_Role_Interface|string $role
      * @param string $module The module name
      * @param string $controller The controller name
      * @param string $action The action name
-     * @return Xyster_Controller_Action_Helper_Acl provides a fluent interface
+     * @return \Xyster\Controller\Plugin\Acl provides a fluent interface
      */
     public function allow( $role, $module = null, $controller = null, $action = null )
     {
@@ -141,7 +126,7 @@ class Xyster_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
      * @param string $module The module name
      * @param string $controller The controller name
      * @param string $action The action name
-     * @return Xyster_Controller_Action_Helper_Acl provides a fluent interface
+     * @return \Xyster\Controller\Plugin\Acl provides a fluent interface
      */
     public function deny( $role, $module = null, $controller = null, $action = null )
     {
@@ -153,9 +138,9 @@ class Xyster_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
     /**
      * Called before Zend_Controller_Front enters its dispatch loop
      *
-     * @param  Zend_Controller_Request_Abstract $request
+     * @param  \Zend_Controller_Request_Abstract $request
      */
-    public function dispatchLoopStartup(Zend_Controller_Request_Abstract $request)
+    public function dispatchLoopStartup(\Zend_Controller_Request_Abstract $request)
     {
         foreach( $this->_rules as $rule ) {
             $role = isset($rule['role']) ? $rule['role'] : null;
@@ -163,7 +148,7 @@ class Xyster_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
             $controller = isset($rule['controller']) ? $rule['controller'] : null;
             $action = isset($rule['action']) ? $rule['action'] : null;
             
-            if ( isset($rule['type']) && $rule['type'] == Zend_Acl::TYPE_DENY ) {
+            if ( isset($rule['type']) && $rule['type'] == \Zend_Acl::TYPE_DENY ) {
                 $this->deny($role, $module, $controller, $action);
             } else {
                 $this->allow($role, $module, $controller, $action);
@@ -199,8 +184,7 @@ class Xyster_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
     public function getAccessDeniedModule()
     {
         if (null === $this->_deniedModule) {
-            require_once 'Zend/Controller/Front.php';
-            $this->_deniedModule = Zend_Controller_Front::getInstance()->getDispatcher()->getDefaultModule();
+            $this->_deniedModule = \Zend_Controller_Front::getInstance()->getDispatcher()->getDefaultModule();
         }
         return $this->_deniedModule;
     }
@@ -233,8 +217,7 @@ class Xyster_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
     public function getLoginModule()
     {
         if (null === $this->_loginModule) {
-            require_once 'Zend/Controller/Front.php';
-            $this->_loginModule = Zend_Controller_Front::getInstance()->getDispatcher()->getDefaultModule();
+            $this->_loginModule = \Zend_Controller_Front::getInstance()->getDispatcher()->getDefaultModule();
         }
         return $this->_loginModule;
     }
@@ -244,10 +227,10 @@ class Xyster_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
      *
      * @param  Zend_Controller_Request_Abstract $request
      */
-    public function preDispatch(Zend_Controller_Request_Abstract $request)
+    public function preDispatch(\Zend_Controller_Request_Abstract $request)
     {        
         $request = $this->getRequest();
-        $auth = Zend_Auth::getInstance();
+        $auth = \Zend_Auth::getInstance();
         $role = $auth->getIdentity();
         $resource = $this->_getResource($request->getModuleName(),
             $request->getControllerName(), $request->getActionName());
@@ -273,11 +256,10 @@ class Xyster_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
             if ( !$isAllowed ) {
                 $msg = 'Insufficient permissions: ';
         		$msg .= $role . ' -> ' . $resource->getResourceId();
-        		require_once 'Zend/Acl/Exception.php';
-                throw new Zend_Acl_Exception($msg);
+                throw new \Zend_Acl_Exception($msg);
             }
-        } catch ( Zend_Acl_Exception $thrown ) {
-            $error = new ArrayObject(array(), ArrayObject::ARRAY_AS_PROPS);
+        } catch ( \Zend_Acl_Exception $thrown ) {
+            $error = new \ArrayObject(array(), \ArrayObject::ARRAY_AS_PROPS);
             $error->exception = $thrown;
             $error->type = 'EXCEPTION_OTHER';
     
@@ -305,7 +287,7 @@ class Xyster_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
      * @param string $module
      * @param string $controller
      * @param string $action
-     * @return Xyster_Controller_Plugin_Acl provides a fluent interface
+     * @return \Xyster\Controller\Plugin\Acl provides a fluent interface
      */
     public function setAccessDenied( $module, $controller, $action )
     {
@@ -322,7 +304,7 @@ class Xyster_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
      * @param string $module
      * @param string $controller
      * @param string $action
-     * @return Xyster_Controller_Plugin_Acl provides a fluent interface
+     * @return \Xyster\Controller\Plugin\Acl provides a fluent interface
      */
     public function setLogin( $module, $controller, $action )
     {
@@ -349,7 +331,7 @@ class Xyster_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
      * {@link deny} for the behavior when null is specified for these values. 
      *
      * @param array $rules
-     * @return Xyster_Controller_Plugin_Acl provides a fluent interface
+     * @return \Xyster\Controller\Plugin\Acl provides a fluent interface
      */
     public function setRules( array $rules )
     {
@@ -363,34 +345,32 @@ class Xyster_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
      * @param string $module
      * @param string $controller
      * @param string $action
-     * @return Xyster_Controller_Request_Resource
+     * @return \Xyster\Controller\Request\Resource
      */
     protected function _getResource( $module, $controller, $action )
     {
         $resource = null;
-        
         if ( $module ) {
-            $moduleResource = new Xyster_Controller_Request_Resource($module);
+            $moduleResource = new \Xyster\Controller\Request\Resource($module);
             if ( !$this->_acl->has($moduleResource) ) {
                 $this->_acl->add($moduleResource);
             }
             $resource = $moduleResource;
         }
         if ( $module && $controller ) {
-            $controllerResource = new Xyster_Controller_Request_Resource($module, $controller);
+            $controllerResource = new \Xyster\Controller\Request\Resource($module, $controller);
             if ( !$this->_acl->has($controllerResource) ) {
                 $this->_acl->add($controllerResource, $moduleResource);
             }
             $resource = $controllerResource;
         }
         if ( $module && $controller && $action ) {
-            $actionResource = new Xyster_Controller_Request_Resource($module, $controller, $action);
+            $actionResource = new \Xyster\Controller\Request\Resource($module, $controller, $action);
             if ( !$this->_acl->has($actionResource) ) {
                 $this->_acl->add($actionResource, $controllerResource);
             }
             $resource = $actionResource;
         }
-        
         return $resource;
     }
 }

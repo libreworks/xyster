@@ -1,8 +1,6 @@
 <?php
 
-require_once 'Zend/Controller/Action.php';
-
-class BarController extends Zend_Controller_Action
+class BarController extends \Zend_Controller_Action
 {
     static public $called = array('baz'=>0, 'test'=>0, 'setObject'=>0);
     
@@ -19,7 +17,7 @@ class BarController extends Zend_Controller_Action
         self::$called['test']++;
     }
     
-    public function setObject( SplObjectStorage $object )
+    public function setObject( \SplObjectStorage $object )
     {
         self::$called['setObject']++;
         $this->object = $object;

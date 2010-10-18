@@ -10,42 +10,26 @@
  * @category  Xyster
  * @package   UnitTests
  * @subpackage Xyster_Collection
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
-// Call Xyster_Collection_ListTest::main() if this source file is executed directly.
-if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'Xyster_Collection_ListTest::main');
-}
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'BaseCollectionTest.php';
-require_once 'Xyster/Collection/List.php';
-
+namespace XysterTest\Collection;
+use Xyster\Collection\ArrayList;
 /**
  * Test for Xyster_Collection
  *
  */
-class Xyster_Collection_ListTest extends Xyster_Collection_BaseCollectionTest
+class ListTest extends BaseCollectionTest
 {
-    protected $_className = 'Xyster_Collection_List';
-
-    /**
-     * Runs the test methods of this class.
-     */
-    public static function main()
-    {
-        require_once 'PHPUnit/TextUI/TestRunner.php';
-        $suite  = new PHPUnit_Framework_TestSuite('Xyster_Collection_ListTest');
-        $result = PHPUnit_TextUI_TestRunner::run($suite);
-    }
+    protected $_className = '\Xyster\Collection\ArrayList';
     
     /**
      * Tests the 'get' method
-     *
+     * @expectedException \OutOfBoundsException
      */
     public function testGet()
     {
-        $this->setExpectedException('OutOfBoundsException');
         $list = $this->_getNewCollection();
         $value = $this->_getNewValue();
         $list->add($value);
@@ -68,10 +52,10 @@ class Xyster_Collection_ListTest extends Xyster_Collection_BaseCollectionTest
     /**
      * Tests the 'insert' method
      *
+     * @expectedException \OutOfBoundsException
      */
     public function testInsert()
     {
-        $this->setExpectedException('OutOfBoundsException');
         $list = $this->_getNewCollection();
         $pre = $list->count();
         $list->insert(0, $this->_getNewValue());
@@ -82,11 +66,10 @@ class Xyster_Collection_ListTest extends Xyster_Collection_BaseCollectionTest
     
     /**
      * Tests the 'insertAll' method
-     *
+     * @expectedException \OutOfBoundsException
      */
     public function testInsertAll()
     {
-        $this->setExpectedException('OutOfBoundsException');
         $list = $this->_getNewCollection();
         $new = $this->_getNewCollectionWithRandomValues();
         $pre = $list->count();
@@ -109,11 +92,10 @@ class Xyster_Collection_ListTest extends Xyster_Collection_BaseCollectionTest
     
     /**
      * Tests the 'removeAt' method
-     *
+     * @expectedException \OutOfBoundsException
      */
     public function testRemoveAt()
     {
-        $this->setExpectedException('OutOfBoundsException');
         $list = $this->_getNewCollectionWithRandomValues();
         $pre = $list->count();
         $list->removeAt(2);
@@ -124,11 +106,10 @@ class Xyster_Collection_ListTest extends Xyster_Collection_BaseCollectionTest
     
     /**
      * Tests the 'set' method
-     *
+     * @expectedException \OutOfBoundsException
      */
     public function testSet()
     {
-        $this->setExpectedException('OutOfBoundsException');
         $list = $this->_getNewCollectionWithRandomValues();
         $pre = $list->count();
         $value = $this->_getNewValue();
@@ -141,11 +122,10 @@ class Xyster_Collection_ListTest extends Xyster_Collection_BaseCollectionTest
     
     /**
      * Tests the 'slice' method
-     *
+     * @expectedException \OutOfBoundsException
      */
     public function testSlice()
     {
-        $this->setExpectedException('OutOfBoundsException');
         $list = $this->_getNewCollectionWithRandomValues();
         $pre = $list->count();
         $list->slice(0, 2);
@@ -153,9 +133,4 @@ class Xyster_Collection_ListTest extends Xyster_Collection_BaseCollectionTest
         $this->assertEquals($post, $pre - 2);
         $list->slice(-2, -1);
     }
-}
-
-// Call Xyster_Collection_ListTest::main() if this source file is executed directly.
-if (PHPUnit_MAIN_METHOD == 'Xyster_Collection_ListTest::main') {
-    Xyster_Collection_ListTest::main();
 }

@@ -10,18 +10,15 @@
  * @category  Xyster
  * @package   Xyster_Controller
  * @subpackage Plugins
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
+namespace Xyster\Controller\Plugin;
 /**
  * Turns off the PHP anti-caching headers sent when a session is active
  */
 ini_set('session.cache_limiter', '');
-/**
- * Zend_Controller_Plugin_Abstract
- */
-require_once 'Zend/Controller/Plugin/Abstract.php';
 /**
  * Cache control plugin
  * 
@@ -33,10 +30,10 @@ require_once 'Zend/Controller/Plugin/Abstract.php';
  * @category  Xyster
  * @package   Xyster_Controller
  * @subpackage Plugins
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Controller_Plugin_Cache extends Zend_Controller_Plugin_Abstract
+class Cache extends \Zend_Controller_Plugin_Abstract
 {
     /**
      * Called before Zend_Controller_Front exits its dispatch loop.

@@ -9,19 +9,20 @@
  *
  * @category  Xyster
  * @package   Xyster_Type
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
+namespace Xyster\Type\Property;
 /**
  * Creates Xyster_Type_Property_Interface objects
  *
  * @category  Xyster
  * @package   Xyster_Type
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Type_Property_Factory
+class Factory
 {
     protected static $_props = array();
     
@@ -30,30 +31,31 @@ class Xyster_Type_Property_Factory
      *
      * @param object $target
      * @param string $property
-     * @return Xyster_Type_Property_Interface
+     * @return IProperty
      */
     public static function get( $target, $property )
     {
-        $className = get_class($target);
-        if ( !array_key_exists($className, self::$_props) ) {
-            $magicSetGet = method_exists($target, '__get') &&
-                method_exists($target, '__set');
-            $magicCall = method_exists($target, '__call');
-            $methodExists = method_exists($target, 'set' . ucfirst($property));
-            $propertyExists = property_exists($target, $property);
-            
-            if ( $target instanceof ArrayAccess && !$propertyExists && !$methodExists ) {
-                require_once 'Xyste/Type/Property/Map.php';
-                self::$_props[$className] = 'Xyster_Type_Property_Map';
-            } else if ( $methodExists || $magicCall ) {
-                require_once 'Xyster/Type/Property/Method.php';
-                self::$_props[$className] = 'Xyster_Type_Property_Method';
-            } else {
-                require_once 'Xyster/Type/Property/Direct.php';
-                self::$_props[$className] = 'Xyster_Type_Property_Direct';
+        if ( is_array($target) ) {
+            return new Map($property);
+        } else if ( is_object($target) ) {
+            $className = get_class($target);
+            if ( !array_key_exists($className, self::$_props) ) {
+                $magicCall = method_exists($target, '__call');
+                $methodExists = method_exists($target, 'set' . ucfirst($property))
+                        || method_exists($target, 'get' . ucfirst($property));
+                $propertyExists = property_exists($target, $property);
+                if ( $target instanceof \ArrayAccess && !$propertyExists && !$methodExists ) {
+                    self::$_props[$className] = '\Xyster\Type\Property\Map';
+                } else if ( $methodExists || $magicCall ) {
+                    self::$_props[$className] = '\Xyster\Type\Property\Method';
+                } else {
+                    self::$_props[$className] = '\Xyster\Type\Property\Direct';
+                }
             }
+            $propertyClassName = self::$_props[$className];
+            return new $propertyClassName($property);
+        } else {
+            throw new \Xyster\Type\InvalidTypeException('You can only create property wrappers for arrays or objects');
         }
-        $propertyClassName = self::$_props[$className];
-        return new $propertyClassName($property); 
     }
 }

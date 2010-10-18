@@ -9,22 +9,19 @@
  *
  * @category  Xyster
  * @package   Xyster_Db
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
-/**
- * @see Zend_Db_Exception
- */
-require_once 'Zend/Db/Exception.php';
+namespace Xyster\Db;
 /**
  * Exception for Xyster_Db package
  *
  * @category  Xyster
  * @package   Xyster_Db
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Db_Exception extends Zend_Db_Exception
+interface Exception
 {
 }

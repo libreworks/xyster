@@ -10,33 +10,32 @@
  * @category  Xyster
  * @package   UnitTests
  * @subpackage Xyster_Container
- * @copyright Copyright (c) Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
-require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
-require_once 'Xyster/Container/Autowire.php';
-
-class Xyster_Container_AutowireTest extends PHPUnit_Framework_TestCase
+namespace XysterTest\Container;
+use Xyster\Container\Autowire;
+class AutowireTest extends \PHPUnit_Framework_TestCase
 {
     public function testNone()
     {
-        $enum = Xyster_Container_Autowire::None();
+        $enum = Autowire::None();
         $this->_runTests($enum, 'None', 0);
     }
     public function testByName()
     {
-        $enum = Xyster_Container_Autowire::ByName();
+        $enum = Autowire::ByName();
         $this->_runTests($enum, 'ByName', 1);
     }
     public function testByType()
     {
-        $enum = Xyster_Container_Autowire::ByType();
+        $enum = Autowire::ByType();
         $this->_runTests($enum, 'ByType', 2);
     }
     public function testConstructor()
     {
-        $enum = Xyster_Container_Autowire::Constructor();
+        $enum = Autowire::Constructor();
         $this->_runTests($enum, 'Constructor', 3);
     }
 
@@ -44,8 +43,8 @@ class Xyster_Container_AutowireTest extends PHPUnit_Framework_TestCase
     {
         self::assertEquals($name,$actual->getName());
         self::assertEquals($value,$actual->getValue());
-        self::assertEquals('Xyster_Container_Autowire ['.$value.','.$name.']',(string)$actual);
-        self::assertEquals($actual,Xyster_Enum::parse('Xyster_Container_Autowire',$name));
-        self::assertEquals($actual,Xyster_Enum::valueOf('Xyster_Container_Autowire',$value));
+        self::assertEquals('Xyster\Container\Autowire ['.$value.','.$name.']',(string)$actual);
+        self::assertEquals($actual,\Xyster\Enum\Enum::parse('\Xyster\Container\Autowire',$name));
+        self::assertEquals($actual,\Xyster\Enum\Enum::valueOf('\Xyster\Container\Autowire',$value));
     }
 }

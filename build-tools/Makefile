@@ -45,12 +45,12 @@ PHPDOC=phpdoc
 # from which the release should be created, relative to the repository
 # location (e.g., trunk, branch/release-1.0).
 ZF_SVN_REVISION=272
-ZF_SVN_DIR=tags/build-6
+ZF_SVN_DIR=tags/02-build-01
 
 # ZF_VERSION is the release version string to build.  This is added
 # to the VERSION.txt file, and is also used for the name of the
 # staging directory and the names of the zip and tarball files.
-ZF_VERSION=build6
+ZF_VERSION=02build01
 
 # For ZF_LANG, use '*' if you want to build all manual translations.
 # If you want to build one language, use one of the names of language
@@ -70,7 +70,7 @@ SVN=svn
 SVN_USER=
 SVN_PASS=
 
-ZF_SVN_URL=https://xyster.devweblog.org/svn/$(ZF_SVN_DIR)
+ZF_SVN_URL=https://forge.libreworks.net/svn/$(ZF_SVN_DIR)
 ZF_PRODUCT_NAME=Xyster Framework
 ZF_PRODUCTNAME=xyster
 ZF_PRODUCT=$(ZF_PRODUCTNAME)-$(ZF_VERSION)

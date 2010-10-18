@@ -10,39 +10,25 @@
  * @category  Xyster
  * @package   UnitTests
  * @subpackage Xyster_Collection
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
-if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'Xyster_Collection_MapTest::main');
-}
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Map/TestCommon.php';
-require_once 'Xyster/Collection/Map.php';
-
+namespace XysterTest\Collection;
+use Xyster\Collection\Map;
 /**
  * Test for Xyster_Collection_Map
  *
  */
-class Xyster_Collection_MapTest extends Xyster_Collection_Map_TestCommon
+class MapTest extends MapTestCommon
 {
-    /**
-     * Runs the test methods of this class.
-     */
-    public static function main()
-    {
-        require_once 'PHPUnit/TextUI/TestRunner.php';
-        $suite  = new PHPUnit_Framework_TestSuite(__CLASS__);
-        $result = PHPUnit_TextUI_TestRunner::run($suite);
-    }
-    
     /**
      * Tests the basic constructor
      */
     public function testConstruct()
     {
         $c = $this->_getNewMapWithRandomValues();
-        $map = new Xyster_Collection_Map($c);
+        $map = new Map($c);
         $this->assertEquals($map->keys(), $c->keys());
     }
     
@@ -112,8 +98,4 @@ class Xyster_Collection_MapTest extends Xyster_Collection_Map_TestCommon
         $this->assertTrue($c->containsValue($value));
         $c->set($key, $this->_getNewValue()); // setting a pre-existing key
     }
-}
-
-if (PHPUnit_MAIN_METHOD == 'Xyster_Collection_MapTest::main') {
-    Xyster_Collection_MapTest::main();
 }

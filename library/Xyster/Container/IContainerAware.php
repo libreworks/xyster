@@ -9,24 +9,25 @@
  *
  * @category  Xyster
  * @package   Xyster_Container
- * @copyright Copyright (c) Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
+namespace Xyster\Container;
 /**
  * Interface for objects aware of the container
  *
  * @category  Xyster
  * @package   Xyster_Container
- * @copyright Copyright (c) Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-interface Xyster_Container_IContainerAware
+interface IContainerAware
 {
     /**
-	 * Injects the container that created the object
-	 * 
-	 * @param Xyster_Container_IContainer $container The container
+     * Injects the container that created the object
+     *
+     * @param \Xyster\Container\IContainer $container The container
      */
-    function setContainer(Xyster_Container_IContainer $container);
+    function setContainer(\Xyster\Container\IContainer $container);
 }

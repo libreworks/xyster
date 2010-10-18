@@ -2,6 +2,7 @@
 /**
  * This file contains test classes for unit testing setter injection 
  */
+namespace XysterTest\Container;
 
 class RocketShip
 {

@@ -9,14 +9,11 @@
  *
  * @category  Xyster
  * @package   Xyster_Type
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
-/**
- * @see Xyster_Type_Property_Interface
- */
-require_once 'Xyster/Type/Property/Interface.php';
+namespace Xyster\Type\Property;
 /**
  * A mediator for setting and getting values from a named field
  * 
@@ -24,10 +21,10 @@ require_once 'Xyster/Type/Property/Interface.php';
  *
  * @category  Xyster
  * @package   Xyster_Type
- * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Type_Property_Map implements Xyster_Type_Property_Interface
+class Map implements IProperty
 {
     /**
      * The property name

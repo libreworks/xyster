@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Xyster Framework
  *
@@ -9,66 +10,66 @@
  *
  * @category  Xyster
  * @package   Xyster_Container
- * @copyright Copyright (c) Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version   $Id$
  */
-/**
- * @see Xyster_Enum
- */
-require_once 'Xyster/Enum.php';
+namespace Xyster\Container;
+
+use Xyster\Enum\Enum;
+
 /**
  * Autowiring modes
  *
  * @category  Xyster
  * @package   Xyster_Container
- * @copyright Copyright (c) Irrational Logic (http://irrationallogic.net)
+ * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Xyster_Container_Autowire extends Xyster_Enum
+class Autowire extends Enum
 {
     const None = 0;
     const ByName = 1;
     const ByType = 2;
     const Constructor = 3;
-    
-	/**
-	 * No autowiring
-	 *
-	 * @return Xyster_Container_Autowire
-	 */
-	static public function None()
-	{
-	   return Xyster_Enum::_factory();
-	}
-	
-	/**
-	 * Autowiring by property name
-	 *
-	 * @return Xyster_Container_Autowire
-	 */
-	static public function ByName()
-	{
-	   return Xyster_Enum::_factory();
-	}
-	
-	/**
-	 * Autowiring by property type
-	 *
-	 * @return Xyster_Container_Autowire
-	 */
-	static public function ByType()
-	{
-	   return Xyster_Enum::_factory();
-	}
-	
-	/**
-	 * Autowiring by constructor arguments
-	 *
-	 * @return Xyster_Container_Autowire
-	 */
-	static public function Constructor()
-	{
-	   return Xyster_Enum::_factory();
-	}
+
+    /**
+     * No autowiring
+     *
+     * @return Autowire
+     */
+    static public function None()
+    {
+        return Enum::_factory();
+    }
+
+    /**
+     * Autowiring by property name
+     *
+     * @return Autowire
+     */
+    static public function ByName()
+    {
+        return Enum::_factory();
+    }
+
+    /**
+     * Autowiring by property type
+     *
+     * @return Autowire
+     */
+    static public function ByType()
+    {
+        return Enum::_factory();
+    }
+
+    /**
+     * Autowiring by constructor arguments
+     *
+     * @return Autowire
+     */
+    static public function Constructor()
+    {
+        return Enum::_factory();
+    }
 }
