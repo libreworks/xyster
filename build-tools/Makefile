@@ -70,7 +70,7 @@ SVN=svn
 SVN_USER=
 SVN_PASS=
 
-ZF_SVN_URL=https://forge.libreworks.net/svn/$(ZF_SVN_DIR)
+ZF_SVN_URL=https://forge.libreworks.net/svn/xyster/$(ZF_SVN_DIR)
 ZF_PRODUCT_NAME=Xyster Framework
 ZF_PRODUCTNAME=xyster
 ZF_PRODUCT=$(ZF_PRODUCTNAME)-$(ZF_VERSION)
@@ -94,7 +94,7 @@ export:
 	@if [ -f "$(ZF_EXPORT_DIR)/VERSION.txt" ] ; then \
 		echo "Found files in '$(ZF_EXPORT_DIR)'" ; \
 	else \
-		$(SVN) export -r $(ZF_SVN_REVISION) --force --config-dir ~/.subversion $(ZF_SVN_URL) $(ZF_EXPORT_DIR) ; \
+		$(SVN) export -r $(ZF_SVN_REVISION) --force $(ZF_SVN_URL) $(ZF_EXPORT_DIR) ; \
 	fi
 
 stage: stage-files stage-docs stage-version

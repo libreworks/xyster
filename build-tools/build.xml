@@ -86,7 +86,7 @@ This build file is customized for the Xyster Framework
   <property name="zf.7zball" value="${stage.home}/${zf.productname}-${zf.version}.7z" />
   <property name="zf.apidoc.output.style" value="HTML:frames:default" />
   <property name="lang" value="en,ar,cs,de,es,fr,ja,nl,pl,pt-br,ro,ru,sk,sr,zh" />
-  <property name="tree" value="core,incubator" />
+  <property name="tree" value="core" />
 
   <target name="dist" depends="build"
     description="Stage product, build docs, create tarball and zip archives.  This is the default target.">
@@ -221,8 +221,11 @@ ${zf.product.name} ${zf.version} (build ${zf.svn.revision})
     <mkdir dir="${zf.apidoc.dest.dir}" />
     <phpdoc title="${zf.product.name} ${zf.apidoc.label} API Documentation"
       destdir="${zf.apidoc.dest.dir}"
-      sourcepath="${zf.apidoc.src.dir}"
-      output="${zf.apidoc.output.style}" />
+      output="${zf.apidoc.output.style}">
+      <fileset dir="${zf.apidoc.src.dir}">
+          <include name="**/*.php"/>
+      </fileset>
+    </phpdoc>
     <echo msg="done." />
   </target>
 
