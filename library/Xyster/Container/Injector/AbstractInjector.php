@@ -124,7 +124,6 @@ abstract class AbstractInjector extends \Xyster\Container\Provider\AbstractProvi
             // @todo wrap this exception if it occurs?
             $prop->set($instance, $propertyValue);
         } else {
-            require_once 'Xyster/Container/Injector/Exception.php';
             throw new Exception(
                 'Cannot inject property ' . $name . ' into ' .
                 get_class($instance) .
