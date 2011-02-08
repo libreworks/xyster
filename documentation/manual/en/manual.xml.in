@@ -9,11 +9,11 @@
     <bookinfo>
         <title>Programmer's Reference Guide</title>
         <subtitle>Xyster Framework</subtitle>
-        <edition>Build 5</edition>
+        <edition>02 Build 02</edition>
         <pubdate><?dbtimestamp format="Y-m-d"?></pubdate>
         <copyright>
             <year>2005-<?dbtimestamp format="Y"?></year>
-            <holder>Irrational Logic</holder>
+            <holder>LibreWorks, LLC</holder>
         </copyright>
         <legalnotice>
             <para>The contents of this guide are available under the terms of the
@@ -78,20 +78,6 @@
     <chapter id="xyster.filter">
         <title>Xyster_Filter</title>
         <xi:include href="module_specs/Xyster_Filter.xml" />
-    </chapter>
-
-    <chapter id="xyster.orm">
-        <title>Xyster_Orm</title>
-    	<xi:include href="module_specs/Xyster_Orm.xml" />
-    	<xi:include href="module_specs/Xyster_Orm_Setup.xml" />
-    	<xi:include href="module_specs/Xyster_Orm_Mapper.xml" />
-    	<xi:include href="module_specs/Xyster_Orm_Entity.xml" />
-    	<xi:include href="module_specs/Xyster_Orm_Orm.xml" />        
-    	<xi:include href="module_specs/Xyster_Orm_Relations.xml" />
-        <xi:include href="module_specs/Xyster_Orm_Lookups.xml" />
-        <xi:include href="module_specs/Xyster_Orm_Validate.xml" />
-    	<xi:include href="module_specs/Xyster_Orm_Queries.xml" />
-    	<xi:include href="module_specs/Xyster_Orm_Plugins.xml" />
     </chapter>
 
     <chapter id="xyster.type">

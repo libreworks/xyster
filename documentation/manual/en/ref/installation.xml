@@ -5,8 +5,8 @@
             <sect2 id="introduction.installation.requirements">
                 <title>System Requirements</title>
 
-                <para>Xyster is built with object-oriented PHP 5 and requires PHP 5.2.0 or later.
-                    Xyster requires the availability of the Zend Framework, version 1.5.0 or later.</para>
+                <para>Xyster is built with object-oriented PHP 5 and requires PHP 5.3.0 or later.
+                    Xyster requires the availability of the Zend Framework, version 1.11.0 or later.</para>
 
             </sect2>
             <sect2 id="introduction.installation.using">

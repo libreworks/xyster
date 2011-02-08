@@ -1,14 +1,14 @@
 	<sect1 id="xyster.collection.maps">
             <title>Maps</title>
 
-            <para><interface>Xyster_Collection_Map_Interface</interface>-based objects have keys instead of numbers like
-		        a list (although the keys could be numbers... they can be any value).</para>
+            <para><interface>Xyster\Collection\IMap</interface>-based objects have keys instead of numbers like
+		        a list (although the keys could be numbers… they can be any value).</para>
 
-    	    <para><interface>Xyster_Collection_Map_Interface</interface> objects implement <interface>ArrayAccess</interface> (defined in the
+    	    <para><interface>Xyster\Collection\IMap</interface> objects implement <interface>ArrayAccess</interface> (defined in the
     		PHP SPL), which means you can get items inside via array style.</para>
 
     	    <programlisting role="php"><![CDATA[<?php
-// if $map is a Xyster_Collection_Map_Interface
+// if $map is a Xyster\Collection\IMap
 
 echo 'Number of entries: ' . count($map) . "\n";
 
@@ -31,13 +31,13 @@ if ( isset($map['test']) ) { // or $map->containsKey('test')
 echo 'Find key for value: ' . $map->keyFor('search value');
 echo 'Find all keys for value: ' . implode(', ', $map->keysFor('search value'));
 
-$aliases = new Xyster_Collection_Map_String();
+$aliases = new \Xyster\Collection\StringMap();
 $aliases['batman'] = 'Bruce';
 $aliases['wolverine'] = 'Logan';
 $aliases['wonderwoman'] = 'Diana';
 $aliases['gambit'] = 'Remy';
 
-$more = new Xyster_Collection_Map_String();
+$more = new \Xyster\Collection\StringMap();
 $more['doom'] = 'Victor';
 $more['spidey'] = 'Peter';
 $more['shazam'] = 'Billy';
@@ -57,7 +57,7 @@ $aliases->remove('doom');
 
 			<para>Maps with objects as keys are what you have in strongly-typed languages. In Java or .NET,
 				for instance, everything is an object including strings and integers.
-				<classname>Xyster_Collection_Map</classname> is the default implementation of this type of map.
+				<classname>Xyster\Collection\Map</classname> is the default implementation of this type of map.
 				Note that PHP's <interface>ArrayAccess</interface> syntax doesn't work for objects as keys.
 				Because of this, you are limited to using the <methodname>get</methodname>, <methodname>set</methodname>,
 				<methodname>remove</methodname>, and <methodname>containsKey</methodname> methods only.</para>
