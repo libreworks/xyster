@@ -32,7 +32,27 @@ class TheCollectionTest extends BaseCollectionTest
     	$this->assertType('\Xyster\Collection\EmptyList', $list);
     	$this->assertSame($list, Collection::emptyList());
     }
-    
+
+    /**
+     * Tests the empty map method
+     */
+    public function testEmptyMap()
+    {
+        $map = Collection::emptyMap();
+        $this->assertType('\Xyster\Collection\EmptyMap', $map);
+        $this->assertSame($map, Collection::emptyMap());
+    }
+
+    /**
+     * Tests the empty set method
+     */
+    public function testEmptySet()
+    {
+        $set = Collection::emptySet();
+        $this->assertType('\Xyster\Collection\EmptyList', $set);
+        $this->assertSame($set, Collection::emptySet());
+    }
+
     /**
      * Tests the fixed collection method
      * @expectedException \Xyster\Collection\Exception

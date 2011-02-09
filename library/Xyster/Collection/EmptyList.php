@@ -21,7 +21,7 @@ namespace Xyster\Collection;
  * @copyright Copyright LibreWorks, LLC (http://libreworks.net)
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class EmptyList implements IList
+class EmptyList implements IList, ISet
 {
     /**
      * Adds an item to the collection

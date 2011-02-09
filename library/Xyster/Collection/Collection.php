@@ -29,6 +29,10 @@ class Collection extends AbstractCollection
      * @var EmptyList
      */
     static private $_emptyList = null;
+    /**
+     * @var EmptyMap
+     */
+    static private $_emptyMap = null;
 
     /**
      * Creates a new simple collection
@@ -54,6 +58,29 @@ class Collection extends AbstractCollection
             self::$_emptyList = new EmptyList;
         }
         return self::$_emptyList;
+    }
+
+    /**
+     * Gets an immutable, empty map
+     *
+     * @return IMap
+     */
+    static public function emptyMap()
+    {
+        if (self::$_emptyMap === null) {
+            self::$_emptyMap = new EmptyMap;
+        }
+        return self::$_emptyMap;
+    }
+
+    /**
+     * Gets an immutable, empty set
+     *
+     * @return ISet
+     */
+    static public function emptySet()
+    {
+        return self::emptyList();
     }
 
     /**

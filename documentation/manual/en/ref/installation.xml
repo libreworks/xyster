@@ -1,6 +1,6 @@
 	<sect1 id="introduction.installation">
             <title>Installation</title>
-            <para>Xyster requires no special installation steps. Simply get a copy of the framework and ensure that the /library directory is in your PHP include_path.</para>
+            <para>Xyster requires no special installation steps. Simply get a copy of the framework and ensure that the <filename>/library</filename> directory is in your PHP <varname>include_path</varname>.</para>
         
             <sect2 id="introduction.installation.requirements">
                 <title>System Requirements</title>

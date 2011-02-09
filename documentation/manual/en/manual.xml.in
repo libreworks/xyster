@@ -45,9 +45,10 @@
     	<xi:include href="module_specs/Xyster_Collection.xml" />
     	<xi:include href="module_specs/Xyster_Collection_Collections.xml" />
     	<xi:include href="module_specs/Xyster_Collection_Lists.xml" />
-	    <xi:include href="module_specs/Xyster_Collection_Sets.xml" />
+	<xi:include href="module_specs/Xyster_Collection_Sets.xml" />
     	<xi:include href="module_specs/Xyster_Collection_Maps.xml" />
-        <xi:include href="module_specs/Xyster_Collection_Static.xml" />        
+        <xi:include href="module_specs/Xyster_Collection_Static.xml" />
+        <xi:include href="module_specs/Xyster_Collection_Delegates.xml" />
     </chapter>
 
     <chapter id="xyster.controller">
