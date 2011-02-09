@@ -15,7 +15,7 @@
  */
 namespace Xyster\Type\Property;
 /**
- * Creates Xyster_Type_Property_Interface objects
+ * Creates {@link Xyster\Type\Property\IProperty} objects
  *
  * @category  Xyster
  * @package   Xyster_Type
@@ -29,9 +29,19 @@ class Factory
     /**
      * Gets the property wrapper appropriate for the object
      *
-     * @param object $target
-     * @param string $property
+     * If the target is an array, or it's an instance of <code>ArrayAccess</code>
+     * and doesn't have a public field or method getter/setter for the property,
+     * a {@link Map} is returned.
+     * 
+     * If the target has a getter or setter method for the property, or has the
+     * magic <code>__call</code> method, a {@link Method} is returned.
+     * 
+     * Any other value will return a {@link Direct}.
+     *
+     * @param object $target The object or array
+     * @param string $property The name of the field
      * @return IProperty
+     * @throws InvalidTypeException if <code>$target</code> isn't an array/object
      */
     public static function get( $target, $property )
     {

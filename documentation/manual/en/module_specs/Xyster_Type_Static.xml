@@ -1,7 +1,7 @@
 	<sect1 id="xyster.type.static">
         <title>Static Methods</title>
 
-        <para>There are several static methods available from the <classname>Xyster_Type</classname>
+        <para>There are several static methods available from the <classname>Xyster\Type\Type</classname>
             class that assist you in working with types and equality.</para>
 
         <sect2 id="xyster.type.static.equality">
@@ -19,11 +19,11 @@
                     if they share the exact same values.</para>
                     
                 <programlisting role="php"><![CDATA[<?php
-Xyster_Type::areEqual('foo', 'foo'); // true
-Xyster_Type::areEqual('foo', 'bar'); // false
-Xyster_Type::areEqual(new ArrayObject, new ArrayObject); // false
+\Xyster\Type\Type::areEqual('foo', 'foo'); // true
+\Xyster\Type\Type::areEqual('foo', 'bar'); // false
+\Xyster\Type\Type::areEqual(new ArrayObject, new ArrayObject); // false
 $object = new ArrayObject;
-Xyster_Type::areEqual($object, $object); // true
+\Xyster\Type\Type::areEqual($object, $object); // true
 ]]></programlisting>
                     
                 <para>If the values aren't identical and if the first value you
@@ -48,7 +48,7 @@ class SmartEquals
                 $this->_value == $value->_value); 
     }
 }
-Xyster_Type::areEqual(new SmartEquals('foobar'), new SmartEquals('foobar')); // true 
+\Xyster\Type\Type::areEqual(new SmartEquals('foobar'), new SmartEquals('foobar')); // true
 ]]></programlisting>
             </sect3>
             
@@ -83,17 +83,17 @@ Xyster_Type::areEqual(new SmartEquals('foobar'), new SmartEquals('foobar')); // 
             <para>A hash code should not be any greater than <constant>PHP_INT_MAX</constant>
                 or smaller than the negative value of <constant>PHP_INT_MAX</constant>,
                 or else PHP will turn it into a float.  The hash number for a string
-                returned from <classname>Xyster_Type</classname> should be the
-                same as the hash for the same string from Java.</para>
+                returned from <classname>Xyster\Type\Type</classname> should be the
+                same as the hash for the same string from Java (that is, 32-bit).</para>
 
             <programlisting role="php"><![CDATA[<?php
-Xyster_Type::hash('hello'); // 99162322
-Xyster_Type::hash('helloa'); // -1220935217
-Xyster_Type::hash('hello to the world'); // -1821194164
-Xyster_Type::hash(123.123); // 1123434234
-Xyster_Type::hash(true); // 1231
-Xyster_Type::hash(true); // 1237
-Xyster_Type::hash(456789); // 456789
+\Xyster\Type\Type::hash('hello'); // 99162322
+\Xyster\Type\Type::hash('helloa'); // -1220935217
+\Xyster\Type\Type::hash('hello to the world'); // -1821194164
+\Xyster\Type\Type::hash(123.123); // 1123434234
+\Xyster\Type\Type::hash(true); // 1231
+\Xyster\Type\Type::hash(true); // 1237
+\Xyster\Type\Type::hash(456789); // 456789
 ]]></programlisting>
             
             <para>By default, any instance of an object will return a unique
@@ -104,8 +104,8 @@ Xyster_Type::hash(456789); // 456789
             <programlisting role="php"><![CDATA[<?php
 $obj = new ArrayObject;
 $obj2 = new ArrayObject;
-Xyster_Type::hash($obj);  // not the same as...
-Xyster_Type::hash($obj2);
+\Xyster\Type\Type::hash($obj);  // not the same as...
+\Xyster\Type\Type::hash($obj2);
 ]]></programlisting>
                 
             <para>If you supply an object that has a <methodname>hashCode</methodname>
@@ -117,13 +117,13 @@ class SmartHash extends SmartEquals
 {    
     public function hashCode()
     {
-        return Xyster_Type::hash($this->_value);
+        return Xyster\Type\Type::hash($this->_value);
     }
 }
 $obj = new SmartHash('hello');
 $obj2 = new SmartHash('hello');
-Xyster_Type::hash($obj);  // 99162322
-Xyster_Type::hash($obj2); // 99162322
+\Xyster\Type\Type::hash($obj);  // 99162322
+\Xyster\Type\Type::hash($obj2); // 99162322
 ]]></programlisting>
         </sect2>
         

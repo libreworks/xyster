@@ -8,17 +8,16 @@
         <sect2 id="xyster.type.overview.creating">
             <title>Creating</title>
 
-            <para><classname>Xyster_Type</classname> accepts either a string
+            <para><classname>Xyster\Type\Type</classname> accepts either a string
                 name for the class it represents or a <classname>ReflectionClass</classname>
-                object.  <classname>Xyster_Type</classname> accepts names for 
+                object.  <classname>Xyster\Type\Type</classname> accepts names for
                 classes, interfaces, or names for PHP primitive types (array,
                 string, integer, boolean, and double).</para>
                 
             <programlisting role="php"><![CDATA[<?php
-require_once 'Xyster/Type.php';
-$typeByString = new Xyster_Type('ArrayObject');
+$typeByString = new \Xyster\Type\Type('ArrayObject');
 $reflectionClass = new ReflectionClass('ArrayObject');
-$typeByReflectionClass = new Xyster_Type($reflectionClass);
+$typeByReflectionClass = new \Xyster\Type\Type($reflectionClass);
 ]]></programlisting>
 
             <para>You can also create the object by using the static <methodname>of</methodname>
@@ -26,25 +25,24 @@ $typeByReflectionClass = new Xyster_Type($reflectionClass);
                 the type.  This works with both objects and primitive types.</para>
                 
             <programlisting role="php"><![CDATA[<?php
-require_once 'Xyster/Type.php';
 $myObject = new SplObjectStorage;
-$typeOfObject = Xyster_Type::of($myObject);
-echo $typeOfObject->getName() . "\n"; // prints SplObjectStorage
+$typeOfObject = \Xyster\Type\Type::of($myObject);
+echo $typeOfObject->getName() . PHP_EOL; // prints SplObjectStorage
 
 $myValue = "a test";
-$typeOfScalar = Xyster_Type::of($myValue);
-echo $typeOfScalar->getName() . "\n"; // prints string
+$typeOfScalar = \Xyster\Type\Type::of($myValue);
+echo $typeOfScalar->getName() . PHP_EOL; // prints string
 
 $myArray = array(1, 2, 3);
-$typeOfArray = Xyster_Type::of($myArray);
-echo $typeOfArray->getName() . "\n"; // prints array
+$typeOfArray = \Xyster\Type\Type::of($myArray);
+echo $typeOfArray->getName() . PHP_EOL; // prints array
 ]]></programlisting>
         </sect2>
 
         <sect2 id="xyster.type.overview.usage">
             <title>Basic Usage</title>
             
-            <para>A <classname>Xyster_Type</classname> object offers many useful
+            <para>A <classname>Xyster\Type\Type</classname> object offers many useful
                 methods to assist you in working with different classes and types.</para>
                 
             <sect3 id="xyster.type.overview.usage.getclass">
@@ -67,7 +65,7 @@ echo $typeOfArray->getName() . "\n"; // prints array
                     
                 <para>The <parameter>$type</parameter> argument can be either a
                     string, a <classname>ReflectionClass</classname> object or a
-                    <classname>Xyster_Type</classname> object.</para>
+                    <classname>Xyster\Type\Type</classname> object.</para>
             </sect3>
             
             <sect3 id="xyster.type.overview.usage.isinstance">
@@ -77,9 +75,9 @@ echo $typeOfArray->getName() . "\n"; // prints array
                     is an instance of the type the object represents.</para>
                     
                 <programlisting role="php"><![CDATA[<?php
-$stringType = new Xyster_Type('string');
+$stringType = new \Xyster\Type\Type('string');
 if ( $stringType->isInstance("This is a string") ) {
-    echo "The argument is a string\n";
+    echo "The argument is a string" . PHP_EOL;
 }
 
 interface Foo
@@ -93,9 +91,9 @@ class Bar implements Foo
     }
 }
 
-$fooType = new Xyster_Type('Foo');
+$fooType = new \Xyster\Type\Type('Foo');
 if ( $fooType->isInstance(new Bar()) ) {
-    echo "The argument is a Foo\n";
+    echo "The argument is a Foo" . PHP_EOL;
 }
 ]]></programlisting>
             </sect3>
