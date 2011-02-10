@@ -1,0 +1,63 @@
+	<sect1 id="proxy">
+            <title>Proxies</title>
+
+            <para>Dynamically-created proxies to real objects are a convenient way
+                to implement <firstterm>Aspect-Oriented</firstterm> Programming.
+                While much less sophisticated than other PHP <acronym>AOP</acronym>
+                systems, this package of Xyster allows for the basics.</para>
+
+            <sect2>
+                <title>Concept</title>
+
+                <para>The <classname>Xyster\Type\Proxy\Builder</classname>
+                class can be used to create these dynamic proxies. The basic idea
+                is that at runtime a new class is created that extends from another
+                and/or implements one or more interfaces. When the methods on this
+                newly-generated class are invoked, another object implementing the
+                <interfacename>Xyster\Type\Proxy\IHandler</interfacename> interface
+                is called with the details of the method invocation. At this point,
+                the handler can do anything it wishes, calling the parent class
+                of the proxy if desired.
+                </para>
+
+                <para>Here is a simple example of this behavior.</para>
+
+                <programlisting role="php"><![CDATA[<?php
+class Foo
+{
+    public function __construct($value)
+    {
+        echo 'Foo::__construct was called with: ' . $value . PHP_EOL;
+    }
+    public function bar()
+    {
+        echo 'Foo::bar was called' . PHP_EOL;
+    }
+    public function baz()
+    {
+        echo 'Foo::baz was called' . PHP_EOL;
+    }
+}
+class FooHandler implements Xyster\Type\Proxy\IHandler
+{
+    function invoke($object, \ReflectionMethod $called, array $args, \ReflectionMethod $parent = null)
+    {
+        echo "Proxy was called. ";
+        if ( $parent != null ) {
+            echo "About to invoke: " . $parent->getDeclaringClass() . "::" . $parent->getName();
+            $parent->invoke($object);
+        }
+        echo PHP_EOL;
+    }
+}
+
+$builder = new Xyster\Type\Proxy\Builder();
+$proxy = $builder->setParent(new Xyster\Type\Type('Foo'))
+    ->setInterfaces(array(new Xyster\Type\Type('Countable')))
+    ->setCallParentConstructor(true)
+    ->create('test');
+$proxy->bar();
+]]></programlisting>
+
+            </sect2>
+        </sect1>
