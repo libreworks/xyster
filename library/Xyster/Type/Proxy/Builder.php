@@ -16,7 +16,7 @@
 namespace Xyster\Type\Proxy;
 use Xyster\Type\Type;
 /**
- * A mediator for setting and getting values from a named field
+ * Creates proxy definitions
  *
  * @category  Xyster
  * @package   Xyster_Type

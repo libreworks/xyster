@@ -59,5 +59,45 @@ $proxy = $builder->setParent(new Xyster\Type\Type('Foo'))
 $proxy->bar();
 ]]></programlisting>
 
+                <para>When this script executes, the following output will occur.</para>
+
+                <screen><![CDATA[Proxy was called. About to invoke: Foo::bar
+Foo::bar was called
+]]></screen>
+
+                <para>Proxies with handlers can add useful behavior to existing
+                    objects, such as transaction demarcation, logging, and security assertions.</para>
+            </sect2>
+            <sect2>
+                <title>The Builder</title>
+
+                <para>The <classname>Xyster\Type\Proxy\Builder</classname> class
+                    is used to create proxy definitions. The methods you can use
+                    to define a proxy have a fluent interface.</para>
+                <glosslist>
+                    <glossentry>
+                        <glossterm><methodname>setCallParentConstructor</methodname></glossterm>
+                        <glossdef><para>Sets whether the proxy should call the parent class constructor upon instantiation. If the proxy lacks a parent class, this option has no effect.</para></glossdef>
+                    </glossentry>
+                    <glossentry>
+                        <glossterm><methodname>setHandler</methodname></glossterm>
+                        <glossdef><para>This method receives the <interfacename>Xyster\Type\Proxy\IHandler</interfacename> that will be used by the proxy.</para></glossdef>
+                    </glossentry>
+                    <glossentry>
+                        <glossterm><methodname>setInterfaces</methodname></glossterm>
+                        <glossdef><para>Sets the list of interfaces that this proxy will implement. This must be an array of <classname>Xyster\Type\Type</classname> objects.</para></glossdef>
+                    </glossentry>
+                    <glossentry>
+                        <glossterm><methodname>setParent</methodname></glossterm>
+                        <glossdef><para>Sets the parent class from which the proxy will extend.</para></glossdef>
+                    </glossentry>
+                </glosslist>
+                <para>After the builder has been configured, you can call the <methodname>create</methodname> method
+                    with any arguments the constructor of the parent class may need. The <methodname>createType</methodname> will just return
+                    the type information and not an instantiated proxy object.</para>
+                <para>If the static <methodname>setCache</methodname> method is called,
+                    the builder will store generated classes and re-use them if another builder
+                    is configured with the same details (parent class, interfaces, handler used, and
+                    whether to call the parent constructor).</para>
             </sect2>
         </sect1>
