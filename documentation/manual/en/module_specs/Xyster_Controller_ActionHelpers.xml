@@ -6,15 +6,15 @@
 				<ulink url="http://framework.zend.com/manual/en/zend.controller.actionhelpers.html">Action Helpers</ulink>.</para>
 
 			<sect2 id="xyster.controller.actionhelpers.cache">
-				<title>Xyster_Controller_Action_Helper_Cache</title>
+				<title>Cache Action Helper</title>
 
 				<para>It's a pain to have to remember all the HTTP headers associated with Caching responses.
 					It's even more of a pain to remember when certain headers don't work (such as certain browsers
-					over SSL). The Cache helper aims to alleviate some of these concerns.</para>
+					over SSL). The <classname>Xyster\Controller\Action\Helper\Cache</classname> helper aims to alleviate some of these concerns.</para>
 
 				<para>It has one method, <methodname>checkModifiedSince</methodname>, which is also called by the
 					direct method of the Helper. Given an integer timestamp, this class compares it to the
-					IF_MODIFIED_SINCE header sent by the client. If the client has a date that is equal to the
+					<code>IF_MODIFIED_SINCE</code> header sent by the client. If the client has a date that is equal to the
 					one supplied, the helper sends the proper Not-Modified headers, turns off the
 		<ulink url="http://framework.zend.com/manual/en/zend.controller.actionhelpers.html#zend.controller.actionhelpers.viewrenderer">viewRenderer</ulink>
 					helper, and returns true. If the client has a date older than the one supplied, the helper
@@ -35,12 +35,12 @@ public function fooAction()
 			</sect2>
 
 			<sect2 id="xyster.controller.actionhelpers.file">
-				<title>Xyster_Controller_Action_Helper_File</title>
+				<title>File Action Helper</title>
 
 				<para>You know what else is a pain? Dynamic file output to a client. Each client is a little
 					different with its gripes about the headers it receives, but this helper should work for most of them.</para>
 
-				<para>It has one method, <methodname>setFileHeaders</methodname>, which is also called by the
+				<para><classname>Xyster\Controller\Action\Helper\File</classname> has one method, <methodname>setFileHeaders</methodname>, which is also called by the
 					direct method of the helper. You can supply a filename, a MIME type, and a last modified
 					integer timestamp of the file (only the filename is required). If the date is specified,
 					this helper will in turn call the Cache Helper to send correct headers. This plugin will

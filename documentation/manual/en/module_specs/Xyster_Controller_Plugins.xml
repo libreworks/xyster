@@ -6,10 +6,10 @@
 			<ulink url="http://framework.zend.com/manual/en/zend.controller.plugins.html">Controller Plugins</ulink>.</para>
 
 			<sect2 id="xyster.controller.plugins.acl">
-				<title>Xyster_Controller_Plugin_Acl</title>
+				<title>ACL Plugin</title>
 
-				<para>The ACL plugin is used to grant roles access to MVC dispatch locations. Given a
-					<classname>Zend_Acl</classname> or <classname>Xyster_Acl</classname>, you can use
+				<para>The <classname>Xyster\Controller\Plugin\Acl</classname> plugin is used to grant roles access to MVC dispatch locations. Given a
+					<classname>Zend_Acl</classname> or <classname>Xyster\Acl\Acl</classname>, you can use
 					this plugin to allow or deny a role access to an entire module, just a controller, or a
 					single action. If the authenticated user tries to access a location that is forbidden,
 					the plugin forwards them to an error action.</para>
@@ -25,7 +25,7 @@
 $module = 'default';
 $controller = 'index';
 $action = 'error';
-/* @var $plugin Xyster_Controller_Plugin_Acl */
+/* @var $plugin \Xyster\Controller\Plugin\Acl */
 $plugin->setAccessDenied($module, $controller, $action);]]></programlisting>
 
 					<para>The plugin registers a preDispatch hook to verify access. If the authenticated user
@@ -34,7 +34,7 @@ $plugin->setAccessDenied($module, $controller, $action);]]></programlisting>
 
 					<tip>
 					<para>This plugin assumes that the currently authenticated <classname>Zend_Auth</classname> identity has been added
-						as a role to the ACL. <classname>Xyster_Controller_Plugin_Auth</classname> when used will add the current
+						as a role to the ACL. <classname>Xyster\Controller\Plugin\Auth</classname> when used will add the current
 						authenticated role to the ACL during the routeStartup event.</para>
 					</tip>
 
@@ -47,13 +47,13 @@ $plugin->setAccessDenied($module, $controller, $action);]]></programlisting>
 $module = 'default';
 $controller = 'index';
 $action = 'login';
-/* @var $plugin Xyster_Controller_Plugin_Acl */
+/* @var $plugin Xyster\Controller\Plugin\Acl */
 $plugin->setLogin($module, $controller, $action);]]></programlisting>
 
 					<para>The login action should process the the user-supplied credentials and authenticate the user.</para>
 
 					<tip>
-						<para>If you use <classname>Xyster_Controller_Plugin_Auth</classname>, you can set the adapter
+						<para>If you use <classname>Xyster\Controller\Plugin\Auth</classname>, you can set the adapter
 							it uses within your login action. Doing so will automatically authenticate the user and
 							assign the role to the ACL.</para>
 					</tip>
@@ -71,17 +71,17 @@ $plugin->setLogin($module, $controller, $action);]]></programlisting>
 						'foo' controller of the 'default' module.</para>
 
 					<programlisting role="php"><![CDATA[<?php
-$acl = new Zend_Acl;
-$identity = Zend_Auth::getInstance()->getIdentity();
-$acl->addRole(new Zend_Acl_Role($identity);
-$plugin = new Xyster_Controller_Plugin_Acl($acl);
+$acl = new \Zend_Acl;
+$identity = \Zend_Auth::getInstance()->getIdentity();
+$acl->addRole(new \Zend_Acl_Role($identity);
+$plugin = new \Xyster\Controller\Plugin\Acl($acl);
 $plugin->allow($identity, 'default', 'foo');
-$front = Zend_Controller_Front::getInstance();
+$front = \Zend_Controller_Front::getInstance();
 $front->registerPlugin($plugin);]]></programlisting>
 
 					<note>
 						<para>The ACL Plugin stores the dispatch locations as
-							<classname>Xyster_Controller_Request_Resource</classname> objects.
+							<classname>Xyster\Controller\Request\Resource</classname> objects.
 							Each one represents a module, controller, or action. They are added hierarchically
 							to the ACL. Therefore, adding a rule for access to the "bar" action in the "foo" controller
 							in the "default" module will add three resources to the ACL: /default, /default/foo,
@@ -115,17 +115,17 @@ $rules = array(
     array('role'=>'admin'),
     array('role'=>'moderators', 'module'=>'forum', 'controller'=>'mod'), 
     array('module'=>'forum', 'controller'=>'view'),
-    array('type'=>Zend_Acl::TYPE_DENY, 'role'=>'trolls')
+    array('type'=>\Zend_Acl::TYPE_DENY, 'role'=>'trolls')
 );
-/* @var $plugin Xyster_Controller_Plugin_Acl */
+/* @var $plugin \Xyster\Controller\Plugin\Acl */
 $plugin->setRules($rules);]]></programlisting>
 
 				</sect3>
 			</sect2>
 			<sect2 id="xyster.controller.plugins.auth">
-				<title>Xyster_Controller_Plugin_Auth</title>
+				<title>Auth Plugin</title>
 
-				<para>The main purpose of the authentication plugin is to authenticate the current user and register
+				<para>The main purpose of the <classname>Xyster\Controller\Plugin\Auth</classname> plugin is to authenticate the current user and register
 					it with a supplied ACL. The plugin registers a routeStartup hook so authentication can take place
 					before the MVC system does any real work.</para>
 
@@ -138,7 +138,7 @@ $plugin->setRules($rules);]]></programlisting>
 
 				<programlisting role="php"><![CDATA[<?php
 $adapter = new MyAuthAdapter;
-$plugin = new Xyster_Controller_Plugin_Auth;
+$plugin = new \Xyster\Controller\Plugin\Auth;
 $plugin->setAuthAdapter($adapter);]]></programlisting>
 
 				<para>If the user must supply credentials for authentication, the adapter can and should be created
@@ -151,7 +151,7 @@ public function loginAction()
 		$username = $this->_getParam('username');
 		$password = $this->_getParam('password');
 		$adapter = new MyAuthAdapter($username, $password);
-		$plugin = $this->getFrontController()->getPlugin('Xyster_Controller_Plugin_Auth');
+		$plugin = $this->getFrontController()->getPlugin('Xyster\Controller\Plugin\Auth');
 		$plugin->setAuthAdapter($adapter);
 		return;
 	} else {
@@ -172,7 +172,7 @@ public function loginAction()
 $module = 'default';
 $controller = 'index';
 $action = 'login';
-/* @var $plugin Xyster_Controller_Plugin_Auth */
+/* @var $plugin \Xyster\Controller\Plugin\Auth */
 $plugin->setFailure($module, $controller, $action);]]></programlisting>
 
 					<para>A <classname>Zend_Auth_Result</classname> object will be passed to this action as the result parameter.</para>
@@ -185,7 +185,7 @@ $plugin->setFailure($module, $controller, $action);]]></programlisting>
 $module = 'default';
 $controller = 'index';
 $action = 'myAccount';
-/* @var $plugin Xyster_Controller_Plugin_Auth */
+/* @var $plugin \Xyster\Controller\Plugin\Auth */
 $plugin->setSuccess($module, $controller, $action);]]></programlisting>
 
 
@@ -194,25 +194,25 @@ $plugin->setSuccess($module, $controller, $action);]]></programlisting>
 					<title>Getting the Identity's Role</title>
 
 					<para>Once the user is authenticated, the plugin will then retrieve and store a role that represents
-						the authenticated user. By default, <classname>Xyster_Acl_Role_Provider</classname> will be used,
+						the authenticated user. By default, <classname>Xyster\Acl\Role\Provider</classname> will be used,
 						but you can define your own provider using the <methodname>setRoleProvider</methodname> method.
 						If an ACL object is supplied, the plugin will take the role it got from the provider and add it
 						to the ACL.</para>
 
 					<programlisting role="php"><![CDATA[<?php
-$acl = new Zend_Acl;
+$acl = new \Zend_Acl;
 $authAdapter = new MyAuthAdapter();
-$plugin = new Xyster_Controller_Plugin_Auth($authAdapter, $acl);
-$front = Zend_Controller_Front::getInstance();
+$plugin = new \Xyster\Controller\Plugin\Auth($authAdapter, $acl);
+$front = \Zend_Controller_Front::getInstance();
 $front->registerPlugin($plugin);]]></programlisting>
 
 					<para>Once authentication takes place, the role generated for the current user is available from the getRole method.</para>
 				</sect3>
 			</sect2>
 			<sect2 id="xyster.controller.plugins.cache">
-				<title>Xyster_Controller_Plugin_Cache</title>
+				<title>Cache Plugin</title>
 
-				<para>The Cache plugin is responsible for one thing: providing the correct cache control headers. </para>
+				<para>The <classname>Xyster\Controller\Plugin\Cache</classname> plugin is responsible for one thing: providing the correct cache control headers. </para>
 
 				<para>Common problem: During a started session, PHP will by default send several anti-caching headers
 					along with the response. Simply including this plugin class turns off the configuration setting
