@@ -17,15 +17,13 @@
         </copyright>
         <legalnotice>
             <para>The contents of this guide are available under the terms of the
-    		<ulink url="http://www.freebsd.org/copyright/freebsd-doc-license.html">FreeBSD Documentation License</ulink></para>
-
-            <para>Redistribution and use in source (SGML DocBook) and &apos;compiled&apos; forms (SGML, HTML, PDF, PostScript, RTF and so forth) with or without modification, are permitted provided that the following conditions are met:</para>
-
-            <orderedlist><listitem><para>Redistributions of source code (SGML DocBook) must retain the above copyright notice, this list of conditions and the following disclaimer as the first lines of this file unmodified.</para></listitem>
-            <listitem><para>Redistributions in compiled form (transformed to other DTDs, converted to PDF, PostScript, RTF and other formats) must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.</para></listitem>
-            </orderedlist>
-
-            <para>THIS DOCUMENTATION IS PROVIDED BY THE XYSTER FRAMEWORK PROJECT &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE FREEBSD DOCUMENTATION PROJECT BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS DOCUMENTATION, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</para>
+                <ulink url="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 Unported License</ulink>
+                (&quot;CC-BY-SA&quot;). In accordance with CC-BY-SA, if you
+                distribute this document or an adaptation of it, you must provide
+                the URL for the original version.</para>
+            <para>LibreWorks, as the licensor of this document, waives the right to
+                enforce, and agrees not to assert, Section 4d of CC-BY-SA to the fullest
+                extent permitted by applicable law.</para>
         </legalnotice>
     </bookinfo>
     <chapter id="introduction">
@@ -56,6 +54,12 @@
         <xi:include href="module_specs/Xyster_Controller.xml" />
         <xi:include href="module_specs/Xyster_Controller_ActionHelpers.xml" />
         <xi:include href="module_specs/Xyster_Controller_Plugins.xml" />
+    </chapter>
+
+    <chapter id="xyster.dao">
+        <title>Xyster_Dao</title>
+    	<xi:include href="module_specs/Xyster_Dao.xml" />
+    	<xi:include href="module_specs/Xyster_Dao_Doctrine.xml" />
     </chapter>
 
     <chapter id="xyster.data">

@@ -1,28 +1,29 @@
-    <sect1 id="xyster.filter.overview">
-        <title>Overview</title>
-        
-        <para>The filter classes available from the Xyster Framework are listed here.
-            Remember to add the <code>Xyster\Filter</code> namespace to the
-            options when using <classname>Zend_Filter</classname>.</para>
-            
-        <para>For more information about the use of filter classes, see the 
-            <ulink url="http://framework.zend.com/manual/en/zend.filter.html">Zend Framework documentation for <code>Zend_Filter</code>.</ulink></para>
-                
-        <sect2 id="xyster.filter.titlecase.example">
-            <title>TitleCase</title>
-            
-	        <para>PHP lacks the function to convert a string to title case because
-	            often times doing so is subjective.  It also usually follows
-	            English-specific language rules.</para>
-	
-	        <para>Title case is making the first letter of important words
-	            uppercase, and keeping the rest lowercase. Lowercase words include
-	            prepositions and conjunctions.</para>
-            
-            <programlisting role="php"><![CDATA[<?php
+<?xml version="1.0" encoding="UTF-8"?>
+<sect1 id="xyster.filter.overview">
+    <title>Overview</title>
+
+    <para>The filter classes available from the Xyster Framework are listed here.
+        Remember to add the <code>Xyster\Filter</code> namespace to the
+        options when using <classname>Zend_Filter</classname>.</para>
+
+    <para>For more information about the use of filter classes, see the
+        <ulink url="http://framework.zend.com/manual/en/zend.filter.html">Zend Framework documentation for <code>Zend_Filter</code>.</ulink></para>
+
+    <sect2 id="xyster.filter.titlecase.example">
+        <title>TitleCase</title>
+
+        <para>PHP lacks the function to convert a string to title case because
+            often times doing so is subjective.  It also usually follows
+            English-specific language rules.</para>
+
+        <para>Title case is making the first letter of important words
+            uppercase, and keeping the rest lowercase. Lowercase words include
+            prepositions and conjunctions.</para>
+
+        <programlisting role="php"><![CDATA[<?php
 $filter = new \Xyster\Filter\TitleCase();
 echo $filter->filter("the dogs came out of the rain");
 // prints The Dogs Came out of the Rain
 ]]></programlisting>
-        </sect2>
-    </sect1>
+    </sect2>
+</sect1>

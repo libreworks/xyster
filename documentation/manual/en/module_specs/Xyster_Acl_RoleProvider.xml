@@ -1,32 +1,33 @@
-		<sect1 id="xyster.acl.roleprovider">
-			<title>The ACL Role Provider</title>
+<?xml version="1.0" encoding="UTF-8"?>
+<sect1 id="xyster.acl.roleprovider">
+    <title>The ACL Role Provider</title>
 
-			<para>The ACL is for determining whether a user has access to a resource. The Auth package is for identifying and authenticating users.
-				What ties them together? Furthermore, what can one use to determine the parent roles of an identity? The answer is the
-				Role Provider. The Role Provider is a mediator that sits between the Acl and Auth packages so neither has to know about the other.</para>
+    <para>The ACL is for determining whether a user has access to a resource. The Auth package is for identifying and authenticating users.
+        What ties them together? Furthermore, what can one use to determine the parent roles of an identity? The answer is the
+        Role Provider. The Role Provider is a mediator that sits between the Acl and Auth packages so neither has to know about the other.</para>
 
-			<para>The Role Provider interface, <interface>Xyster\Acl\Role\IProvider</interface>, has two methods:</para>
+    <para>The Role Provider interface, <interface>Xyster\Acl\Role\IProvider</interface>, has two methods:</para>
 
-			<orderedlist>
-				<listitem><para><methodname>getRole</methodname> – Turn an identity into a Role</para></listitem>
-				<listitem><para><methodname>getParents</methodname> – Gets the parent Roles of a Role</para></listitem>
-			</orderedlist>
+    <orderedlist>
+        <listitem><para><methodname>getRole</methodname> – Turn an identity into a Role</para></listitem>
+        <listitem><para><methodname>getParents</methodname> – Gets the parent Roles of a Role</para></listitem>
+    </orderedlist>
 
-			<para><classname>Xyster\Acl\Role\Provider</classname> is a default implementation of this interface. Given an identity,
-				it will return a <classname>Zend_Acl_Role</classname> object with the identity as the role ID. The
-				<methodname>getParents</methodname> method will just return an empty array.</para>
+    <para><classname>Xyster\Acl\Role\Provider</classname> is a default implementation of this interface. Given an identity,
+        it will return a <classname>Zend_Acl_Role</classname> object with the identity as the role ID. The
+        <methodname>getParents</methodname> method will just return an empty array.</para>
 
-			<para>Using this object makes it simple to authenticate a client and then add it to the ACL.</para>
+    <para>Using this object makes it simple to authenticate a client and then add it to the ACL.</para>
 
-			<programlisting role="php"><![CDATA[<?php
+    <programlisting role="php"><![CDATA[<?php
 $provider = new \Xyster\Acl\Role\Provider;
 $identity = \Zend_Auth::getInstance()->getIdentity();
 $role = $provider->getRole($identity);
 $acl = new \Xyster\Acl\Acl;
 $acl->addRole($role, $provider->getParents($role));]]></programlisting>
 
-			<para>In this case, having the provider is a convenience more than anything. More importantly, the 
-				<classname>Xyster\Controller\Plugin\Auth</classname> class uses a Role Provider to add the
-				authenticated user to an ACL. See its documentation for more details.</para>
-			
-		</sect1>
+    <para>In this case, having the provider is a convenience more than anything. More importantly, the
+        <classname>Xyster\Controller\Plugin\Auth</classname> class uses a Role Provider to add the
+        authenticated user to an ACL. See its documentation for more details.</para>
+
+</sect1>

@@ -1,11 +1,12 @@
-	<sect1 id="xyster.collection.lists">
-            <title>Lists</title>
+<?xml version="1.0" encoding="UTF-8"?>
+<sect1 id="xyster.collection.lists">
+    <title>Lists</title>
 
-		<para>Objects which implement <interface>Xyster\Collection\IList</interface> have numeric zero-based indexes
-			that contain elements, just like an array. They inherit <interface>Xyster\Collection\ICollection</interface> as
-			well as the <interface>ArrayAccess</interface> interface in the PHP SPL.</para>
+    <para>Objects which implement <interface>Xyster\Collection\IList</interface> have numeric zero-based indexes
+        that contain elements, just like an array. They inherit <interface>Xyster\Collection\ICollection</interface> as
+        well as the <interface>ArrayAccess</interface> interface in the PHP SPL.</para>
 
-		<para>You can extract slices of the list and insert elements at an index.</para>
+    <para>You can extract slices of the list and insert elements at an index.</para>
 
-                <para>The default implementation of a List in Xyster is the <classname>Xyster\Collection\ArrayList</classname>.</para>
-        </sect1>
+    <para>The default implementation of a List in Xyster is the <classname>Xyster\Collection\ArrayList</classname>.</para>
+</sect1>

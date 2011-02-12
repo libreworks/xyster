@@ -1,18 +1,19 @@
-	<sect1 id="xyster.collection.collections">
-            <title>Collections</title>
+<?xml version="1.0" encoding="UTF-8"?>
+<sect1 id="xyster.collection.collections">
+    <title>Collections</title>
 
-            <para>All <interface>Xyster\Collection\ICollection</interface>-based objects are traversable they can be iterated through.</para>
+    <para>All <interface>Xyster\Collection\ICollection</interface>-based objects are traversable they can be iterated through.</para>
 
-	    <programlisting role="php"><![CDATA[<?php
+    <programlisting role="php"><![CDATA[<?php
 // if $stuff implements Xyster\Collection\ICollection
 foreach( $stuff as $k=>$v ) {
         printf( 'key: %s, value: %s', $k, $v );
 }
 ]]></programlisting>
 
-		<para>Here are some other useful methods on <interface>Xyster\Collection\ICollection</interface>:</para>
+    <para>Here are some other useful methods on <interface>Xyster\Collection\ICollection</interface>:</para>
 
-		<programlisting role="php"><![CDATA[<?php
+    <programlisting role="php"><![CDATA[<?php
 // if $stuff implements Xyster\Collection\ICollection
 echo count($stuff);
 if ( $stuff->isEmpty() ) {
@@ -26,9 +27,9 @@ if ( $stuff->containsAll( array('value1', 'value2', 'value3') ) ) {
 }
 ]]></programlisting>
 
-		<para>This collection can be added to, changed, or have items removed.</para>
+    <para>This collection can be added to, changed, or have items removed.</para>
 
-		<programlisting role="php"><![CDATA[<?php
+    <programlisting role="php"><![CDATA[<?php
 // if $items is an Xyster\Collection\ICollection
 // let's say $items contains the values 'earth', 'mars', and 'jupiter'
 
@@ -48,4 +49,4 @@ $items->retainAll(\Xyster\Collection\Collection::using(array('earth'))); // $ite
 $items->clear(); // $items now contains nothing
 ]]></programlisting>
 
-        </sect1>
+</sect1>

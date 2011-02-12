@@ -1,9 +1,10 @@
-	<sect1 id="xyster.collection.sets">
-            <title>Sets</title>
+<?xml version="1.0" encoding="UTF-8"?>
+<sect1 id="xyster.collection.sets">
+    <title>Sets</title>
 
-            <para>As listed above, a set can only have one copy of a value. Let's take the same example from above.</para>
-            
-	    <programlisting role="php"><![CDATA[<?php
+    <para>As listed above, a set can only have one copy of a value. Let's take the same example from above.</para>
+
+    <programlisting role="php"><![CDATA[<?php
 $fan4 = \Xyster\Collection\Collection::using(array('mr. fantastic', 'invisible woman', 'human torch', 'thing'));
 
 $heroes = new \Xyster\Collection\Set();
@@ -14,7 +15,7 @@ $heroes->addAll( $fan4 );
 $heroes->addAll( $fan4 );   // does nothing – the set already has the fantastic 4
 ]]></programlisting>
 
-	    <sect2 id="xyster.collection.sets.sortable">
+    <sect2 id="xyster.collection.sets.sortable">
 		<title>Sortable Sets and Comparators</title>
 
 		<para>The sortable set allows for any class implementing <interface>Xyster\Collection\IComparator</interface>
@@ -40,5 +41,5 @@ foreach( $people as $person ) {
 $set->sort(new CaseInsensitiveComparator());
 // $set's items are now ordered 'Clark Kent, 'Felicia Hardy', 'Frank Castle', 'Selina Kyle'
 ]]></programlisting>
-	    </sect2>
-        </sect1>
+    </sect2>
+</sect1>

@@ -1,22 +1,31 @@
-	<sect1 id="xyster.collection.introduction">
-            <title>Introduction</title>
+<?xml version="1.0" encoding="UTF-8"?>
+<sect1 id="xyster.collection.introduction">
+    <title>Introduction</title>
 
-            <para>PHP 5 brought us many useful features in the form of the SPL. We could now iterate over
-                objects in a customizable way. Xyster's collections package is intended to utilize these
-                features in a standard way and inherit good ideas from the collection packages of other
-                popular platforms (read: Java and .NET).</para>
+    <para>PHP 5 brought us many useful features in the form of the SPL. We could now iterate over
+        objects in a customizable way. Xyster's collections package is intended to utilize these
+        features in a standard way and inherit good ideas from the collection packages of other
+        popular platforms (read: Java and .NET).</para>
 
-            <para>Below is a list of the types of collections you will find in this package. You might
-                have seen some of these terms before when working with other languages.</para>
+    <para>Below is a list of the types of collections you will find in this package. You might
+        have seen some of these terms before when working with other languages.</para>
 
-            <glosslist>
-                <glossentry><glossterm>Collection</glossterm>
-                <glossdef><para>The base term for a traversable grouping of objects.</para></glossdef></glossentry>
-                <glossentry><glossterm>List</glossterm>
-                <glossdef><para>A list is just like a numeric array: objects are stored at numeric indexes.</para></glossdef></glossentry>
-                <glossentry><glossterm>Set</glossterm>
-                <glossdef><para>A collection that can contain only one entry for any unique object.</para></glossdef></glossentry>
-                <glossentry><glossterm>Map</glossterm>
-                <glossdef><para>A collection consisting of key-and-value pairs; the keys can be scalar types or objects.</para></glossdef></glossentry>
-            </glosslist>
-        </sect1>
+    <glosslist>
+        <glossentry>
+            <glossterm>Collection</glossterm>
+            <glossdef><para>The base term for a traversable grouping of objects.</para></glossdef>
+        </glossentry>
+        <glossentry>
+            <glossterm>List</glossterm>
+            <glossdef><para>A list is just like a numeric array: objects are stored at numeric indexes.</para></glossdef>
+        </glossentry>
+        <glossentry>
+            <glossterm>Set</glossterm>
+            <glossdef><para>A collection that can contain only one entry for any unique object.</para></glossdef>
+        </glossentry>
+        <glossentry>
+            <glossterm>Map</glossterm>
+            <glossdef><para>A collection consisting of key-and-value pairs; the keys can be scalar types or objects.</para></glossdef>
+        </glossentry>
+    </glosslist>
+</sect1>

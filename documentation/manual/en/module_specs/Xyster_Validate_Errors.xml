@@ -1,27 +1,28 @@
-    <sect1 id="xyster.validate.errors">
-        <title>Error Notification</title>
-        
-        <para>The <classname>Xyster\Validate\Errors</classname> class is a
-            notification object.  It is responsible for collecting the messages
-            returned by a <classname>Zend_Validate</classname> class.  It implements
-            <interfacename>Xyster\Collection\ICollection</interfacename> so you
-            can iterate over it and count the elements inside.</para>
-            
-        <para>Each message is stored in the set as a <classname>Xyster\Validate\Error</classname>
-            object, containing the message and the name of the field to which the
-            message applies.</para>
-                
-        <sect2 id="xyster.validate.errors.example">
-            <title>Example of Use</title>
-            
-            <para>The notification object can accept either a <classname>Zend_Filter_Input</classname>
-                or a <interfacename>Zend_Validate_Interface</interfacename> that
-                will be used to collect messages.</para>
-                
-            <para>Here is an example with a single <interfacename>Zend_Validate_Interface</interfacename>
-                object.</para>
-                
-            <programlisting role="php"><![CDATA[<?php
+<?xml version="1.0" encoding="UTF-8"?>
+<sect1 id="xyster.validate.errors">
+    <title>Error Notification</title>
+
+    <para>The <classname>Xyster\Validate\Errors</classname> class is a
+        notification object.  It is responsible for collecting the messages
+        returned by a <classname>Zend_Validate</classname> class.  It implements
+        <interfacename>Xyster\Collection\ICollection</interfacename> so you
+        can iterate over it and count the elements inside.</para>
+
+    <para>Each message is stored in the set as a <classname>Xyster\Validate\Error</classname>
+        object, containing the message and the name of the field to which the
+        message applies.</para>
+
+    <sect2 id="xyster.validate.errors.example">
+        <title>Example of Use</title>
+
+        <para>The notification object can accept either a <classname>Zend_Filter_Input</classname>
+            or a <interfacename>Zend_Validate_Interface</interfacename> that
+            will be used to collect messages.</para>
+
+        <para>Here is an example with a single <interfacename>Zend_Validate_Interface</interfacename>
+            object.</para>
+
+        <programlisting role="php"><![CDATA[<?php
 $fieldName = 'email';
 $errors = new \Xyster\Validate\Errors();
 $validator = new \Zend_Validate_EmailAddress();
@@ -33,13 +34,12 @@ if ($validator->isValid($email)) {
 } else {
     // email is invalid; get messages
     $errors->addValidateMessages($validator, $fieldName);
-}
-]]></programlisting>
+}]]></programlisting>
 
-            <para>Here is an example with a <classname>Zend_Filter_Input</classname>
-                object.</para>
+        <para>Here is an example with a <classname>Zend_Filter_Input</classname>
+            object.</para>
 
-            <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[<?php
 $errors = new \Xyster\Validate\Errors();
 $filters = array(
     'month'   => 'Digits',
@@ -56,12 +56,11 @@ if ( $input->isValid() ) {
 } else {
     // something is invalid; get messages
     $errors->addFilterInputMessages($input);
-}
-]]></programlisting>
+}]]></programlisting>
 
-            <para>Using the notification pattern, you can pass a
-                <classname>Xyster\Validate\Errors</classname> object to the
-                layer of your application that performs the validation so the
-                messages can find their way to the presentation layer.</para>
-        </sect2>
-    </sect1>
+        <para>Using the notification pattern, you can pass a
+            <classname>Xyster\Validate\Errors</classname> object to the
+            layer of your application that performs the validation so the
+            messages can find their way to the presentation layer.</para>
+    </sect2>
+</sect1>

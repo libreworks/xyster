@@ -1,8 +1,8 @@
-		<sect1 id="xyster.controller.introduction">
-			<title>Introduction</title>
+<?xml version="1.0" encoding="UTF-8"?>
+<sect1 id="xyster.controller.introduction">
+    <title>Introduction</title>
 
-			<para>The <package>Zend_Controller</package> package is a sophisticated <firstterm>Model View Controller</firstterm>.
-                At this time, Xyster doesn't include any extensions to this package, but we did implement several
-				useful <firstterm>Action Helpers</firstterm> and <firstterm>Plugins</firstterm>.</para>
-
-		</sect1>
+    <para>The <package>Zend_Controller</package> package is a sophisticated <firstterm>Model View Controller</firstterm>.
+        At this time, Xyster doesn't include any extensions to this package, but we did implement several
+        useful <firstterm>Action Helpers</firstterm> and <firstterm>Plugins</firstterm>.</para>
+</sect1>

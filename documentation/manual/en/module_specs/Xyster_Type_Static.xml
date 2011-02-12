@@ -1,38 +1,38 @@
-	<sect1 id="xyster.type.static">
-        <title>Static Methods</title>
+<?xml version="1.0" encoding="UTF-8"?>
+<sect1 id="xyster.type.static">
+    <title>Static Methods</title>
 
-        <para>There are several static methods available from the <classname>Xyster\Type\Type</classname>
-            class that assist you in working with types and equality.</para>
+    <para>There are several static methods available from the <classname>Xyster\Type\Type</classname>
+        class that assist you in working with types and equality.</para>
 
-        <sect2 id="xyster.type.static.equality">
-            <title>Testing Value Equality</title>
+    <sect2 id="xyster.type.static.equality">
+        <title>Testing Value Equality</title>
 
-            <para>There are two methods for determining if two objects are equal
-                to each other.</para>
-                
-            <sect3 id="xyster.type.static.equality.areequal">
-                <title>areEqual</title>
-                
-                <para>This method will return true if two values are identical
-                    or shallowly equal.  Objects of the same class but are not
-                    identical are not considered to be equal by this method even
-                    if they share the exact same values.</para>
-                    
-                <programlisting role="php"><![CDATA[<?php
+        <para>There are two methods for determining if two objects are equal
+            to each other.</para>
+
+        <sect3 id="xyster.type.static.equality.areequal">
+            <title>areEqual</title>
+
+            <para>This method will return true if two values are identical
+                or shallowly equal.  Objects of the same class but are not
+                identical are not considered to be equal by this method even
+                if they share the exact same values.</para>
+
+            <programlisting role="php"><![CDATA[<?php
 \Xyster\Type\Type::areEqual('foo', 'foo'); // true
 \Xyster\Type\Type::areEqual('foo', 'bar'); // false
 \Xyster\Type\Type::areEqual(new ArrayObject, new ArrayObject); // false
 $object = new ArrayObject;
-\Xyster\Type\Type::areEqual($object, $object); // true
-]]></programlisting>
+\Xyster\Type\Type::areEqual($object, $object); // true]]></programlisting>
                     
-                <para>If the values aren&apos;t identical and if the first value you
-                    supply is an object and it has an <methodname>equals</methodname>
-                    method, the result of this method will be returned. In this
-                    way, you can write your own logic for determining object
-                    equality.</para>
-                    
-                <programlisting role="php"><![CDATA[<?php
+            <para>If the values aren&apos;t identical and if the first value you
+                supply is an object and it has an <methodname>equals</methodname>
+                method, the result of this method will be returned. In this
+                way, you can write your own logic for determining object
+                equality.</para>
+
+            <programlisting role="php"><![CDATA[<?php
 class SmartEquals
 {
     protected $_value;
@@ -48,71 +48,68 @@ class SmartEquals
                 $this->_value == $value->_value); 
     }
 }
-\Xyster\Type\Type::areEqual(new SmartEquals('foobar'), new SmartEquals('foobar')); // true
-]]></programlisting>
-            </sect3>
-            
-            <sect3 id="xyster.type.static.equality.aredeeplyequal">
-                <title>areDeelyEqual</title>
-                
-                <para>This method is similar to <methodname>areEqual</methodname>, but 
-                    it also will compares values deeply.</para>
-                    
-                <para>If two objects are not identical (that is, are exactly the
-                    same instance) they will be compared property-by-property
-                    recursively if need be.  This method will not nest any
-                    deeper than 10 levels to compare objects. Arrays will be
-                    compared in the same manner.</para>
-                    
-                <para>Just like <methodname>areEqual</methodname>, if the values
-                    aren&apos;t identical and if the first value you supply is an
-                    object and it has an <methodname>equals</methodname> method,
-                    the result of this method will be returned.  The same is
-                    true for any values that are compared recursively.</para>
-            </sect3>
-        </sect2>
-        
-        <sect2 id="xyster.type.static.hash">
-            <title>Hash Codes</title>
-            
-            <para>A hash code is a signed integer that identifies an object or a
-                value.  Developers of other languages like Java are no strangers
-                to hash codes.  The general rule is that if two objects are equal,
-                their hash codes will be equal (the reverse is not always true).</para>
-            
-            <para>A hash code should not be any greater than <constant>PHP_INT_MAX</constant>
-                or smaller than the negative value of <constant>PHP_INT_MAX</constant>,
-                or else PHP will turn it into a float.  The hash number for a string
-                returned from <classname>Xyster\Type\Type</classname> should be the
-                same as the hash for the same string from Java (that is, 32-bit).</para>
+\Xyster\Type\Type::areEqual(new SmartEquals('foobar'), new SmartEquals('foobar')); // true]]></programlisting>
+        </sect3>
 
-            <programlisting role="php"><![CDATA[<?php
+        <sect3 id="xyster.type.static.equality.aredeeplyequal">
+            <title>areDeelyEqual</title>
+
+            <para>This method is similar to <methodname>areEqual</methodname>, but
+                it also will compares values deeply.</para>
+
+            <para>If two objects are not identical (that is, are exactly the
+                same instance) they will be compared property-by-property
+                recursively if need be.  This method will not nest any
+                deeper than 10 levels to compare objects. Arrays will be
+                compared in the same manner.</para>
+
+            <para>Just like <methodname>areEqual</methodname>, if the values
+                aren&apos;t identical and if the first value you supply is an
+                object and it has an <methodname>equals</methodname> method,
+                the result of this method will be returned.  The same is
+                true for any values that are compared recursively.</para>
+        </sect3>
+    </sect2>
+
+    <sect2 id="xyster.type.static.hash">
+        <title>Hash Codes</title>
+
+        <para>A hash code is a signed integer that identifies an object or a
+            value.  Developers of other languages like Java are no strangers
+            to hash codes.  The general rule is that if two objects are equal,
+            their hash codes will be equal (the reverse is not always true).</para>
+
+        <para>A hash code should not be any greater than <constant>PHP_INT_MAX</constant>
+            or smaller than the negative value of <constant>PHP_INT_MAX</constant>,
+            or else PHP will turn it into a float.  The hash number for a string
+            returned from <classname>Xyster\Type\Type</classname> should be the
+            same as the hash for the same string from Java (that is, 32-bit).</para>
+
+        <programlisting role="php"><![CDATA[<?php
 \Xyster\Type\Type::hash('hello'); // 99162322
 \Xyster\Type\Type::hash('helloa'); // -1220935217
 \Xyster\Type\Type::hash('hello to the world'); // -1821194164
 \Xyster\Type\Type::hash(123.123); // 1123434234
 \Xyster\Type\Type::hash(true); // 1231
 \Xyster\Type\Type::hash(true); // 1237
-\Xyster\Type\Type::hash(456789); // 456789
-]]></programlisting>
+\Xyster\Type\Type::hash(456789); // 456789]]></programlisting>
             
-            <para>By default, any instance of an object will return a unique
-                hash code. The <methodname>hash</methodname> method computes an
-                integer based on the return value of
-                <function>spl_object_hash</function>.</para>
-                
-            <programlisting role="php"><![CDATA[<?php
+        <para>By default, any instance of an object will return a unique
+            hash code. The <methodname>hash</methodname> method computes an
+            integer based on the return value of
+            <function>spl_object_hash</function>.</para>
+
+        <programlisting role="php"><![CDATA[<?php
 $obj = new ArrayObject;
 $obj2 = new ArrayObject;
 \Xyster\Type\Type::hash($obj);  // not the same as...
-\Xyster\Type\Type::hash($obj2);
-]]></programlisting>
+\Xyster\Type\Type::hash($obj2);]]></programlisting>
                 
-            <para>If you supply an object that has a <methodname>hashCode</methodname>
-                method, the return value of this method will be returned.  In this
-                way, you can write your own hash calculations for your objects.</para>
-                
-            <programlisting role="php"><![CDATA[<?php
+        <para>If you supply an object that has a <methodname>hashCode</methodname>
+            method, the return value of this method will be returned.  In this
+            way, you can write your own hash calculations for your objects.</para>
+
+        <programlisting role="php"><![CDATA[<?php
 class SmartHash extends SmartEquals
 {    
     public function hashCode()
@@ -123,22 +120,21 @@ class SmartHash extends SmartEquals
 $obj = new SmartHash('hello');
 $obj2 = new SmartHash('hello');
 \Xyster\Type\Type::hash($obj);  // 99162322
-\Xyster\Type\Type::hash($obj2); // 99162322
-]]></programlisting>
-        </sect2>
-        
-        <sect2 id="xyster.type.static.parameters">
-            <title>Parameter Types</title>
-            
-            <para>The <methodname>getForParameters</methodname> method is just
-                a convenience function to get an array of the types of the
-                parameters for a method or function.</para>
-                
-            <para>This method uses type hints and default values where it can
-                to determine the types.  If a type hint or default value is 
-                unavailable for a parameter, it will use a special type object
-                representing <emphasis>scalar</emphasis>.  If you pass any scalar
-                type to the <methodname>isInstance</methodname> method of this object,
-                it will return true.</para>
-        </sect2>
-    </sect1>
+\Xyster\Type\Type::hash($obj2); // 99162322]]></programlisting>
+    </sect2>
+
+    <sect2 id="xyster.type.static.parameters">
+        <title>Parameter Types</title>
+
+        <para>The <methodname>getForParameters</methodname> method is just
+            a convenience function to get an array of the types of the
+            parameters for a method or function.</para>
+
+        <para>This method uses type hints and default values where it can
+            to determine the types.  If a type hint or default value is
+            unavailable for a parameter, it will use a special type object
+            representing <emphasis>scalar</emphasis>.  If you pass any scalar
+            type to the <methodname>isInstance</methodname> method of this object,
+            it will return true.</para>
+    </sect2>
+</sect1>
