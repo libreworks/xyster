@@ -178,7 +178,7 @@ class Set extends \Xyster\Collection\SortableSet
     /**
      * Sorts the collection by one or more columns and directions
      * 
-     * The $sorts parameter can either be a single {@link Xyster_Data_Sort} or
+     * The $sorts parameter can either be a single {@link Xyster\Data\Symbol\Sort} or
      * an array containing multiple.
      * 
      * @param mixed $sorts The sorts to include 
@@ -196,7 +196,7 @@ class Set extends \Xyster\Collection\SortableSet
 	        if ( is_array($sorts) || $sorts instanceof Traversable ) {
 	        	foreach( $sorts as $sort ) {
 	        		if ( ! $sort instanceof Symbol\Sort ) {
-	        			throw new \Xyster\Data\DataException('Only Xyster_Data_Sort objects can be used');
+	        			throw new \Xyster\Data\DataException('Only Xyster\Data\Symbol\Sort objects can be used');
 	        		}
 	        		$clause->add($sort);
 	        	}

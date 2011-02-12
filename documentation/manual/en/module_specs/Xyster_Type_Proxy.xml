@@ -1,4 +1,4 @@
-	<sect1 id="proxy">
+	<sect1 id="xyster.type.proxy">
             <title>Proxies</title>
 
             <para>Dynamically-created proxies to real objects are a convenient way
@@ -6,7 +6,7 @@
                 While much less sophisticated than other PHP <acronym>AOP</acronym>
                 systems, this package of Xyster allows for the basics.</para>
 
-            <sect2>
+            <sect2 id="xyster.type.proxy.concept">
                 <title>Concept</title>
 
                 <para>The <classname>Xyster\Type\Proxy\Builder</classname>
@@ -66,9 +66,11 @@ Foo::bar was called
 ]]></screen>
 
                 <para>Proxies with handlers can add useful behavior to existing
-                    objects, such as transaction demarcation, logging, and security assertions.</para>
+                    objects, such as transaction demarcation, logging, and security assertions.
+                    Any proxy that is created implements the <interfacename>Xyster\Type\Proxy\IProxy</interfacename>
+                    interface in addition to any defined by the builder configuration.</para>
             </sect2>
-            <sect2>
+            <sect2 id="xyster.type.proxy.builder">
                 <title>The Builder</title>
 
                 <para>The <classname>Xyster\Type\Proxy\Builder</classname> class

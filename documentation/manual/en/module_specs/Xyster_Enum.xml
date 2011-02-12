@@ -16,7 +16,7 @@ echo $unix->getName(); // prints Unix
             <para>Using this example, the <code>OperatingSystem</code> enum would look like this:</para>
 
             <programlisting role="php"><![CDATA[<?php
-class OperatingSystem extends Xyster_Enum
+class OperatingSystem extends \Xyster\Enum
 {
         const Unix = 0;
         const Windows = 1;

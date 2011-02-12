@@ -6,28 +6,30 @@
                 through the clause using a <code>foreach</code> block.</para>
 
             <sect2 id="xyster.data.clauses.junction">
-                <title>Xyster_Data_Junction</title>
+                <title>Junction</title>
 
-                <para>The Junction was mentioned previously as containing multiple
-                    <classname>Xyster_Data_Criterion</classname> objects.  It is
+                <para>The <classname>Xyster\Data\Symbol\Junction</classname> was
+                    mentioned previously as containing multiple
+                    <classname>Xyster\Data\Symbol\Criterion</classname> objects.  It is
                     unique among the Clause classes in that it can hold other
                     Junction objects.</para>
 
                 <programlisting role="php"><![CDATA[<?php
-$junction = Xyster_Data_Junction::all(Xyster_Data_Expression::eq('foo', 'bar'),
-    Xyster_Data_Expression::neq('abc', 123));
+$junction = \Xyster\Data\Symbol\Junction::all(\Xyster\Data\Symbol\Expression::eq('foo', 'bar'),
+    \Xyster\Data\Symbol\Expression::neq('abc', 123));
 echo count($junction); // prints 2
 foreach( $junction as $criterion ) {
-    echo $criterion . "\n";
+    echo $criterion . PHP_EOL;
 }
 ]]></programlisting>
 
             </sect2>
             
             <sect2 id="xyster.data.clauses.field">
-                <title>Xyster_Data_Field_Clause</title>
+                <title>Field Clause</title>
                 
-                <para>The Field Clause can contain any <classname>Xyster_Data_Field</classname>
+                <para><classname>Xyster\Data\Symbol\FieldClause</classname> can contain
+                    any <classname>Xyster\Data\Symbol\Field</classname>
                     object.  This includes regular fields, aggregate fields, and
                     grouped fields (since aggregate and group fields inherit
                     from the first).</para>
@@ -37,19 +39,18 @@ foreach( $junction as $criterion ) {
                     it manually.</para>
                     
                 <programlisting role="php"><![CDATA[<?php
-require_once 'Xyster/Data/Field/Clause.php';
-$clause = new Xyster_Data_Field_Clause();
-$clause->add(Xyster_Data_Field::named('foo'))
-    ->add(Xyster_Data_Field::named('bar'));
+$clause = new \Xyster\Data\Symbol\FieldClause();
+$clause->add(\Xyster\Data\Symbol\Field::named('foo'))
+    ->add(\Xyster\Data\Symbol\Field::named('bar'));
 ]]></programlisting>
 
-                <para>You can also pass a <classname>Xyster_Data_Field</classname>
+                <para>You can also pass a <classname>Xyster\Data\Symbol\Field</classname>
                     object or another Field Clause into the constructor to have
                     those items automatically added.</para> 
 
                 <programlisting role="php"><![CDATA[<?php
 // merging with $clause from our example above
-$clause2 = new Xyster_Data_Field_Clause($clause);
+$clause2 = new \Xyster\Data\Symbol\FieldClause($clause);
 echo count($clause2); // prints 2
 ]]></programlisting>
 
@@ -61,29 +62,28 @@ echo count($clause2); // prints 2
             </sect2>
             
             <sect2 id="xyster.data.clauses.sort">
-                <title>Xyster_Data_Sort_Clause</title>
+                <title>Sort Clause</title>
                 
-                <para>The Sort Clause can contain any <classname>Xyster_Data_Sort</classname>
-                    object.</para>
+                <para>The <classname>Xyster\Data\Symbol\SortClause</classname> can
+                    contain any <classname>Xyster\Data\Symbol\Sort</classname> object.</para>
                 
                 <para>If no parameter is passed to the constructor of the object,
                     it is created with no elements.  You can then add sorts to
                     it manually.</para>
                     
                 <programlisting role="php"><![CDATA[<?php
-require_once 'Xyster/Data/Sort/Clause.php';
-$clause = new Xyster_Data_Sort_Clause();
-$clause->add(Xyster_Data_Sort::asc('foo'))
-    ->add(Xyster_Data_Sort::desc('bar'));
+$clause = new \Xyster\Data\Symbol\SortClause();
+$clause->add(\Xyster\Data\Symbol\Sort::asc('foo'))
+    ->add(\Xyster\Data\Symbol\Sort::desc('bar'));
 ]]></programlisting>
 
-                <para>You can also pass a <classname>Xyster_Data_Sort</classname>
+                <para>You can also pass a <classname>Xyster\Data\Symbol\Sort</classname>
                     object or another Sort Clause into the constructor to have
                     those items automatically added.</para> 
 
                 <programlisting role="php"><![CDATA[<?php
 // merging with $clause from our example above
-$clause2 = new Xyster_Data_Sort_Clause($clause);
+$clause2 = new \Xyster\Data\Sort\Clause($clause);
 echo count($clause2); // prints 2
 ]]></programlisting>
 

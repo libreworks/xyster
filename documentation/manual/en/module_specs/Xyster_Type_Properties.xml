@@ -9,10 +9,10 @@
             data from an object, but not for an array also. Type Properties aim
             to ease this.</para>
 
-        <sect2>
+        <sect2 id="xyster.type.properties.explain">
             <title>Explanation of IProperty Classes</title>
 
-            <sect3>
+            <sect3 id="xyster.type.properties.explain.direct">
                 <title>The <classname>Xyster\Type\Property\Direct</classname> Property</title>
 
             <para>This IProperty only works on objects, and accesses properties directly,
@@ -22,7 +22,7 @@
                 magic methods.</para>
             </sect3>
 
-            <sect3>
+            <sect3 id="xyster.type.properties.explain.map">
                 <title>The <classname>Xyster\Type\Property\Map</classname> Property</title>
 
                 <para>This IProperty works on arrays and objects which implement
@@ -31,7 +31,7 @@
                 </para>
             </sect3>
 
-            <sect3>
+            <sect3 id="xyster.type.properties.explain.method">
                 <title>The <classname>Xyster\Type\Property\Method</classname> Property</title>
 
                 <para>This IProperty works on objects which have a getter or setter
@@ -42,7 +42,7 @@
             </sect3>
         </sect2>
 
-        <sect2>
+        <sect2 id="xyster.type.properties.creating">
             <title>Creating IProperty Objects</title>
 
             <para>Using <classname>Xyster\Type\Property\Factory</classname>, you
@@ -61,5 +61,16 @@
                 <classname>Xyster\Type\Property\Method</classname> is returned.</para>
 
              <para>Any other value will return a <classname>Xyster\Type\Property\Direct</classname>.</para>
+        </sect2>
+
+        <sect2 id="xyster.type.properties.custom">
+            <title>Custom IProperty objects</title>
+
+            <para>The default implementations noted above work with almost all
+                field access scenarios. They do not, however, do any value conversion,
+                such as from a string to an integer, or an empty string to null.
+                Any custom operations on the values being retrieved from or set on
+                an object can be implemented in custom <interfacename>IProperty</interfacename>
+                classes (extending from one of the above implementations or not).</para>
         </sect2>
     </sect1>

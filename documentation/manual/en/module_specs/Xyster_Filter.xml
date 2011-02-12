@@ -2,7 +2,7 @@
         <title>Overview</title>
         
         <para>The filter classes available from the Xyster Framework are listed here.
-            Remember to add the <code>Xyster_Filter</code> namespace to the
+            Remember to add the <code>Xyster\Filter</code> namespace to the
             options when using <classname>Zend_Filter</classname>.</para>
             
         <para>For more information about the use of filter classes, see the 
@@ -20,8 +20,7 @@
 	            prepositions and conjunctions.</para>
             
             <programlisting role="php"><![CDATA[<?php
-require_once 'Xyster/Filter/TitleCase.php';
-$filter = new Xyster_Filter_TitleCase();
+$filter = new \Xyster\Filter\TitleCase();
 echo $filter->filter("the dogs came out of the rain");
 // prints The Dogs Came out of the Rain
 ]]></programlisting>

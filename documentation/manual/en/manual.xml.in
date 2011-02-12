@@ -85,6 +85,9 @@
         <title>Xyster_Type</title>
     	<xi:include href="module_specs/Xyster_Type.xml" />
         <xi:include href="module_specs/Xyster_Type_Static.xml" />
+        <xi:include href="module_specs/Xyster_Type_Properties.xml" />
+        <xi:include href="module_specs/Xyster_Type_Binder.xml" />
+        <xi:include href="module_specs/Xyster_Type_Proxy.xml" />
     </chapter>
     
     <chapter id="xyster.validate">

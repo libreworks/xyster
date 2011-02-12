@@ -4,70 +4,70 @@
             <para>Here are some of the generic objects available in this package.</para>
 
             <sect2 id="xyster.data.aggregate">
-                <title>Xyster_Data_Aggregate</title>
+                <title>Aggregate Functions</title>
 
-                <para>This class is an extension of <classname>Xyster_Enum</classname> and provides the different ways
+                <para><classname>Xyster\Data\Symbol\Aggregate</classname> is an extension of <classname>Xyster\Enum\Enum</classname> and provides the different ways
                     to aggregate a group of data. SQL developers will recognize these function names.</para>
 
                 <orderedlist>
-                    <listitem><para><code>Xyster_Data_Aggregate::Average()</code> – A mathematical mean of a group of numbers</para></listitem>
-                    <listitem><para><code>Xyster_Data_Aggregate::Count()</code> – A simple count of rows</para></listitem>
-                    <listitem><para><code>Xyster_Data_Aggregate::Maximum()</code> – Finds the greatest value in a set of data</para></listitem>
-                    <listitem><para><code>Xyster_Data_Aggregate::Minimum()</code> – Finds the smallest value in a set of data</para></listitem>
-                    <listitem><para><code>Xyster_Data_Aggregate::Sum()</code> – The addition of a group of numbers</para></listitem>
+                    <listitem><para><code>Xyster\Data\Symbol\Aggregate::Average()</code> – A mathematical mean of a group of numbers</para></listitem>
+                    <listitem><para><code>Xyster\Data\Symbol\Aggregate::Count()</code> – A simple count of rows</para></listitem>
+                    <listitem><para><code>Xyster\Data\Symbol\Aggregate::Maximum()</code> – Finds the greatest value in a set of data</para></listitem>
+                    <listitem><para><code>Xyster\Data\Symbol\Aggregate::Minimum()</code> – Finds the smallest value in a set of data</para></listitem>
+                    <listitem><para><code>Xyster\Data\Symbol\Aggregate::Sum()</code> – The addition of a group of numbers</para></listitem>
                 </orderedlist>
             </sect2>
 
             <sect2 id="xyster.data.field">
-                <title>Xyster_Data_Field</title>
+                <title>Fields</title>
 
-                <para>This object is used to refer to a column in a database table, an attribute in an XML tag,
+                <para><classname>Xyster\Data\Symbol\Field</classname> is used to refer to a column in a database table, an attribute in an XML tag,
                     a property on an object, a method call on an object, an attribute in an LDAP record, etc.
-                    It can be aliased (given a nickname), it can be associated with an Aggregate, and it can be
+                    It can be aliased (given a nickname), it can be associated with an <classname>Aggregate</classname>, and it can be
                     used to represent data grouped by a certain field.</para>
 
                 <programlisting role="php"><![CDATA[<?php
-Xyster_Data_Field::named("myColumn", "nickName");
-Xyster_Data_Field::group("myColumn");
-Xyster_Data_Field::count("myId");
-Xyster_Data_Field::aggregate(Xyster_Data_Aggregate::Average(), "myColumn");
+\Xyster\Data\Symbol\Field::named("myColumn", "nickName");
+\Xyster\Data\Symbol\Field::group("myColumn");
+\Xyster\Data\Symbol\Field::count("myId");
+\Xyster\Data\Symbol\Field::aggregate(\Xyster\Data\Symbol\Aggregate::Average(), "myColumn");
 ]]>
                 </programlisting>
             </sect2>
 
             <sect2 id="xyster.data.sort">
-                <title>Xyster_Data_Sort</title>
+                <title>Sorting</title>
 
-                <para>A sort consists of a <classname>Xyster_Data_Field</classname> and a direction (either ascending or descending).</para>
+                <para>A <classname>Xyster\Data\Symbol\Sort</classname> consists of a <classname>Xyster\Data\Symbol\Field</classname> and a direction (either ascending or descending).</para>
 
                 <programlisting role="php"><![CDATA[<?php
-$column = Xyster_Data_Field::named("email");
-Xyster_Data_Sort::asc( $column );
-Xyster_Data_Sort::desc( $column );
+$column = \Xyster\Data\Symbol\Field::named("email");
+\Xyster\Data\Symbol\Sort::asc( $column );
+\Xyster\Data\Symbol\Sort::desc( $column );
 ]]>
                 </programlisting>
 
-                <para><classname>Xyster_Data_Comparator</classname> is an instance of Xyster_Collection's
-                    <interface>Xyster_Collection_Comparator</interface> interface. It can be used to sort a
-                    <classname>Xyster_Collection_Set_Sortable</classname> containing arrays or objects
-                    using one or more <classname>Xyster_Data_Sort</classname> objects.</para>
+                <para><classname>Xyster\Data\Comparator</classname> is an instance of <package>Xyster\Collection</package>'s
+                    <interfacename>Xyster\Collection\IComparator</interfacename> interface. It can be used to sort a
+                    <classname>Xyster\Collection\SortableSet</classname> containing arrays or objects
+                    using one or more <classname>Xyster\Data\Symbol\Sort</classname> objects.</para>
 
                 <programlisting role="php"><![CDATA[<?php
 // example will sort a set by last name and salary 
-$sorts = array(Xyster_Data_Sort::asc("lastName"),
-    Xyster_Data_Sort::desc("salary"));
-$comparator = new Xyster_Data_Comparator($sorts);
-// assuming $sortableSet is a Xyster_Collection_Set_Sortable containing objects or associative arrays
+$sorts = array(\Xyster\Data\Symbol\Sort::asc("lastName"),
+    \Xyster\Data\Symbol\Sort::desc("salary"));
+$comparator = new \Xyster\Data\Comparator($sorts);
+// assuming $sortableSet is a Xyster\Collection\SortableSet containing objects or associative arrays
 $sortableSet->sort($comparator);
 ]]>
                 </programlisting>
             </sect2>
 
             <sect2 id="xyster.data.criterion">
-                <title>Xyster_Data_Criterion</title>
+                <title>Criteria</title>
 
-                <para>This is an abstract class that overshadows two other classes: the Expression
-                    and the Junction. A Criterion is a boolean expression, such as a SQL where clause,
+                <para><classname>Xyster\Data\Symbol\Criterion</classname> is an abstract class that overshadows two other classes: the <classname>Expression</classname>
+                    and the <classname>Junction</classname>. A Criterion is a boolean expression, such as a SQL where clause,
                     a PHP if statement, or an LDAP query filter. An Expression is just one statement,
                     with two terms and an operator between (this is commonly called an infix operator).
                     A Junction is a joining of two or more Criterion objects with either an AND or an
@@ -76,42 +76,42 @@ $sortableSet->sort($comparator);
                 <para>Equality: A Field must be equal to a value (==) or not equal to a value (!=, &lt;&gt;)</para>
 
                 <programlisting role="php"><![CDATA[<?php
-Xyster_Data_Expression::eq("myColumn","some value");
-Xyster_Data_Expression::neq("myColumn","some other value");
+\Xyster\Data\Symbol\Expression::eq("myColumn","some value");
+\Xyster\Data\Symbol\Expression::neq("myColumn","some other value");
 ]]>
                 </programlisting>
 
                 <para>Value comparisons: A Field must be greater than (&gt;), less than (&lt;), greater than or equal to (&gt;=), or less than or equal to (&lt;=) a value.</para>
 
                 <programlisting role="php"><![CDATA[<?php
-Xyster_Data_Expression::gt("myColumn",10);
-Xyster_Data_Expression::gte("myColumn",11);
-Xyster_Data_Expression::lt("myColumn",30);
-Xyster_Data_Expression::lte("myColumn",29);
+\Xyster\Data\Symbol\Expression::gt("myColumn",10);
+\Xyster\Data\Symbol\Expression::gte("myColumn",11);
+\Xyster\Data\Symbol\Expression::lt("myColumn",30);
+\Xyster\Data\Symbol\Expression::lte("myColumn",29);
 ]]>
                 </programlisting>
 
                 <para>(Not) Between: A Field must be between or not be between two values</para>
 
                 <programlisting role="php"><![CDATA[<?php
-Xyster_Data_Expression::between("myColumn",10,20);
-Xyster_Data_Expression::notBetween("myColumn",1,9);
+\Xyster\Data\Symbol\Expression::between("myColumn",10,20);
+\Xyster\Data\Symbol\Expression::notBetween("myColumn",1,9);
 ]]>
                 </programlisting>
 
                 <para>Like: A Field must start with, end with, or contain a value (or not)</para>
 
                 <programlisting role="php"><![CDATA[<?php
-Xyster_Data_Expression::like("myColumn","peanut%");
-Xyster_Data_Expression::notLike("myColumn","%butter");
+\Xyster\Data\Symbol\Expression::like("myColumn","peanut%");
+\Xyster\Data\Symbol\Expression::notLike("myColumn","%butter");
 ]]>
                 </programlisting>
 
                 <para>In: A Field must be one of or not be one of a set of values</para>
 
                 <programlisting role="php"><![CDATA[<?php
-Xyster_Data_Expression::in("myColumn",array(1,2,3,4,5));
-Xyster_Data_Expression::notIn("myColumn",array(1,2,3,4,5));
+\Xyster\Data\Symbol\Expression::in("myColumn",array(1,2,3,4,5));
+\Xyster\Data\Symbol\Expression::notIn("myColumn",array(1,2,3,4,5));
 ]]>
                 </programlisting>
 
@@ -119,9 +119,9 @@ Xyster_Data_Expression::notIn("myColumn",array(1,2,3,4,5));
                     &quot;and&quot; statements (conjunctions), or &quot;or&quot; statements (disjunctions). For instance:</para>
 
                 <programlisting role="php"><![CDATA[<?php
-$junction1 = Xyster_Data_Junction::any(Xyster_Data_Expression::eq("myColumn", 100), Xyster_Data_Expression::eq("otherColumn", "text"));
-$junction2 = Xyster_Data_Junction::any(Xyster_Data_Expression::eq("name", "Smith"), Xyster_Data_Expression::like("city", "D%"));
-Xyster_Data_Junction::all($junction1, $junction2);
+$junction1 = \Xyster\Data\Symbol\Junction::any(\Xyster\Data\Symbol\Expression::eq("myColumn", 100), \Xyster\Data\Symbol\Expression::eq("otherColumn", "text"));
+$junction2 = \Xyster\Data\Symbol\Junction::any(\Xyster\Data\Symbol\Expression::eq("name", "Smith"), \Xyster\Data\Symbol\Expression::like("city", "D%"));
+\Xyster\Data\Symbol\Junction::all($junction1, $junction2);
 ]]>
                 </programlisting>
 

@@ -26,7 +26,7 @@ $object = new ArrayObject;
 \Xyster\Type\Type::areEqual($object, $object); // true
 ]]></programlisting>
                     
-                <para>If the values aren't identical and if the first value you
+                <para>If the values aren&apos;t identical and if the first value you
                     supply is an object and it has an <methodname>equals</methodname>
                     method, the result of this method will be returned. In this
                     way, you can write your own logic for determining object
@@ -65,7 +65,7 @@ class SmartEquals
                     compared in the same manner.</para>
                     
                 <para>Just like <methodname>areEqual</methodname>, if the values
-                    aren't identical and if the first value you supply is an
+                    aren&apos;t identical and if the first value you supply is an
                     object and it has an <methodname>equals</methodname> method,
                     the result of this method will be returned.  The same is
                     true for any values that are compared recursively.</para>

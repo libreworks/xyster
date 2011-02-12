@@ -1,0 +1,87 @@
+	<sect1 id="xyster.type.binder">
+        <title>Data Binder</title>
+
+        <para>The <classname>Xyster\Type\Binder</classname> class is responsible for
+            taking a set of key–value pairs and applying them to a target object or array.
+            You can supply a list of forbidden or allowed fields.</para>
+
+        <sect2 id="xyster.type.binder.basics">
+            <title>Basic Operation</title>
+
+            <para>The binder itself uses <interfacename>Xyster\Type\Property\IProperty</interfacename>
+                objects to set values on the target object.</para>
+
+            <para>When you create a binder, its constructor takes two arguments: the first
+                is the target object to which values will be bound. The second argument is
+                optional, and is a <classname>Xyster\Type\Type</classname> of which
+                <interfacename>Xyster\Type\Property\IProperty</interfacename> the binder
+                will use as its default. If not provided, the binder will use the
+                <classname>Xyster\Type\Property\Factory</classname> to generate the
+                correct property accessor for each field.</para>
+
+            <para>After the binder is created, you can use the <methodname>addSetter</methodname>
+                method to supply specific <interfacename>Xyster\Type\Property\IProperty</interfacename>
+                objects for each field on the target.</para>
+
+            <simpara>Here is a quick example of the basic usage of this class.</simpara>
+
+            <programlisting role="php"><![CDATA[<?php
+class TargetPractice
+{
+    private $_foo;
+    private $_bar;
+
+    public function __get($name)
+    {
+        $propName = '_' . $name;
+        return $this->$propName;
+    }
+    public function __set($name, $value)
+    {
+        $propName = '_' . $name;
+        $this->$propName = $value;
+    }
+}
+$values = ("foo" => "Spider", "bar" => "Fly");
+$target = new TargetPractice();
+$binder = new \Xyster\Type\Binder($target, new \Xyster\Type\Type('\Xyster\Type\Property\Direct');
+$binder->bind($values);
+]]></programlisting>
+
+            <para>At this point, the <varname>$target</varname> object will have
+                <code>&quot;Spider&quot;</code> as its <property>$_foo</property> property
+                and <code>&quot;Fly&quot;</code> as its <property>$_bar</property> property.
+                Notice that since we use the <methodname>__get</methodname> and
+                <methodname>__set</methodname> magic methods in our
+                <classname>TargetPractice</classname> class, we supplied
+                <classname>Xyster\Type\Property\Direct</classname> as our default
+                property setter (saving the step of calling the factory to
+                automatically determine this).</para>
+        </sect2>
+        <sect2 id="xyster.type.binder.rules">
+            <title>Allow and Deny Rules</title>
+
+            <para>What use is a value binding utility if you can&apos;t specify which
+                fields are allowed and which aren&apos;t? There are two methods on the
+                binder class which allow you to set allowed fields and disallowed fields.</para>
+
+            <important><simpara>If allowed fields are specified, the binder
+                ignores any disallowed fields and consults only the allowed list.</simpara></important>
+
+            <para>Here is an example using the allowed fields rules with the same
+                <classname>TargetPractice</classname> class from above.</para>
+
+            <programlisting role="php"><![CDATA[<?php
+$values = ("foo" => "Sun", "bar" => "Rain");
+$target = new TargetPractice();
+$binder = new \Xyster\Type\Binder($target, new \Xyster\Type\Type('\Xyster\Type\Property\Direct');
+$binder->setAllowedFields(array('foo'))
+    ->bind($values);
+]]></programlisting>
+
+            <para>At this point, the <varname>$target</varname> object will have
+                <code>&quot;Sun&quot;</code> as its <property>$_foo</property> property
+                and the <property>$_bar</property> property will be null (because
+                it wasn't in the list of allowed fields).</para>
+        </sect2>
+    </sect1>
