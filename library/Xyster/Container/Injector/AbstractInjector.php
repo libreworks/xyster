@@ -25,6 +25,11 @@ namespace Xyster\Container\Injector;
 abstract class AbstractInjector extends \Xyster\Container\Provider\AbstractProvider
 {
     /**
+     * @var InjectionHelper
+     */
+    protected $_injectionHelper;
+
+    /**
      * Creates a new AbstractInjector
      *
      * @param \Xyster\Type\Type $type The component type
@@ -34,6 +39,7 @@ abstract class AbstractInjector extends \Xyster\Container\Provider\AbstractProvi
     {
         parent::__construct($type, $name);
         $this->_checkConcrete();
+        $this->_injectionHelper = new InjectionHelper($type);
     }
     
     /**
@@ -62,7 +68,7 @@ abstract class AbstractInjector extends \Xyster\Container\Provider\AbstractProvi
         $class = $type->getClass();
         $constructor = $class ? $class->getConstructor() : null;
         return $constructor ?
-            $class->newInstanceArgs(InjectionHelper::getMemberArguments($container, $type, $constructorArguments, $into)) :
+            $class->newInstanceArgs($this->_injectionHelper->getMemberArguments($container, $constructorArguments, $into)) :
             $class->newInstance();
     }
 }

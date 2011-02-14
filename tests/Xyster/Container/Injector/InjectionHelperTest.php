@@ -28,6 +28,11 @@ require_once dirname(dirname(__FILE__)) . '/_files/Sdi.php';
 class InjectionHelperTest extends \PHPUnit_Framework_TestCase
 {
     /**
+     * @var InjectionHelper
+     */
+    private $object;
+
+    /**
      * Tests findInContainer
      */
     public function testFindInContainer()
@@ -60,6 +65,7 @@ class InjectionHelperTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetMemberArguments()
     {
+        $this->object = new InjectionHelper(new \Xyster\Type\Type('\XysterTest\Container\Submarine'));
         $container = $this->getMock('\Xyster\Container\IContainer');
         $capn = new \XysterTest\Container\SubmarineCaptain(new \XysterTest\Container\ScubaGear(), "Cap'n Crunch");
         $fuel = new \XysterTest\Container\SubFuel();
@@ -69,8 +75,7 @@ class InjectionHelperTest extends \PHPUnit_Framework_TestCase
         $container->expects($this->any())
             ->method('get')
             ->will($this->onConsecutiveCalls($capn, $fuel));
-        $args = InjectionHelper::getMemberArguments($container,
-            new \Xyster\Type\Type('\XysterTest\Container\Submarine'),
+        $args = $this->object->getMemberArguments($container,
             array('capnCrunch', 'subFuel'));
         $this->assertEquals(array($capn, $fuel, array()), $args);
     }
@@ -80,9 +85,9 @@ class InjectionHelperTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetMemberArgumentsEmpty()
     {
+        $this->object = new InjectionHelper(new \Xyster\Type\Type('\XysterTest\Container\RocketFuel'));
         $this->assertEquals(array(),
-            InjectionHelper::getMemberArguments($this->getMock('\Xyster\Container\IContainer'),
-                new \Xyster\Type\Type('\XysterTest\Container\RocketFuel')));
+            $this->object->getMemberArguments($this->getMock('\Xyster\Container\IContainer')));
     }
 
     /**
@@ -90,6 +95,7 @@ class InjectionHelperTest extends \PHPUnit_Framework_TestCase
      */
     public function testInjectProperties()
     {
+        $this->object = new InjectionHelper(new \Xyster\Type\Type("\XysterTest\Container\RocketShip"));
         $ship = new \XysterTest\Container\RocketShip();
         $fuel = new \XysterTest\Container\RocketFuel();
         $properties = array('fuel' => $fuel);
@@ -103,6 +109,6 @@ class InjectionHelperTest extends \PHPUnit_Framework_TestCase
         $container->expects($this->any())
             ->method('get')
             ->will($this->returnValue($astronaut));
-        InjectionHelper::injectProperties($ship, $container, $properties, $dependsOn, null);
+        $this->object->injectProperties($ship, $container, $properties, $dependsOn, null);
     }
 }

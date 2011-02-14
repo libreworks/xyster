@@ -26,6 +26,21 @@ use Xyster\Type\Type;
 class InjectionHelper
 {
     /**
+     * @var Xyster\Type\Type
+     */
+    private $_type;
+
+    /**
+     * Creates a new InjectionHelper.
+     *
+     * @param Type $type The object type
+     */
+    public function __construct(Type $type)
+    {
+        $this->_type = $type;
+    }
+
+    /**
      * Finds a component in the container.
      *
      * @param \Xyster\Container\IContainer $container
@@ -47,14 +62,13 @@ class InjectionHelper
      * Gets the member arguments
      *
      * @param \Xyster\Container\IContainer $container
-     * @param Type $type The type being created
      * @param array $constructorArguments Array of values or component names
      * @param Type $into The type into which this one is being injected
      * @return array
      */
-    public static function getMemberArguments(\Xyster\Container\IContainer $container, Type $type, array $constructorArguments = array(), Type $into = null)
+    public function getMemberArguments(\Xyster\Container\IContainer $container, array $constructorArguments = array(), Type $into = null)
     {
-        $class = $type->getClass();
+        $class = $this->_type->getClass();
         $member = $class ? $class->getConstructor() : null;
         if ( $member === null || !$member->getNumberOfParameters() ) {
             return array();
@@ -75,13 +89,13 @@ class InjectionHelper
             if ( $paramType->isInstance($argument) ) {
                 $instance = $argument;
             } else if ( $container->contains($argument) ) {
-                $instance = $container->get($argument, $type);
+                $instance = $container->get($argument, $this->_type);
             } else if ( $reflectionParameter->isOptional() ) {
                 $instance = $reflectionParameter->getDefaultValue();
             } else {
                 throw new Exception('Cannot inject method argument ' .
                     $reflectionParameter->getName() .
-                    ' into ' . $type->getName() .
+                    ' into ' . $this->_type->getName() .
                     ': key not found in the container: ' . $argument);
             }
             $result[] = $instance;
@@ -98,12 +112,11 @@ class InjectionHelper
      * @param array $dependsOn Key is property name, value is component name in container
      * @param Type $into The type into which the instance is being injected
      */
-    public static function injectProperties($instance, \Xyster\Container\IContainer $container, array $properties, array $dependsOn, Type $into = null)
+    public function injectProperties($instance, \Xyster\Container\IContainer $container, array $properties, array $dependsOn, Type $into = null)
     {
         $values = array() + $properties;
-        $type = Type::of($instance);
         foreach( $dependsOn as $name => $component ) {
-            $values[$name] = self::findInContainer($container, $component, $type);
+            $values[$name] = self::findInContainer($container, $component, $this->_type);
         }
         $binder = new \Xyster\Type\Binder($instance);
         $binder->bind($values);

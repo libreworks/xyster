@@ -27,9 +27,16 @@ class Builder
 {
     protected static $_types = array();
     protected static $_cache = true;
-    
+
+    /**
+     * @var \Xyster\Type\Type
+     */
     protected $_parent;
-    protected $_interfaces;
+    protected $_interfaces = array();
+    protected $_delegate;
+    /**
+     * @var IHandler
+     */
     protected $_handler;
     protected $_callConstructor = false;
     protected $_className;
@@ -43,7 +50,8 @@ class Builder
     public function create( array $args = null )
     {
         $type = $this->createType();
-        array_unshift($args, $this->_handler);
+        \array_unshift($args, $this->_delegate);
+        \array_unshift($args, $this->_handler);
         return $type->getClass()->newInstanceArgs($args);
     }
     
@@ -63,9 +71,6 @@ class Builder
             foreach( $this->_interfaces as $iface ) {
                 $key .= $iface->getName() . '|';
             }
-            if ( $this->_handler ) {
-                $key .= spl_object_hash($this->_handler) . '|';
-            }
             $key = ( $this->_callConstructor ) ? 'ccy' : 'ccn';
             if ( isset(self::$_types[$key]) ) {
                 return self::$_types[$key];
@@ -78,7 +83,7 @@ class Builder
         }
         return $type;
     }
-    
+
     /**
      * Sets whether the parent constructor is called (default is false)
      * 
@@ -90,7 +95,34 @@ class Builder
         $this->_callConstructor = $flag;
         return $this;
     }
-    
+
+    /**
+     * Sets the delegate object for this proxy.
+     *
+     * This method will set the parent class and interfaces based on this
+     * delegate.
+     *
+     * @param object $object
+     * @return Builder provides a fluent interface
+     */
+    public function setDelegate($object)
+    {
+        if ( !is_object($object) ) {
+            throw new ProxyException('Delegate must be an object instance');
+        }
+        $this->_delegate = $object;
+        $this->setParent(\Xyster\Type\Type::of($object));
+        $parentInterfaces = $this->_parent->getClass()->getInterfaceNames();
+        $interfaces = array();
+        foreach($this->_parent->getClass()->getInterfaces() as $interface){
+            if ( !\in_array($interface->getName(), $parentInterfaces) ) {
+                $interfaces[] = new \Xyster\Type\Type($interface->getName());
+            }
+        }
+        $this->setInterfaces($interfaces);
+        return $this;
+    }
+
     /**
      * Sets the handler used for method callbacks
      * 
@@ -118,7 +150,9 @@ class Builder
                 !$interface->getClass()->isInterface() ) {
                throw new ProxyException('Not an interface: ' . $interface);
             }
-            $this->_interfaces[] = $interface;
+            if ( !\in_array($interface, $this->_interfaces) ) {
+                $this->_interfaces[] = $interface;
+            }
         }
         return $this;
     }
@@ -168,6 +202,7 @@ class Builder
     {
         $class = $this->_getClassHead() .
             " private \$_handler;\n" .
+            " private \$_delegate;\n" .
             " private \$_class;\n" .
             $this->_getConstructor() . 
             " public function getHandler()\n { return \$this->_handler; }\n";
@@ -220,10 +255,11 @@ class Builder
     private function _getConstructor()
     {
         $def = '';
-        $body = "\$this->_handler = \$handler;\n" . 
+        $body = "\$this->_handler = \$handler;\n" .
+            "\$this->_delegate = \$delegate;\n" .
             "\$this->_class = new \ReflectionClass(__CLASS__);\n";
         $decl = "%s function __construct(\Xyster\Type\Proxy\IHandler " .
-            "\$handler%s) {\n";
+            "\$handler, \$delegate%s) {\n";
         
         if ( $this->_parent && $this->_parent->getClass()->getConstructor() ) {
             $constructor = $this->_parent->getClass()->getConstructor();
@@ -324,6 +360,7 @@ class Builder
                 "        return \$this->_handler->invoke(\$this,\n" .
                 "            \$this->_class->getMethod(__FUNCTION__),\n" .
                 "            \$args,\n" .
+                "            \$this->_delegate ? \$this->_delegate : \$this,\n" .
                 "            %s);\n"; 
         }
         return sprintf(

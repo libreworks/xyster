@@ -56,7 +56,7 @@ class Standard extends AbstractInjector
         // instantiate a copy of the type
         $instance = $this->_newInstance($type, $container, $this->_constructorArguments, $into);
         // inject literal and referenced properties
-        InjectionHelper::injectProperties($instance, $container, $this->_properties, $this->_dependsOn, $into);
+        $this->_injectionHelper->injectProperties($instance, $container, $this->_properties, $this->_dependsOn, $into);
         // inject container if necessary
         if ( $instance instanceof \Xyster\Container\IContainerAware ) {
             $instance->setContainer($container);

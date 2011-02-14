@@ -30,8 +30,9 @@ interface IHandler
      * @param object $object The object being called
      * @param ReflectionMethod $called The method in the proxy class
      * @param array $args The arguments passed to the method
+     * @param object $delegate The proxied object: never null, but may be equal to <code>$object</code>.
      * @param ReflectionMethod $parent The method in the parent class (null if interface or abstract method)
      * @return mixed The result of the method 
      */
-    function invoke($object, \ReflectionMethod $called, array $args, \ReflectionMethod $parent = null);
+    function invoke($object, \ReflectionMethod $called, array $args, $delegate, \ReflectionMethod $parent = null);
 }
