@@ -33,6 +33,22 @@ interface IContainer
     function contains($name);
 
     /**
+     * Whether this container contains all of the names provided.
+     *
+     * @param array $names The component names
+     * @return boolean
+     */
+    function containsAll(array $names);
+
+    /**
+     * Whether this container contains any of the names provided.
+     *
+     * @param array $names The component names
+     * @return boolean
+     */
+    function containsAny(array $names);
+
+    /**
      * Whether this container contains a component with the given type.
      * 
      * @param mixed $type A \Xyster\Type\Type or the name of a class

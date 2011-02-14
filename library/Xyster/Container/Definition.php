@@ -40,9 +40,8 @@ class Definition
      */
     public function __construct($type, $name = null)
     {
-        $this->_type = ( $type instanceof Type ) ?
-                $type : new Type($type);
-        $this->_name = !$name ? $this->_type->getName() : $name;
+        $this->_type = ( $type instanceof Type ) ? $type : new Type($type);
+        $this->_name = $name;
     }
 
     /**
@@ -139,6 +138,9 @@ class Definition
 
     /**
      * Sets the name of the method to be invoked when an object has been created
+     *
+     * The method must exist or the class must have a <code>__call</code>
+     * method available.
      *
      * @param string $name The method name
      * @return Definition provides a fluent interface

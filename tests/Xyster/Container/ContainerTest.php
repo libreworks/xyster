@@ -91,6 +91,24 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
         self::assertFalse($this->object->contains('Foobar'));
     }
 
+    public function testContainsAll()
+    {
+        $this->object->add(new \Xyster\Container\Definition('\Xyster\Collection\Collection', 'colly'))
+            ->add(new \Xyster\Container\Definition('\Xyster\Collection\StringMap', 'props'));
+        self::assertTrue($this->object->containsAll(array('colly', 'props')));
+        self::assertFalse($this->object->containsAll(array('colly', 'props', 'foobar')));
+        self::assertFalse($this->object->containsAll(array('foo', 'bar', 'baz')));
+    }
+
+    public function testContainsAny()
+    {
+        $this->object->add(new \Xyster\Container\Definition('\Xyster\Collection\Collection', 'colly'))
+            ->add(new \Xyster\Container\Definition('\Xyster\Collection\StringMap', 'props'));
+        self::assertTrue($this->object->containsAny(array('colly', 'props')));
+        self::assertTrue($this->object->containsAny(array('colly', 'props', 'foobar')));
+        self::assertFalse($this->object->containsAny(array('foo', 'bar', 'baz')));
+    }
+
     public function testContainsType()
     {
         self::assertSame($this->object, $this->object->add(new \Xyster\Container\Definition('ArrayObject')));

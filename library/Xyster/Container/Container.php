@@ -48,7 +48,7 @@ class Container implements IMutable
     /**
      * Adds a definition to the container and autowires its dependencies based on the constructor.
      * 
-     * @param mixed $type A Xyster_Type or the name of a class
+     * @param mixed $type A \Xyster\Type\Type or the name of a class
      * @param string $name Optional. The component name.
      * @return IMutable provides a fluent interface
      */
@@ -61,7 +61,7 @@ class Container implements IMutable
     /**
      * Adds a definition to the container and autowires its dependencies.
      *
-     * @param mixed $type A Xyster_Type or the name of a class
+     * @param mixed $type A \Xyster\Type\Type or the name of a class
      * @param string $name Optional. The component name.
      * @param array $except Optional.  An array of property names to ignore.
      * @return IMutable provides a fluent interface
@@ -75,7 +75,7 @@ class Container implements IMutable
     /**
      * Adds a definition to the container and autowires its dependencies.
      *
-     * @param mixed $type A Xyster_Type or the name of a class
+     * @param mixed $type A \Xyster\Type\Type or the name of a class
      * @param string $name Optional. The component name.
      * @param array $except Optional.  An array of property names to ignore.
      * @return IMutable provides a fluent interface
@@ -127,6 +127,28 @@ class Container implements IMutable
     }
 
     /**
+     * Whether this container contains all of the names provided.
+     *
+     * @param array $names The component names
+     * @return boolean
+     */
+    public function containsAll(array $names)
+    {
+        return !count(array_diff($names, array_intersect(array_keys($this->_providers), $names)));
+    }
+
+    /**
+     * Whether this container contains any of the names provided.
+     *
+     * @param array $names The component names
+     * @return boolean
+     */
+    public function containsAny(array $names)
+    {
+        return count(array_intersect(array_keys($this->_providers), $names)) > 0;
+    }
+
+    /**
      * Whether this container contains a component with the given type.
      * 
      * @param mixed $type A \Xyster\Type\Type or the name of a class
@@ -149,7 +171,7 @@ class Container implements IMutable
      * This method is just for convenience.  Prevents having to create a new
      * definition and then populating it, then passing it to the add method.
      *
-     * @param mixed $type A Xyster_Type or the name of a class
+     * @param mixed $type A \Xyster\Type\Type or the name of a class
      * @param string $name Optional. The component name.
      * @return Definition the definition created
      */
@@ -178,7 +200,7 @@ class Container implements IMutable
     /**
      * Gets the components in the contanier for the given type.
      * 
-     * @param mixed $type A Xyster_Type or string class name
+     * @param mixed $type A \Xyster\Type\Type or string class name
      * @return array Keys are component names, values are components themselves
      */
     public function getForType($type)
@@ -199,7 +221,7 @@ class Container implements IMutable
      * 
      * If the type argument is omitted, this will return all component names.
      * 
-     * @param mixed $type Optional. A Xyster_Type or string class name
+     * @param mixed $type Optional. A \Xyster\Type\Type or string class name
      * @return array of strings
      */
     public function getNames($type = null)

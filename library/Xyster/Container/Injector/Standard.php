@@ -24,6 +24,25 @@ namespace Xyster\Container\Injector;
  */
 class Standard extends AbstractInjector
 {
+    protected $_initMethod;
+    protected $_constructorArguments = array();
+    protected $_properties = array();
+    protected $_dependsOn = array();
+
+    /**
+     * Creates a new standard injector
+     *
+     * @param \Xyster\Container\Definition $def The component definintion
+     */
+    public function __construct(\Xyster\Container\Definition $def)
+    {
+        parent::__construct($def->getType(), $def->getName());
+        $this->_initMethod = $def->getInitMethod();
+        $this->_constructorArguments = $def->getConstructorArgs();
+        $this->_properties = $def->getProperties();
+        $this->_dependsOn = $def->getDependsOn();
+    }
+
     /**
      * Get an instance of the provided component.
      * 
@@ -35,9 +54,9 @@ class Standard extends AbstractInjector
     {
         $type = $this->getType();
         // instantiate a copy of the type
-        $instance = $this->_newInstance($type, $container);
+        $instance = $this->_newInstance($type, $container, $this->_constructorArguments, $into);
         // inject literal and referenced properties
-        $this->injectProperties($instance, $container);
+        InjectionHelper::injectProperties($instance, $container, $this->_properties, $this->_dependsOn, $into);
         // inject container if necessary
         if ( $instance instanceof \Xyster\Container\IContainerAware ) {
             $instance->setContainer($container);

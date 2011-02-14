@@ -29,24 +29,17 @@ abstract class AbstractProvider implements IProvider
      * @var \Xyster\Type\Type
      */
     protected $_type;
-    protected $_initMethod;
-    protected $_constructorArguments = array();
-    protected $_properties = array();
-    protected $_dependsOn = array();
-    
+
     /**
      * Creates a new provider
-     * 
-     * @param \Xyster\Container\Definition $def The component definintion
+     *
+     * @param \Xyster\Type\Type $type The type of component this provider procudes
+     * @param string $name
      */
-    public function __construct(\Xyster\Container\Definition $def)
+    public function __construct(\Xyster\Type\Type $type, $name)
     {
-        $this->_type = $def->getType();
-        $this->_name = $def->getName();
-        $this->_initMethod = $def->getInitMethod();
-        $this->_constructorArguments = $def->getConstructorArgs();
-        $this->_properties = $def->getProperties();
-        $this->_dependsOn = $def->getDependsOn();
+        $this->_type = $type;
+        $this->_name = !$name ? $this->_type->getName() : $name;
     }
     
     /**

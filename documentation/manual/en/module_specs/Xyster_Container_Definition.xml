@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sect1 id="xyster.container.definition">
+    <title>Adding Components</title>
+
+    <para>You can add components to the container in several ways.</para>
+
+    <orderedlist>
+        <listitem><simpara>The <methodname>autowire</methodname> method, which
+            will determine which dependencies a class has based on the type hints
+            of its constructor arguments.</simpara></listitem>
+        <listitem><simpara>The <methodname>autowireByName</methodname> method, which
+            will determine which dependencies a class has based on the names
+            of its setter methods (these names are later looked up in the container
+            when the component is created).</simpara></listitem>
+        <listitem><simpara>The <methodname>autowireByType</methodname> method, which
+            will determine which dependencies a class has based on the type hints
+            of its setter methods.</simpara></listitem>
+        <listitem><simpara>The <methodname>add</methodname> method, which takes
+            a <classname>Xyster\Container\Definition</classname>.</simpara></listitem>
+        <listitem><simpara>The <methodname>addProvider</methodname> method, which
+            takes a <classname>Xyster\Container\Provider\IProvider</classname> that
+            has been configred with whatever settings you wish. This is the most
+            configurable means to add components to the container.</simpara></listitem>
+    </orderedlist>
+
+    <para>If no name is given to a component when added, the name given to it
+        by the container is the name of its class.</para>
+</sect1>
