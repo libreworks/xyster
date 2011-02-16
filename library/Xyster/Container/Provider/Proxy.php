@@ -55,10 +55,9 @@ class Proxy extends Delegate
      */
     public function get(\Xyster\Container\IContainer $container, \Xyster\Type\Type $into = null)
     {
-        $proxied = $this->_delegate->get($container, $into);
         $builder = new \Xyster\Type\Proxy\Builder();
         return $builder->setCallParentConstructor(false)
-            ->setParent($this->_delegate->getType())
+            ->setDelegate($this->_delegate->get($container, $into))
             ->setHandler($this->_handler)
             ->create();
     }
