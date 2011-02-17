@@ -15,7 +15,7 @@
  * @version   $Id$
  */
 namespace XysterTest\Container\Injector;
-use Xyster\Container\Injector\Proxy;
+use Xyster\Container\Provider\Proxy;
 require_once dirname(dirname(__FILE__)) . '/_files/Sdi.php';
 
 /**
@@ -33,53 +33,51 @@ class ProxyTest extends \PHPUnit_Framework_TestCase implements \Xyster\Type\Prox
      */
     protected $injector;
 
+    protected $called = 0;
+
     /**
      * Sets up the fixture, for example, opens a network connection.
-     * This method is called before a test is executed.
      */
     protected function setUp()
     {
         $type = new \Xyster\Type\Type('\XysterTest\Container\RocketShip');
         $this->injector = $this->getMockForAbstractClass('\Xyster\Container\Injector\AbstractInjector', array($type, 'myName'));
-        $this->object = new Proxy($this, $this->injector);
+        $this->object = new Proxy($this->injector, $this);
     }
 
     /**
-     * @todo Implement testGet().
+     * Tests the get method
      */
     public function testGet()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $into = new \Xyster\Type\Type('ArrayObject');
+        $rocket = new \XysterTest\Container\RocketShip();
+        $container = $this->getMock('\Xyster\Container\IContainer');
+        $this->injector->expects($this->once())
+            ->method('get')
+            ->with($container, $into)
+            ->will($this->returnValue($rocket));
+        $proxy = $this->object->get($container, $into);
+        $this->assertType('\XysterTest\Container\RocketShip', $proxy);
+        $this->assertType('\Xyster\Type\Proxy\IProxy', $proxy);
+        $this->assertEquals(0, $this->called);
+        $proxy->getFuel();
+        $this->assertEquals(1, $this->called);
     }
 
     /**
-     * @todo Implement testGetLabel().
+     * Tests the getLabel method
      */
-    public function testGetLabel()
+    public function testToString()
     {
         $this->injector->expects($this->any())
             ->method('getLabel')
             ->will($this->returnValue('MyLabel'));
-        $this->assertEquals('Proxy:MyLabel', $this->object->getLabel());
+        $this->assertEquals('Proxy:MyLabel:myName', $this->object->__toString());
     }
 
-    /**
-     * Tests the validate() method.
-     */
-    public function testValidate()
+    public function invoke($object, \ReflectionMethod $called, array $args, $delegate, \ReflectionMethod $parent = null)
     {
-        $container = $this->getMock('\Xyster\Container\IContainer');
-        $this->injector->expects($this->any())
-            ->method('validate')
-            ->with($this->equalTo($container));
-        $this->object->validate($container);
-    }
-
-    public function invoke($object, \ReflectionMethod $called, array $args, \ReflectionMethod $parent = null)
-    {
-
+        $this->called++;
     }
 }

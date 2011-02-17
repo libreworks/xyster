@@ -50,9 +50,9 @@ class Builder
     public function create( array $args = null )
     {
         $type = $this->createType();
-        \array_unshift($args, $this->_delegate);
-        \array_unshift($args, $this->_handler);
-        return $type->getClass()->newInstanceArgs($args);
+        $realArgs = array_merge(array($this->_handler, $this->_delegate),
+            $args == null ? array() : $args);
+        return $type->getClass()->newInstanceArgs($realArgs);
     }
     
     /**
