@@ -1,0 +1,7 @@
+/.project*
+/.cache*
+/.settings/
+tests/TestConfiguration.php
+/library/.project*
+/library/.cache*
+/nbproject/private
