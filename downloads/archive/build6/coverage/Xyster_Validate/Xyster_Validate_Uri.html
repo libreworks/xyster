@@ -1,0 +1,390 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<LINK REL="stylesheet" TYPE="text/css" TITLE="Style" href="../stylesheet.css">
+</HEAD>
+<BODY>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="bannercell" rowspan="2"><a href="http://phing.info/"><img src="http://phing.info/images/phing.gif" alt="http://phing.info/" align="left" border="0"></a></td>
+<td style="text-align:right"><h2>Source Code Coverage</h2></td>
+</tr>
+<tr><td style="text-align:right">Designed for use with <a href="http://pear.php.net/package/PHPUnit2">PHPUnit2</a>, <a href="http://www.xdebug.org/">Xdebug</a> and <a href="http://phing.info/">Phing</a>.</td></tr>
+</table>
+<hr size="1">
+<table class="log" cellpadding="5" cellspacing="0" width="100%"><tr class="a">
+<td class="small">Methods: 1</td>
+<td class="small">LOC: 69</td>
+<td class="small">Statements: 8</td>
+</tr></table>
+<br><table class="log" cellpadding="5" cellspacing="0" width="100%">
+<tr>
+<th width="100%">Source file</th>
+<th>Statements</th>
+<th>Methods</th>
+<th width="250" colspan="2" nowrap>Total coverage</th>
+</tr>
+<tr class="a">
+<td>Uri.php</td>
+<td>87.5%</td>
+<td>100.0%</td>
+<td>88.9%</td>
+<td><table cellspacing="0" cellpadding="0" border="0" width="100%" style="display: inline"><tr>
+<td class="covered" width="178" height="12"> </td>
+<td class="uncovered" width="22" height="12"> </td>
+</tr></table></td>
+</tr>
+</table>
+<table cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td class="lineCount">1</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">&lt;?php</pre></td>
+</tr>
+<tr>
+<td class="lineCount">2</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">3</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * Xyster Framework</pre></td>
+</tr>
+<tr>
+<td class="lineCount">4</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">5</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * This source file is subject to the new BSD license that is bundled</pre></td>
+</tr>
+<tr>
+<td class="lineCount">6</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * with this package in the file LICENSE.txt.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">7</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * It is also available through the world-wide-web at this URL:</pre></td>
+</tr>
+<tr>
+<td class="lineCount">8</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * http://www.opensource.org/licenses/bsd-license.php</pre></td>
+</tr>
+<tr>
+<td class="lineCount">9</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">10</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @category  Xyster</pre></td>
+</tr>
+<tr>
+<td class="lineCount">11</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @package   Xyster_Validate</pre></td>
+</tr>
+<tr>
+<td class="lineCount">12</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">13</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License</pre></td>
+</tr>
+<tr>
+<td class="lineCount">14</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @version   $Id: Uri.php 190 2008-01-07 22:39:57Z doublecompile $</pre></td>
+</tr>
+<tr>
+<td class="lineCount">15</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">16</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">17</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * Zend_Validate_Abstract</pre></td>
+</tr>
+<tr>
+<td class="lineCount">18</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">19</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">require_once 'Zend/Validate/Abstract.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCount">20</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">21</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * Zend_Uri</pre></td>
+</tr>
+<tr>
+<td class="lineCount">22</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">23</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">require_once 'Zend/Uri.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCount">24</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">25</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * A URI validator</pre></td>
+</tr>
+<tr>
+<td class="lineCount">26</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">27</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @category  Xyster</pre></td>
+</tr>
+<tr>
+<td class="lineCount">28</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @package   Xyster_Validate</pre></td>
+</tr>
+<tr>
+<td class="lineCount">29</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">30</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License</pre></td>
+</tr>
+<tr>
+<td class="lineCount">31</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">32</td>
+<td class="coverageCount"></td>
+<td class="srcLineClassStart"><pre class="srcLine">class Xyster_Validate_Uri extends Zend_Validate_Abstract</pre></td>
+</tr>
+<tr>
+<td class="lineCount">33</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">{</pre></td>
+</tr>
+<tr>
+<td class="lineCount">34</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">35</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Validation failure message key for when the file is not an image</pre></td>
+</tr>
+<tr>
+<td class="lineCount">36</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">37</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">38</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    const NOT_URI = 'notUri';</pre></td>
+</tr>
+<tr>
+<td class="lineCount">39</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">40</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">41</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Validation failure message template definitions</pre></td>
+</tr>
+<tr>
+<td class="lineCount">42</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">43</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @var array</pre></td>
+</tr>
+<tr>
+<td class="lineCount">44</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">45</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    protected $_messageTemplates = array(</pre></td>
+</tr>
+<tr>
+<td class="lineCount">46</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">        self::NOT_URI =&gt; "'%value%' does not appear to be a correct URI",</pre></td>
+</tr>
+<tr>
+<td class="lineCount">47</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    );</pre></td>
+</tr>
+<tr>
+<td class="lineCount">48</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">49</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">50</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Defined by Zend_Validate_Interface</pre></td>
+</tr>
+<tr>
+<td class="lineCount">51</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">52</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Returns true if dimensions of file specified by $value are between width</pre></td>
+</tr>
+<tr>
+<td class="lineCount">53</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * and height options, dimensions being exact if strict is true.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">54</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">55</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param  mixed $value</pre></td>
+</tr>
+<tr>
+<td class="lineCount">56</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return boolean</pre></td>
+</tr>
+<tr>
+<td class="lineCount">57</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">58</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function isValid($value)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">59</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">60</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">        $this-&gt;_setValue($value);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">61</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">62</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">        if ( !Zend_Uri::check($value) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">63</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            $this-&gt;_error();</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">64</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            return false;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">65</td>
+<td class="coverageCountHighlight">0</td>
+<td><pre class="srcLineHighlight">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">66</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">67</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">        return true;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">68</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">69</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">}</pre></td>
+</tr>
+</table>
+<br><table width="100%">
+<tr><td><hr noshade size="1"></td></tr>
+<tr><td class="small">Report generated at 2008-05-19T16:58:24-05:00</td></tr>
+</table>
+</BODY>
+</HTML>

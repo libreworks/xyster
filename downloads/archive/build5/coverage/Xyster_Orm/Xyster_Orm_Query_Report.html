@@ -1,0 +1,1675 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<LINK REL="stylesheet" TYPE="text/css" TITLE="Style" href="../stylesheet.css">
+</HEAD>
+<BODY>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="bannercell" rowspan="2"><a href="http://phing.info/"><img src="http://phing.info/images/phing.gif" alt="http://phing.info/" align="left" border="0"></a></td>
+<td style="text-align:right"><h2>Source Code Coverage</h2></td>
+</tr>
+<tr><td style="text-align:right">Designed for use with <a href="http://pear.php.net/package/PHPUnit2">PHPUnit2</a>, <a href="http://www.xdebug.org/">Xdebug</a> and <a href="http://phing.info/">Phing</a>.</td></tr>
+</table>
+<hr size="1">
+<table class="log" cellpadding="5" cellspacing="0" width="100%"><tr class="a">
+<td class="small">Methods: 13</td>
+<td class="small">LOC: 326</td>
+<td class="small">Statements: 121</td>
+</tr></table>
+<br><table class="log" cellpadding="5" cellspacing="0" width="100%">
+<tr>
+<th width="100%">Source file</th>
+<th>Statements</th>
+<th>Methods</th>
+<th width="250" colspan="2" nowrap>Total coverage</th>
+</tr>
+<tr class="a">
+<td>Report.php</td>
+<td>94.2%</td>
+<td>100.0%</td>
+<td>94.8%</td>
+<td><table cellspacing="0" cellpadding="0" border="0" width="100%" style="display: inline"><tr>
+<td class="covered" width="190" height="12"> </td>
+<td class="uncovered" width="10" height="12"> </td>
+</tr></table></td>
+</tr>
+</table>
+<table cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td class="lineCount">1</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">&lt;?php</pre></td>
+</tr>
+<tr>
+<td class="lineCount">2</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">3</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * Xyster Framework</pre></td>
+</tr>
+<tr>
+<td class="lineCount">4</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">5</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * This source file is subject to the new BSD license that is bundled</pre></td>
+</tr>
+<tr>
+<td class="lineCount">6</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * with this package in the file LICENSE.txt.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">7</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * It is also available through the world-wide-web at this URL:</pre></td>
+</tr>
+<tr>
+<td class="lineCount">8</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * http://www.opensource.org/licenses/bsd-license.php</pre></td>
+</tr>
+<tr>
+<td class="lineCount">9</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">10</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @category  Xyster</pre></td>
+</tr>
+<tr>
+<td class="lineCount">11</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @package   Xyster_Orm</pre></td>
+</tr>
+<tr>
+<td class="lineCount">12</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">13</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License</pre></td>
+</tr>
+<tr>
+<td class="lineCount">14</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @version   $Id: Report.php 220 2008-02-09 18:04:52Z doublecompile $</pre></td>
+</tr>
+<tr>
+<td class="lineCount">15</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">16</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">17</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @see Xyster_Orm_Query</pre></td>
+</tr>
+<tr>
+<td class="lineCount">18</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">19</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">require_once 'Xyster/Orm/Query.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCount">20</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">21</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @see Xyster_Data_Field_Clause</pre></td>
+</tr>
+<tr>
+<td class="lineCount">22</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">23</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">require_once 'Xyster/Data/Field/Clause.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCount">24</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">25</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * A report query object</pre></td>
+</tr>
+<tr>
+<td class="lineCount">26</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">27</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @category  Xyster</pre></td>
+</tr>
+<tr>
+<td class="lineCount">28</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @package   Xyster_Orm</pre></td>
+</tr>
+<tr>
+<td class="lineCount">29</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">30</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License</pre></td>
+</tr>
+<tr>
+<td class="lineCount">31</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">32</td>
+<td class="coverageCount"></td>
+<td class="srcLineClassStart"><pre class="srcLine">class Xyster_Orm_Query_Report extends Xyster_Orm_Query</pre></td>
+</tr>
+<tr>
+<td class="lineCount">33</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">{</pre></td>
+</tr>
+<tr>
+<td class="lineCount">34</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    const DISTINCT = 'distinct';</pre></td>
+</tr>
+<tr>
+<td class="lineCount">35</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    const FIELDS = 'fields';</pre></td>
+</tr>
+<tr>
+<td class="lineCount">36</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    const GROUP = 'group';</pre></td>
+</tr>
+<tr>
+<td class="lineCount">37</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    const HAVING = 'having';</pre></td>
+</tr>
+<tr>
+<td class="lineCount">38</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">39</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">40</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Turns excluding duplicate records on or off</pre></td>
+</tr>
+<tr>
+<td class="lineCount">41</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">42</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param boolean $distinct  True excludes duplicates</pre></td>
+</tr>
+<tr>
+<td class="lineCount">43</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">44</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function distinct( $distinct = true )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">45</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">46</td>
+<td class="lineCountHighlight">6</td>
+<td><pre class="srcLine">        $this-&gt;_parts[self::DISTINCT] = $distinct;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">47</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">48</td>
+<td class="lineCountHighlight">6</td>
+<td><pre class="srcLine">        return $this;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">49</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">50</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">51</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">52</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Executes the report query</pre></td>
+</tr>
+<tr>
+<td class="lineCount">53</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">54</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * If the entire query cannot be executed in the backend, this method will</pre></td>
+</tr>
+<tr>
+<td class="lineCount">55</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * return full entities from the data store, put them in the cache, then do</pre></td>
+</tr>
+<tr>
+<td class="lineCount">56</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * any runtime calculations it needs to do.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">57</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">58</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Data_Set  The query result set</pre></td>
+</tr>
+<tr>
+<td class="lineCount">59</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @throws Xyster_Orm_Query_Exception if there's a select column not aggregated or grouped</pre></td>
+</tr>
+<tr>
+<td class="lineCount">60</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">61</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function execute()</pre></td>
+</tr>
+<tr>
+<td class="lineCount">62</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCount">63</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">        // make sure all fields are either grouped or aggregates</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">64</td>
+<td class="lineCountHighlight">17</td>
+<td><pre class="srcLine">        if ( count($this-&gt;_parts[self::GROUP]) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">65</td>
+<td class="lineCountHighlight">10</td>
+<td><pre class="srcLine">            $groups = array();</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">66</td>
+<td class="lineCountHighlight">10</td>
+<td><pre class="srcLine">            foreach( $this-&gt;_parts[self::GROUP] as $group ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCount">67</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">                /* @var $field Xyster_Data_Field_Group */</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">68</td>
+<td class="lineCountHighlight">10</td>
+<td><pre class="srcLine">                $groups[] = $group-&gt;getName();</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">69</td>
+<td class="lineCountHighlight">10</td>
+<td><pre class="srcLine">            }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">70</td>
+<td class="lineCountHighlight">10</td>
+<td><pre class="srcLine">            foreach( $this-&gt;_parts[self::FIELDS] as $field )</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">71</td>
+<td class="lineCountHighlight">9</td>
+<td><pre class="srcLine">                if ((!$field instanceof Xyster_Data_Field_Aggregate) &amp;&amp;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">72</td>
+<td class="lineCountHighlight">9</td>
+<td><pre class="srcLine">                    !in_array($field-&gt;getName(), $groups)) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">73</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                    require_once 'Xyster/Orm/Query/Exception.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">74</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                    throw new Xyster_Orm_Query_Exception($field-&gt;getName() . ' is not in the group clause');</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">75</td>
+<td class="coverageCountHighlight">0</td>
+<td><pre class="srcLineHighlight">                }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">76</td>
+<td class="lineCountHighlight">9</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">77</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">78</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">        // run the query in the backend</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">79</td>
+<td class="lineCountHighlight">16</td>
+<td><pre class="srcLine">        $collection = $this-&gt;_manager-&gt;executeQuery($this);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">80</td>
+<td class="lineCountHighlight">16</td>
+<td><pre class="srcLine">        if ( $collection instanceof Xyster_Data_Set &amp;&amp;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">81</td>
+<td class="lineCountHighlight">16</td>
+<td><pre class="srcLine">            ! $collection instanceof Xyster_Orm_Set ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCount">82</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            // if it's not an entity set, the whole thing was in the backend;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">83</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	        // it's safe to just return it</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">84</td>
+<td class="lineCountHighlight">9</td>
+<td><pre class="srcLine">            return $collection;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">85</td>
+<td class="coverageCountHighlight">0</td>
+<td><pre class="srcLineHighlight">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">86</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">87</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">        // apply any runtime filters to the entity set</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">88</td>
+<td class="lineCountHighlight">7</td>
+<td><pre class="srcLine">        if ( count($this-&gt;_runtime[Xyster_Orm_Query::WHERE]) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">89</td>
+<td class="lineCountHighlight">6</td>
+<td><pre class="srcLine">            $collection-&gt;filter(Xyster_Data_Criterion::fromArray('AND', $this-&gt;_runtime[Xyster_Orm_Query::WHERE]));</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">90</td>
+<td class="lineCountHighlight">6</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">91</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">92</td>
+<td class="lineCountHighlight">7</td>
+<td><pre class="srcLine">        $fieldsAndGroups = new Xyster_Data_Field_Clause($this-&gt;_parts[self::GROUP]);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">93</td>
+<td class="lineCountHighlight">7</td>
+<td><pre class="srcLine">        $fieldsAndGroups-&gt;merge($this-&gt;_parts[self::FIELDS]);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">94</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">95</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">        // setup the Xyster_Data_Set and add the columns to return</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">96</td>
+<td class="lineCountHighlight">7</td>
+<td><pre class="srcLine">        $rs = new Xyster_Data_Set();</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">97</td>
+<td class="lineCountHighlight">7</td>
+<td><pre class="srcLine">        foreach( $fieldsAndGroups as $field ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCount">98</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">        	/* @var $field Xyster_Data_Field */</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">99</td>
+<td class="lineCountHighlight">7</td>
+<td><pre class="srcLine">            $rs-&gt;addColumn($field-&gt;getAlias());</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">100</td>
+<td class="lineCountHighlight">7</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">101</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">102</td>
+<td class="lineCountHighlight">7</td>
+<td><pre class="srcLine">        if ( count($this-&gt;_parts[self::GROUP]) &gt; 0 ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCount">103</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">104</td>
+<td class="lineCountHighlight">5</td>
+<td><pre class="srcLine">            require_once 'Xyster/Data/Tuple.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCount">105</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            // let Xyster_Data_Tuple do the work for runtime grouping</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">106</td>
+<td class="lineCountHighlight">5</td>
+<td><pre class="srcLine">            Xyster_Data_Tuple::makeTuples(</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">107</td>
+<td class="lineCountHighlight">5</td>
+<td><pre class="srcLine">                $rs,</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">108</td>
+<td class="lineCountHighlight">5</td>
+<td><pre class="srcLine">                $collection,</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">109</td>
+<td class="lineCountHighlight">5</td>
+<td><pre class="srcLine">                $fieldsAndGroups,</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">110</td>
+<td class="lineCountHighlight">5</td>
+<td><pre class="srcLine">                $this-&gt;_parts[self::HAVING],</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">111</td>
+<td class="lineCountHighlight">5</td>
+<td><pre class="srcLine">                $this-&gt;_parts[Xyster_Orm_Query::LIMIT],</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">112</td>
+<td class="lineCountHighlight">5</td>
+<td><pre class="srcLine">                $this-&gt;_parts[Xyster_Orm_Query::OFFSET]</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">113</td>
+<td class="lineCountHighlight">5</td>
+<td><pre class="srcLine">                );</pre></td>
+</tr>
+<tr>
+<td class="lineCount">114</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">115</td>
+<td class="lineCountHighlight">5</td>
+<td><pre class="srcLine">        } else {</pre></td>
+</tr>
+<tr>
+<td class="lineCount">116</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">117</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            // check to see if the fields contain an aggregate</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">118</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">            $aggregate = false;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">119</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">            foreach( $this-&gt;_parts[self::FIELDS] as $field ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">120</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">                if ( $field instanceof Xyster_Data_Field_Aggregate ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCount">121</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">                	/* @var $field Xyster_Data_Field_Aggregate */</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">122</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                    $aggregate = $field-&gt;getFunction();</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">123</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                    break;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">124</td>
+<td class="coverageCountHighlight">0</td>
+<td><pre class="srcLineHighlight">                }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">125</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">126</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">            if ( $aggregate ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCount">127</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">                // just one row that contains aggregates</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">128</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                require_once 'Xyster/Data/Tuple.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">129</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                $tuple = new Xyster_Data_Tuple(array(), $collection);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">130</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                $rs-&gt;add($tuple-&gt;toRow($this-&gt;_parts[self::FIELDS]));</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">131</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            } else {</pre></td>
+</tr>
+<tr>
+<td class="lineCount">132</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">                // add the values to the set (enforcing limit &amp; offset)</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">133</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                foreach( $collection as $offset=&gt;$entity ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">134</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                    if ( $offset &gt;= $this-&gt;_parts[Xyster_Orm_Query::OFFSET] ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">135</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                        $values = array();</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">136</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                        foreach( $this-&gt;_parts[self::FIELDS] as $field ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCount">137</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">                        	/* @var $field Xyster_Data_Field */</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">138</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                            $values[$field-&gt;getAlias()] = $field-&gt;evaluate($entity);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">139</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                        }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">140</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                        $rs-&gt;add( $values );</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">141</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                        if ( $this-&gt;_parts[Xyster_Orm_Query::LIMIT] &gt; 0 &amp;&amp;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">142</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                            count($rs) == $this-&gt;_parts[Xyster_Orm_Query::LIMIT] ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">143</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                            break;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">144</td>
+<td class="coverageCountHighlight">0</td>
+<td><pre class="srcLineHighlight">                        }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">145</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                    }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">146</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">147</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">148</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">149</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">150</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">        // apply any runtime sort order to the entity set</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">151</td>
+<td class="lineCountHighlight">7</td>
+<td><pre class="srcLine">        if ( $this-&gt;_runtime[Xyster_Orm_Query::ORDER] ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">152</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">            $sorts = new Xyster_Data_Sort_Clause;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">153</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">            foreach( $this-&gt;_parts[Xyster_Orm_Query::ORDER] as $sort ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCount">154</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            	/* @var $sort Xyster_Data_Sort */</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">155</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">                foreach( $this-&gt;_parts[self::FIELDS] as $field ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCount">156</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">                	/* @var $field Xyster_Data_Field */</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">157</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                    if ( $sort-&gt;getField()-&gt;getName() == $field-&gt;getName() ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCount">158</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">                    // make sure the sort field is actually in those returned</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">159</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                        $sorts-&gt;add($sort);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">160</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                        break;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">161</td>
+<td class="coverageCountHighlight">0</td>
+<td><pre class="srcLineHighlight">                    }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">162</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">163</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">            }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">164</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">            require_once 'Xyster/Data/Comparator.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">165</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">            $rs-&gt;sort(new Xyster_Data_Comparator($sorts));</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">166</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">167</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">168</td>
+<td class="lineCountHighlight">7</td>
+<td><pre class="srcLine">        return $rs;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">169</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">170</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">171</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">172</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Adds a projected field to this query</pre></td>
+</tr>
+<tr>
+<td class="lineCount">173</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">174</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param Xyster_Data_Field $field</pre></td>
+</tr>
+<tr>
+<td class="lineCount">175</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Orm_Query_Report provides a fluent interface</pre></td>
+</tr>
+<tr>
+<td class="lineCount">176</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">177</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function field( Xyster_Data_Field $field )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">178</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">179</td>
+<td class="lineCountHighlight">22</td>
+<td><pre class="srcLine">        if ( $field instanceof Xyster_Data_Field_Group ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">180</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">            return $this-&gt;group($field);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">181</td>
+<td class="coverageCountHighlight">0</td>
+<td><pre class="srcLineHighlight">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">182</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">183</td>
+<td class="lineCountHighlight">20</td>
+<td><pre class="srcLine">        $this-&gt;_meta-&gt;assertValidField($field);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">184</td>
+<td class="lineCountHighlight">20</td>
+<td><pre class="srcLine">        $this-&gt;_runtime[self::FIELDS] |= $this-&gt;_meta-&gt;isRuntime($field);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">185</td>
+<td class="lineCountHighlight">20</td>
+<td><pre class="srcLine">        $this-&gt;getFields()-&gt;add($field);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">186</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">187</td>
+<td class="lineCountHighlight">20</td>
+<td><pre class="srcLine">        return $this;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">188</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">189</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">190</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">191</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Gets the non-group {@link Xyster_Data_Field} objects added to the statement</pre></td>
+</tr>
+<tr>
+<td class="lineCount">192</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">193</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Data_Field_Clause</pre></td>
+</tr>
+<tr>
+<td class="lineCount">194</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">195</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function getFields()</pre></td>
+</tr>
+<tr>
+<td class="lineCount">196</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">197</td>
+<td class="lineCountHighlight">21</td>
+<td><pre class="srcLine">        return $this-&gt;getPart(self::FIELDS);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">198</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">199</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">200</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">201</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Gets the grouped {@link Xyster_Data_Field} objects added to the statement</pre></td>
+</tr>
+<tr>
+<td class="lineCount">202</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">203</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Data_Field_Clause</pre></td>
+</tr>
+<tr>
+<td class="lineCount">204</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">205</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function getGroup()</pre></td>
+</tr>
+<tr>
+<td class="lineCount">206</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">207</td>
+<td class="lineCountHighlight">18</td>
+<td><pre class="srcLine">        return $this-&gt;getPart(self::GROUP);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">208</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">209</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">210</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">211</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Gets the {@link Xyster_Data_Aggregate} {@link Xyster_Data_Criterion} objects added to the statement</pre></td>
+</tr>
+<tr>
+<td class="lineCount">212</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">213</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return array</pre></td>
+</tr>
+<tr>
+<td class="lineCount">214</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">215</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function getHaving()</pre></td>
+</tr>
+<tr>
+<td class="lineCount">216</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">217</td>
+<td class="lineCountHighlight">7</td>
+<td><pre class="srcLine">        return $this-&gt;getPart(self::HAVING);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">218</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">219</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">220</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">221</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Adds grouped field to this report query</pre></td>
+</tr>
+<tr>
+<td class="lineCount">222</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">223</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param Xyster_Data_Field_Group $group</pre></td>
+</tr>
+<tr>
+<td class="lineCount">224</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Orm_Query_Report provides a fluent interface</pre></td>
+</tr>
+<tr>
+<td class="lineCount">225</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">226</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function group( Xyster_Data_Field_Group $group )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">227</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">228</td>
+<td class="lineCountHighlight">14</td>
+<td><pre class="srcLine">        $this-&gt;_meta-&gt;assertValidField($group);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">229</td>
+<td class="lineCountHighlight">14</td>
+<td><pre class="srcLine">        $this-&gt;_runtime[self::GROUP] |= $this-&gt;_meta-&gt;isRuntime($group);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">230</td>
+<td class="lineCountHighlight">14</td>
+<td><pre class="srcLine">        $this-&gt;getGroup()-&gt;add($group);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">231</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">232</td>
+<td class="lineCountHighlight">14</td>
+<td><pre class="srcLine">        return $this;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">233</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">234</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">235</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">236</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Adds a group-criterion to this query</pre></td>
+</tr>
+<tr>
+<td class="lineCount">237</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">238</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * All fields in the criterion must be instances of</pre></td>
+</tr>
+<tr>
+<td class="lineCount">239</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * {@link Xyster_Data_Field_Aggregate}, as a "having" clause is applied to</pre></td>
+</tr>
+<tr>
+<td class="lineCount">240</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * groups.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">241</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">242</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param Xyster_Data_Criterion $having</pre></td>
+</tr>
+<tr>
+<td class="lineCount">243</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Orm_Query_Report provides a fluent interface</pre></td>
+</tr>
+<tr>
+<td class="lineCount">244</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @throws Xyster_Orm_Query_Exception if not all fields are aggregated</pre></td>
+</tr>
+<tr>
+<td class="lineCount">245</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">246</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function having( Xyster_Data_Criterion $having )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">247</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">248</td>
+<td class="lineCountHighlight">14</td>
+<td><pre class="srcLine">        $aggs = 0;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">249</td>
+<td class="lineCountHighlight">14</td>
+<td><pre class="srcLine">        $fields = Xyster_Data_Criterion::getFields($having);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">250</td>
+<td class="lineCountHighlight">14</td>
+<td><pre class="srcLine">        foreach ( $fields as $field ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">251</td>
+<td class="lineCountHighlight">14</td>
+<td><pre class="srcLine">            $this-&gt;_meta-&gt;assertValidField($field);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">252</td>
+<td class="lineCountHighlight">14</td>
+<td><pre class="srcLine">            $aggs += ($field instanceof Xyster_Data_Field_Aggregate) ? 1 : 0;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">253</td>
+<td class="lineCountHighlight">14</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">254</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">255</td>
+<td class="lineCountHighlight">14</td>
+<td><pre class="srcLine">        if ( !$aggs || count($fields) != $aggs ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">256</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            require_once 'Xyster/Orm/Query/Exception.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">257</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            throw new Xyster_Orm_Query_Exception('The criterion provided must contain only aggregated fields');</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">258</td>
+<td class="coverageCountHighlight">0</td>
+<td><pre class="srcLineHighlight">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">259</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">260</td>
+<td class="lineCountHighlight">13</td>
+<td><pre class="srcLine">        if ( $this-&gt;_meta-&gt;isRuntime($having) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">261</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">            $this-&gt;_runtime[self::GROUP] = true;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">262</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">263</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">264</td>
+<td class="lineCountHighlight">13</td>
+<td><pre class="srcLine">        $this-&gt;_parts[self::HAVING][] = $having;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">265</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">266</td>
+<td class="lineCountHighlight">13</td>
+<td><pre class="srcLine">        return $this;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">267</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">268</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">269</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">270</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Gets whether or not this report query has fields that evaluate at runtime</pre></td>
+</tr>
+<tr>
+<td class="lineCount">271</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">272</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return boolean</pre></td>
+</tr>
+<tr>
+<td class="lineCount">273</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">274</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function hasRuntimeFields()</pre></td>
+</tr>
+<tr>
+<td class="lineCount">275</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">276</td>
+<td class="lineCountHighlight">16</td>
+<td><pre class="srcLine">        return (bool) $this-&gt;_runtime[self::FIELDS];</pre></td>
+</tr>
+<tr>
+<td class="lineCount">277</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">278</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">279</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">280</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Gets whether or not this report query has groups that evaluate at runtime</pre></td>
+</tr>
+<tr>
+<td class="lineCount">281</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">282</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return boolean</pre></td>
+</tr>
+<tr>
+<td class="lineCount">283</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">284</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function hasRuntimeGroup()</pre></td>
+</tr>
+<tr>
+<td class="lineCount">285</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">286</td>
+<td class="lineCountHighlight">18</td>
+<td><pre class="srcLine">        return (bool) $this-&gt;_runtime[self::GROUP];</pre></td>
+</tr>
+<tr>
+<td class="lineCount">287</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">288</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">289</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">290</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Gets whether or not to exclude duplicate results</pre></td>
+</tr>
+<tr>
+<td class="lineCount">291</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">292</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return boolean</pre></td>
+</tr>
+<tr>
+<td class="lineCount">293</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">294</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function isDistinct()</pre></td>
+</tr>
+<tr>
+<td class="lineCount">295</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">296</td>
+<td class="lineCountHighlight">13</td>
+<td><pre class="srcLine">        return $this-&gt;getPart(self::DISTINCT);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">297</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">298</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">299</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">300</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Gets whether this query has parts that are evaluated at runtime</pre></td>
+</tr>
+<tr>
+<td class="lineCount">301</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">302</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return boolean</pre></td>
+</tr>
+<tr>
+<td class="lineCount">303</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">304</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function isRuntime()</pre></td>
+</tr>
+<tr>
+<td class="lineCount">305</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">306</td>
+<td class="lineCountHighlight">27</td>
+<td><pre class="srcLine">        return parent::isRuntime() || $this-&gt;hasRuntimeGroup() ||</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">307</td>
+<td class="lineCountHighlight">27</td>
+<td><pre class="srcLine">            $this-&gt;hasRuntimeFields();</pre></td>
+</tr>
+<tr>
+<td class="lineCount">308</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">309</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">310</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">311</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Inits the parts of the query</pre></td>
+</tr>
+<tr>
+<td class="lineCount">312</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">313</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">314</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    protected function _initParts()</pre></td>
+</tr>
+<tr>
+<td class="lineCount">315</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">316</td>
+<td class="lineCountHighlight">37</td>
+<td><pre class="srcLine">        parent::_initParts();</pre></td>
+</tr>
+<tr>
+<td class="lineCount">317</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">318</td>
+<td class="lineCountHighlight">37</td>
+<td><pre class="srcLine">        $this-&gt;_parts[self::DISTINCT] = false;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">319</td>
+<td class="lineCountHighlight">37</td>
+<td><pre class="srcLine">        $this-&gt;_parts[self::FIELDS] = new Xyster_Data_Field_Clause;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">320</td>
+<td class="lineCountHighlight">37</td>
+<td><pre class="srcLine">        $this-&gt;_parts[self::GROUP] = new Xyster_Data_Field_Clause;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">321</td>
+<td class="lineCountHighlight">37</td>
+<td><pre class="srcLine">        $this-&gt;_parts[self::HAVING] = array();</pre></td>
+</tr>
+<tr>
+<td class="lineCount">322</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">323</td>
+<td class="lineCountHighlight">37</td>
+<td><pre class="srcLine">        $this-&gt;_runtime[self::FIELDS] = false;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">324</td>
+<td class="lineCountHighlight">37</td>
+<td><pre class="srcLine">        $this-&gt;_runtime[self::GROUP] = false;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">325</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">326</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">}</pre></td>
+</tr>
+</table>
+<br><table width="100%">
+<tr><td><hr noshade size="1"></td></tr>
+<tr><td class="small">Report generated at 2008-03-05T18:27:43-05:00</td></tr>
+</table>
+</BODY>
+</HTML>

@@ -1,0 +1,2545 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<LINK REL="stylesheet" TYPE="text/css" TITLE="Style" href="../stylesheet.css">
+</HEAD>
+<BODY>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="bannercell" rowspan="2"><a href="http://phing.info/"><img src="http://phing.info/images/phing.gif" alt="http://phing.info/" align="left" border="0"></a></td>
+<td style="text-align:right"><h2>Source Code Coverage</h2></td>
+</tr>
+<tr><td style="text-align:right">Designed for use with <a href="http://pear.php.net/package/PHPUnit2">PHPUnit2</a>, <a href="http://www.xdebug.org/">Xdebug</a> and <a href="http://phing.info/">Phing</a>.</td></tr>
+</table>
+<hr size="1">
+<table class="log" cellpadding="5" cellspacing="0" width="100%"><tr class="a">
+<td class="small">Methods: 22</td>
+<td class="small">LOC: 500</td>
+<td class="small">Statements: 179</td>
+</tr></table>
+<br><table class="log" cellpadding="5" cellspacing="0" width="100%">
+<tr>
+<th width="100%">Source file</th>
+<th>Statements</th>
+<th>Methods</th>
+<th width="250" colspan="2" nowrap>Total coverage</th>
+</tr>
+<tr class="a">
+<td>Manager.php</td>
+<td>93.9%</td>
+<td>100.0%</td>
+<td>94.5%</td>
+<td><table cellspacing="0" cellpadding="0" border="0" width="100%" style="display: inline"><tr>
+<td class="covered" width="189" height="12"> </td>
+<td class="uncovered" width="11" height="12"> </td>
+</tr></table></td>
+</tr>
+</table>
+<table cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td class="lineCount">1</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">&lt;?php</pre></td>
+</tr>
+<tr>
+<td class="lineCount">2</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">3</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * Xyster Framework</pre></td>
+</tr>
+<tr>
+<td class="lineCount">4</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">5</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * LICENSE</pre></td>
+</tr>
+<tr>
+<td class="lineCount">6</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">7</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * This source file is subject to the new BSD license that is bundled</pre></td>
+</tr>
+<tr>
+<td class="lineCount">8</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * with this package in the file LICENSE.txt.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">9</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * It is also available through the world-wide-web at this URL:</pre></td>
+</tr>
+<tr>
+<td class="lineCount">10</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * http://www.opensource.org/licenses/bsd-license.php</pre></td>
+</tr>
+<tr>
+<td class="lineCount">11</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * If you did not receive a copy of the license and are unable to</pre></td>
+</tr>
+<tr>
+<td class="lineCount">12</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * obtain it through the world-wide-web, please send an email</pre></td>
+</tr>
+<tr>
+<td class="lineCount">13</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * to xyster@devweblog.org so we can send you a copy immediately.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">14</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">15</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @category  Xyster</pre></td>
+</tr>
+<tr>
+<td class="lineCount">16</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @package   Xyster_Orm</pre></td>
+</tr>
+<tr>
+<td class="lineCount">17</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">18</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License</pre></td>
+</tr>
+<tr>
+<td class="lineCount">19</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @version   $Id: Manager.php 130 2007-10-23 12:14:36Z doublecompile $</pre></td>
+</tr>
+<tr>
+<td class="lineCount">20</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">21</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">22</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @see Xyster_Orm_Repository</pre></td>
+</tr>
+<tr>
+<td class="lineCount">23</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">24</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">require_once 'Xyster/Orm/Repository.php';</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">25</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">26</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @see Xyster_Orm_Plugin_Broker</pre></td>
+</tr>
+<tr>
+<td class="lineCount">27</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">28</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">require_once 'Xyster/Orm/Plugin/Broker.php';</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">29</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">30</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * The main backend of the orm package</pre></td>
+</tr>
+<tr>
+<td class="lineCount">31</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">32</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @category  Xyster</pre></td>
+</tr>
+<tr>
+<td class="lineCount">33</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @package   Xyster_Orm</pre></td>
+</tr>
+<tr>
+<td class="lineCount">34</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">35</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License</pre></td>
+</tr>
+<tr>
+<td class="lineCount">36</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">37</td>
+<td class="coverageCount"></td>
+<td class="srcLineClassStart"><pre class="srcLine">class Xyster_Orm_Manager</pre></td>
+</tr>
+<tr>
+<td class="lineCount">38</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">{</pre></td>
+</tr>
+<tr>
+<td class="lineCount">39</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">40</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * The mapper factory</pre></td>
+</tr>
+<tr>
+<td class="lineCount">41</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">42</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @var Xyster_Orm_Mapper_Factory_Interface</pre></td>
+</tr>
+<tr>
+<td class="lineCount">43</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">44</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    protected $_mapFactory;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">45</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">46</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">47</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * The repository for storing entities</pre></td>
+</tr>
+<tr>
+<td class="lineCount">48</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">49</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @var Xyster_Orm_Repository</pre></td>
+</tr>
+<tr>
+<td class="lineCount">50</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">51</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    protected $_repository;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">52</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">53</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">54</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * The secondary cache</pre></td>
+</tr>
+<tr>
+<td class="lineCount">55</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">56</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @var Zend_Cache_Core</pre></td>
+</tr>
+<tr>
+<td class="lineCount">57</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">58</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    protected $_secondaryCache;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">59</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">60</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">61</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * The plugin broker</pre></td>
+</tr>
+<tr>
+<td class="lineCount">62</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">63</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @var Xyster_Orm_Plugin_Broker</pre></td>
+</tr>
+<tr>
+<td class="lineCount">64</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">65</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    protected $_plugins;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">66</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">67</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">68</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Creates a new Orm_Manager</pre></td>
+</tr>
+<tr>
+<td class="lineCount">69</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">70</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">71</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function __construct()</pre></td>
+</tr>
+<tr>
+<td class="lineCount">72</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">73</td>
+<td class="lineCountHighlight">219</td>
+<td><span class="srcLine"><pre class="srcLine">        $this-&gt;_plugins = new Xyster_Orm_Plugin_Broker();</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">74</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">75</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">76</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">77</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Clears out the repository</pre></td>
+</tr>
+<tr>
+<td class="lineCount">78</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">79</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">80</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function clear()</pre></td>
+</tr>
+<tr>
+<td class="lineCount">81</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">82</td>
+<td class="lineCountHighlight">3</td>
+<td><span class="srcLine"><pre class="srcLine">        $this-&gt;_repository = null;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">83</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">84</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">85</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">86</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Executes a query or report query</pre></td>
+</tr>
+<tr>
+<td class="lineCount">87</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">88</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param Xyster_Orm_Query $query</pre></td>
+</tr>
+<tr>
+<td class="lineCount">89</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Data_Set</pre></td>
+</tr>
+<tr>
+<td class="lineCount">90</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">91</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function executeQuery( Xyster_Orm_Query $query )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">92</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">93</td>
+<td class="lineCountHighlight">11</td>
+<td><span class="srcLine"><pre class="srcLine">        $set = $this-&gt;_mapFactory-&gt;get($query-&gt;getFrom())-&gt;query($query);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">94</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">95</td>
+<td class="lineCountHighlight">11</td>
+<td><span class="srcLine"><pre class="srcLine">        if ( $set instanceof Xyster_Orm_Set ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">96</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">        	// add returned entities to the cache</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">97</td>
+<td class="lineCountHighlight">7</td>
+<td><span class="srcLine"><pre class="srcLine">        	$this-&gt;getRepository()-&gt;addAll($set);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">98</td>
+<td class="lineCountHighlight">7</td>
+<td><span class="srcLine"><pre class="srcLine">        	$this-&gt;putAllInSecondaryCache($set);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">99</td>
+<td class="lineCountHighlight">7</td>
+<td><span class="srcLine"><pre class="srcLine">        }</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">100</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">101</td>
+<td class="lineCountHighlight">11</td>
+<td><span class="srcLine"><pre class="srcLine">        return $set;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">102</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">103</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">104</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">105</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Gets the first entity found matching a set of criteria</pre></td>
+</tr>
+<tr>
+<td class="lineCount">106</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">107</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $className</pre></td>
+</tr>
+<tr>
+<td class="lineCount">108</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param array $criteria</pre></td>
+</tr>
+<tr>
+<td class="lineCount">109</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Orm_Entity The entity found or null if none</pre></td>
+</tr>
+<tr>
+<td class="lineCount">110</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">111</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function find( $className, array $criteria )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">112</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">113</td>
+<td class="lineCountHighlight">3</td>
+<td><span class="srcLine"><pre class="srcLine">        if ( $entity = $this-&gt;getRepository()-&gt;find($className, $criteria) ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">114</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">115</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">            return $entity;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">116</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">117</td>
+<td class="coverageCountHighlight">0</td>
+<td><span class="srcLineHighlight"><pre class="srcLine">        } else {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">118</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">119</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">            $map = $this-&gt;getMapperFactory()-&gt;get($className);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">120</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">            $entity = $map-&gt;find($criteria);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">121</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">            if ( $entity ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">122</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">                $this-&gt;getRepository()-&gt;add($entity);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">123</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">                $this-&gt;putInSecondaryCache($entity);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">124</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">            }</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">125</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">            return $entity;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">126</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">127</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">128</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">129</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">130</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Finds all entities matching a given criteria</pre></td>
+</tr>
+<tr>
+<td class="lineCount">131</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">132</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $className</pre></td>
+</tr>
+<tr>
+<td class="lineCount">133</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param mixed $criteria {@link Xyster_Data_Criterion} or associative array</pre></td>
+</tr>
+<tr>
+<td class="lineCount">134</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param mixed $sorts Array of {@link Xyster_Data_Sort} objects</pre></td>
+</tr>
+<tr>
+<td class="lineCount">135</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">136</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function findAll( $className, $criteria, $sorts = null )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">137</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">138</td>
+<td class="lineCountHighlight">10</td>
+<td><span class="srcLine"><pre class="srcLine">        $map = $this-&gt;getMapperFactory()-&gt;get($className);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">139</td>
+<td class="lineCountHighlight">10</td>
+<td><span class="srcLine"><pre class="srcLine">        $all = $map-&gt;findAll($criteria, $sorts);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">140</td>
+<td class="lineCountHighlight">9</td>
+<td><span class="srcLine"><pre class="srcLine">        $this-&gt;getRepository()-&gt;addAll($all);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">141</td>
+<td class="lineCountHighlight">9</td>
+<td><span class="srcLine"><pre class="srcLine">        $this-&gt;putAllInSecondaryCache($all);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">142</td>
+<td class="lineCountHighlight">9</td>
+<td><span class="srcLine"><pre class="srcLine">        return $all;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">143</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">144</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">145</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">146</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Gets an entity by class and primary key</pre></td>
+</tr>
+<tr>
+<td class="lineCount">147</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">148</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $className</pre></td>
+</tr>
+<tr>
+<td class="lineCount">149</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param mixed $id</pre></td>
+</tr>
+<tr>
+<td class="lineCount">150</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Orm_Entity</pre></td>
+</tr>
+<tr>
+<td class="lineCount">151</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">152</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function get( $className, $id )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">153</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">154</td>
+<td class="lineCountHighlight">24</td>
+<td><span class="srcLine"><pre class="srcLine">        $map = $this-&gt;getMapperFactory()-&gt;get($className);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">155</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">156</td>
+<td class="lineCountHighlight">24</td>
+<td><span class="srcLine"><pre class="srcLine">        if ( is_scalar($id) || is_null($id) ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">157</td>
+<td class="lineCountHighlight">17</td>
+<td><span class="srcLine"><pre class="srcLine">            $keyNames = $map-&gt;getEntityMeta()-&gt;getPrimary();</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">158</td>
+<td class="lineCountHighlight">17</td>
+<td><span class="srcLine"><pre class="srcLine">            $id = array( $keyNames[0] =&gt; $id );</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">159</td>
+<td class="lineCountHighlight">17</td>
+<td><span class="srcLine"><pre class="srcLine">        }</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">160</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">161</td>
+<td class="lineCountHighlight">24</td>
+<td><span class="srcLine"><pre class="srcLine">        $entity = $this-&gt;getFromCache($className, $id, true);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">162</td>
+<td class="lineCountHighlight">24</td>
+<td><span class="srcLine"><pre class="srcLine">        if ( $entity instanceof Xyster_Orm_Entity ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">163</td>
+<td class="lineCountHighlight">10</td>
+<td><span class="srcLine"><pre class="srcLine">            return $entity;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">164</td>
+<td class="coverageCountHighlight">0</td>
+<td><span class="srcLineHighlight"><pre class="srcLine">        }</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">165</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">166</td>
+<td class="lineCountHighlight">18</td>
+<td><span class="srcLine"><pre class="srcLine">        $entity = $map-&gt;get($id);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">167</td>
+<td class="lineCountHighlight">18</td>
+<td><span class="srcLine"><pre class="srcLine">        if ( $entity instanceof Xyster_Orm_Entity ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">168</td>
+<td class="lineCountHighlight">14</td>
+<td><span class="srcLine"><pre class="srcLine">            $this-&gt;getRepository()-&gt;add($entity);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">169</td>
+<td class="lineCountHighlight">14</td>
+<td><span class="srcLine"><pre class="srcLine">            $this-&gt;putInSecondaryCache($entity);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">170</td>
+<td class="lineCountHighlight">14</td>
+<td><span class="srcLine"><pre class="srcLine">            return $entity;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">171</td>
+<td class="coverageCountHighlight">0</td>
+<td><span class="srcLineHighlight"><pre class="srcLine">        }</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">172</td>
+<td class="lineCountHighlight">4</td>
+<td><span class="srcLine"><pre class="srcLine">        return null;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">173</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">174</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">175</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">176</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Gets all entities from the data source or a subset if given the keys</pre></td>
+</tr>
+<tr>
+<td class="lineCount">177</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">178</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $className</pre></td>
+</tr>
+<tr>
+<td class="lineCount">179</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param array $ids</pre></td>
+</tr>
+<tr>
+<td class="lineCount">180</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Orm_Set</pre></td>
+</tr>
+<tr>
+<td class="lineCount">181</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">182</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function getAll( $className, array $ids = null )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">183</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">184</td>
+<td class="lineCountHighlight">4</td>
+<td><span class="srcLine"><pre class="srcLine">        $all = null;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">185</td>
+<td class="lineCountHighlight">4</td>
+<td><span class="srcLine"><pre class="srcLine">        $map = $this-&gt;getMapperFactory()-&gt;get($className);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">186</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">187</td>
+<td class="lineCountHighlight">4</td>
+<td><span class="srcLine"><pre class="srcLine">        if ( is_array($ids) &amp;&amp; count($ids) ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">188</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            // we're getting a few entities by primary key</pre></td>
+</tr>
+<tr>
+<td class="lineCount">189</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">190</td>
+<td class="lineCountHighlight">4</td>
+<td><span class="srcLine"><pre class="srcLine">            if ( $this-&gt;getRepository()-&gt;hasAll($className) ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">191</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">                $keyNames = $map-&gt;getEntityMeta()-&gt;getPrimary();</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">192</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">                $all = $map-&gt;getSet();</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">193</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">                foreach( $ids as $id ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">194</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">                    if ( is_scalar($id) ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">195</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">                        $id = array( $keyNames[0] =&gt; $id );</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">196</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">                    }</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">197</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">                    $entity = $this-&gt;getRepository()-&gt;get($className, $id);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">198</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">                    if ( $entity ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">199</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">                        $all-&gt;add( $entity );</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">200</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">                    }</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">201</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">                }</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">202</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">            } else {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">203</td>
+<td class="lineCountHighlight">3</td>
+<td><span class="srcLine"><pre class="srcLine">                $all = $map-&gt;getAll($ids);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">204</td>
+<td class="lineCountHighlight">3</td>
+<td><span class="srcLine"><pre class="srcLine">                $this-&gt;getRepository()-&gt;addAll($all);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">205</td>
+<td class="lineCountHighlight">3</td>
+<td><span class="srcLine"><pre class="srcLine">                $this-&gt;putAllInSecondaryCache($all);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">206</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">207</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">208</td>
+<td class="lineCountHighlight">4</td>
+<td><span class="srcLine"><pre class="srcLine">        } else {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">209</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            // we're getting ALL entities from the source</pre></td>
+</tr>
+<tr>
+<td class="lineCount">210</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">211</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">            if ( $this-&gt;getRepository()-&gt;hasAll($className) ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">212</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">                $all = $this-&gt;getRepository()-&gt;getAll($className);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">213</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">                if (! $all instanceof Xyster_Orm_Set ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">214</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">                    $all = $map-&gt;getSet($all);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">215</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">                }</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">216</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">            } else {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">217</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">                $all = $map-&gt;getAll();</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">218</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">                $this-&gt;getRepository()-&gt;addAll($all);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">219</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">                $this-&gt;putAllInSecondaryCache($all);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">220</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">                $this-&gt;getRepository()-&gt;setHasAll($className);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">221</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">222</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">223</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">224</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">225</td>
+<td class="lineCountHighlight">4</td>
+<td><span class="srcLine"><pre class="srcLine">        return $all;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">226</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">227</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">228</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">229</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Tries to load an entity from the cache</pre></td>
+</tr>
+<tr>
+<td class="lineCount">230</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">231</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * This method will return null if the entity isn't in either cache</pre></td>
+</tr>
+<tr>
+<td class="lineCount">232</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">233</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $className</pre></td>
+</tr>
+<tr>
+<td class="lineCount">234</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param mixed $id</pre></td>
+</tr>
+<tr>
+<td class="lineCount">235</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param boolean $checkSecondary Whether to also check the secondary cache</pre></td>
+</tr>
+<tr>
+<td class="lineCount">236</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Orm_Entity</pre></td>
+</tr>
+<tr>
+<td class="lineCount">237</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">238</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function getFromCache( $className, $id, $checkSecondary = false )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">239</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">240</td>
+<td class="lineCountHighlight">60</td>
+<td><span class="srcLine"><pre class="srcLine">        $map = $this-&gt;getMapperFactory()-&gt;get($className);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">241</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">242</td>
+<td class="lineCountHighlight">60</td>
+<td><span class="srcLine"><pre class="srcLine">        if ( is_scalar($id) || is_null($id) ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">243</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">            $keyNames = $map-&gt;getEntityMeta()-&gt;getPrimary();</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">244</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">            $id = array( $keyNames[0] =&gt; $id );</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">245</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">        }</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">246</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">247</td>
+<td class="lineCountHighlight">60</td>
+<td><span class="srcLine"><pre class="srcLine">        $entity = $this-&gt;getRepository()-&gt;get($className, $id);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">248</td>
+<td class="lineCountHighlight">60</td>
+<td><span class="srcLine"><pre class="srcLine">        if ( $entity instanceof Xyster_Orm_Entity ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">249</td>
+<td class="lineCountHighlight">23</td>
+<td><span class="srcLine"><pre class="srcLine">            return $entity;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">250</td>
+<td class="coverageCountHighlight">0</td>
+<td><span class="srcLineHighlight"><pre class="srcLine">        }</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">251</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">252</td>
+<td class="lineCountHighlight">58</td>
+<td><span class="srcLine"><pre class="srcLine">        if ( $checkSecondary ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">253</td>
+<td class="lineCountHighlight">18</td>
+<td><span class="srcLine"><pre class="srcLine">            $entity = $this-&gt;_getFromSecondaryCache($className, $id);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">254</td>
+<td class="lineCountHighlight">18</td>
+<td><span class="srcLine"><pre class="srcLine">            if ( $entity instanceof Xyster_Orm_Entity ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">255</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">                $this-&gt;_plugins-&gt;postLoad($entity);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">256</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">                $this-&gt;getRepository()-&gt;add($entity);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">257</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">                return $entity;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">258</td>
+<td class="coverageCountHighlight">0</td>
+<td><span class="srcLineHighlight"><pre class="srcLine">            }</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">259</td>
+<td class="lineCountHighlight">18</td>
+<td><span class="srcLine"><pre class="srcLine">        }</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">260</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">261</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">262</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">263</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Gets entities via a many-to-many table</pre></td>
+</tr>
+<tr>
+<td class="lineCount">264</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">265</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $className</pre></td>
+</tr>
+<tr>
+<td class="lineCount">266</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param Xyster_Orm_Entity $entity</pre></td>
+</tr>
+<tr>
+<td class="lineCount">267</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param Xyster_Orm_Relation $relation</pre></td>
+</tr>
+<tr>
+<td class="lineCount">268</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Orm_Set</pre></td>
+</tr>
+<tr>
+<td class="lineCount">269</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">270</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function getJoined( Xyster_Orm_Entity $entity, Xyster_Orm_Relation $relation )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">271</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">272</td>
+<td class="lineCountHighlight">7</td>
+<td><span class="srcLine"><pre class="srcLine">        $className = get_class($entity);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">273</td>
+<td class="lineCountHighlight">7</td>
+<td><span class="srcLine"><pre class="srcLine">        $joined = $this-&gt;_mapFactory-&gt;get($className)-&gt;getJoined($entity, $relation);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">274</td>
+<td class="lineCountHighlight">7</td>
+<td><span class="srcLine"><pre class="srcLine">        $this-&gt;getRepository()-&gt;addAll($joined);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">275</td>
+<td class="lineCountHighlight">7</td>
+<td><span class="srcLine"><pre class="srcLine">        return $joined;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">276</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">277</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">278</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">279</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Gets the factory for entity mappers</pre></td>
+</tr>
+<tr>
+<td class="lineCount">280</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">281</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Orm_Mapper_Factory_Interface</pre></td>
+</tr>
+<tr>
+<td class="lineCount">282</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">283</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function getMapperFactory()</pre></td>
+</tr>
+<tr>
+<td class="lineCount">284</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">285</td>
+<td class="lineCountHighlight">101</td>
+<td><span class="srcLine"><pre class="srcLine">        if ( !$this-&gt;_mapFactory ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">286</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">            require_once 'Xyster/Orm/Mapper/Factory.php';</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">287</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">            $this-&gt;setMapperFactory(new Xyster_Orm_Mapper_Factory());</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">288</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">        }</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">289</td>
+<td class="lineCountHighlight">101</td>
+<td><span class="srcLine"><pre class="srcLine">        return $this-&gt;_mapFactory;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">290</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">291</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">292</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">293</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Gets the plugin broker</pre></td>
+</tr>
+<tr>
+<td class="lineCount">294</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">295</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Orm_Plugin_Broker</pre></td>
+</tr>
+<tr>
+<td class="lineCount">296</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">297</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function getPluginBroker()</pre></td>
+</tr>
+<tr>
+<td class="lineCount">298</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">299</td>
+<td class="lineCountHighlight">64</td>
+<td><span class="srcLine"><pre class="srcLine">        return $this-&gt;_plugins;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">300</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">301</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">302</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">303</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Gets the entity repository</pre></td>
+</tr>
+<tr>
+<td class="lineCount">304</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">305</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Orm_Repository</pre></td>
+</tr>
+<tr>
+<td class="lineCount">306</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">307</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function getRepository()</pre></td>
+</tr>
+<tr>
+<td class="lineCount">308</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">309</td>
+<td class="lineCountHighlight">64</td>
+<td><span class="srcLine"><pre class="srcLine">        if ( !$this-&gt;_repository ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">310</td>
+<td class="lineCountHighlight">56</td>
+<td><span class="srcLine"><pre class="srcLine">            $this-&gt;_repository = new Xyster_Orm_Repository($this-&gt;getMapperFactory());</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">311</td>
+<td class="lineCountHighlight">56</td>
+<td><span class="srcLine"><pre class="srcLine">        }</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">312</td>
+<td class="lineCountHighlight">64</td>
+<td><span class="srcLine"><pre class="srcLine">        return $this-&gt;_repository;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">313</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">314</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">315</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">316</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Gets the secondary repository for storing entities</pre></td>
+</tr>
+<tr>
+<td class="lineCount">317</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">318</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Zend_Cache_Core</pre></td>
+</tr>
+<tr>
+<td class="lineCount">319</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">320</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function getSecondaryCache()</pre></td>
+</tr>
+<tr>
+<td class="lineCount">321</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">322</td>
+<td class="lineCountHighlight">41</td>
+<td><span class="srcLine"><pre class="srcLine">        return $this-&gt;_secondaryCache;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">323</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">324</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">325</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">326</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Refreshes the values of an entity</pre></td>
+</tr>
+<tr>
+<td class="lineCount">327</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">328</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function refresh( Xyster_Orm_Entity $entity )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">329</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">330</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">        $this-&gt;getMapperFactory()-&gt;get(get_class($entity))-&gt;refresh($entity);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">331</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">332</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">333</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">334</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Sets the factory for entity mappers</pre></td>
+</tr>
+<tr>
+<td class="lineCount">335</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">336</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * This method also calls the</pre></td>
+</tr>
+<tr>
+<td class="lineCount">337</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * {@link Xyster_Orm_Mapper_Factory_Interface::setManager} method.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">338</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">339</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param Xyster_Orm_Mapper_Factory_Interface $mapFactory</pre></td>
+</tr>
+<tr>
+<td class="lineCount">340</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">341</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function setMapperFactory( Xyster_Orm_Mapper_Factory_Interface $mapFactory )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">342</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">343</td>
+<td class="lineCountHighlight">219</td>
+<td><span class="srcLine"><pre class="srcLine">        $this-&gt;_mapFactory = $mapFactory;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">344</td>
+<td class="lineCountHighlight">219</td>
+<td><span class="srcLine"><pre class="srcLine">        $mapFactory-&gt;setManager($this);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">345</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">346</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">347</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">348</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Sets the secondary cache for storing entities</pre></td>
+</tr>
+<tr>
+<td class="lineCount">349</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">350</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * If $cache is null, then no secondary cache is used.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">351</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">352</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param mixed $cache Either a Cache object, or a string naming a Registry key</pre></td>
+</tr>
+<tr>
+<td class="lineCount">353</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">354</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function setSecondaryCache($cache = null)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">355</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">356</td>
+<td class="lineCountHighlight">40</td>
+<td><span class="srcLine"><pre class="srcLine">        $this-&gt;_secondaryCache = $this-&gt;_setupSecondaryCache($cache);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">357</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">358</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">359</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">360</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Gets an entity from the secondary cache</pre></td>
+</tr>
+<tr>
+<td class="lineCount">361</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">362</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $className</pre></td>
+</tr>
+<tr>
+<td class="lineCount">363</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param array $id</pre></td>
+</tr>
+<tr>
+<td class="lineCount">364</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Orm_Entity the entity found or null if none</pre></td>
+</tr>
+<tr>
+<td class="lineCount">365</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">366</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    protected function _getFromSecondaryCache( $className, $id )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">367</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">368</td>
+<td class="lineCountHighlight">18</td>
+<td><span class="srcLine"><pre class="srcLine">        $cache = $this-&gt;getSecondaryCache();</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">369</td>
+<td class="lineCountHighlight">18</td>
+<td><span class="srcLine"><pre class="srcLine">        $entity = null;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">370</td>
+<td class="lineCountHighlight">18</td>
+<td><span class="srcLine"><pre class="srcLine">        if ( $cache ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">371</td>
+<td class="lineCountHighlight">11</td>
+<td><span class="srcLine"><pre class="srcLine">            $map = $this-&gt;getMapperFactory()-&gt;get($className);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">372</td>
+<td class="lineCountHighlight">11</td>
+<td><span class="srcLine"><pre class="srcLine">            $cacheId = array('Xyster_Orm', $map-&gt;getDomain(), $className);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">373</td>
+<td class="lineCountHighlight">11</td>
+<td><span class="srcLine"><pre class="srcLine">            foreach( $id as $key =&gt; $value ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">374</td>
+<td class="lineCountHighlight">11</td>
+<td><span class="srcLine"><pre class="srcLine">                $cacheId[] = $key . '=' . $value;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">375</td>
+<td class="lineCountHighlight">11</td>
+<td><span class="srcLine"><pre class="srcLine">            }</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">376</td>
+<td class="lineCountHighlight">11</td>
+<td><span class="srcLine"><pre class="srcLine">            $cacheId = md5(implode("/",$cacheId));</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">377</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">378</td>
+<td class="lineCountHighlight">11</td>
+<td><span class="srcLine"><pre class="srcLine">            $loaded = $cache-&gt;load($cacheId);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">379</td>
+<td class="lineCountHighlight">11</td>
+<td><span class="srcLine"><pre class="srcLine">            if ( is_array($loaded) ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">380</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">                $entity = $this-&gt;_shellToEntity($loaded, $map-&gt;getEntityMeta());</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">381</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">            }</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">382</td>
+<td class="lineCountHighlight">11</td>
+<td><span class="srcLine"><pre class="srcLine">        }</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">383</td>
+<td class="lineCountHighlight">18</td>
+<td><span class="srcLine"><pre class="srcLine">        return $entity;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">384</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">385</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">386</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">387</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Puts the entity in the secondary cache</pre></td>
+</tr>
+<tr>
+<td class="lineCount">388</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">389</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param Xyster_Orm_Entity $entity</pre></td>
+</tr>
+<tr>
+<td class="lineCount">390</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">391</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function putInSecondaryCache( Xyster_Orm_Entity $entity )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">392</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">393</td>
+<td class="lineCountHighlight">33</td>
+<td><span class="srcLine"><pre class="srcLine">        $cache = $this-&gt;getSecondaryCache();</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">394</td>
+<td class="lineCountHighlight">33</td>
+<td><span class="srcLine"><pre class="srcLine">        $className = get_class($entity);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">395</td>
+<td class="lineCountHighlight">33</td>
+<td><span class="srcLine"><pre class="srcLine">        $map = $this-&gt;getMapperFactory()-&gt;get($className);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">396</td>
+<td class="lineCountHighlight">33</td>
+<td><span class="srcLine"><pre class="srcLine">        $cacheLifetime = $map-&gt;getLifetime();</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">397</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">398</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">        // only store the entity if it should be cached longer than the request</pre></td>
+</tr>
+<tr>
+<td class="lineCount">399</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">        // that's why we have the primary repository</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">400</td>
+<td class="lineCountHighlight">33</td>
+<td><span class="srcLine"><pre class="srcLine">        if ( $cache &amp;&amp; $cacheLifetime &gt; -1 ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">401</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">402</td>
+<td class="lineCountHighlight">15</td>
+<td><span class="srcLine"><pre class="srcLine">            $cacheId = array('Xyster_Orm', $map-&gt;getDomain(), $className);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">403</td>
+<td class="lineCountHighlight">15</td>
+<td><span class="srcLine"><pre class="srcLine">            foreach( $entity-&gt;getPrimaryKey() as $key =&gt; $value ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">404</td>
+<td class="lineCountHighlight">15</td>
+<td><span class="srcLine"><pre class="srcLine">                $cacheId[] = $key . '=' . $value;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">405</td>
+<td class="lineCountHighlight">15</td>
+<td><span class="srcLine"><pre class="srcLine">            }</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">406</td>
+<td class="lineCountHighlight">15</td>
+<td><span class="srcLine"><pre class="srcLine">            $cacheId = md5(implode("/", $cacheId));</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">407</td>
+<td class="lineCountHighlight">15</td>
+<td><span class="srcLine"><pre class="srcLine">            $shell = $this-&gt;_entityToShell($entity, $map-&gt;getEntityMeta());</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">408</td>
+<td class="lineCountHighlight">15</td>
+<td><span class="srcLine"><pre class="srcLine">            $cache-&gt;save($shell, $cacheId, array(), $cacheLifetime);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">409</td>
+<td class="lineCountHighlight">15</td>
+<td><span class="srcLine"><pre class="srcLine">        }</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">410</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">411</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">412</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">413</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Convenience method to put all entities in a set in the cache</pre></td>
+</tr>
+<tr>
+<td class="lineCount">414</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">415</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param Xyster_Orm_Set $set</pre></td>
+</tr>
+<tr>
+<td class="lineCount">416</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">417</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function putAllInSecondaryCache( Xyster_Orm_Set $set )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">418</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">419</td>
+<td class="lineCountHighlight">19</td>
+<td><span class="srcLine"><pre class="srcLine">        foreach( $set as $entity ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">420</td>
+<td class="lineCountHighlight">18</td>
+<td><span class="srcLine"><pre class="srcLine">            $this-&gt;putInSecondaryCache($entity);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">421</td>
+<td class="lineCountHighlight">18</td>
+<td><span class="srcLine"><pre class="srcLine">        }</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">422</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">423</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">424</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">425</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Turns an entity into a shell for storage</pre></td>
+</tr>
+<tr>
+<td class="lineCount">426</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">427</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param Xyster_Orm_Entity $entity</pre></td>
+</tr>
+<tr>
+<td class="lineCount">428</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param Xyster_Orm_Entity_Meta $meta</pre></td>
+</tr>
+<tr>
+<td class="lineCount">429</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return array</pre></td>
+</tr>
+<tr>
+<td class="lineCount">430</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">431</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    final protected function _entityToShell( Xyster_Orm_Entity $entity, Xyster_Orm_Entity_Meta $meta )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">432</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">433</td>
+<td class="lineCountHighlight">15</td>
+<td><span class="srcLine"><pre class="srcLine">        $related = array();</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">434</td>
+<td class="lineCountHighlight">15</td>
+<td><span class="srcLine"><pre class="srcLine">        foreach( $meta-&gt;getRelations() as $relation ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">435</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            /* @var $relation Xyster_Orm_Relation */</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">436</td>
+<td class="lineCountHighlight">15</td>
+<td><span class="srcLine"><pre class="srcLine">            $name = $relation-&gt;getName();</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">437</td>
+<td class="lineCountHighlight">15</td>
+<td><span class="srcLine"><pre class="srcLine">            if ( $entity-&gt;isLoaded($name) ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">438</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">                $linked = $entity-&gt;$name;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">439</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">                if ( $relation-&gt;isCollection() ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">440</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">                    /* @var $linked Xyster_Orm_Set */</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">441</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">                    $related[$name] = $linked-&gt;getPrimaryKeys();</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">442</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">                } else {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">443</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">                    /* @var $linked Xyster_Orm_Entity */</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">444</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">                    $related[$name] = $linked-&gt;getPrimaryKey();</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">445</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">                }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">446</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">            }</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">447</td>
+<td class="lineCountHighlight">15</td>
+<td><span class="srcLine"><pre class="srcLine">        }</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">448</td>
+<td class="lineCountHighlight">15</td>
+<td><span class="srcLine"><pre class="srcLine">        return array('values' =&gt; $entity-&gt;toArray(), 'related' =&gt; $related);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">449</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">450</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">451</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">452</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Take the serialized array and turn it back into an entity</pre></td>
+</tr>
+<tr>
+<td class="lineCount">453</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">454</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param array $shell</pre></td>
+</tr>
+<tr>
+<td class="lineCount">455</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Orm_Entity</pre></td>
+</tr>
+<tr>
+<td class="lineCount">456</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">457</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    final protected function _shellToEntity( array $shell, Xyster_Orm_Entity_Meta $meta )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">458</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">459</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">        if ( !isset($shell['values']) ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">460</td>
+<td class="coverageCountHighlight">0</td>
+<td><span class="srcLineHighlight"><pre class="srcLine">            return;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">461</td>
+<td class="coverageCountHighlight">0</td>
+<td><span class="srcLineHighlight"><pre class="srcLine">        }</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">462</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">463</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">        $className = $meta-&gt;getEntityName();</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">464</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">        $entity = new $className($shell['values']);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">465</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">        if ( isset($shell['related']) &amp;&amp; is_array($shell['related']) ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">466</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">            foreach( $shell['related'] as $name =&gt; $related ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">467</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">                $relation = $meta-&gt;getRelation($name);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">468</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">                if ( !$relation-&gt;isCollection() ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">469</td>
+<td class="coverageCountHighlight">0</td>
+<td><span class="srcLineHighlight"><pre class="srcLine">                    $entity-&gt;$name = $this-&gt;get($relation-&gt;getTo(), $related);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">470</td>
+<td class="coverageCountHighlight">0</td>
+<td><span class="srcLineHighlight"><pre class="srcLine">                } else {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">471</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">                    $entity-&gt;$name = $this-&gt;getAll($relation-&gt;getTo(), $related);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">472</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">                }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">473</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">            }</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">474</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">        }</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">475</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">        $entity-&gt;setDirty(false);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">476</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">477</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">        return $entity;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">478</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">479</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">480</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">481</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param mixed $cache Either a Cache object, or a string naming a Registry key</pre></td>
+</tr>
+<tr>
+<td class="lineCount">482</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Zend_Cache_Core</pre></td>
+</tr>
+<tr>
+<td class="lineCount">483</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @throws Xyster_Orm_Exception</pre></td>
+</tr>
+<tr>
+<td class="lineCount">484</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">485</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    final protected function _setupSecondaryCache($cache)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">486</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">487</td>
+<td class="lineCountHighlight">40</td>
+<td><span class="srcLine"><pre class="srcLine">        if ($cache === null) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">488</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">            return null;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">489</td>
+<td class="coverageCountHighlight">0</td>
+<td><span class="srcLineHighlight"><pre class="srcLine">        }</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">490</td>
+<td class="lineCountHighlight">40</td>
+<td><span class="srcLine"><pre class="srcLine">        if (is_string($cache)) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">491</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">            require_once 'Zend/Registry.php';</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">492</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">            $cache = Zend_Registry::get($cache);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">493</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">        }</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">494</td>
+<td class="lineCountHighlight">40</td>
+<td><span class="srcLine"><pre class="srcLine">        if (!$cache instanceof Zend_Cache_Core) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">495</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">            require_once 'Xyster/Orm/Exception.php';</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">496</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">            throw new Xyster_Orm_Exception('Argument must be of type Zend_Cache_Core, or a Registry key where a Zend_Cache_Core object is stored');</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">497</td>
+<td class="coverageCountHighlight">0</td>
+<td><span class="srcLineHighlight"><pre class="srcLine">        }</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">498</td>
+<td class="lineCountHighlight">40</td>
+<td><span class="srcLine"><pre class="srcLine">        return $cache;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">499</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">500</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">}</pre></td>
+</tr>
+</table>
+<br><table width="100%">
+<tr><td><hr noshade size="1"></td></tr>
+<tr><td class="small">Report generated at 2007-11-05T09:09:01-05:00</td></tr>
+</table>
+</BODY>
+</HTML>

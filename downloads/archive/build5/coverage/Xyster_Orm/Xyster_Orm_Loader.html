@@ -1,0 +1,815 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<LINK REL="stylesheet" TYPE="text/css" TITLE="Style" href="../stylesheet.css">
+</HEAD>
+<BODY>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="bannercell" rowspan="2"><a href="http://phing.info/"><img src="http://phing.info/images/phing.gif" alt="http://phing.info/" align="left" border="0"></a></td>
+<td style="text-align:right"><h2>Source Code Coverage</h2></td>
+</tr>
+<tr><td style="text-align:right">Designed for use with <a href="http://pear.php.net/package/PHPUnit2">PHPUnit2</a>, <a href="http://www.xdebug.org/">Xdebug</a> and <a href="http://phing.info/">Phing</a>.</td></tr>
+</table>
+<hr size="1">
+<table class="log" cellpadding="5" cellspacing="0" width="100%"><tr class="a">
+<td class="small">Methods: 5</td>
+<td class="small">LOC: 154</td>
+<td class="small">Statements: 46</td>
+</tr></table>
+<br><table class="log" cellpadding="5" cellspacing="0" width="100%">
+<tr>
+<th width="100%">Source file</th>
+<th>Statements</th>
+<th>Methods</th>
+<th width="250" colspan="2" nowrap>Total coverage</th>
+</tr>
+<tr class="a">
+<td>Loader.php</td>
+<td>84.8%</td>
+<td>100.0%</td>
+<td>86.3%</td>
+<td><table cellspacing="0" cellpadding="0" border="0" width="100%" style="display: inline"><tr>
+<td class="covered" width="173" height="12"> </td>
+<td class="uncovered" width="27" height="12"> </td>
+</tr></table></td>
+</tr>
+</table>
+<table cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td class="lineCount">1</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">&lt;?php</pre></td>
+</tr>
+<tr>
+<td class="lineCount">2</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">3</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * Xyster Framework</pre></td>
+</tr>
+<tr>
+<td class="lineCount">4</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">5</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * This source file is subject to the new BSD license that is bundled</pre></td>
+</tr>
+<tr>
+<td class="lineCount">6</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * with this package in the file LICENSE.txt.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">7</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * It is also available through the world-wide-web at this URL:</pre></td>
+</tr>
+<tr>
+<td class="lineCount">8</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * http://www.opensource.org/licenses/bsd-license.php</pre></td>
+</tr>
+<tr>
+<td class="lineCount">9</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">10</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @category  Xyster</pre></td>
+</tr>
+<tr>
+<td class="lineCount">11</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @package   Xyster_Orm</pre></td>
+</tr>
+<tr>
+<td class="lineCount">12</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">13</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License</pre></td>
+</tr>
+<tr>
+<td class="lineCount">14</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @version   $Id: Loader.php 202 2008-01-20 16:20:09Z doublecompile $</pre></td>
+</tr>
+<tr>
+<td class="lineCount">15</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">16</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">17</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @see Zend_Loader</pre></td>
+</tr>
+<tr>
+<td class="lineCount">18</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">19</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">require_once 'Zend/Loader.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCount">20</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">21</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * The entity/mapper/collection class loader for the Orm layer</pre></td>
+</tr>
+<tr>
+<td class="lineCount">22</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">23</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @category  Xyster</pre></td>
+</tr>
+<tr>
+<td class="lineCount">24</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @package   Xyster_Orm</pre></td>
+</tr>
+<tr>
+<td class="lineCount">25</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">26</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License</pre></td>
+</tr>
+<tr>
+<td class="lineCount">27</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">28</td>
+<td class="coverageCount"></td>
+<td class="srcLineClassStart"><pre class="srcLine">class Xyster_Orm_Loader</pre></td>
+</tr>
+<tr>
+<td class="lineCount">29</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">{</pre></td>
+</tr>
+<tr>
+<td class="lineCount">30</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">31</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Paths where entities, mappers, and sets are stored</pre></td>
+</tr>
+<tr>
+<td class="lineCount">32</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">33</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @var array</pre></td>
+</tr>
+<tr>
+<td class="lineCount">34</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">35</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    static protected $_paths = array();</pre></td>
+</tr>
+<tr>
+<td class="lineCount">36</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">37</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">38</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Adds a path to where class files for entities can be found</pre></td>
+</tr>
+<tr>
+<td class="lineCount">39</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">40</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $path</pre></td>
+</tr>
+<tr>
+<td class="lineCount">41</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">42</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public static function addPath( $path )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">43</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">44</td>
+<td class="lineCountHighlight">299</td>
+<td><pre class="srcLine">        $path        = rtrim($path, '/');</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">45</td>
+<td class="lineCountHighlight">299</td>
+<td><pre class="srcLine">        $path        = rtrim($path, '\\');</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">46</td>
+<td class="lineCountHighlight">299</td>
+<td><pre class="srcLine">        $path       .= DIRECTORY_SEPARATOR;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">47</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">48</td>
+<td class="lineCountHighlight">299</td>
+<td><pre class="srcLine">        if ( @!is_dir($path) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">49</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            require_once 'Xyster/Orm/Exception.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">50</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            throw new Xyster_Orm_Exception("The path '$path' does not exist'");</pre></td>
+</tr>
+<tr>
+<td class="lineCount">51</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">52</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">53</td>
+<td class="lineCountHighlight">299</td>
+<td><pre class="srcLine">        self::$_paths[$path] = $path; // no need for dups</pre></td>
+</tr>
+<tr>
+<td class="lineCount">54</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">55</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">56</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">57</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Tries to load the class in one of the paths defined for entities</pre></td>
+</tr>
+<tr>
+<td class="lineCount">58</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">59</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $className</pre></td>
+</tr>
+<tr>
+<td class="lineCount">60</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return string the class name loaded</pre></td>
+</tr>
+<tr>
+<td class="lineCount">61</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @throws Xyster_Orm_Exception if the class file cannot be loaded</pre></td>
+</tr>
+<tr>
+<td class="lineCount">62</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @throws Xyster_Orm_Exception if the file is found but no class with the name given is defined</pre></td>
+</tr>
+<tr>
+<td class="lineCount">63</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">64</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public static function loadClass( $className )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">65</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">66</td>
+<td class="lineCountHighlight">293</td>
+<td><pre class="srcLine">        if ( class_exists($className, false) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">67</td>
+<td class="lineCountHighlight">291</td>
+<td><pre class="srcLine">            return $className;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">68</td>
+<td class="coverageCountHighlight">0</td>
+<td><pre class="srcLineHighlight">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">69</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">70</td>
+<td class="lineCountHighlight">8</td>
+<td><pre class="srcLine">        $dirs = self::$_paths;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">71</td>
+<td class="lineCountHighlight">8</td>
+<td><pre class="srcLine">        $file = $className . '.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCount">72</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">73</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">        try {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">74</td>
+<td class="lineCountHighlight">8</td>
+<td><pre class="srcLine">            require_once 'Zend/Loader.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">75</td>
+<td class="lineCountHighlight">8</td>
+<td><pre class="srcLine">            Zend_Loader::loadFile($file, $dirs, true);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">76</td>
+<td class="lineCountHighlight">8</td>
+<td><pre class="srcLine">        } catch (Zend_Exception $e) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">77</td>
+<td class="coverageCountHighlight">0</td>
+<td><pre class="srcLineHighlight">            require_once 'Xyster/Orm/Exception.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">78</td>
+<td class="coverageCountHighlight">0</td>
+<td><pre class="srcLineHighlight">            throw new Xyster_Orm_Exception('Cannot load class "' . $className . '"');</pre></td>
+</tr>
+<tr>
+<td class="lineCount">79</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">80</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">81</td>
+<td class="lineCountHighlight">8</td>
+<td><pre class="srcLine">        if (!class_exists($className,false)) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">82</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            require_once 'Xyster/Orm/Exception.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">83</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            throw new Xyster_Orm_Exception('Invalid class ("' . $className . '")');</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">84</td>
+<td class="coverageCountHighlight">0</td>
+<td><pre class="srcLineHighlight">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">85</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">86</td>
+<td class="lineCountHighlight">7</td>
+<td><pre class="srcLine">        return $className;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">87</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">88</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">89</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">90</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Loads the class and makes sure it's a Xyster_Orm_Entity</pre></td>
+</tr>
+<tr>
+<td class="lineCount">91</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">92</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $className</pre></td>
+</tr>
+<tr>
+<td class="lineCount">93</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @throws Xyster_Orm_Exception if the class loaded is not a derivitive of Xyster_Orm_Entity</pre></td>
+</tr>
+<tr>
+<td class="lineCount">94</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">95</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public static function loadEntityClass( $className )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">96</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">97</td>
+<td class="lineCountHighlight">290</td>
+<td><pre class="srcLine">        self::loadClass($className);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">98</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">99</td>
+<td class="lineCountHighlight">290</td>
+<td><pre class="srcLine">        if (!($className instanceof Xyster_Orm_Entity) &amp;&amp;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">100</td>
+<td class="lineCountHighlight">290</td>
+<td><pre class="srcLine">            !is_subclass_of($className, 'Xyster_Orm_Entity')) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">101</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            require_once 'Xyster/Orm/Exception.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">102</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            throw new Xyster_Orm_Exception("'" . $className . "' is not a subclass of Xyster_Orm_Entity");</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">103</td>
+<td class="coverageCountHighlight">0</td>
+<td><pre class="srcLineHighlight">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">104</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">105</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">106</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">107</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Loads the mapper class for the entity class given</pre></td>
+</tr>
+<tr>
+<td class="lineCount">108</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">109</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * To load the 'PersonMapper' class, the $className parameter should just be</pre></td>
+</tr>
+<tr>
+<td class="lineCount">110</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * 'Person'.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">111</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">112</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $className the name of the entity class</pre></td>
+</tr>
+<tr>
+<td class="lineCount">113</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return string the class name</pre></td>
+</tr>
+<tr>
+<td class="lineCount">114</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @throws Xyster_Orm_Exception if the class loaded is not a derivitive of Xyster_Orm_Mapper_Interface</pre></td>
+</tr>
+<tr>
+<td class="lineCount">115</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">116</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public static function loadMapperClass( $className )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">117</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">118</td>
+<td class="lineCountHighlight">288</td>
+<td><pre class="srcLine">        self::loadEntityClass($className);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">119</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">120</td>
+<td class="lineCountHighlight">288</td>
+<td><pre class="srcLine">        $mapper = $className . 'Mapper';</pre></td>
+</tr>
+<tr>
+<td class="lineCount">121</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">122</td>
+<td class="lineCountHighlight">288</td>
+<td><pre class="srcLine">        self::loadClass($mapper);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">123</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">124</td>
+<td class="lineCountHighlight">288</td>
+<td><pre class="srcLine">        if (!($mapper instanceof Xyster_Orm_Mapper_Interface) &amp;&amp;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">125</td>
+<td class="lineCountHighlight">288</td>
+<td><pre class="srcLine">            !is_subclass_of($mapper, 'Xyster_Orm_Mapper_Abstract')) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">126</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            require_once 'Xyster/Orm/Exception.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">127</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            throw new Xyster_Orm_Exception("'" . $mapper . "' is not a subclass of Xyster_Orm_Mapper_Interface");</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">128</td>
+<td class="coverageCountHighlight">0</td>
+<td><pre class="srcLineHighlight">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">129</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">130</td>
+<td class="lineCountHighlight">287</td>
+<td><pre class="srcLine">        return $mapper;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">131</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">132</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">133</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">134</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Loads the set class for the entity class given</pre></td>
+</tr>
+<tr>
+<td class="lineCount">135</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">136</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $className the name of the set class</pre></td>
+</tr>
+<tr>
+<td class="lineCount">137</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param boolean $autoSuffix whether to append 'Set' to the end of the class</pre></td>
+</tr>
+<tr>
+<td class="lineCount">138</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @throws Xyster_Orm_Exception if the class loaded is not a derivitive of Xyster_Orm_Set</pre></td>
+</tr>
+<tr>
+<td class="lineCount">139</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return string the class name</pre></td>
+</tr>
+<tr>
+<td class="lineCount">140</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">141</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public static function loadSetClass( $className, $autoSuffix = true )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">142</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">143</td>
+<td class="lineCountHighlight">288</td>
+<td><pre class="srcLine">        $set = ( $autoSuffix ) ? $className . 'Set' : $className;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">144</td>
+<td class="lineCountHighlight">288</td>
+<td><pre class="srcLine">        self::loadClass($set);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">145</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">146</td>
+<td class="lineCountHighlight">288</td>
+<td><pre class="srcLine">        if (!($set instanceof Xyster_Orm_Set) &amp;&amp;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">147</td>
+<td class="lineCountHighlight">288</td>
+<td><pre class="srcLine">            !is_subclass_of($set, 'Xyster_Orm_Set')) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">148</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            require_once 'Xyster/Orm/Exception.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">149</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            throw new Xyster_Orm_Exception("'" . $set . "' is not a subclass of Xyster_Orm_Set");</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">150</td>
+<td class="coverageCountHighlight">0</td>
+<td><pre class="srcLineHighlight">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">151</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">152</td>
+<td class="lineCountHighlight">287</td>
+<td><pre class="srcLine">        return $set;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">153</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">154</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">}</pre></td>
+</tr>
+</table>
+<br><table width="100%">
+<tr><td><hr noshade size="1"></td></tr>
+<tr><td class="small">Report generated at 2008-03-05T18:27:42-05:00</td></tr>
+</table>
+</BODY>
+</HTML>

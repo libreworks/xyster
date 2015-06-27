@@ -1,0 +1,775 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<LINK REL="stylesheet" TYPE="text/css" TITLE="Style" href="../stylesheet.css">
+</HEAD>
+<BODY>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="bannercell" rowspan="2"><a href="http://phing.info/"><img src="http://phing.info/images/phing.gif" alt="http://phing.info/" align="left" border="0"></a></td>
+<td style="text-align:right"><h2>Source Code Coverage</h2></td>
+</tr>
+<tr><td style="text-align:right">Designed for use with <a href="http://pear.php.net/package/PHPUnit2">PHPUnit2</a>, <a href="http://www.xdebug.org/">Xdebug</a> and <a href="http://phing.info/">Phing</a>.</td></tr>
+</table>
+<hr size="1">
+<table class="log" cellpadding="5" cellspacing="0" width="100%"><tr class="a">
+<td class="small">Methods: 8</td>
+<td class="small">LOC: 146</td>
+<td class="small">Statements: 30</td>
+</tr></table>
+<br><table class="log" cellpadding="5" cellspacing="0" width="100%">
+<tr>
+<th width="100%">Source file</th>
+<th>Statements</th>
+<th>Methods</th>
+<th width="250" colspan="2" nowrap>Total coverage</th>
+</tr>
+<tr class="a">
+<td>Errors.php</td>
+<td>86.7%</td>
+<td>100.0%</td>
+<td>89.5%</td>
+<td><table cellspacing="0" cellpadding="0" border="0" width="100%" style="display: inline"><tr>
+<td class="covered" width="179" height="12"> </td>
+<td class="uncovered" width="21" height="12"> </td>
+</tr></table></td>
+</tr>
+</table>
+<table cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td class="lineCount">1</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">&lt;?php</pre></td>
+</tr>
+<tr>
+<td class="lineCount">2</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">3</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * Xyster Framework</pre></td>
+</tr>
+<tr>
+<td class="lineCount">4</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">5</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * This source file is subject to the new BSD license that is bundled</pre></td>
+</tr>
+<tr>
+<td class="lineCount">6</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * with this package in the file LICENSE.txt.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">7</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * It is also available through the world-wide-web at this URL:</pre></td>
+</tr>
+<tr>
+<td class="lineCount">8</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * http://www.opensource.org/licenses/bsd-license.php</pre></td>
+</tr>
+<tr>
+<td class="lineCount">9</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">10</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @category  Xyster</pre></td>
+</tr>
+<tr>
+<td class="lineCount">11</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @package   Xyster_Validate</pre></td>
+</tr>
+<tr>
+<td class="lineCount">12</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">13</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License</pre></td>
+</tr>
+<tr>
+<td class="lineCount">14</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @version   $Id: Errors.php 190 2008-01-07 22:39:57Z doublecompile $</pre></td>
+</tr>
+<tr>
+<td class="lineCount">15</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">16</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">17</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @see Xyster_Collection_Abstract</pre></td>
+</tr>
+<tr>
+<td class="lineCount">18</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">19</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">require_once 'Xyster/Collection/Abstract.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCount">20</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">21</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @see Xyster_Validate_Error</pre></td>
+</tr>
+<tr>
+<td class="lineCount">22</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">23</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">require_once 'Xyster/Validate/Error.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCount">24</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">25</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * An error notification class</pre></td>
+</tr>
+<tr>
+<td class="lineCount">26</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">27</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @category  Xyster</pre></td>
+</tr>
+<tr>
+<td class="lineCount">28</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @package   Xyster_Validate</pre></td>
+</tr>
+<tr>
+<td class="lineCount">29</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">30</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License</pre></td>
+</tr>
+<tr>
+<td class="lineCount">31</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">32</td>
+<td class="coverageCount"></td>
+<td class="srcLineClassStart"><pre class="srcLine">class Xyster_Validate_Errors extends Xyster_Collection_Abstract</pre></td>
+</tr>
+<tr>
+<td class="lineCount">33</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">{</pre></td>
+</tr>
+<tr>
+<td class="lineCount">34</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">35</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * The fields</pre></td>
+</tr>
+<tr>
+<td class="lineCount">36</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">37</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @var array</pre></td>
+</tr>
+<tr>
+<td class="lineCount">38</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">39</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    protected $_fields = array();</pre></td>
+</tr>
+<tr>
+<td class="lineCount">40</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">41</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">42</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Creates a new notification object</pre></td>
+</tr>
+<tr>
+<td class="lineCount">43</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">44</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param Xyster_Validate_Errors $errors</pre></td>
+</tr>
+<tr>
+<td class="lineCount">45</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">46</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function __construct( Xyster_Validate_Errors $errors = null )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">47</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">48</td>
+<td class="lineCountHighlight">7</td>
+<td><pre class="srcLine">        if ( $errors ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">49</td>
+<td class="coverageCountHighlight">0</td>
+<td><pre class="srcLineHighlight">            $this-&gt;merge($errors);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">50</td>
+<td class="coverageCountHighlight">0</td>
+<td><pre class="srcLineHighlight">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">51</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">52</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">53</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">54</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Adds an error to the collection</pre></td>
+</tr>
+<tr>
+<td class="lineCount">55</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">56</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param mixed $item</pre></td>
+</tr>
+<tr>
+<td class="lineCount">57</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return boolean</pre></td>
+</tr>
+<tr>
+<td class="lineCount">58</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @throws Zend_Validate_Exception if the item isn't an error</pre></td>
+</tr>
+<tr>
+<td class="lineCount">59</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">60</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function add( $item )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">61</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">62</td>
+<td class="lineCountHighlight">7</td>
+<td><pre class="srcLine">        if ( ! $item instanceof Xyster_Validate_Error ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">63</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            require_once 'Zend/Validate/Exception.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">64</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            throw new Zend_Validate_Exception('Item must be of type Xyster_Validate_Error');</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">65</td>
+<td class="coverageCountHighlight">0</td>
+<td><pre class="srcLineHighlight">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">66</td>
+<td class="lineCountHighlight">6</td>
+<td><pre class="srcLine">        parent::add($item);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">67</td>
+<td class="lineCountHighlight">6</td>
+<td><pre class="srcLine">        if ( !in_array($item-&gt;getField(), $this-&gt;_fields) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">68</td>
+<td class="lineCountHighlight">6</td>
+<td><pre class="srcLine">           $this-&gt;_fields[] = $item-&gt;getField();</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">69</td>
+<td class="lineCountHighlight">6</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">70</td>
+<td class="lineCountHighlight">6</td>
+<td><pre class="srcLine">        return true;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">71</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">72</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">73</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">74</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Adds a new error to the collection</pre></td>
+</tr>
+<tr>
+<td class="lineCount">75</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">76</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $message</pre></td>
+</tr>
+<tr>
+<td class="lineCount">77</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $field</pre></td>
+</tr>
+<tr>
+<td class="lineCount">78</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">79</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function addError( $message, $field )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">80</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">81</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">        $this-&gt;add(new Xyster_Validate_Error($message, $field));</pre></td>
+</tr>
+<tr>
+<td class="lineCount">82</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">83</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">84</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">85</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Adds any messages in an input filter as errors to this collection</pre></td>
+</tr>
+<tr>
+<td class="lineCount">86</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">87</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param Zend_Filter_Input $filter</pre></td>
+</tr>
+<tr>
+<td class="lineCount">88</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">89</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function addFilterInputMessages( Zend_Filter_Input $filter )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">90</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">91</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">        foreach( $filter-&gt;getMessages() as $rule =&gt; $messages ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">92</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            foreach( $messages as $message ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">93</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                $this-&gt;add(new Xyster_Validate_Error($message, $rule));</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">94</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">95</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">96</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">97</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">98</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">99</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Adds any messages in a validator as errors to this collection</pre></td>
+</tr>
+<tr>
+<td class="lineCount">100</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">101</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param Zend_Validate_Interface $validate</pre></td>
+</tr>
+<tr>
+<td class="lineCount">102</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $field The name of the field to which these messages apply</pre></td>
+</tr>
+<tr>
+<td class="lineCount">103</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">104</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function addValidateMessages( Zend_Validate_Interface $validate, $field = null )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">105</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">106</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">        foreach( $validate-&gt;getMessages() as $message ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">107</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            $this-&gt;add(new Xyster_Validate_Error($message, $field));</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">108</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">109</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">110</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">111</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">112</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Gets the first message available for the field supplied</pre></td>
+</tr>
+<tr>
+<td class="lineCount">113</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">114</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $field The name of the field</pre></td>
+</tr>
+<tr>
+<td class="lineCount">115</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Validate_Error or null if none found</pre></td>
+</tr>
+<tr>
+<td class="lineCount">116</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">117</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function getError( $field )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">118</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">119</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        foreach( $this as $error ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCount">120</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            /* @var $error Xyster_Validate_Error */</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">121</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">            if ( $error-&gt;getField() == $field ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">122</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">                return $error;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">123</td>
+<td class="coverageCountHighlight">0</td>
+<td><pre class="srcLineHighlight">            }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">124</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">125</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">126</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">127</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">128</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Gets the fields to which the containing messages apply</pre></td>
+</tr>
+<tr>
+<td class="lineCount">129</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">130</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return array</pre></td>
+</tr>
+<tr>
+<td class="lineCount">131</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">132</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function getFields()</pre></td>
+</tr>
+<tr>
+<td class="lineCount">133</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">134</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">        return array_values($this-&gt;_fields);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">135</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">136</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">137</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">138</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * A convenience method to test for presence of errors</pre></td>
+</tr>
+<tr>
+<td class="lineCount">139</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">140</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return boolean</pre></td>
+</tr>
+<tr>
+<td class="lineCount">141</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">142</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function hasErrors()</pre></td>
+</tr>
+<tr>
+<td class="lineCount">143</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">144</td>
+<td class="lineCountHighlight">4</td>
+<td><pre class="srcLine">        return !$this-&gt;isEmpty();</pre></td>
+</tr>
+<tr>
+<td class="lineCount">145</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">146</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">}</pre></td>
+</tr>
+</table>
+<br><table width="100%">
+<tr><td><hr noshade size="1"></td></tr>
+<tr><td class="small">Report generated at 2008-05-19T16:58:24-05:00</td></tr>
+</table>
+</BODY>
+</HTML>

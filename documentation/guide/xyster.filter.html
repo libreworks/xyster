@@ -1,0 +1,87 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Chapter 8. Xyster_Filter</title>
+<link rel="stylesheet" href="dbstyle.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.72.0">
+<link rel="start" href="index.html" title="Programmer's Reference Guide">
+<link rel="up" href="index.html" title="Programmer's Reference Guide">
+<link rel="prev" href="xyster.enum.html" title="Chapter 7. Xyster_Enum">
+<link rel="next" href="xyster.orm.html" title="Chapter 9. Xyster_Orm">
+<link rel="chapter" href="introduction.html" title="Chapter 1. Introduction to Xyster Framework">
+<link rel="chapter" href="xyster.acl.html" title="Chapter 2. Xyster_Acl">
+<link rel="chapter" href="xyster.collection.html" title="Chapter 3. Xyster_Collection">
+<link rel="chapter" href="xyster.controller.html" title="Chapter 4. Xyster_Controller">
+<link rel="chapter" href="xyster.data.html" title="Chapter 5. Xyster_Data">
+<link rel="chapter" href="xyster.date.html" title="Chapter 6. Xyster_Date">
+<link rel="chapter" href="xyster.enum.html" title="Chapter 7. Xyster_Enum">
+<link rel="chapter" href="xyster.filter.html" title="Chapter 8. Xyster_Filter">
+<link rel="chapter" href="xyster.orm.html" title="Chapter 9. Xyster_Orm">
+<link rel="chapter" href="xyster.type.html" title="Chapter 10. Xyster_Type">
+<link rel="chapter" href="xyster.validate.html" title="Chapter 11. Xyster_Validate">
+<link rel="section" href="xyster.filter.html#xyster.filter.overview" title="8.1. Overview">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<div class="navheader"><table width="100%" summary="Navigation header">
+<tr><th colspan="3" align="center">Chapter 8. Xyster_Filter</th></tr>
+<tr>
+<td width="20%" align="left">
+<a accesskey="p" href="xyster.enum.html">Prev</a> </td>
+<th width="60%" align="center"> </th>
+<td width="20%" align="right"> <a accesskey="n" href="xyster.orm.html">Next</a>
+</td>
+</tr>
+</table></div>
+<div class="chapter" lang="en">
+<div class="titlepage"><div><div><h2 class="title">
+<a name="xyster.filter"></a>Chapter 8. Xyster_Filter</h2></div></div></div>
+<div class="toc">
+<p><b>Table of Contents</b></p>
+<dl>
+<dt><span class="sect1"><a href="xyster.filter.html#xyster.filter.overview">8.1. Overview</a></span></dt>
+<dd><dl><dt><span class="sect2"><a href="xyster.filter.html#xyster.filter.titlecase.example">8.1.1. TitleCase</a></span></dt></dl></dd>
+</dl>
+</div>
+<div class="sect1" lang="en">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="xyster.filter.overview"></a>8.1. Overview</h2></div></div></div>
+<p>The filter classes available from the Xyster Framework are listed here.
+            Remember to add the <code class="code">Xyster_Filter</code> namespace to the
+            options when using <code class="classname">Zend_Filter</code>.</p>
+<p>For more information about the use of filter classes, see the 
+            <a href="http://framework.zend.com/manual/en/zend.filter.html" target="_top">Zend Framework documentation for <code class="code">Zend_Filter</code>.</a></p>
+<div class="sect2" lang="en">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="xyster.filter.titlecase.example"></a>8.1.1. TitleCase</h3></div></div></div>
+<p>PHP lacks the function to convert a string to title case because
+	            often times doing so is subjective.  It also usually follows
+	            English-specific language rules.</p>
+<p>Title case is making the first letter of important words
+	            uppercase, and keeping the rest lowercase. Lowercase words include
+	            prepositions and conjunctions.</p>
+<pre class="programlisting">&lt;?php
+require_once 'Xyster/Filter/TitleCase.php';
+$filter = new Xyster_Filter_TitleCase();
+echo $filter-&gt;filter("the dogs came out of the rain");
+// prints The Dogs Came out of the Rain
+</pre>
+</div>
+</div>
+</div>
+<div class="navfooter"><table width="100%" summary="Navigation footer">
+<tr>
+<td width="40%" align="left">
+<a accesskey="p" href="xyster.enum.html">Prev</a> </td>
+<td width="20%" align="center"> </td>
+<td width="40%" align="right"> <a accesskey="n" href="xyster.orm.html">Next</a>
+</td>
+</tr>
+<tr>
+<td width="40%" align="left" valign="top">Chapter 7. Xyster_Enum </td>
+<td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td>
+<td width="40%" align="right" valign="top"> Chapter 9. Xyster_Orm</td>
+</tr>
+</table></div>
+<div class="revinfo"></div>
+</body>
+</html>

@@ -1,0 +1,735 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<LINK REL="stylesheet" TYPE="text/css" TITLE="Style" href="../stylesheet.css">
+</HEAD>
+<BODY>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="bannercell" rowspan="2"><a href="http://phing.info/"><img src="http://phing.info/images/phing.gif" alt="http://phing.info/" align="left" border="0"></a></td>
+<td style="text-align:right"><h2>Source Code Coverage</h2></td>
+</tr>
+<tr><td style="text-align:right">Designed for use with <a href="http://pear.php.net/package/PHPUnit2">PHPUnit2</a>, <a href="http://www.xdebug.org/">Xdebug</a> and <a href="http://phing.info/">Phing</a>.</td></tr>
+</table>
+<hr size="1">
+<table class="log" cellpadding="5" cellspacing="0" width="100%"><tr class="a">
+<td class="small">Methods: 4</td>
+<td class="small">LOC: 138</td>
+<td class="small">Statements: 42</td>
+</tr></table>
+<br><table class="log" cellpadding="5" cellspacing="0" width="100%">
+<tr>
+<th width="100%">Source file</th>
+<th>Statements</th>
+<th>Methods</th>
+<th width="250" colspan="2" nowrap>Total coverage</th>
+</tr>
+<tr class="a">
+<td>Acl.php</td>
+<td>95.2%</td>
+<td>100.0%</td>
+<td>95.7%</td>
+<td><table cellspacing="0" cellpadding="0" border="0" width="100%" style="display: inline"><tr>
+<td class="covered" width="191" height="12"> </td>
+<td class="uncovered" width="9" height="12"> </td>
+</tr></table></td>
+</tr>
+</table>
+<table cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td class="lineCount">1</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">&lt;?php</pre></td>
+</tr>
+<tr>
+<td class="lineCount">2</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">3</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * Xyster Framework</pre></td>
+</tr>
+<tr>
+<td class="lineCount">4</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">5</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * This source file is subject to the new BSD license that is bundled</pre></td>
+</tr>
+<tr>
+<td class="lineCount">6</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * with this package in the file LICENSE.txt.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">7</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * It is also available through the world-wide-web at this URL:</pre></td>
+</tr>
+<tr>
+<td class="lineCount">8</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * http://www.opensource.org/licenses/bsd-license.php</pre></td>
+</tr>
+<tr>
+<td class="lineCount">9</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">10</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @category  Xyster</pre></td>
+</tr>
+<tr>
+<td class="lineCount">11</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @package   Xyster_Acl</pre></td>
+</tr>
+<tr>
+<td class="lineCount">12</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">13</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License</pre></td>
+</tr>
+<tr>
+<td class="lineCount">14</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @version   $Id: Acl.php 202 2008-01-20 16:20:09Z doublecompile $</pre></td>
+</tr>
+<tr>
+<td class="lineCount">15</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">16</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">17</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * Zend_Acl</pre></td>
+</tr>
+<tr>
+<td class="lineCount">18</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">19</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">require_once 'Zend/Acl.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCount">20</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">21</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * An access control list that can dynamically build its own rules</pre></td>
+</tr>
+<tr>
+<td class="lineCount">22</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">23</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @category  Xyster</pre></td>
+</tr>
+<tr>
+<td class="lineCount">24</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @package   Xyster_Acl</pre></td>
+</tr>
+<tr>
+<td class="lineCount">25</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">26</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License</pre></td>
+</tr>
+<tr>
+<td class="lineCount">27</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">28</td>
+<td class="coverageCount"></td>
+<td class="srcLineClassStart"><pre class="srcLine">class Xyster_Acl extends Zend_Acl</pre></td>
+</tr>
+<tr>
+<td class="lineCount">29</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">{</pre></td>
+</tr>
+<tr>
+<td class="lineCount">30</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">31</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * The authorizers</pre></td>
+</tr>
+<tr>
+<td class="lineCount">32</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">33</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @var Xyster_Acl_Authorizer_Interface[]</pre></td>
+</tr>
+<tr>
+<td class="lineCount">34</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">35</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	protected $_authorizers = array();</pre></td>
+</tr>
+<tr>
+<td class="lineCount">36</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">37</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">38</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * Adds an authorizer to the ACL</pre></td>
+</tr>
+<tr>
+<td class="lineCount">39</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">40</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @param Xyster_Acl_Authorizer_Interface $authorizer</pre></td>
+</tr>
+<tr>
+<td class="lineCount">41</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @return Xyster_Acl provides a fluent interface</pre></td>
+</tr>
+<tr>
+<td class="lineCount">42</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">43</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	public function addAuthorizer( Xyster_Acl_Authorizer_Interface $authorizer )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">44</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	{</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">45</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">		if ( !in_array($authorizer, $this-&gt;_authorizers, true) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">46</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">			$this-&gt;_authorizers[] = $authorizer;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">47</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">		}</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">48</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">		return $this;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">49</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">50</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">51</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">52</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * Throws an exception if the Role is denied access to the Resource</pre></td>
+</tr>
+<tr>
+<td class="lineCount">53</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">54</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @param  Zend_Acl_Role_Interface|string     $role</pre></td>
+</tr>
+<tr>
+<td class="lineCount">55</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @param  Zend_Acl_Resource_Interface|string $resource</pre></td>
+</tr>
+<tr>
+<td class="lineCount">56</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @param  string                             $privilege</pre></td>
+</tr>
+<tr>
+<td class="lineCount">57</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @throws Zend_Acl_Exception</pre></td>
+</tr>
+<tr>
+<td class="lineCount">58</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">59</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	public function assertAllowed($role = null, $resource = null, $privilege = null)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">60</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	{</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">61</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">		if ( $this-&gt;isAllowed($role, $resource, $privilege) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">62</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">		    return true;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">63</td>
+<td class="coverageCountHighlight">0</td>
+<td><pre class="srcLineHighlight">		}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">64</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">65</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">		$msg = 'Insufficient permissions: ';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">66</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">		$msg .= ( $role instanceof Zend_Acl_Role_Interface ) ?</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">67</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">		    $role-&gt;getRoleId() : $role;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">68</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">		$msg .= ' -&gt; ';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">69</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">		$msg .= ( $resource instanceof Zend_Acl_Resource_Interface ) ?</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">70</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">		    $resource-&gt;getResourceId() : $resource;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">71</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">		if ( $privilege ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">72</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">		    $msg .= ' (' . $privilege . ')';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">73</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">		}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">74</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">75</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">		require_once 'Zend/Acl/Exception.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">76</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">		throw new Zend_Acl_Exception($msg);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">77</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">78</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">79</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">80</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * Gets the authorizer for a resource</pre></td>
+</tr>
+<tr>
+<td class="lineCount">81</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">82</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * If more than one authorizer applies to a resource, only the first is</pre></td>
+</tr>
+<tr>
+<td class="lineCount">83</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * returned (in the order in which they were added.  First in, first out).</pre></td>
+</tr>
+<tr>
+<td class="lineCount">84</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">85</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * If none apply, null is returned.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">86</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">87</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @param Zend_Acl_Resource_Interface|string $resource</pre></td>
+</tr>
+<tr>
+<td class="lineCount">88</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @return Xyster_Acl_Authorizer_Interface</pre></td>
+</tr>
+<tr>
+<td class="lineCount">89</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">90</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	public function getAuthorizer($resource = null)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">91</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	{</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">92</td>
+<td class="lineCountHighlight">10</td>
+<td><pre class="srcLine">	    $resource = ( $resource !== null ) ? $this-&gt;get($resource) : null;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">93</td>
+<td class="lineCountHighlight">10</td>
+<td><pre class="srcLine">	    $return = null;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">94</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">95</td>
+<td class="lineCountHighlight">10</td>
+<td><pre class="srcLine">	    if ( $resource !== null ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">96</td>
+<td class="lineCountHighlight">10</td>
+<td><pre class="srcLine">    	    foreach( $this-&gt;_authorizers as $authorizer ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCount">97</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    	        /* @var $authorizer Xyster_Acl_Authorizer_Interface */</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">98</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">    		    if ( $authorizer-&gt;applies($resource) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">99</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">    		        $return = $authorizer;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">100</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">    		    }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">101</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">    	    }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">102</td>
+<td class="lineCountHighlight">10</td>
+<td><pre class="srcLine">	    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">103</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">104</td>
+<td class="lineCountHighlight">10</td>
+<td><pre class="srcLine">	    return $return;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">105</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">106</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">107</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">108</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * Returns true if and only if the Role has access to the Resource</pre></td>
+</tr>
+<tr>
+<td class="lineCount">109</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">110</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * {@inherit}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">111</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">112</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @param  Zend_Acl_Role_Interface|string     $role</pre></td>
+</tr>
+<tr>
+<td class="lineCount">113</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @param  Zend_Acl_Resource_Interface|string $resource</pre></td>
+</tr>
+<tr>
+<td class="lineCount">114</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @param  string                             $privilege</pre></td>
+</tr>
+<tr>
+<td class="lineCount">115</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @return boolean</pre></td>
+</tr>
+<tr>
+<td class="lineCount">116</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">117</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	public function isAllowed($role = null, $resource = null, $privilege = null)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">118</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	{</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">119</td>
+<td class="lineCountHighlight">9</td>
+<td><pre class="srcLine">		$role = ( $role !== null ) ? $this-&gt;getRole($role) : null;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">120</td>
+<td class="lineCountHighlight">9</td>
+<td><pre class="srcLine">		$resource = ( $resource !== null ) ? $this-&gt;get($resource) : null;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">121</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">122</td>
+<td class="lineCountHighlight">9</td>
+<td><pre class="srcLine">		if ( $this-&gt;_getRuleType($resource, $role, $privilege) === null ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">123</td>
+<td class="lineCountHighlight">9</td>
+<td><pre class="srcLine">		    if ( $authorizer = $this-&gt;getAuthorizer($resource) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">124</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">    			$allowed = $authorizer-&gt;isAllowed($role, $resource, $privilege);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">125</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">126</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">    			if ( $allowed ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">127</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">    				$this-&gt;allow($role, $resource, $privilege);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">128</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">    			} else {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">129</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">    				$this-&gt;deny($role, $resource, $privilege);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">130</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    			}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">131</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">132</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">    			return $allowed;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">133</td>
+<td class="coverageCountHighlight">0</td>
+<td><pre class="srcLineHighlight">		    }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">134</td>
+<td class="lineCountHighlight">7</td>
+<td><pre class="srcLine">		}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">135</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">136</td>
+<td class="lineCountHighlight">9</td>
+<td><pre class="srcLine">		return parent::isAllowed($role, $resource, $privilege);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">137</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">138</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">}</pre></td>
+</tr>
+</table>
+<br><table width="100%">
+<tr><td><hr noshade size="1"></td></tr>
+<tr><td class="small">Report generated at 2008-05-19T16:58:23-05:00</td></tr>
+</table>
+</BODY>
+</HTML>

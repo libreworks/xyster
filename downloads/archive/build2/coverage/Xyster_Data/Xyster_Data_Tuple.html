@@ -1,0 +1,885 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<LINK REL="stylesheet" TYPE="text/css" TITLE="Style" href="../stylesheet.css">
+</HEAD>
+<BODY>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="bannercell" rowspan="2"><a href="http://phing.info/"><img src="http://phing.info/images/phing.gif" alt="http://phing.info/" align="left" border="0"></a></td>
+<td style="text-align:right"><h2>Source Code Coverage</h2></td>
+</tr>
+<tr><td style="text-align:right">Designed for use with <a href="http://pear.php.net/package/PHPUnit2">PHPUnit2</a>, <a href="http://www.xdebug.org/">Xdebug</a> and <a href="http://phing.info/">Phing</a>.</td></tr>
+</table>
+<hr size="1">
+<table class="log" cellpadding="5" cellspacing="0" width="100%"><tr class="a">
+<td class="small">Methods: 6</td>
+<td class="small">LOC: 168</td>
+<td class="small">Statements: 66</td>
+</tr></table>
+<br><table class="log" cellpadding="5" cellspacing="0" width="100%">
+<tr>
+<th width="100%">Source file</th>
+<th>Statements</th>
+<th>Methods</th>
+<th width="250" colspan="2" nowrap>Total coverage</th>
+</tr>
+<tr class="a">
+<td>Tuple.php</td>
+<td>95.5%</td>
+<td>100.0%</td>
+<td>95.8%</td>
+<td><table cellspacing="0" cellpadding="0" border="0" width="100%" style="display: inline"><tr>
+<td class="covered" width="192" height="12"> </td>
+<td class="uncovered" width="8" height="12"> </td>
+</tr></table></td>
+</tr>
+</table>
+<table cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td class="lineCount">1</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">&lt;?php</pre></td>
+</tr>
+<tr>
+<td class="lineCount">2</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">3</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * Xyster Framework</pre></td>
+</tr>
+<tr>
+<td class="lineCount">4</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">5</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * LICENSE</pre></td>
+</tr>
+<tr>
+<td class="lineCount">6</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">7</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * This source file is subject to the new BSD license that is bundled</pre></td>
+</tr>
+<tr>
+<td class="lineCount">8</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * with this package in the file LICENSE.txt.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">9</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * It is also available through the world-wide-web at this URL:</pre></td>
+</tr>
+<tr>
+<td class="lineCount">10</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * http://www.opensource.org/licenses/bsd-license.php</pre></td>
+</tr>
+<tr>
+<td class="lineCount">11</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * If you did not receive a copy of the license and are unable to</pre></td>
+</tr>
+<tr>
+<td class="lineCount">12</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * obtain it through the world-wide-web, please send an email</pre></td>
+</tr>
+<tr>
+<td class="lineCount">13</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * to xyster@devweblog.org so we can send you a copy immediately.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">14</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">15</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @category  Xyster</pre></td>
+</tr>
+<tr>
+<td class="lineCount">16</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @package   Xyster_Data</pre></td>
+</tr>
+<tr>
+<td class="lineCount">17</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">18</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License</pre></td>
+</tr>
+<tr>
+<td class="lineCount">19</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">20</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">21</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * Xyster_Data_Set</pre></td>
+</tr>
+<tr>
+<td class="lineCount">22</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">23</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">require_once 'Xyster/Data/Set.php';</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">24</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">25</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * A set that holds rows and columns</pre></td>
+</tr>
+<tr>
+<td class="lineCount">26</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">27</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @category  Xyster</pre></td>
+</tr>
+<tr>
+<td class="lineCount">28</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @package   Xyster_Data</pre></td>
+</tr>
+<tr>
+<td class="lineCount">29</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">30</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License</pre></td>
+</tr>
+<tr>
+<td class="lineCount">31</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">32</td>
+<td class="coverageCount"></td>
+<td class="srcLineClassStart"><pre class="srcLine">class Xyster_Data_Tuple extends Xyster_Data_Set</pre></td>
+</tr>
+<tr>
+<td class="lineCount">33</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">{</pre></td>
+</tr>
+<tr>
+<td class="lineCount">34</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    protected $_names = array();</pre></td>
+</tr>
+<tr>
+<td class="lineCount">35</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	protected $_values = array();</pre></td>
+</tr>
+<tr>
+<td class="lineCount">36</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">37</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">38</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * Creates a new tuple</pre></td>
+</tr>
+<tr>
+<td class="lineCount">39</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">40</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @param array $values An associative array of group names and their values</pre></td>
+</tr>
+<tr>
+<td class="lineCount">41</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @param Xyster_Collection_Interface $contents The objects or arrays to add to the tuple</pre></td>
+</tr>
+<tr>
+<td class="lineCount">42</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">43</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	public function __construct( array $values, Xyster_Collection_Interface $contents = null )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">44</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	{</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">45</td>
+<td class="lineCountHighlight">6</td>
+<td><span class="srcLine"><pre class="srcLine">	    parent::__construct($contents);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">46</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">47</td>
+<td class="lineCountHighlight">6</td>
+<td><span class="srcLine"><pre class="srcLine">	    $this-&gt;_values = $values;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">48</td>
+<td class="lineCountHighlight">6</td>
+<td><span class="srcLine"><pre class="srcLine">	    $this-&gt;_names = array_keys($values);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">49</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">50</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">51</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">52</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * Gets the names of the groups</pre></td>
+</tr>
+<tr>
+<td class="lineCount">53</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">54</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @return array</pre></td>
+</tr>
+<tr>
+<td class="lineCount">55</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">56</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	public function getNames()</pre></td>
+</tr>
+<tr>
+<td class="lineCount">57</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	{</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">58</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">		return $this-&gt;_names;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">59</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">60</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">61</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">62</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * Gets the value of a group</pre></td>
+</tr>
+<tr>
+<td class="lineCount">63</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">64</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @param string $name  The group name</pre></td>
+</tr>
+<tr>
+<td class="lineCount">65</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @return string</pre></td>
+</tr>
+<tr>
+<td class="lineCount">66</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">67</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	public function getValue($name)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">68</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	{</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">69</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">		return $this-&gt;_values[$name];</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">70</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">71</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">72</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">73</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * Gets the values for the groups</pre></td>
+</tr>
+<tr>
+<td class="lineCount">74</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">75</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @return array</pre></td>
+</tr>
+<tr>
+<td class="lineCount">76</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">77</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	public function getValues()</pre></td>
+</tr>
+<tr>
+<td class="lineCount">78</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	{</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">79</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">		return $this-&gt;_values;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">80</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">81</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">82</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">83</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * Flattens the tuple into a data row</pre></td>
+</tr>
+<tr>
+<td class="lineCount">84</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">85</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @param array $fields</pre></td>
+</tr>
+<tr>
+<td class="lineCount">86</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @return array</pre></td>
+</tr>
+<tr>
+<td class="lineCount">87</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">88</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	public function toRow( array $fields )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">89</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	{</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">90</td>
+<td class="lineCountHighlight">4</td>
+<td><span class="srcLine"><pre class="srcLine">		$values = array();</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">91</td>
+<td class="lineCountHighlight">4</td>
+<td><span class="srcLine"><pre class="srcLine">		foreach( $fields as $field ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">92</td>
+<td class="lineCountHighlight">4</td>
+<td><span class="srcLine"><pre class="srcLine">			$values[$field-&gt;getAlias()] = ( $field instanceof Xyster_Data_Field_Aggregate ) ?</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">93</td>
+<td class="lineCountHighlight">4</td>
+<td><span class="srcLine"><pre class="srcLine">				$this-&gt;aggregate($field) : $this-&gt;_values[$field-&gt;getAlias()];</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">94</td>
+<td class="lineCountHighlight">4</td>
+<td><span class="srcLine"><pre class="srcLine">		}</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">95</td>
+<td class="lineCountHighlight">4</td>
+<td><span class="srcLine"><pre class="srcLine">		return $values;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">96</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">97</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">98</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">99</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * Creates the Tuples for a collection</pre></td>
+</tr>
+<tr>
+<td class="lineCount">100</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">101</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @param Xyster_Data_Set $rs  The dataset to add rows representing the tuples</pre></td>
+</tr>
+<tr>
+<td class="lineCount">102</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @param mixed $collection  The collection of objects/hashtables to use</pre></td>
+</tr>
+<tr>
+<td class="lineCount">103</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @param array $fields  An array of {@link Xyster_Data_Field} objects to evaluate</pre></td>
+</tr>
+<tr>
+<td class="lineCount">104</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @param array $having  Optional. An array of {@link Xyster_Data_Criterion} objects</pre></td>
+</tr>
+<tr>
+<td class="lineCount">105</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @param int $limit  Optional. The maximum number of tuples to create</pre></td>
+</tr>
+<tr>
+<td class="lineCount">106</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @param int $offset  Optional.  The number of tuples to skip before adding</pre></td>
+</tr>
+<tr>
+<td class="lineCount">107</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @throws Xyster_Data_Set_Exception if there are no grouped columns in the $fields array</pre></td>
+</tr>
+<tr>
+<td class="lineCount">108</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">109</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	static public function makeTuples( Xyster_Data_Set $rs, $collection, array $fields, array $having = null, $limit = 0, $offset = 0 )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">110</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	{</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">111</td>
+<td class="lineCountHighlight">5</td>
+<td><span class="srcLine"><pre class="srcLine">		$groups = array();</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">112</td>
+<td class="lineCountHighlight">5</td>
+<td><span class="srcLine"><pre class="srcLine">		foreach( $fields as $v ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">113</td>
+<td class="lineCountHighlight">5</td>
+<td><span class="srcLine"><pre class="srcLine">			if (! $v instanceof Xyster_Data_Field ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">114</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">				require_once 'Xyster/Data/Set/Exception.php';</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">115</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">				throw new Xyster_Data_Set_Exception('The $fields array must only contain Xyster_Data_Field objects');</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">116</td>
+<td class="coverageCountHighlight">0</td>
+<td><span class="srcLineHighlight"><pre class="srcLine">			}</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">117</td>
+<td class="lineCountHighlight">5</td>
+<td><span class="srcLine"><pre class="srcLine">			if ( $v instanceof Xyster_Data_Field_Group ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">118</td>
+<td class="lineCountHighlight">4</td>
+<td><span class="srcLine"><pre class="srcLine">				$groups[] = $v;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">119</td>
+<td class="lineCountHighlight">4</td>
+<td><span class="srcLine"><pre class="srcLine">			}</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">120</td>
+<td class="lineCountHighlight">5</td>
+<td><span class="srcLine"><pre class="srcLine">		}</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">121</td>
+<td class="lineCountHighlight">4</td>
+<td><span class="srcLine"><pre class="srcLine">		if ( !count($groups) ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">122</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">			require_once 'Xyster/Data/Set/Exception.php';</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">123</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">			throw new Xyster_Data_Set_Exception('You must specify at least one grouped field');</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">124</td>
+<td class="coverageCountHighlight">0</td>
+<td><span class="srcLineHighlight"><pre class="srcLine">		}</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">125</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">126</td>
+<td class="lineCountHighlight">3</td>
+<td><span class="srcLine"><pre class="srcLine">		$tuples = array();</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">127</td>
+<td class="lineCountHighlight">3</td>
+<td><span class="srcLine"><pre class="srcLine">		$tupleValues = array();</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">128</td>
+<td class="lineCountHighlight">3</td>
+<td><span class="srcLine"><pre class="srcLine">		foreach( $collection as $v ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">129</td>
+<td class="lineCountHighlight">3</td>
+<td><span class="srcLine"><pre class="srcLine">			$groupValues = array();</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">130</td>
+<td class="lineCountHighlight">3</td>
+<td><span class="srcLine"><pre class="srcLine">			$groupHash = '';</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">131</td>
+<td class="lineCountHighlight">3</td>
+<td><span class="srcLine"><pre class="srcLine">			foreach( $groups as $group ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">132</td>
+<td class="lineCountHighlight">3</td>
+<td><span class="srcLine"><pre class="srcLine">				$value = $group-&gt;evaluate($v);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">133</td>
+<td class="lineCountHighlight">3</td>
+<td><span class="srcLine"><pre class="srcLine">				$groupValues[$group-&gt;getAlias()] = $value;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">134</td>
+<td class="lineCountHighlight">3</td>
+<td><span class="srcLine"><pre class="srcLine">				$groupHash .= "['".$value."']";</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">135</td>
+<td class="lineCountHighlight">3</td>
+<td><span class="srcLine"><pre class="srcLine">			}</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">136</td>
+<td class="lineCountHighlight">3</td>
+<td><span class="srcLine"><pre class="srcLine">			$tupleValues[$groupHash] = $groupValues;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">137</td>
+<td class="lineCountHighlight">3</td>
+<td><span class="srcLine"><pre class="srcLine">			if ( !isset($tuples[$groupHash]) ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">138</td>
+<td class="lineCountHighlight">3</td>
+<td><span class="srcLine"><pre class="srcLine">				$tuples[$groupHash] = array();</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">139</td>
+<td class="lineCountHighlight">3</td>
+<td><span class="srcLine"><pre class="srcLine">			}</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">140</td>
+<td class="lineCountHighlight">3</td>
+<td><span class="srcLine"><pre class="srcLine">			$tuples[$groupHash][] = $v;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">141</td>
+<td class="lineCountHighlight">3</td>
+<td><span class="srcLine"><pre class="srcLine">		}</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">142</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">143</td>
+<td class="lineCountHighlight">3</td>
+<td><span class="srcLine"><pre class="srcLine">		$loffset = 0;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">144</td>
+<td class="lineCountHighlight">3</td>
+<td><span class="srcLine"><pre class="srcLine">		require_once 'Xyster/Collection.php';</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">145</td>
+<td class="lineCountHighlight">3</td>
+<td><span class="srcLine"><pre class="srcLine">		foreach( $tupleValues as $hash=&gt;$values ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">146</td>
+<td class="lineCountHighlight">3</td>
+<td><span class="srcLine"><pre class="srcLine">			$tuple = new Xyster_Data_Tuple($values,</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">147</td>
+<td class="lineCountHighlight">3</td>
+<td><span class="srcLine"><pre class="srcLine">			    Xyster_Collection::using($tuples[$hash]));</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">148</td>
+<td class="lineCountHighlight">3</td>
+<td><span class="srcLine"><pre class="srcLine">			$ok = true;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">149</td>
+<td class="lineCountHighlight">3</td>
+<td><span class="srcLine"><pre class="srcLine">			if ( $having ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">150</td>
+<td class="lineCountHighlight">3</td>
+<td><span class="srcLine"><pre class="srcLine">				foreach( $having as $crit ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">151</td>
+<td class="lineCountHighlight">3</td>
+<td><span class="srcLine"><pre class="srcLine">					if ( !$crit-&gt;evaluate($tuple) ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">152</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">						$ok = false;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">153</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">					}</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">154</td>
+<td class="lineCountHighlight">3</td>
+<td><span class="srcLine"><pre class="srcLine">				}</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">155</td>
+<td class="lineCountHighlight">3</td>
+<td><span class="srcLine"><pre class="srcLine">			}</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">156</td>
+<td class="lineCountHighlight">3</td>
+<td><span class="srcLine"><pre class="srcLine">			if ( $ok ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">157</td>
+<td class="lineCountHighlight">3</td>
+<td><span class="srcLine"><pre class="srcLine">				if ( $loffset &lt; $offset ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">158</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">					$loffset++;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">159</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">				} else {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">160</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">					$rs-&gt;add($tuple-&gt;toRow($fields));</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">161</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">					if ( $limit &gt; 0 &amp;&amp; count($rs) == $limit ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">162</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">						break;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">163</td>
+<td class="coverageCountHighlight">0</td>
+<td><span class="srcLineHighlight"><pre class="srcLine">					}</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">164</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">				}</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">165</td>
+<td class="lineCountHighlight">3</td>
+<td><span class="srcLine"><pre class="srcLine">			}</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">166</td>
+<td class="lineCountHighlight">3</td>
+<td><span class="srcLine"><pre class="srcLine">		}</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">167</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">168</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">}</pre></td>
+</tr>
+</table>
+<br><table width="100%">
+<tr><td><hr noshade size="1"></td></tr>
+<tr><td class="small">Report generated at 2007-10-08T19:32:24-05:00</td></tr>
+</table>
+</BODY>
+</HTML>

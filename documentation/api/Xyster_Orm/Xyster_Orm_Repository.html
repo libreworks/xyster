@@ -1,0 +1,913 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class Xyster_Orm_Repository</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name">Class Xyster_Orm_Repository</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+													<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+						|											<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+					</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">The &quot;identity map&quot; of persisted entities</p>
+	<ul class="tags">
+				<li><span class="field">copyright:</span> Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)</li>
+				<li><span class="field">license:</span> <a href="http://www.opensource.org/licenses/bsd-license.php">New BSD License</a></li>
+			</ul>
+		<p class="notes">
+			Located in <a class="field" href="_Orm---Repository.php.html">/Orm/Repository.php</a> (line <span class="field">32</span>)
+		</p>
+		
+				
+		<pre></pre>
+	
+			</div>
+</div>
+
+
+
+	<a name="sec-var-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variable Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+						<span class="disabled">Vars</span> (<a href="#sec-vars">details</a>)
+							| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+								</div>
+		<div class="info-box-body">
+			<div class="var-summary">
+																																<div class="var-title">
+					<span class="var-type">array</span>
+					<a href="#$_items" title="details" class="var-name">$_items</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type"><a href="../Xyster_Orm/Xyster_Orm_Mapper_Factory_Interface.html">Xyster_Orm_Mapper_Factory_Interface</a></span>
+					<a href="#$_mapFactory" title="details" class="var-name">$_mapFactory</a>
+				</div>
+											</div>
+		</div>
+	</div>
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+																		<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+				 
+				|
+						<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+																																																																																																																																																																												
+												<div class="method-definition">
+											<span class="method-result">Xyster_Orm_Repository</span>
+										<a href="#__construct" title="details" class="method-name">__construct</a>
+											(<span class="var-type"><a href="../Xyster_Orm/Xyster_Orm_Mapper_Factory_Interface.html">Xyster_Orm_Mapper_Factory_Interface</a></span>&nbsp;<span class="var-name">$mapFactory</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#add" title="details" class="method-name">add</a>
+											(<span class="var-type"><a href="../Xyster_Orm/Xyster_Orm_Entity.html">Xyster_Orm_Entity</a></span>&nbsp;<span class="var-name">$entity</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#addAll" title="details" class="method-name">addAll</a>
+											(<span class="var-type"><a href="../Xyster_Orm/Xyster_Orm_Set.html">Xyster_Orm_Set</a></span>&nbsp;<span class="var-name">$set</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#contains" title="details" class="method-name">contains</a>
+											(<span class="var-type"><a href="../Xyster_Orm/Xyster_Orm_Entity.html">Xyster_Orm_Entity</a></span>&nbsp;<span class="var-name">$entity</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../Xyster_Orm/Xyster_Orm_Entity.html">Xyster_Orm_Entity</a></span>
+										<a href="#find" title="details" class="method-name">find</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$class</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$values</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../Xyster_Orm/Xyster_Orm_Entity.html">Xyster_Orm_Entity</a></span>
+										<a href="#get" title="details" class="method-name">get</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$class</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$primaryKey</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../Xyster_Collection/Xyster_Collection_Interface.html">Xyster_Collection_Interface</a></span>
+										<a href="#getAll" title="details" class="method-name">getAll</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$class</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">array</span>
+										<a href="#getClasses" title="details" class="method-name">getClasses</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#hasAll" title="details" class="method-name">hasAll</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$class</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#remove" title="details" class="method-name">remove</a>
+											(<span class="var-type"><a href="../Xyster_Orm/Xyster_Orm_Entity.html">Xyster_Orm_Entity</a></span>&nbsp;<span class="var-name">$entity</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#removeAll" title="details" class="method-name">removeAll</a>
+											(<span class="var-type"><a href="../Xyster_Orm/Xyster_Orm_Set.html">Xyster_Orm_Set</a></span>&nbsp;<span class="var-name">$set</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#removeAllByKey" title="details" class="method-name">removeAllByKey</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$class</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$ids</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#removeByKey" title="details" class="method-name">removeByKey</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$class</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$key</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setHasAll" title="details" class="method-name">setHasAll</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$class</span>, [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$hasAll</span> = <span class="var-default">true</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#_getByHelper" title="details" class="method-name">_getByHelper</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$class</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$key</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../Xyster_Collection/Xyster_Collection_Map_String.html">Xyster_Collection_Map_String</a></span>
+										<a href="#_getByIndexMap" title="details" class="method-name">_getByIndexMap</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$class</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../Xyster_Collection/Xyster_Collection_Map_String.html">Xyster_Collection_Map_String</a></span>
+										<a href="#_getByKeyMap" title="details" class="method-name">_getByKeyMap</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$class</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../Xyster_Orm/Xyster_Orm_Mapper.html">Xyster_Orm_Mapper</a></span>
+										<a href="#_getMapper" title="details" class="method-name">_getMapper</a>
+											(<span class="var-type"><a href="../Xyster_Orm/Xyster_Orm_Entity.html">Xyster_Orm_Entity</a></span>&nbsp;<span class="var-name">$entity</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#_removeByClassAndKey" title="details" class="method-name">_removeByClassAndKey</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$class</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$key</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#_removeEntity" title="details" class="method-name">_removeEntity</a>
+											(<span class="var-type"><a href="../Xyster_Orm/Xyster_Orm_Entity.html">Xyster_Orm_Entity</a></span>&nbsp;<span class="var-name">$entity</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#_stringifyPrimaryKey" title="details" class="method-name">_stringifyPrimaryKey</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$key</span>)
+									</div>
+								</div>
+		</div>
+	</div>		
+
+	<a name="sec-vars"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variables</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+										<a href="#sec-var-summary">Vars</a> (<span class="disabled">details</span>)
+						
+			
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			<a name="var$_items" id="$_items"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">array</span>
+			<span class="var-name">$_items</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number">56</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">A container for the entity objects</p>
+<p class="description"><p>The array is structured using class names as keys, then another array  with the keys 'byKey', 'byIndex', and 'hasAll'.  hasAll is a boolean, the  other two are <a href="../Xyster_Collection/Xyster_Collection_Map_String.html">Xyster_Collection_Map_String</a> objects.</p><p><div class="src-code"><ol><li><div class="src-line"><span class="src-key">array</span><span class="src-sym">(</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-str">'entityName1'&nbsp;</span>=&gt;&nbsp;<span class="src-key">array</span><span class="src-sym">(</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-str">'byKey'&nbsp;</span>=&gt;&nbsp;<span class="src-id"><a href="../Xyster_Collection/Xyster_Collection_Map_String.html">Xyster_Collection_Map_String</a></span><span class="src-sym">,</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-str">'byIndex&nbsp;=&gt;&nbsp;Xyster_Collection_Map_String,</span></div></li>
+<li><div class="src-line"><span class="src-str">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'</span><a href="../Xyster_Orm/Xyster_Orm_Repository.html#methodhasAll">hasAll</a><span class="src-str">'&nbsp;=&gt;&nbsp;false</span></div></li>
+<li><div class="src-line"><span class="src-str">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;),</span></div></li>
+<li><div class="src-line"><span class="src-str">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'</span><span class="src-id">entityName2</span><span class="src-str">'&nbsp;=&gt;&nbsp;array(</span></div></li>
+<li><div class="src-line"><span class="src-str">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'</span><span class="src-id">byKey</span><span class="src-str">'&nbsp;=&gt;&nbsp;Xyster_Collection_Map_String,</span></div></li>
+<li><div class="src-line"><span class="src-str">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'</span><span class="src-id">byIndex&nbsp;</span>=&gt;&nbsp;<span class="src-id"><a href="../Xyster_Collection/Xyster_Collection_Map_String.html">Xyster_Collection_Map_String</a></span><span class="src-sym">,</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-str">'hasAll'&nbsp;</span>=&gt;&nbsp;<span class="src-id">false</span></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-sym">)</span></div></li>
+<li><div class="src-line">&nbsp;<span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+</ol></div></p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$_mapFactory" id="$_mapFactory"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type"><a href="../Xyster_Orm/Xyster_Orm_Mapper_Factory_Interface.html">Xyster_Orm_Mapper_Factory_Interface</a></span>
+			<span class="var-name">$_mapFactory</span>
+						(line <span class="line-number">63</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">The mapper factory</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+						
+		</div>
+	</div>
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+															<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+																	<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+
+<a name="method__construct" id="__construct"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number">70</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Creates a new entity repository</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Xyster_Orm_Repository</span>
+		<span class="method-name">
+			__construct
+		</span>
+					(<span class="var-type"><a href="../Xyster_Orm/Xyster_Orm_Mapper_Factory_Interface.html">Xyster_Orm_Mapper_Factory_Interface</a></span>&nbsp;<span class="var-name">$mapFactory</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Orm/Xyster_Orm_Mapper_Factory_Interface.html">Xyster_Orm_Mapper_Factory_Interface</a></span>
+				<span class="var-name">$mapFactory</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodadd" id="add"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">add</span> (line <span class="line-number">80</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Adds an entity to the repository</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			add
+		</span>
+					(<span class="var-type"><a href="../Xyster_Orm/Xyster_Orm_Entity.html">Xyster_Orm_Entity</a></span>&nbsp;<span class="var-name">$entity</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Orm/Xyster_Orm_Entity.html">Xyster_Orm_Entity</a></span>
+				<span class="var-name">$entity</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodaddAll" id="addAll"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">addAll</span> (line <span class="line-number">105</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Adds a set to the repository</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			addAll
+		</span>
+					(<span class="var-type"><a href="../Xyster_Orm/Xyster_Orm_Set.html">Xyster_Orm_Set</a></span>&nbsp;<span class="var-name">$set</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Orm/Xyster_Orm_Set.html">Xyster_Orm_Set</a></span>
+				<span class="var-name">$set</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodcontains" id="contains"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">contains</span> (line <span class="line-number">118</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets whether the repository contains the entity supplied</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			contains
+		</span>
+					(<span class="var-type"><a href="../Xyster_Orm/Xyster_Orm_Entity.html">Xyster_Orm_Entity</a></span>&nbsp;<span class="var-name">$entity</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Orm/Xyster_Orm_Entity.html">Xyster_Orm_Entity</a></span>
+				<span class="var-name">$entity</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodfind" id="find"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">find</span> (line <span class="line-number">130</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Finds an entity by indexed value</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> The entity found or null if none</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../Xyster_Orm/Xyster_Orm_Entity.html">Xyster_Orm_Entity</a></span>
+		<span class="method-name">
+			find
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$class</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$values</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$class</span>			</li>
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">$values</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodget" id="get"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">get</span> (line <span class="line-number">150</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets an item from the repository</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> The entity found or null if none</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../Xyster_Orm/Xyster_Orm_Entity.html">Xyster_Orm_Entity</a></span>
+		<span class="method-name">
+			get
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$class</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$primaryKey</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$class</span>			</li>
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$primaryKey</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodgetAll" id="getAll"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getAll</span> (line <span class="line-number">172</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets all entities of a particular type</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../Xyster_Collection/Xyster_Collection_Interface.html">Xyster_Collection_Interface</a></span>
+		<span class="method-name">
+			getAll
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$class</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$class</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodgetClasses" id="getClasses"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getClasses</span> (line <span class="line-number">162</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets the names of classes that are currently stored in this map</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> The names of the classes stored</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">array</span>
+		<span class="method-name">
+			getClasses
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodhasAll" id="hasAll"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">hasAll</span> (line <span class="line-number">185</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets whether a given class has all of its entities loaded</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Whether all entities have been loaded</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			hasAll
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$class</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$class</span><span class="var-description">: The entity class</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodremove" id="remove"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">remove</span> (line <span class="line-number">197</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Removes an entity from the repository</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			remove
+		</span>
+					(<span class="var-type"><a href="../Xyster_Orm/Xyster_Orm_Entity.html">Xyster_Orm_Entity</a></span>&nbsp;<span class="var-name">$entity</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Orm/Xyster_Orm_Entity.html">Xyster_Orm_Entity</a></span>
+				<span class="var-name">$entity</span><span class="var-description">: The entity to remove</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodremoveAll" id="removeAll"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">removeAll</span> (line <span class="line-number">221</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Removes all entities supplied from the repository</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			removeAll
+		</span>
+					(<span class="var-type"><a href="../Xyster_Orm/Xyster_Orm_Set.html">Xyster_Orm_Set</a></span>&nbsp;<span class="var-name">$set</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Orm/Xyster_Orm_Set.html">Xyster_Orm_Set</a></span>
+				<span class="var-name">$set</span><span class="var-description">: The entities to remove</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodremoveAllByKey" id="removeAllByKey"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">removeAllByKey</span> (line <span class="line-number">235</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Removes all entities by class and primary keys</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			removeAllByKey
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$class</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$ids</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$class</span>			</li>
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">$ids</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodremoveByKey" id="removeByKey"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">removeByKey</span> (line <span class="line-number">209</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Removes an entity by class and primary key</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			removeByKey
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$class</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$key</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$class</span>			</li>
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$key</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodsetHasAll" id="setHasAll"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">setHasAll</span> (line <span class="line-number">250</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Sets whether a given class has all of its entities loaded</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setHasAll
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$class</span>, [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$hasAll</span> = <span class="var-default">true</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$class</span><span class="var-description">: The entity class</span>			</li>
+					<li>
+				<span class="var-type">boolean</span>
+				<span class="var-name">$hasAll</span><span class="var-description">: Whether all entities have been loaded</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="method_getByHelper" id="_getByHelper"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">_getByHelper</span> (line <span class="line-number">284</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Sets up the array and class name</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			_getByHelper
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$class</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$key</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$class</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$key</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="method_getByIndexMap" id="_getByIndexMap"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">_getByIndexMap</span> (line <span class="line-number">272</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Convenience method to get the map (and create it if necessary)</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../Xyster_Collection/Xyster_Collection_Map_String.html">Xyster_Collection_Map_String</a></span>
+		<span class="method-name">
+			_getByIndexMap
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$class</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$class</span><span class="var-description">: The entity</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="method_getByKeyMap" id="_getByKeyMap"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">_getByKeyMap</span> (line <span class="line-number">261</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Convenience method to get the map (and create it if necessary)</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../Xyster_Collection/Xyster_Collection_Map_String.html">Xyster_Collection_Map_String</a></span>
+		<span class="method-name">
+			_getByKeyMap
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$class</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$class</span><span class="var-description">: The entity</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="method_getMapper" id="_getMapper"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">_getMapper</span> (line <span class="line-number">303</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Convenience method to get the entity's mapper</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../Xyster_Orm/Xyster_Orm_Mapper.html">Xyster_Orm_Mapper</a></span>
+		<span class="method-name">
+			_getMapper
+		</span>
+					(<span class="var-type"><a href="../Xyster_Orm/Xyster_Orm_Entity.html">Xyster_Orm_Entity</a></span>&nbsp;<span class="var-name">$entity</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Orm/Xyster_Orm_Entity.html">Xyster_Orm_Entity</a></span>
+				<span class="var-name">$entity</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="method_removeByClassAndKey" id="_removeByClassAndKey"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">_removeByClassAndKey</span> (line <span class="line-number">314</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Convenience method to remove an entity</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			_removeByClassAndKey
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$class</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$key</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$class</span>			</li>
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$key</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="method_removeEntity" id="_removeEntity"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">_removeEntity</span> (line <span class="line-number">328</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Removes an entity from both maps</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			_removeEntity
+		</span>
+					(<span class="var-type"><a href="../Xyster_Orm/Xyster_Orm_Entity.html">Xyster_Orm_Entity</a></span>&nbsp;<span class="var-name">$entity</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Orm/Xyster_Orm_Entity.html">Xyster_Orm_Entity</a></span>
+				<span class="var-name">$entity</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="method_stringifyPrimaryKey" id="_stringifyPrimaryKey"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">_stringifyPrimaryKey</span> (line <span class="line-number">347</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Convenience method to stringify the primary key</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> The primary key as a string</li>
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			_stringifyPrimaryKey
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$key</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$key</span><span class="var-description">: A primary key or an entity whose primary key is used</span>			</li>
+				</ul>
+		
+			
+	</div>
+						
+		</div>
+	</div>
+
+
+	<p class="notes" id="credit">
+		Documentation generated on Mon, 19 May 2008 17:07:32 -0400 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.2</a>
+	</p>
+	</div></body>
+</html>

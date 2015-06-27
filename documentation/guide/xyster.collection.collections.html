@@ -1,0 +1,95 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>3.2. Collections</title>
+<link rel="stylesheet" href="dbstyle.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.72.0">
+<link rel="start" href="index.html" title="Programmer's Reference Guide">
+<link rel="up" href="xyster.collection.html" title="Chapter 3. Xyster_Collection">
+<link rel="prev" href="xyster.collection.html" title="Chapter 3. Xyster_Collection">
+<link rel="next" href="xyster.collection.lists.html" title="3.3. Lists">
+<link rel="chapter" href="introduction.html" title="Chapter 1. Introduction to Xyster Framework">
+<link rel="chapter" href="xyster.acl.html" title="Chapter 2. Xyster_Acl">
+<link rel="chapter" href="xyster.collection.html" title="Chapter 3. Xyster_Collection">
+<link rel="chapter" href="xyster.controller.html" title="Chapter 4. Xyster_Controller">
+<link rel="chapter" href="xyster.data.html" title="Chapter 5. Xyster_Data">
+<link rel="chapter" href="xyster.date.html" title="Chapter 6. Xyster_Date">
+<link rel="chapter" href="xyster.enum.html" title="Chapter 7. Xyster_Enum">
+<link rel="chapter" href="xyster.filter.html" title="Chapter 8. Xyster_Filter">
+<link rel="chapter" href="xyster.orm.html" title="Chapter 9. Xyster_Orm">
+<link rel="chapter" href="xyster.type.html" title="Chapter 10. Xyster_Type">
+<link rel="chapter" href="xyster.validate.html" title="Chapter 11. Xyster_Validate">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<div class="navheader"><table width="100%" summary="Navigation header">
+<tr><th colspan="3" align="center">3.2. Collections</th></tr>
+<tr>
+<td width="20%" align="left">
+<a accesskey="p" href="xyster.collection.html">Prev</a> </td>
+<th width="60%" align="center">Chapter 3. Xyster_Collection</th>
+<td width="20%" align="right"> <a accesskey="n" href="xyster.collection.lists.html">Next</a>
+</td>
+</tr>
+</table></div>
+<div class="sect1" lang="en">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="xyster.collection.collections"></a>3.2. Collections</h2></div></div></div>
+<p>All <span class="interface">Xyster_Collection_Interface</span>-based objects are traversable – they can be iterated through.</p>
+<pre class="programlisting">&lt;?php
+// if $stuff implements Xyster_Collection_Interface
+foreach( $stuff as $k=&gt;$v ) {
+        printf( 'key: %s, value: %s', $k, $v );
+}
+</pre>
+<p>Here are some other useful methods on <span class="interface">Xyster_Collection_Interface</span>:</p>
+<pre class="programlisting">&lt;?php
+// if $stuff implements Xyster_Collection_Interface
+echo count($stuff);
+if ( $stuff-&gt;isEmpty() ) {
+        echo 'Empty collection';
+}
+if ( $stuff-&gt;contains('some value') ) {
+        echo 'Yes, it's in there\n';
+}
+if ( $stuff-&gt;containsAll( array('value1', 'value2', 'value3') ) ) {
+        echo 'They're all there';
+}
+</pre>
+<p>This collection can be added to, changed, or have items removed.</p>
+<pre class="programlisting">&lt;?php
+// if $items is an Xyster_Collection_Interface
+// let's say $items contains the values 'earth', 'mars', and 'jupiter'
+
+$innerPlanets = Xyster_Collection::using(array('mercury', 'venus', 'earth', 'mars'));
+
+$items-&gt;merge($innerPlanets); // $items now contains 'mercury', 'venus', 'earth', 'mars', 'jupiter'
+
+$items-&gt;remove('mars'); // $items now contains 'mercury', 'venus', 'earth', 'jupiter'
+$items-&gt;remove('saturn'); // throws an exception – 'saturn' isn't in the collection
+
+$items-&gt;removeAll(Xyster_Collection::using(array('mercury', 'venus'))); // $items now contains 'earth', 'jupiter'
+// the items supplied to removeAll must all be in the collection
+
+$items-&gt;retainAll(Xyster_Collection::using(array('earth'))); // $items now contains 'earth'
+// the items supplied to retainAll must all be in the collection
+
+$items-&gt;clear(); // $items now contains nothing
+</pre>
+</div>
+<div class="navfooter"><table width="100%" summary="Navigation footer">
+<tr>
+<td width="40%" align="left">
+<a accesskey="p" href="xyster.collection.html">Prev</a> </td>
+<td width="20%" align="center"><a accesskey="u" href="xyster.collection.html">Up</a></td>
+<td width="40%" align="right"> <a accesskey="n" href="xyster.collection.lists.html">Next</a>
+</td>
+</tr>
+<tr>
+<td width="40%" align="left" valign="top">Chapter 3. Xyster_Collection </td>
+<td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td>
+<td width="40%" align="right" valign="top"> 3.3. Lists</td>
+</tr>
+</table></div>
+<div class="revinfo"></div>
+</body>
+</html>

@@ -1,0 +1,1767 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<LINK REL="stylesheet" TYPE="text/css" TITLE="Style" href="../stylesheet.css">
+</HEAD>
+<BODY>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="bannercell" rowspan="2"><a href="http://phing.info/"><img src="http://phing.info/images/phing.gif" alt="http://phing.info/" align="left" border="0"></a></td>
+<td style="text-align:right"><h2>Source Code Coverage</h2></td>
+</tr>
+<tr><td style="text-align:right">Designed for use with <a href="http://pear.php.net/package/PHPUnit2">PHPUnit2</a>, <a href="http://www.xdebug.org/">Xdebug</a> and <a href="http://phing.info/">Phing</a>.</td></tr>
+</table>
+<hr size="1">
+<table class="log" cellpadding="5" cellspacing="0" width="100%"><tr class="a">
+<td class="small">Methods: 19</td>
+<td class="small">LOC: 345</td>
+<td class="small">Statements: 59</td>
+</tr></table>
+<br><table class="log" cellpadding="5" cellspacing="0" width="100%">
+<tr>
+<th width="100%">Source file</th>
+<th>Statements</th>
+<th>Methods</th>
+<th width="250" colspan="2" nowrap>Total coverage</th>
+</tr>
+<tr class="a">
+<td>Expression.php</td>
+<td>100.0%</td>
+<td>100.0%</td>
+<td>100.0%</td>
+<td><table cellspacing="0" cellpadding="0" border="0" width="100%" style="display: inline"><tr><td class="fullcover" width="200" height="12"> </td></tr></table></td>
+</tr>
+</table>
+<table cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td class="lineCount">1</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">&lt;?php</pre></td>
+</tr>
+<tr>
+<td class="lineCount">2</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">3</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * Xyster Framework</pre></td>
+</tr>
+<tr>
+<td class="lineCount">4</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">5</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * This source file is subject to the new BSD license that is bundled</pre></td>
+</tr>
+<tr>
+<td class="lineCount">6</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * with this package in the file LICENSE.txt.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">7</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * It is also available through the world-wide-web at this URL:</pre></td>
+</tr>
+<tr>
+<td class="lineCount">8</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * http://www.opensource.org/licenses/bsd-license.php</pre></td>
+</tr>
+<tr>
+<td class="lineCount">9</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">10</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @category  Xyster</pre></td>
+</tr>
+<tr>
+<td class="lineCount">11</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @package   Xyster_Data</pre></td>
+</tr>
+<tr>
+<td class="lineCount">12</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">13</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License</pre></td>
+</tr>
+<tr>
+<td class="lineCount">14</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @version   $Id$</pre></td>
+</tr>
+<tr>
+<td class="lineCount">15</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">16</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">17</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @see Xyster_Data_Criterion</pre></td>
+</tr>
+<tr>
+<td class="lineCount">18</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">19</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">require_once 'Xyster/Data/Criterion.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCount">20</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">21</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @see Xyster_Data_Operator_Expression</pre></td>
+</tr>
+<tr>
+<td class="lineCount">22</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">23</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">require_once 'Xyster/Data/Operator/Expression.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCount">24</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">25</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * An expression is a boolean evaluation comparing a column against a value</pre></td>
+</tr>
+<tr>
+<td class="lineCount">26</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">27</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @category  Xyster</pre></td>
+</tr>
+<tr>
+<td class="lineCount">28</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @package   Xyster_Data</pre></td>
+</tr>
+<tr>
+<td class="lineCount">29</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">30</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License</pre></td>
+</tr>
+<tr>
+<td class="lineCount">31</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">32</td>
+<td class="coverageCount"></td>
+<td class="srcLineClassStart"><pre class="srcLine">class Xyster_Data_Expression extends Xyster_Data_Criterion</pre></td>
+</tr>
+<tr>
+<td class="lineCount">33</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">{</pre></td>
+</tr>
+<tr>
+<td class="lineCount">34</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">35</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Internal list of valid expression operators</pre></td>
+</tr>
+<tr>
+<td class="lineCount">36</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">37</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @var array</pre></td>
+</tr>
+<tr>
+<td class="lineCount">38</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">39</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    static private $_operators = array(</pre></td>
+</tr>
+<tr>
+<td class="lineCount">40</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">        "eq" =&gt; "=",</pre></td>
+</tr>
+<tr>
+<td class="lineCount">41</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">        "neq" =&gt; "&lt;&gt;",</pre></td>
+</tr>
+<tr>
+<td class="lineCount">42</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">        "lt" =&gt; "&lt;",</pre></td>
+</tr>
+<tr>
+<td class="lineCount">43</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">        "gt" =&gt; "&gt;",</pre></td>
+</tr>
+<tr>
+<td class="lineCount">44</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">        "gte" =&gt; "&gt;=",</pre></td>
+</tr>
+<tr>
+<td class="lineCount">45</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">        "lte" =&gt; "&lt;=",</pre></td>
+</tr>
+<tr>
+<td class="lineCount">46</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">        "like" =&gt; "LIKE",</pre></td>
+</tr>
+<tr>
+<td class="lineCount">47</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">        "notLike" =&gt; "NOT LIKE",</pre></td>
+</tr>
+<tr>
+<td class="lineCount">48</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">        "between" =&gt; "BETWEEN",</pre></td>
+</tr>
+<tr>
+<td class="lineCount">49</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">        "notBetween" =&gt; "NOT BETWEEN",</pre></td>
+</tr>
+<tr>
+<td class="lineCount">50</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">        "in" =&gt; "IN",</pre></td>
+</tr>
+<tr>
+<td class="lineCount">51</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">        "notIn" =&gt; "NOT IN"</pre></td>
+</tr>
+<tr>
+<td class="lineCount">52</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    );</pre></td>
+</tr>
+<tr>
+<td class="lineCount">53</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">54</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">55</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * The left value, always a field</pre></td>
+</tr>
+<tr>
+<td class="lineCount">56</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">57</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @var Xyster_Data_Field</pre></td>
+</tr>
+<tr>
+<td class="lineCount">58</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">59</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    protected $_left;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">60</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">61</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">62</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * The operator</pre></td>
+</tr>
+<tr>
+<td class="lineCount">63</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">64</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @var Xyster_Data_Operator_Expression</pre></td>
+</tr>
+<tr>
+<td class="lineCount">65</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">66</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    protected $_operator;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">67</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">68</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">69</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * The right value, could be a scalar or a {@link Xyster_Data_Field}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">70</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">71</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @var mixed</pre></td>
+</tr>
+<tr>
+<td class="lineCount">72</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">73</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    protected $_right;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">74</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">75</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">76</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Creates a new expression</pre></td>
+</tr>
+<tr>
+<td class="lineCount">77</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">78</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param Xyster_Data_Field|string $field</pre></td>
+</tr>
+<tr>
+<td class="lineCount">79</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $operator</pre></td>
+</tr>
+<tr>
+<td class="lineCount">80</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param mixed $value</pre></td>
+</tr>
+<tr>
+<td class="lineCount">81</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">82</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    protected function __construct( $field, $operator, $value )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">83</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">84</td>
+<td class="lineCountHighlight">205</td>
+<td><pre class="srcLine">        if (! $field instanceof Xyster_Data_Field) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">85</td>
+<td class="lineCountHighlight">155</td>
+<td><pre class="srcLine">            require_once 'Xyster/Data/Field.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">86</td>
+<td class="lineCountHighlight">155</td>
+<td><pre class="srcLine">            $field = Xyster_Data_Field::named($field);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">87</td>
+<td class="lineCountHighlight">155</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">88</td>
+<td class="lineCountHighlight">205</td>
+<td><pre class="srcLine">        $this-&gt;_left = $field;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">89</td>
+<td class="lineCountHighlight">205</td>
+<td><pre class="srcLine">        $this-&gt;_operator = Xyster_Enum::valueOf('Xyster_Data_Operator_Expression', $operator);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">90</td>
+<td class="lineCountHighlight">205</td>
+<td><pre class="srcLine">        if ( $value == "NULL" ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">91</td>
+<td class="lineCountHighlight">17</td>
+<td><pre class="srcLine">            $value = null;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">92</td>
+<td class="lineCountHighlight">17</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">93</td>
+<td class="lineCountHighlight">205</td>
+<td><pre class="srcLine">        $this-&gt;_right = $value;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">94</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">95</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">96</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">97</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Gets the field</pre></td>
+</tr>
+<tr>
+<td class="lineCount">98</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">99</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Data_Field</pre></td>
+</tr>
+<tr>
+<td class="lineCount">100</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">101</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function getLeft()</pre></td>
+</tr>
+<tr>
+<td class="lineCount">102</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">103</td>
+<td class="lineCountHighlight">112</td>
+<td><pre class="srcLine">        return $this-&gt;_left;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">104</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">105</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">106</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">107</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Gets the operator</pre></td>
+</tr>
+<tr>
+<td class="lineCount">108</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">109</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Data_Operator_Expression</pre></td>
+</tr>
+<tr>
+<td class="lineCount">110</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">111</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function getOperator()</pre></td>
+</tr>
+<tr>
+<td class="lineCount">112</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">113</td>
+<td class="lineCountHighlight">100</td>
+<td><pre class="srcLine">        return $this-&gt;_operator;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">114</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">115</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">116</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">117</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Gets the value</pre></td>
+</tr>
+<tr>
+<td class="lineCount">118</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">119</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return mixed</pre></td>
+</tr>
+<tr>
+<td class="lineCount">120</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">121</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function getRight()</pre></td>
+</tr>
+<tr>
+<td class="lineCount">122</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">123</td>
+<td class="lineCountHighlight">100</td>
+<td><pre class="srcLine">        return $this-&gt;_right;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">124</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">125</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">126</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">127</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Returns the syntax for this Expression</pre></td>
+</tr>
+<tr>
+<td class="lineCount">128</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">129</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @magic</pre></td>
+</tr>
+<tr>
+<td class="lineCount">130</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return string</pre></td>
+</tr>
+<tr>
+<td class="lineCount">131</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">132</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function __toString()</pre></td>
+</tr>
+<tr>
+<td class="lineCount">133</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">134</td>
+<td class="lineCountHighlight">69</td>
+<td><pre class="srcLine">        $string = "";</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">135</td>
+<td class="lineCountHighlight">69</td>
+<td><pre class="srcLine">        $op = $this-&gt;_operator-&gt;getValue();</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">136</td>
+<td class="lineCountHighlight">69</td>
+<td><pre class="srcLine">        $val = $this-&gt;_right;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">137</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">138</td>
+<td class="lineCountHighlight">69</td>
+<td><pre class="srcLine">        if ( $val === null ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">139</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            $string .= 'NULL';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">140</td>
+<td class="lineCountHighlight">69</td>
+<td><pre class="srcLine">        } else if ( is_array($val) &amp;&amp; strpos($op, 'BETWEEN') !== false ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">141</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">            $string .= ( preg_match("/^[0-9.]+$/", $val[0]) ) ?</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">142</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">                $val[0] : "'" . str_replace("'", "''", $val[0]) . "'";</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">143</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">            $string .= ' AND ';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">144</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">            $string .= ( preg_match("/^[0-9.]+$/", $val[1]) ) ?</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">145</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">                $val[1] : "'" . str_replace("'", "''", $val[1]) . "'";</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">146</td>
+<td class="lineCountHighlight">69</td>
+<td><pre class="srcLine">        } else if ( is_array($val) &amp;&amp; $op == "IN" || $op == "NOT IN" ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">147</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">            $quoted = array();</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">148</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">            foreach( $val as $v ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">149</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">                $quoted[] = ( preg_match("/^[0-9.]+$/", $v) ) ?</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">150</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">                    $v : "'" . str_replace("'", "''", $v) . "'";</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">151</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">            }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">152</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">            $string .= '(' . implode(',', $quoted) . ')';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">153</td>
+<td class="lineCountHighlight">69</td>
+<td><pre class="srcLine">        } else if ( $val instanceof Xyster_Data_Field ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">154</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            $string .= (string)$val;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">155</td>
+<td class="lineCountHighlight">68</td>
+<td><pre class="srcLine">        } else if ( !is_numeric($val) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">156</td>
+<td class="lineCountHighlight">31</td>
+<td><pre class="srcLine">            $string .= "'" . str_replace("'", "''", $val) . "'";</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">157</td>
+<td class="lineCountHighlight">31</td>
+<td><pre class="srcLine">        } else {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">158</td>
+<td class="lineCountHighlight">49</td>
+<td><pre class="srcLine">            $string .= $val;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">159</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">160</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">161</td>
+<td class="lineCountHighlight">69</td>
+<td><pre class="srcLine">        return (string)$this-&gt;_left . " " . $op . " " . $string;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">162</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">163</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">164</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">165</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Evaluates the Expression for a given array or object</pre></td>
+</tr>
+<tr>
+<td class="lineCount">166</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">167</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param mixed $object</pre></td>
+</tr>
+<tr>
+<td class="lineCount">168</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return boolean</pre></td>
+</tr>
+<tr>
+<td class="lineCount">169</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">170</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function evaluate( $object )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">171</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">172</td>
+<td class="lineCountHighlight">58</td>
+<td><pre class="srcLine">        $a = $this-&gt;_left-&gt;evaluate($object);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">173</td>
+<td class="lineCountHighlight">58</td>
+<td><pre class="srcLine">        $b = ( $this-&gt;_right instanceof Xyster_Data_Field ) ?</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">174</td>
+<td class="lineCountHighlight">58</td>
+<td><pre class="srcLine">            $this-&gt;_right-&gt;evaluate($object) : $this-&gt;_right;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">175</td>
+<td class="lineCountHighlight">58</td>
+<td><pre class="srcLine">        return $this-&gt;_operator-&gt;evaluate($a, $b);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">176</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">177</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">178</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">179</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Returns the name of the static method to call for the operator passed</pre></td>
+</tr>
+<tr>
+<td class="lineCount">180</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">181</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $operator</pre></td>
+</tr>
+<tr>
+<td class="lineCount">182</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return string</pre></td>
+</tr>
+<tr>
+<td class="lineCount">183</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">184</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    static public function getMethodName( $operator )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">185</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">186</td>
+<td class="lineCountHighlight">121</td>
+<td><pre class="srcLine">        $method = array_search($operator, array_flip(Xyster_Enum::values('Xyster_Data_Operator_Expression')));</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">187</td>
+<td class="lineCountHighlight">121</td>
+<td><pre class="srcLine">        return strlen($method) &gt; 1 ? strtolower($method[0]) . substr($method, 1) : false;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">188</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">189</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">190</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">191</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Equal To Xyster_Data_Expression ( field = 'value' )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">192</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">193</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * For $value to reference another field, pass a {@link Xyster_Data_Field} object</pre></td>
+</tr>
+<tr>
+<td class="lineCount">194</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">195</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $field</pre></td>
+</tr>
+<tr>
+<td class="lineCount">196</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $value</pre></td>
+</tr>
+<tr>
+<td class="lineCount">197</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Data_Expression</pre></td>
+</tr>
+<tr>
+<td class="lineCount">198</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">199</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    static public function eq( $field, $value )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">200</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">201</td>
+<td class="lineCountHighlight">134</td>
+<td><pre class="srcLine">        return new Xyster_Data_Expression($field, self::$_operators[__FUNCTION__], $value);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">202</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">203</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">204</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">205</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Not Equal To Xyster_Data_Expression ( field &lt;&gt; 'value' )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">206</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">207</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * For $value to reference another field, pass a {@link Xyster_Data_Field} object</pre></td>
+</tr>
+<tr>
+<td class="lineCount">208</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">209</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $field</pre></td>
+</tr>
+<tr>
+<td class="lineCount">210</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $value</pre></td>
+</tr>
+<tr>
+<td class="lineCount">211</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Data_Expression</pre></td>
+</tr>
+<tr>
+<td class="lineCount">212</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">213</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    static public function neq( $field, $value )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">214</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">215</td>
+<td class="lineCountHighlight">120</td>
+<td><pre class="srcLine">        return new Xyster_Data_Expression($field, self::$_operators[__FUNCTION__], $value);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">216</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">217</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">218</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">219</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Less Than Xyster_Data_Expression ( field &lt; 3 )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">220</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">221</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * For $value to reference another field, pass a {@link Xyster_Data_Field} object</pre></td>
+</tr>
+<tr>
+<td class="lineCount">222</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">223</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $field</pre></td>
+</tr>
+<tr>
+<td class="lineCount">224</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $value</pre></td>
+</tr>
+<tr>
+<td class="lineCount">225</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Data_Expression</pre></td>
+</tr>
+<tr>
+<td class="lineCount">226</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">227</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    static public function lt( $field, $value )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">228</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">229</td>
+<td class="lineCountHighlight">4</td>
+<td><pre class="srcLine">        return new Xyster_Data_Expression($field, self::$_operators[__FUNCTION__], $value);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">230</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">231</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">232</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">233</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Less Than or Equal To Xyster_Data_Expression ( field &lt;= 3 )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">234</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">235</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $field</pre></td>
+</tr>
+<tr>
+<td class="lineCount">236</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $value</pre></td>
+</tr>
+<tr>
+<td class="lineCount">237</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Data_Expression</pre></td>
+</tr>
+<tr>
+<td class="lineCount">238</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">239</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    static public function lte( $field, $value )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">240</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">241</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        return new Xyster_Data_Expression($field, self::$_operators[__FUNCTION__], $value);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">242</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">243</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">244</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">245</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Greater Than Xyster_Data_Expression ( field &gt; 2 )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">246</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">247</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * For $value to reference another field, pass a {@link Xyster_Data_Field} object</pre></td>
+</tr>
+<tr>
+<td class="lineCount">248</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">249</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $field</pre></td>
+</tr>
+<tr>
+<td class="lineCount">250</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $value</pre></td>
+</tr>
+<tr>
+<td class="lineCount">251</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Data_Expression</pre></td>
+</tr>
+<tr>
+<td class="lineCount">252</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">253</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    static public function gt( $field, $value )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">254</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">255</td>
+<td class="lineCountHighlight">26</td>
+<td><pre class="srcLine">        return new Xyster_Data_Expression($field, self::$_operators[__FUNCTION__], $value);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">256</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">257</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">258</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">259</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Greater Than or Equal To Xyster_Data_Expression ( field &gt;= 2 )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">260</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">261</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * For $value to reference another field, pass a {@link Xyster_Data_Field} object</pre></td>
+</tr>
+<tr>
+<td class="lineCount">262</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">263</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $field</pre></td>
+</tr>
+<tr>
+<td class="lineCount">264</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $value</pre></td>
+</tr>
+<tr>
+<td class="lineCount">265</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Data_Expression</pre></td>
+</tr>
+<tr>
+<td class="lineCount">266</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">267</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    static public function gte( $field, $value )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">268</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">269</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        return new Xyster_Data_Expression($field, self::$_operators[__FUNCTION__], $value);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">270</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">271</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">272</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">273</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * LIKE Xyster_Data_Expression ( field LIKE '%value' )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">274</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">275</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $field</pre></td>
+</tr>
+<tr>
+<td class="lineCount">276</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $value</pre></td>
+</tr>
+<tr>
+<td class="lineCount">277</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Data_Expression</pre></td>
+</tr>
+<tr>
+<td class="lineCount">278</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">279</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    static public function like( $field, $value )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">280</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">281</td>
+<td class="lineCountHighlight">9</td>
+<td><pre class="srcLine">        return new Xyster_Data_Expression($field, self::$_operators[__FUNCTION__], $value);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">282</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">283</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">284</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">285</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * NOT LIKE Xyster_Data_Expression ( field NOT LIKE '%value' )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">286</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">287</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $field</pre></td>
+</tr>
+<tr>
+<td class="lineCount">288</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $value</pre></td>
+</tr>
+<tr>
+<td class="lineCount">289</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Data_Expression</pre></td>
+</tr>
+<tr>
+<td class="lineCount">290</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">291</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    static public function notLike( $field, $value )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">292</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">293</td>
+<td class="lineCountHighlight">6</td>
+<td><pre class="srcLine">        return new Xyster_Data_Expression($field, self::$_operators[__FUNCTION__], $value);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">294</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">295</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">296</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">297</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * BETWEEN Xyster_Data_Expression ( field BETWEEN 'value' AND 'value' )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">298</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">299</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $field</pre></td>
+</tr>
+<tr>
+<td class="lineCount">300</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $start</pre></td>
+</tr>
+<tr>
+<td class="lineCount">301</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $end</pre></td>
+</tr>
+<tr>
+<td class="lineCount">302</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Data_Expression</pre></td>
+</tr>
+<tr>
+<td class="lineCount">303</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">304</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    static public function between( $field, $start, $end )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">305</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">306</td>
+<td class="lineCountHighlight">5</td>
+<td><pre class="srcLine">        return new Xyster_Data_Expression($field, self::$_operators[__FUNCTION__], array($start, $end));</pre></td>
+</tr>
+<tr>
+<td class="lineCount">307</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">308</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">309</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">310</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Equal To Xyster_Data_Expression ( field NOT BETWEEN 'value' AND 'value' )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">311</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">312</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $field</pre></td>
+</tr>
+<tr>
+<td class="lineCount">313</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $start</pre></td>
+</tr>
+<tr>
+<td class="lineCount">314</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $end</pre></td>
+</tr>
+<tr>
+<td class="lineCount">315</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Data_Expression</pre></td>
+</tr>
+<tr>
+<td class="lineCount">316</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">317</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    static public function notBetween( $field, $start, $end )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">318</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">319</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        return new Xyster_Data_Expression($field, self::$_operators[__FUNCTION__], array($start, $end));</pre></td>
+</tr>
+<tr>
+<td class="lineCount">320</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">321</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">322</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">323</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * In expression ( field IN ( 1,1,2,3,5,8,13,21,'fibonacci','sequence' ) )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">324</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">325</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $field</pre></td>
+</tr>
+<tr>
+<td class="lineCount">326</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param array $choices</pre></td>
+</tr>
+<tr>
+<td class="lineCount">327</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Data_Expression</pre></td>
+</tr>
+<tr>
+<td class="lineCount">328</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">329</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    static public function in( $field, array $choices )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">330</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">331</td>
+<td class="lineCountHighlight">4</td>
+<td><pre class="srcLine">        return new Xyster_Data_Expression($field, self::$_operators[__FUNCTION__], $choices);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">332</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">333</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">334</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">335</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Not in expression ( field NOT IN ( 1,1,2,3,5,8,13,21,'fibonacci','sequence' ) )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">336</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">337</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $field</pre></td>
+</tr>
+<tr>
+<td class="lineCount">338</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param array $choices</pre></td>
+</tr>
+<tr>
+<td class="lineCount">339</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Data_Expression</pre></td>
+</tr>
+<tr>
+<td class="lineCount">340</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">341</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    static public function notIn( $field, array $choices )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">342</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">343</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">        return new Xyster_Data_Expression($field, self::$_operators[__FUNCTION__], $choices);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">344</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">345</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">}</pre></td>
+</tr>
+</table>
+<br><table width="100%">
+<tr><td><hr noshade size="1"></td></tr>
+<tr><td class="small">Report generated at 2008-03-05T18:27:43-05:00</td></tr>
+</table>
+</BODY>
+</HTML>

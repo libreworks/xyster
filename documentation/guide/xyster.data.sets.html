@@ -1,0 +1,134 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>5.4. Sets and Collections</title>
+<link rel="stylesheet" href="dbstyle.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.72.0">
+<link rel="start" href="index.html" title="Programmer's Reference Guide">
+<link rel="up" href="xyster.data.html" title="Chapter 5. Xyster_Data">
+<link rel="prev" href="xyster.data.clauses.html" title="5.3. Symbol Clauses">
+<link rel="next" href="xyster.date.html" title="Chapter 6. Xyster_Date">
+<link rel="chapter" href="introduction.html" title="Chapter 1. Introduction to Xyster Framework">
+<link rel="chapter" href="xyster.acl.html" title="Chapter 2. Xyster_Acl">
+<link rel="chapter" href="xyster.collection.html" title="Chapter 3. Xyster_Collection">
+<link rel="chapter" href="xyster.controller.html" title="Chapter 4. Xyster_Controller">
+<link rel="chapter" href="xyster.data.html" title="Chapter 5. Xyster_Data">
+<link rel="chapter" href="xyster.date.html" title="Chapter 6. Xyster_Date">
+<link rel="chapter" href="xyster.enum.html" title="Chapter 7. Xyster_Enum">
+<link rel="chapter" href="xyster.filter.html" title="Chapter 8. Xyster_Filter">
+<link rel="chapter" href="xyster.orm.html" title="Chapter 9. Xyster_Orm">
+<link rel="chapter" href="xyster.type.html" title="Chapter 10. Xyster_Type">
+<link rel="chapter" href="xyster.validate.html" title="Chapter 11. Xyster_Validate">
+<link rel="subsection" href="xyster.data.sets.html#xyster.data.set" title="5.4.1. Xyster_Data_Set">
+<link rel="subsection" href="xyster.data.sets.html#xyster.data.tuple" title="5.4.2. Xyster_Data_Tuple">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<div class="navheader"><table width="100%" summary="Navigation header">
+<tr><th colspan="3" align="center">5.4. Sets and Collections</th></tr>
+<tr>
+<td width="20%" align="left">
+<a accesskey="p" href="xyster.data.clauses.html">Prev</a> </td>
+<th width="60%" align="center">Chapter 5. Xyster_Data</th>
+<td width="20%" align="right"> <a accesskey="n" href="xyster.date.html">Next</a>
+</td>
+</tr>
+</table></div>
+<div class="sect1" lang="en">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="xyster.data.sets"></a>5.4. Sets and Collections</h2></div></div></div>
+<p>The Xyster_Data package comes supplied with some objects for working with sets of data.</p>
+<div class="sect2" lang="en">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="xyster.data.set"></a>5.4.1. Xyster_Data_Set</h3></div></div></div>
+<p>The data set is an editable record set. More specifically, It's a sortable
+                    set that can contain only objects and arrays. It can have values fetched from it or items
+                    filtered out. For the following examples, let's declare the following class and objects:</p>
+<pre class="programlisting">&lt;?php
+
+class hero
+{
+      public $name;
+      public $gender;
+      public $universe; 
+
+      public function __construct( $name, $gender, $universe )
+      {
+
+            $this-&gt;name = $name;
+            $this-&gt;gender = $gender;
+            $this-&gt;universe = $universe;
+      }
+}
+
+$punisher = new hero( 'Frank Castle', 'M', 'Marvel' );
+$supes = new hero('Clark Kent', 'M', 'DC');
+$blackcat = new hero('Felicia Hardy', 'F', 'Marvel');
+$catwoman = new hero('Selina Kyle', 'F', 'DC' );
+</pre>
+<p>A data set can be constructed from a traversable value containing arrays or objects:</p>
+<pre class="programlisting">&lt;?php
+$heroes = new Xyster_Data_Set();
+foreach( array( $punisher, $supes, $blackcat, $catwoman ) as $hero ) {
+        $heroes-&gt;add($hero);
+}
+</pre>
+<p>The <code class="code">$set</code> data set would contain the Fields "name", "gender", and
+                    "universe". You can also construct a blank set and add Fields to it.</p>
+<pre class="programlisting">&lt;?php
+$heroes = new Xyster_Data_Set();
+
+$heroes-&gt;addColumn("name");
+$heroes-&gt;addColumn("gender");
+$heroes-&gt;addColumn("universe");
+</pre>
+<p>The values in the set can be sorted with the <code class="methodname">sortBy</code> method which takes
+                    one or more <code class="classname">Xyster_Data_Sort</code> objects as a parameter.</p>
+<p>Note that you can mix arrays and objects in the same sortable set, and for that matter,
+                    they can have different columns. However, trying to sort on a column that not every item
+                    has will throw an exception.</p>
+<p>Data sets can have values fetched or aggregated from them:</p>
+<pre class="programlisting">&lt;?php
+$multiverse = $heroes-&gt;fetchColumn('universe');
+// $multiverse contains 'Marvel', 'DC', 'Marvel', 'DC'
+$name = $heroes-&gt;fetchScalar();
+// $name contains the first column of the first item
+$nameAndGender = $heroes-&gt;fetchPairs('name', 'gender');
+// $name contains array("Clark Kent"=&gt;"M","Felicia Hardy"=&gt;"F", ..etc.)
+$max = $heroes-&gt;aggregate(Xyster_Data_Aggregate::Maximum(), 'name');
+// $max contains 'Selina Kyle'
+</pre>
+<p>They can also be filtered with the filter method.</p>
+<pre class="programlisting">&lt;?php
+$criteria = Xyster_Data_Expression::neq('universe','DC');
+$heroes-&gt;filter($criteria);
+// $heroes would contain 'Felicia Hardy' and 'Frank Castle'
+</pre>
+</div>
+<div class="sect2" lang="en">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="xyster.data.tuple"></a>5.4.2. Xyster_Data_Tuple</h3></div></div></div>
+<p>A tuple is a grouping of records by some common feature. Usually, records are
+                    grouped by the same value in one or more columns. For instance, using the objects
+                    above, one could create a tuple containing 'Clark Kent' and 'Selina Kyle'
+                    because they both have 'DC' in the universe column. <code class="classname">Xyster_Data_Tuple</code>
+                    has a static method that accepts a number of arguments to make tuples out of a traversable group
+                    of values (<code class="methodname">makeTuples</code>). See the Tuple API documentation for more information.</p>
+</div>
+</div>
+<div class="navfooter"><table width="100%" summary="Navigation footer">
+<tr>
+<td width="40%" align="left">
+<a accesskey="p" href="xyster.data.clauses.html">Prev</a> </td>
+<td width="20%" align="center"><a accesskey="u" href="xyster.data.html">Up</a></td>
+<td width="40%" align="right"> <a accesskey="n" href="xyster.date.html">Next</a>
+</td>
+</tr>
+<tr>
+<td width="40%" align="left" valign="top">5.3. Symbol Clauses </td>
+<td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td>
+<td width="40%" align="right" valign="top"> Chapter 6. Xyster_Date</td>
+</tr>
+</table></div>
+<div class="revinfo"></div>
+</body>
+</html>

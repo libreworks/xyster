@@ -1,0 +1,847 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class Xyster_Container_Monitor_Abstract</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name">Class Xyster_Container_Monitor_Abstract</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+							<a href="#sec-descendents">Descendents</a>
+			|													<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+											<a href="#sec-const-summary">Constants</a> (<a href="#sec-consts">details</a>)
+						
+			</div>
+	<div class="info-box-body">
+                <p class="implements">
+            Implements interfaces:
+            <ul>
+                <li><a href="../Xyster_Container/Xyster_Container_Monitor.html">Xyster_Container_Monitor</a></li><li><a href="../Xyster_Container/Xyster_Container_Monitor_Strategy.html">Xyster_Container_Monitor_Strategy</a></li>            </ul>
+        </p>
+        		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">A monitor which delegates to another monitor</p>
+<p class="description"><p>It provides a Xyster_Container_Monitor_Null by default, but does not allow to  use <div class="src-code"><ol><li><div class="src-line"><span class="src-id">null</span></div></li>
+</ol></div> for the delegate.</p></p>
+	<ul class="tags">
+				<li><span class="field">copyright:</span> Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)</li>
+				<li><span class="field">abstract:</span> </li>
+				<li><span class="field">license:</span> <a href="http://www.opensource.org/licenses/bsd-license.php">New BSD License</a></li>
+			</ul>
+		<p class="notes">
+			Located in <a class="field" href="_Container---Monitor---Abstract.php.html">/Container/Monitor/Abstract.php</a> (line <span class="field">35</span>)
+		</p>
+		
+				
+		<pre></pre>
+	
+			</div>
+</div>
+
+	<a name="sec-descendents"></a>
+	<div class="info-box">
+		<div class="info-box-title">Direct descendents</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+			<span class="disabled">Descendents</span>
+			|															<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+															<a href="#sec-const-summary">Constants</a> (<a href="#sec-consts">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			<table cellpadding="2" cellspacing="0" class="class-table">
+				<tr>
+					<th class="class-table-header">Class</th>
+					<th class="class-table-header">Description</th>
+				</tr>
+								<tr>
+					<td style="padding-right: 2em"><a href="../Xyster_Container/Xyster_Container_Monitor_Log.html">Xyster_Container_Monitor_Log</a></td>
+					<td>
+											A monitor that writes out to a Zend_Log instance.
+										</td>
+				</tr>
+							</table>
+		</div>
+	</div>
+
+	<a name="sec-const-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Class Constant Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+							<a href="#sec-descendents">Descendants</a> |
+						<span class="disabled">Constants</span> (<a href="#sec-consts">details</a>)
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			<div class="const-summary">
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#INSTANTIATED" title="details" class="const-name">INSTANTIATED</a> = 					<span class="var-type"> &quot;Xyster_Container: instantiated %s [%0.5f ms] injected [%s]&quot;</span>
+
+				</div>
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#INSTANTIATING" title="details" class="const-name">INSTANTIATING</a> = 					<span class="var-type"> &quot;Xyster_Container: instantiating %s&quot;</span>
+
+				</div>
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#INSTANTIATION_FAILED" title="details" class="const-name">INSTANTIATION_FAILED</a> = 					<span class="var-type"> &quot;Xyster_Container: instantiation failed: %s, reason: %s&quot;</span>
+
+				</div>
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#INVOCATION_FAILED" title="details" class="const-name">INVOCATION_FAILED</a> = 					<span class="var-type"> &quot;Xyster_Container: invocation failed: %s on %s, reason: %s&quot;</span>
+
+				</div>
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#INVOKED" title="details" class="const-name">INVOKED</a> = 					<span class="var-type"> &quot;Xyster_Container: invoked %s on %s [%0.5f ms]&quot;</span>
+
+				</div>
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#INVOKING" title="details" class="const-name">INVOKING</a> = 					<span class="var-type"> &quot;Xyster_Container: invoking %s on %s&quot;</span>
+
+				</div>
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#NO_COMPONENT" title="details" class="const-name">NO_COMPONENT</a> = 					<span class="var-type"> &quot;Xyster_Container: No component for key: %s&quot;</span>
+
+				</div>
+							</div>
+		</div>
+	</div>
+
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+							<a href="#sec-descendents">Descendents</a> |
+															<a href="#sec-const-summary">Constants</a> (<a href="#sec-consts">details</a>)
+							
+									<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+																																																																																												<div class="method-definition">
+					static 						<span class="method-result">string</span>
+										<a href="#parmsToString" title="details" class="method-name">parmsToString</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$injected</span>)
+									</div>
+								
+												<div class="method-definition">
+											<span class="method-result">Xyster_Container_Monitor_Abstract</span>
+										<a href="#__construct" title="details" class="method-name">__construct</a>
+											([<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Monitor.html">Xyster_Container_Monitor</a></span>&nbsp;<span class="var-name">$delegate</span> = <span class="var-default">null</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#changeMonitor" title="details" class="method-name">changeMonitor</a>
+											(<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Monitor.html">Xyster_Container_Monitor</a></span>&nbsp;<span class="var-name">$monitor</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../Xyster_Container/Xyster_Container_Monitor.html">Xyster_Container_Monitor</a></span>
+										<a href="#currentMonitor" title="details" class="method-name">currentMonitor</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#instantiated" title="details" class="method-name">instantiated</a>
+											(<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Interface.html">Xyster_Container_Interface</a></span>&nbsp;<span class="var-name">$container</span>, <span class="var-type"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>&nbsp;<span class="var-name">$adapter</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$class</span> = <span class="var-default">null</span>], <span class="var-type">mixed</span>&nbsp;<span class="var-name">$instantiated</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$injected</span> = <span class="var-default">null</span>], <span class="var-type">float</span>&nbsp;<span class="var-name">$duration</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#instantiating" title="details" class="method-name">instantiating</a>
+											(<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Interface.html">Xyster_Container_Interface</a></span>&nbsp;<span class="var-name">$container</span>, <span class="var-type"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>&nbsp;<span class="var-name">$adapter</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$class</span> = <span class="var-default">null</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#instantiationFailed" title="details" class="method-name">instantiationFailed</a>
+											(<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Interface.html">Xyster_Container_Interface</a></span>&nbsp;<span class="var-name">$container</span>, <span class="var-type"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>&nbsp;<span class="var-name">$adapter</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$class</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$cause</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#invocationFailed" title="details" class="method-name">invocationFailed</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$member</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$instance</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$cause</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#invoked" title="details" class="method-name">invoked</a>
+											(<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Interface.html">Xyster_Container_Interface</a></span>&nbsp;<span class="var-name">$container</span>, <span class="var-type"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>&nbsp;<span class="var-name">$adapter</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$method</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$instance</span>, <span class="var-type">float</span>&nbsp;<span class="var-name">$duration</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#invoking" title="details" class="method-name">invoking</a>
+											(<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Interface.html">Xyster_Container_Interface</a></span>&nbsp;<span class="var-name">$container</span>, <span class="var-type"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>&nbsp;<span class="var-name">$adapter</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$member</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$instance</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">mixed</span>
+										<a href="#noComponentFound" title="details" class="method-name">noComponentFound</a>
+											(<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Interface.html">Xyster_Container_Interface</a></span>&nbsp;<span class="var-name">$container</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$key</span>)
+									</div>
+																</div>
+		</div>
+	</div>		
+
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+							<a href="#sec-descendents">Descendents</a> |
+																		<a href="#sec-const-summary">Constants</a> (<a href="#sec-consts">details</a>)
+							
+										<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+<a name="methodparmsToString" id="parmsToString"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">static method parmsToString</span> (line <span class="line-number">186</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Converts an array of values into a string of their type names</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+	    static
+		<span class="method-result">string</span>
+		<span class="method-name">
+			parmsToString
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$injected</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">$injected</span>			</li>
+				</ul>
+		
+			
+	</div>
+
+<a name="method__construct" id="__construct"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number">55</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Creates a new delegating monitor</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Xyster_Container_Monitor_Abstract</span>
+		<span class="method-name">
+			__construct
+		</span>
+					([<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Monitor.html">Xyster_Container_Monitor</a></span>&nbsp;<span class="var-name">$delegate</span> = <span class="var-default">null</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Monitor.html">Xyster_Container_Monitor</a></span>
+				<span class="var-name">$delegate</span>			</li>
+				</ul>
+		
+			
+			<hr class="separator" />
+		<div class="notes">Redefined in descendants as:</div>
+		<ul class="redefinitions">
+					<li>
+				<a href="../Xyster_Container/Xyster_Container_Monitor_Log.html#method__construct">Xyster_Container_Monitor_Log::__construct()</a>
+								: Creates a new delegating monitor
+							</li>
+				</ul>
+	</div>
+<a name="methodchangeMonitor" id="changeMonitor"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">changeMonitor</span> (line <span class="line-number">69</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Changes the component monitor used</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			changeMonitor
+		</span>
+					(<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Monitor.html">Xyster_Container_Monitor</a></span>&nbsp;<span class="var-name">$monitor</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Monitor.html">Xyster_Container_Monitor</a></span>
+				<span class="var-name">$monitor</span><span class="var-description">: the new monitor to use</span>			</li>
+				</ul>
+		
+				<hr class="separator" />
+		<div class="notes">Implementation of:</div>
+			<dl>
+			<dt><a href="../Xyster_Container/Xyster_Container_Monitor_Strategy.html#methodchangeMonitor">Xyster_Container_Monitor_Strategy::changeMonitor()</a></dt>
+						<dd>Changes the component monitor used</dd>
+					</dl>
+			
+	</div>
+<a name="methodcurrentMonitor" id="currentMonitor"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">currentMonitor</span> (line <span class="line-number">83</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets the monitor currently used</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> The monitor currently used</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../Xyster_Container/Xyster_Container_Monitor.html">Xyster_Container_Monitor</a></span>
+		<span class="method-name">
+			currentMonitor
+		</span>
+				()
+			</div>
+	
+		
+				<hr class="separator" />
+		<div class="notes">Implementation of:</div>
+			<dl>
+			<dt><a href="../Xyster_Container/Xyster_Container_Monitor_Strategy.html#methodcurrentMonitor">Xyster_Container_Monitor_Strategy::currentMonitor()</a></dt>
+						<dd>Gets the monitor currently used</dd>
+					</dl>
+			
+	</div>
+<a name="methodinstantiated" id="instantiated"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">instantiated</span> (line <span class="line-number">112</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Event thrown after the component has been instantiated using the given constructor.</p>
+<p class="description"><p>This should be called for both Constructor and Setter DI.</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			instantiated
+		</span>
+					(<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Interface.html">Xyster_Container_Interface</a></span>&nbsp;<span class="var-name">$container</span>, <span class="var-type"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>&nbsp;<span class="var-name">$adapter</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$class</span> = <span class="var-default">null</span>], <span class="var-type">mixed</span>&nbsp;<span class="var-name">$instantiated</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$injected</span> = <span class="var-default">null</span>], <span class="var-type">float</span>&nbsp;<span class="var-name">$duration</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Interface.html">Xyster_Container_Interface</a></span>
+				<span class="var-name">$container</span>			</li>
+					<li>
+				<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>
+				<span class="var-name">$adapter</span>			</li>
+					<li>
+				<span class="var-type">Xyster_Type</span>
+				<span class="var-name">$class</span><span class="var-description">: the class being instantiated</span>			</li>
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$instantiated</span><span class="var-description">: the component that was instantiated</span>			</li>
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">$injected</span><span class="var-description">: the components during instantiation</span>			</li>
+					<li>
+				<span class="var-type">float</span>
+				<span class="var-name">$duration</span><span class="var-description">: the duration in millis of the instantiation</span>			</li>
+				</ul>
+		
+				<hr class="separator" />
+		<div class="notes">Implementation of:</div>
+			<dl>
+			<dt><a href="../Xyster_Container/Xyster_Container_Monitor.html#methodinstantiated">Xyster_Container_Monitor::instantiated()</a></dt>
+						<dd>Event thrown after the component has been instantiated using the given constructor.</dd>
+					</dl>
+			
+			<hr class="separator" />
+		<div class="notes">Redefined in descendants as:</div>
+		<ul class="redefinitions">
+					<li>
+				<a href="../Xyster_Container/Xyster_Container_Monitor_Log.html#methodinstantiated">Xyster_Container_Monitor_Log::instantiated()</a>
+								: Event thrown after the component has been instantiated using the given constructor.
+							</li>
+				</ul>
+	</div>
+<a name="methodinstantiating" id="instantiating"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">instantiating</span> (line <span class="line-number">96</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Event thrown as the component is being instantiated using the given constructor</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			instantiating
+		</span>
+					(<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Interface.html">Xyster_Container_Interface</a></span>&nbsp;<span class="var-name">$container</span>, <span class="var-type"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>&nbsp;<span class="var-name">$adapter</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$class</span> = <span class="var-default">null</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Interface.html">Xyster_Container_Interface</a></span>
+				<span class="var-name">$container</span>			</li>
+					<li>
+				<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>
+				<span class="var-name">$adapter</span>			</li>
+					<li>
+				<span class="var-type">Xyster_Type</span>
+				<span class="var-name">$class</span><span class="var-description">: the class being instantiated</span>			</li>
+				</ul>
+		
+				<hr class="separator" />
+		<div class="notes">Implementation of:</div>
+			<dl>
+			<dt><a href="../Xyster_Container/Xyster_Container_Monitor.html#methodinstantiating">Xyster_Container_Monitor::instantiating()</a></dt>
+						<dd>Event thrown as the component is being instantiated using the given constructor</dd>
+					</dl>
+			
+			<hr class="separator" />
+		<div class="notes">Redefined in descendants as:</div>
+		<ul class="redefinitions">
+					<li>
+				<a href="../Xyster_Container/Xyster_Container_Monitor_Log.html#methodinstantiating">Xyster_Container_Monitor_Log::instantiating()</a>
+								: Event thrown as the component is being instantiated using the given constructor
+							</li>
+				</ul>
+	</div>
+<a name="methodinstantiationFailed" id="instantiationFailed"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">instantiationFailed</span> (line <span class="line-number">125</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Event thrown if the component instantiation failed using the given constructor</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			instantiationFailed
+		</span>
+					(<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Interface.html">Xyster_Container_Interface</a></span>&nbsp;<span class="var-name">$container</span>, <span class="var-type"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>&nbsp;<span class="var-name">$adapter</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$class</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$cause</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Interface.html">Xyster_Container_Interface</a></span>
+				<span class="var-name">$container</span>			</li>
+					<li>
+				<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>
+				<span class="var-name">$adapter</span>			</li>
+					<li>
+				<span class="var-type">Xyster_Type</span>
+				<span class="var-name">$class</span><span class="var-description">: the class being instantiated</span>			</li>
+					<li>
+				<span class="var-type">Exception</span>
+				<span class="var-name">$cause</span><span class="var-description">: the Exception detailing the cause of the failure</span>			</li>
+				</ul>
+		
+				<hr class="separator" />
+		<div class="notes">Implementation of:</div>
+			<dl>
+			<dt><a href="../Xyster_Container/Xyster_Container_Monitor.html#methodinstantiationFailed">Xyster_Container_Monitor::instantiationFailed()</a></dt>
+						<dd>Event thrown if the component instantiation failed using the given constructor</dd>
+					</dl>
+			
+			<hr class="separator" />
+		<div class="notes">Redefined in descendants as:</div>
+		<ul class="redefinitions">
+					<li>
+				<a href="../Xyster_Container/Xyster_Container_Monitor_Log.html#methodinstantiationFailed">Xyster_Container_Monitor_Log::instantiationFailed()</a>
+								: Event thrown if the component instantiation failed using the given constructor
+							</li>
+				</ul>
+	</div>
+<a name="methodinvocationFailed" id="invocationFailed"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">invocationFailed</span> (line <span class="line-number">164</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Event thrown if the component method invocation failed on the given instance</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			invocationFailed
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$member</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$instance</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$cause</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">ReflectionMethod</span>
+				<span class="var-name">$member</span>			</li>
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$instance</span><span class="var-description">: the component instance</span>			</li>
+					<li>
+				<span class="var-type">Exception</span>
+				<span class="var-name">$cause</span><span class="var-description">: the Exception detailing the cause of the failure</span>			</li>
+				</ul>
+		
+				<hr class="separator" />
+		<div class="notes">Implementation of:</div>
+			<dl>
+			<dt><a href="../Xyster_Container/Xyster_Container_Monitor.html#methodinvocationFailed">Xyster_Container_Monitor::invocationFailed()</a></dt>
+						<dd>Event thrown if the component method invocation failed on the given instance</dd>
+					</dl>
+			
+			<hr class="separator" />
+		<div class="notes">Redefined in descendants as:</div>
+		<ul class="redefinitions">
+					<li>
+				<a href="../Xyster_Container/Xyster_Container_Monitor_Log.html#methodinvocationFailed">Xyster_Container_Monitor_Log::invocationFailed()</a>
+								: Event thrown if the component method invocation failed on the given instance
+							</li>
+				</ul>
+	</div>
+<a name="methodinvoked" id="invoked"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">invoked</span> (line <span class="line-number">152</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Event thrown after the component method has been invoked on the given instance</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			invoked
+		</span>
+					(<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Interface.html">Xyster_Container_Interface</a></span>&nbsp;<span class="var-name">$container</span>, <span class="var-type"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>&nbsp;<span class="var-name">$adapter</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$method</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$instance</span>, <span class="var-type">float</span>&nbsp;<span class="var-name">$duration</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Interface.html">Xyster_Container_Interface</a></span>
+				<span class="var-name">$container</span>			</li>
+					<li>
+				<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>
+				<span class="var-name">$adapter</span>			</li>
+					<li>
+				<span class="var-type">ReflectionMethod</span>
+				<span class="var-name">$method</span><span class="var-description">: the Method invoked on the component instance</span>			</li>
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$instance</span><span class="var-description">: the component instance</span>			</li>
+					<li>
+				<span class="var-type">float</span>
+				<span class="var-name">$duration</span><span class="var-description">: the duration in millis of the invocation</span>			</li>
+				</ul>
+		
+				<hr class="separator" />
+		<div class="notes">Implementation of:</div>
+			<dl>
+			<dt><a href="../Xyster_Container/Xyster_Container_Monitor.html#methodinvoked">Xyster_Container_Monitor::invoked()</a></dt>
+						<dd>Event thrown after the component method has been invoked on the given instance</dd>
+					</dl>
+			
+			<hr class="separator" />
+		<div class="notes">Redefined in descendants as:</div>
+		<ul class="redefinitions">
+					<li>
+				<a href="../Xyster_Container/Xyster_Container_Monitor_Log.html#methodinvoked">Xyster_Container_Monitor_Log::invoked()</a>
+								: Event thrown after the component method has been invoked on the given instance
+							</li>
+				</ul>
+	</div>
+<a name="methodinvoking" id="invoking"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">invoking</span> (line <span class="line-number">138</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Event thrown as the component method is being invoked on the given instance</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			invoking
+		</span>
+					(<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Interface.html">Xyster_Container_Interface</a></span>&nbsp;<span class="var-name">$container</span>, <span class="var-type"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>&nbsp;<span class="var-name">$adapter</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$member</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$instance</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Interface.html">Xyster_Container_Interface</a></span>
+				<span class="var-name">$container</span>			</li>
+					<li>
+				<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>
+				<span class="var-name">$adapter</span>			</li>
+					<li>
+				<span class="var-type">ReflectionMethod</span>
+				<span class="var-name">$member</span>			</li>
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$instance</span><span class="var-description">: the component instance</span>			</li>
+				</ul>
+		
+				<hr class="separator" />
+		<div class="notes">Implementation of:</div>
+			<dl>
+			<dt><a href="../Xyster_Container/Xyster_Container_Monitor.html#methodinvoking">Xyster_Container_Monitor::invoking()</a></dt>
+						<dd>Event thrown as the component method is being invoked on the given instance</dd>
+					</dl>
+			
+			<hr class="separator" />
+		<div class="notes">Redefined in descendants as:</div>
+		<ul class="redefinitions">
+					<li>
+				<a href="../Xyster_Container/Xyster_Container_Monitor_Log.html#methodinvoking">Xyster_Container_Monitor_Log::invoking()</a>
+								: Event thrown as the component method is being invoked on the given instance
+							</li>
+				</ul>
+	</div>
+<a name="methodnoComponentFound" id="noComponentFound"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">noComponentFound</span> (line <span class="line-number">175</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">mixed</span>
+		<span class="method-name">
+			noComponentFound
+		</span>
+					(<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Interface.html">Xyster_Container_Interface</a></span>&nbsp;<span class="var-name">$container</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$key</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Interface.html">Xyster_Container_Interface</a></span>
+				<span class="var-name">$container</span>			</li>
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$key</span>			</li>
+				</ul>
+		
+				<hr class="separator" />
+		<div class="notes">Implementation of:</div>
+			<dl>
+			<dt><a href="../Xyster_Container/Xyster_Container_Monitor.html#methodnoComponentFound">Xyster_Container_Monitor::noComponentFound()</a></dt>
+					</dl>
+			
+			<hr class="separator" />
+		<div class="notes">Redefined in descendants as:</div>
+		<ul class="redefinitions">
+					<li>
+				<a href="../Xyster_Container/Xyster_Container_Monitor_Log.html#methodnoComponentFound">Xyster_Container_Monitor_Log::noComponentFound()</a>
+							</li>
+				</ul>
+	</div>
+						
+		</div>
+	</div>
+
+	<a name="sec-consts"></a>
+	<div class="info-box">
+		<div class="info-box-title">Class Constants</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+							<a href="#sec-descendents">Descendants</a> |
+										<a href="#sec-var-summary">Constants</a> (<span class="disabled">details</span>)
+						
+			
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			<a name="constINSTANTIATED" id="INSTANTIATED"><!-- --></A>
+<div class="oddrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">INSTANTIATED</span>
+			 = <span class="const-default"> &quot;Xyster_Container: instantiated %s [%0.5f ms] injected [%s]&quot;</span>
+			(line <span class="line-number">38</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+</div>
+<a name="constINSTANTIATING" id="INSTANTIATING"><!-- --></A>
+<div class="evenrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">INSTANTIATING</span>
+			 = <span class="const-default"> &quot;Xyster_Container: instantiating %s&quot;</span>
+			(line <span class="line-number">37</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+</div>
+<a name="constINSTANTIATION_FAILED" id="INSTANTIATION_FAILED"><!-- --></A>
+<div class="oddrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">INSTANTIATION_FAILED</span>
+			 = <span class="const-default"> &quot;Xyster_Container: instantiation failed: %s, reason: %s&quot;</span>
+			(line <span class="line-number">39</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+</div>
+<a name="constINVOCATION_FAILED" id="INVOCATION_FAILED"><!-- --></A>
+<div class="evenrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">INVOCATION_FAILED</span>
+			 = <span class="const-default"> &quot;Xyster_Container: invocation failed: %s on %s, reason: %s&quot;</span>
+			(line <span class="line-number">42</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+</div>
+<a name="constINVOKED" id="INVOKED"><!-- --></A>
+<div class="oddrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">INVOKED</span>
+			 = <span class="const-default"> &quot;Xyster_Container: invoked %s on %s [%0.5f ms]&quot;</span>
+			(line <span class="line-number">41</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+</div>
+<a name="constINVOKING" id="INVOKING"><!-- --></A>
+<div class="evenrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">INVOKING</span>
+			 = <span class="const-default"> &quot;Xyster_Container: invoking %s on %s&quot;</span>
+			(line <span class="line-number">40</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+</div>
+<a name="constNO_COMPONENT" id="NO_COMPONENT"><!-- --></A>
+<div class="oddrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">NO_COMPONENT</span>
+			 = <span class="const-default"> &quot;Xyster_Container: No component for key: %s&quot;</span>
+			(line <span class="line-number">43</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+</div>
+						
+		</div>
+	</div>
+
+	<p class="notes" id="credit">
+		Documentation generated on Mon, 19 May 2008 17:08:10 -0400 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.2</a>
+	</p>
+	</div></body>
+</html>

@@ -1,0 +1,890 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<LINK REL="stylesheet" TYPE="text/css" TITLE="Style" href="../stylesheet.css">
+</HEAD>
+<BODY>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="bannercell" rowspan="2"><a href="http://phing.info/"><img src="http://phing.info/images/phing.gif" alt="http://phing.info/" align="left" border="0"></a></td>
+<td style="text-align:right"><h2>Source Code Coverage</h2></td>
+</tr>
+<tr><td style="text-align:right">Designed for use with <a href="http://pear.php.net/package/PHPUnit2">PHPUnit2</a>, <a href="http://www.xdebug.org/">Xdebug</a> and <a href="http://phing.info/">Phing</a>.</td></tr>
+</table>
+<hr size="1">
+<table class="log" cellpadding="5" cellspacing="0" width="100%"><tr class="a">
+<td class="small">Methods: 8</td>
+<td class="small">LOC: 169</td>
+<td class="small">Statements: 41</td>
+</tr></table>
+<br><table class="log" cellpadding="5" cellspacing="0" width="100%">
+<tr>
+<th width="100%">Source file</th>
+<th>Statements</th>
+<th>Methods</th>
+<th width="250" colspan="2" nowrap>Total coverage</th>
+</tr>
+<tr class="a">
+<td>Xsql.php</td>
+<td>95.1%</td>
+<td>100.0%</td>
+<td>95.9%</td>
+<td><table cellspacing="0" cellpadding="0" border="0" width="100%" style="display: inline"><tr>
+<td class="covered" width="192" height="12"> </td>
+<td class="uncovered" width="8" height="12"> </td>
+</tr></table></td>
+</tr>
+</table>
+<table cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td class="lineCount">1</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">&lt;?php</pre></td>
+</tr>
+<tr>
+<td class="lineCount">2</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">3</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * Xyster Framework</pre></td>
+</tr>
+<tr>
+<td class="lineCount">4</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">5</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * This source file is subject to the new BSD license that is bundled</pre></td>
+</tr>
+<tr>
+<td class="lineCount">6</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * with this package in the file LICENSE.txt.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">7</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * It is also available through the world-wide-web at this URL:</pre></td>
+</tr>
+<tr>
+<td class="lineCount">8</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * http://www.opensource.org/licenses/bsd-license.php</pre></td>
+</tr>
+<tr>
+<td class="lineCount">9</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">10</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @category  Xyster</pre></td>
+</tr>
+<tr>
+<td class="lineCount">11</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @package   Xyster_Orm</pre></td>
+</tr>
+<tr>
+<td class="lineCount">12</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">13</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License</pre></td>
+</tr>
+<tr>
+<td class="lineCount">14</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @version   $Id: Xsql.php 220 2008-02-09 18:04:52Z doublecompile $</pre></td>
+</tr>
+<tr>
+<td class="lineCount">15</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">16</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">17</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @see Xyster_Orm_Xsql_Split</pre></td>
+</tr>
+<tr>
+<td class="lineCount">18</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">19</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">require_once 'Xyster/Orm/Xsql/Split.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCount">20</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">21</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * A helper for XSQL syntax</pre></td>
+</tr>
+<tr>
+<td class="lineCount">22</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">23</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @category  Xyster</pre></td>
+</tr>
+<tr>
+<td class="lineCount">24</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @package   Xyster_Orm</pre></td>
+</tr>
+<tr>
+<td class="lineCount">25</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">26</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License</pre></td>
+</tr>
+<tr>
+<td class="lineCount">27</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">28</td>
+<td class="coverageCount"></td>
+<td class="srcLineClassStart"><pre class="srcLine">class Xyster_Orm_Xsql</pre></td>
+</tr>
+<tr>
+<td class="lineCount">29</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">{</pre></td>
+</tr>
+<tr>
+<td class="lineCount">30</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">31</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Used for matching parenthesis groups not inside quotes</pre></td>
+</tr>
+<tr>
+<td class="lineCount">32</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">33</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * It works, but this still matches parentheses inside quotes that aren't in</pre></td>
+</tr>
+<tr>
+<td class="lineCount">34</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * parentheses.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">35</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">36</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    const PARENTH_QUOTE_REGEX = '/(?&lt;![\w\d])(\(((?:"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"|[^()])|(?1))+\))/m';</pre></td>
+</tr>
+<tr>
+<td class="lineCount">37</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">38</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">39</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Checks if a literal is a method call</pre></td>
+</tr>
+<tr>
+<td class="lineCount">40</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">41</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $field</pre></td>
+</tr>
+<tr>
+<td class="lineCount">42</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return boolean</pre></td>
+</tr>
+<tr>
+<td class="lineCount">43</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">44</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public static function isMethodCall( $field, array &amp;$matches = array() )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">45</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">46</td>
+<td class="lineCountHighlight">33</td>
+<td><pre class="srcLine">        return (bool) preg_match("/^[a-z_][a-z0-9_]*\([\w\W]*\)$/i", $field, $matches);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">47</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">48</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">49</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">50</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Checks a literal for syntactical correctness</pre></td>
+</tr>
+<tr>
+<td class="lineCount">51</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">52</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $lit</pre></td>
+</tr>
+<tr>
+<td class="lineCount">53</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return boolean</pre></td>
+</tr>
+<tr>
+<td class="lineCount">54</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">55</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public static function isLiteral( $lit )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">56</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCount">57</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">        return (</pre></td>
+</tr>
+<tr>
+<td class="lineCount">58</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            // either a string or a number or the word "null"</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">59</td>
+<td class="lineCountHighlight">61</td>
+<td><pre class="srcLine">            preg_match("/^(\"[^\"]*\"|[\d]+(.[\d]+)?|null)$/i", trim($lit))</pre></td>
+</tr>
+<tr>
+<td class="lineCount">60</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            //  a string with escapes in it</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">61</td>
+<td class="lineCountHighlight">8</td>
+<td><pre class="srcLine">            || preg_match('/^"[^"\\\\]*(\\\\.[^"\\\\]*)*"$/', trim($lit))</pre></td>
+</tr>
+<tr>
+<td class="lineCount">62</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            // check to see if it's a field</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">63</td>
+<td class="lineCountHighlight">8</td>
+<td><pre class="srcLine">            || self::isValidField($lit)</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">64</td>
+<td class="lineCountHighlight">61</td>
+<td><pre class="srcLine">        );</pre></td>
+</tr>
+<tr>
+<td class="lineCount">65</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">66</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">67</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">68</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Checks a reference for syntactical correctness</pre></td>
+</tr>
+<tr>
+<td class="lineCount">69</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">70</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $field</pre></td>
+</tr>
+<tr>
+<td class="lineCount">71</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return boolean</pre></td>
+</tr>
+<tr>
+<td class="lineCount">72</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">73</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public static function isValidField( $field )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">74</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">75</td>
+<td class="lineCountHighlight">17</td>
+<td><pre class="srcLine">        $field = trim($field);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">76</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">77</td>
+<td class="lineCountHighlight">17</td>
+<td><pre class="srcLine">        $ok = true;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">78</td>
+<td class="lineCountHighlight">17</td>
+<td><pre class="srcLine">        if ( !preg_match("/^[a-z][a-z0-9_]*(-&gt;[a-z0-9_]+(\([\s]*\))?)*$/i", $field) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">79</td>
+<td class="lineCountHighlight">17</td>
+<td><pre class="srcLine">        	$mcs = Xyster_Orm_Xsql_Split::Arrow()-&gt;split($field);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">80</td>
+<td class="lineCountHighlight">17</td>
+<td><pre class="srcLine">            foreach( $mcs as $mc ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">81</td>
+<td class="lineCountHighlight">17</td>
+<td><pre class="srcLine">                $matches = array();</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">82</td>
+<td class="lineCountHighlight">17</td>
+<td><pre class="srcLine">                $match = preg_match( "/^[a-z][a-z0-9_]*(\((?P&lt;params&gt;[\w\W]*)\))?$/i", $mc, $matches );</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">83</td>
+<td class="lineCountHighlight">17</td>
+<td><pre class="srcLine">                if ( ( $match &amp;&amp; array_key_exists("params", $matches) &amp;&amp; strlen(trim($matches['params']))</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">84</td>
+<td class="lineCountHighlight">17</td>
+<td><pre class="srcLine">                &amp;&amp; !self::_checkMethodParameters($matches['params']) ) || !$match ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">85</td>
+<td class="lineCountHighlight">17</td>
+<td><pre class="srcLine">                    $ok = false;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">86</td>
+<td class="lineCountHighlight">17</td>
+<td><pre class="srcLine">                    break;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">87</td>
+<td class="coverageCountHighlight">0</td>
+<td><pre class="srcLineHighlight">                }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">88</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">            }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">89</td>
+<td class="lineCountHighlight">17</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">90</td>
+<td class="lineCountHighlight">17</td>
+<td><pre class="srcLine">        return $ok;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">91</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">92</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">93</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">94</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Match nested parentheses groups not inside of double-quotes</pre></td>
+</tr>
+<tr>
+<td class="lineCount">95</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">96</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * This method will find all balanced parentheses not inside of double</pre></td>
+</tr>
+<tr>
+<td class="lineCount">97</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * quotes.  It also respects escaped double quotes (i.e. with a preceding</pre></td>
+</tr>
+<tr>
+<td class="lineCount">98</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * backslash).</pre></td>
+</tr>
+<tr>
+<td class="lineCount">99</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">100</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $string</pre></td>
+</tr>
+<tr>
+<td class="lineCount">101</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return array</pre></td>
+</tr>
+<tr>
+<td class="lineCount">102</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @todo make this work with top-level strings with parenths in them</pre></td>
+</tr>
+<tr>
+<td class="lineCount">103</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">104</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public static function matchGroups( $string )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">105</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">106</td>
+<td class="lineCountHighlight">58</td>
+<td><pre class="srcLine">    	$groups = array();</pre></td>
+</tr>
+<tr>
+<td class="lineCount">107</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">108</td>
+<td class="lineCountHighlight">58</td>
+<td><pre class="srcLine">        if ( strpos($string, '(') !== false ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">109</td>
+<td class="lineCountHighlight">41</td>
+<td><pre class="srcLine">	        $matches = array();</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">110</td>
+<td class="lineCountHighlight">41</td>
+<td><pre class="srcLine">	        preg_match_all(self::PARENTH_QUOTE_REGEX, $string, $matches, PREG_SET_ORDER);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">111</td>
+<td class="lineCountHighlight">41</td>
+<td><pre class="srcLine">	        foreach( $matches as $group ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">112</td>
+<td class="lineCountHighlight">39</td>
+<td><pre class="srcLine">	            $groups[] = $group[0];</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">113</td>
+<td class="lineCountHighlight">39</td>
+<td><pre class="srcLine">	        }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">114</td>
+<td class="lineCountHighlight">41</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">115</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">116</td>
+<td class="lineCountHighlight">58</td>
+<td><pre class="srcLine">        return $groups;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">117</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">118</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">119</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">120</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Splits a string on the arrow ('-&gt;')</pre></td>
+</tr>
+<tr>
+<td class="lineCount">121</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">122</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $haystack</pre></td>
+</tr>
+<tr>
+<td class="lineCount">123</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return array</pre></td>
+</tr>
+<tr>
+<td class="lineCount">124</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">125</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public static function splitArrow( $haystack )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">126</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">127</td>
+<td class="lineCountHighlight">37</td>
+<td><pre class="srcLine">    	return Xyster_Orm_Xsql_Split::Arrow()-&gt;split($haystack);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">128</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">129</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">130</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">131</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Splits a string on the comma (',')</pre></td>
+</tr>
+<tr>
+<td class="lineCount">132</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">133</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $haystack</pre></td>
+</tr>
+<tr>
+<td class="lineCount">134</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return array</pre></td>
+</tr>
+<tr>
+<td class="lineCount">135</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">136</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public static function splitComma( $haystack )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">137</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">138</td>
+<td class="lineCountHighlight">14</td>
+<td><pre class="srcLine">        return Xyster_Orm_Xsql_Split::Comma()-&gt;split($haystack);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">139</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">140</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">141</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">142</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Splits a string on the space (' ')</pre></td>
+</tr>
+<tr>
+<td class="lineCount">143</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">144</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $haystack</pre></td>
+</tr>
+<tr>
+<td class="lineCount">145</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return array</pre></td>
+</tr>
+<tr>
+<td class="lineCount">146</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">147</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public static function splitSpace( $haystack )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">148</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">149</td>
+<td class="lineCountHighlight">64</td>
+<td><pre class="srcLine">        return Xyster_Orm_Xsql_Split::Space()-&gt;split($haystack);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">150</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">151</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">152</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">153</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Checks method parameters for syntactical correctness</pre></td>
+</tr>
+<tr>
+<td class="lineCount">154</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">155</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param array $params</pre></td>
+</tr>
+<tr>
+<td class="lineCount">156</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return boolean</pre></td>
+</tr>
+<tr>
+<td class="lineCount">157</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">158</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    protected static function _checkMethodParameters( $params )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">159</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">160</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        $ok = true;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">161</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        foreach( Xyster_Orm_Xsql_Split::Comma()-&gt;split(trim($params)) as $p ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">162</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">            if ( !self::isLiteral($p) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">163</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">                $ok = false;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">164</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">                break;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">165</td>
+<td class="coverageCountHighlight">0</td>
+<td><pre class="srcLineHighlight">            }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">166</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">167</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        return $ok;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">168</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">169</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">}</pre></td>
+</tr>
+</table>
+<br><table width="100%">
+<tr><td><hr noshade size="1"></td></tr>
+<tr><td class="small">Report generated at 2008-05-19T16:58:24-05:00</td></tr>
+</table>
+</BODY>
+</HTML>

@@ -1,0 +1,96 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>9.7. Lookups</title>
+<link rel="stylesheet" href="dbstyle.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.72.0">
+<link rel="start" href="index.html" title="Programmer's Reference Guide">
+<link rel="up" href="xyster.orm.html" title="Chapter 9. Xyster_Orm">
+<link rel="prev" href="xyster.orm.relation.html" title="9.6. Xyster_Orm_Relation">
+<link rel="next" href="xyster.orm.validate.html" title="9.8. Validation">
+<link rel="chapter" href="introduction.html" title="Chapter 1. Introduction to Xyster Framework">
+<link rel="chapter" href="xyster.acl.html" title="Chapter 2. Xyster_Acl">
+<link rel="chapter" href="xyster.collection.html" title="Chapter 3. Xyster_Collection">
+<link rel="chapter" href="xyster.controller.html" title="Chapter 4. Xyster_Controller">
+<link rel="chapter" href="xyster.data.html" title="Chapter 5. Xyster_Data">
+<link rel="chapter" href="xyster.date.html" title="Chapter 6. Xyster_Date">
+<link rel="chapter" href="xyster.enum.html" title="Chapter 7. Xyster_Enum">
+<link rel="chapter" href="xyster.filter.html" title="Chapter 8. Xyster_Filter">
+<link rel="chapter" href="xyster.orm.html" title="Chapter 9. Xyster_Orm">
+<link rel="chapter" href="xyster.type.html" title="Chapter 10. Xyster_Type">
+<link rel="chapter" href="xyster.validate.html" title="Chapter 11. Xyster_Validate">
+<link rel="subsection" href="xyster.orm.lookup.html#xyster.orm.lookup.date" title="9.7.1. Xyster_Orm_Entity_Lookup_Date">
+<link rel="subsection" href="xyster.orm.lookup.html#xyster.orm.lookup.enum" title="9.7.2. Xyster_Orm_Entity_Lookup_Enum">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<div class="navheader"><table width="100%" summary="Navigation header">
+<tr><th colspan="3" align="center">9.7. Lookups</th></tr>
+<tr>
+<td width="20%" align="left">
+<a accesskey="p" href="xyster.orm.relation.html">Prev</a> </td>
+<th width="60%" align="center">Chapter 9. Xyster_Orm</th>
+<td width="20%" align="right"> <a accesskey="n" href="xyster.orm.validate.html">Next</a>
+</td>
+</tr>
+</table></div>
+<div class="sect1" lang="en">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="xyster.orm.lookup"></a>9.7. Lookups</h2></div></div></div>
+<p>Lookups are special objects that can be added to an entity type.
+            The allow for runtime generation of values based on the contents of
+            an entity.  They also allow setting values back to the entity.
+            There are two different lookups that come with Xyster.</p>
+<div class="glosslist"><dl>
+<dt>Xyster_Orm_Entity_Lookup_Date</dt>
+<dd><p>Can generate <code class="classname">Zend_Date</code> objects based on a date field in an entity</p></dd>
+<dt>Xyster_Orm_Entity_Lookup_Enum</dt>
+<dd><p>Can generate <code class="classname">Xyster_Enum</code> objects based on the value of a field in an entity</p></dd>
+</dl></div>
+<p>The best place to instantiate and add these lookups is the <code class="methodname">init</code>
+            method in your mapper classes.  You can create your own lookup classes
+            by implenting <span class="interface">Xyster_Orm_Entity_Lookup_Interface</span>.</p>
+<div class="sect2" lang="en">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="xyster.orm.lookup.date"></a>9.7.1. Xyster_Orm_Entity_Lookup_Date</h3></div></div></div>
+<p>The date object takes two or three arguments.  The type of 
+                entity that the lookup supports, the name of the field where
+                the date value is stored, and optionally the name of the property
+                on the entity that will invoke this lookup (by default it's the
+                name of the field appended with 'Date').</p>
+<p>When a new <code class="classname">Zend_Date</code> object is stored to
+                the lookup property, its value will be written to the original 
+                date field on the entity (additionally, you can specify the format).</p>
+</div>
+<div class="sect2" lang="en">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="xyster.orm.lookup.enum"></a>9.7.2. Xyster_Orm_Entity_Lookup_Enum</h3></div></div></div>
+<p>The enum lookup takes between 3 and 5 arguments.  The type of 
+                entity that the lookup supports, a <code class="classname">Xyster_Type</code>
+                object that represents the type of enum class, the name of the
+                field where the lookup value is stored, optionally a flag for 
+                specifying whether the entity value is used as the enum name or
+                value, and optionally the name of the property on the entity
+                that will invoke this lookup (by default it's the name of the 
+                field appended with 'Type').</p>
+<p>When a new <code class="classname">Xyster_Enum</code> object is stored
+                to the lookup property, its value (or name) will be written to
+                the original value field on the entity.</p>
+</div>
+</div>
+<div class="navfooter"><table width="100%" summary="Navigation footer">
+<tr>
+<td width="40%" align="left">
+<a accesskey="p" href="xyster.orm.relation.html">Prev</a> </td>
+<td width="20%" align="center"><a accesskey="u" href="xyster.orm.html">Up</a></td>
+<td width="40%" align="right"> <a accesskey="n" href="xyster.orm.validate.html">Next</a>
+</td>
+</tr>
+<tr>
+<td width="40%" align="left" valign="top">9.6. Xyster_Orm_Relation </td>
+<td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td>
+<td width="40%" align="right" valign="top"> 9.8. Validation</td>
+</tr>
+</table></div>
+<div class="revinfo"></div>
+</body>
+</html>

@@ -1,0 +1,280 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>9.6. Xyster_Orm_Relation</title>
+<link rel="stylesheet" href="dbstyle.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.72.0">
+<link rel="start" href="index.html" title="Programmer's Reference Guide">
+<link rel="up" href="xyster.orm.html" title="Chapter 9. Xyster_Orm">
+<link rel="prev" href="xyster.orm.orm.html" title="9.5. Xyster_Orm">
+<link rel="next" href="xyster.orm.lookup.html" title="9.7. Lookups">
+<link rel="chapter" href="introduction.html" title="Chapter 1. Introduction to Xyster Framework">
+<link rel="chapter" href="xyster.acl.html" title="Chapter 2. Xyster_Acl">
+<link rel="chapter" href="xyster.collection.html" title="Chapter 3. Xyster_Collection">
+<link rel="chapter" href="xyster.controller.html" title="Chapter 4. Xyster_Controller">
+<link rel="chapter" href="xyster.data.html" title="Chapter 5. Xyster_Data">
+<link rel="chapter" href="xyster.date.html" title="Chapter 6. Xyster_Date">
+<link rel="chapter" href="xyster.enum.html" title="Chapter 7. Xyster_Enum">
+<link rel="chapter" href="xyster.filter.html" title="Chapter 8. Xyster_Filter">
+<link rel="chapter" href="xyster.orm.html" title="Chapter 9. Xyster_Orm">
+<link rel="chapter" href="xyster.type.html" title="Chapter 10. Xyster_Type">
+<link rel="chapter" href="xyster.validate.html" title="Chapter 11. Xyster_Validate">
+<link rel="subsection" href="xyster.orm.relation.html#xyster.orm.relation.one" title="9.6.1. One-to-one">
+<link rel="subsection" href="xyster.orm.relation.html#xyster.orm.relation.many" title="9.6.2. One-to-many">
+<link rel="subsection" href="xyster.orm.relation.html#xyster.orm.relation.join" title="9.6.3. Joined (Many-to-many)">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<div class="navheader"><table width="100%" summary="Navigation header">
+<tr><th colspan="3" align="center">9.6. Xyster_Orm_Relation</th></tr>
+<tr>
+<td width="20%" align="left">
+<a accesskey="p" href="xyster.orm.orm.html">Prev</a> </td>
+<th width="60%" align="center">Chapter 9. Xyster_Orm</th>
+<td width="20%" align="right"> <a accesskey="n" href="xyster.orm.lookup.html">Next</a>
+</td>
+</tr>
+</table></div>
+<div class="sect1" lang="en">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="xyster.orm.relation"></a>9.6. Xyster_Orm_Relation</h2></div></div></div>
+<p>This class allows you to define relationships between your entities. An instance of this class holds the details of a given relationship. There are four different types.</p>
+<div class="glosslist"><dl>
+<dt>One</dt>
+<dd><p>Where one entity stores the primary key of another entity (one-to-one)</p></dd>
+<dt>Many</dt>
+<dd><p>Where one entity "owns" several; they all store its primary key (one-to-many)</p></dd>
+<dt>Belongs</dt>
+<dd><p>An entity "owned" by a many relationship (many-to-one)</p></dd>
+<dt>Joined</dt>
+<dd><p>When two entities can belong to more than one of each other (many-to-many)</p></dd>
+</dl></div>
+<div class="sect2" lang="en">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="xyster.orm.relation.one"></a>9.6.1. One-to-one</h3></div></div></div>
+<p>Adding to the above person class to demonstrate, we'll add an extra field that refers to another person object.</p>
+<pre class="programlisting">&lt;?php
+class PersonMapper extends Xyster_Orm_Mapper
+{
+        // protected properties go here 
+
+        public function init()
+        {
+            $this-&gt;_hasOne('nemesis', array('class'=&gt;'Person', 'id'=&gt;'nemesisId'));
+        }
+}</pre>
+<p>The <code class="methodname">init</code> method is called when the mapper is constructed. Basically, it"s a place to keep the relationship definitions for an entity and any initializations you require. In this case, we've said that person has a one-to-one relationship with itself based on the <code class="code">nemesisId</code> field. The <code class="methodname">relationship</code> methods take two parameters: the name of the relationship and an array of options. See the <code class="classname">Xyster_Orm_Relation</code> API for further details on these options.</p>
+<p>You now expose some extra features with a relationship defined.</p>
+<pre class="programlisting">&lt;?php
+$orm = Xyster_Orm::getInstance();
+$luke = $orm-&gt;get('Person', 1);
+$vader = $orm-&gt;get('Person', 2);
+$luke-&gt;nemesis = $vader;
+// or $luke-&gt;setNemesis($vader);
+echo $luke-&gt;nemesis-&gt;name; // echoes 'Darth Vader'
+$orm-&gt;commit();</pre>
+<p>Once commit is called, the ORM system assigns <code class="varname">$luke</code>'s nemesisId with <code class="varname">$vader</code>'s primary key. As a developer, you should only be working with objects and not worry about primary keys. See the following example in which two objects are related before they're even saved into the data store.</p>
+<pre class="programlisting">&lt;?php
+// create Han Solo
+$han = new Person();
+$han-&gt;name = 'Han Solo';
+$han-&gt;affiliation = 'Rebel';
+$han-&gt;alignment = 'good';
+$han-&gt;gender = 'M';
+$han-&gt;race = 'Human';
+// create Jabba the Hutt
+$jabba = new Person();
+$jabba-&gt;name = 'Jabba Desilijic Tiure';
+$jabba-&gt;affiliation = 'Criminal';
+$jabba-&gt;alignment = 'evil';
+$jabba-&gt;gender = 'M';
+$jabba-&gt;race = 'Hutt';
+// Jabba is Han's nemesis
+$han-&gt;nemesis = $jabba;
+// Jabba is too egocentric to have a nemesis, just save Han
+$orm-&gt;persist($han);
+$orm-&gt;commit();
+// both Han and Jabba are saved</pre>
+</div>
+<div class="sect2" lang="en">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="xyster.orm.relation.many"></a>9.6.2. One-to-many</h3></div></div></div>
+<p>Here's another entity. The person entity should be able to be related to any number of these.</p>
+<pre class="programlisting">&lt;?php
+class Quote extends Xyster_Orm_Entity {}
+class QuoteSet extends Xyster_Orm_Set { }
+class QuoteMapper extends Xyster_Orm_Mapper 
+{
+        protected $_domain = 'myDb';
+        protected $_lifetime = 0; // a quote shouldn't ever change
+}</pre>
+<p>A person can have a list of quotes; a one-to-many relationship. In the person mapper, we can specify this relationship to the quote entity.</p>
+<pre class="programlisting">&lt;?php
+class personMapper extends Xyster_Orm_Mapper
+{
+        // protected $_domain, etc.
+
+        public function init()
+        {
+            $this-&gt;_hasOne('nemesis', array('class'=&gt;'Person', 'id'=&gt;'nemesisId'))
+                -&gt;_hasMany('quotes');
+        }
+}</pre>
+<p>A property called <code class="code">quotes</code> is now available on the entity, and it returns a <code class="classname">QuoteSet</code>. You probably also want to add a "belongs" relationship to the <code class="classname">QuoteMapper</code> class.</p>
+<pre class="programlisting">&lt;?php
+class QuoteMapper extends Xyster_Orm_Mapper
+{
+        // stuff declared above
+
+        public function init()
+        {
+            $this-&gt;_belongsTo('person');
+        }
+}</pre>
+<p>A "belongs" relationship works the same way that a "one" relationship does, except it wires up the fact that quote objects should have the person object they relate to assigned to them when added to the person object's quote set. The following example shows how to add quote entities to the set.</p>
+<pre class="programlisting">&lt;?php
+$quote1 = new Quote();
+$quote1-&gt;value = 'What is thy bidding, my master?';
+$vader-&gt;quotes-&gt;add($quote1); 
+// or $vader-&gt;getQuotes()-&gt;add($quote1);
+$quote2 = new Quote();
+$quote2-&gt;value = "Help me, Obi-won; you're my only hope!";
+$leia-&gt;quotes-&gt;add($quote2);
+$orm-&gt;commit();
+// try out the 'belongs' relationship on quote
+echo $quote2-&gt;person-&gt;name; // prints 'Princess Leia Organa'</pre>
+<p>Quotes can also be removed from the set; any removed entities will be deleted from the data store when the work unit is committed.</p>
+<pre class="programlisting">&lt;?php
+$quotes = $leia-&gt;getQuotes();
+echo count($quotes); // prints 1
+foreach( $quotes as $quote ) {
+        if ( $quote-&gt;value == "Help me, Obi-won; you're my only hope!" ) {
+                $leia-&gt;quotes-&gt;remove($quote);
+        }
+}
+echo count($quotes); // prints 0
+$orm-&gt;commit();</pre>
+<p>Here are some more quotes for us to play with.</p>
+<pre class="programlisting">&lt;?php
+$quotes = array();
+$quotes['Han Solo'] = array( "She's fast enough for you, old man",
+        "Yeah, but this time I've *got* the money." );
+$quotes['Darth Vader'] = array( "I have you now!",
+        "I find your lack of faith disturbing." );
+$quotes['Luke Skywalker'] = array( "I'm not such a bad pilot myself",
+        "I'm Luke Skywalker. I'm here to rescue you." );
+$quotes['Princess Leia Organa'] = array( 
+        "Why you stuck-up, half-witted, scruffy-looking nerf herder!",
+        "Aren't you a little short for a stormtrooper?" );
+foreach( $quotes as $name =&gt; $personQuotes ) {
+        if ( $person = $orm-&gt;find('Person', array('name'=&gt;$name)) ) {
+                foreach( $personQuotes as $quoteText ) {
+                        $quote = new Quote();
+                        $quote-&gt;value = $quoteText;
+                        $person-&gt;quotes-&gt;add($quote);
+                }
+        }
+}
+$orm-&gt;commit();</pre>
+<p>And now that they're all saved, let's go through all person entities in the data store and print their quotes.</p>
+<pre class="programlisting">&lt;?php
+$people = $orm-&gt;getAll('Person');
+foreach( $people as $person ) {
+        $quotes = $person-&gt;getQuotes();
+        if ( count($quotes) ) {
+                echo "Quotes for ".$person-&gt;name.":\n";
+                foreach( $quotes as $quote ) {
+                        echo "\t\"".$quote-&gt;value."\"\n";
+                }
+                echo "\n";
+        }
+}</pre>
+<div class="sect3" lang="en">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="xyster.orm.relation.many.cascade"></a>9.6.2.1. Cascading</h4></div></div></div>
+<p>When an entity is deleted or has its primary key changed, other entities that depend on it could be orphaned if necessary
+				constraints aren't defined in the 
+				data store.  If the backend doesn't have the capability to manage these kind of constraints, a one-to-many relationship can 
+				have options set to enforce them. There are two options available to a one-to-many relationship for this purpose.</p>
+<p>The <em class="structfield"><code>onDelete</code></em> option supports three values
+				available as constants on the Xyster_Orm_Relation class.  <code class="constant">ACTION_SET_NULL</code> will set the foreign key to null on all entities
+				in the associated set.  <code class="constant">ACTION_CASCADE</code> will let the backend take care of the cascade and just removes the related entities
+				from the session.  <code class="constant">ACTION_REMOVE</code> will delete every related entity in the set one at a time.  ACTION_NONE does nothing; if
+				the backend has constraints they are still enforced.</p>
+<p>The 'onUpdate' option only supports one option in addition to <code class="constant">ACTION_NONE</code>.
+				<code class="constant">ACTION_CASCADE</code> will set the foreign key in each
+				entity in the set.  Regardless of the setting, any constraints the backend has defined are enforced.</p>
+</div>
+</div>
+<div class="sect2" lang="en">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="xyster.orm.relation.join"></a>9.6.3. Joined (Many-to-many)</h3></div></div></div>
+<p>A joined relationship, also called many-to-many, uses a table to store the primary keys of two entities, relating them. Let's define another entity.</p>
+<pre class="programlisting">&lt;?php
+class Skill extends Xyster_Orm_Entity {}
+class SkillSet extends Xyster_Orm_Set {}
+class SkillMapper extends Xyster_Orm_Mapper
+{
+        protected $_domain = 'myDb';
+
+        public function init()
+        {
+                $details = array("table"=&gt;'person_skill', "class"=&gt;'Person');
+                $this-&gt;_hasJoined('people', $details);
+        }
+}</pre>
+<p>The joined relationship takes many arguments in the details array. The table is by default the declaring class and the joined class separated by an underscore. In this case, it would be "skill_person", but let's say the table is really called "person_skill". See the <code class="classname">Xyster_Orm_Relation</code> API for more information about parameters to this method. Let's also define this relationship in the person mapper.</p>
+<pre class="programlisting">&lt;?php
+class PersonMapper extends Xyster_Orm_Mapper
+{
+        // protected $_domain, etc.
+
+        public function init()
+        {
+            $this-&gt;_hasOne('nemesis', array('class'=&gt;'Person', 'id'=&gt;'nemesisId'))
+                -&gt;_hasMany('quotes')
+                -&gt;_hasJoined('skills');
+        }
+}</pre>
+<p>Now that the relationships are defined, let's create some skill entities to use.</p>
+<pre class="programlisting">&lt;?php
+$skills = array("Piloting", "Gunning", "The Force", "Diplomacy", "Leadership");
+foreach( $skills as $skillName ) {
+        $skill = new Skill();
+        $skill-&gt;name = $skillName;
+        $orm-&gt;persist($skill);
+}
+$orm-&gt;commit();</pre>
+<p>And we can now relate these skills to people.</p>
+<pre class="programlisting">&lt;?php
+// load the skills
+$piloting = $orm-&gt;find('Skill','Piloting');
+$gunning = $orm-&gt;find('Skill','Gunning');
+$theForce = $orm-&gt;find('Skill','The Force');
+$diplomacy = $orm-&gt;find('Skill','Diplomacy');
+$leadership = $orm-&gt;find('Skill','Leadership');
+// and let's assign the skills
+$luke-&gt;skills-&gt;addAll(Xyster_Collection::using(array($piloting, $gunning, $theForce)));
+$vader-&gt;skills-&gt;addAll(Xyster_Collection::using(array($piloting, $gunning, $theForce, $leadership)));
+$leia-&gt;skills-&gt;addAll(Xyster_Collection::using(array($diplomacy, $theForce, $leadership))); // debatable
+$han-&gt;skills-&gt;addAll(Xyster_Collection::using(array($piloting, $gunning, $diplomacy)));
+$orm-&gt;commit();</pre>
+<p>So now there will be 13 records in the <span class="database">person_skill</span> table. 3 for Luke, 4 for Vader, 3 for Leia, and 3 for Han.</p>
+</div>
+</div>
+<div class="navfooter"><table width="100%" summary="Navigation footer">
+<tr>
+<td width="40%" align="left">
+<a accesskey="p" href="xyster.orm.orm.html">Prev</a> </td>
+<td width="20%" align="center"><a accesskey="u" href="xyster.orm.html">Up</a></td>
+<td width="40%" align="right"> <a accesskey="n" href="xyster.orm.lookup.html">Next</a>
+</td>
+</tr>
+<tr>
+<td width="40%" align="left" valign="top">9.5. Xyster_Orm </td>
+<td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td>
+<td width="40%" align="right" valign="top"> 9.7. Lookups</td>
+</tr>
+</table></div>
+<div class="revinfo"></div>
+</body>
+</html>

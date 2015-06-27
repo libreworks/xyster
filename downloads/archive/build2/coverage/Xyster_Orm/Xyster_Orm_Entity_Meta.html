@@ -1,0 +1,1530 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<LINK REL="stylesheet" TYPE="text/css" TITLE="Style" href="../stylesheet.css">
+</HEAD>
+<BODY>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="bannercell" rowspan="2"><a href="http://phing.info/"><img src="http://phing.info/images/phing.gif" alt="http://phing.info/" align="left" border="0"></a></td>
+<td style="text-align:right"><h2>Source Code Coverage</h2></td>
+</tr>
+<tr><td style="text-align:right">Designed for use with <a href="http://pear.php.net/package/PHPUnit2">PHPUnit2</a>, <a href="http://www.xdebug.org/">Xdebug</a> and <a href="http://phing.info/">Phing</a>.</td></tr>
+</table>
+<hr size="1">
+<table class="log" cellpadding="5" cellspacing="0" width="100%"><tr class="a">
+<td class="small">Methods: 16</td>
+<td class="small">LOC: 297</td>
+<td class="small">Statements: 43</td>
+</tr></table>
+<br><table class="log" cellpadding="5" cellspacing="0" width="100%">
+<tr>
+<th width="100%">Source file</th>
+<th>Statements</th>
+<th>Methods</th>
+<th width="250" colspan="2" nowrap>Total coverage</th>
+</tr>
+<tr class="a">
+<td>Meta.php</td>
+<td>95.3%</td>
+<td>100.0%</td>
+<td>96.6%</td>
+<td><table cellspacing="0" cellpadding="0" border="0" width="100%" style="display: inline"><tr>
+<td class="covered" width="193" height="12"> </td>
+<td class="uncovered" width="7" height="12"> </td>
+</tr></table></td>
+</tr>
+</table>
+<table cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td class="lineCount">1</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">&lt;?php</pre></td>
+</tr>
+<tr>
+<td class="lineCount">2</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">3</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * Xyster Framework</pre></td>
+</tr>
+<tr>
+<td class="lineCount">4</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">5</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * LICENSE</pre></td>
+</tr>
+<tr>
+<td class="lineCount">6</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">7</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * This source file is subject to the new BSD license that is bundled</pre></td>
+</tr>
+<tr>
+<td class="lineCount">8</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * with this package in the file LICENSE.txt.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">9</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * It is also available through the world-wide-web at this URL:</pre></td>
+</tr>
+<tr>
+<td class="lineCount">10</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * http://www.opensource.org/licenses/bsd-license.php</pre></td>
+</tr>
+<tr>
+<td class="lineCount">11</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * If you did not receive a copy of the license and are unable to</pre></td>
+</tr>
+<tr>
+<td class="lineCount">12</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * obtain it through the world-wide-web, please send an email</pre></td>
+</tr>
+<tr>
+<td class="lineCount">13</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * to xyster@devweblog.org so we can send you a copy immediately.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">14</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">15</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @category  Xyster</pre></td>
+</tr>
+<tr>
+<td class="lineCount">16</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @package   Xyster_Orm</pre></td>
+</tr>
+<tr>
+<td class="lineCount">17</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">18</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License</pre></td>
+</tr>
+<tr>
+<td class="lineCount">19</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @version   $Id: Meta.php 69 2007-08-16 20:50:03Z doublecompile $</pre></td>
+</tr>
+<tr>
+<td class="lineCount">20</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">21</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">22</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @see Xyster_Orm_Entity_Field</pre></td>
+</tr>
+<tr>
+<td class="lineCount">23</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">24</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">require_once 'Xyster/Orm/Entity/Field.php';</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">25</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">26</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * A helper for meta information about entities</pre></td>
+</tr>
+<tr>
+<td class="lineCount">27</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">28</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @category  Xyster</pre></td>
+</tr>
+<tr>
+<td class="lineCount">29</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @package   Xyster_Orm</pre></td>
+</tr>
+<tr>
+<td class="lineCount">30</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">31</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License</pre></td>
+</tr>
+<tr>
+<td class="lineCount">32</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">33</td>
+<td class="coverageCount"></td>
+<td class="srcLineClassStart"><pre class="srcLine">class Xyster_Orm_Entity_Meta</pre></td>
+</tr>
+<tr>
+<td class="lineCount">34</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">{</pre></td>
+</tr>
+<tr>
+<td class="lineCount">35</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    protected $_class;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">36</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">37</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * The mapper factory</pre></td>
+</tr>
+<tr>
+<td class="lineCount">38</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">39</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @var Xyster_Orm_Mapper_Factory_Interface</pre></td>
+</tr>
+<tr>
+<td class="lineCount">40</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">41</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    protected $_mapFactory;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">42</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    protected $_fields = array();</pre></td>
+</tr>
+<tr>
+<td class="lineCount">43</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    protected $_members = array();</pre></td>
+</tr>
+<tr>
+<td class="lineCount">44</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    protected $_primary = array();</pre></td>
+</tr>
+<tr>
+<td class="lineCount">45</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    protected $_relations = array();</pre></td>
+</tr>
+<tr>
+<td class="lineCount">46</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">47</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">48</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Creates a new Entity Metadata helper</pre></td>
+</tr>
+<tr>
+<td class="lineCount">49</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">50</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param Xyster_Orm_Mapper $map</pre></td>
+</tr>
+<tr>
+<td class="lineCount">51</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">52</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function __construct( Xyster_Orm_Mapper_Interface $map )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">53</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">54</td>
+<td class="lineCountHighlight">214</td>
+<td><span class="srcLine"><pre class="srcLine">        $this-&gt;_class = $map-&gt;getEntityName();</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">55</td>
+<td class="lineCountHighlight">214</td>
+<td><span class="srcLine"><pre class="srcLine">        $this-&gt;_mapFactory = $map-&gt;getFactory();</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">56</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">57</td>
+<td class="lineCountHighlight">214</td>
+<td><span class="srcLine"><pre class="srcLine">        foreach( $map-&gt;getFields() as $name =&gt; $values ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">58</td>
+<td class="lineCountHighlight">214</td>
+<td><span class="srcLine"><pre class="srcLine">            $translated = $map-&gt;translateField($name);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">59</td>
+<td class="lineCountHighlight">214</td>
+<td><span class="srcLine"><pre class="srcLine">            $field = new Xyster_Orm_Entity_Field($translated, $values);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">60</td>
+<td class="lineCountHighlight">214</td>
+<td><span class="srcLine"><pre class="srcLine">            $this-&gt;_fields[$translated] = $field;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">61</td>
+<td class="lineCountHighlight">214</td>
+<td><span class="srcLine"><pre class="srcLine">            if ( $field-&gt;isPrimary() ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">62</td>
+<td class="lineCountHighlight">214</td>
+<td><span class="srcLine"><pre class="srcLine">                $this-&gt;_primary[] = $translated;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">63</td>
+<td class="lineCountHighlight">214</td>
+<td><span class="srcLine"><pre class="srcLine">            }</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">64</td>
+<td class="lineCountHighlight">214</td>
+<td><span class="srcLine"><pre class="srcLine">        }</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">65</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">66</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">67</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">68</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Gets the class name of the entity</pre></td>
+</tr>
+<tr>
+<td class="lineCount">69</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">70</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return string The class name</pre></td>
+</tr>
+<tr>
+<td class="lineCount">71</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">72</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function getEntityName()</pre></td>
+</tr>
+<tr>
+<td class="lineCount">73</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">74</td>
+<td class="lineCountHighlight">214</td>
+<td><span class="srcLine"><pre class="srcLine">        return $this-&gt;_class;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">75</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">76</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">77</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">78</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Gets the names of the fields for the entity</pre></td>
+</tr>
+<tr>
+<td class="lineCount">79</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">80</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return array An array of field names</pre></td>
+</tr>
+<tr>
+<td class="lineCount">81</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">82</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function getFieldNames()</pre></td>
+</tr>
+<tr>
+<td class="lineCount">83</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">84</td>
+<td class="lineCountHighlight">113</td>
+<td><span class="srcLine"><pre class="srcLine">        return array_keys($this-&gt;_fields);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">85</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">86</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">87</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">88</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Gets the fields for the entity</pre></td>
+</tr>
+<tr>
+<td class="lineCount">89</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">90</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return array An array of {@link Xyster_Orm_Entity_Field} objects</pre></td>
+</tr>
+<tr>
+<td class="lineCount">91</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">92</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function getFields()</pre></td>
+</tr>
+<tr>
+<td class="lineCount">93</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">94</td>
+<td class="lineCountHighlight">8</td>
+<td><span class="srcLine"><pre class="srcLine">        return $this-&gt;_fields;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">95</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">96</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">97</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">98</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Gets the mapper factory</pre></td>
+</tr>
+<tr>
+<td class="lineCount">99</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">100</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Orm_Mapper_Factory_Interface</pre></td>
+</tr>
+<tr>
+<td class="lineCount">101</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">102</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function getMapperFactory()</pre></td>
+</tr>
+<tr>
+<td class="lineCount">103</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">104</td>
+<td class="lineCountHighlight">194</td>
+<td><span class="srcLine"><pre class="srcLine">        return $this-&gt;_mapFactory;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">105</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">106</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">107</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">108</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Gets all available class members (fields, relations, and methods)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">109</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">110</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return array</pre></td>
+</tr>
+<tr>
+<td class="lineCount">111</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">112</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function getMembers()</pre></td>
+</tr>
+<tr>
+<td class="lineCount">113</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">114</td>
+<td class="lineCountHighlight">33</td>
+<td><span class="srcLine"><pre class="srcLine">        if ( !$this-&gt;_members ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">115</td>
+<td class="lineCountHighlight">33</td>
+<td><span class="srcLine"><pre class="srcLine">            $this-&gt;_members = array_merge($this-&gt;_members, array_keys($this-&gt;_fields));</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">116</td>
+<td class="lineCountHighlight">33</td>
+<td><span class="srcLine"><pre class="srcLine">            $this-&gt;_members = array_merge($this-&gt;_members, $this-&gt;getRelationNames());</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">117</td>
+<td class="lineCountHighlight">33</td>
+<td><span class="srcLine"><pre class="srcLine">            $this-&gt;_members = array_merge($this-&gt;_members, get_class_methods($this-&gt;_class));</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">118</td>
+<td class="lineCountHighlight">33</td>
+<td><span class="srcLine"><pre class="srcLine">        }</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">119</td>
+<td class="lineCountHighlight">33</td>
+<td><span class="srcLine"><pre class="srcLine">        return $this-&gt;_members;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">120</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">121</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">122</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">123</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Gets an array containing the field name or names for the primary key</pre></td>
+</tr>
+<tr>
+<td class="lineCount">124</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">125</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return array  The field names</pre></td>
+</tr>
+<tr>
+<td class="lineCount">126</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">127</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function getPrimary()</pre></td>
+</tr>
+<tr>
+<td class="lineCount">128</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">129</td>
+<td class="lineCountHighlight">202</td>
+<td><span class="srcLine"><pre class="srcLine">        return $this-&gt;_primary;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">130</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">131</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">132</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">133</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Gets the relationship by name</pre></td>
+</tr>
+<tr>
+<td class="lineCount">134</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">135</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $name The name of the relationship</pre></td>
+</tr>
+<tr>
+<td class="lineCount">136</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Orm_Relation</pre></td>
+</tr>
+<tr>
+<td class="lineCount">137</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @throws Xyster_Orm_Relation_Exception if the relationship name is invalid</pre></td>
+</tr>
+<tr>
+<td class="lineCount">138</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">139</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function getRelation( $name )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">140</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">141</td>
+<td class="lineCountHighlight">41</td>
+<td><span class="srcLine"><pre class="srcLine">        if ( !$this-&gt;isRelation($name) ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">142</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">            require_once 'Xyster/Orm/Relation/Exception.php';</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">143</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">            throw new Xyster_Orm_Relation_Exception("'" . $name</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">144</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">                . "' is not a valid relation for the '" . $this-&gt;_class . "' class");</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">145</td>
+<td class="coverageCountHighlight">0</td>
+<td><span class="srcLineHighlight"><pre class="srcLine">        }</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">146</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">147</td>
+<td class="lineCountHighlight">40</td>
+<td><span class="srcLine"><pre class="srcLine">        return $this-&gt;_relations[$name];</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">148</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">149</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">150</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">151</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Gets the names of all relations defined for this entity</pre></td>
+</tr>
+<tr>
+<td class="lineCount">152</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">153</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return array The names of defined relations</pre></td>
+</tr>
+<tr>
+<td class="lineCount">154</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">155</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function getRelationNames()</pre></td>
+</tr>
+<tr>
+<td class="lineCount">156</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">157</td>
+<td class="lineCountHighlight">34</td>
+<td><span class="srcLine"><pre class="srcLine">        return array_keys($this-&gt;_relations);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">158</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">159</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">160</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">161</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Gets the relations for the entity</pre></td>
+</tr>
+<tr>
+<td class="lineCount">162</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">163</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return array An array of {@link Xyster_Orm_Relation} objects</pre></td>
+</tr>
+<tr>
+<td class="lineCount">164</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">165</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function getRelations()</pre></td>
+</tr>
+<tr>
+<td class="lineCount">166</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">167</td>
+<td class="lineCountHighlight">22</td>
+<td><span class="srcLine"><pre class="srcLine">        return $this-&gt;_relations;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">168</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">169</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">170</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">171</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * Creates a 'one to one' relationship for entities on the 'many' end of a 'one to many' relationship</pre></td>
+</tr>
+<tr>
+<td class="lineCount">172</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">173</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * Options can contain the following values:</pre></td>
+</tr>
+<tr>
+<td class="lineCount">174</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">175</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * &lt;dl&gt;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">176</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * &lt;dt&gt;class&lt;/dt&gt;&lt;dd&gt;The foreign class. The relation name by default&lt;/dd&gt;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">177</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * &lt;dt&gt;id&lt;/dt&gt;&lt;dd&gt;The name of the foreign key field(s) on the declaring</pre></td>
+</tr>
+<tr>
+<td class="lineCount">178</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * entity.  This should either be an array (if multiple) or a string (if</pre></td>
+</tr>
+<tr>
+<td class="lineCount">179</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * one).  By default, this is &lt;var&gt;class&lt;/var&gt;Id&lt;/dd&gt;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">180</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * &lt;dt&gt;filters&lt;/dt&gt;&lt;dd&gt;In XSQL, any Criteria that should be used</pre></td>
+</tr>
+<tr>
+<td class="lineCount">181</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * against the entity to be loaded&lt;/dd&gt;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">182</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * &lt;/dl&gt;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">183</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">184</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @param string $name  The name of the relationship</pre></td>
+</tr>
+<tr>
+<td class="lineCount">185</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @param array $options  An array of options</pre></td>
+</tr>
+<tr>
+<td class="lineCount">186</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @return Xyster_Orm_Relation  The relationship created</pre></td>
+</tr>
+<tr>
+<td class="lineCount">187</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">188</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	public function belongsTo( $name, array $options = array() )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">189</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	{</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">190</td>
+<td class="lineCountHighlight">194</td>
+<td><span class="srcLine"><pre class="srcLine">		return $this-&gt;_baseCreate('belongs', $name, $options);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">191</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">192</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">193</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * Creates a 'one to one' relationship</pre></td>
+</tr>
+<tr>
+<td class="lineCount">194</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">195</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * Options can contain the following values:</pre></td>
+</tr>
+<tr>
+<td class="lineCount">196</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">197</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * &lt;dl&gt;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">198</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * &lt;dt&gt;class&lt;/dt&gt;&lt;dd&gt;The foreign class. The relation name by default&lt;/dd&gt;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">199</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * &lt;dt&gt;id&lt;/dt&gt;&lt;dd&gt;The name of the foreign key field(s) on the declaring</pre></td>
+</tr>
+<tr>
+<td class="lineCount">200</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * entity.  This should either be an array (if multiple) or a string (if</pre></td>
+</tr>
+<tr>
+<td class="lineCount">201</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * one).  By default, this is &lt;var&gt;class&lt;/var&gt;Id&lt;/dd&gt;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">202</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * &lt;dt&gt;filters&lt;/dt&gt;&lt;dd&gt;In XSQL, any Criteria that should be used</pre></td>
+</tr>
+<tr>
+<td class="lineCount">203</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * against the entity to be loaded&lt;/dd&gt;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">204</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * &lt;/dl&gt;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">205</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">206</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @param string $name  The name of the relationship</pre></td>
+</tr>
+<tr>
+<td class="lineCount">207</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @param array $options  An array of options</pre></td>
+</tr>
+<tr>
+<td class="lineCount">208</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @return Xyster_Orm_Relation  The relationship created</pre></td>
+</tr>
+<tr>
+<td class="lineCount">209</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">210</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	public function hasOne( $name, array $options = array() )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">211</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	{</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">212</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">		return $this-&gt;_baseCreate('one', $name, $options);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">213</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">214</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">215</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * Creates a 'one to many' relationship</pre></td>
+</tr>
+<tr>
+<td class="lineCount">216</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">217</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * Options can contain the following values:</pre></td>
+</tr>
+<tr>
+<td class="lineCount">218</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">219</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * &lt;dl&gt;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">220</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * &lt;dt&gt;class&lt;/dt&gt;&lt;dd&gt;The foreign class.  The relation name minus a trailing</pre></td>
+</tr>
+<tr>
+<td class="lineCount">221</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * 's' by default&lt;/dd&gt;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">222</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * &lt;dt&gt;id&lt;/dt&gt;&lt;dd&gt;The name of the foreign key field(s) on the related</pre></td>
+</tr>
+<tr>
+<td class="lineCount">223</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * entity.  This should either be an array (if multiple) or a string (if</pre></td>
+</tr>
+<tr>
+<td class="lineCount">224</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * one).  By default, this is &lt;var&gt;class&lt;/var&gt;Id&lt;/dd&gt;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">225</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * &lt;dt&gt;filters&lt;/dt&gt;&lt;dd&gt;In XSQL, any Criteria that should be used</pre></td>
+</tr>
+<tr>
+<td class="lineCount">226</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * against the entities to be loaded&lt;/dd&gt;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">227</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * &lt;/dl&gt;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">228</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">229</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @param string $name  The name of the relationship</pre></td>
+</tr>
+<tr>
+<td class="lineCount">230</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @param array $options  An array of options</pre></td>
+</tr>
+<tr>
+<td class="lineCount">231</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @return Xyster_Orm_Relation  The relationship created</pre></td>
+</tr>
+<tr>
+<td class="lineCount">232</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">233</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	public function hasMany( $name, array $options = array() )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">234</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	{</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">235</td>
+<td class="lineCountHighlight">29</td>
+<td><span class="srcLine"><pre class="srcLine">		return $this-&gt;_baseCreate('many', $name, $options);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">236</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">237</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">238</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * Creates a 'many to many' relationship</pre></td>
+</tr>
+<tr>
+<td class="lineCount">239</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">240</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * &lt;dl&gt;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">241</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * &lt;dt&gt;class&lt;/dt&gt;&lt;dd&gt;The class of entity to load through the join table. It</pre></td>
+</tr>
+<tr>
+<td class="lineCount">242</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * will be the relationship name minus a trailing 's' by default.&lt;/dd&gt;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">243</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * &lt;dt&gt;table&lt;/dt&gt;&lt;dd&gt;The join table name.  By default this will be</pre></td>
+</tr>
+<tr>
+<td class="lineCount">244</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * &lt;var&gt;declaring_class&lt;/var&gt;_&lt;var&gt;class&lt;/var&gt;&lt;/dd&gt;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">245</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * &lt;dt&gt;left&lt;/dt&gt;&lt;dd&gt;The column(s) in the join table referencing the</pre></td>
+</tr>
+<tr>
+<td class="lineCount">246</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * declaringClass entity. By default: &lt;var&gt;declaring_class&lt;/var&gt;_id&lt;/dd&gt;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">247</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * &lt;dt&gt;right&lt;/dt&gt;&lt;dd&gt;The column(s) in the join table referencing the</pre></td>
+</tr>
+<tr>
+<td class="lineCount">248</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * foreign entity.  By default, it's &lt;var&gt;class_name&lt;/var&gt;_id&lt;/dd&gt;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">249</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * &lt;dt&gt;filters&lt;/dt&gt;&lt;dd&gt;In XSQL, any Criteria that should be used</pre></td>
+</tr>
+<tr>
+<td class="lineCount">250</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * against the join table.  Column names should be specified in the format</pre></td>
+</tr>
+<tr>
+<td class="lineCount">251</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * native to the data store (i.e. with underscores, not camelCase)&lt;/dd&gt;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">252</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * &lt;/dl&gt;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">253</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">254</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @param string $name  The name of the relationship</pre></td>
+</tr>
+<tr>
+<td class="lineCount">255</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @param array $options  An array of options</pre></td>
+</tr>
+<tr>
+<td class="lineCount">256</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @return Xyster_Orm_Relation  The relationship created</pre></td>
+</tr>
+<tr>
+<td class="lineCount">257</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">258</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	public function hasJoined( $name, array $options = array() )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">259</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	{</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">260</td>
+<td class="lineCountHighlight">194</td>
+<td><span class="srcLine"><pre class="srcLine">		return $this-&gt;_baseCreate('joined', $name, $options);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">261</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">262</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">263</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">264</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Whether the entity has a relationship with the name supplied</pre></td>
+</tr>
+<tr>
+<td class="lineCount">265</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">266</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $name The name of the relationship</pre></td>
+</tr>
+<tr>
+<td class="lineCount">267</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return boolean</pre></td>
+</tr>
+<tr>
+<td class="lineCount">268</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">269</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	public function isRelation( $name )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">270</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	{</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">271</td>
+<td class="lineCountHighlight">43</td>
+<td><span class="srcLine"><pre class="srcLine">	    return array_key_exists($name, $this-&gt;_relations);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">272</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">273</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">274</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">275</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Base creator method</pre></td>
+</tr>
+<tr>
+<td class="lineCount">276</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">277</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $type The type of the relationship</pre></td>
+</tr>
+<tr>
+<td class="lineCount">278</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $name The name of the relationship</pre></td>
+</tr>
+<tr>
+<td class="lineCount">279</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param array $options An array of options</pre></td>
+</tr>
+<tr>
+<td class="lineCount">280</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Orm_Relation</pre></td>
+</tr>
+<tr>
+<td class="lineCount">281</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @throws Xyster_Orm_Relation_Exception if the relationship is already defined</pre></td>
+</tr>
+<tr>
+<td class="lineCount">282</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">283</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    protected function _baseCreate( $type, $name, array $options )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">284</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">285</td>
+<td class="lineCountHighlight">194</td>
+<td><span class="srcLine"><pre class="srcLine">        $declaringClass = $this-&gt;_class;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">286</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">287</td>
+<td class="lineCountHighlight">194</td>
+<td><span class="srcLine"><pre class="srcLine">        if ( array_key_exists($name, $this-&gt;_relations) ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">288</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">            require_once 'Xyster/Orm/Relation/Exception.php';</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">289</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">            throw new Xyster_Orm_Relation_Exception("The relationship '" . $name . "' already exists");</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">290</td>
+<td class="coverageCountHighlight">0</td>
+<td><span class="srcLineHighlight"><pre class="srcLine">        }</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">291</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">292</td>
+<td class="lineCountHighlight">194</td>
+<td><span class="srcLine"><pre class="srcLine">        require_once 'Xyster/Orm/Relation.php';</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">293</td>
+<td class="lineCountHighlight">194</td>
+<td><span class="srcLine"><pre class="srcLine">        $this-&gt;_relations[$name] = new Xyster_Orm_Relation($this, $type, $name, $options);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">294</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">295</td>
+<td class="lineCountHighlight">194</td>
+<td><span class="srcLine"><pre class="srcLine">        return $this-&gt;_relations[$name];</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">296</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">297</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">}</pre></td>
+</tr>
+</table>
+<br><table width="100%">
+<tr><td><hr noshade size="1"></td></tr>
+<tr><td class="small">Report generated at 2007-10-08T19:32:23-05:00</td></tr>
+</table>
+</BODY>
+</HTML>

@@ -1,0 +1,75 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>2.2. The ACL Role Provider</title>
+<link rel="stylesheet" href="dbstyle.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.72.0">
+<link rel="start" href="index.html" title="Programmer's Reference Guide">
+<link rel="up" href="xyster.acl.html" title="Chapter 2. Xyster_Acl">
+<link rel="prev" href="xyster.acl.html" title="Chapter 2. Xyster_Acl">
+<link rel="next" href="xyster.collection.html" title="Chapter 3. Xyster_Collection">
+<link rel="chapter" href="introduction.html" title="Chapter 1. Introduction to Xyster Framework">
+<link rel="chapter" href="xyster.acl.html" title="Chapter 2. Xyster_Acl">
+<link rel="chapter" href="xyster.collection.html" title="Chapter 3. Xyster_Collection">
+<link rel="chapter" href="xyster.controller.html" title="Chapter 4. Xyster_Controller">
+<link rel="chapter" href="xyster.data.html" title="Chapter 5. Xyster_Data">
+<link rel="chapter" href="xyster.date.html" title="Chapter 6. Xyster_Date">
+<link rel="chapter" href="xyster.enum.html" title="Chapter 7. Xyster_Enum">
+<link rel="chapter" href="xyster.filter.html" title="Chapter 8. Xyster_Filter">
+<link rel="chapter" href="xyster.orm.html" title="Chapter 9. Xyster_Orm">
+<link rel="chapter" href="xyster.type.html" title="Chapter 10. Xyster_Type">
+<link rel="chapter" href="xyster.validate.html" title="Chapter 11. Xyster_Validate">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<div class="navheader"><table width="100%" summary="Navigation header">
+<tr><th colspan="3" align="center">2.2. The ACL Role Provider</th></tr>
+<tr>
+<td width="20%" align="left">
+<a accesskey="p" href="xyster.acl.html">Prev</a> </td>
+<th width="60%" align="center">Chapter 2. Xyster_Acl</th>
+<td width="20%" align="right"> <a accesskey="n" href="xyster.collection.html">Next</a>
+</td>
+</tr>
+</table></div>
+<div class="sect1" lang="en">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="xyster.acl.roleprovider"></a>2.2. The ACL Role Provider</h2></div></div></div>
+<p>The ACL is for determining whether a user has access to a resource. The Auth package is for identifying and authenticating users.
+				What ties them together? Furthermore, what can one use to determine the parent roles of an identity? The answer is the
+				Role Provider. The Role Provider is a mediator that sits between the Acl and Auth packages so neither has to know about the other.</p>
+<p>The Role Provider interface, <span class="interface">Xyster_Acl_Role_Provider_Interface</span>, has two methods:</p>
+<div class="orderedlist"><ol type="1">
+<li><p>getRole – Turn an identity into a Role</p></li>
+<li><p>getParents – Gets the parent Roles of a Role</p></li>
+</ol></div>
+<p><code class="classname">Xyster_Acl_Role_Provider</code> is a default implementation of this interface. Given an identity,
+				it will return a <code class="classname">Zend_Acl_Role</code> object with the identity as the role ID. The
+				<code class="methodname">getParents</code> method will just return an empty array.</p>
+<p>Using this object makes it simple to authenticate a client and then add it to the ACL.</p>
+<pre class="programlisting">&lt;?php
+$provider = new Xyster_Acl_Role_Provider;
+$identity = Zend_Auth::getInstance()-&gt;getIdentity();
+$role = $provider-&gt;getRole($identity);
+$acl = new Xyster_Acl;
+$acl-&gt;addRole($role, $provider-&gt;getParents($role));</pre>
+<p>In this case, having the provider is a convenience more than anything. More importantly, the 
+				<code class="classname">Xyster_Controller_Plugin_Auth</code> class uses a Role Provider to add the
+				authenticated user to an ACL. See its documentation for more details.</p>
+</div>
+<div class="navfooter"><table width="100%" summary="Navigation footer">
+<tr>
+<td width="40%" align="left">
+<a accesskey="p" href="xyster.acl.html">Prev</a> </td>
+<td width="20%" align="center"><a accesskey="u" href="xyster.acl.html">Up</a></td>
+<td width="40%" align="right"> <a accesskey="n" href="xyster.collection.html">Next</a>
+</td>
+</tr>
+<tr>
+<td width="40%" align="left" valign="top">Chapter 2. Xyster_Acl </td>
+<td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td>
+<td width="40%" align="right" valign="top"> Chapter 3. Xyster_Collection</td>
+</tr>
+</table></div>
+<div class="revinfo"></div>
+</body>
+</html>

@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class Xyster_Container_Visitor_MethodCalling</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name">Class Xyster_Container_Visitor_MethodCalling</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+															<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+					</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">A visitor implementation that calls methods on the components of a specified type</p>
+	<ul class="tags">
+				<li><span class="field">copyright:</span> Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)</li>
+				<li><span class="field">license:</span> <a href="http://www.opensource.org/licenses/bsd-license.php">New BSD License</a></li>
+			</ul>
+		<p class="notes">
+			Located in <a class="field" href="_Container---Visitor---MethodCalling.php.html">/Container/Visitor/MethodCalling.php</a> (line <span class="field">32</span>)
+		</p>
+		
+				
+		<pre><a href="../Xyster_Container/Xyster_Container_Visitor_Abstract.html">Xyster_Container_Visitor_Abstract</a>
+   |
+   --<a href="../Xyster_Container/Xyster_Container_Visitor_TraversalChecking.html">Xyster_Container_Visitor_TraversalChecking</a>
+      |
+      --Xyster_Container_Visitor_MethodCalling</pre>
+	
+			</div>
+</div>
+
+
+
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+												<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+																																																				
+												<div class="method-definition">
+											<span class="method-result">Xyster_Container_Visitor_MethodCalling</span>
+										<a href="#__construct" title="details" class="method-name">__construct</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$method</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$arguments</span> = <span class="var-default">array()</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$visitInInstantiationOrder</span> = <span class="var-default">true</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#traverse" title="details" class="method-name">traverse</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$node</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#visitContainer" title="details" class="method-name">visitContainer</a>
+											(<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Interface.html">Xyster_Container_Interface</a></span>&nbsp;<span class="var-name">$container</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">array</span>
+										<a href="#_getArguments" title="details" class="method-name">_getArguments</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">ReflectionMethod</span>
+										<a href="#_getMethod" title="details" class="method-name">_getMethod</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#_invoke" title="details" class="method-name">_invoke</a>
+											(<span class="var-type">object</span>&nbsp;<span class="var-name">$target</span>)
+									</div>
+								</div>
+		</div>
+	</div>		
+
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+																<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+
+<a name="method__construct" id="__construct"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number">61</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Creates a MethodCalling visitor for a method with arguments</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Xyster_Container_Visitor_MethodCalling</span>
+		<span class="method-name">
+			__construct
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$method</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$arguments</span> = <span class="var-default">array()</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$visitInInstantiationOrder</span> = <span class="var-default">true</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">ReflectionMethod</span>
+				<span class="var-name">$method</span><span class="var-description">: the method to invoke</span>			</li>
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">$arguments</span><span class="var-description">: the arguments for the method invocation</span>			</li>
+					<li>
+				<span class="var-type">boolean</span>
+				<span class="var-name">$visitInInstantiationOrder</span><span class="var-description">: true if components are visited in instantiation order</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodtraverse" id="traverse"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">traverse</span> (line <span class="line-number">76</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Entry point for the Visitor traversal</p>
+<p class="description"><p>{@inherit}</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			traverse
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$node</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$node</span><span class="var-description">: the start node of the traversal</span>			</li>
+				</ul>
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../Xyster_Container/Xyster_Container_Visitor_Abstract.html#methodtraverse">Xyster_Container_Visitor_Abstract::traverse()</a></dt>
+						<dd>Entry point for the Visitor traversal  {@inherit}</dd>
+					</dl>
+			
+	</div>
+<a name="methodvisitContainer" id="visitContainer"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">visitContainer</span> (line <span class="line-number">102</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Visit a container that has to accept the visitor</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			visitContainer
+		</span>
+					(<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Interface.html">Xyster_Container_Interface</a></span>&nbsp;<span class="var-name">$container</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Interface.html">Xyster_Container_Interface</a></span>
+				<span class="var-name">$container</span><span class="var-description">: the visited container.</span>			</li>
+				</ul>
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../Xyster_Container/Xyster_Container_Visitor_TraversalChecking.html#methodvisitContainer">Xyster_Container_Visitor_TraversalChecking::visitContainer()</a></dt>
+						<dd>Visit a container that has to accept the visitor</dd>
+					</dl>
+			
+	</div>
+<a name="method_getArguments" id="_getArguments"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">_getArguments</span> (line <span class="line-number">114</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets the arguments for the method</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">array</span>
+		<span class="method-name">
+			_getArguments
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="method_getMethod" id="_getMethod"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">_getMethod</span> (line <span class="line-number">124</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets the method</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">ReflectionMethod</span>
+		<span class="method-name">
+			_getMethod
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="method_invoke" id="_invoke"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">_invoke</span> (line <span class="line-number">134</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Invokes the method on the given object</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			_invoke
+		</span>
+					(<span class="var-type">object</span>&nbsp;<span class="var-name">$target</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object</span>
+				<span class="var-name">$target</span>			</li>
+				</ul>
+		
+			
+	</div>
+							<h4>Inherited Methods</h4>
+				<a name='inherited_methods'><!-- --></a>	
+									<!-- =========== Summary =========== -->
+					<p>Inherited From <span class="classname"><a href="../Xyster_Container/Xyster_Container_Visitor_TraversalChecking.html">Xyster_Container_Visitor_TraversalChecking</a></span></p>
+					<blockquote>
+													<span class="method-name"><a href="../Xyster_Container/Xyster_Container_Visitor_TraversalChecking.html#methodvisitComponentAdapter">Xyster_Container_Visitor_TraversalChecking::visitComponentAdapter()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Container/Xyster_Container_Visitor_TraversalChecking.html#methodvisitContainer">Xyster_Container_Visitor_TraversalChecking::visitContainer()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Container/Xyster_Container_Visitor_TraversalChecking.html#methodvisitParameter">Xyster_Container_Visitor_TraversalChecking::visitParameter()</a></span><br>
+											</blockquote>
+									<!-- =========== Summary =========== -->
+					<p>Inherited From <span class="classname"><a href="../Xyster_Container/Xyster_Container_Visitor_Abstract.html">Xyster_Container_Visitor_Abstract</a></span></p>
+					<blockquote>
+													<span class="method-name"><a href="../Xyster_Container/Xyster_Container_Visitor_Abstract.html#methodtraverse">Xyster_Container_Visitor_Abstract::traverse()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Container/Xyster_Container_Visitor_Abstract.html#method_checkTraversal">Xyster_Container_Visitor_Abstract::_checkTraversal()</a></span><br>
+											</blockquote>
+										
+		</div>
+	</div>
+
+
+	<p class="notes" id="credit">
+		Documentation generated on Mon, 19 May 2008 17:08:25 -0400 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.2</a>
+	</p>
+	</div></body>
+</html>

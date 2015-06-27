@@ -1,0 +1,1148 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<LINK REL="stylesheet" TYPE="text/css" TITLE="Style" href="../../stylesheet.css">
+</head>
+<body>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="bannercell" rowspan="2"><a href="http://phing.info/"><img src="http://phing.info/images/phing.gif" alt="http://phing.info/" align="left" border="0"></a></td>
+<td style="text-align:right"><h2>Source Code Coverage</h2></td>
+</tr>
+<tr><td style="text-align:right">Designed for use with <a href="http://pear.php.net/package/PHPUnit2">PHPUnit2</a>, <a href="http://www.xdebug.org/">Xdebug</a> and <a href="http://phing.info/">Phing</a>.</td></tr>
+</table>
+<hr size="1">
+<table class="log" cellpadding="5" cellspacing="0" width="100%"><tr class="a">
+<td class="small">Methods: 11</td>
+<td class="small">LOC: 220</td>
+<td class="small">Statements: 82</td>
+</tr></table>
+<table class="log" cellpadding="5" cellspacing="0" width="100%"><tbody><tr>
+<td class="legendItem" width="0%">Legend:</td>
+<td class="legendValue" width="100%">
+<span class="legendCovered">executed</span><span class="legendUncovered">not executed</span><span class="legendDeadCode">dead code</span>
+</td>
+</tr></tbody></table>
+<table class="log" cellpadding="5" cellspacing="0" width="100%">
+<tr>
+<th width="100%">Source file</th>
+<th>Statements</th>
+<th>Methods</th>
+<th width="250" colspan="2" nowrap>Total coverage</th>
+</tr>
+<tr class="a">
+<td>Set.php</td>
+<td>100.0%</td>
+<td>100.0%</td>
+<td>100.0%</td>
+<td><table cellspacing="0" cellpadding="0" border="0" width="100%" style="display: inline"><tr><td class="fullcover" width="200" height="12"> </td></tr></table></td>
+</tr>
+</table>
+<table cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td class="lineCount">1</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">&lt;?php</pre></td>
+</tr>
+<tr>
+<td class="lineCount">2</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">3</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * Xyster Framework</pre></td>
+</tr>
+<tr>
+<td class="lineCount">4</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">5</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * This source file is subject to the new BSD license that is bundled</pre></td>
+</tr>
+<tr>
+<td class="lineCount">6</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * with this package in the file LICENSE.txt.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">7</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * It is also available through the world-wide-web at this URL:</pre></td>
+</tr>
+<tr>
+<td class="lineCount">8</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * http://www.opensource.org/licenses/bsd-license.php</pre></td>
+</tr>
+<tr>
+<td class="lineCount">9</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">10</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @category  Xyster</pre></td>
+</tr>
+<tr>
+<td class="lineCount">11</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @package   Xyster_Data</pre></td>
+</tr>
+<tr>
+<td class="lineCount">12</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @copyright Copyright LibreWorks, LLC (http://libreworks.net)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">13</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License</pre></td>
+</tr>
+<tr>
+<td class="lineCount">14</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">15</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">namespace Xyster\Data;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">16</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">17</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * A set that holds rows and columns</pre></td>
+</tr>
+<tr>
+<td class="lineCount">18</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">19</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @category  Xyster</pre></td>
+</tr>
+<tr>
+<td class="lineCount">20</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @package   Xyster_Data</pre></td>
+</tr>
+<tr>
+<td class="lineCount">21</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @copyright Copyright LibreWorks, LLC (http://libreworks.net)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">22</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License</pre></td>
+</tr>
+<tr>
+<td class="lineCount">23</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">24</td>
+<td class="coverageCount"></td>
+<td class="srcLineClassStart"><pre class="srcLine">class Set extends \Xyster\Collection\SortableSet</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">25</td>
+<td class="lineCountCovered">1</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">{</pre></td>
+</tr>
+<tr>
+<td class="lineCount">26</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">27</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @var Xyster_Collection_Set</pre></td>
+</tr>
+<tr>
+<td class="lineCount">28</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">29</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    protected $_columns;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">30</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">31</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">32</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Creates a new data set</pre></td>
+</tr>
+<tr>
+<td class="lineCount">33</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">34</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param \Xyster\Collection\ICollection $values The values to add</pre></td>
+</tr>
+<tr>
+<td class="lineCount">35</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">36</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function __construct( \Xyster\Collection\ICollection $values = null )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">37</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">38</td>
+<td class="lineCountCovered">68</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        $this-&gt;_columns = new \Xyster\Collection\Set();</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">39</td>
+<td class="lineCountCovered">68</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        if ( $values instanceof \Xyster\Collection\ICollection ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">40</td>
+<td class="lineCountCovered">7</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">            if ( !count($this-&gt;_columns) &amp;&amp; count($values) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">41</td>
+<td class="lineCountCovered">7</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                $first = $values-&gt;getIterator()-&gt;current();</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">42</td>
+<td class="lineCountCovered">7</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                if ( !is_array($first) &amp;&amp; !is_object($first) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">43</td>
+<td class="lineCountCovered">2</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                    throw new \Xyster\Data\DataException('This set can only contain arrays or objects');</pre></td>
+</tr>
+<tr>
+<td class="lineCountDeadCode">44</td>
+<td class="coverageCountDeadCode"></td>
+<td class="srcLineDeadCode"><pre class="srcLineDeadCode">                }</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">45</td>
+<td class="lineCountCovered">5</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                $this-&gt;_createColumnsFromItem($first);</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">46</td>
+<td class="lineCountCovered">5</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">            }</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">47</td>
+<td class="lineCountCovered">5</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">            $this-&gt;merge($values);</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">48</td>
+<td class="lineCountCovered">5</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">49</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">50</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">51</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">52</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Adds an item to the set</pre></td>
+</tr>
+<tr>
+<td class="lineCount">53</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">54</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * This collection doesn't accept duplicate values, and will return false</pre></td>
+</tr>
+<tr>
+<td class="lineCount">55</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * if the provided value is already in the collection.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">56</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">57</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * It can only accept arrays or objects as items, otherwise it will throw a</pre></td>
+</tr>
+<tr>
+<td class="lineCount">58</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * \Xyster\Data\DataException.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">59</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">60</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param mixed $item The item to add</pre></td>
+</tr>
+<tr>
+<td class="lineCount">61</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return boolean Whether the set changed as a result of this method</pre></td>
+</tr>
+<tr>
+<td class="lineCount">62</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @throws \Xyster\Data\DataException if the collection cannot contain the value</pre></td>
+</tr>
+<tr>
+<td class="lineCount">63</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">64</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function add( $item )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">65</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">66</td>
+<td class="lineCountCovered">61</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        if ( !is_array($item) &amp;&amp; !is_object($item) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">67</td>
+<td class="lineCountCovered">2</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">            throw new \Xyster\Data\DataException('This set can only contain arrays or objects');</pre></td>
+</tr>
+<tr>
+<td class="lineCountDeadCode">68</td>
+<td class="coverageCountDeadCode"></td>
+<td class="srcLineDeadCode"><pre class="srcLineDeadCode">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">69</td>
+<td class="lineCountCovered">59</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        if ( !count($this-&gt;_columns) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">70</td>
+<td class="lineCountCovered">59</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">            $this-&gt;_createColumnsFromItem($item);</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">71</td>
+<td class="lineCountCovered">59</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">72</td>
+<td class="lineCountCovered">59</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        return parent::add($item);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">73</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">74</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">75</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Adds a column to the set</pre></td>
+</tr>
+<tr>
+<td class="lineCount">76</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">77</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $column The name of the column</pre></td>
+</tr>
+<tr>
+<td class="lineCount">78</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @throws \Xyster\Data\DataException if the method is called after the set contains items</pre></td>
+</tr>
+<tr>
+<td class="lineCount">79</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">80</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function addColumn( $column )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">81</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">82</td>
+<td class="lineCountCovered">61</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        if ( count($this-&gt;_items) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">83</td>
+<td class="lineCountCovered">2</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">            throw new \Xyster\Data\DataException('Columns cannot be added once items have been added');</pre></td>
+</tr>
+<tr>
+<td class="lineCountDeadCode">84</td>
+<td class="coverageCountDeadCode"></td>
+<td class="srcLineDeadCode"><pre class="srcLineDeadCode">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">85</td>
+<td class="lineCountCovered">61</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        $this-&gt;_columns-&gt;add(Symbol\Field::named($column));</pre></td>
+</tr>
+<tr>
+<td class="lineCount">86</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">87</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">88</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Perform an aggregate function on a column</pre></td>
+</tr>
+<tr>
+<td class="lineCount">89</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">90</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param Symbol\AggregateField $field</pre></td>
+</tr>
+<tr>
+<td class="lineCount">91</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return mixed</pre></td>
+</tr>
+<tr>
+<td class="lineCount">92</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">93</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function aggregate( Symbol\AggregateField $field )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">94</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">95</td>
+<td class="lineCountCovered">12</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        $function = $field-&gt;getFunction();</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">96</td>
+<td class="lineCountCovered">12</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        switch( strtoupper($function-&gt;getValue()) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">97</td>
+<td class="lineCountCovered">12</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">            case "MAX":</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">98</td>
+<td class="lineCountCovered">3</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                $value = max($this-&gt;fetchColumn($field));</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">99</td>
+<td class="lineCountCovered">3</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                break;</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">100</td>
+<td class="lineCountCovered">10</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">            case "MIN":</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">101</td>
+<td class="lineCountCovered">2</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                $value = min($this-&gt;fetchColumn($field));</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">102</td>
+<td class="lineCountCovered">2</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                break;</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">103</td>
+<td class="lineCountCovered">8</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">            case "SUM":</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">104</td>
+<td class="lineCountCovered">2</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                $value = array_sum($this-&gt;fetchColumn($field));</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">105</td>
+<td class="lineCountCovered">2</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                break;</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">106</td>
+<td class="lineCountCovered">6</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">            case "AVG":</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">107</td>
+<td class="lineCountCovered">2</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                $value = array_sum($this-&gt;fetchColumn($field))/count($this-&gt;_items);</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">108</td>
+<td class="lineCountCovered">2</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                break;</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">109</td>
+<td class="lineCountCovered">4</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">            case "COUNT":</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">110</td>
+<td class="lineCountCovered">4</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">            default:</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">111</td>
+<td class="lineCountCovered">4</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                $value = count($this-&gt;_items);</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">112</td>
+<td class="lineCountCovered">12</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">113</td>
+<td class="lineCountCovered">12</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        return $value;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">114</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">115</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">116</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Converts an entire column of values to an array</pre></td>
+</tr>
+<tr>
+<td class="lineCount">117</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">118</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param mixed $field A {@link Symbol\Field} or the name of the field to fetch</pre></td>
+</tr>
+<tr>
+<td class="lineCount">119</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return array The fetched values from the column</pre></td>
+</tr>
+<tr>
+<td class="lineCount">120</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">121</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function fetchColumn( $field )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">122</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">123</td>
+<td class="lineCountCovered">13</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        $getter = new Symbol\Evaluator($field);</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">124</td>
+<td class="lineCountCovered">13</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        $values = array();</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">125</td>
+<td class="lineCountCovered">13</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        foreach( $this-&gt;_items as $v ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">126</td>
+<td class="lineCountCovered">13</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">            $values[] = $getter-&gt;evaluate($v);</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">127</td>
+<td class="lineCountCovered">13</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">128</td>
+<td class="lineCountCovered">13</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        return $values;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">129</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">130</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">131</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Returns the first column of the first row of a statement</pre></td>
+</tr>
+<tr>
+<td class="lineCount">132</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">133</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return mixed The value of the first column in the first row</pre></td>
+</tr>
+<tr>
+<td class="lineCount">134</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">135</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function fetchOne()</pre></td>
+</tr>
+<tr>
+<td class="lineCount">136</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">137</td>
+<td class="lineCountCovered">2</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        $value = null;</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">138</td>
+<td class="lineCountCovered">2</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        if ( $item = current($this-&gt;_items) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">139</td>
+<td class="lineCountCovered">2</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">            $value = current((array) $item);</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">140</td>
+<td class="lineCountCovered">2</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">141</td>
+<td class="lineCountCovered">2</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        return $value;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">142</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">143</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">144</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Converts 2 fields into an associative array</pre></td>
+</tr>
+<tr>
+<td class="lineCount">145</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">146</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param mixed $key A {@link Symbol\Field} or the name of the field to fetch</pre></td>
+</tr>
+<tr>
+<td class="lineCount">147</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param mixed $value A {@link Symbol\Field} or the name of the field to fetch</pre></td>
+</tr>
+<tr>
+<td class="lineCount">148</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return array The translated fields</pre></td>
+</tr>
+<tr>
+<td class="lineCount">149</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">150</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function fetchPairs( $key, $value )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">151</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">152</td>
+<td class="lineCountCovered">4</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        $getter1 = new Symbol\Evaluator($key);</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">153</td>
+<td class="lineCountCovered">4</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        $getter2 = new Symbol\Evaluator($value);</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">154</td>
+<td class="lineCountCovered">4</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        $pairs = array();</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">155</td>
+<td class="lineCountCovered">4</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        foreach( $this-&gt;_items as $v ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">156</td>
+<td class="lineCountCovered">4</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">            $pairs[ $getter1-&gt;evaluate($v) ] = $getter2-&gt;evaluate($v);</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">157</td>
+<td class="lineCountCovered">4</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">158</td>
+<td class="lineCountCovered">4</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        return $pairs;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">159</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">160</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">161</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Removes elements in the collection based on a criteria</pre></td>
+</tr>
+<tr>
+<td class="lineCount">162</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">163</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param Symbol\Criterion $criteria The criteria for filtering</pre></td>
+</tr>
+<tr>
+<td class="lineCount">164</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">165</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function filter( Symbol\Criterion $criteria )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">166</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">167</td>
+<td class="lineCountCovered">2</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        $this-&gt;_items = array_values(array_filter($this-&gt;_items, array($criteria, 'evaluate')));</pre></td>
+</tr>
+<tr>
+<td class="lineCount">168</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">169</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">170</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Gets the columns that have been added to the set</pre></td>
+</tr>
+<tr>
+<td class="lineCount">171</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">172</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Collection_Set</pre></td>
+</tr>
+<tr>
+<td class="lineCount">173</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">174</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function getColumns()</pre></td>
+</tr>
+<tr>
+<td class="lineCount">175</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">176</td>
+<td class="lineCountCovered">4</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        return \Xyster\Collection\Collection::fixedSet($this-&gt;_columns);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">177</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">178</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">179</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Sorts the collection by one or more columns and directions</pre></td>
+</tr>
+<tr>
+<td class="lineCount">180</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">181</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * The $sorts parameter can either be a single {@link Xyster_Data_Sort} or</pre></td>
+</tr>
+<tr>
+<td class="lineCount">182</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * an array containing multiple.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">183</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">184</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param mixed $sorts The sorts to include</pre></td>
+</tr>
+<tr>
+<td class="lineCount">185</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">186</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function sortBy( $sorts )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">187</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">188</td>
+<td class="lineCountCovered">6</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">    	$param = ( $sorts instanceof Symbol\ISymbol ) ? $sorts : null;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">189</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">190</td>
+<td class="lineCountCovered">6</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        $clause = new Symbol\SortClause($param);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">191</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">192</td>
+<td class="lineCountCovered">6</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        if ( $param === null ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">193</td>
+<td class="lineCountCovered">4</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">	        if ( !is_array($sorts) &amp;&amp; ! $sorts instanceof Traversable ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">194</td>
+<td class="lineCountCovered">2</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">	        	$sorts = array($sorts);</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">195</td>
+<td class="lineCountCovered">2</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">	        }</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">196</td>
+<td class="lineCountCovered">4</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">	        if ( is_array($sorts) || $sorts instanceof Traversable ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">197</td>
+<td class="lineCountCovered">4</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">	        	foreach( $sorts as $sort ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">198</td>
+<td class="lineCountCovered">4</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">	        		if ( ! $sort instanceof Symbol\Sort ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">199</td>
+<td class="lineCountCovered">2</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">	        			throw new \Xyster\Data\DataException('Only Xyster_Data_Sort objects can be used');</pre></td>
+</tr>
+<tr>
+<td class="lineCountDeadCode">200</td>
+<td class="coverageCountDeadCode"></td>
+<td class="srcLineDeadCode"><pre class="srcLineDeadCode">	        		}</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">201</td>
+<td class="lineCountCovered">2</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">	        		$clause-&gt;add($sort);</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">202</td>
+<td class="lineCountCovered">2</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">	        	}</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">203</td>
+<td class="lineCountCovered">2</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">	        }</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">204</td>
+<td class="lineCountCovered">2</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">205</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">206</td>
+<td class="lineCountCovered">4</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        $this-&gt;sort(new Comparator($clause));</pre></td>
+</tr>
+<tr>
+<td class="lineCount">207</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">208</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">209</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">210</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Creates the columns for this set from an array or object</pre></td>
+</tr>
+<tr>
+<td class="lineCount">211</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">212</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param mixed $item either an array or an object</pre></td>
+</tr>
+<tr>
+<td class="lineCount">213</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">214</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    protected function _createColumnsFromItem( $item )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">215</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">216</td>
+<td class="lineCountCovered">59</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        foreach( $item as $k =&gt; $v ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">217</td>
+<td class="lineCountCovered">59</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">            $this-&gt;addColumn($k);</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">218</td>
+<td class="lineCountCovered">59</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">219</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">220</td>
+<td class="lineCountCovered">1</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">}</pre></td>
+</tr>
+</table>
+<br><table width="100%">
+<tr><td><hr noshade size="1"></td></tr>
+<tr><td class="small">Report generated at 2010-10-18T17:19:49-04:00</td></tr>
+</table>
+</body>
+</html>

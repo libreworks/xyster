@@ -1,0 +1,716 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class Xyster_Orm_Query_Report</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name">Class Xyster_Orm_Query_Report</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+													<a href="#sec-vars">Vars</a>
+						|											<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+											<a href="#sec-const-summary">Constants</a> (<a href="#sec-consts">details</a>)
+						
+			</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">A report query object</p>
+	<ul class="tags">
+				<li><span class="field">copyright:</span> Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)</li>
+				<li><span class="field">license:</span> <a href="http://www.opensource.org/licenses/bsd-license.php">New BSD License</a></li>
+			</ul>
+		<p class="notes">
+			Located in <a class="field" href="_Orm---Query---Report.php.html">/Orm/Query/Report.php</a> (line <span class="field">32</span>)
+		</p>
+		
+				
+		<pre><a href="../Xyster_Orm/Xyster_Orm_Query.html">Xyster_Orm_Query</a>
+   |
+   --Xyster_Orm_Query_Report</pre>
+	
+			</div>
+</div>
+
+
+	<a name="sec-const-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Class Constant Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+						<span class="disabled">Constants</span> (<a href="#sec-consts">details</a>)
+												<a href="#sec-vars">Vars</a>
+				 
+				|
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			<div class="const-summary">
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#DISTINCT" title="details" class="const-name">DISTINCT</a> = 					<span class="var-type"> 'distinct'</span>
+
+				</div>
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#FIELDS" title="details" class="const-name">FIELDS</a> = 					<span class="var-type"> 'fields'</span>
+
+				</div>
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#GROUP" title="details" class="const-name">GROUP</a> = 					<span class="var-type"> 'group'</span>
+
+				</div>
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#HAVING" title="details" class="const-name">HAVING</a> = 					<span class="var-type"> 'having'</span>
+
+				</div>
+							</div>
+		</div>
+	</div>
+
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+															<a href="#sec-const-summary">Constants</a> (<a href="#sec-consts">details</a>)
+							
+															<a href="#sec-vars">Vars</a>
+				 
+				|
+						<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+																																																																																																												
+												<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#distinct" title="details" class="method-name">distinct</a>
+											([<span class="var-type">boolean</span>&nbsp;<span class="var-name">$distinct</span> = <span class="var-default">true</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../Xyster_Data/Xyster_Data_Set.html">Xyster_Data_Set</a></span>
+										<a href="#execute" title="details" class="method-name">execute</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../Xyster_Orm/Xyster_Orm_Query_Report.html">Xyster_Orm_Query_Report</a></span>
+										<a href="#field" title="details" class="method-name">field</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$field</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../Xyster_Data/Xyster_Data_Field_Clause.html">Xyster_Data_Field_Clause</a></span>
+										<a href="#getFields" title="details" class="method-name">getFields</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../Xyster_Data/Xyster_Data_Field_Clause.html">Xyster_Data_Field_Clause</a></span>
+										<a href="#getGroup" title="details" class="method-name">getGroup</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">array</span>
+										<a href="#getHaving" title="details" class="method-name">getHaving</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../Xyster_Orm/Xyster_Orm_Query_Report.html">Xyster_Orm_Query_Report</a></span>
+										<a href="#group" title="details" class="method-name">group</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$group</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#hasRuntimeFields" title="details" class="method-name">hasRuntimeFields</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#hasRuntimeGroup" title="details" class="method-name">hasRuntimeGroup</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../Xyster_Orm/Xyster_Orm_Query_Report.html">Xyster_Orm_Query_Report</a></span>
+										<a href="#having" title="details" class="method-name">having</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$having</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#isDistinct" title="details" class="method-name">isDistinct</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#isRuntime" title="details" class="method-name">isRuntime</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#_initParts" title="details" class="method-name">_initParts</a>
+										()
+									</div>
+								</div>
+		</div>
+	</div>		
+
+	<a name="sec-vars"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variables</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+										<a href="#sec-var-summary">Vars</a> (<span class="disabled">details</span>)
+						
+			
+												<a href="#sec-const-summary">Constants</a> (<a href="#sec-consts">details</a>)
+							
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+										<h4>Inherited Variables</h4>
+				<A NAME='inherited_vars'><!-- --></A>
+									<p>Inherited from <span class="classname"><a href="../Xyster_Orm/Xyster_Orm_Query.html">Xyster_Orm_Query</a></span></p>
+					<blockquote>
+													<span class="var-title">
+								<span class="var-name"><a href="../Xyster_Orm/Xyster_Orm_Query.html#var$_backend">Xyster_Orm_Query::$_backend</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../Xyster_Orm/Xyster_Orm_Query.html#var$_class">Xyster_Orm_Query::$_class</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../Xyster_Orm/Xyster_Orm_Query.html#var$_manager">Xyster_Orm_Query::$_manager</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../Xyster_Orm/Xyster_Orm_Query.html#var$_meta">Xyster_Orm_Query::$_meta</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../Xyster_Orm/Xyster_Orm_Query.html#var$_parts">Xyster_Orm_Query::$_parts</a></span><br>
+							</span>
+													<span class="var-title">
+								<span class="var-name"><a href="../Xyster_Orm/Xyster_Orm_Query.html#var$_runtime">Xyster_Orm_Query::$_runtime</a></span><br>
+							</span>
+											</blockquote> 
+										
+		</div>
+	</div>
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+															<a href="#sec-vars">Vars</a>
+																			<a href="#sec-const-summary">Constants</a> (<a href="#sec-consts">details</a>)
+							
+										<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+
+<a name="methoddistinct" id="distinct"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">distinct</span> (line <span class="line-number">44</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Turns excluding duplicate records on or off</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			distinct
+		</span>
+					([<span class="var-type">boolean</span>&nbsp;<span class="var-name">$distinct</span> = <span class="var-default">true</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">boolean</span>
+				<span class="var-name">$distinct</span><span class="var-description">: True excludes duplicates</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodexecute" id="execute"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">execute</span> (line <span class="line-number">61</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Executes the report query</p>
+<p class="description"><p>If the entire query cannot be executed in the backend, this method will  return full entities from the data store, put them in the cache, then do  any runtime calculations it needs to do.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> The query result set</li>
+				<li><span class="field">throws:</span> Xyster_Orm_Query_Exception if there's a select column not aggregated or grouped</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../Xyster_Data/Xyster_Data_Set.html">Xyster_Data_Set</a></span>
+		<span class="method-name">
+			execute
+		</span>
+				()
+			</div>
+	
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../Xyster_Orm/Xyster_Orm_Query.html#methodexecute">Xyster_Orm_Query::execute()</a></dt>
+						<dd>Executes the query</dd>
+					</dl>
+			
+	</div>
+<a name="methodfield" id="field"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">field</span> (line <span class="line-number">177</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Adds a projected field to this query</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> provides a fluent interface</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../Xyster_Orm/Xyster_Orm_Query_Report.html">Xyster_Orm_Query_Report</a></span>
+		<span class="method-name">
+			field
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$field</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Data/Xyster_Data_Field.html">Xyster_Data_Field</a></span>
+				<span class="var-name">$field</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodgetFields" id="getFields"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getFields</span> (line <span class="line-number">195</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets the non-group <a href="../Xyster_Data/Xyster_Data_Field.html">Xyster_Data_Field</a> objects added to the statement</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../Xyster_Data/Xyster_Data_Field_Clause.html">Xyster_Data_Field_Clause</a></span>
+		<span class="method-name">
+			getFields
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetGroup" id="getGroup"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getGroup</span> (line <span class="line-number">205</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets the grouped <a href="../Xyster_Data/Xyster_Data_Field.html">Xyster_Data_Field</a> objects added to the statement</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../Xyster_Data/Xyster_Data_Field_Clause.html">Xyster_Data_Field_Clause</a></span>
+		<span class="method-name">
+			getGroup
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetHaving" id="getHaving"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getHaving</span> (line <span class="line-number">215</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets the <a href="../Xyster_Data/Xyster_Data_Aggregate.html">Xyster_Data_Aggregate</a> <a href="../Xyster_Data/Xyster_Data_Criterion.html">Xyster_Data_Criterion</a> objects added to the statement</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">array</span>
+		<span class="method-name">
+			getHaving
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgroup" id="group"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">group</span> (line <span class="line-number">226</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Adds grouped field to this report query</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> provides a fluent interface</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../Xyster_Orm/Xyster_Orm_Query_Report.html">Xyster_Orm_Query_Report</a></span>
+		<span class="method-name">
+			group
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$group</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Data/Xyster_Data_Field_Group.html">Xyster_Data_Field_Group</a></span>
+				<span class="var-name">$group</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodhasRuntimeFields" id="hasRuntimeFields"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">hasRuntimeFields</span> (line <span class="line-number">274</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets whether or not this report query has fields that evaluate at runtime</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			hasRuntimeFields
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodhasRuntimeGroup" id="hasRuntimeGroup"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">hasRuntimeGroup</span> (line <span class="line-number">284</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets whether or not this report query has groups that evaluate at runtime</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			hasRuntimeGroup
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodhaving" id="having"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">having</span> (line <span class="line-number">246</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Adds a group-criterion to this query</p>
+<p class="description"><p>All fields in the criterion must be instances of  <a href="../Xyster_Data/Xyster_Data_Field_Aggregate.html">Xyster_Data_Field_Aggregate</a>, as a &quot;having&quot; clause is applied to  groups.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> provides a fluent interface</li>
+				<li><span class="field">throws:</span> Xyster_Orm_Query_Exception if not all fields are aggregated</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../Xyster_Orm/Xyster_Orm_Query_Report.html">Xyster_Orm_Query_Report</a></span>
+		<span class="method-name">
+			having
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$having</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Data/Xyster_Data_Criterion.html">Xyster_Data_Criterion</a></span>
+				<span class="var-name">$having</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodisDistinct" id="isDistinct"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">isDistinct</span> (line <span class="line-number">294</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets whether or not to exclude duplicate results</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			isDistinct
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodisRuntime" id="isRuntime"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">isRuntime</span> (line <span class="line-number">304</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets whether this query has parts that are evaluated at runtime</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			isRuntime
+		</span>
+				()
+			</div>
+	
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../Xyster_Orm/Xyster_Orm_Query.html#methodisRuntime">Xyster_Orm_Query::isRuntime()</a></dt>
+						<dd>Gets whether this query has parts that are evaluated at runtime</dd>
+					</dl>
+			
+	</div>
+<a name="method_initParts" id="_initParts"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">_initParts</span> (line <span class="line-number">314</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Inits the parts of the query</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			_initParts
+		</span>
+				()
+			</div>
+	
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../Xyster_Orm/Xyster_Orm_Query.html#method_initParts">Xyster_Orm_Query::_initParts()</a></dt>
+						<dd>Initializes the parts container</dd>
+					</dl>
+			
+	</div>
+							<h4>Inherited Methods</h4>
+				<a name='inherited_methods'><!-- --></a>	
+									<!-- =========== Summary =========== -->
+					<p>Inherited From <span class="classname"><a href="../Xyster_Orm/Xyster_Orm_Query.html">Xyster_Orm_Query</a></span></p>
+					<blockquote>
+													<span class="method-name"><a href="../Xyster_Orm/Xyster_Orm_Query.html#method__construct">Xyster_Orm_Query::__construct()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Orm/Xyster_Orm_Query.html#methodexecute">Xyster_Orm_Query::execute()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Orm/Xyster_Orm_Query.html#methodgetBackendWhere">Xyster_Orm_Query::getBackendWhere()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Orm/Xyster_Orm_Query.html#methodgetFrom">Xyster_Orm_Query::getFrom()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Orm/Xyster_Orm_Query.html#methodgetLimit">Xyster_Orm_Query::getLimit()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Orm/Xyster_Orm_Query.html#methodgetOffset">Xyster_Orm_Query::getOffset()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Orm/Xyster_Orm_Query.html#methodgetOrder">Xyster_Orm_Query::getOrder()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Orm/Xyster_Orm_Query.html#methodgetPart">Xyster_Orm_Query::getPart()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Orm/Xyster_Orm_Query.html#methodgetWhere">Xyster_Orm_Query::getWhere()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Orm/Xyster_Orm_Query.html#methodhasRuntimeOrder">Xyster_Orm_Query::hasRuntimeOrder()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Orm/Xyster_Orm_Query.html#methodhasRuntimeWhere">Xyster_Orm_Query::hasRuntimeWhere()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Orm/Xyster_Orm_Query.html#methodisRuntime">Xyster_Orm_Query::isRuntime()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Orm/Xyster_Orm_Query.html#methodlimit">Xyster_Orm_Query::limit()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Orm/Xyster_Orm_Query.html#methodorder">Xyster_Orm_Query::order()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Orm/Xyster_Orm_Query.html#methodwhere">Xyster_Orm_Query::where()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Orm/Xyster_Orm_Query.html#method_initParts">Xyster_Orm_Query::_initParts()</a></span><br>
+											</blockquote>
+										
+		</div>
+	</div>
+
+	<a name="sec-consts"></a>
+	<div class="info-box">
+		<div class="info-box-title">Class Constants</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+										<a href="#sec-var-summary">Constants</a> (<span class="disabled">details</span>)
+						
+			
+												<a href="#sec-vars">Vars</a>
+														| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			<a name="constDISTINCT" id="DISTINCT"><!-- --></A>
+<div class="oddrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">DISTINCT</span>
+			 = <span class="const-default"> 'distinct'</span>
+			(line <span class="line-number">34</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+</div>
+<a name="constFIELDS" id="FIELDS"><!-- --></A>
+<div class="evenrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">FIELDS</span>
+			 = <span class="const-default"> 'fields'</span>
+			(line <span class="line-number">35</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+</div>
+<a name="constGROUP" id="GROUP"><!-- --></A>
+<div class="oddrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">GROUP</span>
+			 = <span class="const-default"> 'group'</span>
+			(line <span class="line-number">36</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+</div>
+<a name="constHAVING" id="HAVING"><!-- --></A>
+<div class="evenrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">HAVING</span>
+			 = <span class="const-default"> 'having'</span>
+			(line <span class="line-number">37</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+</div>
+							<h4>Inherited Constants</h4>
+				<A NAME='inherited_vars'><!-- --></A>
+									<p>Inherited from <span class="classname"><a href="../Xyster_Orm/Xyster_Orm_Query.html">Xyster_Orm_Query</a></span></p>
+					<blockquote>
+													<img src="../media/images/Variable.png" />
+							<span class="const-title">
+								<span class="const-name"><a href="../Xyster_Orm/Xyster_Orm_Query.html#constLIMIT">Xyster_Orm_Query::LIMIT</a></span><br>
+							</span>
+													<img src="../media/images/Variable.png" />
+							<span class="const-title">
+								<span class="const-name"><a href="../Xyster_Orm/Xyster_Orm_Query.html#constOFFSET">Xyster_Orm_Query::OFFSET</a></span><br>
+							</span>
+													<img src="../media/images/Variable.png" />
+							<span class="const-title">
+								<span class="const-name"><a href="../Xyster_Orm/Xyster_Orm_Query.html#constORDER">Xyster_Orm_Query::ORDER</a></span><br>
+							</span>
+													<img src="../media/images/Variable.png" />
+							<span class="const-title">
+								<span class="const-name"><a href="../Xyster_Orm/Xyster_Orm_Query.html#constWHERE">Xyster_Orm_Query::WHERE</a></span><br>
+							</span>
+											</blockquote> 
+										
+		</div>
+	</div>
+
+	<p class="notes" id="credit">
+		Documentation generated on Mon, 19 May 2008 17:07:32 -0400 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.2</a>
+	</p>
+	</div></body>
+</html>

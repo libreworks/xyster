@@ -1,0 +1,1044 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class Xyster_Db_Gateway_Pdo_Sqlite</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name">Class Xyster_Db_Gateway_Pdo_Sqlite</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+															<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+					</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">A gateway and abstraction layer for SQLite</p>
+	<ul class="tags">
+				<li><span class="field">copyright:</span> Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)</li>
+				<li><span class="field">license:</span> <a href="http://www.opensource.org/licenses/bsd-license.php">New BSD License</a></li>
+			</ul>
+		<p class="notes">
+			Located in <a class="field" href="_Db---Gateway---Pdo---Sqlite.php.html">/Db/Gateway/Pdo/Sqlite.php</a> (line <span class="field">28</span>)
+		</p>
+		
+				
+		<pre><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html">Xyster_Db_Gateway_Abstract</a>
+   |
+   --Xyster_Db_Gateway_Pdo_Sqlite</pre>
+	
+			</div>
+</div>
+
+
+
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+												<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+																																																																																																																																																																												
+												<div class="method-definition">
+											<span class="method-result">Xyster_Db_Gateway_Pdo_Sqlite</span>
+										<a href="#__construct" title="details" class="method-name">__construct</a>
+											([<span class="var-type"></span>&nbsp;<span class="var-name">$db</span> = <span class="var-default">null</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#dropColumn" title="details" class="method-name">dropColumn</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$table</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$column</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$default</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#listForeignKeys" title="details" class="method-name">listForeignKeys</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">array</span>
+										<a href="#listIndexes" title="details" class="method-name">listIndexes</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#renameColumn" title="details" class="method-name">renameColumn</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$table</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$old</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$new</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#renameIndex" title="details" class="method-name">renameIndex</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$old</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$new</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$table</span> = <span class="var-default">null</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setAdapter" title="details" class="method-name">setAdapter</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$db</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setDefault" title="details" class="method-name">setDefault</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$table</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$column</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$default</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setUnique" title="details" class="method-name">setUnique</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$table</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$cols</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#supportsForeignKeys" title="details" class="method-name">supportsForeignKeys</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#_getAddPrimarySql" title="details" class="method-name">_getAddPrimarySql</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$table</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$columns</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#_getCreateIndexSql" title="details" class="method-name">_getCreateIndexSql</a>
+											(<span class="var-type"><a href="../Xyster_Db/Xyster_Db_Gateway_IndexBuilder.html">Xyster_Db_Gateway_IndexBuilder</a></span>&nbsp;<span class="var-name">$builder</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#_getDropIndexSql" title="details" class="method-name">_getDropIndexSql</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$name</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$table</span> = <span class="var-default">null</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#_getDropPrimarySql" title="details" class="method-name">_getDropPrimarySql</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$table</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$name</span> = <span class="var-default">null</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#_getListSequencesSql" title="details" class="method-name">_getListSequencesSql</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#_getRenameColumnSql" title="details" class="method-name">_getRenameColumnSql</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$table</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$old</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$new</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#_getRenameIndexSql" title="details" class="method-name">_getRenameIndexSql</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$old</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$new</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$table</span> = <span class="var-default">null</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#_getRenameTableSql" title="details" class="method-name">_getRenameTableSql</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$old</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$new</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#_getSetNullSql" title="details" class="method-name">_getSetNullSql</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$table</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$column</span>, [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$null</span> = <span class="var-default">true</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#_getSetTypeSql" title="details" class="method-name">_getSetTypeSql</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$table</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$column</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$type</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argument</span> = <span class="var-default">null</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#_translateType" title="details" class="method-name">_translateType</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$type</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argument</span> = <span class="var-default">null</span>])
+									</div>
+								</div>
+		</div>
+	</div>		
+
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+																<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+
+<a name="method__construct" id="__construct"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number">35</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Creates a new MySQL DB gateway</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Xyster_Db_Gateway_Pdo_Sqlite</span>
+		<span class="method-name">
+			__construct
+		</span>
+					([<span class="var-type"></span>&nbsp;<span class="var-name">$db</span> = <span class="var-default">null</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">Zend_Db_Adapter_Pdo_Sqlite</span>
+				<span class="var-name">$db</span><span class="var-description">: The database adapter to use</span>			</li>
+				</ul>
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method__construct">Xyster_Db_Gateway_Abstract::__construct()</a></dt>
+						<dd>Creates a new DB gateway</dd>
+					</dl>
+			
+	</div>
+<a name="methoddropColumn" id="dropColumn"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">dropColumn</span> (line <span class="line-number">60</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Drops a column</p>
+<p class="description"><p>SQLite does not support dropping columns</p></p>
+	<ul class="tags">
+				<li><span class="field">throws:</span> Xyster_Db_Gateway_Exception always</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			dropColumn
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$table</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$column</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$default</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$table</span><span class="var-description">: The table name</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$column</span><span class="var-description">: The column name</span>			</li>
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$default</span><span class="var-description">: The new column default value</span>			</li>
+				</ul>
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methoddropColumn">Xyster_Db_Gateway_Abstract::dropColumn()</a></dt>
+						<dd>Removes a column from a table</dd>
+					</dl>
+			
+	</div>
+<a name="methodlistForeignKeys" id="listForeignKeys"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">listForeignKeys</span> (line <span class="line-number">82</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Lists all foreign keys</p>
+<p class="description"><p>The return value is an associative array keyed by the key name, as  returned by the RDBMS.</p><p>The value of each array element is an associative array with the  following keys:</p><p>KEY_NAME    =&gt; string; foreign key name  SCHEMA_NAME =&gt; string; name of database or schema  TABLE_NAME  =&gt; string; name of table  COLUMNS     =&gt; array; An array of the column names  ON_UPDATE   =&gt; string;  ON_DELETE   =&gt; string;</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			listForeignKeys
+		</span>
+				()
+			</div>
+	
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodlistForeignKeys">Xyster_Db_Gateway_Abstract::listForeignKeys()</a></dt>
+						<dd>Lists all foreign keys</dd>
+					</dl>
+			
+	</div>
+<a name="methodlistIndexes" id="listIndexes"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">listIndexes</span> (line <span class="line-number">106</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Lists all indexes</p>
+<p class="description"><p>The return value is an associative array keyed by the index name,  as returned by the RDBMS.  For now, we cannot easily calculate the  primary key status in SQLite.</p><p>The value of each array element is an associative array  with the following keys:</p><p>INDEX_NAME  =&gt; string; index name  SCHEMA_NAME =&gt; string; name of database or schema  TABLE_NAME  =&gt; string; name of table  COLUMNS     =&gt; array; An array of the column names  PRIMARY     =&gt; boolean; true if the index is a primary key  UNIQUE      =&gt; boolean; true if the index is a unique key</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> An array of string index names</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">array</span>
+		<span class="method-name">
+			listIndexes
+		</span>
+				()
+			</div>
+	
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodlistIndexes">Xyster_Db_Gateway_Abstract::listIndexes()</a></dt>
+						<dd>Lists all indexes</dd>
+					</dl>
+			
+	</div>
+<a name="methodrenameColumn" id="renameColumn"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">renameColumn</span> (line <span class="line-number">149</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Renames a column</p>
+<p class="description"><p>SQLite doesn't support renaming columns</p></p>
+	<ul class="tags">
+				<li><span class="field">throws:</span> Xyster_Db_Gateway_Exception always</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			renameColumn
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$table</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$old</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$new</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$table</span><span class="var-description">: The table name</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$old</span><span class="var-description">: The current column name</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$new</span><span class="var-description">: The new column name</span>			</li>
+				</ul>
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodrenameColumn">Xyster_Db_Gateway_Abstract::renameColumn()</a></dt>
+						<dd>Renames a column</dd>
+					</dl>
+			
+	</div>
+<a name="methodrenameIndex" id="renameIndex"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">renameIndex</span> (line <span class="line-number">162</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Renames an index</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			renameIndex
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$old</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$new</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$table</span> = <span class="var-default">null</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$old</span><span class="var-description">: The current index name</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$new</span><span class="var-description">: The new index name</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$table</span><span class="var-description">: The table name (not required on all databases)</span>			</li>
+				</ul>
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodrenameIndex">Xyster_Db_Gateway_Abstract::renameIndex()</a></dt>
+						<dd>Renames an index</dd>
+					</dl>
+			
+	</div>
+<a name="methodsetAdapter" id="setAdapter"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">setAdapter</span> (line <span class="line-number">45</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Sets the database adapter</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setAdapter
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$db</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">Zend_Db_Adapter_Pdo_Sqlite</span>
+				<span class="var-name">$db</span><span class="var-description">: The database adapter to use</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodsetDefault" id="setDefault"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">setDefault</span> (line <span class="line-number">186</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Sets the default value for a column</p>
+<p class="description"><p>SQLite does not support setting column default values</p></p>
+	<ul class="tags">
+				<li><span class="field">throws:</span> Xyster_Db_Gateway_Exception always</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setDefault
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$table</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$column</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$default</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$table</span><span class="var-description">: The table name</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$column</span><span class="var-description">: The column name</span>			</li>
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$default</span><span class="var-description">: The new column default value</span>			</li>
+				</ul>
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodsetDefault">Xyster_Db_Gateway_Abstract::setDefault()</a></dt>
+						<dd>Sets the default value for a column</dd>
+					</dl>
+			
+	</div>
+<a name="methodsetUnique" id="setUnique"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">setUnique</span> (line <span class="line-number">201</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Creates a unique index on a column or columns</p>
+<p class="description"><p>SQLite doesn't allow you to add unique indexes in this way after the  fact; you should instead use the <a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodcreateIndex">createIndex</a> method.</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setUnique
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$table</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$cols</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$table</span><span class="var-description">: The table name</span>			</li>
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$cols</span><span class="var-description">: The string column name or an array of column names</span>			</li>
+				</ul>
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodsetUnique">Xyster_Db_Gateway_Abstract::setUnique()</a></dt>
+						<dd>Creates a unique index on a column or columns</dd>
+					</dl>
+			
+	</div>
+<a name="methodsupportsForeignKeys" id="supportsForeignKeys"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">supportsForeignKeys</span> (line <span class="line-number">212</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Whether the database supports foreign keys</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			supportsForeignKeys
+		</span>
+				()
+			</div>
+	
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodsupportsForeignKeys">Xyster_Db_Gateway_Abstract::supportsForeignKeys()</a></dt>
+						<dd>Whether the database supports foreign keys</dd>
+					</dl>
+			
+	</div>
+<a name="method_getAddPrimarySql" id="_getAddPrimarySql"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">_getAddPrimarySql</span> (line <span class="line-number">227</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets the SQL statement to add a primary key to a table</p>
+<p class="description"><p>SQLite doesn't support adding primary keys after table creation</p></p>
+	<ul class="tags">
+				<li><span class="field">throws:</span> Xyster_Db_Gateway_Exception</li>
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			_getAddPrimarySql
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$table</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$columns</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$table</span><span class="var-description">: The table name</span>			</li>
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">$columns</span><span class="var-description">: The columns in the key</span>			</li>
+				</ul>
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getAddPrimarySql">Xyster_Db_Gateway_Abstract::_getAddPrimarySql()</a></dt>
+						<dd>Gets the SQL statement to add a primary key to a table</dd>
+					</dl>
+			
+	</div>
+<a name="method_getCreateIndexSql" id="_getCreateIndexSql"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">_getCreateIndexSql</span> (line <span class="line-number">239</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets the SQL statement to create an index</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			_getCreateIndexSql
+		</span>
+					(<span class="var-type"><a href="../Xyster_Db/Xyster_Db_Gateway_IndexBuilder.html">Xyster_Db_Gateway_IndexBuilder</a></span>&nbsp;<span class="var-name">$builder</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Db/Xyster_Db_Gateway_IndexBuilder.html">Xyster_Db_Gateway_IndexBuilder</a></span>
+				<span class="var-name">$builder</span><span class="var-description">: The index builder</span>			</li>
+				</ul>
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getCreateIndexSql">Xyster_Db_Gateway_Abstract::_getCreateIndexSql()</a></dt>
+						<dd>Gets the SQL statement to create an index</dd>
+					</dl>
+			
+	</div>
+<a name="method_getDropIndexSql" id="_getDropIndexSql"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">_getDropIndexSql</span> (line <span class="line-number">260</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets the SQL statement to drop an index</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			_getDropIndexSql
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$name</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$table</span> = <span class="var-default">null</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$name</span><span class="var-description">: The index name</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$table</span><span class="var-description">: The table (not all dbs require this)</span>			</li>
+				</ul>
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getDropIndexSql">Xyster_Db_Gateway_Abstract::_getDropIndexSql()</a></dt>
+						<dd>Gets the SQL statement to drop an index</dd>
+					</dl>
+			
+	</div>
+<a name="method_getDropPrimarySql" id="_getDropPrimarySql"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">_getDropPrimarySql</span> (line <span class="line-number">275</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets the SQL statement to drop a primary key from a table</p>
+<p class="description"><p>Dropping a primary key is not supported by SQLite</p></p>
+	<ul class="tags">
+				<li><span class="field">throws:</span> Xyster_Db_Gateway_Exception always</li>
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			_getDropPrimarySql
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$table</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$name</span> = <span class="var-default">null</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$table</span><span class="var-description">: The table name</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$name</span><span class="var-description">: The index name (not all dbs require this)</span>			</li>
+				</ul>
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getDropPrimarySql">Xyster_Db_Gateway_Abstract::_getDropPrimarySql()</a></dt>
+						<dd>Gets the SQL statement to drop a primary key from a table</dd>
+					</dl>
+			
+	</div>
+<a name="method_getListSequencesSql" id="_getListSequencesSql"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">_getListSequencesSql</span> (line <span class="line-number">286</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets the SQL statement to list the sequences</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			_getListSequencesSql
+		</span>
+				()
+			</div>
+	
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getListSequencesSql">Xyster_Db_Gateway_Abstract::_getListSequencesSql()</a></dt>
+						<dd>Gets the SQL statement to list the sequences</dd>
+					</dl>
+			
+	</div>
+<a name="method_getRenameColumnSql" id="_getRenameColumnSql"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">_getRenameColumnSql</span> (line <span class="line-number">330</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets the SQL statement to rename a column in a table</p>
+<p class="description"><p>SQLite does not support renaming of columns; an exception will always be  thrown.</p></p>
+	<ul class="tags">
+				<li><span class="field">throws:</span> Xyster_Db_Gateway_Exception always</li>
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			_getRenameColumnSql
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$table</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$old</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$new</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$table</span><span class="var-description">: The table name</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$old</span><span class="var-description">: The current column name</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$new</span><span class="var-description">: The new column name</span>			</li>
+				</ul>
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getRenameColumnSql">Xyster_Db_Gateway_Abstract::_getRenameColumnSql()</a></dt>
+						<dd>Gets the SQL statement to rename a column in a table</dd>
+					</dl>
+			
+	</div>
+<a name="method_getRenameIndexSql" id="_getRenameIndexSql"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">_getRenameIndexSql</span> (line <span class="line-number">301</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets the SQL statement to rename an index</p>
+<p class="description"><p>This method is left empty because in this class we overwrite the  <a href="../Xyster_Db/Xyster_Db_Gateway_Pdo_Sqlite.html#methodrenameIndex">renameIndex</a> method in the abstract gateway, which calls this one.</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			_getRenameIndexSql
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$old</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$new</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$table</span> = <span class="var-default">null</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$old</span><span class="var-description">: The current index name</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$new</span><span class="var-description">: The new index name</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$table</span><span class="var-description">: The table name (not all dbs require this)</span>			</li>
+				</ul>
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getRenameIndexSql">Xyster_Db_Gateway_Abstract::_getRenameIndexSql()</a></dt>
+						<dd>Gets the SQL statement to rename an index</dd>
+					</dl>
+			
+	</div>
+<a name="method_getRenameTableSql" id="_getRenameTableSql"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">_getRenameTableSql</span> (line <span class="line-number">312</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets the SQL statement to rename a table</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			_getRenameTableSql
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$old</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$new</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$old</span><span class="var-description">: The current table name</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$new</span><span class="var-description">: The new table name</span>			</li>
+				</ul>
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getRenameTableSql">Xyster_Db_Gateway_Abstract::_getRenameTableSql()</a></dt>
+						<dd>Gets the SQL statement to rename a table</dd>
+					</dl>
+			
+	</div>
+<a name="method_getSetNullSql" id="_getSetNullSql"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">_getSetNullSql</span> (line <span class="line-number">347</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets the SQL statement to set a column's NULL status</p>
+<p class="description"><p>SQLite does not support altering the nullability of a column.</p></p>
+	<ul class="tags">
+				<li><span class="field">throws:</span> Xyster_Db_Gateway_Exception</li>
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			_getSetNullSql
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$table</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$column</span>, [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$null</span> = <span class="var-default">true</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$table</span><span class="var-description">: The table name</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$column</span><span class="var-description">: The column name</span>			</li>
+					<li>
+				<span class="var-type">boolean</span>
+				<span class="var-name">$null</span><span class="var-description">: True for NULL, false for NOT NULL</span>			</li>
+				</ul>
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getSetNullSql">Xyster_Db_Gateway_Abstract::_getSetNullSql()</a></dt>
+						<dd>Gets the SQL statement to set a column's NULL status</dd>
+					</dl>
+			
+	</div>
+<a name="method_getSetTypeSql" id="_getSetTypeSql"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">_getSetTypeSql</span> (line <span class="line-number">365</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets the SQL statement to set the data type of a column</p>
+<p class="description"><p>SQLite does not support altering the type of a column</p></p>
+	<ul class="tags">
+				<li><span class="field">throws:</span> Xyster_Db_Gateway_Exception always</li>
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			_getSetTypeSql
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$table</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$column</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$type</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argument</span> = <span class="var-default">null</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$table</span><span class="var-description">: The table name</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$column</span><span class="var-description">: The column name</span>			</li>
+					<li>
+				<span class="var-type">Xyster_Db_DataType</span>
+				<span class="var-name">$type</span><span class="var-description">: The data type</span>			</li>
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$argument</span><span class="var-description">: An argument for the data type</span>			</li>
+				</ul>
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getSetTypeSql">Xyster_Db_Gateway_Abstract::_getSetTypeSql()</a></dt>
+						<dd>Gets the SQL statement to set the data type of a column</dd>
+					</dl>
+			
+	</div>
+<a name="method_translateType" id="_translateType"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">_translateType</span> (line <span class="line-number">383</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Translates a DataType enum into the correct SQL syntax</p>
+<p class="description"><p>SQLite has very interesting data type implemetation.  As such, we have  tried to convert the expected SQL:2003 data types into SQLite's type  affinities.  Date times are part of the TEXT type, boolean part of  INTEGER.</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			_translateType
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$type</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$argument</span> = <span class="var-default">null</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">Xyster_Db_DataType</span>
+				<span class="var-name">$type</span>			</li>
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$argument</span>			</li>
+				</ul>
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_translateType">Xyster_Db_Gateway_Abstract::_translateType()</a></dt>
+						<dd>Translates a DataType enum into the correct SQL syntax</dd>
+					</dl>
+			
+	</div>
+							<h4>Inherited Methods</h4>
+				<a name='inherited_methods'><!-- --></a>	
+									<!-- =========== Summary =========== -->
+					<p>Inherited From <span class="classname"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html">Xyster_Db_Gateway_Abstract</a></span></p>
+					<blockquote>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method__construct">Xyster_Db_Gateway_Abstract::__construct()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodaddColumn">Xyster_Db_Gateway_Abstract::addColumn()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodaddForeign">Xyster_Db_Gateway_Abstract::addForeign()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodaddPrimary">Xyster_Db_Gateway_Abstract::addPrimary()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodcreateIndex">Xyster_Db_Gateway_Abstract::createIndex()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodcreateSequence">Xyster_Db_Gateway_Abstract::createSequence()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodcreateTable">Xyster_Db_Gateway_Abstract::createTable()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methoddropColumn">Xyster_Db_Gateway_Abstract::dropColumn()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methoddropForeign">Xyster_Db_Gateway_Abstract::dropForeign()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methoddropIndex">Xyster_Db_Gateway_Abstract::dropIndex()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methoddropPrimary">Xyster_Db_Gateway_Abstract::dropPrimary()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methoddropSequence">Xyster_Db_Gateway_Abstract::dropSequence()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methoddropTable">Xyster_Db_Gateway_Abstract::dropTable()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodexecuteIndexBuilder">Xyster_Db_Gateway_Abstract::executeIndexBuilder()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodexecuteTableBuilder">Xyster_Db_Gateway_Abstract::executeTableBuilder()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodgetAdapter">Xyster_Db_Gateway_Abstract::getAdapter()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodlistForeignKeys">Xyster_Db_Gateway_Abstract::listForeignKeys()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodlistIndexes">Xyster_Db_Gateway_Abstract::listIndexes()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodlistSequences">Xyster_Db_Gateway_Abstract::listSequences()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodrenameColumn">Xyster_Db_Gateway_Abstract::renameColumn()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodrenameIndex">Xyster_Db_Gateway_Abstract::renameIndex()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodrenameSequence">Xyster_Db_Gateway_Abstract::renameSequence()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodrenameTable">Xyster_Db_Gateway_Abstract::renameTable()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodsetDefault">Xyster_Db_Gateway_Abstract::setDefault()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodsetNull">Xyster_Db_Gateway_Abstract::setNull()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodsetType">Xyster_Db_Gateway_Abstract::setType()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodsetUnique">Xyster_Db_Gateway_Abstract::setUnique()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodsupportsForeignKeys">Xyster_Db_Gateway_Abstract::supportsForeignKeys()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodsupportsSequences">Xyster_Db_Gateway_Abstract::supportsSequences()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getAddColumnSql">Xyster_Db_Gateway_Abstract::_getAddColumnSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getAddForeignSql">Xyster_Db_Gateway_Abstract::_getAddForeignSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getAddPrimarySql">Xyster_Db_Gateway_Abstract::_getAddPrimarySql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getCreateIndexSql">Xyster_Db_Gateway_Abstract::_getCreateIndexSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getCreateSequenceSql">Xyster_Db_Gateway_Abstract::_getCreateSequenceSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getCreateTableSql">Xyster_Db_Gateway_Abstract::_getCreateTableSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getDropColumnSql">Xyster_Db_Gateway_Abstract::_getDropColumnSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getDropForeignSql">Xyster_Db_Gateway_Abstract::_getDropForeignSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getDropIndexSql">Xyster_Db_Gateway_Abstract::_getDropIndexSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getDropPrimarySql">Xyster_Db_Gateway_Abstract::_getDropPrimarySql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getDropSequenceSql">Xyster_Db_Gateway_Abstract::_getDropSequenceSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getDropTableSql">Xyster_Db_Gateway_Abstract::_getDropTableSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getListSequencesSql">Xyster_Db_Gateway_Abstract::_getListSequencesSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getRenameColumnSql">Xyster_Db_Gateway_Abstract::_getRenameColumnSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getRenameIndexSql">Xyster_Db_Gateway_Abstract::_getRenameIndexSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getRenameSequenceSql">Xyster_Db_Gateway_Abstract::_getRenameSequenceSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getRenameTableSql">Xyster_Db_Gateway_Abstract::_getRenameTableSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getSetDefaultSql">Xyster_Db_Gateway_Abstract::_getSetDefaultSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getSetNullSql">Xyster_Db_Gateway_Abstract::_getSetNullSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getSetTypeSql">Xyster_Db_Gateway_Abstract::_getSetTypeSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getSetUniqueSql">Xyster_Db_Gateway_Abstract::_getSetUniqueSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_makeArray">Xyster_Db_Gateway_Abstract::_makeArray()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_quote">Xyster_Db_Gateway_Abstract::_quote()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_setAdapter">Xyster_Db_Gateway_Abstract::_setAdapter()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_translateType">Xyster_Db_Gateway_Abstract::_translateType()</a></span><br>
+											</blockquote>
+										
+		</div>
+	</div>
+
+
+	<p class="notes" id="credit">
+		Documentation generated on Mon, 19 May 2008 17:08:34 -0400 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.2</a>
+	</p>
+	</div></body>
+</html>

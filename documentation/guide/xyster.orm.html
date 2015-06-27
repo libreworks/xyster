@@ -1,0 +1,123 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Chapter 9. Xyster_Orm</title>
+<link rel="stylesheet" href="dbstyle.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.72.0">
+<link rel="start" href="index.html" title="Programmer's Reference Guide">
+<link rel="up" href="index.html" title="Programmer's Reference Guide">
+<link rel="prev" href="xyster.filter.html" title="Chapter 8. Xyster_Filter">
+<link rel="next" href="xyster.orm.setup.html" title="9.2. Setting Up">
+<link rel="chapter" href="introduction.html" title="Chapter 1. Introduction to Xyster Framework">
+<link rel="chapter" href="xyster.acl.html" title="Chapter 2. Xyster_Acl">
+<link rel="chapter" href="xyster.collection.html" title="Chapter 3. Xyster_Collection">
+<link rel="chapter" href="xyster.controller.html" title="Chapter 4. Xyster_Controller">
+<link rel="chapter" href="xyster.data.html" title="Chapter 5. Xyster_Data">
+<link rel="chapter" href="xyster.date.html" title="Chapter 6. Xyster_Date">
+<link rel="chapter" href="xyster.enum.html" title="Chapter 7. Xyster_Enum">
+<link rel="chapter" href="xyster.filter.html" title="Chapter 8. Xyster_Filter">
+<link rel="chapter" href="xyster.orm.html" title="Chapter 9. Xyster_Orm">
+<link rel="chapter" href="xyster.type.html" title="Chapter 10. Xyster_Type">
+<link rel="chapter" href="xyster.validate.html" title="Chapter 11. Xyster_Validate">
+<link rel="section" href="xyster.orm.html#xyster.orm.introduction" title="9.1. Introduction">
+<link rel="section" href="xyster.orm.setup.html" title="9.2. Setting Up">
+<link rel="section" href="xyster.orm.mapper.html" title="9.3. Xyster_Orm_Mapper">
+<link rel="section" href="xyster.orm.entity.html" title="9.4. Xyster_Orm_Entity">
+<link rel="section" href="xyster.orm.orm.html" title="9.5. Xyster_Orm">
+<link rel="section" href="xyster.orm.relation.html" title="9.6. Xyster_Orm_Relation">
+<link rel="section" href="xyster.orm.lookup.html" title="9.7. Lookups">
+<link rel="section" href="xyster.orm.validate.html" title="9.8. Validation">
+<link rel="section" href="xyster.orm.queries.html" title="9.9. Queries and Reporting">
+<link rel="section" href="xyster.orm.plugins.html" title="9.10. Plugins">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<div class="navheader"><table width="100%" summary="Navigation header">
+<tr><th colspan="3" align="center">Chapter 9. Xyster_Orm</th></tr>
+<tr>
+<td width="20%" align="left">
+<a accesskey="p" href="xyster.filter.html">Prev</a> </td>
+<th width="60%" align="center"> </th>
+<td width="20%" align="right"> <a accesskey="n" href="xyster.orm.setup.html">Next</a>
+</td>
+</tr>
+</table></div>
+<div class="chapter" lang="en">
+<div class="titlepage"><div><div><h2 class="title">
+<a name="xyster.orm"></a>Chapter 9. Xyster_Orm</h2></div></div></div>
+<div class="toc">
+<p><b>Table of Contents</b></p>
+<dl>
+<dt><span class="sect1"><a href="xyster.orm.html#xyster.orm.introduction">9.1. Introduction</a></span></dt>
+<dt><span class="sect1"><a href="xyster.orm.setup.html">9.2. Setting Up</a></span></dt>
+<dt><span class="sect1"><a href="xyster.orm.mapper.html">9.3. Xyster_Orm_Mapper</a></span></dt>
+<dt><span class="sect1"><a href="xyster.orm.entity.html">9.4. Xyster_Orm_Entity</a></span></dt>
+<dt><span class="sect1"><a href="xyster.orm.orm.html">9.5. Xyster_Orm</a></span></dt>
+<dd><dl>
+<dt><span class="sect2"><a href="xyster.orm.orm.html#xyster.orm.orm.getting">9.5.1. Getting entities</a></span></dt>
+<dt><span class="sect2"><a href="xyster.orm.orm.html#xyster.orm.orm.storing">9.5.2. Storing Changes</a></span></dt>
+<dt><span class="sect2"><a href="xyster.orm.orm.html#xyster.orm.orm.cache">9.5.3. Secondary Cache</a></span></dt>
+</dl></dd>
+<dt><span class="sect1"><a href="xyster.orm.relation.html">9.6. Xyster_Orm_Relation</a></span></dt>
+<dd><dl>
+<dt><span class="sect2"><a href="xyster.orm.relation.html#xyster.orm.relation.one">9.6.1. One-to-one</a></span></dt>
+<dt><span class="sect2"><a href="xyster.orm.relation.html#xyster.orm.relation.many">9.6.2. One-to-many</a></span></dt>
+<dt><span class="sect2"><a href="xyster.orm.relation.html#xyster.orm.relation.join">9.6.3. Joined (Many-to-many)</a></span></dt>
+</dl></dd>
+<dt><span class="sect1"><a href="xyster.orm.lookup.html">9.7. Lookups</a></span></dt>
+<dd><dl>
+<dt><span class="sect2"><a href="xyster.orm.lookup.html#xyster.orm.lookup.date">9.7.1. Xyster_Orm_Entity_Lookup_Date</a></span></dt>
+<dt><span class="sect2"><a href="xyster.orm.lookup.html#xyster.orm.lookup.enum">9.7.2. Xyster_Orm_Entity_Lookup_Enum</a></span></dt>
+</dl></dd>
+<dt><span class="sect1"><a href="xyster.orm.validate.html">9.8. Validation</a></span></dt>
+<dd><dl>
+<dt><span class="sect2"><a href="xyster.orm.validate.html#xyster.orm.validate.options">9.8.1. Options</a></span></dt>
+<dt><span class="sect2"><a href="xyster.orm.validate.html#xyster.orm.validate.setup">9.8.2. Setting up</a></span></dt>
+</dl></dd>
+<dt><span class="sect1"><a href="xyster.orm.queries.html">9.9. Queries and Reporting</a></span></dt>
+<dd><dl>
+<dt><span class="sect2"><a href="xyster.orm.queries.html#xyster.orm.query">9.9.1. Xyster_Orm_Query</a></span></dt>
+<dt><span class="sect2"><a href="xyster.orm.queries.html#xyster.orm.query.report">9.9.2. Xyster_Orm_Query_Report</a></span></dt>
+</dl></dd>
+<dt><span class="sect1"><a href="xyster.orm.plugins.html">9.10. Plugins</a></span></dt>
+<dd><dl><dt><span class="sect2"><a href="xyster.orm.plugins.html#xyster.orm.plugins.included">9.10.1. Plugins Included in the Release</a></span></dt></dl></dd>
+</dl>
+</div>
+<div class="sect1" lang="en">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="xyster.orm.introduction"></a>9.1. Introduction</h2></div></div></div>
+<p>Object-relational mapping systems have come into popularity in the last few years. These systems allow the developers to do their job and the data store specialists (typically DBAs) to do theirs. Rows of data pulled from the data store are translated into objects with which developers can work easily. They can make modifications to these objects and save them back to the data store without any knowledge of exactly how to save them there.</p>
+<p>Xyster makes use of an ORM system that employs the Data Mapper design pattern, as opposed to the Active Record pattern of some renown. Under this pattern, objects that represent rows in the data store have no knowledge of how to store themselves. Mapper objects exist to facilitate any reads or writes to or from the data’s source. Records in a persistent store are represented as objects called data entities. Groups of these entities are gathered in strongly-typed Sets.</p>
+<p>Each type of entity must have three classes to work with the ORM system.</p>
+<div class="orderedlist"><ol type="1">
+<li>
+<p>The entity class (which extends <code class="classname">Xyster_Orm_Entity</code>)</p>
+<div class="orderedlist"><ol type="a"><li><p>Just a container for each record's data. It has no knowledge of how to store itself.</p></li></ol></div>
+</li>
+<li>
+<p>The entity set class (which extends <code class="classname">Xyster_Orm_Set</code>)</p>
+<div class="orderedlist"><ol type="a"><li><p>A container for multiple entities</p></li></ol></div>
+</li>
+<li>
+<p>The entity mapper class (which implements <code class="classname">Xyster_Orm_Mapper_Interface</code>)</p>
+<div class="orderedlist"><ol type="a"><li><p>Responsible for CRUD operations (create, retrieve, update, delete) against entities.</p></li></ol></div>
+</li>
+</ol></div>
+</div>
+</div>
+<div class="navfooter"><table width="100%" summary="Navigation footer">
+<tr>
+<td width="40%" align="left">
+<a accesskey="p" href="xyster.filter.html">Prev</a> </td>
+<td width="20%" align="center"> </td>
+<td width="40%" align="right"> <a accesskey="n" href="xyster.orm.setup.html">Next</a>
+</td>
+</tr>
+<tr>
+<td width="40%" align="left" valign="top">Chapter 8. Xyster_Filter </td>
+<td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td>
+<td width="40%" align="right" valign="top"> 9.2. Setting Up</td>
+</tr>
+</table></div>
+<div class="revinfo"></div>
+</body>
+</html>

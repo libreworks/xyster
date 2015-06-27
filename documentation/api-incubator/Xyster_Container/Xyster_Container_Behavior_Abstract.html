@@ -1,0 +1,586 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class Xyster_Container_Behavior_Abstract</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name">Class Xyster_Container_Behavior_Abstract</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+							<a href="#sec-descendents">Descendents</a>
+			|											<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+						|											<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+					</div>
+	<div class="info-box-body">
+                <p class="implements">
+            Implements interfaces:
+            <ul>
+                <li><a href="../Xyster_Container/Xyster_Container_Behavior.html">Xyster_Container_Behavior</a></li><li><a href="../Xyster_Container/Xyster_Container_Monitor_Strategy.html">Xyster_Container_Monitor_Strategy</a></li>            </ul>
+        </p>
+        		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Component adapter which decorates another adapter</p>
+<p class="description"><p>This adapter supports a monitor strategoy and will propagate change of  monitor to the delegate if the delegate iteslf supports the monitor strategy.</p></p>
+	<ul class="tags">
+				<li><span class="field">copyright:</span> Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)</li>
+				<li><span class="field">abstract:</span> </li>
+				<li><span class="field">license:</span> <a href="http://www.opensource.org/licenses/bsd-license.php">New BSD License</a></li>
+			</ul>
+		<p class="notes">
+			Located in <a class="field" href="_Container---Behavior---Abstract.php.html">/Container/Behavior/Abstract.php</a> (line <span class="field">35</span>)
+		</p>
+		
+				
+		<pre></pre>
+	
+			</div>
+</div>
+
+	<a name="sec-descendents"></a>
+	<div class="info-box">
+		<div class="info-box-title">Direct descendents</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+			<span class="disabled">Descendents</span>
+			|												<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+								|															<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+								</div>
+		<div class="info-box-body">
+			<table cellpadding="2" cellspacing="0" class="class-table">
+				<tr>
+					<th class="class-table-header">Class</th>
+					<th class="class-table-header">Description</th>
+				</tr>
+								<tr>
+					<td style="padding-right: 2em"><a href="../Xyster_Container/Xyster_Container_Behavior_Automated.html">Xyster_Container_Behavior_Automated</a></td>
+					<td>
+											Automated behavior
+										</td>
+				</tr>
+								<tr>
+					<td style="padding-right: 2em"><a href="../Xyster_Container/Xyster_Container_Behavior_PropertyApplicator.html">Xyster_Container_Behavior_PropertyApplicator</a></td>
+					<td>
+											Behavior to apply properties
+										</td>
+				</tr>
+								<tr>
+					<td style="padding-right: 2em"><a href="../Xyster_Container/Xyster_Container_Behavior_Stored.html">Xyster_Container_Behavior_Stored</a></td>
+					<td>
+											Stored behavior
+										</td>
+				</tr>
+							</table>
+		</div>
+	</div>
+
+
+	<a name="sec-var-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variable Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+							<a href="#sec-descendents">Descendents</a> |
+						<span class="disabled">Vars</span> (<a href="#sec-vars">details</a>)
+							| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+								</div>
+		<div class="info-box-body">
+			<div class="var-summary">
+																								<div class="var-title">
+					<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>
+					<a href="#$_delegate" title="details" class="var-name">$_delegate</a>
+				</div>
+											</div>
+		</div>
+	</div>
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+							<a href="#sec-descendents">Descendents</a> |
+																		<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+				 
+				|
+						<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+																																																																																				
+												<div class="method-definition">
+											<span class="method-result">Xyster_Container_Behavior_Abstract</span>
+										<a href="#__construct" title="details" class="method-name">__construct</a>
+											(<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>&nbsp;<span class="var-name">$delegate</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#accept" title="details" class="method-name">accept</a>
+											(<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Visitor.html">Xyster_Container_Visitor</a></span>&nbsp;<span class="var-name">$visitor</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#changeMonitor" title="details" class="method-name">changeMonitor</a>
+											(<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Monitor.html">Xyster_Container_Monitor</a></span>&nbsp;<span class="var-name">$monitor</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../Xyster_Container/Xyster_Container_Monitor.html">Xyster_Container_Monitor</a></span>
+										<a href="#currentMonitor" title="details" class="method-name">currentMonitor</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>
+										<a href="#getDelegate" title="details" class="method-name">getDelegate</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">Xyster_Type</span>
+										<a href="#getImplementation" title="details" class="method-name">getImplementation</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">object the</span>
+										<a href="#getInstance" title="details" class="method-name">getInstance</a>
+											(<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Interface.html">Xyster_Container_Interface</a></span>&nbsp;<span class="var-name">$container</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">mixed</span>
+										<a href="#getKey" title="details" class="method-name">getKey</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#verify" title="details" class="method-name">verify</a>
+											(<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Interface.html">Xyster_Container_Interface</a></span>&nbsp;<span class="var-name">$container</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#__toString" title="details" class="method-name">__toString</a>
+										()
+									</div>
+								</div>
+		</div>
+	</div>		
+
+	<a name="sec-vars"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variables</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+							<a href="#sec-descendents">Descendents</a> |
+										<a href="#sec-var-summary">Vars</a> (<span class="disabled">details</span>)
+						
+			
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			<a name="var$_delegate" id="$_delegate"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>
+			<span class="var-name">$_delegate</span>
+						(line <span class="line-number">40</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+						
+		</div>
+	</div>
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+							<a href="#sec-descendents">Descendents</a> |
+															<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+																	<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+
+<a name="method__construct" id="__construct"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number">47</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Creates a new behavior.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Xyster_Container_Behavior_Abstract</span>
+		<span class="method-name">
+			__construct
+		</span>
+					(<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>&nbsp;<span class="var-name">$delegate</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>
+				<span class="var-name">$delegate</span>			</li>
+				</ul>
+		
+			
+			<hr class="separator" />
+		<div class="notes">Redefined in descendants as:</div>
+		<ul class="redefinitions">
+					<li>
+				<a href="../Xyster_Container/Xyster_Container_Behavior_Stored.html#method__construct">Xyster_Container_Behavior_Stored::__construct()</a>
+								: Creates a new stored behavior
+							</li>
+					<li>
+				<a href="../Xyster_Container/Xyster_Container_Behavior_Cached.html#method__construct">Xyster_Container_Behavior_Cached::__construct()</a>
+								: Creates a new stored behavior
+							</li>
+				</ul>
+	</div>
+<a name="methodaccept" id="accept"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">accept</span> (line <span class="line-number">59</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Accepts a visitor for this Adapter</p>
+<p class="description"><p>{@inherit}</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			accept
+		</span>
+					(<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Visitor.html">Xyster_Container_Visitor</a></span>&nbsp;<span class="var-name">$visitor</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Visitor.html">Xyster_Container_Visitor</a></span>
+				<span class="var-name">$visitor</span><span class="var-description">: the visitor.</span>			</li>
+				</ul>
+		
+				<hr class="separator" />
+		<div class="notes">Implementation of:</div>
+			<dl>
+			<dt><a href="../Xyster_Container/Xyster_Container_Adapter.html#methodaccept">Xyster_Container_Adapter::accept()</a></dt>
+						<dd>Accepts a visitor for this Adapter</dd>
+					</dl>
+			
+	</div>
+<a name="methodchangeMonitor" id="changeMonitor"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">changeMonitor</span> (line <span class="line-number">69</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Delegates change of monitor if the delegate supports a component monitor strategy</p>
+<p class="description"><p>{@inherit}</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			changeMonitor
+		</span>
+					(<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Monitor.html">Xyster_Container_Monitor</a></span>&nbsp;<span class="var-name">$monitor</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Monitor.html">Xyster_Container_Monitor</a></span>
+				<span class="var-name">$monitor</span>			</li>
+				</ul>
+		
+				<hr class="separator" />
+		<div class="notes">Implementation of:</div>
+			<dl>
+			<dt><a href="../Xyster_Container/Xyster_Container_Monitor_Strategy.html#methodchangeMonitor">Xyster_Container_Monitor_Strategy::changeMonitor()</a></dt>
+						<dd>Changes the component monitor used</dd>
+					</dl>
+			
+	</div>
+<a name="methodcurrentMonitor" id="currentMonitor"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">currentMonitor</span> (line <span class="line-number">83</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Returns delegate's current monitor if the delegate supports  a component monitor strategy.</p>
+<p class="description"><p>{@inheritDoc}</p></p>
+	<ul class="tags">
+				<li><span class="field">throws:</span> Exception if no component monitor is found in delegate</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../Xyster_Container/Xyster_Container_Monitor.html">Xyster_Container_Monitor</a></span>
+		<span class="method-name">
+			currentMonitor
+		</span>
+				()
+			</div>
+	
+		
+				<hr class="separator" />
+		<div class="notes">Implementation of:</div>
+			<dl>
+			<dt><a href="../Xyster_Container/Xyster_Container_Monitor_Strategy.html#methodcurrentMonitor">Xyster_Container_Monitor_Strategy::currentMonitor()</a></dt>
+						<dd>Gets the monitor currently used</dd>
+					</dl>
+			
+	</div>
+<a name="methodgetDelegate" id="getDelegate"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getDelegate</span> (line <span class="line-number">95</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>
+		<span class="method-name">
+			getDelegate
+		</span>
+				()
+			</div>
+	
+		
+				<hr class="separator" />
+		<div class="notes">Implementation of:</div>
+			<dl>
+			<dt><a href="../Xyster_Container/Xyster_Container_Adapter.html#methodgetDelegate">Xyster_Container_Adapter::getDelegate()</a></dt>
+					</dl>
+			
+	</div>
+<a name="methodgetImplementation" id="getImplementation"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getImplementation</span> (line <span class="line-number">107</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Retrieve the class of the component</p>
+<p class="description"><p>{@inherit}</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> the component's implementation class</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Xyster_Type</span>
+		<span class="method-name">
+			getImplementation
+		</span>
+				()
+			</div>
+	
+		
+				<hr class="separator" />
+		<div class="notes">Implementation of:</div>
+			<dl>
+			<dt><a href="../Xyster_Container/Xyster_Container_Adapter.html#methodgetImplementation">Xyster_Container_Adapter::getImplementation()</a></dt>
+						<dd>Retrieve the class of the component</dd>
+					</dl>
+			
+	</div>
+<a name="methodgetInstance" id="getInstance"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getInstance</span> (line <span class="line-number">122</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Retrieve the component instance</p>
+<p class="description"><p>{@inherit}</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> component instance.</li>
+				<li><span class="field">throws:</span> Exception  if the component has dependencies which could not be resolved, or instantiation of the component lead to an ambigous situation within the container.</li>
+				<li><span class="field">throws:</span> Exception if the component could not be instantiated.</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">object the</span>
+		<span class="method-name">
+			getInstance
+		</span>
+					(<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Interface.html">Xyster_Container_Interface</a></span>&nbsp;<span class="var-name">$container</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Interface.html">Xyster_Container_Interface</a></span>
+				<span class="var-name">$container</span><span class="var-description">: the container, that is used to resolve any possible dependencies of the instance</span>			</li>
+				</ul>
+		
+				<hr class="separator" />
+		<div class="notes">Implementation of:</div>
+			<dl>
+			<dt><a href="../Xyster_Container/Xyster_Container_Adapter.html#methodgetInstance">Xyster_Container_Adapter::getInstance()</a></dt>
+						<dd>Retrieve the component instance</dd>
+					</dl>
+			
+			<hr class="separator" />
+		<div class="notes">Redefined in descendants as:</div>
+		<ul class="redefinitions">
+					<li>
+				<a href="../Xyster_Container/Xyster_Container_Behavior_PropertyApplicator.html#methodgetInstance">Xyster_Container_Behavior_PropertyApplicator::getInstance()</a>
+								: Get a component instance and set given property values
+							</li>
+					<li>
+				<a href="../Xyster_Container/Xyster_Container_Behavior_Stored.html#methodgetInstance">Xyster_Container_Behavior_Stored::getInstance()</a>
+								: Retrieve the component instance
+							</li>
+				</ul>
+	</div>
+<a name="methodgetKey" id="getKey"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getKey</span> (line <span class="line-number">134</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Retrieve the key associated with the component</p>
+<p class="description"><p>{@inherit}</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> the component's key</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">mixed</span>
+		<span class="method-name">
+			getKey
+		</span>
+				()
+			</div>
+	
+		
+				<hr class="separator" />
+		<div class="notes">Implementation of:</div>
+			<dl>
+			<dt><a href="../Xyster_Container/Xyster_Container_Adapter.html#methodgetKey">Xyster_Container_Adapter::getKey()</a></dt>
+						<dd>Retrieve the key associated with the component</dd>
+					</dl>
+			
+	</div>
+<a name="methodverify" id="verify"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">verify</span> (line <span class="line-number">147</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Verify that all dependencies for this adapter can be satisifed</p>
+<p class="description"><p>{@inherit}</p></p>
+	<ul class="tags">
+				<li><span class="field">throws:</span> Exception if one or more dependencies cannot be resolved</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			verify
+		</span>
+					(<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Interface.html">Xyster_Container_Interface</a></span>&nbsp;<span class="var-name">$container</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Interface.html">Xyster_Container_Interface</a></span>
+				<span class="var-name">$container</span><span class="var-description">: the container, that is used to resolve any possible dependencies of the instance</span>			</li>
+				</ul>
+		
+				<hr class="separator" />
+		<div class="notes">Implementation of:</div>
+			<dl>
+			<dt><a href="../Xyster_Container/Xyster_Container_Adapter.html#methodverify">Xyster_Container_Adapter::verify()</a></dt>
+						<dd>Verify that all dependencies for this adapter can be satisifed</dd>
+					</dl>
+			
+	</div>
+<a name="method__toString" id="__toString"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">__toString</span> (line <span class="line-number">157</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Returns the string representation of the object</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			__toString
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+						
+		</div>
+	</div>
+
+
+	<p class="notes" id="credit">
+		Documentation generated on Mon, 19 May 2008 17:08:08 -0400 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.2</a>
+	</p>
+	</div></body>
+</html>

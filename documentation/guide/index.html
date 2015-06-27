@@ -1,0 +1,208 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Programmer's Reference Guide</title>
+<link rel="stylesheet" href="dbstyle.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.72.0">
+<link rel="start" href="index.html" title="Programmer's Reference Guide">
+<link rel="next" href="introduction.html" title="Chapter 1. Introduction to Xyster Framework">
+<link rel="chapter" href="introduction.html" title="Chapter 1. Introduction to Xyster Framework">
+<link rel="chapter" href="xyster.acl.html" title="Chapter 2. Xyster_Acl">
+<link rel="chapter" href="xyster.collection.html" title="Chapter 3. Xyster_Collection">
+<link rel="chapter" href="xyster.controller.html" title="Chapter 4. Xyster_Controller">
+<link rel="chapter" href="xyster.data.html" title="Chapter 5. Xyster_Data">
+<link rel="chapter" href="xyster.date.html" title="Chapter 6. Xyster_Date">
+<link rel="chapter" href="xyster.enum.html" title="Chapter 7. Xyster_Enum">
+<link rel="chapter" href="xyster.filter.html" title="Chapter 8. Xyster_Filter">
+<link rel="chapter" href="xyster.orm.html" title="Chapter 9. Xyster_Orm">
+<link rel="chapter" href="xyster.type.html" title="Chapter 10. Xyster_Type">
+<link rel="chapter" href="xyster.validate.html" title="Chapter 11. Xyster_Validate">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<div class="navheader"><table width="100%" summary="Navigation header">
+<tr><th colspan="3" align="center">Programmer's Reference Guide</th></tr>
+<tr>
+<td width="20%" align="left"> </td>
+<th width="60%" align="center"> </th>
+<td width="20%" align="right"> <a accesskey="n" href="introduction.html">Next</a>
+</td>
+</tr>
+</table></div>
+<div class="book" lang="en">
+<div class="titlepage">
+<div>
+<div><h1 class="title">
+<a name="manual"></a>Programmer's Reference Guide</h1></div>
+<div><h2 class="subtitle">Xyster Framework</h2></div>
+<div><p class="copyright">Copyright © 2005-2008 Irrational Logic</p></div>
+<div><div class="legalnotice">
+<a name="id2540539"></a><p>The contents of this guide are available under the terms of the
+    		<a href="http://www.freebsd.org/copyright/freebsd-doc-license.html" target="_top">FreeBSD Documentation License</a></p>
+<p>Redistribution and use in source (SGML DocBook) and 'compiled' forms (SGML, HTML, PDF, PostScript, RTF and so forth) with or without modification, are permitted provided that the following conditions are met:</p>
+<div class="orderedlist"><ol type="1">
+<li><p>Redistributions of source code (SGML DocBook) must retain the above copyright notice, this list of conditions and the following disclaimer as the first lines of this file unmodified.</p></li>
+<li><p>Redistributions in compiled form (transformed to other DTDs, converted to PDF, PostScript, RTF and other formats) must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.</p></li>
+</ol></div>
+<p>THIS DOCUMENTATION IS PROVIDED BY THE XYSTER FRAMEWORK PROJECT "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE FREEBSD DOCUMENTATION PROJECT BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS DOCUMENTATION, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
+</div></div>
+<div><p class="pubdate">2008-05-19</p></div>
+</div>
+<hr>
+</div>
+<div class="toc">
+<p><b>Table of Contents</b></p>
+<dl>
+<dt><span class="chapter"><a href="introduction.html">1. Introduction to Xyster Framework</a></span></dt>
+<dd><dl>
+<dt><span class="sect1"><a href="introduction.html#introduction.overview">1.1. Overview</a></span></dt>
+<dt><span class="sect1"><a href="introduction.installation.html">1.2. Installation</a></span></dt>
+<dd><dl>
+<dt><span class="sect2"><a href="introduction.installation.html#introduction.installation.requirements">1.2.1. System Requirements</a></span></dt>
+<dt><span class="sect2"><a href="introduction.installation.html#introduction.installation.using">1.2.2. Using the Xyster Framework</a></span></dt>
+</dl></dd>
+</dl></dd>
+<dt><span class="chapter"><a href="xyster.acl.html">2. Xyster_Acl</a></span></dt>
+<dd><dl>
+<dt><span class="sect1"><a href="xyster.acl.html#xyster.acl.introduction">2.1. Introduction</a></span></dt>
+<dd><dl><dt><span class="sect2"><a href="xyster.acl.html#xyster.acl.introduction.authorizers">2.1.1. Authorizers</a></span></dt></dl></dd>
+<dt><span class="sect1"><a href="xyster.acl.roleprovider.html">2.2. The ACL Role Provider</a></span></dt>
+</dl></dd>
+<dt><span class="chapter"><a href="xyster.collection.html">3. Xyster_Collection</a></span></dt>
+<dd><dl>
+<dt><span class="sect1"><a href="xyster.collection.html#xyster.collection.introduction">3.1. Introduction</a></span></dt>
+<dt><span class="sect1"><a href="xyster.collection.collections.html">3.2. Collections</a></span></dt>
+<dt><span class="sect1"><a href="xyster.collection.lists.html">3.3. Lists</a></span></dt>
+<dt><span class="sect1"><a href="xyster.collection.sets.html">3.4. Sets</a></span></dt>
+<dd><dl><dt><span class="sect2"><a href="xyster.collection.sets.html#xyster.collection.sets.sortable">3.4.1. Sortable Sets and Comparators</a></span></dt></dl></dd>
+<dt><span class="sect1"><a href="xyster.collection.maps.html">3.5. Maps</a></span></dt>
+<dd><dl>
+<dt><span class="sect2"><a href="xyster.collection.maps.html#xyster.collection.maps.string">3.5.1. String Maps</a></span></dt>
+<dt><span class="sect2"><a href="xyster.collection.maps.html#xyster.collection.maps.object">3.5.2. Object Maps</a></span></dt>
+</dl></dd>
+<dt><span class="sect1"><a href="xyster.collection.static.html">3.6. Xyster_Collection Static Methods</a></span></dt>
+</dl></dd>
+<dt><span class="chapter"><a href="xyster.controller.html">4. Xyster_Controller</a></span></dt>
+<dd><dl>
+<dt><span class="sect1"><a href="xyster.controller.html#xyster.controller.introduction">4.1. Introduction</a></span></dt>
+<dt><span class="sect1"><a href="xyster.controller.actionhelpers.html">4.2. Action Helpers</a></span></dt>
+<dd><dl>
+<dt><span class="sect2"><a href="xyster.controller.actionhelpers.html#xyster.controller.actionhelpers.cache">4.2.1. Xyster_Controller_Action_Helper_Cache</a></span></dt>
+<dt><span class="sect2"><a href="xyster.controller.actionhelpers.html#xyster.controller.actionhelpers.file">4.2.2. Xyster_Controller_Action_Helper_File</a></span></dt>
+</dl></dd>
+<dt><span class="sect1"><a href="xyster.controller.plugins.html">4.3. Plugins</a></span></dt>
+<dd><dl>
+<dt><span class="sect2"><a href="xyster.controller.plugins.html#xyster.controller.plugins.acl">4.3.1. Xyster_Controller_Plugin_Acl</a></span></dt>
+<dt><span class="sect2"><a href="xyster.controller.plugins.html#xyster.controller.plugins.auth">4.3.2. Xyster_Controller_Plugin_Auth</a></span></dt>
+<dt><span class="sect2"><a href="xyster.controller.plugins.html#xyster.controller.plugins.cache">4.3.3. Xyster_Controller_Plugin_Cache</a></span></dt>
+</dl></dd>
+</dl></dd>
+<dt><span class="chapter"><a href="xyster.data.html">5. Xyster_Data</a></span></dt>
+<dd><dl>
+<dt><span class="sect1"><a href="xyster.data.html#xyster.data.overview">5.1. Overview</a></span></dt>
+<dt><span class="sect1"><a href="xyster.data.generics.html">5.2. Data Symbols</a></span></dt>
+<dd><dl>
+<dt><span class="sect2"><a href="xyster.data.generics.html#xyster.data.aggregate">5.2.1. Xyster_Data_Aggregate</a></span></dt>
+<dt><span class="sect2"><a href="xyster.data.generics.html#xyster.data.field">5.2.2. Xyster_Data_Field</a></span></dt>
+<dt><span class="sect2"><a href="xyster.data.generics.html#xyster.data.sort">5.2.3. Xyster_Data_Sort</a></span></dt>
+<dt><span class="sect2"><a href="xyster.data.generics.html#xyster.data.criterion">5.2.4. Xyster_Data_Criterion</a></span></dt>
+</dl></dd>
+<dt><span class="sect1"><a href="xyster.data.clauses.html">5.3. Symbol Clauses</a></span></dt>
+<dd><dl>
+<dt><span class="sect2"><a href="xyster.data.clauses.html#xyster.data.clauses.junction">5.3.1. Xyster_Data_Junction</a></span></dt>
+<dt><span class="sect2"><a href="xyster.data.clauses.html#xyster.data.clauses.field">5.3.2. Xyster_Data_Field_Clause</a></span></dt>
+<dt><span class="sect2"><a href="xyster.data.clauses.html#xyster.data.clauses.sort">5.3.3. Xyster_Data_Sort_Clause</a></span></dt>
+</dl></dd>
+<dt><span class="sect1"><a href="xyster.data.sets.html">5.4. Sets and Collections</a></span></dt>
+<dd><dl>
+<dt><span class="sect2"><a href="xyster.data.sets.html#xyster.data.set">5.4.1. Xyster_Data_Set</a></span></dt>
+<dt><span class="sect2"><a href="xyster.data.sets.html#xyster.data.tuple">5.4.2. Xyster_Data_Tuple</a></span></dt>
+</dl></dd>
+</dl></dd>
+<dt><span class="chapter"><a href="xyster.date.html">6. Xyster_Date</a></span></dt>
+<dd><dl>
+<dt><span class="sect1"><a href="xyster.date.html#xyster.date.overview">6.1. Overview</a></span></dt>
+<dd><dl><dt><span class="sect2"><a href="xyster.date.html#xyster.date.range.example">6.1.1. Xyster_Date_Range</a></span></dt></dl></dd>
+</dl></dd>
+<dt><span class="chapter"><a href="xyster.enum.html">7. Xyster_Enum</a></span></dt>
+<dd><dl><dt><span class="sect1"><a href="xyster.enum.html#xyster.enum.overview">7.1. Overview</a></span></dt></dl></dd>
+<dt><span class="chapter"><a href="xyster.filter.html">8. Xyster_Filter</a></span></dt>
+<dd><dl>
+<dt><span class="sect1"><a href="xyster.filter.html#xyster.filter.overview">8.1. Overview</a></span></dt>
+<dd><dl><dt><span class="sect2"><a href="xyster.filter.html#xyster.filter.titlecase.example">8.1.1. TitleCase</a></span></dt></dl></dd>
+</dl></dd>
+<dt><span class="chapter"><a href="xyster.orm.html">9. Xyster_Orm</a></span></dt>
+<dd><dl>
+<dt><span class="sect1"><a href="xyster.orm.html#xyster.orm.introduction">9.1. Introduction</a></span></dt>
+<dt><span class="sect1"><a href="xyster.orm.setup.html">9.2. Setting Up</a></span></dt>
+<dt><span class="sect1"><a href="xyster.orm.mapper.html">9.3. Xyster_Orm_Mapper</a></span></dt>
+<dt><span class="sect1"><a href="xyster.orm.entity.html">9.4. Xyster_Orm_Entity</a></span></dt>
+<dt><span class="sect1"><a href="xyster.orm.orm.html">9.5. Xyster_Orm</a></span></dt>
+<dd><dl>
+<dt><span class="sect2"><a href="xyster.orm.orm.html#xyster.orm.orm.getting">9.5.1. Getting entities</a></span></dt>
+<dt><span class="sect2"><a href="xyster.orm.orm.html#xyster.orm.orm.storing">9.5.2. Storing Changes</a></span></dt>
+<dt><span class="sect2"><a href="xyster.orm.orm.html#xyster.orm.orm.cache">9.5.3. Secondary Cache</a></span></dt>
+</dl></dd>
+<dt><span class="sect1"><a href="xyster.orm.relation.html">9.6. Xyster_Orm_Relation</a></span></dt>
+<dd><dl>
+<dt><span class="sect2"><a href="xyster.orm.relation.html#xyster.orm.relation.one">9.6.1. One-to-one</a></span></dt>
+<dt><span class="sect2"><a href="xyster.orm.relation.html#xyster.orm.relation.many">9.6.2. One-to-many</a></span></dt>
+<dt><span class="sect2"><a href="xyster.orm.relation.html#xyster.orm.relation.join">9.6.3. Joined (Many-to-many)</a></span></dt>
+</dl></dd>
+<dt><span class="sect1"><a href="xyster.orm.lookup.html">9.7. Lookups</a></span></dt>
+<dd><dl>
+<dt><span class="sect2"><a href="xyster.orm.lookup.html#xyster.orm.lookup.date">9.7.1. Xyster_Orm_Entity_Lookup_Date</a></span></dt>
+<dt><span class="sect2"><a href="xyster.orm.lookup.html#xyster.orm.lookup.enum">9.7.2. Xyster_Orm_Entity_Lookup_Enum</a></span></dt>
+</dl></dd>
+<dt><span class="sect1"><a href="xyster.orm.validate.html">9.8. Validation</a></span></dt>
+<dd><dl>
+<dt><span class="sect2"><a href="xyster.orm.validate.html#xyster.orm.validate.options">9.8.1. Options</a></span></dt>
+<dt><span class="sect2"><a href="xyster.orm.validate.html#xyster.orm.validate.setup">9.8.2. Setting up</a></span></dt>
+</dl></dd>
+<dt><span class="sect1"><a href="xyster.orm.queries.html">9.9. Queries and Reporting</a></span></dt>
+<dd><dl>
+<dt><span class="sect2"><a href="xyster.orm.queries.html#xyster.orm.query">9.9.1. Xyster_Orm_Query</a></span></dt>
+<dt><span class="sect2"><a href="xyster.orm.queries.html#xyster.orm.query.report">9.9.2. Xyster_Orm_Query_Report</a></span></dt>
+</dl></dd>
+<dt><span class="sect1"><a href="xyster.orm.plugins.html">9.10. Plugins</a></span></dt>
+<dd><dl><dt><span class="sect2"><a href="xyster.orm.plugins.html#xyster.orm.plugins.included">9.10.1. Plugins Included in the Release</a></span></dt></dl></dd>
+</dl></dd>
+<dt><span class="chapter"><a href="xyster.type.html">10. Xyster_Type</a></span></dt>
+<dd><dl>
+<dt><span class="sect1"><a href="xyster.type.html#xyster.type.overview">10.1. Overview</a></span></dt>
+<dd><dl>
+<dt><span class="sect2"><a href="xyster.type.html#xyster.type.overview.creating">10.1.1. Creating</a></span></dt>
+<dt><span class="sect2"><a href="xyster.type.html#xyster.type.overview.usage">10.1.2. Basic Usage</a></span></dt>
+</dl></dd>
+<dt><span class="sect1"><a href="xyster.type.static.html">10.2. Static Methods</a></span></dt>
+<dd><dl>
+<dt><span class="sect2"><a href="xyster.type.static.html#xyster.type.static.equality">10.2.1. Testing Value Equality</a></span></dt>
+<dt><span class="sect2"><a href="xyster.type.static.html#xyster.type.static.hash">10.2.2. Hash Codes</a></span></dt>
+<dt><span class="sect2"><a href="xyster.type.static.html#xyster.type.static.parameters">10.2.3. Parameter Types</a></span></dt>
+</dl></dd>
+</dl></dd>
+<dt><span class="chapter"><a href="xyster.validate.html">11. Xyster_Validate</a></span></dt>
+<dd><dl>
+<dt><span class="sect1"><a href="xyster.validate.html#xyster.validate.overview">11.1. Overview</a></span></dt>
+<dd><dl><dt><span class="sect2"><a href="xyster.validate.html#xyster.validate.overview.uri">11.1.1. Uri</a></span></dt></dl></dd>
+<dt><span class="sect1"><a href="xyster.validate.errors.html">11.2. Error Notification</a></span></dt>
+<dd><dl><dt><span class="sect2"><a href="xyster.validate.errors.html#xyster.validate.errors.example">11.2.1. Example of Use</a></span></dt></dl></dd>
+</dl></dd>
+</dl>
+</div>
+</div>
+<div class="navfooter"><table width="100%" summary="Navigation footer">
+<tr>
+<td width="40%" align="left"> </td>
+<td width="20%" align="center"> </td>
+<td width="40%" align="right"> <a accesskey="n" href="introduction.html">Next</a>
+</td>
+</tr>
+<tr>
+<td width="40%" align="left" valign="top"> </td>
+<td width="20%" align="center"> </td>
+<td width="40%" align="right" valign="top"> Chapter 1. Introduction to Xyster Framework</td>
+</tr>
+</table></div>
+<div class="revinfo"></div>
+</body>
+</html>

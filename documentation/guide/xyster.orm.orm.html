@@ -1,0 +1,141 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>9.5. Xyster_Orm</title>
+<link rel="stylesheet" href="dbstyle.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.72.0">
+<link rel="start" href="index.html" title="Programmer's Reference Guide">
+<link rel="up" href="xyster.orm.html" title="Chapter 9. Xyster_Orm">
+<link rel="prev" href="xyster.orm.entity.html" title="9.4. Xyster_Orm_Entity">
+<link rel="next" href="xyster.orm.relation.html" title="9.6. Xyster_Orm_Relation">
+<link rel="chapter" href="introduction.html" title="Chapter 1. Introduction to Xyster Framework">
+<link rel="chapter" href="xyster.acl.html" title="Chapter 2. Xyster_Acl">
+<link rel="chapter" href="xyster.collection.html" title="Chapter 3. Xyster_Collection">
+<link rel="chapter" href="xyster.controller.html" title="Chapter 4. Xyster_Controller">
+<link rel="chapter" href="xyster.data.html" title="Chapter 5. Xyster_Data">
+<link rel="chapter" href="xyster.date.html" title="Chapter 6. Xyster_Date">
+<link rel="chapter" href="xyster.enum.html" title="Chapter 7. Xyster_Enum">
+<link rel="chapter" href="xyster.filter.html" title="Chapter 8. Xyster_Filter">
+<link rel="chapter" href="xyster.orm.html" title="Chapter 9. Xyster_Orm">
+<link rel="chapter" href="xyster.type.html" title="Chapter 10. Xyster_Type">
+<link rel="chapter" href="xyster.validate.html" title="Chapter 11. Xyster_Validate">
+<link rel="subsection" href="xyster.orm.orm.html#xyster.orm.orm.getting" title="9.5.1. Getting entities">
+<link rel="subsection" href="xyster.orm.orm.html#xyster.orm.orm.storing" title="9.5.2. Storing Changes">
+<link rel="subsection" href="xyster.orm.orm.html#xyster.orm.orm.cache" title="9.5.3. Secondary Cache">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<div class="navheader"><table width="100%" summary="Navigation header">
+<tr><th colspan="3" align="center">9.5. Xyster_Orm</th></tr>
+<tr>
+<td width="20%" align="left">
+<a accesskey="p" href="xyster.orm.entity.html">Prev</a> </td>
+<th width="60%" align="center">Chapter 9. Xyster_Orm</th>
+<td width="20%" align="right"> <a accesskey="n" href="xyster.orm.relation.html">Next</a>
+</td>
+</tr>
+</table></div>
+<div class="sect1" lang="en">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="xyster.orm.orm"></a>9.5. Xyster_Orm</h2></div></div></div>
+<p>The session manager, <code class="classname">Xyster_Orm</code>, is the starting point for anything you do in the ORM system. You use it to retrieve entities from the data store, delete existing ones, create new ones, refresh persistent ones, and perform queries.</p>
+<div class="sect2" lang="en">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="xyster.orm.orm.getting"></a>9.5.1. Getting entities</h3></div></div></div>
+<p>Any entities the session manager retrieves from the data store are persisted in an identity map. When an entity is requested, the manager checks its identity map (a <code class="classname">Xyster_Orm_Repository</code> object) for the presence of the requested entity. If it's found, it's returned, otherwise the manager uses a data mapper to connect to the data store. Persisting entities in the identity map prevents unnecessary visits to the data store if the same entity is requested more than once.</p>
+<pre class="programlisting">&lt;?php
+$orm = Xyster_Orm::getInstance();
+$entityClassName = 'Person';
+$primaryKey = 1;
+$entity = $orm-&gt;get($entityClassName, $primaryKey);   // retrieves from store
+$entity = $orm-&gt;get($entityClassName, $primaryKey);   // retrieves from id map
+$entity = $orm-&gt;get($entityClassName, 1234567);       // if not found, null</pre>
+<p>In addition to the get method, you can use the find method to search for entities based on value. The find method will always query the data store. (Tip: In the world of SQL databases, find queries work quickest on indexed columns.)</p>
+<pre class="programlisting">&lt;?php
+// the criteria array has keys as columns
+$criteria = array('name' =&gt; 'Darth Vader');
+// it can also be an actual Criterion object
+$criteria = Xyster_Data_Expression::eq('name', 'Darth Vader');
+$vader = $orm-&gt;find('Person', $criteria);</pre>
+<p>You can also get a collection of entities.</p>
+<pre class="programlisting">&lt;?php
+// gets all entities of a certain type; be careful w/ large numbers!
+$people = $orm-&gt;getAll('Person');
+// you can supply an array of primary keys
+$people = $orm-&gt;getAll('Person', array(1, 2, 3, 4));</pre>
+<p>And you can find them.</p>
+<pre class="programlisting">&lt;?php
+// multiple values for a field will be used like Expression::in()
+$criteria = array('name' =&gt; array('Luke Skywalker', 'Darth Vader'));
+// and you can still use Criterion objects
+$criteria = Xyster_Data_Expression::in('name', array('Luke Skywalker', 'Darth Vader'));
+// you can specify a sort order just like Xyster_Data_Set::sortBy
+$sorts = Xyster_Data_Sort::desc("name");
+$people = $orm-&gt;findAll('Person', $criteria, $sorts);</pre>
+<p>At any time, you can refresh an existing entity with current data from the store.</p>
+<pre class="programlisting">&lt;?php
+$luke = $orm-&gt;get('Person',1);
+$orm-&gt;refresh($luke);
+		</pre>
+</div>
+<div class="sect2" lang="en">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="xyster.orm.orm.storing"></a>9.5.2. Storing Changes</h3></div></div></div>
+<p>Changes can be made to entities and committed back to the data store. Let's face it, that's really the whole reason to do this. A work unit session can be committed or destroyed.</p>
+<pre class="programlisting">&lt;?php
+$luke = $orm-&gt;get('Person', 1);
+$luke-&gt;affiliation = 'Jedi Knights';
+$orm-&gt;commit(); // the change to the entity will be flushed back to the data store
+$luke-&gt;affiliation = 'Jedi';
+$orm-&gt;destroy(); // abandons all changes, unloads all entities, clears any cache</pre>
+<p>You can store new entities very easily.</p>
+<pre class="programlisting">&lt;?php
+$leia = new Person();
+$leia-&gt;name = 'Princess Leia Organa';
+$leia-&gt;affiliation = 'Rebel';
+$leia-&gt;alignment = 'good';
+$leia-&gt;gender = 'F';
+$leia-&gt;race = 'Human';
+$orm-&gt;persist($leia);
+echo $leia-&gt;personId; // prints null
+$orm-&gt;commit();
+echo $leia-&gt;personId; // prints new primary key</pre>
+<p>You can also delete entities very easily.</p>
+<pre class="programlisting">&lt;?php
+$vader = $orm-&gt;get('person',2);
+$orm-&gt;remove($vader);
+$orm-&gt;commit();</pre>
+</div>
+<div class="sect2" lang="en">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="xyster.orm.orm.cache"></a>9.5.3. Secondary Cache</h3></div></div></div>
+<p>It's incredibly wise from a performance standpoint to take advantage of the secondary cache mechanism. Entities in the identity map the manager uses are only persisted for the lifetime of the object instance; just one request. If the secondary cache is defined, entities will be placed there and are persisted across many requests. This also allows sharing of the entities between user sessions.</p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>We recommend using APC, Memecached, or Zend Platform for the secondary cache.</p></td></tr>
+</table></div>
+<pre class="programlisting">&lt;?php
+$cache = Zend_Cache::factory('Core', 'Zend Platform');
+$orm-&gt;setSecondaryCache($cache);</pre>
+<p>Entities are first tried to be located in the <code class="classname">Xyster_Orm_Repository</code>, then if not found, the <code class="classname">Zend_Cache_Core</code> object supplied to the <code class="methodname">setSecondaryCache</code> method. Finally, if still not found, the entity is pulled out of the data store through the data mapper.</p>
+</div>
+</div>
+<div class="navfooter"><table width="100%" summary="Navigation footer">
+<tr>
+<td width="40%" align="left">
+<a accesskey="p" href="xyster.orm.entity.html">Prev</a> </td>
+<td width="20%" align="center"><a accesskey="u" href="xyster.orm.html">Up</a></td>
+<td width="40%" align="right"> <a accesskey="n" href="xyster.orm.relation.html">Next</a>
+</td>
+</tr>
+<tr>
+<td width="40%" align="left" valign="top">9.4. Xyster_Orm_Entity </td>
+<td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td>
+<td width="40%" align="right" valign="top"> 9.6. Xyster_Orm_Relation</td>
+</tr>
+</table></div>
+<div class="revinfo"></div>
+</body>
+</html>

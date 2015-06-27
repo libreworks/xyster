@@ -1,0 +1,132 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>5.3. Symbol Clauses</title>
+<link rel="stylesheet" href="dbstyle.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.72.0">
+<link rel="start" href="index.html" title="Programmer's Reference Guide">
+<link rel="up" href="xyster.data.html" title="Chapter 5. Xyster_Data">
+<link rel="prev" href="xyster.data.generics.html" title="5.2. Data Symbols">
+<link rel="next" href="xyster.data.sets.html" title="5.4. Sets and Collections">
+<link rel="chapter" href="introduction.html" title="Chapter 1. Introduction to Xyster Framework">
+<link rel="chapter" href="xyster.acl.html" title="Chapter 2. Xyster_Acl">
+<link rel="chapter" href="xyster.collection.html" title="Chapter 3. Xyster_Collection">
+<link rel="chapter" href="xyster.controller.html" title="Chapter 4. Xyster_Controller">
+<link rel="chapter" href="xyster.data.html" title="Chapter 5. Xyster_Data">
+<link rel="chapter" href="xyster.date.html" title="Chapter 6. Xyster_Date">
+<link rel="chapter" href="xyster.enum.html" title="Chapter 7. Xyster_Enum">
+<link rel="chapter" href="xyster.filter.html" title="Chapter 8. Xyster_Filter">
+<link rel="chapter" href="xyster.orm.html" title="Chapter 9. Xyster_Orm">
+<link rel="chapter" href="xyster.type.html" title="Chapter 10. Xyster_Type">
+<link rel="chapter" href="xyster.validate.html" title="Chapter 11. Xyster_Validate">
+<link rel="subsection" href="xyster.data.clauses.html#xyster.data.clauses.junction" title="5.3.1. Xyster_Data_Junction">
+<link rel="subsection" href="xyster.data.clauses.html#xyster.data.clauses.field" title="5.3.2. Xyster_Data_Field_Clause">
+<link rel="subsection" href="xyster.data.clauses.html#xyster.data.clauses.sort" title="5.3.3. Xyster_Data_Sort_Clause">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<div class="navheader"><table width="100%" summary="Navigation header">
+<tr><th colspan="3" align="center">5.3. Symbol Clauses</th></tr>
+<tr>
+<td width="20%" align="left">
+<a accesskey="p" href="xyster.data.generics.html">Prev</a> </td>
+<th width="60%" align="center">Chapter 5. Xyster_Data</th>
+<td width="20%" align="right"> <a accesskey="n" href="xyster.data.sets.html">Next</a>
+</td>
+</tr>
+</table></div>
+<div class="sect1" lang="en">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="xyster.data.clauses"></a>5.3. Symbol Clauses</h2></div></div></div>
+<p>A clause is a container for multiple symbols.  There are three
+                clauses available in the framework.  You can iterate
+                through the clause using a <code class="code">foreach</code> block.</p>
+<div class="sect2" lang="en">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="xyster.data.clauses.junction"></a>5.3.1. Xyster_Data_Junction</h3></div></div></div>
+<p>The Junction was mentioned previously as containing multiple
+                    <code class="classname">Xyster_Data_Criterion</code> objects.  It is
+                    unique among the Clause classes in that it can hold other
+                    Junction objects.</p>
+<pre class="programlisting">&lt;?php
+$junction = Xyster_Data_Junction::all(Xyster_Data_Expression::eq('foo', 'bar'),
+    Xyster_Data_Expression::neq('abc', 123));
+echo count($junction); // prints 2
+foreach( $junction as $criterion ) {
+    echo $criterion . "\n";
+}
+</pre>
+</div>
+<div class="sect2" lang="en">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="xyster.data.clauses.field"></a>5.3.2. Xyster_Data_Field_Clause</h3></div></div></div>
+<p>The Field Clause can contain any <code class="classname">Xyster_Data_Field</code>
+                    object.  This includes regular fields, aggregate fields, and
+                    grouped fields (since aggregate and group fields inherit
+                    from the first).</p>
+<p>If no parameter is passed to the constructor of the object,
+                    it is created with no elements.  You can then add fields to
+                    it manually.</p>
+<pre class="programlisting">&lt;?php
+require_once 'Xyster/Data/Field/Clause.php';
+$clause = new Xyster_Data_Field_Clause();
+$clause-&gt;add(Xyster_Data_Field::named('foo'))
+    -&gt;add(Xyster_Data_Field::named('bar'));
+</pre>
+<p>You can also pass a <code class="classname">Xyster_Data_Field</code>
+                    object or another Field Clause into the constructor to have
+                    those items automatically added.</p>
+<pre class="programlisting">&lt;?php
+// merging with $clause from our example above
+$clause2 = new Xyster_Data_Field_Clause($clause);
+echo count($clause2); // prints 2
+</pre>
+<p>You can add or remove fields from a Field Clause using the 
+                    <code class="methodname">add</code> and <code class="methodname">remove</code>
+                    methods.  You can also copy all the items from one clause
+                    into another using the <code class="methodname">merge</code> method.</p>
+</div>
+<div class="sect2" lang="en">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="xyster.data.clauses.sort"></a>5.3.3. Xyster_Data_Sort_Clause</h3></div></div></div>
+<p>The Sort Clause can contain any <code class="classname">Xyster_Data_Sort</code>
+                    object.</p>
+<p>If no parameter is passed to the constructor of the object,
+                    it is created with no elements.  You can then add sorts to
+                    it manually.</p>
+<pre class="programlisting">&lt;?php
+require_once 'Xyster/Data/Sort/Clause.php';
+$clause = new Xyster_Data_Sort_Clause();
+$clause-&gt;add(Xyster_Data_Sort::asc('foo'))
+    -&gt;add(Xyster_Data_Sort::desc('bar'));
+</pre>
+<p>You can also pass a <code class="classname">Xyster_Data_Sort</code>
+                    object or another Sort Clause into the constructor to have
+                    those items automatically added.</p>
+<pre class="programlisting">&lt;?php
+// merging with $clause from our example above
+$clause2 = new Xyster_Data_Sort_Clause($clause);
+echo count($clause2); // prints 2
+</pre>
+<p>You can add or remove sorts from a Sort Clause using the 
+                    <code class="methodname">add</code> and <code class="methodname">remove</code>
+                    methods.  You can also copy all the items from one clause
+                    into another using the <code class="methodname">merge</code> method.</p>
+</div>
+</div>
+<div class="navfooter"><table width="100%" summary="Navigation footer">
+<tr>
+<td width="40%" align="left">
+<a accesskey="p" href="xyster.data.generics.html">Prev</a> </td>
+<td width="20%" align="center"><a accesskey="u" href="xyster.data.html">Up</a></td>
+<td width="40%" align="right"> <a accesskey="n" href="xyster.data.sets.html">Next</a>
+</td>
+</tr>
+<tr>
+<td width="40%" align="left" valign="top">5.2. Data Symbols </td>
+<td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td>
+<td width="40%" align="right" valign="top"> 5.4. Sets and Collections</td>
+</tr>
+</table></div>
+<div class="revinfo"></div>
+</body>
+</html>

@@ -1,0 +1,3240 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<LINK REL="stylesheet" TYPE="text/css" TITLE="Style" href="../stylesheet.css">
+</HEAD>
+<BODY>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="bannercell" rowspan="2"><a href="http://phing.info/"><img src="http://phing.info/images/phing.gif" alt="http://phing.info/" align="left" border="0"></a></td>
+<td style="text-align:right"><h2>Source Code Coverage</h2></td>
+</tr>
+<tr><td style="text-align:right">Designed for use with <a href="http://pear.php.net/package/PHPUnit2">PHPUnit2</a>, <a href="http://www.xdebug.org/">Xdebug</a> and <a href="http://phing.info/">Phing</a>.</td></tr>
+</table>
+<hr size="1">
+<table class="log" cellpadding="5" cellspacing="0" width="100%"><tr class="a">
+<td class="small">Methods: 18</td>
+<td class="small">LOC: 639</td>
+<td class="small">Statements: 319</td>
+</tr></table>
+<br><table class="log" cellpadding="5" cellspacing="0" width="100%">
+<tr>
+<th width="100%">Source file</th>
+<th>Statements</th>
+<th>Methods</th>
+<th width="250" colspan="2" nowrap>Total coverage</th>
+</tr>
+<tr class="a">
+<td>Parser.php</td>
+<td>95.6%</td>
+<td>100.0%</td>
+<td>95.8%</td>
+<td><table cellspacing="0" cellpadding="0" border="0" width="100%" style="display: inline"><tr>
+<td class="covered" width="192" height="12"> </td>
+<td class="uncovered" width="8" height="12"> </td>
+</tr></table></td>
+</tr>
+</table>
+<table cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td class="lineCount">1</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">&lt;?php</pre></td>
+</tr>
+<tr>
+<td class="lineCount">2</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">3</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * Xyster Framework</pre></td>
+</tr>
+<tr>
+<td class="lineCount">4</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">5</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * This source file is subject to the new BSD license that is bundled</pre></td>
+</tr>
+<tr>
+<td class="lineCount">6</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * with this package in the file LICENSE.txt.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">7</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * It is also available through the world-wide-web at this URL:</pre></td>
+</tr>
+<tr>
+<td class="lineCount">8</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * http://www.opensource.org/licenses/bsd-license.php</pre></td>
+</tr>
+<tr>
+<td class="lineCount">9</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">10</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @category  Xyster</pre></td>
+</tr>
+<tr>
+<td class="lineCount">11</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @package   Xyster_Orm</pre></td>
+</tr>
+<tr>
+<td class="lineCount">12</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">13</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License</pre></td>
+</tr>
+<tr>
+<td class="lineCount">14</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @version   $Id: Parser.php 202 2008-01-20 16:20:09Z doublecompile $</pre></td>
+</tr>
+<tr>
+<td class="lineCount">15</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">16</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">17</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @see Xyster_String</pre></td>
+</tr>
+<tr>
+<td class="lineCount">18</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">19</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">require_once 'Xyster/String.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCount">20</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">21</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * A data entity: the basic data unit of the ORM package</pre></td>
+</tr>
+<tr>
+<td class="lineCount">22</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">23</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @category  XysterColumn</pre></td>
+</tr>
+<tr>
+<td class="lineCount">24</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @package   Xyster_Orm</pre></td>
+</tr>
+<tr>
+<td class="lineCount">25</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">26</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License</pre></td>
+</tr>
+<tr>
+<td class="lineCount">27</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">28</td>
+<td class="coverageCount"></td>
+<td class="srcLineClassStart"><pre class="srcLine">class Xyster_Orm_Query_Parser</pre></td>
+</tr>
+<tr>
+<td class="lineCount">29</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">{</pre></td>
+</tr>
+<tr>
+<td class="lineCount">30</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">31</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * The mapper factory</pre></td>
+</tr>
+<tr>
+<td class="lineCount">32</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">33</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @var Xyster_Orm_Mapper_Factory_Interface</pre></td>
+</tr>
+<tr>
+<td class="lineCount">34</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">35</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    protected $_mapFactory;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">36</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">37</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">38</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * A cache for runtime evaluations</pre></td>
+</tr>
+<tr>
+<td class="lineCount">39</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">40</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @var unknown_type</pre></td>
+</tr>
+<tr>
+<td class="lineCount">41</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">42</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    static protected $_runtime = array();</pre></td>
+</tr>
+<tr>
+<td class="lineCount">43</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">44</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">45</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Creates a new query parser</pre></td>
+</tr>
+<tr>
+<td class="lineCount">46</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">47</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param Xyster_Orm_Mapper_Factory_Interface $mapFactory</pre></td>
+</tr>
+<tr>
+<td class="lineCount">48</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">49</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function __construct( Xyster_Orm_Mapper_Factory_Interface $mapFactory )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">50</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">51</td>
+<td class="lineCountHighlight">97</td>
+<td><pre class="srcLine">        $this-&gt;_mapFactory = $mapFactory;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">52</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">53</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">54</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">55</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Asserts a field's presence in a class' members</pre></td>
+</tr>
+<tr>
+<td class="lineCount">56</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">57</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $field</pre></td>
+</tr>
+<tr>
+<td class="lineCount">58</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $className</pre></td>
+</tr>
+<tr>
+<td class="lineCount">59</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @throws Xyster_Orm_Query_Parser_Exception</pre></td>
+</tr>
+<tr>
+<td class="lineCount">60</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">61</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function assertValidFieldForClass( $field, $className )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">62</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">63</td>
+<td class="lineCountHighlight">32</td>
+<td><pre class="srcLine">        require_once 'Xyster/Orm/Relation.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">64</td>
+<td class="lineCountHighlight">32</td>
+<td><pre class="srcLine">        require_once 'Xyster/Orm/Entity/Meta.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCount">65</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">66</td>
+<td class="lineCountHighlight">32</td>
+<td><pre class="srcLine">        require_once 'Xyster/Orm/Loader.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">67</td>
+<td class="lineCountHighlight">32</td>
+<td><pre class="srcLine">        Xyster_Orm_Loader::loadEntityClass($className);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">68</td>
+<td class="lineCountHighlight">32</td>
+<td><pre class="srcLine">        $map = $this-&gt;_mapFactory-&gt;get($className);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">69</td>
+<td class="lineCountHighlight">32</td>
+<td><pre class="srcLine">        $meta = $map-&gt;getEntityMeta();</pre></td>
+</tr>
+<tr>
+<td class="lineCount">70</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">71</td>
+<td class="lineCountHighlight">32</td>
+<td><pre class="srcLine">        $field = ( $field instanceof Xyster_Data_Field ) ?</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">72</td>
+<td class="lineCountHighlight">32</td>
+<td><pre class="srcLine">            trim($field-&gt;getName()) : trim($field);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">73</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">74</td>
+<td class="lineCountHighlight">32</td>
+<td><pre class="srcLine">        require_once 'Xyster/Data/Field/Aggregate.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">75</td>
+<td class="lineCountHighlight">32</td>
+<td><pre class="srcLine">        $matches = Xyster_Data_Field_Aggregate::match($field);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">76</td>
+<td class="lineCountHighlight">32</td>
+<td><pre class="srcLine">        if ( count($matches) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">77</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            $field = trim($matches["field"]);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">78</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">79</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">80</td>
+<td class="lineCountHighlight">32</td>
+<td><pre class="srcLine">        $calls = Xyster_String::smartSplit("-&gt;", $field);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">81</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">        /*</pre></td>
+</tr>
+<tr>
+<td class="lineCount">82</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            for composite references (i.e.  supervisor-&gt;name )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">83</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            - check each column exists in its container</pre></td>
+</tr>
+<tr>
+<td class="lineCount">84</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">        */</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">85</td>
+<td class="lineCountHighlight">32</td>
+<td><pre class="srcLine">        if ( count($calls) &gt; 1 ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCount">86</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">87</td>
+<td class="lineCountHighlight">7</td>
+<td><pre class="srcLine">            $container = $className;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">88</td>
+<td class="lineCountHighlight">7</td>
+<td><pre class="srcLine">            $currentMeta = $meta;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">89</td>
+<td class="lineCountHighlight">7</td>
+<td><pre class="srcLine">            foreach( $calls as $k=&gt;$v ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">90</td>
+<td class="lineCountHighlight">7</td>
+<td><pre class="srcLine">                $this-&gt;assertValidFieldForClass($v, $container);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">91</td>
+<td class="lineCountHighlight">7</td>
+<td><pre class="srcLine">                if ( $meta-&gt;isRelation($v) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">92</td>
+<td class="lineCountHighlight">7</td>
+<td><pre class="srcLine">                    $details = $meta-&gt;getRelation($v);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">93</td>
+<td class="lineCountHighlight">7</td>
+<td><pre class="srcLine">                    if ( !$details-&gt;isCollection() ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">94</td>
+<td class="lineCountHighlight">7</td>
+<td><pre class="srcLine">                        $container = $details-&gt;getTo();</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">95</td>
+<td class="lineCountHighlight">7</td>
+<td><pre class="srcLine">                        $currentMeta = $this-&gt;_mapFactory-&gt;get($container)-&gt;getEntityMeta();</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">96</td>
+<td class="lineCountHighlight">7</td>
+<td><pre class="srcLine">                    } else {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">97</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                        break;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">98</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">                    }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">99</td>
+<td class="lineCountHighlight">7</td>
+<td><pre class="srcLine">                } else {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">100</td>
+<td class="lineCountHighlight">7</td>
+<td><pre class="srcLine">                    break;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">101</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">                }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">102</td>
+<td class="lineCountHighlight">7</td>
+<td><pre class="srcLine">            }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">103</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">104</td>
+<td class="lineCountHighlight">7</td>
+<td><pre class="srcLine">        } else {</pre></td>
+</tr>
+<tr>
+<td class="lineCount">105</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">106</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            /*</pre></td>
+</tr>
+<tr>
+<td class="lineCount">107</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">                for method calls</pre></td>
+</tr>
+<tr>
+<td class="lineCount">108</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">                - check method exists in class</pre></td>
+</tr>
+<tr>
+<td class="lineCount">109</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">                - check any method parameters that may themselves be members</pre></td>
+</tr>
+<tr>
+<td class="lineCount">110</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            */</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">111</td>
+<td class="lineCountHighlight">32</td>
+<td><pre class="srcLine">            if ( preg_match("/^(?P&lt;name&gt;[a-z0-9_]+)(?P&lt;meth&gt;\((?P&lt;args&gt;[\w\W]*)\))$/i", $field, $matches) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">112</td>
+<td class="lineCountHighlight">16</td>
+<td><pre class="srcLine">                if ( $className != "" &amp;&amp; !in_array($matches['name'], $meta-&gt;getMembers()) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">113</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                    require_once 'Xyster/Orm/Query/Parser/Exception.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">114</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                    throw new Xyster_Orm_Query_Parser_Exception($matches['name'] . ' is not a member of the ' . $className . ' class' );</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">115</td>
+<td class="coverageCountHighlight">0</td>
+<td><pre class="srcLineHighlight">                }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">116</td>
+<td class="lineCountHighlight">16</td>
+<td><pre class="srcLine">                $args = array();</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">117</td>
+<td class="lineCountHighlight">16</td>
+<td><pre class="srcLine">                if ( strlen(trim($matches['args'])) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">118</td>
+<td class="lineCountHighlight">9</td>
+<td><pre class="srcLine">                    foreach( Xyster_String::smartSplit(",", $matches['args']) as $v ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">119</td>
+<td class="lineCountHighlight">9</td>
+<td><pre class="srcLine">                        $v = trim($v);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">120</td>
+<td class="lineCountHighlight">9</td>
+<td><pre class="srcLine">                        $args[] = ( $this-&gt;isValidField($v) ) ?</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">121</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                            $this-&gt;assertValidFieldForClass($v, $className) : $v;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">122</td>
+<td class="lineCountHighlight">9</td>
+<td><pre class="srcLine">                    }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">123</td>
+<td class="lineCountHighlight">9</td>
+<td><pre class="srcLine">                }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">124</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            /*</pre></td>
+</tr>
+<tr>
+<td class="lineCount">125</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">                for properties and relationships</pre></td>
+</tr>
+<tr>
+<td class="lineCount">126</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">                - check column exists in class</pre></td>
+</tr>
+<tr>
+<td class="lineCount">127</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            */</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">128</td>
+<td class="lineCountHighlight">32</td>
+<td><pre class="srcLine">            } else if ( $className != "" &amp;&amp; !in_array($field, $meta-&gt;getMembers()) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">129</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                require_once 'Xyster/Orm/Query/Parser/Exception.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">130</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                throw new Xyster_Orm_Query_Parser_Exception($field . ' is not a member of the ' . $className . ' class');</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">131</td>
+<td class="coverageCountHighlight">0</td>
+<td><pre class="srcLineHighlight">            }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">132</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">133</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">134</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">135</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">136</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Checks if a literal is a method call</pre></td>
+</tr>
+<tr>
+<td class="lineCount">137</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">138</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $field</pre></td>
+</tr>
+<tr>
+<td class="lineCount">139</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return bool</pre></td>
+</tr>
+<tr>
+<td class="lineCount">140</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">141</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function isMethodCall( $field )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">142</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">143</td>
+<td class="lineCountHighlight">15</td>
+<td><pre class="srcLine">        return (bool) preg_match("/^[a-z_][a-z0-9_]*\([\w\W]*\)$/i", $field);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">144</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">145</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">146</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">147</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Verifies if a {@link Xyster_Data_Criterion} or {@link Xyster_Data_Field} is runtime</pre></td>
+</tr>
+<tr>
+<td class="lineCount">148</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">149</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param object $object</pre></td>
+</tr>
+<tr>
+<td class="lineCount">150</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $class</pre></td>
+</tr>
+<tr>
+<td class="lineCount">151</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return bool</pre></td>
+</tr>
+<tr>
+<td class="lineCount">152</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">153</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function isRuntime( $object, $class )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">154</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">155</td>
+<td class="lineCountHighlight">33</td>
+<td><pre class="srcLine">        if ( $object instanceof Xyster_Data_Criterion ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCount">156</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">157</td>
+<td class="lineCountHighlight">20</td>
+<td><pre class="srcLine">            foreach( Xyster_Data_Criterion::getFields($object) as $v ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">158</td>
+<td class="lineCountHighlight">20</td>
+<td><pre class="srcLine">                if ($this-&gt;isRuntime($v, $class)) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">159</td>
+<td class="lineCountHighlight">12</td>
+<td><pre class="srcLine">                    return true;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">160</td>
+<td class="coverageCountHighlight">0</td>
+<td><pre class="srcLineHighlight">                }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">161</td>
+<td class="lineCountHighlight">16</td>
+<td><pre class="srcLine">            }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">162</td>
+<td class="lineCountHighlight">16</td>
+<td><pre class="srcLine">            return false;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">163</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">164</td>
+<td class="lineCountHighlight">33</td>
+<td><pre class="srcLine">        } else if ( $object instanceof Xyster_Data_Field ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCount">165</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">166</td>
+<td class="lineCountHighlight">32</td>
+<td><pre class="srcLine">            $name = $object-&gt;getName();</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">167</td>
+<td class="lineCountHighlight">32</td>
+<td><pre class="srcLine">            if ( !isset(self::$_runtime[$class][$name])) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">168</td>
+<td class="lineCountHighlight">14</td>
+<td><pre class="srcLine">                self::$_runtime[$class][$name] = $this-&gt;_isRuntime($name,$class);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">169</td>
+<td class="lineCountHighlight">14</td>
+<td><pre class="srcLine">            }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">170</td>
+<td class="lineCountHighlight">32</td>
+<td><pre class="srcLine">            return self::$_runtime[$class][$name];</pre></td>
+</tr>
+<tr>
+<td class="lineCount">171</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">172</td>
+<td class="lineCountHighlight">13</td>
+<td><pre class="srcLine">        } else if ( $object instanceof Xyster_Data_Sort ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCount">173</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">174</td>
+<td class="lineCountHighlight">12</td>
+<td><pre class="srcLine">            return $this-&gt;isRuntime($object-&gt;getField(), $class);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">175</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">176</td>
+<td class="coverageCountHighlight">0</td>
+<td><pre class="srcLineHighlight">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">177</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">178</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">        require_once 'Xyster/Orm/Query/Parser/Exception.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">179</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">        throw new Xyster_Orm_Query_Parser_Exception('Unexpected type: ' . gettype($object));</pre></td>
+</tr>
+<tr>
+<td class="lineCount">180</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">181</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">182</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">183</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Checks a reference for syntactical correctness</pre></td>
+</tr>
+<tr>
+<td class="lineCount">184</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">185</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $field</pre></td>
+</tr>
+<tr>
+<td class="lineCount">186</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return boolean</pre></td>
+</tr>
+<tr>
+<td class="lineCount">187</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">188</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function isValidField( $field )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">189</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">190</td>
+<td class="lineCountHighlight">16</td>
+<td><pre class="srcLine">        $field = trim($field);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">191</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">192</td>
+<td class="lineCountHighlight">16</td>
+<td><pre class="srcLine">        $ok = true;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">193</td>
+<td class="lineCountHighlight">16</td>
+<td><pre class="srcLine">        if ( !preg_match("/^[a-z][a-z0-9_]*(-&gt;[a-z0-9_]+(\([\s]*\))?)*$/i", $field) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">194</td>
+<td class="lineCountHighlight">16</td>
+<td><pre class="srcLine">            $mcs = Xyster_String::smartSplit("-&gt;", $field);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">195</td>
+<td class="lineCountHighlight">16</td>
+<td><pre class="srcLine">            foreach( $mcs as $mc ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">196</td>
+<td class="lineCountHighlight">16</td>
+<td><pre class="srcLine">                $matches = array();</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">197</td>
+<td class="lineCountHighlight">16</td>
+<td><pre class="srcLine">                $match = preg_match( "/^[a-z][a-z0-9_]*(\((?P&lt;params&gt;[\w\W]*)\))?$/i", $mc, $matches );</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">198</td>
+<td class="lineCountHighlight">16</td>
+<td><pre class="srcLine">                if ( ( $match &amp;&amp; array_key_exists("params", $matches) &amp;&amp; strlen(trim($matches['params']))</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">199</td>
+<td class="lineCountHighlight">16</td>
+<td><pre class="srcLine">                &amp;&amp; !$this-&gt;_checkMethodParameters($matches['params']) ) || !$match ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">200</td>
+<td class="lineCountHighlight">16</td>
+<td><pre class="srcLine">                    $ok = false;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">201</td>
+<td class="lineCountHighlight">16</td>
+<td><pre class="srcLine">                    break;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">202</td>
+<td class="coverageCountHighlight">0</td>
+<td><pre class="srcLineHighlight">                }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">203</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">204</td>
+<td class="lineCountHighlight">16</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">205</td>
+<td class="lineCountHighlight">16</td>
+<td><pre class="srcLine">        return $ok;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">206</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">207</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">208</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">209</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Parse a statement into a Xyster_Data_Criterion</pre></td>
+</tr>
+<tr>
+<td class="lineCount">210</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">211</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $statement</pre></td>
+</tr>
+<tr>
+<td class="lineCount">212</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Data_Criterion</pre></td>
+</tr>
+<tr>
+<td class="lineCount">213</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">214</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function parseCriterion( $statement )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">215</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">216</td>
+<td class="lineCountHighlight">54</td>
+<td><pre class="srcLine">        require_once 'Xyster/Data/Junction.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCount">217</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">218</td>
+<td class="lineCountHighlight">54</td>
+<td><pre class="srcLine">        $crit = null;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">219</td>
+<td class="lineCountHighlight">54</td>
+<td><pre class="srcLine">        $statement = trim($statement);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">220</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">221</td>
+<td class="lineCountHighlight">54</td>
+<td><pre class="srcLine">        $groups = Xyster_String::matchGroups($statement);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">222</td>
+<td class="lineCountHighlight">54</td>
+<td><pre class="srcLine">        if ( count($groups) == 1 &amp;&amp; strlen($groups[0]) == strlen($statement) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">223</td>
+<td class="lineCountHighlight">35</td>
+<td><pre class="srcLine">            $statement = trim(substr($statement,1,-1));</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">224</td>
+<td class="lineCountHighlight">35</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">225</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">226</td>
+<td class="lineCountHighlight">54</td>
+<td><pre class="srcLine">        $crits = Xyster_String::smartSplit(" AND ", $statement, true);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">227</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">        // in case it split the and of a "BETWEEN x AND y"</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">228</td>
+<td class="lineCountHighlight">54</td>
+<td><pre class="srcLine">        if ( count($crits) == 2 &amp;&amp; $this-&gt;_checkLiteral($crits[1]) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">229</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            $crits = array($statement);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">230</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">231</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">232</td>
+<td class="lineCountHighlight">54</td>
+<td><pre class="srcLine">        if ( count($crits) &lt; 2 ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCount">233</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">234</td>
+<td class="lineCountHighlight">54</td>
+<td><pre class="srcLine">            $subcrits = Xyster_String::smartSplit(" OR ", $statement, true);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">235</td>
+<td class="lineCountHighlight">54</td>
+<td><pre class="srcLine">            if ( count($subcrits) &lt; 2 ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">236</td>
+<td class="lineCountHighlight">54</td>
+<td><pre class="srcLine">                $groups = Xyster_String::matchGroups(trim($subcrits[0]));</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">237</td>
+<td class="lineCountHighlight">54</td>
+<td><pre class="srcLine">                $crit = ( count($groups) &gt; 0 &amp;&amp; strlen($groups[0]) ) ?</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">238</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">                    $this-&gt;parseCriterion($subcrits[0]) :</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">239</td>
+<td class="lineCountHighlight">54</td>
+<td><pre class="srcLine">                    $this-&gt;parseExpression($subcrits[0]);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">240</td>
+<td class="lineCountHighlight">54</td>
+<td><pre class="srcLine">            } else {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">241</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">                $criteria = array_map(array($this, 'parseCriterion'), $subcrits);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">242</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">                $crit = Xyster_Data_Criterion::fromArray('OR', $criteria);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">243</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">244</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">245</td>
+<td class="lineCountHighlight">54</td>
+<td><pre class="srcLine">        } else {</pre></td>
+</tr>
+<tr>
+<td class="lineCount">246</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">247</td>
+<td class="lineCountHighlight">5</td>
+<td><pre class="srcLine">            $crit = Xyster_Data_Junction::all( $this-&gt;parseCriterion($crits[0]),</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">248</td>
+<td class="lineCountHighlight">5</td>
+<td><pre class="srcLine">                $this-&gt;parseCriterion($crits[1]) );</pre></td>
+</tr>
+<tr>
+<td class="lineCount">249</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">250</td>
+<td class="lineCountHighlight">5</td>
+<td><pre class="srcLine">            if ( count($crits) &gt; 2 ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">251</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                for ( $i=2; $i&lt;count($crits); $i++ ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">252</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                    $crit-&gt;add( $this-&gt;parseCriterion( $crits[$i] ) );</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">253</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">254</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">255</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">256</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">257</td>
+<td class="lineCountHighlight">54</td>
+<td><pre class="srcLine">        return $crit;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">258</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">259</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">260</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">261</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Parse string statement as Expression</pre></td>
+</tr>
+<tr>
+<td class="lineCount">262</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">263</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $statement</pre></td>
+</tr>
+<tr>
+<td class="lineCount">264</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Data_Expression</pre></td>
+</tr>
+<tr>
+<td class="lineCount">265</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @throws Xyster_Orm_Query_Parser_Exception if the expression syntax is incorrect</pre></td>
+</tr>
+<tr>
+<td class="lineCount">266</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">267</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function parseExpression( $statement )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">268</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">269</td>
+<td class="lineCountHighlight">59</td>
+<td><pre class="srcLine">        require_once 'Xyster/Data/Expression.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCount">270</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">271</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">        // remove whitespace characters we don't like</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">272</td>
+<td class="lineCountHighlight">59</td>
+<td><pre class="srcLine">        $statement = Xyster_String::smartSplit(" ", preg_replace("/[\t\n\r]+/", " ", trim($statement)));</pre></td>
+</tr>
+<tr>
+<td class="lineCount">273</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">274</td>
+<td class="lineCountHighlight">59</td>
+<td><pre class="srcLine">        $exp = array();</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">275</td>
+<td class="lineCountHighlight">59</td>
+<td><pre class="srcLine">        foreach( $statement as $v ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">276</td>
+<td class="lineCountHighlight">59</td>
+<td><pre class="srcLine">            if( $v != "" ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">277</td>
+<td class="lineCountHighlight">59</td>
+<td><pre class="srcLine">                $exp[] = $v;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">278</td>
+<td class="lineCountHighlight">59</td>
+<td><pre class="srcLine">            }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">279</td>
+<td class="lineCountHighlight">59</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">280</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">281</td>
+<td class="lineCountHighlight">59</td>
+<td><pre class="srcLine">        $leftlit = $this-&gt;parseField($exp[0]);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">282</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">283</td>
+<td class="lineCountHighlight">59</td>
+<td><pre class="srcLine">        array_shift($exp);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">284</td>
+<td class="lineCountHighlight">59</td>
+<td><pre class="srcLine">        $upper0 = strtoupper($exp[0]);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">285</td>
+<td class="lineCountHighlight">59</td>
+<td><pre class="srcLine">        $upper1 = strtoupper($exp[1]);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">286</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">287</td>
+<td class="lineCountHighlight">59</td>
+<td><pre class="srcLine">        if ( $upper0 == "NOT" || ( $upper0 == "IS" &amp;&amp; $upper1 == "NOT" ) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">288</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">            $operator = $upper0 . " " . $upper1;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">289</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">            array_shift($exp);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">290</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        } else {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">291</td>
+<td class="lineCountHighlight">58</td>
+<td><pre class="srcLine">            $operator = $upper0;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">292</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">293</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">294</td>
+<td class="lineCountHighlight">59</td>
+<td><pre class="srcLine">        if ( !Xyster_Data_Expression::isOperator($operator) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">295</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            require_once 'Xyster/Orm/Query/Parser/Exception.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">296</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            throw new Xyster_Orm_Query_Parser_Exception('Invalid expression operator: ' . $operator);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">297</td>
+<td class="coverageCountHighlight">0</td>
+<td><pre class="srcLineHighlight">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">298</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">299</td>
+<td class="lineCountHighlight">58</td>
+<td><pre class="srcLine">        array_shift($exp);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">300</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">301</td>
+<td class="lineCountHighlight">58</td>
+<td><pre class="srcLine">        if ( ( $operator == "BETWEEN" || $operator == "NOT BETWEEN" ) &amp;&amp; count($exp) != 3 ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">302</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            require_once 'Xyster/Orm/Query/Parser/Exception.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">303</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            throw new Xyster_Orm_Query_Parser_Exception('Invalid literal: ' . implode(" ",$exp));</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">304</td>
+<td class="coverageCountHighlight">0</td>
+<td><pre class="srcLineHighlight">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">305</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">306</td>
+<td class="lineCountHighlight">57</td>
+<td><pre class="srcLine">        if ( $operator == "IN" || $operator == "NOT IN" ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">307</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">            $rightlit = trim(implode(" ",$exp));</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">308</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">            $matches = array();</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">309</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">            if ( !preg_match('/^\([\s]*(?P&lt;choices&gt;.*)[\s]*\)$/',$rightlit,$matches) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">310</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                require_once 'Xyster/Orm/Query/Parser/Exception.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">311</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                throw new Xyster_Orm_Query_Parser_Exception('Invalid literal: ' . $rightlit);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">312</td>
+<td class="coverageCountHighlight">0</td>
+<td><pre class="srcLineHighlight">            }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">313</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            else {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">314</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                $inChoices = Xyster_String::smartSplit(',',$matches['choices']);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">315</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                foreach( $inChoices as $k=&gt;$choice ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">316</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                    $choice = trim($choice);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">317</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                    $this-&gt;_assertLiteral($choice);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">318</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                    if ( preg_match('/^"[^"]*"$/i',$choice) )</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">319</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                        $inChoices[$k] = substr($choice,1,-1);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">320</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">321</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                $rightlit = $inChoices;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">322</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">323</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">        } else {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">324</td>
+<td class="lineCountHighlight">55</td>
+<td><pre class="srcLine">            $rightlit = ( $operator == "BETWEEN" || $operator == "NOT BETWEEN" ) ?</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">325</td>
+<td class="lineCountHighlight">55</td>
+<td><pre class="srcLine">                array( $exp[0], $exp[2] ) : $exp[0];</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">326</td>
+<td class="lineCountHighlight">55</td>
+<td><pre class="srcLine">            $this-&gt;_assertLiteral($rightlit);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">327</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">328</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">329</td>
+<td class="lineCountHighlight">55</td>
+<td><pre class="srcLine">        if ( !is_array($rightlit) &amp;&amp; preg_match('/^"[^"]*"$/i',$rightlit) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">330</td>
+<td class="lineCountHighlight">7</td>
+<td><pre class="srcLine">            $rightlit = substr($rightlit,1,-1);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">331</td>
+<td class="lineCountHighlight">7</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">332</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">333</td>
+<td class="lineCountHighlight">55</td>
+<td><pre class="srcLine">        $args = array( $leftlit );</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">334</td>
+<td class="lineCountHighlight">55</td>
+<td><pre class="srcLine">        if ( in_array($operator, array("=","&lt;&gt;","&gt;","&gt;=","&lt;","&lt;=","LIKE","NOT LIKE",'IN','NOT IN')) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">335</td>
+<td class="lineCountHighlight">55</td>
+<td><pre class="srcLine">            $args[] = $rightlit;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">336</td>
+<td class="lineCountHighlight">55</td>
+<td><pre class="srcLine">        } else if ( $operator == "BETWEEN" || $operator == "NOT BETWEEN" ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">337</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            $args[] = $rightlit[0];</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">338</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            $args[] = $rightlit[1];</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">339</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">340</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">341</td>
+<td class="lineCountHighlight">55</td>
+<td><pre class="srcLine">        return call_user_func_array(array("Xyster_Data_Expression",</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">342</td>
+<td class="lineCountHighlight">55</td>
+<td><pre class="srcLine">            Xyster_Data_Expression::getMethodName($operator)), $args);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">343</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">344</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">345</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">346</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Parse a string as Field</pre></td>
+</tr>
+<tr>
+<td class="lineCount">347</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">348</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $name</pre></td>
+</tr>
+<tr>
+<td class="lineCount">349</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Data_Field</pre></td>
+</tr>
+<tr>
+<td class="lineCount">350</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">351</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function parseField( $name )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">352</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">353</td>
+<td class="lineCountHighlight">62</td>
+<td><pre class="srcLine">        $name = trim($name);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">354</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">355</td>
+<td class="lineCountHighlight">62</td>
+<td><pre class="srcLine">        require_once 'Xyster/Data/Field/Aggregate.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">356</td>
+<td class="lineCountHighlight">62</td>
+<td><pre class="srcLine">        $match = Xyster_Data_Field_Aggregate::match($name);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">357</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">358</td>
+<td class="lineCountHighlight">62</td>
+<td><pre class="srcLine">        if ( $match ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">359</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">            require_once 'Xyster/Enum.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">360</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">            $function = Xyster_Enum::valueOf('Xyster_Data_Aggregate', strtoupper($match['function']));</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">361</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">            $field = Xyster_Data_Field::aggregate($function, trim($match['field']));</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">362</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">        } else {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">363</td>
+<td class="lineCountHighlight">61</td>
+<td><pre class="srcLine">            $field = Xyster_Data_Field::named($name);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">364</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">365</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">366</td>
+<td class="lineCountHighlight">62</td>
+<td><pre class="srcLine">        return $field;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">367</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">368</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">369</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">370</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Parse a string as Field with alias</pre></td>
+</tr>
+<tr>
+<td class="lineCount">371</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">372</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $name</pre></td>
+</tr>
+<tr>
+<td class="lineCount">373</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Data_Field</pre></td>
+</tr>
+<tr>
+<td class="lineCount">374</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">375</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function parseFieldAlias( $statement )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">376</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">377</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">        $statement = trim($statement);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">378</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">        $matches = array();</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">379</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">        $alias = $statement;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">380</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">        $pattern = '/[\s]+(AS[\s]+(?P&lt;aliasA&gt;[a-z0-9_]+)|"(?P&lt;aliasQ&gt;[a-z0-9_]+)")/i';</pre></td>
+</tr>
+<tr>
+<td class="lineCount">381</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">382</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">        if (preg_match($pattern, $statement, $matches)) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">383</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">            if (!empty($matches['aliasA']) || !empty($matches['aliasQ'])) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">384</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">                $alias = (!empty($matches['aliasA'])) ?</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">385</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">                    $matches['aliasA'] : $matches['aliasQ'];</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">386</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">            }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">387</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">            $statement = str_replace($matches[0], "", $statement);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">388</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">389</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">390</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">        $field = $this-&gt;parseField($statement);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">391</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">        $field-&gt;setAlias($alias);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">392</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">        return $field;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">393</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">394</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">395</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">396</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Parses string statement as Xyster_Orm_Query</pre></td>
+</tr>
+<tr>
+<td class="lineCount">397</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">398</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param Xyster_Orm_Query $query</pre></td>
+</tr>
+<tr>
+<td class="lineCount">399</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $statement</pre></td>
+</tr>
+<tr>
+<td class="lineCount">400</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">401</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function parseQuery( Xyster_Orm_Query $query, $statement )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">402</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">403</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        $expecting = array('where','order');</pre></td>
+</tr>
+<tr>
+<td class="lineCount">404</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">405</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        $parts = $this-&gt;_baseParseQuery($query, $statement, $expecting);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">406</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        if ( !empty($parts['where']) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">407</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">            $query-&gt;where($this-&gt;parseCriterion($parts['where']));</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">408</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">409</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        if ( !empty($parts['order']) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">410</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            $this-&gt;_parseClause($query, 'order', $parts['order']);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">411</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">412</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">413</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">414</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">415</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Parses string statement as Xyster_Orm_Query_Report</pre></td>
+</tr>
+<tr>
+<td class="lineCount">416</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">417</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param Xyster_Orm_Query_Report $query</pre></td>
+</tr>
+<tr>
+<td class="lineCount">418</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $statement</pre></td>
+</tr>
+<tr>
+<td class="lineCount">419</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">420</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function parseReportQuery( Xyster_Orm_Query_Report $query, $statement )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">421</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">422</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">        $expecting = array('select','where','group','having','order');</pre></td>
+</tr>
+<tr>
+<td class="lineCount">423</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">424</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">        $parts = $this-&gt;_baseParseQuery($query,$statement,$expecting);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">425</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">        if ( empty($parts['select']) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">426</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            require_once 'Xyster/Orm/Query/Parser/Exception.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">427</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            throw new Xyster_Orm_Query_Parser_Exception('Invalid statement: ' . $statement);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">428</td>
+<td class="coverageCountHighlight">0</td>
+<td><pre class="srcLineHighlight">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">429</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">430</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        $matches = array();</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">431</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        if (preg_match('/^distinct[[:space:]]+/i', $parts['select'], $matches)) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">432</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            $query-&gt;distinct(true);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">433</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            $parts['select'] = str_replace($matches[0], '', $parts['select']);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">434</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">435</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">436</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        $this-&gt;_parseClause($query, 'select', $parts['select']);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">437</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        if ( !empty($parts['where']) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">438</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">            $query-&gt;where($this-&gt;parseCriterion($parts['where']));</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">439</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">440</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        if ( !empty($parts['order']) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">441</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            $this-&gt;_parseClause($query, 'order', $parts['order']);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">442</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">443</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        if ( !empty($parts['group']) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">444</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            $this-&gt;_parseClause($query, 'group', $parts['group']);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">445</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">446</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        if ( !empty($parts['having']) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">447</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            $query-&gt;having($this-&gt;parseCriterion($parts['having']));</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">448</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">449</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">450</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">451</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">452</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Parse string statement as a {@link Xyster_Data_Sort}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">453</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">454</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $statement</pre></td>
+</tr>
+<tr>
+<td class="lineCount">455</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Data_Sort</pre></td>
+</tr>
+<tr>
+<td class="lineCount">456</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @throws Xyster_Orm_Query_Parser_Exception  if the statement syntax is invalid</pre></td>
+</tr>
+<tr>
+<td class="lineCount">457</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">458</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function parseSort( $statement )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">459</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">460</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">        $statement = trim($statement);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">461</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">        $matches = array();</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">462</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">        $dir = 'ASC';</pre></td>
+</tr>
+<tr>
+<td class="lineCount">463</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">464</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">        if ( preg_match('/\s+(?P&lt;dir&gt;ASC|DESC)$/i', $statement, $matches) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">465</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">            $dir = $matches["dir"];</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">466</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">            $statement = trim(str_replace($matches[0], "", $statement));</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">467</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">468</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">469</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">        $field = $this-&gt;parseField($statement);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">470</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">        return (!strcasecmp($dir, 'DESC')) ? $field-&gt;desc() : $field-&gt;asc();</pre></td>
+</tr>
+<tr>
+<td class="lineCount">471</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">472</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">473</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">474</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Asserts a literal for syntactical correctness</pre></td>
+</tr>
+<tr>
+<td class="lineCount">475</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">476</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $lit</pre></td>
+</tr>
+<tr>
+<td class="lineCount">477</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @throws Xyster_Orm_Query_Parser_Exception if the syntax is incorrect</pre></td>
+</tr>
+<tr>
+<td class="lineCount">478</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">479</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    protected function _assertLiteral( $lit )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">480</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">481</td>
+<td class="lineCountHighlight">56</td>
+<td><pre class="srcLine">        if ( is_array($lit) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">482</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            foreach( $lit as $v ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">483</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                $this-&gt;_assertLiteral($v);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">484</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">485</td>
+<td class="lineCountHighlight">56</td>
+<td><pre class="srcLine">        } else if ( !$this-&gt;_checkLiteral($lit) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">486</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            require_once 'Xyster/Orm/Query/Parser/Exception.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">487</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            throw new Xyster_Orm_Query_Parser_Exception('Invalid literal: ' . $lit);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">488</td>
+<td class="coverageCountHighlight">0</td>
+<td><pre class="srcLineHighlight">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">489</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">490</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">491</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">492</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Removes the limit and offset clause from a statement</pre></td>
+</tr>
+<tr>
+<td class="lineCount">493</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">494</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param Xyster_Orm_Query $query  The query into which the parts are set</pre></td>
+</tr>
+<tr>
+<td class="lineCount">495</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $statement  The statement to parse</pre></td>
+</tr>
+<tr>
+<td class="lineCount">496</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param array $expecting</pre></td>
+</tr>
+<tr>
+<td class="lineCount">497</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return array  The statement split by parts</pre></td>
+</tr>
+<tr>
+<td class="lineCount">498</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">499</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    protected function _baseParseQuery( Xyster_Orm_Query $query, $statement, array $expecting )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">500</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">501</td>
+<td class="lineCountHighlight">4</td>
+<td><pre class="srcLine">        $matches = array();</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">502</td>
+<td class="lineCountHighlight">4</td>
+<td><pre class="srcLine">        if ( preg_match('/[\s]*LIMIT (?P&lt;limit&gt;[\d]+)( OFFSET (?P&lt;offset&gt;[\d]+))?$/i',$statement,$matches) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">503</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">            $statement = str_replace($matches[0], '', $statement);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">504</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">505</td>
+<td class="lineCountHighlight">4</td>
+<td><pre class="srcLine">        $limit = ( isset($matches['limit']) ) ? $matches['limit'] : 0;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">506</td>
+<td class="lineCountHighlight">4</td>
+<td><pre class="srcLine">        $offset = ( isset($matches['offset']) ) ? $matches['offset'] : 0;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">507</td>
+<td class="lineCountHighlight">4</td>
+<td><pre class="srcLine">        if ( $limit ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">508</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">            $query-&gt;limit($limit,$offset);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">509</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">510</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">511</td>
+<td class="lineCountHighlight">4</td>
+<td><pre class="srcLine">        $parts = array();</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">512</td>
+<td class="lineCountHighlight">4</td>
+<td><pre class="srcLine">        $part = '';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">513</td>
+<td class="lineCountHighlight">4</td>
+<td><pre class="srcLine">        $split = Xyster_String::smartSplit(' ', trim($statement));</pre></td>
+</tr>
+<tr>
+<td class="lineCount">514</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">515</td>
+<td class="lineCountHighlight">4</td>
+<td><pre class="srcLine">        foreach( $split as $v ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">516</td>
+<td class="lineCountHighlight">4</td>
+<td><pre class="srcLine">            if ( in_array($part, array('order','group')) &amp;&amp; !strcasecmp($v, 'by') ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">517</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">                continue;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">518</td>
+<td class="coverageCountHighlight">0</td>
+<td><pre class="srcLineHighlight">            }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">519</td>
+<td class="lineCountHighlight">4</td>
+<td><pre class="srcLine">            foreach( $expecting as $epart ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">520</td>
+<td class="lineCountHighlight">4</td>
+<td><pre class="srcLine">                if ( !strcasecmp($v, $epart) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">521</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">                    $part = strtolower($v);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">522</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">                }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">523</td>
+<td class="lineCountHighlight">4</td>
+<td><pre class="srcLine">            }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">524</td>
+<td class="lineCountHighlight">4</td>
+<td><pre class="srcLine">            if ( !in_array(strtolower($v), $expecting) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">525</td>
+<td class="lineCountHighlight">4</td>
+<td><pre class="srcLine">                if ( !isset($parts[$part]) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">526</td>
+<td class="lineCountHighlight">4</td>
+<td><pre class="srcLine">                    $parts[$part] = "";</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">527</td>
+<td class="lineCountHighlight">4</td>
+<td><pre class="srcLine">                }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">528</td>
+<td class="lineCountHighlight">4</td>
+<td><pre class="srcLine">                $parts[$part] .= $v . " ";</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">529</td>
+<td class="lineCountHighlight">4</td>
+<td><pre class="srcLine">            }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">530</td>
+<td class="lineCountHighlight">4</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">531</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">532</td>
+<td class="lineCountHighlight">4</td>
+<td><pre class="srcLine">        return $parts;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">533</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">534</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">535</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">536</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Checks a literal for syntactical correctness</pre></td>
+</tr>
+<tr>
+<td class="lineCount">537</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">538</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $lit</pre></td>
+</tr>
+<tr>
+<td class="lineCount">539</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return boolean</pre></td>
+</tr>
+<tr>
+<td class="lineCount">540</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">541</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    protected function _checkLiteral( $lit )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">542</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCount">543</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">        return (</pre></td>
+</tr>
+<tr>
+<td class="lineCount">544</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            // either a string or a number or the word "null"</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">545</td>
+<td class="lineCountHighlight">57</td>
+<td><pre class="srcLine">            preg_match("/^(\"[^\"]*\"|[\d]+(.[\d]+)?|null)$/i", trim($lit))</pre></td>
+</tr>
+<tr>
+<td class="lineCount">546</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            //  a string with escapes in it</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">547</td>
+<td class="lineCountHighlight">7</td>
+<td><pre class="srcLine">            || preg_match('/^"[^"\\\\]*(\\\\.[^"\\\\]*)*"$/', trim($lit))</pre></td>
+</tr>
+<tr>
+<td class="lineCount">548</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            // check to see if it's a field</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">549</td>
+<td class="lineCountHighlight">7</td>
+<td><pre class="srcLine">            || $this-&gt;isValidField($lit)</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">550</td>
+<td class="lineCountHighlight">57</td>
+<td><pre class="srcLine">        );</pre></td>
+</tr>
+<tr>
+<td class="lineCount">551</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">552</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">553</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">554</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Checks method parameters for syntactical correctness</pre></td>
+</tr>
+<tr>
+<td class="lineCount">555</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">556</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param array $params</pre></td>
+</tr>
+<tr>
+<td class="lineCount">557</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return boolean</pre></td>
+</tr>
+<tr>
+<td class="lineCount">558</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">559</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    protected function _checkMethodParameters( $params )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">560</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">561</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">        $ps = Xyster_String::smartSplit(",", trim($params));</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">562</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">        $ok = true;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">563</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">        foreach( $ps as $p ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">564</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            if ( !$this-&gt;_checkLiteral($p) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">565</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                $ok = false;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">566</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                break;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">567</td>
+<td class="coverageCountHighlight">0</td>
+<td><pre class="srcLineHighlight">            }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">568</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">569</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">        return $ok;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">570</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">571</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">572</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">573</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Checks to see if a column can only be evaluated at runtime</pre></td>
+</tr>
+<tr>
+<td class="lineCount">574</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">575</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $field</pre></td>
+</tr>
+<tr>
+<td class="lineCount">576</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $className</pre></td>
+</tr>
+<tr>
+<td class="lineCount">577</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return boolean</pre></td>
+</tr>
+<tr>
+<td class="lineCount">578</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">579</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    protected function _isRuntime( $field, $className )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">580</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">581</td>
+<td class="lineCountHighlight">14</td>
+<td><pre class="srcLine">        require_once 'Xyster/Orm/Loader.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">582</td>
+<td class="lineCountHighlight">14</td>
+<td><pre class="srcLine">        Xyster_Orm_Loader::loadEntityClass($className);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">583</td>
+<td class="lineCountHighlight">14</td>
+<td><pre class="srcLine">        $meta = $this-&gt;_mapFactory-&gt;get($className)-&gt;getEntityMeta();</pre></td>
+</tr>
+<tr>
+<td class="lineCount">584</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">585</td>
+<td class="lineCountHighlight">14</td>
+<td><pre class="srcLine">        $calls = Xyster_String::smartSplit('-&gt;',trim($field));</pre></td>
+</tr>
+<tr>
+<td class="lineCount">586</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">587</td>
+<td class="lineCountHighlight">14</td>
+<td><pre class="srcLine">        if ( count($calls) == 1 ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCount">588</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">589</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            // the call isn't composite - could be a member or a relation</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">590</td>
+<td class="lineCountHighlight">14</td>
+<td><pre class="srcLine">            return ( $this-&gt;isMethodCall($calls[0]) ) ? true :</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">591</td>
+<td class="lineCountHighlight">8</td>
+<td><pre class="srcLine">                ( !in_array($field, $meta-&gt;getFieldNames())</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">592</td>
+<td class="lineCountHighlight">14</td>
+<td><pre class="srcLine">                    &amp;&amp; !$meta-&gt;isRelation($field) );</pre></td>
+</tr>
+<tr>
+<td class="lineCount">593</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">594</td>
+<td class="coverageCountHighlight">0</td>
+<td><pre class="srcLineHighlight">        } else {</pre></td>
+</tr>
+<tr>
+<td class="lineCount">595</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">596</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            // the call is composite - loop through to see if we can figure</pre></td>
+</tr>
+<tr>
+<td class="lineCount">597</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            // out the type bindings</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">598</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">            $container = $className;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">599</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">            $currentMeta = $meta;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">600</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">            foreach( $calls as $call ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">601</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">                if ( $this-&gt;isMethodCall($call) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">602</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                    return true;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">603</td>
+<td class="coverageCountHighlight">0</td>
+<td><pre class="srcLineHighlight">                } else {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">604</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">                    $isRel = $currentMeta-&gt;isRelation($call);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">605</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">                    if ( !in_array($call, array_keys($currentMeta-&gt;getFields()))</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">606</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">                        &amp;&amp; !$isRel ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">607</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                        return true;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">608</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">                    } else if ( $isRel ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">609</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">                        $container = $currentMeta-&gt;getRelation($call)-&gt;getTo();</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">610</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">                        $currentMeta = $this-&gt;_mapFactory-&gt;get($container)-&gt;getEntityMeta();</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">611</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">                    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">612</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">                }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">613</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">            }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">614</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">            return false;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">615</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">616</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">617</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">618</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">619</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">620</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Parses a string statement clause into its corresponding parts</pre></td>
+</tr>
+<tr>
+<td class="lineCount">621</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">622</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param Xyster_Orm_Query $query The query into which the parts will be set</pre></td>
+</tr>
+<tr>
+<td class="lineCount">623</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $type  The type of clause (either select, group, or order)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">624</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $statement  The actual clause to parse</pre></td>
+</tr>
+<tr>
+<td class="lineCount">625</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">626</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    protected function _parseClause( Xyster_Orm_Query $query, $type, $statement )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">627</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCount">628</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">        $call = array(</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">629</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">                'select'=&gt;array($this, 'parseFieldAlias'),</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">630</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">                'order'=&gt;array($this, 'parseSort'),</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">631</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">                'group'=&gt;array('Xyster_Data_Field', 'group')</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">632</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">            );</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">633</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">        $method = array('select'=&gt;'field', 'order'=&gt;'order', 'group'=&gt;'group');</pre></td>
+</tr>
+<tr>
+<td class="lineCount">634</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">635</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">        foreach( Xyster_String::smartSplit(",", $statement) as $item ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">636</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">            $query-&gt;{$method[$type]}( call_user_func($call[$type], $item) );</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">637</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">638</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">639</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">}</pre></td>
+</tr>
+</table>
+<br><table width="100%">
+<tr><td><hr noshade size="1"></td></tr>
+<tr><td class="small">Report generated at 2008-01-20T12:13:38-05:00</td></tr>
+</table>
+</BODY>
+</HTML>

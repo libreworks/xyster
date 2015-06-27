@@ -1,0 +1,829 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class Xyster_Collection_Abstract</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name">Class Xyster_Collection_Abstract</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+							<a href="#sec-descendents">Descendents</a>
+			|											<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+						|											<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+					</div>
+	<div class="info-box-body">
+                <p class="implements">
+            Implements interfaces:
+            <ul>
+                <li><a href="../Xyster_Collection/Xyster_Collection_Interface.html">Xyster_Collection_Interface</a></li>            </ul>
+        </p>
+        		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Abstract class for collections</p>
+	<ul class="tags">
+				<li><span class="field">copyright:</span> Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)</li>
+				<li><span class="field">license:</span> <a href="http://www.opensource.org/licenses/bsd-license.php">New BSD License</a></li>
+			</ul>
+		<p class="notes">
+			Located in <a class="field" href="_Collection---Abstract.php.html">/Collection/Abstract.php</a> (line <span class="field">31</span>)
+		</p>
+		
+				
+		<pre></pre>
+	
+			</div>
+</div>
+
+	<a name="sec-descendents"></a>
+	<div class="info-box">
+		<div class="info-box-title">Direct descendents</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+			<span class="disabled">Descendents</span>
+			|												<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+								|															<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+								</div>
+		<div class="info-box-body">
+			<table cellpadding="2" cellspacing="0" class="class-table">
+				<tr>
+					<th class="class-table-header">Class</th>
+					<th class="class-table-header">Description</th>
+				</tr>
+								<tr>
+					<td style="padding-right: 2em"><a href="../Xyster_Collection/Xyster_Collection_Set_Abstract.html">Xyster_Collection_Set_Abstract</a></td>
+					<td>
+											Abstract class for no-duplicate collections
+										</td>
+				</tr>
+								<tr>
+					<td style="padding-right: 2em"><a href="../Xyster_Collection/Xyster_Collection_List_Abstract.html">Xyster_Collection_List_Abstract</a></td>
+					<td>
+											Abstract class for index-based collections
+										</td>
+				</tr>
+								<tr>
+					<td style="padding-right: 2em"><a href="../Xyster_Validate/Xyster_Validate_Errors.html">Xyster_Validate_Errors</a></td>
+					<td>
+											An error notification class
+										</td>
+				</tr>
+								<tr>
+					<td style="padding-right: 2em"><a href="../Xyster_Collection/Xyster_Collection.html">Xyster_Collection</a></td>
+					<td>
+											Implementation of Xyster_Collection_Abstract with static helper methods
+										</td>
+				</tr>
+							</table>
+		</div>
+	</div>
+
+
+	<a name="sec-var-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variable Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+							<a href="#sec-descendents">Descendents</a> |
+						<span class="disabled">Vars</span> (<a href="#sec-vars">details</a>)
+							| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+								</div>
+		<div class="info-box-body">
+			<div class="var-summary">
+																								<div class="var-title">
+					<span class="var-type">array</span>
+					<a href="#$_items" title="details" class="var-name">$_items</a>
+				</div>
+											</div>
+		</div>
+	</div>
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+							<a href="#sec-descendents">Descendents</a> |
+																		<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+				 
+				|
+						<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+																																																																																																																				
+												<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#add" title="details" class="method-name">add</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$item</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#clear" title="details" class="method-name">clear</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#contains" title="details" class="method-name">contains</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$item</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#containsAll" title="details" class="method-name">containsAll</a>
+											(<span class="var-type"><a href="../Xyster_Collection/Xyster_Collection_Interface.html">Xyster_Collection_Interface</a></span>&nbsp;<span class="var-name">$values</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#containsAny" title="details" class="method-name">containsAny</a>
+											(<span class="var-type"><a href="../Xyster_Collection/Xyster_Collection_Interface.html">Xyster_Collection_Interface</a></span>&nbsp;<span class="var-name">$values</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">int</span>
+										<a href="#count" title="details" class="method-name">count</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">SeekableIterator</span>
+										<a href="#getIterator" title="details" class="method-name">getIterator</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#isEmpty" title="details" class="method-name">isEmpty</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#merge" title="details" class="method-name">merge</a>
+											(<span class="var-type"><a href="../Xyster_Collection/Xyster_Collection_Interface.html">Xyster_Collection_Interface</a></span>&nbsp;<span class="var-name">$values</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#remove" title="details" class="method-name">remove</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$item</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#removeAll" title="details" class="method-name">removeAll</a>
+											(<span class="var-type"><a href="../Xyster_Collection/Xyster_Collection_Interface.html">Xyster_Collection_Interface</a></span>&nbsp;<span class="var-name">$values</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#retainAll" title="details" class="method-name">retainAll</a>
+											(<span class="var-type"><a href="../Xyster_Collection/Xyster_Collection_Interface.html">Xyster_Collection_Interface</a></span>&nbsp;<span class="var-name">$values</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">array</span>
+										<a href="#toArray" title="details" class="method-name">toArray</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#__toString" title="details" class="method-name">__toString</a>
+										()
+									</div>
+								</div>
+		</div>
+	</div>		
+
+	<a name="sec-vars"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variables</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+							<a href="#sec-descendents">Descendents</a> |
+										<a href="#sec-var-summary">Vars</a> (<span class="disabled">details</span>)
+						
+			
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			<a name="var$_items" id="$_items"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">array</span>
+			<span class="var-name">$_items</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number">38</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">The actual collection entries</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+						
+		</div>
+	</div>
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+							<a href="#sec-descendents">Descendents</a> |
+															<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+																	<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+
+<a name="methodadd" id="add"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">add</span> (line <span class="line-number">46</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Adds an item to the collection</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Whether the collection changed as a result of this method</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			add
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$item</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$item</span><span class="var-description">: The item to add</span>			</li>
+				</ul>
+		
+				<hr class="separator" />
+		<div class="notes">Implementation of:</div>
+			<dl>
+			<dt><a href="../Xyster_Collection/Xyster_Collection_Interface.html#methodadd">Xyster_Collection_Interface::add()</a></dt>
+						<dd>Adds an item to the collection</dd>
+					</dl>
+			
+			<hr class="separator" />
+		<div class="notes">Redefined in descendants as:</div>
+		<ul class="redefinitions">
+					<li>
+				<a href="../Xyster_Collection/Xyster_Collection_Set_Abstract.html#methodadd">Xyster_Collection_Set_Abstract::add()</a>
+								: Adds an item to the set
+							</li>
+					<li>
+				<a href="../Xyster_Data/Xyster_Data_Set.html#methodadd">Xyster_Data_Set::add()</a>
+								: Adds an item to the set
+							</li>
+					<li>
+				<a href="../Xyster_Orm/Xyster_Orm_Set.html#methodadd">Xyster_Orm_Set::add()</a>
+								: Adds an item to the set
+							</li>
+					<li>
+				<a href="../Xyster_Collection/Xyster_Collection_List.html#methodadd">Xyster_Collection_List::add()</a>
+								: Adds an item to the collection
+							</li>
+					<li>
+				<a href="../Xyster_Validate/Xyster_Validate_Errors.html#methodadd">Xyster_Validate_Errors::add()</a>
+								: Adds an error to the collection
+							</li>
+					<li>
+				<a href="../Xyster_Collection/Xyster_Collection.html#methodadd">Xyster_Collection::add()</a>
+								: Adds an item to the collection
+							</li>
+					<li>
+				<a href="../Xyster_Collection/Xyster_Collection_Set.html#methodadd">Xyster_Collection_Set::add()</a>
+								: Adds an item to the set
+							</li>
+				</ul>
+	</div>
+<a name="methodclear" id="clear"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">clear</span> (line <span class="line-number">55</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Removes all items from the collection</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			clear
+		</span>
+				()
+			</div>
+	
+		
+				<hr class="separator" />
+		<div class="notes">Implementation of:</div>
+			<dl>
+			<dt><a href="../Xyster_Collection/Xyster_Collection_Interface.html#methodclear">Xyster_Collection_Interface::clear()</a></dt>
+						<dd>Removes all items from the collection</dd>
+					</dl>
+			
+			<hr class="separator" />
+		<div class="notes">Redefined in descendants as:</div>
+		<ul class="redefinitions">
+					<li>
+				<a href="../Xyster_Orm/Xyster_Orm_Set.html#methodclear">Xyster_Orm_Set::clear()</a>
+								: Removes all items from the collection
+							</li>
+					<li>
+				<a href="../Xyster_Collection/Xyster_Collection_List.html#methodclear">Xyster_Collection_List::clear()</a>
+								: Removes all items from the collection
+							</li>
+					<li>
+				<a href="../Xyster_Collection/Xyster_Collection.html#methodclear">Xyster_Collection::clear()</a>
+								: Removes all items from the collection
+							</li>
+				</ul>
+	</div>
+<a name="methodcontains" id="contains"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">contains</span> (line <span class="line-number">69</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Tests to see whether the collection contains the value supplied</p>
+<p class="description"><p>If the supplied value is an object, the comparison will be done for  identity (===) and not for value (==).</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Whether the collection contains the supplied value</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			contains
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$item</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$item</span><span class="var-description">: The item to test</span>			</li>
+				</ul>
+		
+				<hr class="separator" />
+		<div class="notes">Implementation of:</div>
+			<dl>
+			<dt><a href="../Xyster_Collection/Xyster_Collection_Interface.html#methodcontains">Xyster_Collection_Interface::contains()</a></dt>
+						<dd>Tests to see whether the collection contains the value supplied</dd>
+					</dl>
+			
+	</div>
+<a name="methodcontainsAll" id="containsAll"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">containsAll</span> (line <span class="line-number">80</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Tests to see whether the collection contains all of the supplied values</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Whether the collection contains all of the supplied values</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			containsAll
+		</span>
+					(<span class="var-type"><a href="../Xyster_Collection/Xyster_Collection_Interface.html">Xyster_Collection_Interface</a></span>&nbsp;<span class="var-name">$values</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Collection/Xyster_Collection_Interface.html">Xyster_Collection_Interface</a></span>
+				<span class="var-name">$values</span><span class="var-description">: The values to test</span>			</li>
+				</ul>
+		
+				<hr class="separator" />
+		<div class="notes">Implementation of:</div>
+			<dl>
+			<dt><a href="../Xyster_Collection/Xyster_Collection_Interface.html#methodcontainsAll">Xyster_Collection_Interface::containsAll()</a></dt>
+						<dd>Tests to see whether the collection contains all of the supplied values</dd>
+					</dl>
+			
+	</div>
+<a name="methodcontainsAny" id="containsAny"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">containsAny</span> (line <span class="line-number">99</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Tests to see whether the collection contains any of the supplied values</p>
+<p class="description"><p>Basically, implementations can safely return true on the first item that  is found.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Whether the collection contains any of the supplied values</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			containsAny
+		</span>
+					(<span class="var-type"><a href="../Xyster_Collection/Xyster_Collection_Interface.html">Xyster_Collection_Interface</a></span>&nbsp;<span class="var-name">$values</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Collection/Xyster_Collection_Interface.html">Xyster_Collection_Interface</a></span>
+				<span class="var-name">$values</span><span class="var-description">: The values to test</span>			</li>
+				</ul>
+		
+				<hr class="separator" />
+		<div class="notes">Implementation of:</div>
+			<dl>
+			<dt><a href="../Xyster_Collection/Xyster_Collection_Interface.html#methodcontainsAny">Xyster_Collection_Interface::containsAny()</a></dt>
+						<dd>Tests to see whether the collection contains any of the supplied values</dd>
+					</dl>
+			
+	</div>
+<a name="methodcount" id="count"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">count</span> (line <span class="line-number">114</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets the number of items in the collection</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> The number of items</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">int</span>
+		<span class="method-name">
+			count
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetIterator" id="getIterator"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getIterator</span> (line <span class="line-number">124</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets an iterator for the values in the collection</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">SeekableIterator</span>
+		<span class="method-name">
+			getIterator
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodisEmpty" id="isEmpty"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">isEmpty</span> (line <span class="line-number">139</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Tests to see if the collection contains no elements</p>
+<p class="description"><p>The return value from this method should be equivalent to  <div class="src-code"><ol><li><div class="src-line"><span class="src-sym">(&nbsp;</span><span class="src-var">$collection</span><span class="src-sym">-&gt;</span><a href="../Xyster_Collection/Xyster_Collection_Abstract.html#methodcount">count</a><span class="src-sym">(</span><span class="src-sym">)&nbsp;</span>==&nbsp;<span class="src-num">0&nbsp;</span><span class="src-sym">)</span></div></li>
+</ol></div>.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Whether this collection has no elements</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			isEmpty
+		</span>
+				()
+			</div>
+	
+		
+				<hr class="separator" />
+		<div class="notes">Implementation of:</div>
+			<dl>
+			<dt><a href="../Xyster_Collection/Xyster_Collection_Interface.html#methodisEmpty">Xyster_Collection_Interface::isEmpty()</a></dt>
+						<dd>Tests to see if the collection contains no elements</dd>
+					</dl>
+			
+	</div>
+<a name="methodmerge" id="merge"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">merge</span> (line <span class="line-number">150</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Merges the values from the supplied collection into this one</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Whether the collection changed as a result of this method</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			merge
+		</span>
+					(<span class="var-type"><a href="../Xyster_Collection/Xyster_Collection_Interface.html">Xyster_Collection_Interface</a></span>&nbsp;<span class="var-name">$values</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Collection/Xyster_Collection_Interface.html">Xyster_Collection_Interface</a></span>
+				<span class="var-name">$values</span>			</li>
+				</ul>
+		
+				<hr class="separator" />
+		<div class="notes">Implementation of:</div>
+			<dl>
+			<dt><a href="../Xyster_Collection/Xyster_Collection_Interface.html#methodmerge">Xyster_Collection_Interface::merge()</a></dt>
+						<dd>Merges the values from the supplied collection into this one</dd>
+					</dl>
+			
+	</div>
+<a name="methodremove" id="remove"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">remove</span> (line <span class="line-number">165</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Removes the specified value from the collection</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> If the value was in the collection</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			remove
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$item</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$item</span><span class="var-description">: The value to remove</span>			</li>
+				</ul>
+		
+				<hr class="separator" />
+		<div class="notes">Implementation of:</div>
+			<dl>
+			<dt><a href="../Xyster_Collection/Xyster_Collection_Interface.html#methodremove">Xyster_Collection_Interface::remove()</a></dt>
+						<dd>Removes the specified value from the collection</dd>
+					</dl>
+			
+			<hr class="separator" />
+		<div class="notes">Redefined in descendants as:</div>
+		<ul class="redefinitions">
+					<li>
+				<a href="../Xyster_Orm/Xyster_Orm_Set.html#methodremove">Xyster_Orm_Set::remove()</a>
+								: Removes the specified value from the collection
+							</li>
+					<li>
+				<a href="../Xyster_Collection/Xyster_Collection_List_Abstract.html#methodremove">Xyster_Collection_List_Abstract::remove()</a>
+								: Removes the specified value from the collection
+							</li>
+					<li>
+				<a href="../Xyster_Collection/Xyster_Collection_List.html#methodremove">Xyster_Collection_List::remove()</a>
+								: Removes the specified value from the collection
+							</li>
+					<li>
+				<a href="../Xyster_Collection/Xyster_Collection.html#methodremove">Xyster_Collection::remove()</a>
+								: Removes the specified value from the collection
+							</li>
+				</ul>
+	</div>
+<a name="methodremoveAll" id="removeAll"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">removeAll</span> (line <span class="line-number">182</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Removes all of the specified values from the collection</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Whether the collection changed as a result of this method</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			removeAll
+		</span>
+					(<span class="var-type"><a href="../Xyster_Collection/Xyster_Collection_Interface.html">Xyster_Collection_Interface</a></span>&nbsp;<span class="var-name">$values</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Collection/Xyster_Collection_Interface.html">Xyster_Collection_Interface</a></span>
+				<span class="var-name">$values</span><span class="var-description">: The values to remove</span>			</li>
+				</ul>
+		
+				<hr class="separator" />
+		<div class="notes">Implementation of:</div>
+			<dl>
+			<dt><a href="../Xyster_Collection/Xyster_Collection_Interface.html#methodremoveAll">Xyster_Collection_Interface::removeAll()</a></dt>
+						<dd>Removes all of the specified values from the collection</dd>
+					</dl>
+			
+			<hr class="separator" />
+		<div class="notes">Redefined in descendants as:</div>
+		<ul class="redefinitions">
+					<li>
+				<a href="../Xyster_Orm/Xyster_Orm_Set.html#methodremoveAll">Xyster_Orm_Set::removeAll()</a>
+								: Removes all of the specified values from the collection
+							</li>
+					<li>
+				<a href="../Xyster_Collection/Xyster_Collection_List_Abstract.html#methodremoveAll">Xyster_Collection_List_Abstract::removeAll()</a>
+								: Removes all of the specified values from the collection
+							</li>
+					<li>
+				<a href="../Xyster_Collection/Xyster_Collection_List.html#methodremoveAll">Xyster_Collection_List::removeAll()</a>
+								: Removes all of the specified values from the collection
+							</li>
+					<li>
+				<a href="../Xyster_Collection/Xyster_Collection.html#methodremoveAll">Xyster_Collection::removeAll()</a>
+								: Removes all of the specified values from the collection
+							</li>
+				</ul>
+	</div>
+<a name="methodretainAll" id="retainAll"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">retainAll</span> (line <span class="line-number">202</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Removes all values from the collection except for the ones specified</p>
+<p class="description"><p>If the collection doesn't contain any of the values supplied, it should  simply be emptied.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Whether the collection changed as a result of this method</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			retainAll
+		</span>
+					(<span class="var-type"><a href="../Xyster_Collection/Xyster_Collection_Interface.html">Xyster_Collection_Interface</a></span>&nbsp;<span class="var-name">$values</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Collection/Xyster_Collection_Interface.html">Xyster_Collection_Interface</a></span>
+				<span class="var-name">$values</span><span class="var-description">: The values to keep</span>			</li>
+				</ul>
+		
+				<hr class="separator" />
+		<div class="notes">Implementation of:</div>
+			<dl>
+			<dt><a href="../Xyster_Collection/Xyster_Collection_Interface.html#methodretainAll">Xyster_Collection_Interface::retainAll()</a></dt>
+						<dd>Removes all values from the collection except for the ones specified</dd>
+					</dl>
+			
+			<hr class="separator" />
+		<div class="notes">Redefined in descendants as:</div>
+		<ul class="redefinitions">
+					<li>
+				<a href="../Xyster_Orm/Xyster_Orm_Set.html#methodretainAll">Xyster_Orm_Set::retainAll()</a>
+								: Removes all values from the collection except for the ones specified
+							</li>
+					<li>
+				<a href="../Xyster_Collection/Xyster_Collection_List_Abstract.html#methodretainAll">Xyster_Collection_List_Abstract::retainAll()</a>
+								: Removes all values from the collection except for the ones specified
+							</li>
+					<li>
+				<a href="../Xyster_Collection/Xyster_Collection_List.html#methodretainAll">Xyster_Collection_List::retainAll()</a>
+								: Removes all values from the collection except for the ones specified
+							</li>
+					<li>
+				<a href="../Xyster_Collection/Xyster_Collection.html#methodretainAll">Xyster_Collection::retainAll()</a>
+								: Removes all values from the collection except for the ones specified
+							</li>
+				</ul>
+	</div>
+<a name="methodtoArray" id="toArray"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">toArray</span> (line <span class="line-number">222</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Puts the items in this collection into an array</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> The items in this collection</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">array</span>
+		<span class="method-name">
+			toArray
+		</span>
+				()
+			</div>
+	
+		
+				<hr class="separator" />
+		<div class="notes">Implementation of:</div>
+			<dl>
+			<dt><a href="../Xyster_Collection/Xyster_Collection_Interface.html#methodtoArray">Xyster_Collection_Interface::toArray()</a></dt>
+						<dd>Puts the items in this collection into an array</dd>
+					</dl>
+			
+	</div>
+<a name="method__toString" id="__toString"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">__toString</span> (line <span class="line-number">233</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Converts the collection into a string</p>
+	<ul class="tags">
+				<li><span class="field">magic:</span> </li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			__toString
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+						
+		</div>
+	</div>
+
+
+	<p class="notes" id="credit">
+		Documentation generated on Mon, 19 May 2008 17:06:52 -0400 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.2</a>
+	</p>
+	</div></body>
+</html>

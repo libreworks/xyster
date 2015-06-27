@@ -1,0 +1,96 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Chapter 3. Xyster_Collection</title>
+<link rel="stylesheet" href="dbstyle.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.72.0">
+<link rel="start" href="index.html" title="Programmer's Reference Guide">
+<link rel="up" href="index.html" title="Programmer's Reference Guide">
+<link rel="prev" href="xyster.acl.roleprovider.html" title="2.2. The ACL Role Provider">
+<link rel="next" href="xyster.collection.collections.html" title="3.2. Collections">
+<link rel="chapter" href="introduction.html" title="Chapter 1. Introduction to Xyster Framework">
+<link rel="chapter" href="xyster.acl.html" title="Chapter 2. Xyster_Acl">
+<link rel="chapter" href="xyster.collection.html" title="Chapter 3. Xyster_Collection">
+<link rel="chapter" href="xyster.controller.html" title="Chapter 4. Xyster_Controller">
+<link rel="chapter" href="xyster.data.html" title="Chapter 5. Xyster_Data">
+<link rel="chapter" href="xyster.date.html" title="Chapter 6. Xyster_Date">
+<link rel="chapter" href="xyster.enum.html" title="Chapter 7. Xyster_Enum">
+<link rel="chapter" href="xyster.filter.html" title="Chapter 8. Xyster_Filter">
+<link rel="chapter" href="xyster.orm.html" title="Chapter 9. Xyster_Orm">
+<link rel="chapter" href="xyster.type.html" title="Chapter 10. Xyster_Type">
+<link rel="chapter" href="xyster.validate.html" title="Chapter 11. Xyster_Validate">
+<link rel="section" href="xyster.collection.html#xyster.collection.introduction" title="3.1. Introduction">
+<link rel="section" href="xyster.collection.collections.html" title="3.2. Collections">
+<link rel="section" href="xyster.collection.lists.html" title="3.3. Lists">
+<link rel="section" href="xyster.collection.sets.html" title="3.4. Sets">
+<link rel="section" href="xyster.collection.maps.html" title="3.5. Maps">
+<link rel="section" href="xyster.collection.static.html" title="3.6. Xyster_Collection Static Methods">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<div class="navheader"><table width="100%" summary="Navigation header">
+<tr><th colspan="3" align="center">Chapter 3. Xyster_Collection</th></tr>
+<tr>
+<td width="20%" align="left">
+<a accesskey="p" href="xyster.acl.roleprovider.html">Prev</a> </td>
+<th width="60%" align="center"> </th>
+<td width="20%" align="right"> <a accesskey="n" href="xyster.collection.collections.html">Next</a>
+</td>
+</tr>
+</table></div>
+<div class="chapter" lang="en">
+<div class="titlepage"><div><div><h2 class="title">
+<a name="xyster.collection"></a>Chapter 3. Xyster_Collection</h2></div></div></div>
+<div class="toc">
+<p><b>Table of Contents</b></p>
+<dl>
+<dt><span class="sect1"><a href="xyster.collection.html#xyster.collection.introduction">3.1. Introduction</a></span></dt>
+<dt><span class="sect1"><a href="xyster.collection.collections.html">3.2. Collections</a></span></dt>
+<dt><span class="sect1"><a href="xyster.collection.lists.html">3.3. Lists</a></span></dt>
+<dt><span class="sect1"><a href="xyster.collection.sets.html">3.4. Sets</a></span></dt>
+<dd><dl><dt><span class="sect2"><a href="xyster.collection.sets.html#xyster.collection.sets.sortable">3.4.1. Sortable Sets and Comparators</a></span></dt></dl></dd>
+<dt><span class="sect1"><a href="xyster.collection.maps.html">3.5. Maps</a></span></dt>
+<dd><dl>
+<dt><span class="sect2"><a href="xyster.collection.maps.html#xyster.collection.maps.string">3.5.1. String Maps</a></span></dt>
+<dt><span class="sect2"><a href="xyster.collection.maps.html#xyster.collection.maps.object">3.5.2. Object Maps</a></span></dt>
+</dl></dd>
+<dt><span class="sect1"><a href="xyster.collection.static.html">3.6. Xyster_Collection Static Methods</a></span></dt>
+</dl>
+</div>
+<div class="sect1" lang="en">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="xyster.collection.introduction"></a>3.1. Introduction</h2></div></div></div>
+<p>PHP 5 brought us many useful features in the form of the SPL. We could now iterate over
+                objects in a customizable way. Xyster's collections package is intended to utilize these
+                features in a standard way and inherit good ideas from the collection packages of other
+                popular platforms (read: Java and .NET).</p>
+<p>Below is a list of the types of collections you will find in this package. You might
+                have seen some of these terms before when working with other languages.</p>
+<div class="glosslist"><dl>
+<dt>Collection</dt>
+<dd><p>The base term for a traversable grouping of objects.</p></dd>
+<dt>List</dt>
+<dd><p>A list is just like a numeric array: objects are stored at numeric indexes.</p></dd>
+<dt>Set</dt>
+<dd><p>A collection that can contain only one entry for any unique object.</p></dd>
+<dt>Map</dt>
+<dd><p>A collection consisting of key-and-value pairs; the keys can be scalar types or objects.</p></dd>
+</dl></div>
+</div>
+</div>
+<div class="navfooter"><table width="100%" summary="Navigation footer">
+<tr>
+<td width="40%" align="left">
+<a accesskey="p" href="xyster.acl.roleprovider.html">Prev</a> </td>
+<td width="20%" align="center"> </td>
+<td width="40%" align="right"> <a accesskey="n" href="xyster.collection.collections.html">Next</a>
+</td>
+</tr>
+<tr>
+<td width="40%" align="left" valign="top">2.2. The ACL Role Provider </td>
+<td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td>
+<td width="40%" align="right" valign="top"> 3.2. Collections</td>
+</tr>
+</table></div>
+<div class="revinfo"></div>
+</body>
+</html>

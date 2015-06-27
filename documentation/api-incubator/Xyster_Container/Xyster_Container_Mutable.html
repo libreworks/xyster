@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class Xyster_Container_Mutable</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name">Interface Xyster_Container_Mutable</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+															<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+					</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Core interface for registration of components within a container</p>
+	<ul class="tags">
+				<li><span class="field">copyright:</span> Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)</li>
+				<li><span class="field">license:</span> <a href="http://www.opensource.org/licenses/bsd-license.php">New BSD License</a></li>
+			</ul>
+		<p class="notes">
+			Located in <a class="field" href="_Container---Mutable.php.html">/Container/Mutable.php</a> (line <span class="field">28</span>)
+		</p>
+		
+				
+		<pre><a href="../Xyster_Container/Xyster_Container_Interface.html">Xyster_Container_Interface</a>
+   |
+   --Xyster_Container_Mutable</pre>
+	
+			</div>
+</div>
+
+
+
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+												<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+																																																																				
+												<div class="method-definition">
+											<span class="method-result"><a href="../Xyster_Container/Xyster_Container_Mutable.html">Xyster_Container_Mutable</a></span>
+										<a href="#addAdapter" title="details" class="method-name">addAdapter</a>
+											(<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>&nbsp;<span class="var-name">$componentAdapter</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$properties</span> = <span class="var-default">null</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../Xyster_Container/Xyster_Container_Mutable.html">Xyster_Container_Mutable</a></span>
+										<a href="#addComponent" title="details" class="method-name">addComponent</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$implementation</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$key</span> = <span class="var-default">null</span>], [<span class="var-type"></span>&nbsp;<span class="var-name">$parameters</span> = <span class="var-default">null</span>], <span class="var-type">mixed</span>&nbsp;<span class="var-name">$implementationOrInstance</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../Xyster_Container/Xyster_Container_Mutable.html">Xyster_Container_Mutable</a></span>
+										<a href="#addComponentInstance" title="details" class="method-name">addComponentInstance</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$instance</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$key</span> = <span class="var-default">null</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../Xyster_Container/Xyster_Container_Mutable.html">Xyster_Container_Mutable</a></span>
+										<a href="#addConfig" title="details" class="method-name">addConfig</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$name</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$val</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../Xyster_Container/Xyster_Container_Mutable.html">Xyster_Container_Mutable</a></span>
+										<a href="#change" title="details" class="method-name">change</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$properties</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>
+										<a href="#removeComponent" title="details" class="method-name">removeComponent</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$componentKey</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>
+										<a href="#removeComponentByInstance" title="details" class="method-name">removeComponentByInstance</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$componentInstance</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../Xyster_Container/Xyster_Container_Mutable.html">Xyster_Container_Mutable</a></span>
+										<a href="#with" title="details" class="method-name">with</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$properties</span>)
+									</div>
+								</div>
+		</div>
+	</div>		
+
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+																<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+
+<a name="methodaddAdapter" id="addAdapter"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">addAdapter</span> (line <span class="line-number">41</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Register a component via an Adapter</p>
+<p class="description"><p>Use this if you need fine grained control over what Adapter to use for a  specific component.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> provides a fluent interface</li>
+				<li><span class="field">throws:</span> Xyster_Container_Exception if registration fails</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../Xyster_Container/Xyster_Container_Mutable.html">Xyster_Container_Mutable</a></span>
+		<span class="method-name">
+			addAdapter
+		</span>
+					(<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>&nbsp;<span class="var-name">$componentAdapter</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$properties</span> = <span class="var-default">null</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>
+				<span class="var-name">$componentAdapter</span><span class="var-description">: the addAdapter</span>			</li>
+					<li>
+				<span class="var-type">Xyster_Collection_Map_Interface</span>
+				<span class="var-name">$properties</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodaddComponent" id="addComponent"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">addComponent</span> (line <span class="line-number">72</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Register a component</p>
+<p class="description"><p>This method creates specific instructions with which components  and/or constants to provide as constructor arguments.</p><p>If the key is null, the implementation class will be used as a key.</p><p>These &quot;directives&quot; are provided through an array of Parameter objects.  Parameter[0] correspondes to the first constructor argument,  Parameter[N] corresponds to the  N+1th constructor argument.</p><p>Partial Autowiring: If you have two constructor args to match and you  only wish to specify one of the constructors and let the Container wire  the other one, you can use as parameters:  <div class="src-code"><ol><li><div class="src-line"><span class="src-key">new&nbsp;</span><span class="src-id">ComponentParameter</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">,&nbsp;</span><span class="src-key">new&nbsp;</span><span class="src-id">ComponentParameter</span><span class="src-sym">(</span><span class="src-str">&quot;someService&quot;</span><span class="src-sym">)</span></div></li>
+</ol></div>  The constructor for the component parameter indicates auto-wiring should  take place for that parameter.</p><p>Force No-Arg constructor usage: If you wish to force a component to be  constructed with the no-arg constructor, use a zero length Parameter  array.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> provides a fluent interface</li>
+				<li><span class="field">throws:</span> Xyster_Container_Exception if registration of the component fails</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../Xyster_Container/Xyster_Container_Mutable.html">Xyster_Container_Mutable</a></span>
+		<span class="method-name">
+			addComponent
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$implementation</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$key</span> = <span class="var-default">null</span>], [<span class="var-type"></span>&nbsp;<span class="var-name">$parameters</span> = <span class="var-default">null</span>], <span class="var-type">mixed</span>&nbsp;<span class="var-name">$implementationOrInstance</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$implementationOrInstance</span><span class="var-description">: the component's implementation class</span>			</li>
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$key</span><span class="var-description">: a key unique within the container that identifies the component</span>			</li>
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$parameters</span><span class="var-description">: the parameters that gives hints about what arguments to pass</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$implementation</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodaddComponentInstance" id="addComponentInstance"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">addComponentInstance</span> (line <span class="line-number">84</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Register a component instance</p>
+<p class="description"><p>If the key is null, the implementation class will be used as a key.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> provides a fluent interface</li>
+				<li><span class="field">throws:</span> Xyster_Container_Exception if registration of the component fails</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../Xyster_Container/Xyster_Container_Mutable.html">Xyster_Container_Mutable</a></span>
+		<span class="method-name">
+			addComponentInstance
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$instance</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$key</span> = <span class="var-default">null</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$instance</span><span class="var-description">: an instance of the component</span>			</li>
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$key</span><span class="var-description">: a key unique within the container that identifies the component</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodaddConfig" id="addConfig"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">addConfig</span> (line <span class="line-number">94</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Register a config item</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> provides a fluent interface</li>
+				<li><span class="field">throws:</span> Xyster_Container_Exception if registration fails</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../Xyster_Container/Xyster_Container_Mutable.html">Xyster_Container_Mutable</a></span>
+		<span class="method-name">
+			addConfig
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$name</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$val</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$name</span><span class="var-description">: the name of the config item</span>			</li>
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$val</span><span class="var-description">: the value of the config item</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodchange" id="change"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">change</span> (line <span class="line-number">102</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">You can change the characteristic of registration of all subsequent components in this container</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> provides a fluent interface</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../Xyster_Container/Xyster_Container_Mutable.html">Xyster_Container_Mutable</a></span>
+		<span class="method-name">
+			change
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$properties</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">Xyster_Collection_Map_Interface</span>
+				<span class="var-name">$properties</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodremoveComponent" id="removeComponent"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">removeComponent</span> (line <span class="line-number">110</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Unregister a component by key</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> the adapter that was associated with this component</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>
+		<span class="method-name">
+			removeComponent
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$componentKey</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$componentKey</span><span class="var-description">: key of the component to unregister.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodremoveComponentByInstance" id="removeComponentByInstance"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">removeComponentByInstance</span> (line <span class="line-number">118</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Unregister a component by instance</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> the adapter removed</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>
+		<span class="method-name">
+			removeComponentByInstance
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$componentInstance</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$componentInstance</span><span class="var-description">: the component instance to unregister.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodwith" id="with"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">with</span> (line <span class="line-number">126</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">You can set for the following operation only the characteristic of registration of a component on the fly</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> the same instance with temporary properties</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../Xyster_Container/Xyster_Container_Mutable.html">Xyster_Container_Mutable</a></span>
+		<span class="method-name">
+			with
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$properties</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">Xyster_Collection_Map_Interface</span>
+				<span class="var-name">$properties</span>			</li>
+				</ul>
+		
+			
+	</div>
+							<h4>Inherited Methods</h4>
+				<a name='inherited_methods'><!-- --></a>	
+									<!-- =========== Summary =========== -->
+					<p>Inherited From <span class="classname"><a href="../Xyster_Container/Xyster_Container_Interface.html">Xyster_Container_Interface</a></span></p>
+					<blockquote>
+													<span class="method-name"><a href="../Xyster_Container/Xyster_Container_Interface.html#methodaccept">Xyster_Container_Interface::accept()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Container/Xyster_Container_Interface.html#methodgetComponent">Xyster_Container_Interface::getComponent()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Container/Xyster_Container_Interface.html#methodgetComponentAdapter">Xyster_Container_Interface::getComponentAdapter()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Container/Xyster_Container_Interface.html#methodgetComponentAdapterByType">Xyster_Container_Interface::getComponentAdapterByType()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Container/Xyster_Container_Interface.html#methodgetComponentAdapters">Xyster_Container_Interface::getComponentAdapters()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Container/Xyster_Container_Interface.html#methodgetComponents">Xyster_Container_Interface::getComponents()</a></span><br>
+											</blockquote>
+										
+		</div>
+	</div>
+
+
+	<p class="notes" id="credit">
+		Documentation generated on Mon, 19 May 2008 17:08:25 -0400 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.2</a>
+	</p>
+	</div></body>
+</html>

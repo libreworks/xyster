@@ -1,0 +1,1230 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<LINK REL="stylesheet" TYPE="text/css" TITLE="Style" href="../stylesheet.css">
+</HEAD>
+<BODY>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="bannercell" rowspan="2"><a href="http://phing.info/"><img src="http://phing.info/images/phing.gif" alt="http://phing.info/" align="left" border="0"></a></td>
+<td style="text-align:right"><h2>Source Code Coverage</h2></td>
+</tr>
+<tr><td style="text-align:right">Designed for use with <a href="http://pear.php.net/package/PHPUnit2">PHPUnit2</a>, <a href="http://www.xdebug.org/">Xdebug</a> and <a href="http://phing.info/">Phing</a>.</td></tr>
+</table>
+<hr size="1">
+<table class="log" cellpadding="5" cellspacing="0" width="100%"><tr class="a">
+<td class="small">Methods: 12</td>
+<td class="small">LOC: 237</td>
+<td class="small">Statements: 77</td>
+</tr></table>
+<br><table class="log" cellpadding="5" cellspacing="0" width="100%">
+<tr>
+<th width="100%">Source file</th>
+<th>Statements</th>
+<th>Methods</th>
+<th width="250" colspan="2" nowrap>Total coverage</th>
+</tr>
+<tr class="a">
+<td>Broker.php</td>
+<td>94.8%</td>
+<td>100.0%</td>
+<td>95.5%</td>
+<td><table cellspacing="0" cellpadding="0" border="0" width="100%" style="display: inline"><tr>
+<td class="covered" width="191" height="12"> </td>
+<td class="uncovered" width="9" height="12"> </td>
+</tr></table></td>
+</tr>
+</table>
+<table cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td class="lineCount">1</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">&lt;?php</pre></td>
+</tr>
+<tr>
+<td class="lineCount">2</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">3</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * Xyster Framework</pre></td>
+</tr>
+<tr>
+<td class="lineCount">4</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">5</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * This source file is subject to the new BSD license that is bundled</pre></td>
+</tr>
+<tr>
+<td class="lineCount">6</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * with this package in the file LICENSE.txt.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">7</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * It is also available through the world-wide-web at this URL:</pre></td>
+</tr>
+<tr>
+<td class="lineCount">8</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * http://www.opensource.org/licenses/bsd-license.php</pre></td>
+</tr>
+<tr>
+<td class="lineCount">9</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">10</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @category  Xyster</pre></td>
+</tr>
+<tr>
+<td class="lineCount">11</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @package   Xyster_Orm</pre></td>
+</tr>
+<tr>
+<td class="lineCount">12</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">13</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License</pre></td>
+</tr>
+<tr>
+<td class="lineCount">14</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @version   $Id: Broker.php 202 2008-01-20 16:20:09Z doublecompile $</pre></td>
+</tr>
+<tr>
+<td class="lineCount">15</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">16</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">17</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * A broker for plugins</pre></td>
+</tr>
+<tr>
+<td class="lineCount">18</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">19</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @category  Xyster</pre></td>
+</tr>
+<tr>
+<td class="lineCount">20</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @package   Xyster_Orm</pre></td>
+</tr>
+<tr>
+<td class="lineCount">21</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">22</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License</pre></td>
+</tr>
+<tr>
+<td class="lineCount">23</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">24</td>
+<td class="coverageCount"></td>
+<td class="srcLineClassStart"><pre class="srcLine">class Xyster_Orm_Plugin_Broker</pre></td>
+</tr>
+<tr>
+<td class="lineCount">25</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">{</pre></td>
+</tr>
+<tr>
+<td class="lineCount">26</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">27</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Array of Xyster_Orm_Plugin_Abstract objects</pre></td>
+</tr>
+<tr>
+<td class="lineCount">28</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">29</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @var array</pre></td>
+</tr>
+<tr>
+<td class="lineCount">30</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">31</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    protected $_plugins = array();</pre></td>
+</tr>
+<tr>
+<td class="lineCount">32</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">33</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">34</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Retrieve a plugin or plugins by class</pre></td>
+</tr>
+<tr>
+<td class="lineCount">35</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">36</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param  string $class Class name of plugin(s) desired</pre></td>
+</tr>
+<tr>
+<td class="lineCount">37</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Orm_Plugin_Abstract|array|false False if none, the plugin if only one, and array of plugins if multiple of same class</pre></td>
+</tr>
+<tr>
+<td class="lineCount">38</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">39</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function getPlugin( $class )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">40</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">41</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        $found = array();</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">42</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        foreach ($this-&gt;_plugins as $plugin) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">43</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">            if ( $class == get_class($plugin) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">44</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">                $found[] = $plugin;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">45</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">            }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">46</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">47</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">48</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        switch (count($found)) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">49</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">            case 0:</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">50</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                return false;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">51</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">            case 1:</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">52</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">                return $found[0];</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">53</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            default:</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">54</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">55</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">56</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">        return $found;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">57</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">58</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">59</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">60</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Retrieve all plugins</pre></td>
+</tr>
+<tr>
+<td class="lineCount">61</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">62</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return array</pre></td>
+</tr>
+<tr>
+<td class="lineCount">63</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">64</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function getPlugins()</pre></td>
+</tr>
+<tr>
+<td class="lineCount">65</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">66</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        return $this-&gt;_plugins;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">67</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">68</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">69</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">70</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Checks whether a plugin of a particular class is registered</pre></td>
+</tr>
+<tr>
+<td class="lineCount">71</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">72</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $class</pre></td>
+</tr>
+<tr>
+<td class="lineCount">73</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return boolean</pre></td>
+</tr>
+<tr>
+<td class="lineCount">74</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">75</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function hasPlugin( $class )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">76</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">77</td>
+<td class="lineCountHighlight">4</td>
+<td><pre class="srcLine">        foreach ($this-&gt;_plugins as $plugin) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">78</td>
+<td class="lineCountHighlight">4</td>
+<td><pre class="srcLine">            if ( $class == get_class($plugin) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">79</td>
+<td class="lineCountHighlight">4</td>
+<td><pre class="srcLine">                return true;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">80</td>
+<td class="coverageCountHighlight">0</td>
+<td><pre class="srcLineHighlight">            }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">81</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">82</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">83</td>
+<td class="lineCountHighlight">4</td>
+<td><pre class="srcLine">        return false;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">84</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">85</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">86</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">87</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Called prior to an entity being deleted</pre></td>
+</tr>
+<tr>
+<td class="lineCount">88</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">89</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param Xyster_Orm_Entity $entity</pre></td>
+</tr>
+<tr>
+<td class="lineCount">90</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">91</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function postDelete( Xyster_Orm_Entity $entity )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">92</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">93</td>
+<td class="lineCountHighlight">14</td>
+<td><pre class="srcLine">        foreach( $this-&gt;_plugins as $plugin ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCount">94</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            /* @var $plugin Xyster_Orm_Plugin_Abstract */</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">95</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">            $plugin-&gt;postDelete($entity);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">96</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">97</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">98</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">99</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">100</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Called prior to an entity being inserted</pre></td>
+</tr>
+<tr>
+<td class="lineCount">101</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">102</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param Xyster_Orm_Entity $entity</pre></td>
+</tr>
+<tr>
+<td class="lineCount">103</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">104</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function postInsert( Xyster_Orm_Entity $entity )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">105</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">106</td>
+<td class="lineCountHighlight">17</td>
+<td><pre class="srcLine">        foreach( $this-&gt;_plugins as $plugin ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCount">107</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            /* @var $plugin Xyster_Orm_Plugin_Abstract */</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">108</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">            $plugin-&gt;postInsert($entity);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">109</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">110</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">111</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">112</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">113</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Called after a new entity is loaded with values</pre></td>
+</tr>
+<tr>
+<td class="lineCount">114</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">115</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param Xyster_Orm_Entity $entity</pre></td>
+</tr>
+<tr>
+<td class="lineCount">116</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">117</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function postLoad( Xyster_Orm_Entity $entity )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">118</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">119</td>
+<td class="lineCountHighlight">104</td>
+<td><pre class="srcLine">        foreach( $this-&gt;_plugins as $plugin ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCount">120</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            /* @var $plugin Xyster_Orm_Plugin_Abstract */</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">121</td>
+<td class="lineCountHighlight">4</td>
+<td><pre class="srcLine">            $plugin-&gt;postLoad($entity);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">122</td>
+<td class="lineCountHighlight">4</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">123</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">124</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">125</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">126</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Called prior to an entity being updated</pre></td>
+</tr>
+<tr>
+<td class="lineCount">127</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">128</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param Xyster_Orm_Entity $entity</pre></td>
+</tr>
+<tr>
+<td class="lineCount">129</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">130</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function postUpdate( Xyster_Orm_Entity $entity )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">131</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">132</td>
+<td class="lineCountHighlight">30</td>
+<td><pre class="srcLine">        foreach( $this-&gt;_plugins as $plugin ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCount">133</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            /* @var $plugin Xyster_Orm_Plugin_Abstract */</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">134</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">            $plugin-&gt;postUpdate($entity);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">135</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">136</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">137</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">138</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">139</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Called prior to an entity being deleted</pre></td>
+</tr>
+<tr>
+<td class="lineCount">140</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">141</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param Xyster_Orm_Entity $entity</pre></td>
+</tr>
+<tr>
+<td class="lineCount">142</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">143</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function preDelete( Xyster_Orm_Entity $entity )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">144</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">145</td>
+<td class="lineCountHighlight">14</td>
+<td><pre class="srcLine">        foreach( $this-&gt;_plugins as $plugin ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCount">146</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            /* @var $plugin Xyster_Orm_Plugin_Abstract */</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">147</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">            $plugin-&gt;preDelete($entity);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">148</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">149</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">150</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">151</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">152</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Called prior to an entity being inserted</pre></td>
+</tr>
+<tr>
+<td class="lineCount">153</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">154</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param Xyster_Orm_Entity $entity</pre></td>
+</tr>
+<tr>
+<td class="lineCount">155</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">156</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function preInsert( Xyster_Orm_Entity $entity )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">157</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">158</td>
+<td class="lineCountHighlight">17</td>
+<td><pre class="srcLine">        foreach( $this-&gt;_plugins as $plugin ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCount">159</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            /* @var $plugin Xyster_Orm_Plugin_Abstract */</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">160</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">            $plugin-&gt;preInsert($entity);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">161</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">162</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">163</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">164</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">165</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Called prior to an entity being updated</pre></td>
+</tr>
+<tr>
+<td class="lineCount">166</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">167</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param Xyster_Orm_Entity $entity</pre></td>
+</tr>
+<tr>
+<td class="lineCount">168</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">169</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function preUpdate( Xyster_Orm_Entity $entity )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">170</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">171</td>
+<td class="lineCountHighlight">30</td>
+<td><pre class="srcLine">        foreach( $this-&gt;_plugins as $plugin ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCount">172</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            /* @var $plugin Xyster_Orm_Plugin_Abstract */</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">173</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">            $plugin-&gt;preUpdate($entity);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">174</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">175</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">176</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">177</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">178</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Register a plugin</pre></td>
+</tr>
+<tr>
+<td class="lineCount">179</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">180</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param Xyster_Orm_Plugin_Abstract $plugin</pre></td>
+</tr>
+<tr>
+<td class="lineCount">181</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param int $stackIndex</pre></td>
+</tr>
+<tr>
+<td class="lineCount">182</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Orm_Plugin_Broker provides a fluent interface</pre></td>
+</tr>
+<tr>
+<td class="lineCount">183</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">184</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function registerPlugin( Xyster_Orm_Plugin_Abstract $plugin, $stackIndex = null )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">185</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">186</td>
+<td class="lineCountHighlight">22</td>
+<td><pre class="srcLine">        if ( in_array($plugin, $this-&gt;_plugins, true) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">187</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            require_once 'Xyster/Orm/Exception.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">188</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            throw new Xyster_Orm_Exception('Plugin already registered');</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">189</td>
+<td class="coverageCountHighlight">0</td>
+<td><pre class="srcLineHighlight">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">190</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">191</td>
+<td class="lineCountHighlight">22</td>
+<td><pre class="srcLine">        $stackIndex = (int) $stackIndex;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">192</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">193</td>
+<td class="lineCountHighlight">22</td>
+<td><pre class="srcLine">        if ($stackIndex) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">194</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">            if ( isset($this-&gt;_plugins[$stackIndex]) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">195</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                require_once 'Xyster/Orm/Exception.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">196</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                throw new Xyster_Orm_Exception('Plugin with stackIndex "' . $stackIndex . '" already registered');</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">197</td>
+<td class="coverageCountHighlight">0</td>
+<td><pre class="srcLineHighlight">            }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">198</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">            $this-&gt;_plugins[$stackIndex] = $plugin;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">199</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        } else {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">200</td>
+<td class="lineCountHighlight">22</td>
+<td><pre class="srcLine">            $stackIndex = count($this-&gt;_plugins);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">201</td>
+<td class="lineCountHighlight">22</td>
+<td><pre class="srcLine">            while ( isset($this-&gt;_plugins[$stackIndex]) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">202</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                ++$stackIndex;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">203</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">204</td>
+<td class="lineCountHighlight">22</td>
+<td><pre class="srcLine">            $this-&gt;_plugins[$stackIndex] = $plugin;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">205</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">206</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">207</td>
+<td class="lineCountHighlight">22</td>
+<td><pre class="srcLine">        ksort($this-&gt;_plugins);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">208</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">209</td>
+<td class="lineCountHighlight">22</td>
+<td><pre class="srcLine">        return $this;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">210</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">211</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">212</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">213</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Unregister a plugin.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">214</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">215</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string|Xyster_Orm_Plugin_Abstract $plugin Plugin object or class name</pre></td>
+</tr>
+<tr>
+<td class="lineCount">216</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Orm_Plugin_Broker provides a fluent interface</pre></td>
+</tr>
+<tr>
+<td class="lineCount">217</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">218</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function unregisterPlugin( $plugin )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">219</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">220</td>
+<td class="lineCountHighlight">5</td>
+<td><pre class="srcLine">        if ( $plugin instanceof Xyster_Orm_Plugin_Abstract ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">221</td>
+<td class="lineCountHighlight">4</td>
+<td><pre class="srcLine">            $key = array_search($plugin, $this-&gt;_plugins, true);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">222</td>
+<td class="lineCountHighlight">4</td>
+<td><pre class="srcLine">            if ( $key === false ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">223</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                require_once 'Xyster/Orm/Exception.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">224</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                throw new Xyster_Orm_Exception('Plugin not registered');</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">225</td>
+<td class="coverageCountHighlight">0</td>
+<td><pre class="srcLineHighlight">            }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">226</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">            unset($this-&gt;_plugins[$key]);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">227</td>
+<td class="lineCountHighlight">4</td>
+<td><pre class="srcLine">        } else if ( is_string($plugin) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">228</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            foreach( $this-&gt;_plugins as $key =&gt; $_plugin ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">229</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                $type = get_class($_plugin);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">230</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                if ($plugin == $type) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">231</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                    unset($this-&gt;_plugins[$key]);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">232</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">233</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">234</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">235</td>
+<td class="lineCountHighlight">4</td>
+<td><pre class="srcLine">        return $this;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">236</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">237</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">}</pre></td>
+</tr>
+</table>
+<br><table width="100%">
+<tr><td><hr noshade size="1"></td></tr>
+<tr><td class="small">Report generated at 2008-03-05T18:27:43-05:00</td></tr>
+</table>
+</BODY>
+</HTML>

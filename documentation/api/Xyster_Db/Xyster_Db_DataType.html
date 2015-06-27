@@ -1,0 +1,794 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class Xyster_Db_DataType</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name">Class Xyster_Db_DataType</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+															<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+											<a href="#sec-const-summary">Constants</a> (<a href="#sec-consts">details</a>)
+						
+			</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">SQL Data type enumerated type</p>
+	<ul class="tags">
+				<li><span class="field">copyright:</span> Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)</li>
+				<li><span class="field">license:</span> <a href="http://www.opensource.org/licenses/bsd-license.php">New BSD License</a></li>
+			</ul>
+		<p class="notes">
+			Located in <a class="field" href="_Db---DataType.php.html">/Db/DataType.php</a> (line <span class="field">28</span>)
+		</p>
+		
+				
+		<pre><a href="../Xyster_Enum/Xyster_Enum.html">Xyster_Enum</a>
+   |
+   --Xyster_Db_DataType</pre>
+	
+			</div>
+</div>
+
+
+	<a name="sec-const-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Class Constant Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+						<span class="disabled">Constants</span> (<a href="#sec-consts">details</a>)
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			<div class="const-summary">
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#Bigint" title="details" class="const-name">Bigint</a> = 					<span class="var-type"> 12</span>
+
+				</div>
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#Blob" title="details" class="const-name">Blob</a> = 					<span class="var-type"> 9</span>
+
+				</div>
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#Boolean" title="details" class="const-name">Boolean</a> = 					<span class="var-type"> 10</span>
+
+				</div>
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#Char" title="details" class="const-name">Char</a> = 					<span class="var-type"> 1</span>
+
+				</div>
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#Clob" title="details" class="const-name">Clob</a> = 					<span class="var-type"> 8</span>
+
+				</div>
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#Date" title="details" class="const-name">Date</a> = 					<span class="var-type"> 6</span>
+
+				</div>
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#Float" title="details" class="const-name">Float</a> = 					<span class="var-type"> 4</span>
+
+				</div>
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#Identity" title="details" class="const-name">Identity</a> = 					<span class="var-type"> 11</span>
+
+				</div>
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#Integer" title="details" class="const-name">Integer</a> = 					<span class="var-type"> 2</span>
+
+				</div>
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#Smallint" title="details" class="const-name">Smallint</a> = 					<span class="var-type"> 3</span>
+
+				</div>
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#Time" title="details" class="const-name">Time</a> = 					<span class="var-type"> 7</span>
+
+				</div>
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#Timestamp" title="details" class="const-name">Timestamp</a> = 					<span class="var-type"> 5</span>
+
+				</div>
+								<div class="const-title">
+					<img src="../media/images/Constant.png" alt=" " />
+					<a href="#Varchar" title="details" class="const-name">Varchar</a> = 					<span class="var-type"> 0</span>
+
+				</div>
+							</div>
+		</div>
+	</div>
+
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+															<a href="#sec-const-summary">Constants</a> (<a href="#sec-consts">details</a>)
+							
+									<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+												<div class="method-definition">
+					static 						<span class="method-result"><a href="../Xyster_Db/Xyster_Db_DataType.html">Xyster_Db_DataType</a></span>
+										<a href="#Bigint" title="details" class="method-name">Bigint</a>
+										()
+									</div>
+																<div class="method-definition">
+					static 						<span class="method-result"><a href="../Xyster_Db/Xyster_Db_DataType.html">Xyster_Db_DataType</a></span>
+										<a href="#Blob" title="details" class="method-name">Blob</a>
+										()
+									</div>
+																<div class="method-definition">
+					static 						<span class="method-result"><a href="../Xyster_Db/Xyster_Db_DataType.html">Xyster_Db_DataType</a></span>
+										<a href="#Boolean" title="details" class="method-name">Boolean</a>
+										()
+									</div>
+																<div class="method-definition">
+					static 						<span class="method-result"><a href="../Xyster_Db/Xyster_Db_DataType.html">Xyster_Db_DataType</a></span>
+										<a href="#Char" title="details" class="method-name">Char</a>
+										()
+									</div>
+																<div class="method-definition">
+					static 						<span class="method-result"><a href="../Xyster_Db/Xyster_Db_DataType.html">Xyster_Db_DataType</a></span>
+										<a href="#Clob" title="details" class="method-name">Clob</a>
+										()
+									</div>
+																<div class="method-definition">
+					static 						<span class="method-result"><a href="../Xyster_Db/Xyster_Db_DataType.html">Xyster_Db_DataType</a></span>
+										<a href="#Date" title="details" class="method-name">Date</a>
+										()
+									</div>
+																<div class="method-definition">
+					static 						<span class="method-result"><a href="../Xyster_Db/Xyster_Db_DataType.html">Xyster_Db_DataType</a></span>
+										<a href="#Float" title="details" class="method-name">Float</a>
+										()
+									</div>
+																<div class="method-definition">
+					static 						<span class="method-result"><a href="../Xyster_Db/Xyster_Db_DataType.html">Xyster_Db_DataType</a></span>
+										<a href="#Identity" title="details" class="method-name">Identity</a>
+										()
+									</div>
+																<div class="method-definition">
+					static 						<span class="method-result"><a href="../Xyster_Db/Xyster_Db_DataType.html">Xyster_Db_DataType</a></span>
+										<a href="#Integer" title="details" class="method-name">Integer</a>
+										()
+									</div>
+																<div class="method-definition">
+					static 						<span class="method-result"><a href="../Xyster_Db/Xyster_Db_DataType.html">Xyster_Db_DataType</a></span>
+										<a href="#Smallint" title="details" class="method-name">Smallint</a>
+										()
+									</div>
+																<div class="method-definition">
+					static 						<span class="method-result"><a href="../Xyster_Db/Xyster_Db_DataType.html">Xyster_Db_DataType</a></span>
+										<a href="#Time" title="details" class="method-name">Time</a>
+										()
+									</div>
+																<div class="method-definition">
+					static 						<span class="method-result"><a href="../Xyster_Db/Xyster_Db_DataType.html">Xyster_Db_DataType</a></span>
+										<a href="#Timestamp" title="details" class="method-name">Timestamp</a>
+										()
+									</div>
+																<div class="method-definition">
+					static 						<span class="method-result"><a href="../Xyster_Db/Xyster_Db_DataType.html">Xyster_Db_DataType</a></span>
+										<a href="#Varchar" title="details" class="method-name">Varchar</a>
+										()
+									</div>
+								
+																																																																																																												</div>
+		</div>
+	</div>		
+
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+																		<a href="#sec-const-summary">Constants</a> (<a href="#sec-consts">details</a>)
+							
+										<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+<a name="methodBigint" id="Bigint"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">static method Bigint</span> (line <span class="line-number">170</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">The Bigint data type</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+	    static
+		<span class="method-result"><a href="../Xyster_Db/Xyster_Db_DataType.html">Xyster_Db_DataType</a></span>
+		<span class="method-name">
+			Bigint
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodBlob" id="Blob"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">static method Blob</span> (line <span class="line-number">140</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">The Blob data type</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+	    static
+		<span class="method-result"><a href="../Xyster_Db/Xyster_Db_DataType.html">Xyster_Db_DataType</a></span>
+		<span class="method-name">
+			Blob
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodBoolean" id="Boolean"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">static method Boolean</span> (line <span class="line-number">150</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">The Boolean data type</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+	    static
+		<span class="method-result"><a href="../Xyster_Db/Xyster_Db_DataType.html">Xyster_Db_DataType</a></span>
+		<span class="method-name">
+			Boolean
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodChar" id="Char"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">static method Char</span> (line <span class="line-number">59</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">The Char data type</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+	    static
+		<span class="method-result"><a href="../Xyster_Db/Xyster_Db_DataType.html">Xyster_Db_DataType</a></span>
+		<span class="method-name">
+			Char
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodClob" id="Clob"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">static method Clob</span> (line <span class="line-number">130</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">The Clob data type</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+	    static
+		<span class="method-result"><a href="../Xyster_Db/Xyster_Db_DataType.html">Xyster_Db_DataType</a></span>
+		<span class="method-name">
+			Clob
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodDate" id="Date"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">static method Date</span> (line <span class="line-number">109</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">The Date data type</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+	    static
+		<span class="method-result"><a href="../Xyster_Db/Xyster_Db_DataType.html">Xyster_Db_DataType</a></span>
+		<span class="method-name">
+			Date
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodFloat" id="Float"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">static method Float</span> (line <span class="line-number">89</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">The Float data type</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+	    static
+		<span class="method-result"><a href="../Xyster_Db/Xyster_Db_DataType.html">Xyster_Db_DataType</a></span>
+		<span class="method-name">
+			Float
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodIdentity" id="Identity"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">static method Identity</span> (line <span class="line-number">160</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">The Identity data type</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+	    static
+		<span class="method-result"><a href="../Xyster_Db/Xyster_Db_DataType.html">Xyster_Db_DataType</a></span>
+		<span class="method-name">
+			Identity
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodInteger" id="Integer"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">static method Integer</span> (line <span class="line-number">69</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">The Integer data type</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+	    static
+		<span class="method-result"><a href="../Xyster_Db/Xyster_Db_DataType.html">Xyster_Db_DataType</a></span>
+		<span class="method-name">
+			Integer
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodSmallint" id="Smallint"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">static method Smallint</span> (line <span class="line-number">79</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">The Smallint data type</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+	    static
+		<span class="method-result"><a href="../Xyster_Db/Xyster_Db_DataType.html">Xyster_Db_DataType</a></span>
+		<span class="method-name">
+			Smallint
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodTime" id="Time"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">static method Time</span> (line <span class="line-number">119</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">The Time data type</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+	    static
+		<span class="method-result"><a href="../Xyster_Db/Xyster_Db_DataType.html">Xyster_Db_DataType</a></span>
+		<span class="method-name">
+			Time
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodTimestamp" id="Timestamp"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">static method Timestamp</span> (line <span class="line-number">99</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">The Timestamp data type</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+	    static
+		<span class="method-result"><a href="../Xyster_Db/Xyster_Db_DataType.html">Xyster_Db_DataType</a></span>
+		<span class="method-name">
+			Timestamp
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodVarchar" id="Varchar"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">static method Varchar</span> (line <span class="line-number">49</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">The Varchar data type</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+	    static
+		<span class="method-result"><a href="../Xyster_Db/Xyster_Db_DataType.html">Xyster_Db_DataType</a></span>
+		<span class="method-name">
+			Varchar
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+
+							<h4>Inherited Methods</h4>
+				<a name='inherited_methods'><!-- --></a>	
+									<!-- =========== Summary =========== -->
+					<p>Inherited From <span class="classname"><a href="../Xyster_Enum/Xyster_Enum.html">Xyster_Enum</a></span></p>
+					<blockquote>
+													<span class="method-name"><a href="../Xyster_Enum/Xyster_Enum.html#method__construct">Xyster_Enum::__construct()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Enum/Xyster_Enum.html#methodgetName">Xyster_Enum::getName()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Enum/Xyster_Enum.html#methodgetValue">Xyster_Enum::getValue()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Enum/Xyster_Enum.html#methodparse">Xyster_Enum::parse()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Enum/Xyster_Enum.html#methodvalueOf">Xyster_Enum::valueOf()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Enum/Xyster_Enum.html#methodvalues">Xyster_Enum::values()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Enum/Xyster_Enum.html#method_factory">Xyster_Enum::_factory()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Enum/Xyster_Enum.html#method__clone">Xyster_Enum::__clone()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Enum/Xyster_Enum.html#method__toString">Xyster_Enum::__toString()</a></span><br>
+											</blockquote>
+										
+		</div>
+	</div>
+
+	<a name="sec-consts"></a>
+	<div class="info-box">
+		<div class="info-box-title">Class Constants</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+										<a href="#sec-var-summary">Constants</a> (<span class="disabled">details</span>)
+						
+			
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			<a name="constBigint" id="Bigint"><!-- --></A>
+<div class="oddrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">Bigint</span>
+			 = <span class="const-default"> 12</span>
+			(line <span class="line-number">42</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+</div>
+<a name="constBlob" id="Blob"><!-- --></A>
+<div class="evenrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">Blob</span>
+			 = <span class="const-default"> 9</span>
+			(line <span class="line-number">39</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+</div>
+<a name="constBoolean" id="Boolean"><!-- --></A>
+<div class="oddrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">Boolean</span>
+			 = <span class="const-default"> 10</span>
+			(line <span class="line-number">40</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+</div>
+<a name="constChar" id="Char"><!-- --></A>
+<div class="evenrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">Char</span>
+			 = <span class="const-default"> 1</span>
+			(line <span class="line-number">31</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+</div>
+<a name="constClob" id="Clob"><!-- --></A>
+<div class="oddrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">Clob</span>
+			 = <span class="const-default"> 8</span>
+			(line <span class="line-number">38</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+</div>
+<a name="constDate" id="Date"><!-- --></A>
+<div class="evenrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">Date</span>
+			 = <span class="const-default"> 6</span>
+			(line <span class="line-number">36</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+</div>
+<a name="constFloat" id="Float"><!-- --></A>
+<div class="oddrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">Float</span>
+			 = <span class="const-default"> 4</span>
+			(line <span class="line-number">34</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+</div>
+<a name="constIdentity" id="Identity"><!-- --></A>
+<div class="evenrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">Identity</span>
+			 = <span class="const-default"> 11</span>
+			(line <span class="line-number">41</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+</div>
+<a name="constInteger" id="Integer"><!-- --></A>
+<div class="oddrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">Integer</span>
+			 = <span class="const-default"> 2</span>
+			(line <span class="line-number">32</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+</div>
+<a name="constSmallint" id="Smallint"><!-- --></A>
+<div class="evenrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">Smallint</span>
+			 = <span class="const-default"> 3</span>
+			(line <span class="line-number">33</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+</div>
+<a name="constTime" id="Time"><!-- --></A>
+<div class="oddrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">Time</span>
+			 = <span class="const-default"> 7</span>
+			(line <span class="line-number">37</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+</div>
+<a name="constTimestamp" id="Timestamp"><!-- --></A>
+<div class="evenrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">Timestamp</span>
+			 = <span class="const-default"> 5</span>
+			(line <span class="line-number">35</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+</div>
+<a name="constVarchar" id="Varchar"><!-- --></A>
+<div class="oddrow">
+
+	<div class="const-header">
+		<img src="../media/images/Variable.png" />
+		<span class="const-title">
+			<span class="const-name">Varchar</span>
+			 = <span class="const-default"> 0</span>
+			(line <span class="line-number">30</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+</div>
+						
+		</div>
+	</div>
+
+	<p class="notes" id="credit">
+		Documentation generated on Mon, 19 May 2008 17:07:04 -0400 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.2</a>
+	</p>
+	</div></body>
+</html>

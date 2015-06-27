@@ -1,0 +1,782 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class Xyster_Orm_Mapper_Interface</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name">Interface Xyster_Orm_Mapper_Interface</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+															<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+					</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Responsible for translating data store records into entities</p>
+<p class="description"><p>Fowler describes a data mapper as &quot;A layer of Mappers that moves data between  objects and a database while keeping them independent of each other and the  mapper itself&quot;. <a href="http://www.martinfowler.com/eaaCatalog/dataMapper.html">http://www.martinfowler.com/eaaCatalog/dataMapper.html</a></p></p>
+	<ul class="tags">
+				<li><span class="field">copyright:</span> Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)</li>
+				<li><span class="field">license:</span> <a href="http://www.opensource.org/licenses/bsd-license.php">New BSD License</a></li>
+			</ul>
+		<p class="notes">
+			Located in <a class="field" href="_Orm---Mapper---Interface.php.html">/Orm/Mapper/Interface.php</a> (line <span class="field">28</span>)
+		</p>
+		
+				
+		<pre></pre>
+	
+			</div>
+</div>
+
+
+
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+												<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+																																																																																																																																																																																												
+												<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#delete" title="details" class="method-name">delete</a>
+											(<span class="var-type"><a href="../Xyster_Orm/Xyster_Orm_Entity.html">Xyster_Orm_Entity</a></span>&nbsp;<span class="var-name">$entity</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../Xyster_Orm/Xyster_Orm_Entity.html">Xyster_Orm_Entity</a></span>
+										<a href="#find" title="details" class="method-name">find</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$criteria</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../Xyster_Orm/Xyster_Orm_Set.html">Xyster_Orm_Set</a></span>
+										<a href="#findAll" title="details" class="method-name">findAll</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$criteria</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$sorts</span> = <span class="var-default">null</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../Xyster_Orm/Xyster_Orm_Entity.html">Xyster_Orm_Entity</a></span>
+										<a href="#get" title="details" class="method-name">get</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$id</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../Xyster_Orm/Xyster_Orm_Set.html">Xyster_Orm_Set</a></span>
+										<a href="#getAll" title="details" class="method-name">getAll</a>
+											([<span class="var-type"></span>&nbsp;<span class="var-name">$ids</span> = <span class="var-default">null</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#getDomain" title="details" class="method-name">getDomain</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#getEntityName" title="details" class="method-name">getEntityName</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../Xyster_Orm/Xyster_Orm_Entity_Type.html">Xyster_Orm_Entity_Type</a></span>
+										<a href="#getEntityType" title="details" class="method-name">getEntityType</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../Xyster_Orm/Xyster_Orm_Mapper_Factory_Interface.html">Xyster_Orm_Mapper_Factory_Interface</a></span>
+										<a href="#getFactory" title="details" class="method-name">getFactory</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">array</span>
+										<a href="#getFields" title="details" class="method-name">getFields</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">array</span>
+										<a href="#getIndex" title="details" class="method-name">getIndex</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../Xyster_Orm/Xyster_Orm_Set.html">Xyster_Orm_Set</a></span>
+										<a href="#getJoined" title="details" class="method-name">getJoined</a>
+											(<span class="var-type"><a href="../Xyster_Orm/Xyster_Orm_Entity.html">Xyster_Orm_Entity</a></span>&nbsp;<span class="var-name">$entity</span>, <span class="var-type"><a href="../Xyster_Orm/Xyster_Orm_Relation.html">Xyster_Orm_Relation</a></span>&nbsp;<span class="var-name">$relation</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">int</span>
+										<a href="#getLifetime" title="details" class="method-name">getLifetime</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">mixed</span>
+										<a href="#getOption" title="details" class="method-name">getOption</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$name</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">array</span>
+										<a href="#getOptions" title="details" class="method-name">getOptions</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../Xyster_Orm/Xyster_Orm_Set.html">Xyster_Orm_Set</a></span>
+										<a href="#getSet" title="details" class="method-name">getSet</a>
+											([<span class="var-type"></span>&nbsp;<span class="var-name">$entities</span> = <span class="var-default">null</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#getTable" title="details" class="method-name">getTable</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#init" title="details" class="method-name">init</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../Xyster_Data/Xyster_Data_Set.html">Xyster_Data_Set</a></span>
+										<a href="#query" title="details" class="method-name">query</a>
+											(<span class="var-type"><a href="../Xyster_Orm/Xyster_Orm_Query.html">Xyster_Orm_Query</a></span>&nbsp;<span class="var-name">$query</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#refresh" title="details" class="method-name">refresh</a>
+											(<span class="var-type"><a href="../Xyster_Orm/Xyster_Orm_Entity.html">Xyster_Orm_Entity</a></span>&nbsp;<span class="var-name">$entity</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#save" title="details" class="method-name">save</a>
+											(<span class="var-type"><a href="../Xyster_Orm/Xyster_Orm_Entity.html">Xyster_Orm_Entity</a></span>&nbsp;<span class="var-name">$entity</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#translateField" title="details" class="method-name">translateField</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$field</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#untranslateField" title="details" class="method-name">untranslateField</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$field</span>)
+									</div>
+								</div>
+		</div>
+	</div>		
+
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+																<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+
+<a name="methoddelete" id="delete"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">delete</span> (line <span class="line-number">40</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Deletes an entity</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			delete
+		</span>
+					(<span class="var-type"><a href="../Xyster_Orm/Xyster_Orm_Entity.html">Xyster_Orm_Entity</a></span>&nbsp;<span class="var-name">$entity</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Orm/Xyster_Orm_Entity.html">Xyster_Orm_Entity</a></span>
+				<span class="var-name">$entity</span><span class="var-description">: The entity to delete</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodfind" id="find"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">find</span> (line <span class="line-number">47</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets the first entity from the data store matching the criteria</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> The entity found</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../Xyster_Orm/Xyster_Orm_Entity.html">Xyster_Orm_Entity</a></span>
+		<span class="method-name">
+			find
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$criteria</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$criteria</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodfindAll" id="findAll"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">findAll</span> (line <span class="line-number">55</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets all entities from the data store matching the criteria</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> A collection of the entities</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../Xyster_Orm/Xyster_Orm_Set.html">Xyster_Orm_Set</a></span>
+		<span class="method-name">
+			findAll
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$criteria</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$sorts</span> = <span class="var-default">null</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$criteria</span>			</li>
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$sorts</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodget" id="get"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">get</span> (line <span class="line-number">62</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets an entity with the supplied identifier</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> The data entity found, or null if none</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../Xyster_Orm/Xyster_Orm_Entity.html">Xyster_Orm_Entity</a></span>
+		<span class="method-name">
+			get
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$id</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$id</span><span class="var-description">: The id of the entity to get</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodgetAll" id="getAll"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getAll</span> (line <span class="line-number">69</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets all entities from the data store</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> A collection of the entities</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../Xyster_Orm/Xyster_Orm_Set.html">Xyster_Orm_Set</a></span>
+		<span class="method-name">
+			getAll
+		</span>
+					([<span class="var-type"></span>&nbsp;<span class="var-name">$ids</span> = <span class="var-default">null</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">$ids</span><span class="var-description">: An array of ids for which entities to retrieve</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodgetDomain" id="getDomain"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getDomain</span> (line <span class="line-number">75</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets the name of the domain to which this mapper belongs</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> The domain</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			getDomain
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetEntityName" id="getEntityName"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getEntityName</span> (line <span class="line-number">87</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets the class name of the entity</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> The class name of the entity</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			getEntityName
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetEntityType" id="getEntityType"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getEntityType</span> (line <span class="line-number">81</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets the entity metadata</p>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../Xyster_Orm/Xyster_Orm_Entity_Type.html">Xyster_Orm_Entity_Type</a></span>
+		<span class="method-name">
+			getEntityType
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetFactory" id="getFactory"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getFactory</span> (line <span class="line-number">93</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets the factory that created the mapper</p>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../Xyster_Orm/Xyster_Orm_Mapper_Factory_Interface.html">Xyster_Orm_Mapper_Factory_Interface</a></span>
+		<span class="method-name">
+			getFactory
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetFields" id="getFields"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getFields</span> (line <span class="line-number">103</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets the fields for an entity as they appear in the backend</p>
+<p class="description"><p>The array should come in the format of the describeTable method of the  Zend_Db_Adapter_Abstract class.</p></p>
+	<ul class="tags">
+				<li><span class="field">see:</span> Zend_Db_Adapter_Abstract::describeTable()</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">array</span>
+		<span class="method-name">
+			getFields
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetIndex" id="getIndex"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getIndex</span> (line <span class="line-number">112</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets the columns that should be used to index the entity</p>
+<p class="description"><p>The array should consist of index names as keys and arrays of the columns  contained within as values.</p></p>
+	
+	<div class="method-signature">
+		<span class="method-result">array</span>
+		<span class="method-name">
+			getIndex
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetJoined" id="getJoined"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getJoined</span> (line <span class="line-number">120</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets entities via a many-to-many table</p>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../Xyster_Orm/Xyster_Orm_Set.html">Xyster_Orm_Set</a></span>
+		<span class="method-name">
+			getJoined
+		</span>
+					(<span class="var-type"><a href="../Xyster_Orm/Xyster_Orm_Entity.html">Xyster_Orm_Entity</a></span>&nbsp;<span class="var-name">$entity</span>, <span class="var-type"><a href="../Xyster_Orm/Xyster_Orm_Relation.html">Xyster_Orm_Relation</a></span>&nbsp;<span class="var-name">$relation</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Orm/Xyster_Orm_Entity.html">Xyster_Orm_Entity</a></span>
+				<span class="var-name">$entity</span>			</li>
+					<li>
+				<span class="var-type"><a href="../Xyster_Orm/Xyster_Orm_Relation.html">Xyster_Orm_Relation</a></span>
+				<span class="var-name">$relation</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodgetLifetime" id="getLifetime"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getLifetime</span> (line <span class="line-number">126</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets the time in seconds an entity should be cached</p>
+	
+	<div class="method-signature">
+		<span class="method-result">int</span>
+		<span class="method-name">
+			getLifetime
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetOption" id="getOption"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getOption</span> (line <span class="line-number">133</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets the value of an option</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> The option value</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">mixed</span>
+		<span class="method-name">
+			getOption
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$name</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$name</span><span class="var-description">: The name of the option</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodgetOptions" id="getOptions"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getOptions</span> (line <span class="line-number">139</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets the options for this mapper</p>
+	
+	<div class="method-signature">
+		<span class="method-result">array</span>
+		<span class="method-name">
+			getOptions
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetSet" id="getSet"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getSet</span> (line <span class="line-number">145</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets an empty entity set for the mapper's entity type</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> An empty set</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../Xyster_Orm/Xyster_Orm_Set.html">Xyster_Orm_Set</a></span>
+		<span class="method-name">
+			getSet
+		</span>
+					([<span class="var-type"></span>&nbsp;<span class="var-name">$entities</span> = <span class="var-default">null</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Collection/Xyster_Collection_Interface.html">Xyster_Collection_Interface</a></span>
+				<span class="var-name">$entities</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodgetTable" id="getTable"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getTable</span> (line <span class="line-number">156</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets the table from which an entity comes</p>
+<p class="description"><p>What the &quot;table&quot; means is up to the implementation.  In an RDBMS, this is  obvious.  If the mapper is for a set of XML documents, this might  represent the file name.  An LDAP implementation might be a DN with an  object type.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> The table name</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			getTable
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodinit" id="init"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">init</span> (line <span class="line-number">34</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Allows for subclassing without overwriting constructor</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			init
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodquery" id="query"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">query</span> (line <span class="line-number">163</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Performs a query</p>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../Xyster_Data/Xyster_Data_Set.html">Xyster_Data_Set</a></span>
+		<span class="method-name">
+			query
+		</span>
+					(<span class="var-type"><a href="../Xyster_Orm/Xyster_Orm_Query.html">Xyster_Orm_Query</a></span>&nbsp;<span class="var-name">$query</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Orm/Xyster_Orm_Query.html">Xyster_Orm_Query</a></span>
+				<span class="var-name">$query</span><span class="var-description">: The query details</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodrefresh" id="refresh"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">refresh</span> (line <span class="line-number">169</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Reloads an entity's values with fresh ones from the backend</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			refresh
+		</span>
+					(<span class="var-type"><a href="../Xyster_Orm/Xyster_Orm_Entity.html">Xyster_Orm_Entity</a></span>&nbsp;<span class="var-name">$entity</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Orm/Xyster_Orm_Entity.html">Xyster_Orm_Entity</a></span>
+				<span class="var-name">$entity</span><span class="var-description">: The entity to refresh</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodsave" id="save"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">save</span> (line <span class="line-number">175</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Saves an entity (insert or update)</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			save
+		</span>
+					(<span class="var-type"><a href="../Xyster_Orm/Xyster_Orm_Entity.html">Xyster_Orm_Entity</a></span>&nbsp;<span class="var-name">$entity</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Orm/Xyster_Orm_Entity.html">Xyster_Orm_Entity</a></span>
+				<span class="var-name">$entity</span><span class="var-description">: The entity to save</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodtranslateField" id="translateField"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">translateField</span> (line <span class="line-number">186</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Translates the field from the original format into the entity field name</p>
+<p class="description"><p>For instance, many database users prefer to use underscores for column  names, and the class should have this as a camel case word.  (user_name vs. userName).</p></p>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			translateField
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$field</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$field</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methoduntranslateField" id="untranslateField"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">untranslateField</span> (line <span class="line-number">197</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Translates the field from the entity format back into the original</p>
+<p class="description"><p>For instance, many database users prefer to use underscores for column  names, and the class should have this as a camel case word.  (user_name vs. userName).</p></p>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			untranslateField
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$field</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$field</span>			</li>
+				</ul>
+		
+			
+	</div>
+						
+		</div>
+	</div>
+
+
+	<p class="notes" id="credit">
+		Documentation generated on Mon, 19 May 2008 17:07:20 -0400 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.2</a>
+	</p>
+	</div></body>
+</html>

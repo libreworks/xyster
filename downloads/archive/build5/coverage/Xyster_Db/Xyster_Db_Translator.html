@@ -1,0 +1,1585 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<LINK REL="stylesheet" TYPE="text/css" TITLE="Style" href="../stylesheet.css">
+</HEAD>
+<BODY>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="bannercell" rowspan="2"><a href="http://phing.info/"><img src="http://phing.info/images/phing.gif" alt="http://phing.info/" align="left" border="0"></a></td>
+<td style="text-align:right"><h2>Source Code Coverage</h2></td>
+</tr>
+<tr><td style="text-align:right">Designed for use with <a href="http://pear.php.net/package/PHPUnit2">PHPUnit2</a>, <a href="http://www.xdebug.org/">Xdebug</a> and <a href="http://phing.info/">Phing</a>.</td></tr>
+</table>
+<hr size="1">
+<table class="log" cellpadding="5" cellspacing="0" width="100%"><tr class="a">
+<td class="small">Methods: 12</td>
+<td class="small">LOC: 308</td>
+<td class="small">Statements: 112</td>
+</tr></table>
+<br><table class="log" cellpadding="5" cellspacing="0" width="100%">
+<tr>
+<th width="100%">Source file</th>
+<th>Statements</th>
+<th>Methods</th>
+<th width="250" colspan="2" nowrap>Total coverage</th>
+</tr>
+<tr class="a">
+<td>Translator.php</td>
+<td>98.2%</td>
+<td>100.0%</td>
+<td>98.4%</td>
+<td><table cellspacing="0" cellpadding="0" border="0" width="100%" style="display: inline"><tr>
+<td class="covered" width="197" height="12"> </td>
+<td class="uncovered" width="3" height="12"> </td>
+</tr></table></td>
+</tr>
+</table>
+<table cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td class="lineCount">1</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">&lt;?php</pre></td>
+</tr>
+<tr>
+<td class="lineCount">2</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">3</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * Xyster Framework</pre></td>
+</tr>
+<tr>
+<td class="lineCount">4</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">5</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * This source file is subject to the new BSD license that is bundled</pre></td>
+</tr>
+<tr>
+<td class="lineCount">6</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * with this package in the file LICENSE.txt.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">7</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * It is also available through the world-wide-web at this URL:</pre></td>
+</tr>
+<tr>
+<td class="lineCount">8</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * http://www.opensource.org/licenses/bsd-license.php</pre></td>
+</tr>
+<tr>
+<td class="lineCount">9</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">10</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @category  Xyster</pre></td>
+</tr>
+<tr>
+<td class="lineCount">11</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @package   Xyster_Db</pre></td>
+</tr>
+<tr>
+<td class="lineCount">12</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">13</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License</pre></td>
+</tr>
+<tr>
+<td class="lineCount">14</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @version   $Id: Translator.php 220 2008-02-09 18:04:52Z doublecompile $</pre></td>
+</tr>
+<tr>
+<td class="lineCount">15</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">16</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">17</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @see Xyster_Db_Token</pre></td>
+</tr>
+<tr>
+<td class="lineCount">18</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">19</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">require_once 'Xyster/Db/Token.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCount">20</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">21</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * Translates objects in the Xyster_Data package into SQL fragments</pre></td>
+</tr>
+<tr>
+<td class="lineCount">22</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">23</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @category  Xyster</pre></td>
+</tr>
+<tr>
+<td class="lineCount">24</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @package   Xyster_Db</pre></td>
+</tr>
+<tr>
+<td class="lineCount">25</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">26</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License</pre></td>
+</tr>
+<tr>
+<td class="lineCount">27</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">28</td>
+<td class="coverageCount"></td>
+<td class="srcLineClassStart"><pre class="srcLine">class Xyster_Db_Translator</pre></td>
+</tr>
+<tr>
+<td class="lineCount">29</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">{</pre></td>
+</tr>
+<tr>
+<td class="lineCount">30</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">31</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @var Zend_Db_Adapter_Abstract</pre></td>
+</tr>
+<tr>
+<td class="lineCount">32</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">33</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	protected $_adapter;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">34</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">35</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">36</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * The callback for column renaming</pre></td>
+</tr>
+<tr>
+<td class="lineCount">37</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">38</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @var mixed</pre></td>
+</tr>
+<tr>
+<td class="lineCount">39</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">40</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	protected $_renameCallback;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">41</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">42</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">43</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * A table name to prefix columns</pre></td>
+</tr>
+<tr>
+<td class="lineCount">44</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">45</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @var mixed</pre></td>
+</tr>
+<tr>
+<td class="lineCount">46</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">47</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	protected $_table;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">48</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">49</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">50</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * Creates a new translator for a given SQL connection</pre></td>
+</tr>
+<tr>
+<td class="lineCount">51</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">52</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @param Zend_Db_Adapter_Abstract $adapter</pre></td>
+</tr>
+<tr>
+<td class="lineCount">53</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">54</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	public function __construct( Zend_Db_Adapter_Abstract $adapter )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">55</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	{</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">56</td>
+<td class="lineCountHighlight">87</td>
+<td><pre class="srcLine">		$this-&gt;_adapter = $adapter;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">57</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">58</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">59</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">60</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * Sets the callback for column renaming</pre></td>
+</tr>
+<tr>
+<td class="lineCount">61</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">62</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * This can be any valid PHP callback.  It's passed the column object.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">63</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">64</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @param mixed $callback</pre></td>
+</tr>
+<tr>
+<td class="lineCount">65</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @return Xyster_Db_Translator  Provides a fluent interface</pre></td>
+</tr>
+<tr>
+<td class="lineCount">66</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">67</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	public function setRenameCallback( $callback )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">68</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	{</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">69</td>
+<td class="lineCountHighlight">68</td>
+<td><pre class="srcLine">		if ( !is_callable($callback) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">70</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">		    require_once 'Xyster/Db/Exception.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">71</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">			throw new Xyster_Db_Exception('This is not a valid callback');</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">72</td>
+<td class="coverageCountHighlight">0</td>
+<td><pre class="srcLineHighlight">		}</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">73</td>
+<td class="lineCountHighlight">67</td>
+<td><pre class="srcLine">		$this-&gt;_renameCallback = $callback;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">74</td>
+<td class="lineCountHighlight">67</td>
+<td><pre class="srcLine">		return $this;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">75</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">76</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">77</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">78</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * Sets a table name to prefix to columns</pre></td>
+</tr>
+<tr>
+<td class="lineCount">79</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">80</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @param string $table</pre></td>
+</tr>
+<tr>
+<td class="lineCount">81</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @return Xyster_Db_Translator  Provides a fluent interface</pre></td>
+</tr>
+<tr>
+<td class="lineCount">82</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">83</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	public function setTable( $table )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">84</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	{</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">85</td>
+<td class="lineCountHighlight">27</td>
+<td><pre class="srcLine">		$this-&gt;_table = $table;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">86</td>
+<td class="lineCountHighlight">27</td>
+<td><pre class="srcLine">		return $this;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">87</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">88</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">89</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">90</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * Translates one of the Xyster Data objects into a SQL token</pre></td>
+</tr>
+<tr>
+<td class="lineCount">91</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">92</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @param Xyster_Data_Symbol $object</pre></td>
+</tr>
+<tr>
+<td class="lineCount">93</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param boolean $quote Whether to quote field names</pre></td>
+</tr>
+<tr>
+<td class="lineCount">94</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @return Xyster_Db_Token</pre></td>
+</tr>
+<tr>
+<td class="lineCount">95</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">96</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	public function translate( Xyster_Data_Symbol $object, $quote = true )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">97</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	{</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">98</td>
+<td class="lineCountHighlight">71</td>
+<td><pre class="srcLine">		if ( $object instanceof Xyster_Data_Field ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">99</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">			return $this-&gt;translateField($object, $quote);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">100</td>
+<td class="lineCountHighlight">68</td>
+<td><pre class="srcLine">		} else if ( $object instanceof Xyster_Data_Sort ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">101</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">			return $this-&gt;translateSort($object, $quote);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">102</td>
+<td class="lineCountHighlight">67</td>
+<td><pre class="srcLine">		} else if ( $object instanceof Xyster_Data_Criterion ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">103</td>
+<td class="lineCountHighlight">66</td>
+<td><pre class="srcLine">			return $this-&gt;translateCriterion($object, $quote);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">104</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">		} else if ( $object instanceof Xyster_Data_Clause_Interface ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">105</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">			return $this-&gt;translateClause($object, $quote);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">106</td>
+<td class="coverageCountHighlight">0</td>
+<td><pre class="srcLineHighlight">		}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">107</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">108</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">109</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">110</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * Translates a clause</pre></td>
+</tr>
+<tr>
+<td class="lineCount">111</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">112</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @param Xyster_Data_Clause_Interface $clause</pre></td>
+</tr>
+<tr>
+<td class="lineCount">113</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @param boolean $quote</pre></td>
+</tr>
+<tr>
+<td class="lineCount">114</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @return Xyster_Db_Token</pre></td>
+</tr>
+<tr>
+<td class="lineCount">115</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">116</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	public function translateClause( Xyster_Data_Clause_Interface $clause, $quote = true )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">117</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	{</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">118</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">		$translated = null;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">119</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">		if ( $clause instanceof Xyster_Data_Junction ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">120</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">			$translated = $this-&gt;translateJunction($clause, $quote);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">121</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">		} else {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">122</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">			$sql = array();</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">123</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">			$binds = array();</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">124</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">			foreach( $clause as $k =&gt; $symbol ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">125</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">				$token = $this-&gt;translate($symbol, $quote);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">126</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">				$sql[] = $token-&gt;getSql();</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">127</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">				$binds += $token-&gt;getBindValues();</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">128</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">			}</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">129</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">			$translated = new Xyster_Db_Token(implode(', ', $sql), $binds);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">130</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">		}</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">131</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">		return $translated;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">132</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">133</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">134</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">135</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * Converts a field to SQL</pre></td>
+</tr>
+<tr>
+<td class="lineCount">136</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">137</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @param Xyster_Data_Field $tosql  The field to translate</pre></td>
+</tr>
+<tr>
+<td class="lineCount">138</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param boolean $quote Whether to quote field names</pre></td>
+</tr>
+<tr>
+<td class="lineCount">139</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @return Xyster_Db_Token  The translated SQL syntax</pre></td>
+</tr>
+<tr>
+<td class="lineCount">140</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">141</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	public function translateField( Xyster_Data_Field $tosql, $quote = true )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">142</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	{</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">143</td>
+<td class="lineCountHighlight">80</td>
+<td><pre class="srcLine">		$rename = $this-&gt;_getRenamedField($tosql);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">144</td>
+<td class="lineCountHighlight">80</td>
+<td><pre class="srcLine">		$tableName = $this-&gt;_getTableName($tosql);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">145</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">146</td>
+<td class="lineCountHighlight">80</td>
+<td><pre class="srcLine">		$field = ( $quote ) ? $this-&gt;_adapter-&gt;quoteIdentifier($rename) : $rename;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">147</td>
+<td class="lineCountHighlight">80</td>
+<td><pre class="srcLine">		if ( $tableName ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">148</td>
+<td class="lineCountHighlight">34</td>
+<td><pre class="srcLine">			$field = "$tableName.$field";</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">149</td>
+<td class="lineCountHighlight">34</td>
+<td><pre class="srcLine">		}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">150</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">151</td>
+<td class="lineCountHighlight">80</td>
+<td><pre class="srcLine">		return new Xyster_Db_Token( $tosql instanceof Xyster_Data_Field_Aggregate ?</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">152</td>
+<td class="lineCountHighlight">80</td>
+<td><pre class="srcLine">				$tosql-&gt;getFunction()-&gt;getValue().'('.$field.')' : $field );</pre></td>
+</tr>
+<tr>
+<td class="lineCount">153</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">154</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">155</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">156</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * Converts a sort to SQL</pre></td>
+</tr>
+<tr>
+<td class="lineCount">157</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">158</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @param Xyster_Data_Sort $tosql  The Sort to translate</pre></td>
+</tr>
+<tr>
+<td class="lineCount">159</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param boolean $quote Whether to quote field names</pre></td>
+</tr>
+<tr>
+<td class="lineCount">160</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @return Xyster_Db_Token  The translated SQL syntax</pre></td>
+</tr>
+<tr>
+<td class="lineCount">161</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">162</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	public function translateSort( Xyster_Data_Sort $tosql, $quote = true )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">163</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	{</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">164</td>
+<td class="lineCountHighlight">14</td>
+<td><pre class="srcLine">		return new Xyster_Db_Token(</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">165</td>
+<td class="lineCountHighlight">14</td>
+<td><pre class="srcLine">		    $this-&gt;translateField($tosql-&gt;getField(), $quote)-&gt;getSql() . " "</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">166</td>
+<td class="lineCountHighlight">14</td>
+<td><pre class="srcLine">			. $tosql-&gt;getDirection() );</pre></td>
+</tr>
+<tr>
+<td class="lineCount">167</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">168</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">169</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">170</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * Converts a criterion to SQL</pre></td>
+</tr>
+<tr>
+<td class="lineCount">171</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">172</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @param Xyster_Data_Criterion $tosql  The Criterion to translate</pre></td>
+</tr>
+<tr>
+<td class="lineCount">173</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param boolean $quote Whether to quote field names</pre></td>
+</tr>
+<tr>
+<td class="lineCount">174</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @return Xyster_Db_Token  The translated SQL syntax</pre></td>
+</tr>
+<tr>
+<td class="lineCount">175</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">176</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	public function translateCriterion( Xyster_Data_Criterion $tosql, $quote = true )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">177</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	{</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">178</td>
+<td class="lineCountHighlight">75</td>
+<td><pre class="srcLine">	    $token = null;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">179</td>
+<td class="lineCountHighlight">75</td>
+<td><pre class="srcLine">		if ( $tosql instanceof Xyster_Data_Expression ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">180</td>
+<td class="lineCountHighlight">75</td>
+<td><pre class="srcLine">			$token = $this-&gt;translateExpression($tosql, $quote);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">181</td>
+<td class="lineCountHighlight">75</td>
+<td><pre class="srcLine">		} else if ( $tosql instanceof Xyster_Data_Junction ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">182</td>
+<td class="lineCountHighlight">25</td>
+<td><pre class="srcLine">			$token = $this-&gt;translateJunction($tosql, $quote);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">183</td>
+<td class="lineCountHighlight">25</td>
+<td><pre class="srcLine">		}</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">184</td>
+<td class="lineCountHighlight">75</td>
+<td><pre class="srcLine">		return $token;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">185</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">186</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">187</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">188</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * Converts a Junction to SQL</pre></td>
+</tr>
+<tr>
+<td class="lineCount">189</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">190</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @param Xyster_Data_Junction $tosql  The Junction to translate</pre></td>
+</tr>
+<tr>
+<td class="lineCount">191</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param boolean $quote Whether to quote field names</pre></td>
+</tr>
+<tr>
+<td class="lineCount">192</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @return Xyster_Db_Token  The translated SQL syntax</pre></td>
+</tr>
+<tr>
+<td class="lineCount">193</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">194</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	public function translateJunction( Xyster_Data_Junction $tosql, $quote = true )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">195</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	{</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">196</td>
+<td class="lineCountHighlight">26</td>
+<td><pre class="srcLine">		$criteria = array();</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">197</td>
+<td class="lineCountHighlight">26</td>
+<td><pre class="srcLine">		foreach( $tosql-&gt;getCriteria() as $v ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">198</td>
+<td class="lineCountHighlight">26</td>
+<td><pre class="srcLine">			$loopToken = $this-&gt;translateCriterion($v, $quote);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">199</td>
+<td class="lineCountHighlight">26</td>
+<td><pre class="srcLine">			$criteria[$loopToken-&gt;getSql()] = $loopToken;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">200</td>
+<td class="lineCountHighlight">26</td>
+<td><pre class="srcLine">		}</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">201</td>
+<td class="lineCountHighlight">26</td>
+<td><pre class="srcLine">		$token = new Xyster_Db_Token( "( " .</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">202</td>
+<td class="lineCountHighlight">26</td>
+<td><pre class="srcLine">			implode( " ".$tosql-&gt;getOperator()." ", array_keys($criteria) ) .</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">203</td>
+<td class="lineCountHighlight">26</td>
+<td><pre class="srcLine">			" )" );</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">204</td>
+<td class="lineCountHighlight">26</td>
+<td><pre class="srcLine">		foreach( $criteria as $v ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">205</td>
+<td class="lineCountHighlight">26</td>
+<td><pre class="srcLine">			$token-&gt;addBindValues( $v );</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">206</td>
+<td class="lineCountHighlight">26</td>
+<td><pre class="srcLine">		}</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">207</td>
+<td class="lineCountHighlight">26</td>
+<td><pre class="srcLine">		return $token;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">208</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">209</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">210</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">211</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * Converts an expression to SQL</pre></td>
+</tr>
+<tr>
+<td class="lineCount">212</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">213</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @param Xyster_Data_Expression $tosql  The Expression to translate</pre></td>
+</tr>
+<tr>
+<td class="lineCount">214</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @param boolean $quote Whether to quote field names</pre></td>
+</tr>
+<tr>
+<td class="lineCount">215</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @return Xyster_Db_Token  The translated SQL syntax</pre></td>
+</tr>
+<tr>
+<td class="lineCount">216</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">217</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	public function translateExpression( Xyster_Data_Expression $tosql, $quote = true )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">218</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	{</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">219</td>
+<td class="lineCountHighlight">75</td>
+<td><pre class="srcLine">		$binds = array();</pre></td>
+</tr>
+<tr>
+<td class="lineCount">220</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">221</td>
+<td class="lineCountHighlight">75</td>
+<td><pre class="srcLine">		$sql = $this-&gt;translateField($tosql-&gt;getLeft(), $quote)-&gt;getSql() . ' ';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">222</td>
+<td class="lineCountHighlight">75</td>
+<td><pre class="srcLine">		$val = $tosql-&gt;getRight();</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">223</td>
+<td class="lineCountHighlight">75</td>
+<td><pre class="srcLine">		$operator = $tosql-&gt;getOperator()-&gt;getValue();</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">224</td>
+<td class="lineCountHighlight">75</td>
+<td><pre class="srcLine">		if ( $val === null || $val == "NULL" ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">225</td>
+<td class="lineCountHighlight">18</td>
+<td><pre class="srcLine">		    $sql .= ( $operator == '=' ) ? 'IS' : 'IS NOT';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">226</td>
+<td class="lineCountHighlight">18</td>
+<td><pre class="srcLine">		} else {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">227</td>
+<td class="lineCountHighlight">67</td>
+<td><pre class="srcLine">		    $sql .= $operator;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">228</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">		}</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">229</td>
+<td class="lineCountHighlight">75</td>
+<td><pre class="srcLine">		$sql .= ' ';</pre></td>
+</tr>
+<tr>
+<td class="lineCount">230</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">231</td>
+<td class="lineCountHighlight">75</td>
+<td><pre class="srcLine">		if ( $val == "NULL" || $val === null ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">232</td>
+<td class="lineCountHighlight">18</td>
+<td><pre class="srcLine">			$sql .= 'NULL';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">233</td>
+<td class="lineCountHighlight">75</td>
+<td><pre class="srcLine">		} else if ( $val instanceof Xyster_Data_Field ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">234</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">			$sql .= $this-&gt;translateField($val, $quote)-&gt;getSql();</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">235</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">		} else {</pre></td>
+</tr>
+<tr>
+<td class="lineCount">236</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">237</td>
+<td class="lineCountHighlight">67</td>
+<td><pre class="srcLine">			$bindName = ':P'.str_pad(dechex(crc32((string)$tosql)), 8, '0', STR_PAD_LEFT);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">238</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">239</td>
+<td class="lineCountHighlight">67</td>
+<td><pre class="srcLine">			if ( is_array($val) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCount">240</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">241</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">				if ( substr($operator,-7) == 'BETWEEN' ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">242</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">					$sql .= "{$bindName}1 AND {$bindName}2";</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">243</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">					$binds[$bindName.'1'] = $val[0];</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">244</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">					$binds[$bindName.'2'] = $val[1];</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">245</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">				} else if ( substr($operator,-2) == 'IN' ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">246</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">					$quoted = array();</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">247</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">					foreach( $val as $k=&gt;$v ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">248</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">						$quoted[] = $bindName.$k;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">249</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">						$binds[$bindName.$k] = $v;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">250</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">					}</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">251</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">					$sql .= '('. implode(',',$quoted) . ')';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">252</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">				}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">253</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">254</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">			} else {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">255</td>
+<td class="lineCountHighlight">66</td>
+<td><pre class="srcLine">				$sql .= $bindName;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">256</td>
+<td class="lineCountHighlight">66</td>
+<td><pre class="srcLine">				$binds[$bindName] = $val;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">257</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">			}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">258</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">259</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">		}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">260</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">261</td>
+<td class="lineCountHighlight">75</td>
+<td><pre class="srcLine">        if ( $this-&gt;_adapter instanceof Zend_Db_Adapter_Mysqli ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCount">262</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            // mysqli has no support for :name style binding, we must replace</pre></td>
+</tr>
+<tr>
+<td class="lineCount">263</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            // bind values with '?'</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">264</td>
+<td class="lineCountHighlight">18</td>
+<td><pre class="srcLine">            $matches = array();</pre></td>
+</tr>
+<tr>
+<td class="lineCount">265</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">266</td>
+<td class="lineCountHighlight">18</td>
+<td><pre class="srcLine">            if ( preg_match_all('/:P[a-z0-9]+/', $sql, $matches, PREG_SET_ORDER) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">267</td>
+<td class="lineCountHighlight">16</td>
+<td><pre class="srcLine">                $newBinds = array();</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">268</td>
+<td class="lineCountHighlight">16</td>
+<td><pre class="srcLine">                foreach( $matches as $match ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">269</td>
+<td class="lineCountHighlight">16</td>
+<td><pre class="srcLine">                    $sql = str_replace($match[0], '?', $sql);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">270</td>
+<td class="lineCountHighlight">16</td>
+<td><pre class="srcLine">                    $newBinds[] = $binds[$match[0]];</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">271</td>
+<td class="lineCountHighlight">16</td>
+<td><pre class="srcLine">                }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">272</td>
+<td class="lineCountHighlight">16</td>
+<td><pre class="srcLine">                $binds = $newBinds;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">273</td>
+<td class="lineCountHighlight">16</td>
+<td><pre class="srcLine">            }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">274</td>
+<td class="lineCountHighlight">18</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">275</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">276</td>
+<td class="lineCountHighlight">75</td>
+<td><pre class="srcLine">		return new Xyster_Db_Token($sql, $binds);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">277</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">278</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">279</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">280</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * Gets the renamed value of the field if appropriate</pre></td>
+</tr>
+<tr>
+<td class="lineCount">281</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">282</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * This can be overridden to provide a custom renaming strategy</pre></td>
+</tr>
+<tr>
+<td class="lineCount">283</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">284</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @param Xyster_Data_Field $field</pre></td>
+</tr>
+<tr>
+<td class="lineCount">285</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @return string</pre></td>
+</tr>
+<tr>
+<td class="lineCount">286</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">287</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	protected function _getRenamedField( Xyster_Data_Field $field )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">288</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	{</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">289</td>
+<td class="lineCountHighlight">72</td>
+<td><pre class="srcLine">	    $rename = $field-&gt;getName();</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">290</td>
+<td class="lineCountHighlight">72</td>
+<td><pre class="srcLine">		if ( $this-&gt;_renameCallback !== null ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">291</td>
+<td class="lineCountHighlight">66</td>
+<td><pre class="srcLine">			$rename = call_user_func($this-&gt;_renameCallback, $rename);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">292</td>
+<td class="lineCountHighlight">66</td>
+<td><pre class="srcLine">		}</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">293</td>
+<td class="lineCountHighlight">72</td>
+<td><pre class="srcLine">		return $rename;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">294</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">295</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">296</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">297</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * Gets the name of the table to use to prefix columns</pre></td>
+</tr>
+<tr>
+<td class="lineCount">298</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">299</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * This can be extended to provide a custom table name</pre></td>
+</tr>
+<tr>
+<td class="lineCount">300</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">301</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @param Xyster_Data_Field $field</pre></td>
+</tr>
+<tr>
+<td class="lineCount">302</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @return string</pre></td>
+</tr>
+<tr>
+<td class="lineCount">303</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">304</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	protected function _getTableName( Xyster_Data_Field $field )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">305</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	{</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">306</td>
+<td class="lineCountHighlight">72</td>
+<td><pre class="srcLine">	    return $this-&gt;_table;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">307</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">308</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">}</pre></td>
+</tr>
+</table>
+<br><table width="100%">
+<tr><td><hr noshade size="1"></td></tr>
+<tr><td class="small">Report generated at 2008-03-05T18:27:43-05:00</td></tr>
+</table>
+</BODY>
+</HTML>

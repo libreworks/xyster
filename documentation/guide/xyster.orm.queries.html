@@ -1,0 +1,105 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>9.9. Queries and Reporting</title>
+<link rel="stylesheet" href="dbstyle.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.72.0">
+<link rel="start" href="index.html" title="Programmer's Reference Guide">
+<link rel="up" href="xyster.orm.html" title="Chapter 9. Xyster_Orm">
+<link rel="prev" href="xyster.orm.validate.html" title="9.8. Validation">
+<link rel="next" href="xyster.orm.plugins.html" title="9.10. Plugins">
+<link rel="chapter" href="introduction.html" title="Chapter 1. Introduction to Xyster Framework">
+<link rel="chapter" href="xyster.acl.html" title="Chapter 2. Xyster_Acl">
+<link rel="chapter" href="xyster.collection.html" title="Chapter 3. Xyster_Collection">
+<link rel="chapter" href="xyster.controller.html" title="Chapter 4. Xyster_Controller">
+<link rel="chapter" href="xyster.data.html" title="Chapter 5. Xyster_Data">
+<link rel="chapter" href="xyster.date.html" title="Chapter 6. Xyster_Date">
+<link rel="chapter" href="xyster.enum.html" title="Chapter 7. Xyster_Enum">
+<link rel="chapter" href="xyster.filter.html" title="Chapter 8. Xyster_Filter">
+<link rel="chapter" href="xyster.orm.html" title="Chapter 9. Xyster_Orm">
+<link rel="chapter" href="xyster.type.html" title="Chapter 10. Xyster_Type">
+<link rel="chapter" href="xyster.validate.html" title="Chapter 11. Xyster_Validate">
+<link rel="subsection" href="xyster.orm.queries.html#xyster.orm.query" title="9.9.1. Xyster_Orm_Query">
+<link rel="subsection" href="xyster.orm.queries.html#xyster.orm.query.report" title="9.9.2. Xyster_Orm_Query_Report">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<div class="navheader"><table width="100%" summary="Navigation header">
+<tr><th colspan="3" align="center">9.9. Queries and Reporting</th></tr>
+<tr>
+<td width="20%" align="left">
+<a accesskey="p" href="xyster.orm.validate.html">Prev</a> </td>
+<th width="60%" align="center">Chapter 9. Xyster_Orm</th>
+<td width="20%" align="right"> <a accesskey="n" href="xyster.orm.plugins.html">Next</a>
+</td>
+</tr>
+</table></div>
+<div class="sect1" lang="en">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="xyster.orm.queries"></a>9.9. Queries and Reporting</h2></div></div></div>
+<p>You can query your data store to retrieve a specific set of entities or sets of aggregated data without knowing anything about SQL, LDAP filters, XQuery, or whatever else your data store uses to filter things stored within it. When creating these query objects, you can use either a simple but robust API or a SQL-like syntax.</p>
+<div class="sect2" lang="en">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="xyster.orm.query"></a>9.9.1. Xyster_Orm_Query</h3></div></div></div>
+<p>The query object provides a way to precisely return search results for entities. You can specify Criteria, Sorts, a maximum number of entities to return (limit), and a number to skip (offset). When executed, a <code class="classname">Xyster_Orm_Query</code> will return a <code class="classname">Xyster_Orm_Set</code> of the appropriate type.</p>
+<p>First is an example of using the query API.</p>
+<pre class="programlisting">&lt;?php
+$query = $orm-&gt;query('Person');
+$query-&gt;where(Xyster_Data_Expression::eq('affiliation','Rebel'))    // it's the rebels, sir.
+        -&gt;order(Xyster_Data_Sort::asc('name'))                      // sort by name
+        -&gt;limit(3);                           // only 3 of them
+$people = $query-&gt;execute();</pre>
+<p>Pretty easy. Here's the "XSQL" (Xyster SQL) syntax.</p>
+<pre class="programlisting">&lt;?php
+$query = $orm-&gt;query('Person', 'where affiliation = "Rebel" order by name asc limit 3');
+$people = $query-&gt;execute();</pre>
+<p>The XSQL syntax for a normal query follows the following format.</p>
+<p><code class="code">WHERE criteria[ ORDER BY sort[, sort...][ LIMIT number[ OFFSET number]]]</code></p>
+<p>Criteria look much like SQL criteria except using double-quotes instead of single quotes for string literals. All column names should be using the entity's camel case-style properties, not the data store field names. Aggregate functions cannot be used in Criteria or Sorts for a normal query.</p>
+<p>One interesting feature is that you can use field names that deal with linked entities, as detailed in the following example.</p>
+<pre class="programlisting">&lt;?php
+// only return people with a nemesis
+$query = $orm-&gt;query('Person',
+        'where nemesis-&gt;name is not null order by name asc limit 3');
+$people = $query-&gt;execute;</pre>
+<p>Columns can even be method calls with parameters. (Example: <code class="code">nemesis-&gt;callMethod()-&gt;anotherMethod("string", 1.999, anotherEntityField) )</code>.</p>
+</div>
+<div class="sect2" lang="en">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="xyster.orm.query.report"></a>9.9.2. Xyster_Orm_Query_Report</h3></div></div></div>
+<p>The report query is like the query, but you can specify which columns to return and what their names should be, how to group them, apply any group criteria, and specify distinct values: it's just like a full-blown SQL query.</p>
+<p>When a report query is executed, it returns a Xyster_Data_Set of the results. Let's try a query for affiliations and the number each one has.</p>
+<pre class="programlisting">&lt;?php
+$report = $orm-&gt;reportQuery('Person');
+$count = Xyster_Data_Field::count('personId', 'people'); // aliased field
+$report-&gt;group(Xyster_Data_Field::group('affiliation'))
+        -&gt;field($count)
+        -&gt;where($count-&gt;lte(5))         // any affiliation with &lt; 5 people
+        -&gt;order($count-&gt;desc());
+$affiliationCounts = $report-&gt;execute();</pre>
+<p>Here's the same query in XSQL syntax.</p>
+<pre class="programlisting">&lt;?php
+$report = $orm-&gt;reportQuery('Person', 'SELECT affiliation, count(personId) as people'.
+        'GrouP By affiliation HAViNG count(personId) &lt; 5 '.
+        'ORDER BY count(personId) desc');
+$affiliationCounts = $report-&gt;execute();</pre>
+<p>The XSQL syntax for a report query follows the following format.</p>
+<p><code class="code">SELECT field[, field...][ WHERE criteria][ GROUP BY field[, field...][ HAVING criteria]][ ORDER BY sort[, sort...]][ LIMIT number[ OFFSET number]]</code></p>
+</div>
+</div>
+<div class="navfooter"><table width="100%" summary="Navigation footer">
+<tr>
+<td width="40%" align="left">
+<a accesskey="p" href="xyster.orm.validate.html">Prev</a> </td>
+<td width="20%" align="center"><a accesskey="u" href="xyster.orm.html">Up</a></td>
+<td width="40%" align="right"> <a accesskey="n" href="xyster.orm.plugins.html">Next</a>
+</td>
+</tr>
+<tr>
+<td width="40%" align="left" valign="top">9.8. Validation </td>
+<td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td>
+<td width="40%" align="right" valign="top"> 9.10. Plugins</td>
+</tr>
+</table></div>
+<div class="revinfo"></div>
+</body>
+</html>

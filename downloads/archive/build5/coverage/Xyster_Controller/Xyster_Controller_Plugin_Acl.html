@@ -1,0 +1,2025 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<LINK REL="stylesheet" TYPE="text/css" TITLE="Style" href="../stylesheet.css">
+</HEAD>
+<BODY>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="bannercell" rowspan="2"><a href="http://phing.info/"><img src="http://phing.info/images/phing.gif" alt="http://phing.info/" align="left" border="0"></a></td>
+<td style="text-align:right"><h2>Source Code Coverage</h2></td>
+</tr>
+<tr><td style="text-align:right">Designed for use with <a href="http://pear.php.net/package/PHPUnit2">PHPUnit2</a>, <a href="http://www.xdebug.org/">Xdebug</a> and <a href="http://phing.info/">Phing</a>.</td></tr>
+</table>
+<hr size="1">
+<table class="log" cellpadding="5" cellspacing="0" width="100%"><tr class="a">
+<td class="small">Methods: 15</td>
+<td class="small">LOC: 396</td>
+<td class="small">Statements: 105</td>
+</tr></table>
+<br><table class="log" cellpadding="5" cellspacing="0" width="100%">
+<tr>
+<th width="100%">Source file</th>
+<th>Statements</th>
+<th>Methods</th>
+<th width="250" colspan="2" nowrap>Total coverage</th>
+</tr>
+<tr class="a">
+<td>Acl.php</td>
+<td>98.1%</td>
+<td>100.0%</td>
+<td>98.3%</td>
+<td><table cellspacing="0" cellpadding="0" border="0" width="100%" style="display: inline"><tr>
+<td class="covered" width="197" height="12"> </td>
+<td class="uncovered" width="3" height="12"> </td>
+</tr></table></td>
+</tr>
+</table>
+<table cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td class="lineCount">1</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">&lt;?php</pre></td>
+</tr>
+<tr>
+<td class="lineCount">2</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">3</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * Xyster Framework</pre></td>
+</tr>
+<tr>
+<td class="lineCount">4</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">5</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * This source file is subject to the new BSD license that is bundled</pre></td>
+</tr>
+<tr>
+<td class="lineCount">6</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * with this package in the file LICENSE.txt.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">7</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * It is also available through the world-wide-web at this URL:</pre></td>
+</tr>
+<tr>
+<td class="lineCount">8</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * http://www.opensource.org/licenses/bsd-license.php</pre></td>
+</tr>
+<tr>
+<td class="lineCount">9</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">10</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @category  Xyster</pre></td>
+</tr>
+<tr>
+<td class="lineCount">11</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @package   Xyster_Controller</pre></td>
+</tr>
+<tr>
+<td class="lineCount">12</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @subpackage Plugins</pre></td>
+</tr>
+<tr>
+<td class="lineCount">13</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">14</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License</pre></td>
+</tr>
+<tr>
+<td class="lineCount">15</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @version   $Id: Acl.php 202 2008-01-20 16:20:09Z doublecompile $</pre></td>
+</tr>
+<tr>
+<td class="lineCount">16</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">17</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">18</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * Zend_Controller_Plugin_Abstract</pre></td>
+</tr>
+<tr>
+<td class="lineCount">19</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">20</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">require_once 'Zend/Controller/Plugin/Abstract.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCount">21</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">22</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @see Xyster_Controller_Request_Resource</pre></td>
+</tr>
+<tr>
+<td class="lineCount">23</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">24</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">require_once 'Xyster/Controller/Request/Resource.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCount">25</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">26</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * Zend_Auth</pre></td>
+</tr>
+<tr>
+<td class="lineCount">27</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">28</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">require_once 'Zend/Auth.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCount">29</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">30</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * Zend_Acl</pre></td>
+</tr>
+<tr>
+<td class="lineCount">31</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">32</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">require_once 'Zend/Acl.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCount">33</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">34</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * Authorization plugin</pre></td>
+</tr>
+<tr>
+<td class="lineCount">35</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">36</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @category  Xyster</pre></td>
+</tr>
+<tr>
+<td class="lineCount">37</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @package   Xyster_Controller</pre></td>
+</tr>
+<tr>
+<td class="lineCount">38</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @subpackage Plugins</pre></td>
+</tr>
+<tr>
+<td class="lineCount">39</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @copyright Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">40</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License</pre></td>
+</tr>
+<tr>
+<td class="lineCount">41</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">42</td>
+<td class="coverageCount"></td>
+<td class="srcLineClassStart"><pre class="srcLine">class Xyster_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract</pre></td>
+</tr>
+<tr>
+<td class="lineCount">43</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">{</pre></td>
+</tr>
+<tr>
+<td class="lineCount">44</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">45</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * The acl</pre></td>
+</tr>
+<tr>
+<td class="lineCount">46</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">47</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @var Zend_Acl</pre></td>
+</tr>
+<tr>
+<td class="lineCount">48</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">49</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    protected $_acl;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">50</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">51</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">52</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Action to use for errors; defaults to 'error'</pre></td>
+</tr>
+<tr>
+<td class="lineCount">53</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @var string</pre></td>
+</tr>
+<tr>
+<td class="lineCount">54</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">55</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    protected $_deniedAction = 'error';</pre></td>
+</tr>
+<tr>
+<td class="lineCount">56</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">57</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">58</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Controller to use for errors; defaults to 'error'</pre></td>
+</tr>
+<tr>
+<td class="lineCount">59</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @var string</pre></td>
+</tr>
+<tr>
+<td class="lineCount">60</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">61</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    protected $_deniedController = 'error';</pre></td>
+</tr>
+<tr>
+<td class="lineCount">62</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">63</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">64</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Module to use for errors; defaults to default module in dispatcher</pre></td>
+</tr>
+<tr>
+<td class="lineCount">65</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @var string</pre></td>
+</tr>
+<tr>
+<td class="lineCount">66</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">67</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    protected $_deniedModule;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">68</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">69</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">70</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Action to use for login; defaults to 'index'</pre></td>
+</tr>
+<tr>
+<td class="lineCount">71</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @var string</pre></td>
+</tr>
+<tr>
+<td class="lineCount">72</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">73</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    protected $_loginAction = 'index';</pre></td>
+</tr>
+<tr>
+<td class="lineCount">74</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">75</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">76</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Controller to use for login; defaults to 'login'</pre></td>
+</tr>
+<tr>
+<td class="lineCount">77</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @var string</pre></td>
+</tr>
+<tr>
+<td class="lineCount">78</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">79</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    protected $_loginController = 'login';</pre></td>
+</tr>
+<tr>
+<td class="lineCount">80</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">81</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">82</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Module to use for login; defaults to default module in dispatcher</pre></td>
+</tr>
+<tr>
+<td class="lineCount">83</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @var string</pre></td>
+</tr>
+<tr>
+<td class="lineCount">84</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">85</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    protected $_loginModule;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">86</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">87</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">88</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Holds the rules passed to 'setRules' until dispatchLoopStartup</pre></td>
+</tr>
+<tr>
+<td class="lineCount">89</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">90</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @var array</pre></td>
+</tr>
+<tr>
+<td class="lineCount">91</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">92</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    protected $_rules = array();</pre></td>
+</tr>
+<tr>
+<td class="lineCount">93</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">94</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">95</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Creates a new acl plugin</pre></td>
+</tr>
+<tr>
+<td class="lineCount">96</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">97</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param Zend_Acl $acl</pre></td>
+</tr>
+<tr>
+<td class="lineCount">98</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">99</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function __construct( Zend_Acl $acl )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">100</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">101</td>
+<td class="lineCountHighlight">7</td>
+<td><pre class="srcLine">        $this-&gt;_acl = $acl;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">102</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">103</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">104</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">105</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Allows access to an action by a role</pre></td>
+</tr>
+<tr>
+<td class="lineCount">106</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">107</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Passing null for the role will allow all users to access the action.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">108</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">109</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Passing null for the module will allow the role access to all actions in</pre></td>
+</tr>
+<tr>
+<td class="lineCount">110</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * all controllers in all modules.  Specifying a module but leaving</pre></td>
+</tr>
+<tr>
+<td class="lineCount">111</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * controller and action null will allow access to all actions in all</pre></td>
+</tr>
+<tr>
+<td class="lineCount">112</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * controllers in the specified module.  Specifying a module and a</pre></td>
+</tr>
+<tr>
+<td class="lineCount">113</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * controller but leaving action null will allow access to all actions in</pre></td>
+</tr>
+<tr>
+<td class="lineCount">114</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * the specified controller.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">115</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">116</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param Zend_Acl_Role_Interface|string $role</pre></td>
+</tr>
+<tr>
+<td class="lineCount">117</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $module The module name</pre></td>
+</tr>
+<tr>
+<td class="lineCount">118</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $controller The controller name</pre></td>
+</tr>
+<tr>
+<td class="lineCount">119</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $action The action name</pre></td>
+</tr>
+<tr>
+<td class="lineCount">120</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Controller_Action_Helper_Acl provides a fluent interface</pre></td>
+</tr>
+<tr>
+<td class="lineCount">121</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">122</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function allow( $role, $module = null, $controller = null, $action = null )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">123</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">124</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        $resource = $this-&gt;_getResource($module, $controller, $action);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">125</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        $this-&gt;_acl-&gt;allow($role, $resource);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">126</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        return $this;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">127</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">128</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">129</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">130</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Denies access to an action by a role</pre></td>
+</tr>
+<tr>
+<td class="lineCount">131</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">132</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Passing null for the role will deny all users access to the action.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">133</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">134</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Passing null for the module will deny everything to the role supplied.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">135</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Specifying a module but leaving controller and action null will deny</pre></td>
+</tr>
+<tr>
+<td class="lineCount">136</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * access to all controllers in the specified module.  Specifying a module</pre></td>
+</tr>
+<tr>
+<td class="lineCount">137</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * and a controller but leaving action null will deny access to all actions</pre></td>
+</tr>
+<tr>
+<td class="lineCount">138</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * in the specified controller.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">139</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">140</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param Zend_Acl_Role_Interface|string $role</pre></td>
+</tr>
+<tr>
+<td class="lineCount">141</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $module The module name</pre></td>
+</tr>
+<tr>
+<td class="lineCount">142</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $controller The controller name</pre></td>
+</tr>
+<tr>
+<td class="lineCount">143</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $action The action name</pre></td>
+</tr>
+<tr>
+<td class="lineCount">144</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Controller_Action_Helper_Acl provides a fluent interface</pre></td>
+</tr>
+<tr>
+<td class="lineCount">145</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">146</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function deny( $role, $module = null, $controller = null, $action = null )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">147</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">148</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        $resource = $this-&gt;_getResource($module, $controller, $action);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">149</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        $this-&gt;_acl-&gt;deny($role, $resource);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">150</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        return $this;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">151</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">152</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">153</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">154</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Called before Zend_Controller_Front enters its dispatch loop</pre></td>
+</tr>
+<tr>
+<td class="lineCount">155</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">156</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param  Zend_Controller_Request_Abstract $request</pre></td>
+</tr>
+<tr>
+<td class="lineCount">157</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">158</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function dispatchLoopStartup(Zend_Controller_Request_Abstract $request)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">159</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">160</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">        foreach( $this-&gt;_rules as $rule ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">161</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            $role = isset($rule['role']) ? $rule['role'] : null;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">162</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            $module = isset($rule['module']) ? $rule['module'] : null;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">163</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            $controller = isset($rule['controller']) ? $rule['controller'] : null;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">164</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            $action = isset($rule['action']) ? $rule['action'] : null;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">165</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">166</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            if ( isset($rule['type']) &amp;&amp; $rule['type'] == Zend_Acl::TYPE_DENY ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">167</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                $this-&gt;deny($role, $module, $controller, $action);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">168</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            } else {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">169</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                $this-&gt;allow($role, $module, $controller, $action);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">170</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">171</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">172</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">173</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">174</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">175</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Retrieve the current acl plugin action</pre></td>
+</tr>
+<tr>
+<td class="lineCount">176</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">177</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return string</pre></td>
+</tr>
+<tr>
+<td class="lineCount">178</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">179</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function getAccessDeniedAction()</pre></td>
+</tr>
+<tr>
+<td class="lineCount">180</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">181</td>
+<td class="lineCountHighlight">4</td>
+<td><pre class="srcLine">        return $this-&gt;_deniedAction;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">182</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">183</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">184</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">185</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Retrieve the current acl plugin controller</pre></td>
+</tr>
+<tr>
+<td class="lineCount">186</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">187</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return string</pre></td>
+</tr>
+<tr>
+<td class="lineCount">188</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">189</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function getAccessDeniedController()</pre></td>
+</tr>
+<tr>
+<td class="lineCount">190</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">191</td>
+<td class="lineCountHighlight">4</td>
+<td><pre class="srcLine">        return $this-&gt;_deniedController;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">192</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">193</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">194</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">195</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Retrieve the current acl plugin module</pre></td>
+</tr>
+<tr>
+<td class="lineCount">196</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">197</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return string</pre></td>
+</tr>
+<tr>
+<td class="lineCount">198</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">199</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function getAccessDeniedModule()</pre></td>
+</tr>
+<tr>
+<td class="lineCount">200</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">201</td>
+<td class="lineCountHighlight">4</td>
+<td><pre class="srcLine">        if (null === $this-&gt;_deniedModule) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">202</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">            require_once 'Zend/Controller/Front.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">203</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">            $this-&gt;_deniedModule = Zend_Controller_Front::getInstance()-&gt;getDispatcher()-&gt;getDefaultModule();</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">204</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">205</td>
+<td class="lineCountHighlight">4</td>
+<td><pre class="srcLine">        return $this-&gt;_deniedModule;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">206</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">207</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">208</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">209</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Retrieve the current not-authenticated action</pre></td>
+</tr>
+<tr>
+<td class="lineCount">210</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">211</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return string</pre></td>
+</tr>
+<tr>
+<td class="lineCount">212</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">213</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function getLoginAction()</pre></td>
+</tr>
+<tr>
+<td class="lineCount">214</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">215</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        return $this-&gt;_loginAction;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">216</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">217</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">218</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">219</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Retrieve the current not-authenticated controller</pre></td>
+</tr>
+<tr>
+<td class="lineCount">220</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">221</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return string</pre></td>
+</tr>
+<tr>
+<td class="lineCount">222</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">223</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function getLoginController()</pre></td>
+</tr>
+<tr>
+<td class="lineCount">224</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">225</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        return $this-&gt;_loginController;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">226</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">227</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">228</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">229</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Retrieve the current not-authenticated module</pre></td>
+</tr>
+<tr>
+<td class="lineCount">230</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">231</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return string</pre></td>
+</tr>
+<tr>
+<td class="lineCount">232</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">233</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function getLoginModule()</pre></td>
+</tr>
+<tr>
+<td class="lineCount">234</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">235</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        if (null === $this-&gt;_loginModule) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">236</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            require_once 'Zend/Controller/Front.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">237</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            $this-&gt;_loginModule = Zend_Controller_Front::getInstance()-&gt;getDispatcher()-&gt;getDefaultModule();</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">238</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">239</td>
+<td class="lineCountHighlight">2</td>
+<td><pre class="srcLine">        return $this-&gt;_loginModule;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">240</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">241</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">242</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">243</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Called before an action is dispatched by Zend_Controller_Dispatcher.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">244</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">245</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param  Zend_Controller_Request_Abstract $request</pre></td>
+</tr>
+<tr>
+<td class="lineCount">246</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">247</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function preDispatch(Zend_Controller_Request_Abstract $request)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">248</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">249</td>
+<td class="lineCountHighlight">5</td>
+<td><pre class="srcLine">        $request = $this-&gt;getRequest();</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">250</td>
+<td class="lineCountHighlight">5</td>
+<td><pre class="srcLine">        $auth = Zend_Auth::getInstance();</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">251</td>
+<td class="lineCountHighlight">5</td>
+<td><pre class="srcLine">        $role = $auth-&gt;getIdentity();</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">252</td>
+<td class="lineCountHighlight">5</td>
+<td><pre class="srcLine">        $resource = $this-&gt;_getResource($request-&gt;getModuleName(),</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">253</td>
+<td class="lineCountHighlight">5</td>
+<td><pre class="srcLine">            $request-&gt;getControllerName(), $request-&gt;getActionName());</pre></td>
+</tr>
+<tr>
+<td class="lineCount">254</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">255</td>
+<td class="lineCountHighlight">5</td>
+<td><pre class="srcLine">        $isAllowed = $this-&gt;_acl-&gt;isAllowed($role, $resource);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">256</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">257</td>
+<td class="lineCountHighlight">5</td>
+<td><pre class="srcLine">        if ( !$isAllowed &amp;&amp; !$auth-&gt;hasIdentity() ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCount">258</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            // they should be allowed access to the login form</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">259</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            $this-&gt;_acl-&gt;allow(null,</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">260</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                $this-&gt;_getResource($this-&gt;getLoginModule(),</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">261</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                $this-&gt;getLoginController(),</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">262</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                $this-&gt;getLoginAction()));</pre></td>
+</tr>
+<tr>
+<td class="lineCount">263</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">264</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            // Forward to the login form</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">265</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            $request-&gt;setModuleName($this-&gt;getLoginModule())</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">266</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                -&gt;setControllerName($this-&gt;getLoginController())</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">267</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                -&gt;setActionName($this-&gt;getLoginAction())</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">268</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">                -&gt;setDispatched(false);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">269</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">            return;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">270</td>
+<td class="coverageCountHighlight">0</td>
+<td><pre class="srcLineHighlight">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">271</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">272</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">        try {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">273</td>
+<td class="lineCountHighlight">4</td>
+<td><pre class="srcLine">            if ( !$isAllowed ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">274</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">                $msg = 'Insufficient permissions: ';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">275</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">        		$msg .= $role . ' -&gt; ' . $resource-&gt;getResourceId();</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">276</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">        		require_once 'Zend/Acl/Exception.php';</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">277</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">                throw new Zend_Acl_Exception($msg);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">278</td>
+<td class="coverageCountHighlight">0</td>
+<td><pre class="srcLineHighlight">            }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">279</td>
+<td class="lineCountHighlight">4</td>
+<td><pre class="srcLine">        } catch ( Zend_Acl_Exception $thrown ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">280</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">            $error = new ArrayObject(array(), ArrayObject::ARRAY_AS_PROPS);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">281</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">            $error-&gt;exception = $thrown;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">282</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">            $error-&gt;type = 'EXCEPTION_OTHER';</pre></td>
+</tr>
+<tr>
+<td class="lineCount">283</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">284</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            // Keep a copy of the original request</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">285</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">            $error-&gt;request = clone $request;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">286</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">287</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            // they should be allowed access to the error display screen, duh</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">288</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">            $this-&gt;_acl-&gt;allow(null,</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">289</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">                $this-&gt;_getResource($this-&gt;getAccessDeniedModule(),</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">290</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">                $this-&gt;getAccessDeniedController(),</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">291</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">                $this-&gt;getAccessDeniedAction()));</pre></td>
+</tr>
+<tr>
+<td class="lineCount">292</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">293</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            // Forward to the error handler</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">294</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">            $request-&gt;setParam('error_handler', $error)</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">295</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">                -&gt;setModuleName($this-&gt;getAccessDeniedModule())</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">296</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">                -&gt;setControllerName($this-&gt;getAccessDeniedController())</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">297</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">                -&gt;setActionName($this-&gt;getAccessDeniedAction())</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">298</td>
+<td class="lineCountHighlight">3</td>
+<td><pre class="srcLine">                -&gt;setDispatched(false);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">299</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">300</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">301</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">302</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">303</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Setup the dispatch location for access denied errors</pre></td>
+</tr>
+<tr>
+<td class="lineCount">304</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">305</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $module</pre></td>
+</tr>
+<tr>
+<td class="lineCount">306</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $controller</pre></td>
+</tr>
+<tr>
+<td class="lineCount">307</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $action</pre></td>
+</tr>
+<tr>
+<td class="lineCount">308</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Controller_Plugin_Acl provides a fluent interface</pre></td>
+</tr>
+<tr>
+<td class="lineCount">309</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">310</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function setAccessDenied( $module, $controller, $action )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">311</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">312</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">        $this-&gt;_deniedModule = (string) $module;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">313</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">        $this-&gt;_deniedController = (string) $controller;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">314</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">        $this-&gt;_deniedAction = (string) $action;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">315</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">316</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">        return $this;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">317</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">318</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">319</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">320</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Setup the dispatch location for unauthenticated users</pre></td>
+</tr>
+<tr>
+<td class="lineCount">321</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">322</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $module</pre></td>
+</tr>
+<tr>
+<td class="lineCount">323</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $controller</pre></td>
+</tr>
+<tr>
+<td class="lineCount">324</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $action</pre></td>
+</tr>
+<tr>
+<td class="lineCount">325</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Controller_Plugin_Acl provides a fluent interface</pre></td>
+</tr>
+<tr>
+<td class="lineCount">326</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">327</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function setLogin( $module, $controller, $action )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">328</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">329</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">        $this-&gt;_loginModule = (string) $module;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">330</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">        $this-&gt;_loginController = (string) $controller;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">331</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">        $this-&gt;_loginAction = (string) $action;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">332</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">333</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">        return $this;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">334</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">335</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">336</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">337</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Sets multiple rules simultaneously</pre></td>
+</tr>
+<tr>
+<td class="lineCount">338</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">339</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Each element in the $rules array should be itself an associative array</pre></td>
+</tr>
+<tr>
+<td class="lineCount">340</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * containing the following keys:</pre></td>
+</tr>
+<tr>
+<td class="lineCount">341</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *  - type : either Zend_Acl::TYPE_ALLOW or Zend_Acl::TYPE_DENY</pre></td>
+</tr>
+<tr>
+<td class="lineCount">342</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *  - role : the string role ID</pre></td>
+</tr>
+<tr>
+<td class="lineCount">343</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *  - module : the module name</pre></td>
+</tr>
+<tr>
+<td class="lineCount">344</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *  - controller : the controller name</pre></td>
+</tr>
+<tr>
+<td class="lineCount">345</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *  - action : the action name</pre></td>
+</tr>
+<tr>
+<td class="lineCount">346</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">347</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * If 'type' is omitted or is null, Zend_Acl::TYPE_ALLOW is assumed.  If any</pre></td>
+</tr>
+<tr>
+<td class="lineCount">348</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * of the other keys are omitted, null is assumed.  See {@link allow} and</pre></td>
+</tr>
+<tr>
+<td class="lineCount">349</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * {@link deny} for the behavior when null is specified for these values.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">350</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">351</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param array $rules</pre></td>
+</tr>
+<tr>
+<td class="lineCount">352</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Controller_Plugin_Acl provides a fluent interface</pre></td>
+</tr>
+<tr>
+<td class="lineCount">353</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">354</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function setRules( array $rules )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">355</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">356</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">        $this-&gt;_rules = $rules;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">357</td>
+<td class="lineCountHighlight">1</td>
+<td><pre class="srcLine">        return $this;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">358</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">359</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">360</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">361</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Gets the resource object</pre></td>
+</tr>
+<tr>
+<td class="lineCount">362</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">363</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $module</pre></td>
+</tr>
+<tr>
+<td class="lineCount">364</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $controller</pre></td>
+</tr>
+<tr>
+<td class="lineCount">365</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param string $action</pre></td>
+</tr>
+<tr>
+<td class="lineCount">366</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return Xyster_Controller_Request_Resource</pre></td>
+</tr>
+<tr>
+<td class="lineCount">367</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">368</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    protected function _getResource( $module, $controller, $action )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">369</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">370</td>
+<td class="lineCountHighlight">5</td>
+<td><pre class="srcLine">        $resource = null;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">371</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">372</td>
+<td class="lineCountHighlight">5</td>
+<td><pre class="srcLine">        if ( $module ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">373</td>
+<td class="lineCountHighlight">5</td>
+<td><pre class="srcLine">            $moduleResource = new Xyster_Controller_Request_Resource($module);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">374</td>
+<td class="lineCountHighlight">5</td>
+<td><pre class="srcLine">            if ( !$this-&gt;_acl-&gt;has($moduleResource) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">375</td>
+<td class="lineCountHighlight">5</td>
+<td><pre class="srcLine">                $this-&gt;_acl-&gt;add($moduleResource);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">376</td>
+<td class="lineCountHighlight">5</td>
+<td><pre class="srcLine">            }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">377</td>
+<td class="lineCountHighlight">5</td>
+<td><pre class="srcLine">            $resource = $moduleResource;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">378</td>
+<td class="lineCountHighlight">5</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">379</td>
+<td class="lineCountHighlight">5</td>
+<td><pre class="srcLine">        if ( $module &amp;&amp; $controller ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">380</td>
+<td class="lineCountHighlight">5</td>
+<td><pre class="srcLine">            $controllerResource = new Xyster_Controller_Request_Resource($module, $controller);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">381</td>
+<td class="lineCountHighlight">5</td>
+<td><pre class="srcLine">            if ( !$this-&gt;_acl-&gt;has($controllerResource) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">382</td>
+<td class="lineCountHighlight">5</td>
+<td><pre class="srcLine">                $this-&gt;_acl-&gt;add($controllerResource, $moduleResource);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">383</td>
+<td class="lineCountHighlight">5</td>
+<td><pre class="srcLine">            }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">384</td>
+<td class="lineCountHighlight">5</td>
+<td><pre class="srcLine">            $resource = $controllerResource;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">385</td>
+<td class="lineCountHighlight">5</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">386</td>
+<td class="lineCountHighlight">5</td>
+<td><pre class="srcLine">        if ( $module &amp;&amp; $controller &amp;&amp; $action ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">387</td>
+<td class="lineCountHighlight">5</td>
+<td><pre class="srcLine">            $actionResource = new Xyster_Controller_Request_Resource($module, $controller, $action);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">388</td>
+<td class="lineCountHighlight">5</td>
+<td><pre class="srcLine">            if ( !$this-&gt;_acl-&gt;has($actionResource) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">389</td>
+<td class="lineCountHighlight">5</td>
+<td><pre class="srcLine">                $this-&gt;_acl-&gt;add($actionResource, $controllerResource);</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">390</td>
+<td class="lineCountHighlight">5</td>
+<td><pre class="srcLine">            }</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">391</td>
+<td class="lineCountHighlight">5</td>
+<td><pre class="srcLine">            $resource = $actionResource;</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">392</td>
+<td class="lineCountHighlight">5</td>
+<td><pre class="srcLine">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">393</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">394</td>
+<td class="lineCountHighlight">5</td>
+<td><pre class="srcLine">        return $resource;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">395</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">396</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">}</pre></td>
+</tr>
+</table>
+<br><table width="100%">
+<tr><td><hr noshade size="1"></td></tr>
+<tr><td class="small">Report generated at 2008-03-05T18:27:43-05:00</td></tr>
+</table>
+</BODY>
+</HTML>

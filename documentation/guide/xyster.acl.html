@@ -1,0 +1,119 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Chapter 2. Xyster_Acl</title>
+<link rel="stylesheet" href="dbstyle.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.72.0">
+<link rel="start" href="index.html" title="Programmer's Reference Guide">
+<link rel="up" href="index.html" title="Programmer's Reference Guide">
+<link rel="prev" href="introduction.installation.html" title="1.2. Installation">
+<link rel="next" href="xyster.acl.roleprovider.html" title="2.2. The ACL Role Provider">
+<link rel="chapter" href="introduction.html" title="Chapter 1. Introduction to Xyster Framework">
+<link rel="chapter" href="xyster.acl.html" title="Chapter 2. Xyster_Acl">
+<link rel="chapter" href="xyster.collection.html" title="Chapter 3. Xyster_Collection">
+<link rel="chapter" href="xyster.controller.html" title="Chapter 4. Xyster_Controller">
+<link rel="chapter" href="xyster.data.html" title="Chapter 5. Xyster_Data">
+<link rel="chapter" href="xyster.date.html" title="Chapter 6. Xyster_Date">
+<link rel="chapter" href="xyster.enum.html" title="Chapter 7. Xyster_Enum">
+<link rel="chapter" href="xyster.filter.html" title="Chapter 8. Xyster_Filter">
+<link rel="chapter" href="xyster.orm.html" title="Chapter 9. Xyster_Orm">
+<link rel="chapter" href="xyster.type.html" title="Chapter 10. Xyster_Type">
+<link rel="chapter" href="xyster.validate.html" title="Chapter 11. Xyster_Validate">
+<link rel="section" href="xyster.acl.html#xyster.acl.introduction" title="2.1. Introduction">
+<link rel="section" href="xyster.acl.roleprovider.html" title="2.2. The ACL Role Provider">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<div class="navheader"><table width="100%" summary="Navigation header">
+<tr><th colspan="3" align="center">Chapter 2. Xyster_Acl</th></tr>
+<tr>
+<td width="20%" align="left">
+<a accesskey="p" href="introduction.installation.html">Prev</a> </td>
+<th width="60%" align="center"> </th>
+<td width="20%" align="right"> <a accesskey="n" href="xyster.acl.roleprovider.html">Next</a>
+</td>
+</tr>
+</table></div>
+<div class="chapter" lang="en">
+<div class="titlepage"><div><div><h2 class="title">
+<a name="xyster.acl"></a>Chapter 2. Xyster_Acl</h2></div></div></div>
+<div class="toc">
+<p><b>Table of Contents</b></p>
+<dl>
+<dt><span class="sect1"><a href="xyster.acl.html#xyster.acl.introduction">2.1. Introduction</a></span></dt>
+<dd><dl><dt><span class="sect2"><a href="xyster.acl.html#xyster.acl.introduction.authorizers">2.1.1. Authorizers</a></span></dt></dl></dd>
+<dt><span class="sect1"><a href="xyster.acl.roleprovider.html">2.2. The ACL Role Provider</a></span></dt>
+</dl>
+</div>
+<div class="sect1" lang="en">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="xyster.acl.introduction"></a>2.1. Introduction</h2></div></div></div>
+<p><code class="classname">Xyster_Acl</code> is an extension of <code class="classname">Zend_Acl</code>. It is an access
+				control list used to define rules where roles
+				are granted or denied access to resources. If any of this sounds unfamiliar to you, check out the
+				documentation for <a href="http://framework.zend.com/manual/en/zend.acl.html" target="_top">Zend_Acl</a>.</p>
+<p>To put it simply, we found that the <code class="classname">Zend_Acl</code> object was lacking something important.
+				As is, each rule in the ACL must be defined explicitly. While this is fine for broad permissions setups,
+				anything fine-grained will quickly result in an obscene amount of rules loaded unnecessarily, especially
+				when access to a resource is dependent on things about the role accessing it. Ultimately, the access control
+				list needs the ability to determine its rules on the fly.</p>
+<p>What about <code class="classname">Zend_Acl_Assert</code> classes, you say? These are objects that determine if a
+				rule is valid when queried. This idea would be perfect if these objects were passed the role, resource,
+				and privilege currently being queried—not the ones with which the rule was defined.</p>
+<p>Seeing no readily available solution to this problem, we came up with the idea of authorizers.</p>
+<div class="sect2" lang="en">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="xyster.acl.introduction.authorizers"></a>2.1.1. Authorizers</h3></div></div></div>
+<p>An ACL Authorizer is just a class that implements <span class="interface">Xyster_Acl_Authorizer_Interface</span>.
+					It has two methods:</p>
+<div class="orderedlist"><ol type="1">
+<li><p><code class="methodname">applies</code> – Does the authorizer apply to the supplied resource?</p></li>
+<li><p><code class="methodname">isAllowed</code> – Passed the role, resource, and privilege currently being queried and
+						returns a boolean if the role should be given access to the resource with the given privilege.</p></li>
+</ol></div>
+<p>A <code class="classname">Xyster_Acl</code> object can be loaded with one or more authorizer. Each authorizer
+					can apply to a different type of resource. As an example, let's say you have two objects that implement
+					<span class="interface">Zend_Acl_Resource_Interface</span>: <code class="classname">Document</code> and <code class="classname">Article</code>.
+					You can have a <code class="classname">Document_Authorizer</code> and an <code class="classname">Article_Authorizer</code> to determine
+					if users can perform certain actions on <code class="classname">Document</code>s and <code class="classname">Article</code>s.</p>
+<pre class="programlisting">&lt;?php
+class Document_Authorizer implements Xyster_Acl_Authorizer_Interface
+{
+	public function applies( Zend_Acl_Resource_Interface $resource )
+	{
+		return $resource instanceof Document;
+	}
+	public function isAllowed( Zend_Acl_Role_Interface $role = null, Zend_Acl_Resource_Interface $resource = null, $privilege = null )
+	{
+		if ( $resource !== null &amp;&amp; $role !== null ) {
+			return $role-&gt;getRoleId() == $resource-&gt;userId;
+		}
+		return false;
+	}	
+}
+$acl = new Xyster_Acl;
+$acl-&gt;addAuthorizer(new Document_Authorizer);</pre>
+<p>So according to this object, if a role's id is the same as the userId property of the <code class="classname">Document</code>,
+					the role should be allowed access. Once the <code class="classname">Xyster_Acl</code> receives a response, it creates the
+					rule and never has to re-query the authorizer.</p>
+<p>If the <code class="classname">Xyster_Acl</code> goes through all of its authorizers and can't find one that applies to the
+					resource, it assumes the default rule in the ACL, which is usually to deny access.</p>
+</div>
+</div>
+</div>
+<div class="navfooter"><table width="100%" summary="Navigation footer">
+<tr>
+<td width="40%" align="left">
+<a accesskey="p" href="introduction.installation.html">Prev</a> </td>
+<td width="20%" align="center"> </td>
+<td width="40%" align="right"> <a accesskey="n" href="xyster.acl.roleprovider.html">Next</a>
+</td>
+</tr>
+<tr>
+<td width="40%" align="left" valign="top">1.2. Installation </td>
+<td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td>
+<td width="40%" align="right" valign="top"> 2.2. The ACL Role Provider</td>
+</tr>
+</table></div>
+<div class="revinfo"></div>
+</body>
+</html>

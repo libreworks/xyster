@@ -1,0 +1,85 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Chapter 6. Xyster_Date</title>
+<link rel="stylesheet" href="dbstyle.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.72.0">
+<link rel="start" href="index.html" title="Programmer's Reference Guide">
+<link rel="up" href="index.html" title="Programmer's Reference Guide">
+<link rel="prev" href="xyster.data.sets.html" title="5.4. Sets and Collections">
+<link rel="next" href="xyster.enum.html" title="Chapter 7. Xyster_Enum">
+<link rel="chapter" href="introduction.html" title="Chapter 1. Introduction to Xyster Framework">
+<link rel="chapter" href="xyster.acl.html" title="Chapter 2. Xyster_Acl">
+<link rel="chapter" href="xyster.collection.html" title="Chapter 3. Xyster_Collection">
+<link rel="chapter" href="xyster.controller.html" title="Chapter 4. Xyster_Controller">
+<link rel="chapter" href="xyster.data.html" title="Chapter 5. Xyster_Data">
+<link rel="chapter" href="xyster.date.html" title="Chapter 6. Xyster_Date">
+<link rel="chapter" href="xyster.enum.html" title="Chapter 7. Xyster_Enum">
+<link rel="chapter" href="xyster.filter.html" title="Chapter 8. Xyster_Filter">
+<link rel="chapter" href="xyster.orm.html" title="Chapter 9. Xyster_Orm">
+<link rel="chapter" href="xyster.type.html" title="Chapter 10. Xyster_Type">
+<link rel="chapter" href="xyster.validate.html" title="Chapter 11. Xyster_Validate">
+<link rel="section" href="xyster.date.html#xyster.date.overview" title="6.1. Overview">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<div class="navheader"><table width="100%" summary="Navigation header">
+<tr><th colspan="3" align="center">Chapter 6. Xyster_Date</th></tr>
+<tr>
+<td width="20%" align="left">
+<a accesskey="p" href="xyster.data.sets.html">Prev</a> </td>
+<th width="60%" align="center"> </th>
+<td width="20%" align="right"> <a accesskey="n" href="xyster.enum.html">Next</a>
+</td>
+</tr>
+</table></div>
+<div class="chapter" lang="en">
+<div class="titlepage"><div><div><h2 class="title">
+<a name="xyster.date"></a>Chapter 6. Xyster_Date</h2></div></div></div>
+<div class="toc">
+<p><b>Table of Contents</b></p>
+<dl>
+<dt><span class="sect1"><a href="xyster.date.html#xyster.date.overview">6.1. Overview</a></span></dt>
+<dd><dl><dt><span class="sect2"><a href="xyster.date.html#xyster.date.range.example">6.1.1. Xyster_Date_Range</a></span></dt></dl></dd>
+</dl>
+</div>
+<div class="sect1" lang="en">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="xyster.date.overview"></a>6.1. Overview</h2></div></div></div>
+<p>This package contains extensions to the Zend Framework Date
+                package.</p>
+<p>For more information about the use of the date classes, see the 
+                <a href="http://framework.zend.com/manual/en/zend.date.html" target="_top">Zend Framework documentation for <code class="code">Zend_Date</code>.</a></p>
+<div class="sect2" lang="en">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="xyster.date.range.example"></a>6.1.1. Xyster_Date_Range</h3></div></div></div>
+<p>This class gives you the ability to specify a range of two
+                dates.  You can calculate the timespan between them and see if
+                a given date is within this range.</p>
+<pre class="programlisting">&lt;?php
+$start = new Zend_Date(strtotime('-90 days'));
+$end = new Zend_Date(); // right now
+$range = new Xyster_Date_Range($start, $end);
+$within = new Zend_Date('-60 days');
+if ( $range-&gt;isWithin($within) ) {
+    // do something here
+}</pre>
+</div>
+</div>
+</div>
+<div class="navfooter"><table width="100%" summary="Navigation footer">
+<tr>
+<td width="40%" align="left">
+<a accesskey="p" href="xyster.data.sets.html">Prev</a> </td>
+<td width="20%" align="center"> </td>
+<td width="40%" align="right"> <a accesskey="n" href="xyster.enum.html">Next</a>
+</td>
+</tr>
+<tr>
+<td width="40%" align="left" valign="top">5.4. Sets and Collections </td>
+<td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td>
+<td width="40%" align="right" valign="top"> Chapter 7. Xyster_Enum</td>
+</tr>
+</table></div>
+<div class="revinfo"></div>
+</body>
+</html>

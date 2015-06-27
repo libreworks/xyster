@@ -1,0 +1,546 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class Xyster_Container_Parameter_Basic</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name">Class Xyster_Container_Parameter_Basic</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+													<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+						|											<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+					</div>
+	<div class="info-box-body">
+                <p class="implements">
+            Implements interfaces:
+            <ul>
+                <li><a href="../Xyster_Container/Xyster_Container_Parameter.html">Xyster_Container_Parameter</a></li>            </ul>
+        </p>
+        		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Should be used to pass in a particular component as argument to a different component's constructor</p>
+<p class="description"><p>This is particularly useful in cases where several components of the same  type have been registered, but with a different key. Passing a Parameter as a  parameter when registering a component will give the Container a hint about  what other component to use in the constructor. This Parameter will never  resolve against a collecting type, that is not directly registered in the  Container itself.</p></p>
+	<ul class="tags">
+				<li><span class="field">copyright:</span> Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)</li>
+				<li><span class="field">license:</span> <a href="http://www.opensource.org/licenses/bsd-license.php">New BSD License</a></li>
+			</ul>
+		<p class="notes">
+			Located in <a class="field" href="_Container---Parameter---Basic.php.html">/Container/Parameter/Basic.php</a> (line <span class="field">35</span>)
+		</p>
+		
+				
+		<pre></pre>
+	
+			</div>
+</div>
+
+
+
+	<a name="sec-var-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variable Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+						<span class="disabled">Vars</span> (<a href="#sec-vars">details</a>)
+							| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+								</div>
+		<div class="info-box-body">
+			<div class="var-summary">
+												<div class="var-title">
+					static <span class="var-type">mixed</span>
+					<a href="#$_default" title="details" class="var-name">$_default</a>
+				</div>
+																							</div>
+		</div>
+	</div>
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+																		<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+				 
+				|
+						<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+																																												<div class="method-definition">
+					static 						<span class="method-result"><a href="../Xyster_Container/Xyster_Container_Parameter_Basic.html">Xyster_Container_Parameter_Basic</a></span>
+										<a href="#standard" title="details" class="method-name">standard</a>
+										()
+									</div>
+																																								
+												<div class="method-definition">
+											<span class="method-result">Xyster_Container_Parameter_Basic</span>
+										<a href="#__construct" title="details" class="method-name">__construct</a>
+											([<span class="var-type">mixed</span>&nbsp;<span class="var-name">$key</span> = <span class="var-default">null</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#accept" title="details" class="method-name">accept</a>
+											(<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Visitor.html">Xyster_Container_Visitor</a></span>&nbsp;<span class="var-name">$visitor</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#isResolvable" title="details" class="method-name">isResolvable</a>
+											(<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Interface.html">Xyster_Container_Interface</a></span>&nbsp;<span class="var-name">$container</span>, [<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>&nbsp;<span class="var-name">$adapter</span> = <span class="var-default">null</span>], <span class="var-type"></span>&nbsp;<span class="var-name">$expectedType</span>, <span class="var-type"><a href="../Xyster_Container/Xyster_Container_NameBinding.html">Xyster_Container_NameBinding</a></span>&nbsp;<span class="var-name">$expectedNameBinding</span>, <span class="var-type">boolean</span>&nbsp;<span class="var-name">$useNames</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">mixed</span>
+										<a href="#resolveInstance" title="details" class="method-name">resolveInstance</a>
+											(<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Interface.html">Xyster_Container_Interface</a></span>&nbsp;<span class="var-name">$container</span>, [<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>&nbsp;<span class="var-name">$adapter</span> = <span class="var-default">null</span>], <span class="var-type"></span>&nbsp;<span class="var-name">$expectedType</span>, <span class="var-type"><a href="../Xyster_Container/Xyster_Container_NameBinding.html">Xyster_Container_NameBinding</a></span>&nbsp;<span class="var-name">$expectedNameBinding</span>, <span class="var-type">boolean</span>&nbsp;<span class="var-name">$useNames</span>)
+									</div>
+																								<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#verify" title="details" class="method-name">verify</a>
+											(<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Interface.html">Xyster_Container_Interface</a></span>&nbsp;<span class="var-name">$container</span>, [<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>&nbsp;<span class="var-name">$adapter</span> = <span class="var-default">null</span>], <span class="var-type"></span>&nbsp;<span class="var-name">$expectedType</span>, <span class="var-type"><a href="../Xyster_Container/Xyster_Container_NameBinding.html">Xyster_Container_NameBinding</a></span>&nbsp;<span class="var-name">$expectedNameBinding</span>, <span class="var-type">boolean</span>&nbsp;<span class="var-name">$useNames</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#_areCompatible" title="details" class="method-name">_areCompatible</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$expectedType</span>, <span class="var-type"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>&nbsp;<span class="var-name">$found</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>
+										<a href="#_getTargetAdapter" title="details" class="method-name">_getTargetAdapter</a>
+											(<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Interface.html">Xyster_Container_Interface</a></span>&nbsp;<span class="var-name">$container</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$expectedType</span>, <span class="var-type"><a href="../Xyster_Container/Xyster_Container_NameBinding.html">Xyster_Container_NameBinding</a></span>&nbsp;<span class="var-name">$expectedNameBinding</span>, [<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>&nbsp;<span class="var-name">$excludeAdapter</span> = <span class="var-default">null</span>], <span class="var-type"></span>&nbsp;<span class="var-name">$useNames</span>, <span class="var-type">ReflectionParameter</span>&nbsp;<span class="var-name">$expectedParameter</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>
+										<a href="#_resolveAdapter" title="details" class="method-name">_resolveAdapter</a>
+											(<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Interface.html">Xyster_Container_Interface</a></span>&nbsp;<span class="var-name">$container</span>, [<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>&nbsp;<span class="var-name">$adapter</span> = <span class="var-default">null</span>], <span class="var-type"></span>&nbsp;<span class="var-name">$expectedType</span>, <span class="var-type"><a href="../Xyster_Container/Xyster_Container_NameBinding.html">Xyster_Container_NameBinding</a></span>&nbsp;<span class="var-name">$expectedNameBinding</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$useNames</span>, <span class="var-type">ReflectionParameter</span>&nbsp;<span class="var-name">$expectedParameter</span>)
+									</div>
+								</div>
+		</div>
+	</div>		
+
+	<a name="sec-vars"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variables</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+										<a href="#sec-var-summary">Vars</a> (<span class="disabled">details</span>)
+						
+			
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			<a name="var$_default" id="$_default"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			static <span class="var-type">mixed</span>
+			<span class="var-name">$_default</span>
+						(line <span class="line-number">39</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+						
+		</div>
+	</div>
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+															<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+																	<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+<a name="methodstandard" id="standard"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">static method standard</span> (line <span class="line-number">46</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets a simple parameter</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+	    static
+		<span class="method-result"><a href="../Xyster_Container/Xyster_Container_Parameter_Basic.html">Xyster_Container_Parameter_Basic</a></span>
+		<span class="method-name">
+			standard
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+
+<a name="method__construct" id="__construct"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number">62</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Creates a new basic parameter</p>
+<p class="description"><p>If the $key parameter is null, this object will match any parameter of  the appropriate type.</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Xyster_Container_Parameter_Basic</span>
+		<span class="method-name">
+			__construct
+		</span>
+					([<span class="var-type">mixed</span>&nbsp;<span class="var-name">$key</span> = <span class="var-default">null</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$key</span><span class="var-description">: The key of the desired component</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodaccept" id="accept"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">accept</span> (line <span class="line-number">72</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Visit the current parameter</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			accept
+		</span>
+					(<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Visitor.html">Xyster_Container_Visitor</a></span>&nbsp;<span class="var-name">$visitor</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Visitor.html">Xyster_Container_Visitor</a></span>
+				<span class="var-name">$visitor</span>			</li>
+				</ul>
+		
+				<hr class="separator" />
+		<div class="notes">Implementation of:</div>
+			<dl>
+			<dt><a href="../Xyster_Container/Xyster_Container_Parameter.html#methodaccept">Xyster_Container_Parameter::accept()</a></dt>
+						<dd>Accepts a visitor for this Parameter</dd>
+					</dl>
+			
+	</div>
+<a name="methodisResolvable" id="isResolvable"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">isResolvable</span> (line <span class="line-number">87</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Check if the Parameter can statisfy the expected type using the container.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> <div class="src-code"><ol><li><div class="src-line"><span class="src-id">true</span></div></li>
+</ol></div> if the component parameter can be resolved.</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			isResolvable
+		</span>
+					(<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Interface.html">Xyster_Container_Interface</a></span>&nbsp;<span class="var-name">$container</span>, [<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>&nbsp;<span class="var-name">$adapter</span> = <span class="var-default">null</span>], <span class="var-type"></span>&nbsp;<span class="var-name">$expectedType</span>, <span class="var-type"><a href="../Xyster_Container/Xyster_Container_NameBinding.html">Xyster_Container_NameBinding</a></span>&nbsp;<span class="var-name">$expectedNameBinding</span>, <span class="var-type">boolean</span>&nbsp;<span class="var-name">$useNames</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Interface.html">Xyster_Container_Interface</a></span>
+				<span class="var-name">$container</span><span class="var-description">: the container from which dependencies are resolved.</span>			</li>
+					<li>
+				<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>
+				<span class="var-name">$adapter</span><span class="var-description">: the adapter that is asking for the instance</span>			</li>
+					<li>
+				<span class="var-type">Xyster_Type</span>
+				<span class="var-name">$expectedType</span><span class="var-description">: the required type</span>			</li>
+					<li>
+				<span class="var-type"><a href="../Xyster_Container/Xyster_Container_NameBinding.html">Xyster_Container_NameBinding</a></span>
+				<span class="var-name">$expectedNameBinding</span><span class="var-description">: the expected parameter name</span>			</li>
+					<li>
+				<span class="var-type">boolean</span>
+				<span class="var-name">$useNames</span>			</li>
+				</ul>
+		
+				<hr class="separator" />
+		<div class="notes">Implementation of:</div>
+			<dl>
+			<dt><a href="../Xyster_Container/Xyster_Container_Parameter.html#methodisResolvable">Xyster_Container_Parameter::isResolvable()</a></dt>
+						<dd>Check if the Parameter can statisfy the expected type using the container.</dd>
+					</dl>
+			
+	</div>
+<a name="methodresolveInstance" id="resolveInstance"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">resolveInstance</span> (line <span class="line-number">103</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Retrieve the object from the Parameter that statisfies the expected type.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> the instance or <div class="src-code"><ol><li><div class="src-line"><span class="src-id">null</span></div></li>
+</ol></div> if no suitable instance can be found.</li>
+				<li><span class="field">throws:</span> Xyster_Container_Exception if a referenced component could not be instantiated.</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">mixed</span>
+		<span class="method-name">
+			resolveInstance
+		</span>
+					(<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Interface.html">Xyster_Container_Interface</a></span>&nbsp;<span class="var-name">$container</span>, [<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>&nbsp;<span class="var-name">$adapter</span> = <span class="var-default">null</span>], <span class="var-type"></span>&nbsp;<span class="var-name">$expectedType</span>, <span class="var-type"><a href="../Xyster_Container/Xyster_Container_NameBinding.html">Xyster_Container_NameBinding</a></span>&nbsp;<span class="var-name">$expectedNameBinding</span>, <span class="var-type">boolean</span>&nbsp;<span class="var-name">$useNames</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Interface.html">Xyster_Container_Interface</a></span>
+				<span class="var-name">$container</span><span class="var-description">: the container from which dependencies are resolved.</span>			</li>
+					<li>
+				<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>
+				<span class="var-name">$adapter</span><span class="var-description">: the Component Adapter that is asking for the instance</span>			</li>
+					<li>
+				<span class="var-type">Xyster_Type</span>
+				<span class="var-name">$expectedType</span><span class="var-description">: the required type</span>			</li>
+					<li>
+				<span class="var-type"><a href="../Xyster_Container/Xyster_Container_NameBinding.html">Xyster_Container_NameBinding</a></span>
+				<span class="var-name">$expectedNameBinding</span><span class="var-description">: the expected parameter name</span>			</li>
+					<li>
+				<span class="var-type">boolean</span>
+				<span class="var-name">$useNames</span>			</li>
+				</ul>
+		
+				<hr class="separator" />
+		<div class="notes">Implementation of:</div>
+			<dl>
+			<dt><a href="../Xyster_Container/Xyster_Container_Parameter.html#methodresolveInstance">Xyster_Container_Parameter::resolveInstance()</a></dt>
+						<dd>Retrieve the object from the Parameter that statisfies the expected type.</dd>
+					</dl>
+			
+	</div>
+<a name="methodverify" id="verify"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">verify</span> (line <span class="line-number">129</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Verify that the Parameter can statisfied the expected type using the container</p>
+	<ul class="tags">
+				<li><span class="field">throws:</span> Xyster_Container_Parameter_Exception if parameter and its dependencies cannot be resolved</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			verify
+		</span>
+					(<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Interface.html">Xyster_Container_Interface</a></span>&nbsp;<span class="var-name">$container</span>, [<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>&nbsp;<span class="var-name">$adapter</span> = <span class="var-default">null</span>], <span class="var-type"></span>&nbsp;<span class="var-name">$expectedType</span>, <span class="var-type"><a href="../Xyster_Container/Xyster_Container_NameBinding.html">Xyster_Container_NameBinding</a></span>&nbsp;<span class="var-name">$expectedNameBinding</span>, <span class="var-type">boolean</span>&nbsp;<span class="var-name">$useNames</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Interface.html">Xyster_Container_Interface</a></span>
+				<span class="var-name">$container</span><span class="var-description">: the container from which dependencies are resolved.</span>			</li>
+					<li>
+				<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>
+				<span class="var-name">$adapter</span><span class="var-description">: the Component Adapter that is asking for the verification</span>			</li>
+					<li>
+				<span class="var-type">Xyster_Type</span>
+				<span class="var-name">$expectedType</span><span class="var-description">: the required type</span>			</li>
+					<li>
+				<span class="var-type"><a href="../Xyster_Container/Xyster_Container_NameBinding.html">Xyster_Container_NameBinding</a></span>
+				<span class="var-name">$expectedNameBinding</span><span class="var-description">: the expected parameter name</span>			</li>
+					<li>
+				<span class="var-type">boolean</span>
+				<span class="var-name">$useNames</span>			</li>
+				</ul>
+		
+				<hr class="separator" />
+		<div class="notes">Implementation of:</div>
+			<dl>
+			<dt><a href="../Xyster_Container/Xyster_Container_Parameter.html#methodverify">Xyster_Container_Parameter::verify()</a></dt>
+						<dd>Verify that the Parameter can statisfied the expected type using the container</dd>
+					</dl>
+			
+	</div>
+<a name="method_areCompatible" id="_areCompatible"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">_areCompatible</span> (line <span class="line-number">146</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Tests to see if a type and an adapter are compatible</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			_areCompatible
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$expectedType</span>, <span class="var-type"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>&nbsp;<span class="var-name">$found</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">Xyster_Type</span>
+				<span class="var-name">$expectedType</span>			</li>
+					<li>
+				<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>
+				<span class="var-name">$found</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="method_getTargetAdapter" id="_getTargetAdapter"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">_getTargetAdapter</span> (line <span class="line-number">160</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets the adapter for the parameter supplied</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>
+		<span class="method-name">
+			_getTargetAdapter
+		</span>
+					(<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Interface.html">Xyster_Container_Interface</a></span>&nbsp;<span class="var-name">$container</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$expectedType</span>, <span class="var-type"><a href="../Xyster_Container/Xyster_Container_NameBinding.html">Xyster_Container_NameBinding</a></span>&nbsp;<span class="var-name">$expectedNameBinding</span>, [<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>&nbsp;<span class="var-name">$excludeAdapter</span> = <span class="var-default">null</span>], <span class="var-type"></span>&nbsp;<span class="var-name">$useNames</span>, <span class="var-type">ReflectionParameter</span>&nbsp;<span class="var-name">$expectedParameter</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Interface.html">Xyster_Container_Interface</a></span>
+				<span class="var-name">$container</span>			</li>
+					<li>
+				<span class="var-type">ReflectionParameter</span>
+				<span class="var-name">$expectedParameter</span>			</li>
+					<li>
+				<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>
+				<span class="var-name">$excludeAdapter</span>			</li>
+					<li>
+				<span class="var-type">Xyster_Type</span>
+				<span class="var-name">$expectedType</span>			</li>
+					<li>
+				<span class="var-type"><a href="../Xyster_Container/Xyster_Container_NameBinding.html">Xyster_Container_NameBinding</a></span>
+				<span class="var-name">$expectedNameBinding</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$useNames</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="method_resolveAdapter" id="_resolveAdapter"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">_resolveAdapter</span> (line <span class="line-number">213</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Tries to resolve the adapter used for the type</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>
+		<span class="method-name">
+			_resolveAdapter
+		</span>
+					(<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Interface.html">Xyster_Container_Interface</a></span>&nbsp;<span class="var-name">$container</span>, [<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>&nbsp;<span class="var-name">$adapter</span> = <span class="var-default">null</span>], <span class="var-type"></span>&nbsp;<span class="var-name">$expectedType</span>, <span class="var-type"><a href="../Xyster_Container/Xyster_Container_NameBinding.html">Xyster_Container_NameBinding</a></span>&nbsp;<span class="var-name">$expectedNameBinding</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$useNames</span>, <span class="var-type">ReflectionParameter</span>&nbsp;<span class="var-name">$expectedParameter</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Interface.html">Xyster_Container_Interface</a></span>
+				<span class="var-name">$container</span>			</li>
+					<li>
+				<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>
+				<span class="var-name">$adapter</span>			</li>
+					<li>
+				<span class="var-type">ReflectionParameter</span>
+				<span class="var-name">$expectedParameter</span>			</li>
+					<li>
+				<span class="var-type">Xyster_Type</span>
+				<span class="var-name">$expectedType</span>			</li>
+					<li>
+				<span class="var-type"><a href="../Xyster_Container/Xyster_Container_NameBinding.html">Xyster_Container_NameBinding</a></span>
+				<span class="var-name">$expectedNameBinding</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$useNames</span>			</li>
+				</ul>
+		
+			
+	</div>
+						
+		</div>
+	</div>
+
+
+	<p class="notes" id="credit">
+		Documentation generated on Mon, 19 May 2008 17:08:14 -0400 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.2</a>
+	</p>
+	</div></body>
+</html>

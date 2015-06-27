@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class Xyster_Db_Gateway_Mysqli</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name">Class Xyster_Db_Gateway_Mysqli</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+															<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+					</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">A gateway and abstraction layer for MySQLi connections</p>
+<p class="description"><p>We'll worry about inheritance later.</p></p>
+	<ul class="tags">
+				<li><span class="field">copyright:</span> Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)</li>
+				<li><span class="field">license:</span> <a href="http://www.opensource.org/licenses/bsd-license.php">New BSD License</a></li>
+			</ul>
+		<p class="notes">
+			Located in <a class="field" href="_Db---Gateway---Mysqli.php.html">/Db/Gateway/Mysqli.php</a> (line <span class="field">30</span>)
+		</p>
+		
+				
+		<pre><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html">Xyster_Db_Gateway_Abstract</a>
+   |
+   --<a href="../Xyster_Db/Xyster_Db_Gateway_Pdo_Mysql.html">Xyster_Db_Gateway_Pdo_Mysql</a>
+      |
+      --Xyster_Db_Gateway_Mysqli</pre>
+	
+			</div>
+</div>
+
+
+
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+												<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+																				
+												<div class="method-definition">
+											<span class="method-result">Xyster_Db_Gateway_Mysqli</span>
+										<a href="#__construct" title="details" class="method-name">__construct</a>
+											([<span class="var-type"></span>&nbsp;<span class="var-name">$db</span> = <span class="var-default">null</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setAdapter" title="details" class="method-name">setAdapter</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$db</span>)
+									</div>
+								</div>
+		</div>
+	</div>		
+
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+																<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+
+<a name="method__construct" id="__construct"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number">37</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Creates a new MySQLi DB gateway</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Xyster_Db_Gateway_Mysqli</span>
+		<span class="method-name">
+			__construct
+		</span>
+					([<span class="var-type"></span>&nbsp;<span class="var-name">$db</span> = <span class="var-default">null</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">Zend_Db_Adapter_Mysqli</span>
+				<span class="var-name">$db</span><span class="var-description">: The database adapter to use</span>			</li>
+				</ul>
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../Xyster_Db/Xyster_Db_Gateway_Pdo_Mysql.html#method__construct">Xyster_Db_Gateway_Pdo_Mysql::__construct()</a></dt>
+						<dd>Creates a new MySQL DB gateway</dd>
+					</dl>
+			
+	</div>
+<a name="methodsetAdapter" id="setAdapter"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">setAdapter</span> (line <span class="line-number">49</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Sets the database adapter</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setAdapter
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$db</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">Zend_Db_Adapter_Mysqli</span>
+				<span class="var-name">$db</span><span class="var-description">: The database adapter to use</span>			</li>
+				</ul>
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../Xyster_Db/Xyster_Db_Gateway_Pdo_Mysql.html#methodsetAdapter">Xyster_Db_Gateway_Pdo_Mysql::setAdapter()</a></dt>
+						<dd>Sets the database adapter</dd>
+					</dl>
+			
+	</div>
+							<h4>Inherited Methods</h4>
+				<a name='inherited_methods'><!-- --></a>	
+									<!-- =========== Summary =========== -->
+					<p>Inherited From <span class="classname"><a href="../Xyster_Db/Xyster_Db_Gateway_Pdo_Mysql.html">Xyster_Db_Gateway_Pdo_Mysql</a></span></p>
+					<blockquote>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Pdo_Mysql.html#method__construct">Xyster_Db_Gateway_Pdo_Mysql::__construct()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Pdo_Mysql.html#methodlistForeignKeys">Xyster_Db_Gateway_Pdo_Mysql::listForeignKeys()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Pdo_Mysql.html#methodlistIndexes">Xyster_Db_Gateway_Pdo_Mysql::listIndexes()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Pdo_Mysql.html#methodrenameIndex">Xyster_Db_Gateway_Pdo_Mysql::renameIndex()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Pdo_Mysql.html#methodsetAdapter">Xyster_Db_Gateway_Pdo_Mysql::setAdapter()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Pdo_Mysql.html#method_getCreateIndexSql">Xyster_Db_Gateway_Pdo_Mysql::_getCreateIndexSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Pdo_Mysql.html#method_getCreateTableSql">Xyster_Db_Gateway_Pdo_Mysql::_getCreateTableSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Pdo_Mysql.html#method_getDropForeignSql">Xyster_Db_Gateway_Pdo_Mysql::_getDropForeignSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Pdo_Mysql.html#method_getDropIndexSql">Xyster_Db_Gateway_Pdo_Mysql::_getDropIndexSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Pdo_Mysql.html#method_getDropPrimarySql">Xyster_Db_Gateway_Pdo_Mysql::_getDropPrimarySql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Pdo_Mysql.html#method_getListSequencesSql">Xyster_Db_Gateway_Pdo_Mysql::_getListSequencesSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Pdo_Mysql.html#method_getRenameColumnSql">Xyster_Db_Gateway_Pdo_Mysql::_getRenameColumnSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Pdo_Mysql.html#method_getRenameIndexSql">Xyster_Db_Gateway_Pdo_Mysql::_getRenameIndexSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Pdo_Mysql.html#method_getRenameTableSql">Xyster_Db_Gateway_Pdo_Mysql::_getRenameTableSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Pdo_Mysql.html#method_getSetNullSql">Xyster_Db_Gateway_Pdo_Mysql::_getSetNullSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Pdo_Mysql.html#method_getSetTypeSql">Xyster_Db_Gateway_Pdo_Mysql::_getSetTypeSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Pdo_Mysql.html#method_translateType">Xyster_Db_Gateway_Pdo_Mysql::_translateType()</a></span><br>
+											</blockquote>
+									<!-- =========== Summary =========== -->
+					<p>Inherited From <span class="classname"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html">Xyster_Db_Gateway_Abstract</a></span></p>
+					<blockquote>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method__construct">Xyster_Db_Gateway_Abstract::__construct()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodaddColumn">Xyster_Db_Gateway_Abstract::addColumn()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodaddForeign">Xyster_Db_Gateway_Abstract::addForeign()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodaddPrimary">Xyster_Db_Gateway_Abstract::addPrimary()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodcreateIndex">Xyster_Db_Gateway_Abstract::createIndex()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodcreateSequence">Xyster_Db_Gateway_Abstract::createSequence()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodcreateTable">Xyster_Db_Gateway_Abstract::createTable()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methoddropColumn">Xyster_Db_Gateway_Abstract::dropColumn()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methoddropForeign">Xyster_Db_Gateway_Abstract::dropForeign()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methoddropIndex">Xyster_Db_Gateway_Abstract::dropIndex()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methoddropPrimary">Xyster_Db_Gateway_Abstract::dropPrimary()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methoddropSequence">Xyster_Db_Gateway_Abstract::dropSequence()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methoddropTable">Xyster_Db_Gateway_Abstract::dropTable()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodexecuteIndexBuilder">Xyster_Db_Gateway_Abstract::executeIndexBuilder()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodexecuteTableBuilder">Xyster_Db_Gateway_Abstract::executeTableBuilder()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodgetAdapter">Xyster_Db_Gateway_Abstract::getAdapter()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodlistForeignKeys">Xyster_Db_Gateway_Abstract::listForeignKeys()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodlistIndexes">Xyster_Db_Gateway_Abstract::listIndexes()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodlistSequences">Xyster_Db_Gateway_Abstract::listSequences()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodrenameColumn">Xyster_Db_Gateway_Abstract::renameColumn()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodrenameIndex">Xyster_Db_Gateway_Abstract::renameIndex()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodrenameSequence">Xyster_Db_Gateway_Abstract::renameSequence()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodrenameTable">Xyster_Db_Gateway_Abstract::renameTable()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodsetDefault">Xyster_Db_Gateway_Abstract::setDefault()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodsetNull">Xyster_Db_Gateway_Abstract::setNull()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodsetType">Xyster_Db_Gateway_Abstract::setType()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodsetUnique">Xyster_Db_Gateway_Abstract::setUnique()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodsupportsForeignKeys">Xyster_Db_Gateway_Abstract::supportsForeignKeys()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#methodsupportsSequences">Xyster_Db_Gateway_Abstract::supportsSequences()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getAddColumnSql">Xyster_Db_Gateway_Abstract::_getAddColumnSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getAddForeignSql">Xyster_Db_Gateway_Abstract::_getAddForeignSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getAddPrimarySql">Xyster_Db_Gateway_Abstract::_getAddPrimarySql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getCreateIndexSql">Xyster_Db_Gateway_Abstract::_getCreateIndexSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getCreateSequenceSql">Xyster_Db_Gateway_Abstract::_getCreateSequenceSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getCreateTableSql">Xyster_Db_Gateway_Abstract::_getCreateTableSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getDropColumnSql">Xyster_Db_Gateway_Abstract::_getDropColumnSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getDropForeignSql">Xyster_Db_Gateway_Abstract::_getDropForeignSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getDropIndexSql">Xyster_Db_Gateway_Abstract::_getDropIndexSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getDropPrimarySql">Xyster_Db_Gateway_Abstract::_getDropPrimarySql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getDropSequenceSql">Xyster_Db_Gateway_Abstract::_getDropSequenceSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getDropTableSql">Xyster_Db_Gateway_Abstract::_getDropTableSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getListSequencesSql">Xyster_Db_Gateway_Abstract::_getListSequencesSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getRenameColumnSql">Xyster_Db_Gateway_Abstract::_getRenameColumnSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getRenameIndexSql">Xyster_Db_Gateway_Abstract::_getRenameIndexSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getRenameSequenceSql">Xyster_Db_Gateway_Abstract::_getRenameSequenceSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getRenameTableSql">Xyster_Db_Gateway_Abstract::_getRenameTableSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getSetDefaultSql">Xyster_Db_Gateway_Abstract::_getSetDefaultSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getSetNullSql">Xyster_Db_Gateway_Abstract::_getSetNullSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getSetTypeSql">Xyster_Db_Gateway_Abstract::_getSetTypeSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_getSetUniqueSql">Xyster_Db_Gateway_Abstract::_getSetUniqueSql()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_makeArray">Xyster_Db_Gateway_Abstract::_makeArray()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_quote">Xyster_Db_Gateway_Abstract::_quote()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_setAdapter">Xyster_Db_Gateway_Abstract::_setAdapter()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Db/Xyster_Db_Gateway_Abstract.html#method_translateType">Xyster_Db_Gateway_Abstract::_translateType()</a></span><br>
+											</blockquote>
+										
+		</div>
+	</div>
+
+
+	<p class="notes" id="credit">
+		Documentation generated on Mon, 19 May 2008 17:08:28 -0400 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.2</a>
+	</p>
+	</div></body>
+</html>

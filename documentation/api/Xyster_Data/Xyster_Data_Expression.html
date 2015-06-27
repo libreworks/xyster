@@ -1,0 +1,902 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class Xyster_Data_Expression</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name">Class Xyster_Data_Expression</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+													<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+						|											<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+					</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">An expression is a boolean evaluation comparing a column against a value</p>
+	<ul class="tags">
+				<li><span class="field">copyright:</span> Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)</li>
+				<li><span class="field">license:</span> <a href="http://www.opensource.org/licenses/bsd-license.php">New BSD License</a></li>
+			</ul>
+		<p class="notes">
+			Located in <a class="field" href="_Data---Expression.php.html">/Data/Expression.php</a> (line <span class="field">32</span>)
+		</p>
+		
+				
+		<pre><a href="../Xyster_Data/Xyster_Data_Criterion.html">Xyster_Data_Criterion</a>
+   |
+   --Xyster_Data_Expression</pre>
+	
+			</div>
+</div>
+
+
+
+	<a name="sec-var-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variable Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+						<span class="disabled">Vars</span> (<a href="#sec-vars">details</a>)
+							| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+								</div>
+		<div class="info-box-body">
+			<div class="var-summary">
+																																								<div class="var-title">
+					<span class="var-type"><a href="../Xyster_Data/Xyster_Data_Field.html">Xyster_Data_Field</a></span>
+					<a href="#$_left" title="details" class="var-name">$_left</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type"><a href="../Xyster_Data/Xyster_Data_Operator_Expression.html">Xyster_Data_Operator_Expression</a></span>
+					<a href="#$_operator" title="details" class="var-name">$_operator</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$_right" title="details" class="var-name">$_right</a>
+				</div>
+											</div>
+		</div>
+	</div>
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+																		<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+				 
+				|
+						<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+																				<div class="method-definition">
+					static 						<span class="method-result"><a href="../Xyster_Data/Xyster_Data_Expression.html">Xyster_Data_Expression</a></span>
+										<a href="#between" title="details" class="method-name">between</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$field</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$start</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$end</span>)
+									</div>
+																<div class="method-definition">
+					static 						<span class="method-result"><a href="../Xyster_Data/Xyster_Data_Expression.html">Xyster_Data_Expression</a></span>
+										<a href="#eq" title="details" class="method-name">eq</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$field</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$value</span>)
+									</div>
+																																<div class="method-definition">
+					static 						<span class="method-result">string</span>
+										<a href="#getMethodName" title="details" class="method-name">getMethodName</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$operator</span>)
+									</div>
+																																<div class="method-definition">
+					static 						<span class="method-result"><a href="../Xyster_Data/Xyster_Data_Expression.html">Xyster_Data_Expression</a></span>
+										<a href="#gt" title="details" class="method-name">gt</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$field</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$value</span>)
+									</div>
+																<div class="method-definition">
+					static 						<span class="method-result"><a href="../Xyster_Data/Xyster_Data_Expression.html">Xyster_Data_Expression</a></span>
+										<a href="#gte" title="details" class="method-name">gte</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$field</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$value</span>)
+									</div>
+																<div class="method-definition">
+					static 						<span class="method-result"><a href="../Xyster_Data/Xyster_Data_Expression.html">Xyster_Data_Expression</a></span>
+										<a href="#in" title="details" class="method-name">in</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$field</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$choices</span>)
+									</div>
+																<div class="method-definition">
+					static 						<span class="method-result"><a href="../Xyster_Data/Xyster_Data_Expression.html">Xyster_Data_Expression</a></span>
+										<a href="#like" title="details" class="method-name">like</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$field</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$value</span>)
+									</div>
+																<div class="method-definition">
+					static 						<span class="method-result"><a href="../Xyster_Data/Xyster_Data_Expression.html">Xyster_Data_Expression</a></span>
+										<a href="#lt" title="details" class="method-name">lt</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$field</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$value</span>)
+									</div>
+																<div class="method-definition">
+					static 						<span class="method-result"><a href="../Xyster_Data/Xyster_Data_Expression.html">Xyster_Data_Expression</a></span>
+										<a href="#lte" title="details" class="method-name">lte</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$field</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$value</span>)
+									</div>
+																<div class="method-definition">
+					static 						<span class="method-result"><a href="../Xyster_Data/Xyster_Data_Expression.html">Xyster_Data_Expression</a></span>
+										<a href="#neq" title="details" class="method-name">neq</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$field</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$value</span>)
+									</div>
+																<div class="method-definition">
+					static 						<span class="method-result"><a href="../Xyster_Data/Xyster_Data_Expression.html">Xyster_Data_Expression</a></span>
+										<a href="#notBetween" title="details" class="method-name">notBetween</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$field</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$start</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$end</span>)
+									</div>
+																<div class="method-definition">
+					static 						<span class="method-result"><a href="../Xyster_Data/Xyster_Data_Expression.html">Xyster_Data_Expression</a></span>
+										<a href="#notIn" title="details" class="method-name">notIn</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$field</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$choices</span>)
+									</div>
+																<div class="method-definition">
+					static 						<span class="method-result"><a href="../Xyster_Data/Xyster_Data_Expression.html">Xyster_Data_Expression</a></span>
+										<a href="#notLike" title="details" class="method-name">notLike</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$field</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$value</span>)
+									</div>
+																
+												<div class="method-definition">
+											<span class="method-result">Xyster_Data_Expression</span>
+										<a href="#__construct" title="details" class="method-name">__construct</a>
+											(<span class="var-type"><a href="../Xyster_Data/Xyster_Data_Field.html">Xyster_Data_Field</a>|string</span>&nbsp;<span class="var-name">$field</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$operator</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$value</span>)
+									</div>
+																																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#evaluate" title="details" class="method-name">evaluate</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$object</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../Xyster_Data/Xyster_Data_Field.html">Xyster_Data_Field</a></span>
+										<a href="#getLeft" title="details" class="method-name">getLeft</a>
+										()
+									</div>
+																								<div class="method-definition">
+											<span class="method-result"><a href="../Xyster_Data/Xyster_Data_Operator_Expression.html">Xyster_Data_Operator_Expression</a></span>
+										<a href="#getOperator" title="details" class="method-name">getOperator</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">mixed</span>
+										<a href="#getRight" title="details" class="method-name">getRight</a>
+										()
+									</div>
+																																																																																																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#__toString" title="details" class="method-name">__toString</a>
+										()
+									</div>
+								</div>
+		</div>
+	</div>		
+
+	<a name="sec-vars"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variables</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+										<a href="#sec-var-summary">Vars</a> (<span class="disabled">details</span>)
+						
+			
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			<a name="var$_left" id="$_left"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type"><a href="../Xyster_Data/Xyster_Data_Field.html">Xyster_Data_Field</a></span>
+			<span class="var-name">$_left</span>
+						(line <span class="line-number">59</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">The left value, always a field</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$_operator" id="$_operator"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type"><a href="../Xyster_Data/Xyster_Data_Operator_Expression.html">Xyster_Data_Operator_Expression</a></span>
+			<span class="var-name">$_operator</span>
+						(line <span class="line-number">66</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">The operator</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$_right" id="$_right"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$_right</span>
+						(line <span class="line-number">73</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">The right value, could be a scalar or a <a href="../Xyster_Data/Xyster_Data_Field.html">Xyster_Data_Field</a></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+						
+		</div>
+	</div>
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+															<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+																	<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+<a name="methodbetween" id="between"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">static method between</span> (line <span class="line-number">304</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">BETWEEN Xyster_Data_Expression ( field BETWEEN 'value' AND 'value' )</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+	    static
+		<span class="method-result"><a href="../Xyster_Data/Xyster_Data_Expression.html">Xyster_Data_Expression</a></span>
+		<span class="method-name">
+			between
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$field</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$start</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$end</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$field</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$start</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$end</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodeq" id="eq"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">static method eq</span> (line <span class="line-number">199</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Equal To Xyster_Data_Expression ( field = 'value' )</p>
+<p class="description"><p>For $value to reference another field, pass a <a href="../Xyster_Data/Xyster_Data_Field.html">Xyster_Data_Field</a> object</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+	    static
+		<span class="method-result"><a href="../Xyster_Data/Xyster_Data_Expression.html">Xyster_Data_Expression</a></span>
+		<span class="method-name">
+			eq
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$field</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$value</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$field</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$value</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodgetMethodName" id="getMethodName"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">static method getMethodName</span> (line <span class="line-number">184</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Returns the name of the static method to call for the operator passed</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+	    static
+		<span class="method-result">string</span>
+		<span class="method-name">
+			getMethodName
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$operator</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$operator</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodgt" id="gt"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">static method gt</span> (line <span class="line-number">253</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Greater Than Xyster_Data_Expression ( field &gt; 2 )</p>
+<p class="description"><p>For $value to reference another field, pass a <a href="../Xyster_Data/Xyster_Data_Field.html">Xyster_Data_Field</a> object</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+	    static
+		<span class="method-result"><a href="../Xyster_Data/Xyster_Data_Expression.html">Xyster_Data_Expression</a></span>
+		<span class="method-name">
+			gt
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$field</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$value</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$field</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$value</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodgte" id="gte"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">static method gte</span> (line <span class="line-number">267</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Greater Than or Equal To Xyster_Data_Expression ( field &gt;= 2 )</p>
+<p class="description"><p>For $value to reference another field, pass a <a href="../Xyster_Data/Xyster_Data_Field.html">Xyster_Data_Field</a> object</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+	    static
+		<span class="method-result"><a href="../Xyster_Data/Xyster_Data_Expression.html">Xyster_Data_Expression</a></span>
+		<span class="method-name">
+			gte
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$field</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$value</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$field</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$value</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodin" id="in"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">static method in</span> (line <span class="line-number">329</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">In expression ( field IN ( 1,1,2,3,5,8,13,21,'fibonacci','sequence' ) )</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+	    static
+		<span class="method-result"><a href="../Xyster_Data/Xyster_Data_Expression.html">Xyster_Data_Expression</a></span>
+		<span class="method-name">
+			in
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$field</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$choices</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$field</span>			</li>
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">$choices</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodlike" id="like"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">static method like</span> (line <span class="line-number">279</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">LIKE Xyster_Data_Expression ( field LIKE '%value' )</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+	    static
+		<span class="method-result"><a href="../Xyster_Data/Xyster_Data_Expression.html">Xyster_Data_Expression</a></span>
+		<span class="method-name">
+			like
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$field</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$value</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$field</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$value</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodlt" id="lt"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">static method lt</span> (line <span class="line-number">227</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Less Than Xyster_Data_Expression ( field &lt; 3 )</p>
+<p class="description"><p>For $value to reference another field, pass a <a href="../Xyster_Data/Xyster_Data_Field.html">Xyster_Data_Field</a> object</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+	    static
+		<span class="method-result"><a href="../Xyster_Data/Xyster_Data_Expression.html">Xyster_Data_Expression</a></span>
+		<span class="method-name">
+			lt
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$field</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$value</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$field</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$value</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodlte" id="lte"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">static method lte</span> (line <span class="line-number">239</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Less Than or Equal To Xyster_Data_Expression ( field &lt;= 3 )</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+	    static
+		<span class="method-result"><a href="../Xyster_Data/Xyster_Data_Expression.html">Xyster_Data_Expression</a></span>
+		<span class="method-name">
+			lte
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$field</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$value</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$field</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$value</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodneq" id="neq"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">static method neq</span> (line <span class="line-number">213</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Not Equal To Xyster_Data_Expression ( field &lt;&gt; 'value' )</p>
+<p class="description"><p>For $value to reference another field, pass a <a href="../Xyster_Data/Xyster_Data_Field.html">Xyster_Data_Field</a> object</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+	    static
+		<span class="method-result"><a href="../Xyster_Data/Xyster_Data_Expression.html">Xyster_Data_Expression</a></span>
+		<span class="method-name">
+			neq
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$field</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$value</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$field</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$value</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodnotBetween" id="notBetween"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">static method notBetween</span> (line <span class="line-number">317</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Equal To Xyster_Data_Expression ( field NOT BETWEEN 'value' AND 'value' )</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+	    static
+		<span class="method-result"><a href="../Xyster_Data/Xyster_Data_Expression.html">Xyster_Data_Expression</a></span>
+		<span class="method-name">
+			notBetween
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$field</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$start</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$end</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$field</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$start</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$end</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodnotIn" id="notIn"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">static method notIn</span> (line <span class="line-number">341</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Not in expression ( field NOT IN ( 1,1,2,3,5,8,13,21,'fibonacci','sequence' ) )</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+	    static
+		<span class="method-result"><a href="../Xyster_Data/Xyster_Data_Expression.html">Xyster_Data_Expression</a></span>
+		<span class="method-name">
+			notIn
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$field</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$choices</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$field</span>			</li>
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">$choices</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodnotLike" id="notLike"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">static method notLike</span> (line <span class="line-number">291</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">NOT LIKE Xyster_Data_Expression ( field NOT LIKE '%value' )</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+	    static
+		<span class="method-result"><a href="../Xyster_Data/Xyster_Data_Expression.html">Xyster_Data_Expression</a></span>
+		<span class="method-name">
+			notLike
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$field</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$value</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$field</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$value</span>			</li>
+				</ul>
+		
+			
+	</div>
+
+<a name="method__construct" id="__construct"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number">82</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Creates a new expression</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Xyster_Data_Expression</span>
+		<span class="method-name">
+			__construct
+		</span>
+					(<span class="var-type"><a href="../Xyster_Data/Xyster_Data_Field.html">Xyster_Data_Field</a>|string</span>&nbsp;<span class="var-name">$field</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$operator</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$value</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Data/Xyster_Data_Field.html">Xyster_Data_Field</a>|string</span>
+				<span class="var-name">$field</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$operator</span>			</li>
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$value</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodevaluate" id="evaluate"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">evaluate</span> (line <span class="line-number">170</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Evaluates the Expression for a given array or object</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			evaluate
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$object</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$object</span>			</li>
+				</ul>
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../Xyster_Data/Xyster_Data_Criterion.html#methodevaluate">Xyster_Data_Criterion::evaluate()</a></dt>
+						<dd>Evaluates the Criterion for a given object</dd>
+					</dl>
+			
+	</div>
+<a name="methodgetLeft" id="getLeft"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getLeft</span> (line <span class="line-number">101</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets the field</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../Xyster_Data/Xyster_Data_Field.html">Xyster_Data_Field</a></span>
+		<span class="method-name">
+			getLeft
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetOperator" id="getOperator"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getOperator</span> (line <span class="line-number">111</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets the operator</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../Xyster_Data/Xyster_Data_Operator_Expression.html">Xyster_Data_Operator_Expression</a></span>
+		<span class="method-name">
+			getOperator
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetRight" id="getRight"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getRight</span> (line <span class="line-number">121</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets the value</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">mixed</span>
+		<span class="method-name">
+			getRight
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="method__toString" id="__toString"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">__toString</span> (line <span class="line-number">132</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Returns the syntax for this Expression</p>
+	<ul class="tags">
+				<li><span class="field">magic:</span> </li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			__toString
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+							<h4>Inherited Methods</h4>
+				<a name='inherited_methods'><!-- --></a>	
+									<!-- =========== Summary =========== -->
+					<p>Inherited From <span class="classname"><a href="../Xyster_Data/Xyster_Data_Criterion.html">Xyster_Data_Criterion</a></span></p>
+					<blockquote>
+													<span class="method-name"><a href="../Xyster_Data/Xyster_Data_Criterion.html#methodevaluate">Xyster_Data_Criterion::evaluate()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Data/Xyster_Data_Criterion.html#methodfromArray">Xyster_Data_Criterion::fromArray()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Data/Xyster_Data_Criterion.html#methodgetFields">Xyster_Data_Criterion::getFields()</a></span><br>
+													<span class="method-name"><a href="../Xyster_Data/Xyster_Data_Criterion.html#method_getFields">Xyster_Data_Criterion::_getFields()</a></span><br>
+											</blockquote>
+										
+		</div>
+	</div>
+
+
+	<p class="notes" id="credit">
+		Documentation generated on Mon, 19 May 2008 17:07:16 -0400 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.2</a>
+	</p>
+	</div></body>
+</html>

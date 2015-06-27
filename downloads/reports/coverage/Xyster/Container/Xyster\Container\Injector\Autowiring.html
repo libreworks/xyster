@@ -1,0 +1,903 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<LINK REL="stylesheet" TYPE="text/css" TITLE="Style" href="../../stylesheet.css">
+</head>
+<body>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="bannercell" rowspan="2"><a href="http://phing.info/"><img src="http://phing.info/images/phing.gif" alt="http://phing.info/" align="left" border="0"></a></td>
+<td style="text-align:right"><h2>Source Code Coverage</h2></td>
+</tr>
+<tr><td style="text-align:right">Designed for use with <a href="http://pear.php.net/package/PHPUnit2">PHPUnit2</a>, <a href="http://www.xdebug.org/">Xdebug</a> and <a href="http://phing.info/">Phing</a>.</td></tr>
+</table>
+<hr size="1">
+<table class="log" cellpadding="5" cellspacing="0" width="100%"><tr class="a">
+<td class="small">Methods: 4</td>
+<td class="small">LOC: 171</td>
+<td class="small">Statements: 82</td>
+</tr></table>
+<table class="log" cellpadding="5" cellspacing="0" width="100%"><tbody><tr>
+<td class="legendItem" width="0%">Legend:</td>
+<td class="legendValue" width="100%">
+<span class="legendCovered">executed</span><span class="legendUncovered">not executed</span><span class="legendDeadCode">dead code</span>
+</td>
+</tr></tbody></table>
+<table class="log" cellpadding="5" cellspacing="0" width="100%">
+<tr>
+<th width="100%">Source file</th>
+<th>Statements</th>
+<th>Methods</th>
+<th width="250" colspan="2" nowrap>Total coverage</th>
+</tr>
+<tr class="a">
+<td>Autowiring.php</td>
+<td>100.0%</td>
+<td>100.0%</td>
+<td>100.0%</td>
+<td><table cellspacing="0" cellpadding="0" border="0" width="100%" style="display: inline"><tr><td class="fullcover" width="200" height="12"> </td></tr></table></td>
+</tr>
+</table>
+<table cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td class="lineCount">1</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">&lt;?php</pre></td>
+</tr>
+<tr>
+<td class="lineCount">2</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">3</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * Xyster Framework</pre></td>
+</tr>
+<tr>
+<td class="lineCount">4</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">5</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * This source file is subject to the new BSD license that is bundled</pre></td>
+</tr>
+<tr>
+<td class="lineCount">6</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * with this package in the file LICENSE.txt.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">7</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * It is also available through the world-wide-web at this URL:</pre></td>
+</tr>
+<tr>
+<td class="lineCount">8</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * http://www.opensource.org/licenses/bsd-license.php</pre></td>
+</tr>
+<tr>
+<td class="lineCount">9</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">10</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @category  Xyster</pre></td>
+</tr>
+<tr>
+<td class="lineCount">11</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @package   Xyster_Container</pre></td>
+</tr>
+<tr>
+<td class="lineCount">12</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @copyright Copyright LibreWorks, LLC (http://libreworks.net)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">13</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License</pre></td>
+</tr>
+<tr>
+<td class="lineCount">14</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @version   $Id$</pre></td>
+</tr>
+<tr>
+<td class="lineCount">15</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">16</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">namespace Xyster\Container\Injector;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">17</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">use Xyster\Type\Type;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">18</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">use Xyster\Container\Autowire;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">19</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">20</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * Autowires dependencies of a component as it creates it</pre></td>
+</tr>
+<tr>
+<td class="lineCount">21</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">22</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @category  Xyster</pre></td>
+</tr>
+<tr>
+<td class="lineCount">23</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @package   Xyster_Container</pre></td>
+</tr>
+<tr>
+<td class="lineCount">24</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @copyright Copyright LibreWorks, LLC (http://libreworks.net)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">25</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License</pre></td>
+</tr>
+<tr>
+<td class="lineCount">26</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">27</td>
+<td class="coverageCount"></td>
+<td class="srcLineClassStart"><pre class="srcLine">class Autowiring extends Standard</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">28</td>
+<td class="lineCountCovered">1</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">{</pre></td>
+</tr>
+<tr>
+<td class="lineCount">29</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">30</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @var \Xyster\Container\Autowire</pre></td>
+</tr>
+<tr>
+<td class="lineCount">31</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">32</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    protected $_autowire;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">33</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    protected $_ignore = array();</pre></td>
+</tr>
+<tr>
+<td class="lineCount">34</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">35</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">36</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Creates a new provider</pre></td>
+</tr>
+<tr>
+<td class="lineCount">37</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">38</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param \Xyster\Container\Definition $def The component definintion</pre></td>
+</tr>
+<tr>
+<td class="lineCount">39</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param \Xyster\Container\Autowire $autowire Optional. The autowire mode.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">40</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param array $ignore The autowire candidates (names or types) to ignore.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">41</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">42</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function __construct(\Xyster\Container\Definition $def, Autowire $autowire = null, array $ignore = array())</pre></td>
+</tr>
+<tr>
+<td class="lineCount">43</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">44</td>
+<td class="lineCountCovered">19</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        parent::__construct($def);</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">45</td>
+<td class="lineCountCovered">19</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        $this-&gt;_autowire = $autowire === null ? Autowire::None() : $autowire;</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">46</td>
+<td class="lineCountCovered">19</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        $this-&gt;_ignore = $ignore;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">47</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">48</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">49</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">50</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Gets the label for the type of provider.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">51</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">52</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return string The provider label</pre></td>
+</tr>
+<tr>
+<td class="lineCount">53</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">54</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function getLabel()</pre></td>
+</tr>
+<tr>
+<td class="lineCount">55</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">56</td>
+<td class="lineCountCovered">1</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        return 'Autowiring';</pre></td>
+</tr>
+<tr>
+<td class="lineCount">57</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">58</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">59</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">60</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Gets the member arguments.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">61</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">62</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * This method handles Constructor autowiring.  It will look in the</pre></td>
+</tr>
+<tr>
+<td class="lineCount">63</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * container for a component matching the type, if more than one is found,</pre></td>
+</tr>
+<tr>
+<td class="lineCount">64</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * it will try to use the parameter name to select the correct one.   If no</pre></td>
+</tr>
+<tr>
+<td class="lineCount">65</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * component is found and the method parameter has a default value available</pre></td>
+</tr>
+<tr>
+<td class="lineCount">66</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * it will be used.  If all else fails, an exception is thrown.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">67</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">68</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param \Xyster\Container\IContainer $container</pre></td>
+</tr>
+<tr>
+<td class="lineCount">69</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param \ReflectionMethod $member</pre></td>
+</tr>
+<tr>
+<td class="lineCount">70</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @return array</pre></td>
+</tr>
+<tr>
+<td class="lineCount">71</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @throws Xyster_Container_Injector_Exception if a parameter could not be autowired</pre></td>
+</tr>
+<tr>
+<td class="lineCount">72</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">73</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function getMemberArguments( \Xyster\Container\IContainer $container, \ReflectionMethod $member = null )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">74</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">75</td>
+<td class="lineCountCovered">14</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        if ( $member === null || !$member-&gt;getNumberOfParameters()</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">76</td>
+<td class="lineCountCovered">14</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">            || $this-&gt;_autowire !== Autowire::Constructor() ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">77</td>
+<td class="lineCountCovered">9</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">            return array();</pre></td>
+</tr>
+<tr>
+<td class="lineCountDeadCode">78</td>
+<td class="coverageCountDeadCode"></td>
+<td class="srcLineDeadCode"><pre class="srcLineDeadCode">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">79</td>
+<td class="lineCountCovered">5</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        $result = array();</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">80</td>
+<td class="lineCountCovered">5</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        $types = Type::getForParameters($member);</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">81</td>
+<td class="lineCountCovered">5</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        foreach( $member-&gt;getParameters() as $k =&gt; $reflectionParameter ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCount">82</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            /* @var $reflectionParameter \ReflectionParameter */</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">83</td>
+<td class="lineCountCovered">5</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">            $instance = null;</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">84</td>
+<td class="lineCountCovered">5</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">            $paramType = $types[$k];</pre></td>
+</tr>
+<tr>
+<td class="lineCount">85</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">            /* @var $paramType \Xyster\Type\Type */</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">86</td>
+<td class="lineCountCovered">5</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">            if ( !$paramType-&gt;isObject() &amp;&amp; !$reflectionParameter-&gt;isOptional() ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">87</td>
+<td class="lineCountCovered">1</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                throw new Exception('Cannot inject method argument ' .</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">88</td>
+<td class="lineCountCovered">1</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                    $reflectionParameter-&gt;getName() .</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">89</td>
+<td class="lineCountCovered">1</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                    ' into ' . $member-&gt;getDeclaringClass()-&gt;getName() .</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">90</td>
+<td class="lineCountCovered">1</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                    ': non-object parameters cannot be autowired');</pre></td>
+</tr>
+<tr>
+<td class="lineCountDeadCode">91</td>
+<td class="coverageCountDeadCode"></td>
+<td class="srcLineDeadCode"><pre class="srcLineDeadCode">            }</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">92</td>
+<td class="lineCountCovered">4</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">            $names = $container-&gt;getNames($paramType);</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">93</td>
+<td class="lineCountCovered">4</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">            if ( count($names) == 1 ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">94</td>
+<td class="lineCountCovered">2</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                $instance = $container-&gt;get($names[0]);</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">95</td>
+<td class="lineCountCovered">4</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">            } else if ( count($names) &gt; 1 &amp;&amp; in_array($reflectionParameter-&gt;getName(), $names) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">96</td>
+<td class="lineCountCovered">1</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                $instance = $container-&gt;get($reflectionParameter-&gt;getName());</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">97</td>
+<td class="lineCountCovered">4</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">            } else if ( $reflectionParameter-&gt;isDefaultValueAvailable() ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">98</td>
+<td class="lineCountCovered">2</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                $instance = $reflectionParameter-&gt;getDefaultValue();</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">99</td>
+<td class="lineCountCovered">4</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">            } else if ( !count($names) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">100</td>
+<td class="lineCountCovered">1</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                throw new Exception('Cannot inject method argument ' .</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">101</td>
+<td class="lineCountCovered">1</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                    $reflectionParameter-&gt;getName() .</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">102</td>
+<td class="lineCountCovered">1</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                    ' into ' . $member-&gt;getDeclaringClass()-&gt;getName() .</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">103</td>
+<td class="lineCountCovered">1</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                    ': no matching types were found in the container');</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">104</td>
+<td class="lineCountCovered">1</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">            } else if ( count($names) &gt; 1 ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">105</td>
+<td class="lineCountCovered">1</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                throw new Exception('Cannot inject method argument ' .</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">106</td>
+<td class="lineCountCovered">1</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                    $reflectionParameter-&gt;getName() .</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">107</td>
+<td class="lineCountCovered">1</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                    ' into ' . $member-&gt;getDeclaringClass()-&gt;getName() .</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">108</td>
+<td class="lineCountCovered">1</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                    ': more than one value is available in the container');</pre></td>
+</tr>
+<tr>
+<td class="lineCountDeadCode">109</td>
+<td class="coverageCountDeadCode"></td>
+<td class="srcLineDeadCode"><pre class="srcLineDeadCode">            }</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">110</td>
+<td class="lineCountCovered">2</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">            $result[] = $instance;</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">111</td>
+<td class="lineCountCovered">2</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">112</td>
+<td class="lineCountCovered">2</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        return $result;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">113</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">114</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">115</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">116</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * Injects properties into an instance</pre></td>
+</tr>
+<tr>
+<td class="lineCount">117</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">118</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param object $instance</pre></td>
+</tr>
+<tr>
+<td class="lineCount">119</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @param \Xyster\Container\IContainer $container</pre></td>
+</tr>
+<tr>
+<td class="lineCount">120</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">121</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    public function injectProperties($instance, \Xyster\Container\IContainer $container)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">122</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">123</td>
+<td class="lineCountCovered">11</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        if ( $this-&gt;_autowire === Autowire::ByType() ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">124</td>
+<td class="lineCountCovered">6</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">            foreach( $this-&gt;_type-&gt;getClass()-&gt;getMethods() as $k =&gt; $method ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCount">125</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">                /* @var $method \ReflectionMethod */</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">126</td>
+<td class="lineCountCovered">6</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                if ( $method-&gt;getNumberOfParameters() == 1 &amp;&amp;</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">127</td>
+<td class="lineCountCovered">6</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                    substr($method-&gt;getName(), 0, 3) == 'set' ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">128</td>
+<td class="lineCountCovered">6</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                    $types = Type::getForParameters($method);</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">129</td>
+<td class="lineCountCovered">6</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                    $propertyType = $types[0];</pre></td>
+</tr>
+<tr>
+<td class="lineCount">130</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">                    /* @var $propertyType \Xyster\Type\Type */</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">131</td>
+<td class="lineCountCovered">6</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                    $name = strtolower(substr($method-&gt;getName(),3,1)) . substr($method-&gt;getName(),4);</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">132</td>
+<td class="lineCountCovered">6</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                    if ( in_array($name, $this-&gt;_ignore) || !$propertyType-&gt;isObject() ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">133</td>
+<td class="lineCountCovered">3</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                        continue;</pre></td>
+</tr>
+<tr>
+<td class="lineCountDeadCode">134</td>
+<td class="coverageCountDeadCode"></td>
+<td class="srcLineDeadCode"><pre class="srcLineDeadCode">                    }</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">135</td>
+<td class="lineCountCovered">6</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                    if ( $container-&gt;containsType($propertyType) ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">136</td>
+<td class="lineCountCovered">5</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                        $propertyValues = $container-&gt;getForType($propertyType);</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">137</td>
+<td class="lineCountCovered">5</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                        if ( count($propertyValues) == 1 ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCount">138</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">                            // @todo wrap this exception if it occurs?</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">139</td>
+<td class="lineCountCovered">4</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                            \Xyster\Type\Property\Factory::get($instance, $name)</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">140</td>
+<td class="lineCountCovered">4</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                                -&gt;set($instance, array_pop($propertyValues));</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">141</td>
+<td class="lineCountCovered">4</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                        } else {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">142</td>
+<td class="lineCountCovered">1</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                            throw new Exception('Cannot inject property ' . $name .</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">143</td>
+<td class="lineCountCovered">1</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                                ' into ' . $method-&gt;getDeclaringClass()-&gt;getName() .</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">144</td>
+<td class="lineCountCovered">1</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                                ': more than one value is available in the container');</pre></td>
+</tr>
+<tr>
+<td class="lineCount">145</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">                        }</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">146</td>
+<td class="lineCountCovered">4</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                    } else {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">147</td>
+<td class="lineCountCovered">1</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                        throw new Exception(</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">148</td>
+<td class="lineCountCovered">1</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                            'Cannot inject property ' . $name . ' into ' .</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">149</td>
+<td class="lineCountCovered">1</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                            $method-&gt;getDeclaringClass()-&gt;getName() .</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">150</td>
+<td class="lineCountCovered">1</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                            ': type not found in the container: ' . $propertyType);</pre></td>
+</tr>
+<tr>
+<td class="lineCount">151</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">                    }</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">152</td>
+<td class="lineCountCovered">4</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                }</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">153</td>
+<td class="lineCountCovered">6</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">            }</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">154</td>
+<td class="lineCountCovered">9</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        } else if ( $this-&gt;_autowire === Autowire::ByName() ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">155</td>
+<td class="lineCountCovered">2</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">            foreach( $this-&gt;_type-&gt;getClass()-&gt;getMethods() as $k =&gt; $method ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCount">156</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">                /* @var $method \ReflectionMethod */</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">157</td>
+<td class="lineCountCovered">2</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                if ( $method-&gt;getNumberOfParameters() == 1 &amp;&amp;</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">158</td>
+<td class="lineCountCovered">2</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                    substr($method-&gt;getName(), 0, 3) == 'set' ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">159</td>
+<td class="lineCountCovered">2</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                    $name = strtolower(substr($method-&gt;getName(),3,1)) . substr($method-&gt;getName(),4);</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">160</td>
+<td class="lineCountCovered">2</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                    $types = Type::getForParameters($method);</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">161</td>
+<td class="lineCountCovered">2</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                    $propertyType = $types[0];</pre></td>
+</tr>
+<tr>
+<td class="lineCount">162</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">                    /* @var $propertyType \Xyster\Type\Type */</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">163</td>
+<td class="lineCountCovered">2</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                    if ( in_array($name, $this-&gt;_ignore) || !$propertyType-&gt;isObject() ) {</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">164</td>
+<td class="lineCountCovered">1</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                        continue;</pre></td>
+</tr>
+<tr>
+<td class="lineCountDeadCode">165</td>
+<td class="coverageCountDeadCode"></td>
+<td class="srcLineDeadCode"><pre class="srcLineDeadCode">                    }</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">166</td>
+<td class="lineCountCovered">2</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                    $this-&gt;_injectByNameFromContainer($container, $instance, $name, $name);</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">167</td>
+<td class="lineCountCovered">2</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">                }</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">168</td>
+<td class="lineCountCovered">2</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">            }</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">169</td>
+<td class="lineCountCovered">2</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">        }</pre></td>
+</tr>
+<tr>
+<td class="lineCount">170</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    }</pre></td>
+</tr>
+<tr>
+<td class="lineCountCovered">171</td>
+<td class="lineCountCovered">1</td>
+<td class="srcLineCovered"><pre class="srcLineCovered">}</pre></td>
+</tr>
+</table>
+<br><table width="100%">
+<tr><td><hr noshade size="1"></td></tr>
+<tr><td class="small">Report generated at 2010-10-18T17:19:49-04:00</td></tr>
+</table>
+</body>
+</html>

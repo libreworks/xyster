@@ -1,0 +1,1330 @@
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<LINK REL="stylesheet" TYPE="text/css" TITLE="Style" href="../stylesheet.css">
+</HEAD>
+<BODY>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="bannercell" rowspan="2"><a href="http://phing.info/"><img src="http://phing.info/images/phing.gif" alt="http://phing.info/" align="left" border="0"></a></td>
+<td style="text-align:right"><h2>Source Code Coverage</h2></td>
+</tr>
+<tr><td style="text-align:right">Designed for use with <a href="http://pear.php.net/package/PHPUnit2">PHPUnit2</a>, <a href="http://www.xdebug.org/">Xdebug</a> and <a href="http://phing.info/">Phing</a>.</td></tr>
+</table>
+<hr size="1">
+<table class="log" cellpadding="5" cellspacing="0" width="100%"><tr class="a">
+<td class="small">Methods: 6</td>
+<td class="small">LOC: 257</td>
+<td class="small">Statements: 107</td>
+</tr></table>
+<br><table class="log" cellpadding="5" cellspacing="0" width="100%">
+<tr>
+<th width="100%">Source file</th>
+<th>Statements</th>
+<th>Methods</th>
+<th width="250" colspan="2" nowrap>Total coverage</th>
+</tr>
+<tr class="a">
+<td>Translator.php</td>
+<td>97.2%</td>
+<td>100.0%</td>
+<td>97.3%</td>
+<td><table cellspacing="0" cellpadding="0" border="0" width="100%" style="display: inline"><tr>
+<td class="covered" width="195" height="12"> </td>
+<td class="uncovered" width="5" height="12"> </td>
+</tr></table></td>
+</tr>
+</table>
+<table cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td class="lineCount">1</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">&lt;?php</pre></td>
+</tr>
+<tr>
+<td class="lineCount">2</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">3</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * Xyster Framework</pre></td>
+</tr>
+<tr>
+<td class="lineCount">4</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">5</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * LICENSE</pre></td>
+</tr>
+<tr>
+<td class="lineCount">6</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">7</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * This source file is subject to the new BSD license that is bundled</pre></td>
+</tr>
+<tr>
+<td class="lineCount">8</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * with this package in the file LICENSE.txt.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">9</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * It is also available through the world-wide-web at this URL:</pre></td>
+</tr>
+<tr>
+<td class="lineCount">10</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * http://www.opensource.org/licenses/bsd-license.php</pre></td>
+</tr>
+<tr>
+<td class="lineCount">11</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * If you did not receive a copy of the license and are unable to</pre></td>
+</tr>
+<tr>
+<td class="lineCount">12</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * obtain it through the world-wide-web, please send an email</pre></td>
+</tr>
+<tr>
+<td class="lineCount">13</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * to xyster@devweblog.org so we can send you a copy immediately.</pre></td>
+</tr>
+<tr>
+<td class="lineCount">14</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">15</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @category  Xyster</pre></td>
+</tr>
+<tr>
+<td class="lineCount">16</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @package   Xyster_Orm</pre></td>
+</tr>
+<tr>
+<td class="lineCount">17</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">18</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License</pre></td>
+</tr>
+<tr>
+<td class="lineCount">19</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @version   $Id: Translator.php 70 2007-08-17 17:15:45Z doublecompile $</pre></td>
+</tr>
+<tr>
+<td class="lineCount">20</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">21</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">22</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @see Xyster_Db_Translator</pre></td>
+</tr>
+<tr>
+<td class="lineCount">23</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">24</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">require_once 'Xyster/Db/Translator.php';</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">25</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">26</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @see Xyster_Orm_Query_Parser</pre></td>
+</tr>
+<tr>
+<td class="lineCount">27</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">28</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">require_once 'Xyster/Orm/Query/Parser.php';</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">29</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">30</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * A translator for db fields that is smart about ORM</pre></td>
+</tr>
+<tr>
+<td class="lineCount">31</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">32</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @category  Xyster</pre></td>
+</tr>
+<tr>
+<td class="lineCount">33</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @package   Xyster_Orm</pre></td>
+</tr>
+<tr>
+<td class="lineCount">34</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @copyright Copyright (c) 2007 Irrational Logic (http://devweblog.org)</pre></td>
+</tr>
+<tr>
+<td class="lineCount">35</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License</pre></td>
+</tr>
+<tr>
+<td class="lineCount">36</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"> */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">37</td>
+<td class="coverageCount"></td>
+<td class="srcLineClassStart"><pre class="srcLine">class Xyster_Orm_Mapper_Translator extends Xyster_Db_Translator</pre></td>
+</tr>
+<tr>
+<td class="lineCount">38</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">{</pre></td>
+</tr>
+<tr>
+<td class="lineCount">39</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">    /**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">40</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * This is the anchor class for translations</pre></td>
+</tr>
+<tr>
+<td class="lineCount">41</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">42</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     * @var string</pre></td>
+</tr>
+<tr>
+<td class="lineCount">43</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">     */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">44</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	protected $_class;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">45</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">46</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">47</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * Associative array of prefixes to table aliases</pre></td>
+</tr>
+<tr>
+<td class="lineCount">48</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">49</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @var array</pre></td>
+</tr>
+<tr>
+<td class="lineCount">50</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">51</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	protected $_aliases = array();</pre></td>
+</tr>
+<tr>
+<td class="lineCount">52</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">53</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">54</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * Associative array of prefixes to table names</pre></td>
+</tr>
+<tr>
+<td class="lineCount">55</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">56</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @var array</pre></td>
+</tr>
+<tr>
+<td class="lineCount">57</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">58</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	protected $_tables = array();</pre></td>
+</tr>
+<tr>
+<td class="lineCount">59</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">60</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">61</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * The mapper factory</pre></td>
+</tr>
+<tr>
+<td class="lineCount">62</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">63</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @var Xyster_Orm_Mapper_Factory_Interface</pre></td>
+</tr>
+<tr>
+<td class="lineCount">64</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">65</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	protected $_mapFactory;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">66</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">67</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">68</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * The query parser</pre></td>
+</tr>
+<tr>
+<td class="lineCount">69</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">70</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @var Xyster_Orm_Query_Parser</pre></td>
+</tr>
+<tr>
+<td class="lineCount">71</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">72</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	protected $_parser;</pre></td>
+</tr>
+<tr>
+<td class="lineCount">73</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">74</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">75</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * Creates a new orm sql translator</pre></td>
+</tr>
+<tr>
+<td class="lineCount">76</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * {@inherit}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">77</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">78</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @param Zend_Db_Adapter_Abstract $db</pre></td>
+</tr>
+<tr>
+<td class="lineCount">79</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @param string $className</pre></td>
+</tr>
+<tr>
+<td class="lineCount">80</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">81</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	public function __construct( Zend_Db_Adapter_Abstract $db, $className, Xyster_Orm_Mapper_Factory_Interface $mapFactory )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">82</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	{</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">83</td>
+<td class="lineCountHighlight">5</td>
+<td><span class="srcLine"><pre class="srcLine">	    parent::__construct($db);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">84</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">85</td>
+<td class="lineCountHighlight">5</td>
+<td><span class="srcLine"><pre class="srcLine">	    require_once 'Xyster/Orm/Loader.php';</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">86</td>
+<td class="lineCountHighlight">5</td>
+<td><span class="srcLine"><pre class="srcLine">	    Xyster_Orm_Loader::loadEntityClass($className);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">87</td>
+<td class="lineCountHighlight">5</td>
+<td><span class="srcLine"><pre class="srcLine">	    $this-&gt;_class = $className;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">88</td>
+<td class="lineCountHighlight">5</td>
+<td><span class="srcLine"><pre class="srcLine">	    $this-&gt;_mapFactory = $mapFactory;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">89</td>
+<td class="lineCountHighlight">5</td>
+<td><span class="srcLine"><pre class="srcLine">	    require_once 'Xyster/Orm/Query/Parser.php';</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">90</td>
+<td class="lineCountHighlight">5</td>
+<td><span class="srcLine"><pre class="srcLine">	    $this-&gt;_parser = new Xyster_Orm_Query_Parser($mapFactory);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">91</td>
+<td class="lineCountHighlight">5</td>
+<td><span class="srcLine"><pre class="srcLine">	    $map = $mapFactory-&gt;get($className);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">92</td>
+<td class="lineCountHighlight">5</td>
+<td><span class="srcLine"><pre class="srcLine">	    $this-&gt;aliasField(current($map-&gt;getEntityMeta()-&gt;getPrimary()));</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">93</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">94</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">95</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">96</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * Gets the main alias</pre></td>
+</tr>
+<tr>
+<td class="lineCount">97</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">98</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @return string</pre></td>
+</tr>
+<tr>
+<td class="lineCount">99</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">100</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	public function getMain()</pre></td>
+</tr>
+<tr>
+<td class="lineCount">101</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	{</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">102</td>
+<td class="lineCountHighlight">4</td>
+<td><span class="srcLine"><pre class="srcLine">		return array_key_exists('', $this-&gt;_aliases) ? $this-&gt;_aliases[''] : null;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">103</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">104</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">105</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">106</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * Returns an alias to prefix a column in a SQL query</pre></td>
+</tr>
+<tr>
+<td class="lineCount">107</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">108</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @param string $column  The column to alias</pre></td>
+</tr>
+<tr>
+<td class="lineCount">109</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @throws Xyster_Orm_Backend_Sql_Exception if $column is runtime</pre></td>
+</tr>
+<tr>
+<td class="lineCount">110</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @return string</pre></td>
+</tr>
+<tr>
+<td class="lineCount">111</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">112</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	public function aliasField( $field )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">113</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	{</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">114</td>
+<td class="lineCountHighlight">5</td>
+<td><span class="srcLine"><pre class="srcLine">		if ( $this-&gt;_parser-&gt;isRuntime(Xyster_Data_Field::named($field), $this-&gt;_class) ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">115</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">			require_once 'Xyster/Orm/Mapper/Exception.php';</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">116</td>
+<td class="lineCountHighlight">1</td>
+<td><span class="srcLine"><pre class="srcLine">			throw new Xyster_Orm_Mapper_Exception('Runtime fields cannot be aliased for the backend');</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">117</td>
+<td class="coverageCountHighlight">0</td>
+<td><span class="srcLineHighlight"><pre class="srcLine">		}</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">118</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">119</td>
+<td class="lineCountHighlight">5</td>
+<td><span class="srcLine"><pre class="srcLine">		$factory = $this-&gt;_mapFactory;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">120</td>
+<td class="lineCountHighlight">5</td>
+<td><span class="srcLine"><pre class="srcLine">		$className = $this-&gt;_class;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">121</td>
+<td class="lineCountHighlight">5</td>
+<td><span class="srcLine"><pre class="srcLine">		$prefix = "";</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">122</td>
+<td class="lineCountHighlight">5</td>
+<td><span class="srcLine"><pre class="srcLine">        $currentMeta = $factory-&gt;getEntityMeta($className);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">123</td>
+<td class="lineCountHighlight">5</td>
+<td><span class="srcLine"><pre class="srcLine">		$calls = Xyster_String::smartSplit('-&gt;',$field);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">124</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">125</td>
+<td class="lineCountHighlight">5</td>
+<td><span class="srcLine"><pre class="srcLine">		if ( count($calls) &gt; 1 ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">126</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">			$prefixes = array();</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">127</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">			foreach( $calls as $call ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">128</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">			    if ( $currentMeta-&gt;isRelation($call) ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">129</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">    				$prefixes[] = $call;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">130</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">				    $className = $currentMeta-&gt;getRelation($call)-&gt;getTo();</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">131</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">				    $currentMeta = $factory-&gt;getEntityMeta($className);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">132</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">			    }</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">133</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">			}</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">134</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">			$prefix = implode('-&gt;', $prefixes) . '-&gt;';</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">135</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">		}</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">136</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">137</td>
+<td class="lineCountHighlight">5</td>
+<td><span class="srcLine"><pre class="srcLine">		if ( !in_array($prefix, array_keys($this-&gt;_tables)) ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">138</td>
+<td class="lineCountHighlight">5</td>
+<td><span class="srcLine"><pre class="srcLine">			$tableName = $factory-&gt;get($className)-&gt;getTable();</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">139</td>
+<td class="lineCountHighlight">5</td>
+<td><span class="srcLine"><pre class="srcLine">			$num = count(array_keys($this-&gt;_tables, $tableName));</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">140</td>
+<td class="lineCountHighlight">5</td>
+<td><span class="srcLine"><pre class="srcLine">			$this-&gt;_tables[$prefix] = $tableName;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">141</td>
+<td class="lineCountHighlight">5</td>
+<td><span class="srcLine"><pre class="srcLine">			$this-&gt;_aliases[$prefix] = preg_replace('/[`\]\s]*/i', '',</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">142</td>
+<td class="lineCountHighlight">5</td>
+<td><span class="srcLine"><pre class="srcLine">				$tableName) . $num;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">143</td>
+<td class="lineCountHighlight">5</td>
+<td><span class="srcLine"><pre class="srcLine">		}</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">144</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">145</td>
+<td class="lineCountHighlight">5</td>
+<td><span class="srcLine"><pre class="srcLine">		return $this-&gt;_aliases[$prefix];</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">146</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">147</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">148</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">149</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * Returns a from clause for a SQL query</pre></td>
+</tr>
+<tr>
+<td class="lineCount">150</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">151</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @return array An array of {@link Xyster_Db_Token} objects with table alias as key</pre></td>
+</tr>
+<tr>
+<td class="lineCount">152</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">153</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	public function getFromClause()</pre></td>
+</tr>
+<tr>
+<td class="lineCount">154</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	{</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">155</td>
+<td class="lineCountHighlight">4</td>
+<td><span class="srcLine"><pre class="srcLine">		$joined = array();</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">156</td>
+<td class="lineCountHighlight">4</td>
+<td><span class="srcLine"><pre class="srcLine">		$from = array();</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">157</td>
+<td class="lineCountHighlight">4</td>
+<td><span class="srcLine"><pre class="srcLine">		$factory = $this-&gt;_mapFactory;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">158</td>
+<td class="lineCountHighlight">4</td>
+<td><span class="srcLine"><pre class="srcLine">		$db = $this-&gt;_adapter;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">159</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">160</td>
+<td class="lineCountHighlight">4</td>
+<td><span class="srcLine"><pre class="srcLine">		foreach( array_keys($this-&gt;_aliases) as $prefix ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">161</td>
+<td class="lineCountHighlight">4</td>
+<td><span class="srcLine"><pre class="srcLine">			if ( $prefix == '' ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">162</td>
+<td class="lineCountHighlight">4</td>
+<td><span class="srcLine"><pre class="srcLine">				continue;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">163</td>
+<td class="coverageCountHighlight">0</td>
+<td><span class="srcLineHighlight"><pre class="srcLine">			}</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">164</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">165</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">			$prefixes = explode('-&gt;',$prefix);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">166</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">			$container = $this-&gt;_class;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">167</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">			$prefixsofar = '';</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">168</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">			$lastTable = $this-&gt;_tables[''];</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">169</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">			$lastAlias = $this-&gt;getMain();</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">170</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">171</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">			foreach( $prefixes as $v ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">172</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">				if ( !$v ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">173</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">					continue;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">174</td>
+<td class="coverageCountHighlight">0</td>
+<td><span class="srcLineHighlight"><pre class="srcLine">				}</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">175</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">176</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">				$prefixsofar .= $v.'-&gt;';</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">177</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">				$fromMap = $factory-&gt;get($container);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">178</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">				$fromMeta = $fromMap-&gt;getEntityMeta();</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">179</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">				$relation = $fromMeta-&gt;getRelation($v);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">180</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">				$class = $relation-&gt;getTo();</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">181</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">				$toMap = $factory-&gt;get($class);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">182</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">				$alias = $this-&gt;aliasField($prefixsofar.current($toMap-&gt;getEntityMeta()-&gt;getPrimary()));</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">183</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">184</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">				$binds = array();</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">185</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">			    $localFrom = array();</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">186</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">187</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">				if (!in_array($prefixsofar, $joined)) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">188</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">189</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">                    $keyMap = array_combine($relation-&gt;getId(), $toMap-&gt;getEntityMeta()-&gt;getPrimary());</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">190</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">					foreach( $keyMap as $fromKey=&gt;$toKey ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">191</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">					    $localFrom[] = $lastAlias . '.'</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">192</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">							. $db-&gt;quoteIdentifier($fromMap-&gt;untranslateField($fromKey))</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">193</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">					        . ' = ' . $alias . '.' . $toMap-&gt;untranslateField($db-&gt;quoteIdentifier($toKey));</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">194</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">					}</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">195</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">196</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">					if ( $relation-&gt;getFilters() ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">197</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">						$translator = new Xyster_Db_Translator($db);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">198</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">						$translator-&gt;setRenameCallback(array($toMap, 'untranslateField'));</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">199</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">						$translator-&gt;setTable($alias);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">200</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">						$fToken = $translator-&gt;translate($relation-&gt;getFilters());</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">201</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">						$localFrom[] = $fToken-&gt;getSql();</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">202</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">						$binds += $fToken-&gt;getBindValues();</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">203</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">					}</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">204</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">					$joined[] = $prefixsofar;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">205</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">				}</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">206</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">				$lastAlias = $alias;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">207</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">				$lastTable = $toMap-&gt;getTable();</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">208</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">				$container = $class;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">209</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">210</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">				$from[ $toMap-&gt;getTable() . ' AS ' . $alias ] =</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">211</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">				    new Xyster_Db_Token(implode(' AND ', $localFrom), $binds);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">212</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">			}</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">213</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">		}</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">214</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">215</td>
+<td class="lineCountHighlight">4</td>
+<td><span class="srcLine"><pre class="srcLine">		return $from;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">216</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">217</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">218</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">219</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * {@inherit}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">220</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">221</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @param Xyster_Data_Field $field</pre></td>
+</tr>
+<tr>
+<td class="lineCount">222</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @return string</pre></td>
+</tr>
+<tr>
+<td class="lineCount">223</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">224</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	protected function _getRenamedField( Xyster_Data_Field $field )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">225</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	{</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">226</td>
+<td class="lineCountHighlight">4</td>
+<td><span class="srcLine"><pre class="srcLine">	    $factory = $this-&gt;_mapFactory;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">227</td>
+<td class="lineCountHighlight">4</td>
+<td><span class="srcLine"><pre class="srcLine">		$className = $this-&gt;_class;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">228</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">229</td>
+<td class="lineCountHighlight">4</td>
+<td><span class="srcLine"><pre class="srcLine">	    $prefixes = Xyster_String::smartSplit('-&gt;', $field-&gt;getName());</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">230</td>
+<td class="lineCountHighlight">4</td>
+<td><span class="srcLine"><pre class="srcLine">		$meta = $factory-&gt;getEntityMeta($className);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">231</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">232</td>
+<td class="lineCountHighlight">4</td>
+<td><span class="srcLine"><pre class="srcLine">		if ( count($prefixes) &gt; 1 ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">233</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">			foreach( $prefixes as $call ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">234</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">				if ( $meta-&gt;isRelation($call) ) {</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">235</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">					$className = $meta-&gt;getRelation($call)-&gt;getTo();</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">236</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">		            $meta = $factory-&gt;getEntityMeta($className);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">237</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">				}</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">238</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">			}</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">239</td>
+<td class="lineCountHighlight">2</td>
+<td><span class="srcLine"><pre class="srcLine">		}</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">240</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">241</td>
+<td class="lineCountHighlight">4</td>
+<td><span class="srcLine"><pre class="srcLine">		$rename = $factory-&gt;get($className)</pre></span></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">242</td>
+<td class="lineCountHighlight">4</td>
+<td><span class="srcLine"><pre class="srcLine">			-&gt;untranslateField($prefixes[count($prefixes)-1]);</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">243</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">244</td>
+<td class="lineCountHighlight">4</td>
+<td><span class="srcLine"><pre class="srcLine">	    return $rename;</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">245</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">246</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine"></pre></td>
+</tr>
+<tr>
+<td class="lineCount">247</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	/**</pre></td>
+</tr>
+<tr>
+<td class="lineCount">248</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * {@inherit}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">249</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 *</pre></td>
+</tr>
+<tr>
+<td class="lineCount">250</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @param Xyster_Data_Field $field</pre></td>
+</tr>
+<tr>
+<td class="lineCount">251</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 * @return string</pre></td>
+</tr>
+<tr>
+<td class="lineCount">252</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	 */</pre></td>
+</tr>
+<tr>
+<td class="lineCount">253</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	protected function _getTableName( Xyster_Data_Field $field )</pre></td>
+</tr>
+<tr>
+<td class="lineCount">254</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	{</pre></td>
+</tr>
+<tr>
+<td class="lineCountHighlight">255</td>
+<td class="lineCountHighlight">4</td>
+<td><span class="srcLine"><pre class="srcLine">	    return $this-&gt;aliasField($field-&gt;getName());</pre></span></td>
+</tr>
+<tr>
+<td class="lineCount">256</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">	}</pre></td>
+</tr>
+<tr>
+<td class="lineCount">257</td>
+<td class="coverageCount"></td>
+<td><pre class="srcLine">}</pre></td>
+</tr>
+</table>
+<br><table width="100%">
+<tr><td><hr noshade size="1"></td></tr>
+<tr><td class="small">Report generated at 2007-10-08T19:32:23-05:00</td></tr>
+</table>
+</BODY>
+</HTML>

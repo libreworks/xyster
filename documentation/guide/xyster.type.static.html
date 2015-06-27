@@ -1,0 +1,180 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>10.2. Static Methods</title>
+<link rel="stylesheet" href="dbstyle.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.72.0">
+<link rel="start" href="index.html" title="Programmer's Reference Guide">
+<link rel="up" href="xyster.type.html" title="Chapter 10. Xyster_Type">
+<link rel="prev" href="xyster.type.html" title="Chapter 10. Xyster_Type">
+<link rel="next" href="xyster.validate.html" title="Chapter 11. Xyster_Validate">
+<link rel="chapter" href="introduction.html" title="Chapter 1. Introduction to Xyster Framework">
+<link rel="chapter" href="xyster.acl.html" title="Chapter 2. Xyster_Acl">
+<link rel="chapter" href="xyster.collection.html" title="Chapter 3. Xyster_Collection">
+<link rel="chapter" href="xyster.controller.html" title="Chapter 4. Xyster_Controller">
+<link rel="chapter" href="xyster.data.html" title="Chapter 5. Xyster_Data">
+<link rel="chapter" href="xyster.date.html" title="Chapter 6. Xyster_Date">
+<link rel="chapter" href="xyster.enum.html" title="Chapter 7. Xyster_Enum">
+<link rel="chapter" href="xyster.filter.html" title="Chapter 8. Xyster_Filter">
+<link rel="chapter" href="xyster.orm.html" title="Chapter 9. Xyster_Orm">
+<link rel="chapter" href="xyster.type.html" title="Chapter 10. Xyster_Type">
+<link rel="chapter" href="xyster.validate.html" title="Chapter 11. Xyster_Validate">
+<link rel="subsection" href="xyster.type.static.html#xyster.type.static.equality" title="10.2.1. Testing Value Equality">
+<link rel="subsection" href="xyster.type.static.html#xyster.type.static.hash" title="10.2.2. Hash Codes">
+<link rel="subsection" href="xyster.type.static.html#xyster.type.static.parameters" title="10.2.3. Parameter Types">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<div class="navheader"><table width="100%" summary="Navigation header">
+<tr><th colspan="3" align="center">10.2. Static Methods</th></tr>
+<tr>
+<td width="20%" align="left">
+<a accesskey="p" href="xyster.type.html">Prev</a> </td>
+<th width="60%" align="center">Chapter 10. Xyster_Type</th>
+<td width="20%" align="right"> <a accesskey="n" href="xyster.validate.html">Next</a>
+</td>
+</tr>
+</table></div>
+<div class="sect1" lang="en">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="xyster.type.static"></a>10.2. Static Methods</h2></div></div></div>
+<p>There are several static methods available from the <code class="classname">Xyster_Type</code>
+            class that assist you in working with types and equality.</p>
+<div class="sect2" lang="en">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="xyster.type.static.equality"></a>10.2.1. Testing Value Equality</h3></div></div></div>
+<p>There are two methods for determining if two objects are equal
+                to each other.</p>
+<div class="sect3" lang="en">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="xyster.type.static.equality.areequal"></a>10.2.1.1. areEqual</h4></div></div></div>
+<p>This method will return true if two values are identical
+                    or shallowly equal.  Objects of the same class but are not
+                    identical are not considered to be equal by this method even
+                    if they share the exact same values.</p>
+<pre class="programlisting">&lt;?php
+Xyster_Type::areEqual('foo', 'foo'); // true
+Xyster_Type::areEqual('foo', 'bar'); // false
+Xyster_Type::areEqual(new ArrayObject, new ArrayObject); // false
+$object = new ArrayObject;
+Xyster_Type::areEqual($object, $object); // true
+</pre>
+<p>If the values aren't identical and if the first value you
+                    supply is an object and it has an <code class="methodname">equals</code>
+                    method, the result of this method will be returned. In this
+                    way, you can write your own logic for determining object
+                    equality.</p>
+<pre class="programlisting">&lt;?php
+class SmartEquals
+{
+    protected $_value;
+    
+    public function __construct( $value )
+    {
+        $this-&gt;_value = $value;
+    }
+    
+    public function equals( $value )
+    {
+        return $value === $this || ( get_class($this) == get_class($value) &amp;&amp;
+                $this-&gt;_value == $value-&gt;_value); 
+    }
+}
+Xyster_Type::areEqual(new SmartEquals('foobar'), new SmartEquals('foobar')); // true 
+</pre>
+</div>
+<div class="sect3" lang="en">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="xyster.type.static.equality.aredeeplyequal"></a>10.2.1.2. areDeelyEqual</h4></div></div></div>
+<p>This method is similar to <code class="methodname">areEqual</code>, but 
+                    it also will compares values deeply.</p>
+<p>If two objects are not identical (that is, are exactly the
+                    same instance) they will be compared property-by-property
+                    recursively if need be.  This method will not nest any
+                    deeper than 10 levels to compare objects. Arrays will be
+                    compared in the same manner.</p>
+<p>Just like <code class="methodname">areEqual</code>, if the values
+                    aren't identical and if the first value you supply is an
+                    object and it has an <code class="methodname">equals</code> method,
+                    the result of this method will be returned.  The same is
+                    true for any values that are compared recursively.</p>
+</div>
+</div>
+<div class="sect2" lang="en">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="xyster.type.static.hash"></a>10.2.2. Hash Codes</h3></div></div></div>
+<p>A hash code is a signed integer that identifies an object or a
+                value.  Developers of other languages like Java are no strangers
+                to hash codes.  The general rule is that if two objects are equal,
+                their hash codes will be equal (the reverse is not always true).</p>
+<p>A hash code should not be any greater than <code class="constant">PHP_INT_MAX</code>
+                or smaller than the negative value of <code class="constant">PHP_INT_MAX</code>,
+                or else PHP will turn it into a float.  The hash number for a string
+                returned from <code class="classname">Xyster_Type</code> should be the
+                same as the hash for the same string from Java.</p>
+<pre class="programlisting">&lt;?php
+Xyster_Type::hash('hello'); // 99162322
+Xyster_Type::hash('helloa'); // -1220935217
+Xyster_Type::hash('hello to the world'); // -1821194164
+Xyster_Type::hash(123.123); // 1123434234
+Xyster_Type::hash(true); // 1231
+Xyster_Type::hash(true); // 1237
+Xyster_Type::hash(456789); // 456789
+</pre>
+<p>By default, any instance of an object will return a unique
+                hash code. The <code class="methodname">hash</code> method computes an
+                integer based on the return value of
+                <code class="function">spl_object_hash</code>.</p>
+<pre class="programlisting">&lt;?php
+$obj = new ArrayObject;
+$obj2 = new ArrayObject;
+Xyster_Type::hash($obj);  // not the same as...
+Xyster_Type::hash($obj2);
+</pre>
+<p>If you supply an object that has a <code class="methodname">hashCode</code>
+                method, the return value of this method will be returned.  In this
+                way, you can write your own hash calculations for your objects.</p>
+<pre class="programlisting">&lt;?php
+class SmartHash extends SmartEquals
+{    
+    public function hashCode()
+    {
+        return Xyster_Type::hash($this-&gt;_value);
+    }
+}
+$obj = new SmartHash('hello');
+$obj2 = new SmartHash('hello');
+Xyster_Type::hash($obj);  // 99162322
+Xyster_Type::hash($obj2); // 99162322
+</pre>
+</div>
+<div class="sect2" lang="en">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="xyster.type.static.parameters"></a>10.2.3. Parameter Types</h3></div></div></div>
+<p>The <code class="methodname">getForParameters</code> method is just
+                a convenience function to get an array of the types of the
+                parameters for a method or function.</p>
+<p>This method uses type hints and default values where it can
+                to determine the types.  If a type hint or default value is 
+                unavailable for a parameter, it will use a special type object
+                representing <span class="emphasis"><em>scalar</em></span>.  If you pass any scalar
+                type to the <code class="methodname">isInstance</code> method of this object,
+                it will return true.</p>
+</div>
+</div>
+<div class="navfooter"><table width="100%" summary="Navigation footer">
+<tr>
+<td width="40%" align="left">
+<a accesskey="p" href="xyster.type.html">Prev</a> </td>
+<td width="20%" align="center"><a accesskey="u" href="xyster.type.html">Up</a></td>
+<td width="40%" align="right"> <a accesskey="n" href="xyster.validate.html">Next</a>
+</td>
+</tr>
+<tr>
+<td width="40%" align="left" valign="top">Chapter 10. Xyster_Type </td>
+<td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td>
+<td width="40%" align="right" valign="top"> Chapter 11. Xyster_Validate</td>
+</tr>
+</table></div>
+<div class="revinfo"></div>
+</body>
+</html>

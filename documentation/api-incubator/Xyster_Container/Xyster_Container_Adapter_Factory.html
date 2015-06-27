@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class Xyster_Container_Adapter_Factory</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name">Interface Xyster_Container_Adapter_Factory</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+							<a href="#sec-descendents">Descendents</a>
+			|													<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+					</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Responsible for creating component adapters</p>
+<p class="description"><p>The main use of the factory is to customize the default component adapter  used when none is specified explicitly.</p></p>
+	<ul class="tags">
+				<li><span class="field">copyright:</span> Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)</li>
+				<li><span class="field">license:</span> <a href="http://www.opensource.org/licenses/bsd-license.php">New BSD License</a></li>
+			</ul>
+		<p class="notes">
+			Located in <a class="field" href="_Container---Adapter---Factory.php.html">/Container/Adapter/Factory.php</a> (line <span class="field">27</span>)
+		</p>
+		
+				
+		<pre></pre>
+	
+			</div>
+</div>
+
+	<a name="sec-descendents"></a>
+	<div class="info-box">
+		<div class="info-box-title">Direct descendents</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+			<span class="disabled">Descendents</span>
+			|															<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+								</div>
+		<div class="info-box-body">
+			<table cellpadding="2" cellspacing="0" class="class-table">
+				<tr>
+					<th class="class-table-header">Class</th>
+					<th class="class-table-header">Description</th>
+				</tr>
+								<tr>
+					<td style="padding-right: 2em"><a href="../Xyster_Container/Xyster_Container_Injection_Factory.html">Xyster_Container_Injection_Factory</a></td>
+					<td>
+											An tagging interface for Injection factories
+										</td>
+				</tr>
+								<tr>
+					<td style="padding-right: 2em"><a href="../Xyster_Container/Xyster_Container_Behavior_Factory.html">Xyster_Container_Behavior_Factory</a></td>
+					<td>
+											Extends Xyster_Container_Adapter_Factory to provide methods for Behaviors
+										</td>
+				</tr>
+							</table>
+		</div>
+	</div>
+
+
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+							<a href="#sec-descendents">Descendents</a> |
+												<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+												
+												<div class="method-definition">
+											<span class="method-result"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>
+										<a href="#createComponentAdapter" title="details" class="method-name">createComponentAdapter</a>
+											(<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Monitor.html">Xyster_Container_Monitor</a></span>&nbsp;<span class="var-name">$monitor</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$properties</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$key</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$implementation</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$parameters</span>)
+									</div>
+								</div>
+		</div>
+	</div>		
+
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+							<a href="#sec-descendents">Descendents</a> |
+																<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+
+<a name="methodcreateComponentAdapter" id="createComponentAdapter"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">createComponentAdapter</span> (line <span class="line-number">55</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Create a new component adapter based on the specified arguments</p>
+<p class="description"><p>The $key parameter should be returned from a call to  getComponentKey() on the  created adapter.</p><p>The $implementation parameter is the implementation class to be  associated with this adapter. This value should be returned from a call  to getImplementation() on the created  adapter. Should not be null.</p><p>The $parameters parameter are additional parameters to use by the  component adapter in constructing component instances. These may be used,  for example, to make decisions about the arguments passed into the  component constructor. These should be considered hints; they may be  ignored by some implementations. May be null, and may be of zero length.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> The component adapter</li>
+				<li><span class="field">throws:</span> Exception if the creation of the component adapter fails</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../Xyster_Container/Xyster_Container_Adapter.html">Xyster_Container_Adapter</a></span>
+		<span class="method-name">
+			createComponentAdapter
+		</span>
+					(<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Monitor.html">Xyster_Container_Monitor</a></span>&nbsp;<span class="var-name">$monitor</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$properties</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$key</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$implementation</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$parameters</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../Xyster_Container/Xyster_Container_Monitor.html">Xyster_Container_Monitor</a></span>
+				<span class="var-name">$monitor</span><span class="var-description">: the component monitor</span>			</li>
+					<li>
+				<span class="var-type">Xyster_Collection_Map_Interface</span>
+				<span class="var-name">$properties</span><span class="var-description">: the component properties</span>			</li>
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$key</span><span class="var-description">: the key to be associated with this adapter.</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$implementation</span>			</li>
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$parameters</span>			</li>
+				</ul>
+		
+			
+	</div>
+						
+		</div>
+	</div>
+
+
+	<p class="notes" id="credit">
+		Documentation generated on Mon, 19 May 2008 17:08:20 -0400 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.2</a>
+	</p>
+	</div></body>
+</html>

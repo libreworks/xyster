@@ -1,0 +1,164 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>5.2. Data Symbols</title>
+<link rel="stylesheet" href="dbstyle.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.72.0">
+<link rel="start" href="index.html" title="Programmer's Reference Guide">
+<link rel="up" href="xyster.data.html" title="Chapter 5. Xyster_Data">
+<link rel="prev" href="xyster.data.html" title="Chapter 5. Xyster_Data">
+<link rel="next" href="xyster.data.clauses.html" title="5.3. Symbol Clauses">
+<link rel="chapter" href="introduction.html" title="Chapter 1. Introduction to Xyster Framework">
+<link rel="chapter" href="xyster.acl.html" title="Chapter 2. Xyster_Acl">
+<link rel="chapter" href="xyster.collection.html" title="Chapter 3. Xyster_Collection">
+<link rel="chapter" href="xyster.controller.html" title="Chapter 4. Xyster_Controller">
+<link rel="chapter" href="xyster.data.html" title="Chapter 5. Xyster_Data">
+<link rel="chapter" href="xyster.date.html" title="Chapter 6. Xyster_Date">
+<link rel="chapter" href="xyster.enum.html" title="Chapter 7. Xyster_Enum">
+<link rel="chapter" href="xyster.filter.html" title="Chapter 8. Xyster_Filter">
+<link rel="chapter" href="xyster.orm.html" title="Chapter 9. Xyster_Orm">
+<link rel="chapter" href="xyster.type.html" title="Chapter 10. Xyster_Type">
+<link rel="chapter" href="xyster.validate.html" title="Chapter 11. Xyster_Validate">
+<link rel="subsection" href="xyster.data.generics.html#xyster.data.aggregate" title="5.2.1. Xyster_Data_Aggregate">
+<link rel="subsection" href="xyster.data.generics.html#xyster.data.field" title="5.2.2. Xyster_Data_Field">
+<link rel="subsection" href="xyster.data.generics.html#xyster.data.sort" title="5.2.3. Xyster_Data_Sort">
+<link rel="subsection" href="xyster.data.generics.html#xyster.data.criterion" title="5.2.4. Xyster_Data_Criterion">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<div class="navheader"><table width="100%" summary="Navigation header">
+<tr><th colspan="3" align="center">5.2. Data Symbols</th></tr>
+<tr>
+<td width="20%" align="left">
+<a accesskey="p" href="xyster.data.html">Prev</a> </td>
+<th width="60%" align="center">Chapter 5. Xyster_Data</th>
+<td width="20%" align="right"> <a accesskey="n" href="xyster.data.clauses.html">Next</a>
+</td>
+</tr>
+</table></div>
+<div class="sect1" lang="en">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="xyster.data.generics"></a>5.2. Data Symbols</h2></div></div></div>
+<p>Here are some of the generic objects available in this package.</p>
+<div class="sect2" lang="en">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="xyster.data.aggregate"></a>5.2.1. Xyster_Data_Aggregate</h3></div></div></div>
+<p>This class is an extension of <code class="classname">Xyster_Enum</code> and provides the different ways
+                    to aggregate a group of data. SQL developers will recognize these function names.</p>
+<div class="orderedlist"><ol type="1">
+<li><p><code class="code">Xyster_Data_Aggregate::Average()</code> – A mathematical mean of a group of numbers</p></li>
+<li><p><code class="code">Xyster_Data_Aggregate::Count()</code> – A simple count of rows</p></li>
+<li><p><code class="code">Xyster_Data_Aggregate::Maximum()</code> – Finds the greatest value in a set of data</p></li>
+<li><p><code class="code">Xyster_Data_Aggregate::Minimum()</code> – Finds the smallest value in a set of data</p></li>
+<li><p><code class="code">Xyster_Data_Aggregate::Sum()</code> – The addition of a group of numbers</p></li>
+</ol></div>
+</div>
+<div class="sect2" lang="en">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="xyster.data.field"></a>5.2.2. Xyster_Data_Field</h3></div></div></div>
+<p>This object is used to refer to a column in a database table, an attribute in an XML tag,
+                    a property on an object, a method call on an object, an attribute in an LDAP record, etc.
+                    It can be aliased (given a nickname), it can be associated with an Aggregate, and it can be
+                    used to represent data grouped by a certain field.</p>
+<pre class="programlisting">&lt;?php
+Xyster_Data_Field::named("myColumn", "nickName");
+Xyster_Data_Field::group("myColumn");
+Xyster_Data_Field::count("myId");
+Xyster_Data_Field::aggregate(Xyster_Data_Aggregate::Average(), "myColumn");
+
+                </pre>
+</div>
+<div class="sect2" lang="en">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="xyster.data.sort"></a>5.2.3. Xyster_Data_Sort</h3></div></div></div>
+<p>A sort consists of a <code class="classname">Xyster_Data_Field</code> and a direction (either ascending or descending).</p>
+<pre class="programlisting">&lt;?php
+$column = Xyster_Data_Field::named("email");
+Xyster_Data_Sort::asc( $column );
+Xyster_Data_Sort::desc( $column );
+
+                </pre>
+<p><code class="classname">Xyster_Data_Comparator</code> is an instance of Xyster_Collection's
+                    <span class="interface">Xyster_Collection_Comparator</span> interface. It can be used to sort a
+                    <code class="classname">Xyster_Collection_Set_Sortable</code> containing arrays or objects
+                    using one or more <code class="classname">Xyster_Data_Sort</code> objects.</p>
+<pre class="programlisting">&lt;?php
+// example will sort a set by last name and salary 
+$sorts = array(Xyster_Data_Sort::asc("lastName"),
+    Xyster_Data_Sort::desc("salary"));
+$comparator = new Xyster_Data_Comparator($sorts);
+// assuming $sortableSet is a Xyster_Collection_Set_Sortable containing objects or associative arrays
+$sortableSet-&gt;sort($comparator);
+
+                </pre>
+</div>
+<div class="sect2" lang="en">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="xyster.data.criterion"></a>5.2.4. Xyster_Data_Criterion</h3></div></div></div>
+<p>This is an abstract class that overshadows two other classes: the Expression
+                    and the Junction. A Criterion is a boolean expression, such as a SQL where clause,
+                    a PHP if statement, or an LDAP query filter. An Expression is just one statement,
+                    with two terms and an operator between (this is commonly called an infix operator).
+                    A Junction is a joining of two or more Criterion objects with either an AND or an
+                    OR operator between.</p>
+<p>Equality: A Field must be equal to a value (==) or not equal to a value (!=, &lt;&gt;)</p>
+<pre class="programlisting">&lt;?php
+Xyster_Data_Expression::eq("myColumn","some value");
+Xyster_Data_Expression::neq("myColumn","some other value");
+
+                </pre>
+<p>Value comparisons: A Field must be greater than (&gt;), less than (&lt;), greater than or equal to (&gt;=), or less than or equal to (&lt;=) a value.</p>
+<pre class="programlisting">&lt;?php
+Xyster_Data_Expression::gt("myColumn",10);
+Xyster_Data_Expression::gte("myColumn",11);
+Xyster_Data_Expression::lt("myColumn",30);
+Xyster_Data_Expression::lte("myColumn",29);
+
+                </pre>
+<p>(Not) Between: A Field must be between or not be between two values</p>
+<pre class="programlisting">&lt;?php
+Xyster_Data_Expression::between("myColumn",10,20);
+Xyster_Data_Expression::notBetween("myColumn",1,9);
+
+                </pre>
+<p>Like: A Field must start with, end with, or contain a value (or not)</p>
+<pre class="programlisting">&lt;?php
+Xyster_Data_Expression::like("myColumn","peanut%");
+Xyster_Data_Expression::notLike("myColumn","%butter");
+
+                </pre>
+<p>In: A Field must be one of or not be one of a set of values</p>
+<pre class="programlisting">&lt;?php
+Xyster_Data_Expression::in("myColumn",array(1,2,3,4,5));
+Xyster_Data_Expression::notIn("myColumn",array(1,2,3,4,5));
+
+                </pre>
+<p>A Junction is a group of two or more Expression objects, and must either be
+                    "and" statements (conjunctions), or "or" statements (disjunctions). For instance:</p>
+<pre class="programlisting">&lt;?php
+$junction1 = Xyster_Data_Junction::any(Xyster_Data_Expression::eq("myColumn", 100), Xyster_Data_Expression::eq("otherColumn", "text"));
+$junction2 = Xyster_Data_Junction::any(Xyster_Data_Expression::eq("name", "Smith"), Xyster_Data_Expression::like("city", "D%"));
+Xyster_Data_Junction::all($junction1, $junction2);
+
+                </pre>
+<p>These objects can be used to abstractly represent a query for data, or manipulate
+                    data returned from such a query. The Xyster framework wanted to provide a universal
+                    way to work with this kind of data that can easily be reused.</p>
+</div>
+</div>
+<div class="navfooter"><table width="100%" summary="Navigation footer">
+<tr>
+<td width="40%" align="left">
+<a accesskey="p" href="xyster.data.html">Prev</a> </td>
+<td width="20%" align="center"><a accesskey="u" href="xyster.data.html">Up</a></td>
+<td width="40%" align="right"> <a accesskey="n" href="xyster.data.clauses.html">Next</a>
+</td>
+</tr>
+<tr>
+<td width="40%" align="left" valign="top">Chapter 5. Xyster_Data </td>
+<td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td>
+<td width="40%" align="right" valign="top"> 5.3. Symbol Clauses</td>
+</tr>
+</table></div>
+<div class="revinfo"></div>
+</body>
+</html>

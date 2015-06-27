@@ -1,0 +1,847 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class Xyster_Controller_Plugin_Acl</title>
+			<link rel="stylesheet" href="../../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name">Class Xyster_Controller_Plugin_Acl</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+													<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+						|											<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+					</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Authorization plugin</p>
+	<ul class="tags">
+				<li><span class="field">copyright:</span> Copyright (c) 2007-2008 Irrational Logic (http://irrationallogic.net)</li>
+				<li><span class="field">license:</span> <a href="http://www.opensource.org/licenses/bsd-license.php">New BSD License</a></li>
+			</ul>
+		<p class="notes">
+			Located in <a class="field" href="_Controller---Plugin---Acl.php.html">/Controller/Plugin/Acl.php</a> (line <span class="field">42</span>)
+		</p>
+		
+				
+		<pre>Zend_Controller_Plugin_Abstract
+   |
+   --Xyster_Controller_Plugin_Acl</pre>
+	
+			</div>
+</div>
+
+
+
+	<a name="sec-var-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variable Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+						<span class="disabled">Vars</span> (<a href="#sec-vars">details</a>)
+							| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+								</div>
+		<div class="info-box-body">
+			<div class="var-summary">
+																																																																																<div class="var-title">
+					<span class="var-type">Zend_Acl</span>
+					<a href="#$_acl" title="details" class="var-name">$_acl</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">string</span>
+					<a href="#$_deniedAction" title="details" class="var-name">$_deniedAction</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">string</span>
+					<a href="#$_deniedController" title="details" class="var-name">$_deniedController</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">string</span>
+					<a href="#$_deniedModule" title="details" class="var-name">$_deniedModule</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">string</span>
+					<a href="#$_loginAction" title="details" class="var-name">$_loginAction</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">string</span>
+					<a href="#$_loginController" title="details" class="var-name">$_loginController</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">string</span>
+					<a href="#$_loginModule" title="details" class="var-name">$_loginModule</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">array</span>
+					<a href="#$_rules" title="details" class="var-name">$_rules</a>
+				</div>
+											</div>
+		</div>
+	</div>
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+																		<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+				 
+				|
+						<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+																																																																																																																												
+												<div class="method-definition">
+											<span class="method-result">Xyster_Controller_Plugin_Acl</span>
+										<a href="#__construct" title="details" class="method-name">__construct</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$acl</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">Xyster_Controller_Action_Helper_Acl</span>
+										<a href="#allow" title="details" class="method-name">allow</a>
+											(<span class="var-type">Zend_Acl_Role_Interface|string</span>&nbsp;<span class="var-name">$role</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$module</span> = <span class="var-default">null</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$controller</span> = <span class="var-default">null</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$action</span> = <span class="var-default">null</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">Xyster_Controller_Action_Helper_Acl</span>
+										<a href="#deny" title="details" class="method-name">deny</a>
+											(<span class="var-type">Zend_Acl_Role_Interface|string</span>&nbsp;<span class="var-name">$role</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$module</span> = <span class="var-default">null</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$controller</span> = <span class="var-default">null</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$action</span> = <span class="var-default">null</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#dispatchLoopStartup" title="details" class="method-name">dispatchLoopStartup</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$request</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#getAccessDeniedAction" title="details" class="method-name">getAccessDeniedAction</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#getAccessDeniedController" title="details" class="method-name">getAccessDeniedController</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#getAccessDeniedModule" title="details" class="method-name">getAccessDeniedModule</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#getLoginAction" title="details" class="method-name">getLoginAction</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#getLoginController" title="details" class="method-name">getLoginController</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#getLoginModule" title="details" class="method-name">getLoginModule</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#preDispatch" title="details" class="method-name">preDispatch</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$request</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../../Xyster_Controller/Plugins/Xyster_Controller_Plugin_Acl.html">Xyster_Controller_Plugin_Acl</a></span>
+										<a href="#setAccessDenied" title="details" class="method-name">setAccessDenied</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$module</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$controller</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$action</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../../Xyster_Controller/Plugins/Xyster_Controller_Plugin_Acl.html">Xyster_Controller_Plugin_Acl</a></span>
+										<a href="#setLogin" title="details" class="method-name">setLogin</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$module</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$controller</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$action</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../../Xyster_Controller/Plugins/Xyster_Controller_Plugin_Acl.html">Xyster_Controller_Plugin_Acl</a></span>
+										<a href="#setRules" title="details" class="method-name">setRules</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$rules</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../../Xyster_Controller/Xyster_Controller_Request_Resource.html">Xyster_Controller_Request_Resource</a></span>
+										<a href="#_getResource" title="details" class="method-name">_getResource</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$module</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$controller</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$action</span>)
+									</div>
+								</div>
+		</div>
+	</div>		
+
+	<a name="sec-vars"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variables</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+										<a href="#sec-var-summary">Vars</a> (<span class="disabled">details</span>)
+						
+			
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			<a name="var$_acl" id="$_acl"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">Zend_Acl</span>
+			<span class="var-name">$_acl</span>
+						(line <span class="line-number">49</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">The acl</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$_deniedAction" id="$_deniedAction"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$_deniedAction</span>
+			 = <span class="var-default"> 'error'</span>			(line <span class="line-number">55</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Action to use for errors; defaults to 'error'</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$_deniedController" id="$_deniedController"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$_deniedController</span>
+			 = <span class="var-default"> 'error'</span>			(line <span class="line-number">61</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Controller to use for errors; defaults to 'error'</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$_deniedModule" id="$_deniedModule"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$_deniedModule</span>
+						(line <span class="line-number">67</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Module to use for errors; defaults to default module in dispatcher</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$_loginAction" id="$_loginAction"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$_loginAction</span>
+			 = <span class="var-default"> 'index'</span>			(line <span class="line-number">73</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Action to use for login; defaults to 'index'</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$_loginController" id="$_loginController"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$_loginController</span>
+			 = <span class="var-default"> 'login'</span>			(line <span class="line-number">79</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Controller to use for login; defaults to 'login'</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$_loginModule" id="$_loginModule"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$_loginModule</span>
+						(line <span class="line-number">85</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Module to use for login; defaults to default module in dispatcher</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$_rules" id="$_rules"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">array</span>
+			<span class="var-name">$_rules</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number">92</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Holds the rules passed to 'setRules' until dispatchLoopStartup</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+						
+		</div>
+	</div>
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+															<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+																	<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+
+<a name="method__construct" id="__construct"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number">99</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Creates a new acl plugin</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Xyster_Controller_Plugin_Acl</span>
+		<span class="method-name">
+			__construct
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$acl</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">Zend_Acl</span>
+				<span class="var-name">$acl</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodallow" id="allow"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">allow</span> (line <span class="line-number">122</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Allows access to an action by a role</p>
+<p class="description"><p>Passing null for the role will allow all users to access the action.</p><p>Passing null for the module will allow the role access to all actions in  all controllers in all modules.  Specifying a module but leaving  controller and action null will allow access to all actions in all  controllers in the specified module.  Specifying a module and a  controller but leaving action null will allow access to all actions in  the specified controller.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> provides a fluent interface</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Xyster_Controller_Action_Helper_Acl</span>
+		<span class="method-name">
+			allow
+		</span>
+					(<span class="var-type">Zend_Acl_Role_Interface|string</span>&nbsp;<span class="var-name">$role</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$module</span> = <span class="var-default">null</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$controller</span> = <span class="var-default">null</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$action</span> = <span class="var-default">null</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">Zend_Acl_Role_Interface|string</span>
+				<span class="var-name">$role</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$module</span><span class="var-description">: The module name</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$controller</span><span class="var-description">: The controller name</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$action</span><span class="var-description">: The action name</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methoddeny" id="deny"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">deny</span> (line <span class="line-number">146</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Denies access to an action by a role</p>
+<p class="description"><p>Passing null for the role will deny all users access to the action.</p><p>Passing null for the module will deny everything to the role supplied.  Specifying a module but leaving controller and action null will deny  access to all controllers in the specified module.  Specifying a module  and a controller but leaving action null will deny access to all actions  in the specified controller.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> provides a fluent interface</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Xyster_Controller_Action_Helper_Acl</span>
+		<span class="method-name">
+			deny
+		</span>
+					(<span class="var-type">Zend_Acl_Role_Interface|string</span>&nbsp;<span class="var-name">$role</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$module</span> = <span class="var-default">null</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$controller</span> = <span class="var-default">null</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$action</span> = <span class="var-default">null</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">Zend_Acl_Role_Interface|string</span>
+				<span class="var-name">$role</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$module</span><span class="var-description">: The module name</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$controller</span><span class="var-description">: The controller name</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$action</span><span class="var-description">: The action name</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methoddispatchLoopStartup" id="dispatchLoopStartup"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">dispatchLoopStartup</span> (line <span class="line-number">158</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Called before Zend_Controller_Front enters its dispatch loop</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			dispatchLoopStartup
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$request</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">Zend_Controller_Request_Abstract</span>
+				<span class="var-name">$request</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodgetAccessDeniedAction" id="getAccessDeniedAction"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getAccessDeniedAction</span> (line <span class="line-number">179</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Retrieve the current acl plugin action</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			getAccessDeniedAction
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetAccessDeniedController" id="getAccessDeniedController"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getAccessDeniedController</span> (line <span class="line-number">189</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Retrieve the current acl plugin controller</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			getAccessDeniedController
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetAccessDeniedModule" id="getAccessDeniedModule"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getAccessDeniedModule</span> (line <span class="line-number">199</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Retrieve the current acl plugin module</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			getAccessDeniedModule
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetLoginAction" id="getLoginAction"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getLoginAction</span> (line <span class="line-number">213</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Retrieve the current not-authenticated action</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			getLoginAction
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetLoginController" id="getLoginController"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getLoginController</span> (line <span class="line-number">223</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Retrieve the current not-authenticated controller</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			getLoginController
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetLoginModule" id="getLoginModule"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getLoginModule</span> (line <span class="line-number">233</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Retrieve the current not-authenticated module</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			getLoginModule
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodpreDispatch" id="preDispatch"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">preDispatch</span> (line <span class="line-number">247</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Called before an action is dispatched by Zend_Controller_Dispatcher.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			preDispatch
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$request</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">Zend_Controller_Request_Abstract</span>
+				<span class="var-name">$request</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodsetAccessDenied" id="setAccessDenied"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">setAccessDenied</span> (line <span class="line-number">310</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Setup the dispatch location for access denied errors</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> provides a fluent interface</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../../Xyster_Controller/Plugins/Xyster_Controller_Plugin_Acl.html">Xyster_Controller_Plugin_Acl</a></span>
+		<span class="method-name">
+			setAccessDenied
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$module</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$controller</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$action</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$module</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$controller</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$action</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodsetLogin" id="setLogin"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">setLogin</span> (line <span class="line-number">327</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Setup the dispatch location for unauthenticated users</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> provides a fluent interface</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../../Xyster_Controller/Plugins/Xyster_Controller_Plugin_Acl.html">Xyster_Controller_Plugin_Acl</a></span>
+		<span class="method-name">
+			setLogin
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$module</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$controller</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$action</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$module</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$controller</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$action</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodsetRules" id="setRules"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">setRules</span> (line <span class="line-number">354</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Sets multiple rules simultaneously</p>
+<p class="description"><p>Each element in the $rules array should be itself an associative array  containing the following keys: <ul><li>type : either Zend_Acl::TYPE_ALLOW or Zend_Acl::TYPE_DENY</li><li>role : the string role ID</li><li>module : the module name</li><li>controller : the controller name</li><li>action : the action name</li></ul>  If 'type' is omitted or is null, Zend_Acl::TYPE_ALLOW is assumed.  If any  of the other keys are omitted, null is assumed.  See <a href="../../Xyster_Controller/Plugins/Xyster_Controller_Plugin_Acl.html#methodallow">allow</a> and  <a href="../../Xyster_Controller/Plugins/Xyster_Controller_Plugin_Acl.html#methoddeny">deny</a> for the behavior when null is specified for these values.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> provides a fluent interface</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../../Xyster_Controller/Plugins/Xyster_Controller_Plugin_Acl.html">Xyster_Controller_Plugin_Acl</a></span>
+		<span class="method-name">
+			setRules
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$rules</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">$rules</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="method_getResource" id="_getResource"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">_getResource</span> (line <span class="line-number">368</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets the resource object</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../../Xyster_Controller/Xyster_Controller_Request_Resource.html">Xyster_Controller_Request_Resource</a></span>
+		<span class="method-name">
+			_getResource
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$module</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$controller</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$action</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$module</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$controller</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$action</span>			</li>
+				</ul>
+		
+			
+	</div>
+						
+		</div>
+	</div>
+
+
+	<p class="notes" id="credit">
+		Documentation generated on Mon, 19 May 2008 17:06:57 -0400 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.2</a>
+	</p>
+	</div></body>
+</html>

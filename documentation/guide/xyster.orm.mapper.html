@@ -1,0 +1,88 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>9.3. Xyster_Orm_Mapper</title>
+<link rel="stylesheet" href="dbstyle.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.72.0">
+<link rel="start" href="index.html" title="Programmer's Reference Guide">
+<link rel="up" href="xyster.orm.html" title="Chapter 9. Xyster_Orm">
+<link rel="prev" href="xyster.orm.setup.html" title="9.2. Setting Up">
+<link rel="next" href="xyster.orm.entity.html" title="9.4. Xyster_Orm_Entity">
+<link rel="chapter" href="introduction.html" title="Chapter 1. Introduction to Xyster Framework">
+<link rel="chapter" href="xyster.acl.html" title="Chapter 2. Xyster_Acl">
+<link rel="chapter" href="xyster.collection.html" title="Chapter 3. Xyster_Collection">
+<link rel="chapter" href="xyster.controller.html" title="Chapter 4. Xyster_Controller">
+<link rel="chapter" href="xyster.data.html" title="Chapter 5. Xyster_Data">
+<link rel="chapter" href="xyster.date.html" title="Chapter 6. Xyster_Date">
+<link rel="chapter" href="xyster.enum.html" title="Chapter 7. Xyster_Enum">
+<link rel="chapter" href="xyster.filter.html" title="Chapter 8. Xyster_Filter">
+<link rel="chapter" href="xyster.orm.html" title="Chapter 9. Xyster_Orm">
+<link rel="chapter" href="xyster.type.html" title="Chapter 10. Xyster_Type">
+<link rel="chapter" href="xyster.validate.html" title="Chapter 11. Xyster_Validate">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<div class="navheader"><table width="100%" summary="Navigation header">
+<tr><th colspan="3" align="center">9.3. Xyster_Orm_Mapper</th></tr>
+<tr>
+<td width="20%" align="left">
+<a accesskey="p" href="xyster.orm.setup.html">Prev</a> </td>
+<th width="60%" align="center">Chapter 9. Xyster_Orm</th>
+<td width="20%" align="right"> <a accesskey="n" href="xyster.orm.entity.html">Next</a>
+</td>
+</tr>
+</table></div>
+<div class="sect1" lang="en">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="xyster.orm.mapper"></a>9.3. Xyster_Orm_Mapper</h2></div></div></div>
+<p>The <code class="classname">Xyster_Orm_Mapper</code> class is intended to connect to SQL databases. You can extend <code class="classname">Xyster_Orm_Mapper_Abstract</code> to create a mapper that connects to an LDAP server, parses an XML document, calls web services, and so on.</p>
+<p>You need to set up the database connection to <code class="classname">Xyster_Orm_Mapper</code> before any operations are performed with <code class="classname">Xyster_Orm</code>. Simply pass the connection settings to the <code class="methodname">dsn</code> method of <code class="classname">Xyster_Orm_Mapper</code>.</p>
+<pre class="programlisting">&lt;?php
+Xyster_Orm_Mapper::dsn('myDb', 'Pdo_Mysql', array('host' =&gt; '127.0.0.1',
+    'username' =&gt; 'webuser',
+    'password' =&gt; 'xxxxxxxx',
+    'dbname' =&gt; 'test'));</pre>
+<p>You can also pass a <code class="classname">Zend_Db_Adapter_Abstract</code> object instead of the driver type and options.</p>
+<pre class="programlisting">&lt;?php
+$db = new Zend_Db_Adapter_Pdo_Mysql(array('host' =&gt; '127.0.0.1',
+    'username' =&gt; 'webuser',
+    'password' =&gt; 'xxxxxxxx',
+    'dbname' =&gt; 'test'
+));
+Xyster_Orm_Mapper::dsn('myDb', $db);</pre>
+<p>The <code class="classname">Xyster_Orm_Mapper</code> class has the ability to cache the metadata it retrieves for tables, avoiding repeat trips to the data store. A <code class="classname">Zend_Cache_Core</code> object can be passed to the <code class="classname">Xyster_Orm_Mapper_Factory</code> instance that creates the mappers.</p>
+<pre class="programlisting">&lt;?php
+$frontendOptions = array('automatic_serialization' =&gt; true);
+$backendOptions = array('cacheDir' =&gt; 'cacheDir');
+$cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
+
+$orm = Xyster_Orm::getInstance();
+$mf = $orm-&gt;getMapperFactory();
+$mf-&gt;setMetadataCache($cache);</pre>
+<p>Alternatively, you can specify a <code class="classname">Zend_Registry</code> key in the options array of the mapper itself.</p>
+<pre class="programlisting">&lt;?php
+// let's pretent $cache is the Zend_Cache object we factoried a minute ago
+Zend_Registry::set('myCache', $cache);
+
+class SomethingMapper extends Xyster_Orm_Mapper
+{
+	// protected properties like $_domain, etc.
+	protected $_options = array('metadataCache' =&gt; 'myCache');
+}</pre>
+</div>
+<div class="navfooter"><table width="100%" summary="Navigation footer">
+<tr>
+<td width="40%" align="left">
+<a accesskey="p" href="xyster.orm.setup.html">Prev</a> </td>
+<td width="20%" align="center"><a accesskey="u" href="xyster.orm.html">Up</a></td>
+<td width="40%" align="right"> <a accesskey="n" href="xyster.orm.entity.html">Next</a>
+</td>
+</tr>
+<tr>
+<td width="40%" align="left" valign="top">9.2. Setting Up </td>
+<td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td>
+<td width="40%" align="right" valign="top"> 9.4. Xyster_Orm_Entity</td>
+</tr>
+</table></div>
+<div class="revinfo"></div>
+</body>
+</html>
